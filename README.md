@@ -3,6 +3,7 @@
 Clone this repository
 Install docker and docker-compose
 
+Create a symlink with name docker-compose.yml to docker-compose.local.yml
 
 Run external services docker-compose -f external_services.yml up -d
 
