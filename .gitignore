@@ -32,30 +32,6 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
-# Translations
-
-# Django stuff:
-
-# Flask stuff:
-
-# Scrapy stuff:
-
-# Sphinx documentation
-
-# PyBuilder
-
-# Jupyter Notebook
-
-# IPython
-
-# pyenv
-
-# Celery
-
-# celery beat schedule file
-
-# SageMath parsed files
-
 # Environments
 .env
 env/
@@ -75,6 +51,7 @@ env/
 # Docker
 docker-compose.yml
 dockrt-entrypoint.local.sh
+postgres-data
 
 #IDE
 .idea
