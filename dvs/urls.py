@@ -31,4 +31,5 @@ urlpatterns = [
     path('Hydro',views.ProductViewSet.as_view(),name='Hydro'),
     path('sentry-debug/', trigger_error),
     path('core/', include('core.urls')),
+    path('dashboard/', include('dashboard.urls')),
 ]

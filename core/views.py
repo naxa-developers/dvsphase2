@@ -4,6 +4,8 @@ from rest_framework.permissions import AllowAny
 from .serializers import OrganizationSerializer,ProgramSerializer,MarkerValuesSerializer
 from rest_framework import views
 from rest_framework.response import Response
+import django_filters.rest_framework
+from django.db.models import Q
 # Create your views here.
 
 
@@ -18,9 +20,21 @@ class OrganizationView(views.APIView):
 
 
 class ProgramView(views.APIView):
+    """
+    get: list of program
+            - parameters: search(from program)
+            - description: search should be of type string.
+    """
     permissions_classes=[AllowAny]
     def get(self,request):
-        queryset=Program.objects.all()
+        search_param = self.request.query_params.get('search', None)
+        print(search_param)
+        if search_param:
+            queryset=Program.objects.filter(Q(program_name__icontains=search_param)| Q(id__icontains=search_param))
+        else:
+            queryset=Program.objects.all()
+
+        print(queryset)
         serializer=ProgramSerializer(queryset,many=True)
         return Response({'heading':'Heading of data','description':'description of data','data':serializer.data})
 
