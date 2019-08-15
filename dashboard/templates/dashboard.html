@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+  {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<form action={% url "upload" %} method="post" enctype="multipart/form-data">
+    Select image to upload:
+    <input type="file" name="csv_file" id="csv_file">
+    <input type="submit" value="Upload File" name="submit">
+    {% csrf_token %}
+</form>
+
+</body>
+</html>

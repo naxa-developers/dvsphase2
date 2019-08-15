@@ -16,3 +16,9 @@ class TestViews(APITestCase,APIRequestFactory):
         response = self.client.get(url, format='json')
         print(response)
         assert response.status_code == 200
+
+    def test_programapi(self):
+        url = reverse('program')
+        response = self.client.get(url, format='json')
+        print(response)
+        assert response.status_code == 200
