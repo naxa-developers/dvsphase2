@@ -9,4 +9,6 @@ def trigger_error(request):
 urlpatterns = [
     path('test/', trigger_error,name='test'),
     path('organization/', views.OrganizationView.as_view(),name='organization'),
+    path('program/', views.ProgramView.as_view(),name='program'),
+    path('marker/', views.MarkerView.as_view(),name='marker'),
 ]
