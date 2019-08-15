@@ -9,4 +9,4 @@ RUN apt-get update &&\
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 COPY . /code/
-ENTRYPOINT /code/docker-entrypoint.local.sh
+ENTRYPOINT /code/docker-entrypoint.prod.sh
