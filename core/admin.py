@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Organization,Program,Sector,SubSector,MarkerCategory,MarkerValues
+from .models import Partner,Program,Sector,SubSector,MarkerCategory,MarkerValues
 # Register your models here.
 
-admin.site.register(Organization)
+admin.site.register(Partner)
 admin.site.register(Program)
 admin.site.register(Sector)
 admin.site.register(SubSector)

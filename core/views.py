@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
-from .models import Organization,Program,MarkerValues
+from .models import Partner,Program,MarkerValues
 from rest_framework.permissions import AllowAny
-from .serializers import OrganizationSerializer,ProgramSerializer,MarkerValuesSerializer
+from .serializers import PartnerSerializer,ProgramSerializer,MarkerValuesSerializer
 from rest_framework import views
 from rest_framework.response import Response
 import django_filters.rest_framework
@@ -10,12 +10,12 @@ from django.db.models import Q
 
 
 
-class OrganizationView(views.APIView):
+class PartnerView(views.APIView):
     permission_classes=[AllowAny]
     def get(self,request,*args,**kwargs):
         # print(request.user.group)
-        queryset=Organization.objects.all()
-        serializer=OrganizationSerializer(queryset,many=True)
+        queryset=Partner.objects.all()
+        serializer=PartnerSerializer(queryset,many=True)
         return Response({'heading':'Heading of data','description':'description of data','data':serializer.data})
 
 

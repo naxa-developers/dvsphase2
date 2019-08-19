@@ -1,7 +1,7 @@
 from django.shortcuts import render
 import pandas as pd
 from django.http import HttpResponse
-from core.models import Program, Organization
+from core.models import Program, Partner
 from .models import FiveW
 # Create your views here.
 def uploadData(request):
@@ -16,7 +16,7 @@ def uploadData(request):
             fiveData=[
                 FiveW(
                     program_name=Program.objects.get(program_name='Naxa'),
-                    organization_name=Organization.objects.get(organization_name='Naxa')
+                    partner_name=Partner.objects.get(partner_name='Naxa')
                 ) for row in range(0,2)
 
                 ]
