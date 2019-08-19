@@ -3,6 +3,9 @@
 Test status of master branch :
 [![CircleCI](https://circleci.com/gh/naxadeve/dvsphase2/tree/master.svg?style=svg)](https://circleci.com/gh/naxadeve/dvsphase2/tree/master)
 
+Test status of test-server-setup branch :
+[![CircleCI](https://circleci.com/gh/naxadeve/dvsphase2/tree/test-server-setup.svg?style=svg)](https://circleci.com/gh/naxadeve/dvsphase2/tree/test-server-setup)
+
 Clone this repository
 Install docker and docker-compose
 
