@@ -14,6 +14,7 @@ class PartnerView(views.APIView):
     permission_classes=[AllowAny]
     def get(self,request,*args,**kwargs):
         # print(request.user.group)
+        # print(request.user.group)
         queryset=Partner.objects.all()
         serializer=PartnerSerializer(queryset,many=True)
         return Response({'heading':'Heading of data','description':'description of data','data':serializer.data})
