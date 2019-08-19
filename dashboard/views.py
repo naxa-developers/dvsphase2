@@ -36,4 +36,4 @@ class Fivew(views.APIView):
     def get(self,request,*args,**kwargs):
         queryset=FiveW.objects.all()
         serializer=FivewSerializer(queryset,many=True)
-        return Response({'heading':'Heading of data','description':'description of data','data':serializer.data})
+        return Response({'heading':'Heading of dataa','description':'description of data','data':serializer.data})

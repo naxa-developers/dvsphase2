@@ -47,6 +47,7 @@ class Program(models.Model):
     program_description=models.TextField(blank=True)
     sub_sector=models.ForeignKey(SubSector, on_delete=models.CASCADE, related_name='SubSector', null=True, blank=True)
     marker=models.ManyToManyField(MarkerValues,related_name='MarkerValues',blank=True)
+    program_code=models.CharField(max_length=100,blank=True,null=True)
 
     def __str__(self):
         return self.program_name
