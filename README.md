@@ -1,6 +1,6 @@
 # dvsphase2
 
-Test status For master :
+Test status of master branch :
 [![CircleCI](https://circleci.com/gh/naxadeve/dvsphase2/tree/master.svg?style=svg)](https://circleci.com/gh/naxadeve/dvsphase2/tree/master)
 
 Clone this repository
