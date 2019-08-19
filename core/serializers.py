@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from .models import Organization,Program,MarkerValues,MarkerCategory
+from .models import Partner,Program,MarkerValues,MarkerCategory
 
-class OrganizationSerializer(serializers.ModelSerializer):
+class PartnerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Organization
+        model = Partner
         fields= ('__all__')
 
 
@@ -33,4 +33,4 @@ class ProgramSerializer(serializers.ModelSerializer):
          return MarkerValuesSerializer(qs, many=True, read_only=True).data
 
     def get_sub_sector(self,obj):
-        return str(obj.sub_sector.sub_sector_name)     
+        return str(obj.sub_sector.sub_sector_name)

@@ -1,13 +1,13 @@
 from django.db import models
 
 # Create your models here.
-class Organization(models.Model):
-    organization_name=models.CharField(max_length=100,null=True, blank=True)
-    organization_description=models.TextField(blank=True)
-    organization_address=models.CharField(max_length=100,null=True, blank=True)
+class Partner(models.Model):
+    partner_name=models.CharField(max_length=100,null=True, blank=True)
+    partner_description=models.TextField(blank=True)
+    partner_address=models.CharField(max_length=100,null=True, blank=True)
 
     def __str__(self):
-        return self.organization_name
+        return self.partner_name
 
 class MarkerCategory(models.Model):
     marker_category=models.CharField(max_length=100,null=True,blank=True)
