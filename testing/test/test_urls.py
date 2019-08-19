@@ -8,6 +8,6 @@ class TestUrls:
         path=reverse('detail',kwargs={'pk':1})
         assert resolve(path).view_name == "detail"
 
-    def test_core_organization_url(self):
-        path=reverse('organization')
-        assert resolve(path).view_name == "organization"
+    def test_core_partner_url(self):
+        path=reverse('partner')
+        assert resolve(path).view_name == "partner"
