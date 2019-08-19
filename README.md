@@ -11,3 +11,6 @@ Run the server docker-compose up -d
 
 
 Note: for logs run docker-compose logs -f --tail 100
+
+
+[![CircleCI](https://circleci.com/gh/naxadeve/dvsphase2/tree/master.svg?style=svg)](https://circleci.com/gh/naxadeve/dvsphase2/tree/master)
