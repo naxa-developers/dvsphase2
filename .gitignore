@@ -1,0 +1,59 @@
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+
+
+# If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
+# in your Git repository. Update and uncomment the following line accordingly.
+/static/
+dvs/local_setting.py
+
+### Django.Python Stack ###
+# Byte-compiled / optimized / DLL files
+
+# Distribution / packaging
+
+MANIFEST
+
+
+
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Environments
+.env
+env/
+
+
+
+# Spyder project settings
+
+# Rope project settings
+
+# mkdocs documentation
+
+# mypy
+
+# Pyre type checker
+
+# Docker
+docker-compose.yml
+dockrt-entrypoint.local.sh
+postgres-data
+Dockerfile
+
+#IDE
+.idea
