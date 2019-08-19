@@ -52,7 +52,6 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            python manage.py migrate
             pytest
 
       - store_artifacts:
