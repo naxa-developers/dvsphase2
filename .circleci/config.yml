@@ -54,6 +54,7 @@ jobs:
             . venv/bin/activate
             python manage.py migrate
             pytest
+            python manage.py runserver
 
       - store_artifacts:
           path: test-reports
