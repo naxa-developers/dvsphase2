@@ -1,8 +1,13 @@
 from django.shortcuts import render
 import pandas as pd
 from django.http import HttpResponse
-from core.models import Program, Organization
+from core.models import Program, Partner
 from .models import FiveW
+from .serializers import FivewSerializer
+from rest_framework import views
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+
 # Create your views here.
 def uploadData(request):
     if "GET"==request.method:
@@ -16,7 +21,7 @@ def uploadData(request):
             fiveData=[
                 FiveW(
                     program_name=Program.objects.get(program_name='Naxa'),
-                    organization_name=Organization.objects.get(organization_name='Naxa')
+                    partner_name=Partner.objects.get(partner_name='Naxa')
                 ) for row in range(0,2)
 
                 ]
@@ -24,3 +29,11 @@ def uploadData(request):
             return HttpResponse(str('success'))
         except Exception as e:
             return HttpResponse(e)
+
+
+class Fivew(views.APIView):
+    permission_classes=[AllowAny]
+    def get(self,request,*args,**kwargs):
+        queryset=FiveW.objects.all()
+        serializer=FivewSerializer(queryset,many=True)
+        return Response({'heading':'Heading of data','description':'description of data','data':serializer.data})
