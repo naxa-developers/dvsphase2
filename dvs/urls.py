@@ -14,22 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
 from testing import views
 from rest_framework_swagger.views import get_swagger_view
 from rest_framework.schemas import SchemaGenerator
 
 schema_view = get_swagger_view(title='DFID API DOCS')
 
-def trigger_error(request):
-    division_by_zero = 1 / 0
-
 urlpatterns = [
-    path('<int:pk>',views.product_detail,name='detail'),
+    path('<int:pk>', views.product_detail, name='detail'),
     path('admin/', admin.site.urls),
-    path('',schema_view),
-    path('Hydro',views.ProductViewSet.as_view(),name='Hydro'),
-    path('sentry-debug/', trigger_error),
+    path('', schema_view),
     path('core/', include('core.urls')),
     path('dashboard/', include('dashboard.urls')),
 ]
