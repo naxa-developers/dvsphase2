@@ -40,26 +40,3 @@ class TestViews(APITestCase, APIRequestFactory):
         response = self.client.get(url, format='json')
         assert response.status_code == 200
 
-    def test_markerapi(self):
-        url = reverse('marker')
-        response = self.client.get(url, format='json')
-        print(response)
-        assert response.status_code == 200
-
-    def test_districtapi(self):
-        url = reverse('district')
-        response = self.client.get(url, format='json')
-        print(response)
-        assert response.status_code == 200
-
-    def test_provinceapi(self):
-        url = reverse('province')
-        response = self.client.get(url, format='json')
-        print(response)
-        assert response.status_code == 200
-
-    def test_gapanapaapi(self):
-        url = reverse('gapanapa')
-        response = self.client.get(url, format='json')
-        print(response)
-        assert response.status_code == 200
