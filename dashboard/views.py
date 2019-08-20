@@ -29,10 +29,3 @@ def uploadData(request):
             return HttpResponse(e)
 
 
-class Fivew(views.APIView):
-    permission_classes = [AllowAny]
-
-    def get(self, request, *args, **kwargs):
-        queryset = FiveW.objects.all()
-        serializer = FivewSerializer(queryset, many=True)
-        return Response({'heading': 'Heading of dataa', 'description': 'description of data', 'data': serializer.data})
