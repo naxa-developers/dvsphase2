@@ -1,12 +1,8 @@
 from django.shortcuts import render
 import pandas as pd
 from django.http import HttpResponse
-from core.models import Program, Partner
-from .models import FiveW
-from .serializers import FivewSerializer
-from rest_framework import views
-from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
+from core.models import Program, Partner, FiveW
+
 
 
 # Create your views here.
@@ -32,10 +28,4 @@ def uploadData(request):
             return HttpResponse(e)
 
 
-class Fivew(views.APIView):
-    permission_classes = [AllowAny]
 
-    def get(self, request, *args, **kwargs):
-        queryset = FiveW.objects.all()
-        serializer = FivewSerializer(queryset, many=True)
-        return Response({'heading': 'Heading of dataa', 'description': 'description of data', 'data': serializer.data})

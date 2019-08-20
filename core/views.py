@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Partner, Program, MarkerValues, District, Province, GapaNapa
+from .models import Partner, Program, MarkerValues, District, Province, GapaNapa, FiveW
 from rest_framework.permissions import AllowAny
-from .serializers import PartnerSerializer, ProgramSerializer, MarkerValuesSerializer, DistrictSerializer, ProvinceSerializer, GaanapaSerializer
+from .serializers import PartnerSerializer, ProgramSerializer, MarkerValuesSerializer, DistrictSerializer, ProvinceSerializer, GaanapaSerializer, FivewSerializer
 from rest_framework import views
 from rest_framework.response import Response
 import django_filters.rest_framework
@@ -76,3 +76,12 @@ class GapaNapaApi(views.APIView):
         queryset = GapaNapa.objects.select_related().all()
         serializer = GaanapaSerializer(queryset, many=True)
         return Response({'heading': 'Heading of data', 'description': 'description of data', 'data': serializer.data})
+
+
+class Fivew(views.APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        queryset = FiveW.objects.all()
+        serializer = FivewSerializer(queryset, many=True)
+        return Response({'heading': 'Heading of dataa', 'description': 'description of data', 'data': serializer.data})

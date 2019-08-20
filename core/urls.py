@@ -13,4 +13,6 @@ urlpatterns = [
     path('district/', views.DistrictApi.as_view(), name='district'),
     path('province/', views.DistrictApi.as_view(), name='province'),
     path('gapanapa/', views.GapaNapaApi.as_view(), name='gapanapa'),
+    path('fivew/', views.Fivew.as_view(),name='fivew'),
+
 ]

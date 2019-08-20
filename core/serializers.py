@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Partner, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa
+from .models import Partner, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW
 
 
 class PartnerSerializer(serializers.ModelSerializer):
@@ -70,3 +70,32 @@ class GaanapaSerializer(serializers.ModelSerializer):
 
     def get_district(self, obj):
         return str(obj.district.district_name)
+
+
+class FivewSerializer(serializers.ModelSerializer):
+    partner_name = serializers.SerializerMethodField()
+    program_name = serializers.SerializerMethodField()
+    province = serializers.SerializerMethodField()
+    district = serializers.SerializerMethodField()
+    gapa_napa = serializers.SerializerMethodField()
+
+    class Meta:
+        model = FiveW
+        fields = (
+            'partner_name', 'program_name', 'province', 'district', 'gapa_napa', 'status', 'start_date', 'end_date',
+            'reporting_ministry_line')
+
+    def get_partner_name(self, obj):
+        return str(obj.partner_name.partner_name)
+
+    def get_program_name(self, obj):
+        return str(obj.program_name.program_name)
+
+    def get_province(self, obj):
+        return str(obj.province.province_name)
+
+    def get_district(self, obj):
+        return str(obj.district.district_name)
+
+    def get_gapa_napa(self, obj):
+        return str(obj.gapa_napa.gapaNapa_name)

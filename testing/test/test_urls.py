@@ -26,3 +26,7 @@ class TestUrls:
     def test_core_gapanapa_url(self):
         path = reverse('gapanapa')
         assert resolve(path).view_name == "gapanapa"
+
+    def test_core_fivew_url(self):
+        path = reverse('fivew')
+        assert resolve(path).view_name == "fivew"
