@@ -24,7 +24,7 @@ class PartnerView(views.APIView):
 
 class ProgramView(views.APIView):
     """
-    get: listsss deployssss offffaaa program
+    get: listsss deployssss offffaaaaad program
             - parameters: search(from program)
             - description: search should be of type string.
     """
