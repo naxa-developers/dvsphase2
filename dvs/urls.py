@@ -25,6 +25,6 @@ urlpatterns = [
     path('<int:pk>', views.product_detail, name='detail'),
     path('admin/', admin.site.urls),
     path('', schema_view),
-    path('core/', include('core.urls')),
+    path('api/v1/core/', include('core.urls')),
     path('dashboard/', include('dashboard.urls')),
 ]
