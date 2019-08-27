@@ -4,6 +4,8 @@ Pipeline Test status of Staging: [![CircleCI](https://circleci.com/gh/naxadeve/d
 
 Pipeline Test status of Development : [![CircleCI](https://circleci.com/gh/naxadeve/dvsphase2/tree/test-server-setup.svg?style=svg)](https://circleci.com/gh/naxadeve/dvsphase2/tree/test-server-setup)
 
+Requirements :[![Requirements Status](https://requires.io/github/dfid-dvs/server/requirements.svg?branch=master)](https://requires.io/github/dfid-dvs/server/requirements/?branch=master)
+
 
 Clone this repository Install docker and docker-compose
 

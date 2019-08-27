@@ -22,7 +22,7 @@ class MarkerValuesSerializer(serializers.ModelSerializer):
         fields = ('marker_values', 'marker_category')
 
     def get_marker_category(self, obj):
-        return str(obj.marker_category.marker_category)
+        return str(obj.marker_category)
 
 
 class ProgramSerializer(serializers.ModelSerializer):
@@ -38,7 +38,7 @@ class ProgramSerializer(serializers.ModelSerializer):
         return MarkerValuesSerializer(qs, many=True, read_only=True).data
 
     def get_sub_sector(self, obj):
-        return str(obj.sub_sector.sub_sector_name)
+        return str(obj.sub_sector)
 
 
 class ProvinceSerializer(serializers.ModelSerializer):
@@ -55,10 +55,11 @@ class DistrictSerializer(serializers.ModelSerializer):
         fields = ('province', 'district_name', 'code')
 
     def get_province(self, obj):
-        return str(obj.province.province_name)
+        return str(obj.province)
 
 
 class GaanapaSerializer(serializers.ModelSerializer):
+    province = serializers.SerializerMethodField()
     district = serializers.SerializerMethodField()
 
     class Meta:
@@ -66,10 +67,10 @@ class GaanapaSerializer(serializers.ModelSerializer):
         fields = ('province', 'district', 'gapaNapa_name', 'code')
 
     def get_province(self, obj):
-        return str(obj.province.province_name)
+        return str(obj.province)
 
     def get_district(self, obj):
-        return str(obj.district.district_name)
+        return str(obj.district)
 
 
 class FivewSerializer(serializers.ModelSerializer):
@@ -78,24 +79,37 @@ class FivewSerializer(serializers.ModelSerializer):
     province = serializers.SerializerMethodField()
     district = serializers.SerializerMethodField()
     gapa_napa = serializers.SerializerMethodField()
+    implenting_partner_first = serializers.SerializerMethodField()
+    implenting_partner_second = serializers.SerializerMethodField()
+    implenting_partner_third = serializers.SerializerMethodField()
 
     class Meta:
         model = FiveW
         fields = (
             'partner_name', 'program_name', 'province', 'district', 'gapa_napa', 'status', 'start_date', 'end_date',
-            'reporting_ministry_line')
+            'reporting_ministry_line', 'implenting_partner_first', 'implenting_partner_second',
+            'implenting_partner_third')
 
     def get_partner_name(self, obj):
-        return str(obj.partner_name.partner_name)
+        return str(obj.partner_name)
 
     def get_program_name(self, obj):
-        return str(obj.program_name.program_name)
+        return str(obj.program_name)
 
     def get_province(self, obj):
-        return str(obj.province.province_name)
+        return str(obj.province)
 
     def get_district(self, obj):
-        return str(obj.district.district_name)
+        return str(obj.district)
 
     def get_gapa_napa(self, obj):
         return str(obj.gapa_napa.gapaNapa_name)
+
+    def get_implenting_partner_first(self, obj):
+        return str(obj.implenting_partner_first)
+
+    def get_implenting_partner_second(self, obj):
+        return str(obj.implenting_partner_second)
+
+    def get_implenting_partner_third(self, obj):
+        return str(obj.implenting_partner_third)
