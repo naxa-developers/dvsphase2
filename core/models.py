@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 class Partner(models.Model):
     partner_name = models.CharField(max_length=100, null=True, blank=True)
-    partner_description = models.TextField(blank=True)
+    partner_description = models.TextField(null=True, blank=True)
     partner_address = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
@@ -86,10 +86,23 @@ class FiveW(models.Model):
     province = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='FProvince', null=True, blank=True)
     district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='FDistrict', null=True, blank=True)
     gapa_napa = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='GapaNapa', null=True, blank=True)
+    implenting_partner_first = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='FPartner', null=True,
+                                                 blank=True)
+    implenting_partner_second = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='SPartner', null=True,
+                                                  blank=True)
+    implenting_partner_third = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='TPartner', null=True,
+                                                 blank=True)
+    implenting_partner_fourth = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='FOPartner',
+                                                  null=True, blank=True)
     status = models.CharField(max_length=100, null=True, blank=True)
     start_date = models.CharField(max_length=100, null=True, blank=True)
     end_date = models.CharField(max_length=100, null=True, blank=True)
     reporting_ministry_line = models.CharField(max_length=100, null=True, blank=True)
+    budget = models.FloatField(null=True, blank=True, default=None)
+    rp_name = models.CharField(max_length=200, null=True, blank=True)
+    rp_contact_name = models.CharField(max_length=200, null=True, blank=True)
+    rp_email = models.CharField(max_length=100, null=True, blank=True)
+    remarks = models.TextField(blank=True)
 
     def __str__(self):
         return self.partner_name.partner_name
