@@ -1,10 +1,13 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Partner, Program, MarkerValues, District, Province, GapaNapa, FiveW
+from .models import Partner, Program, MarkerValues, District, Province, GapaNapa, FiveW, Indicator, IndicatorValue
 from rest_framework.permissions import AllowAny
-from .serializers import PartnerSerializer, ProgramSerializer, MarkerValuesSerializer, DistrictSerializer, ProvinceSerializer, GaanapaSerializer, FivewSerializer
-from rest_framework import views
+from rest_framework.pagination import LimitOffsetPagination
+from .serializers import PartnerSerializer, ProgramSerializer, MarkerValuesSerializer, DistrictSerializer, \
+    ProvinceSerializer, GaanapaSerializer, FivewSerializer, \
+    IndicatorSerializer, IndicatorValueSerializer
+from rest_framework import viewsets, views
 from rest_framework.response import Response
-import django_filters.rest_framework
+from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Q
 
 
@@ -25,8 +28,7 @@ class PartnerView(views.APIView):
 class ProgramView(views.APIView):
     """
     get: lists of program
-            - parameters: search(from program)
-            - description: search should be of type string.
+            -example request url for search "/api/v1/core/program/?search=program_name/program_id"
     """
     permissions_classes = [AllowAny]
 
@@ -69,6 +71,7 @@ class ProvinceApi(views.APIView):
         serializer = ProvinceSerializer(queryset, many=True)
         return Response({'heading': 'Heading of data', 'description': 'description of data', 'data': serializer.data})
 
+
 class GapaNapaApi(views.APIView):
     permission_classes = [AllowAny]
 
@@ -82,6 +85,48 @@ class Fivew(views.APIView):
     permission_classes = [AllowAny]
 
     def get(self, request, *args, **kwargs):
-        queryset = FiveW.objects.all()
+        queryset = FiveW.objects.select_related().all()
         serializer = FivewSerializer(queryset, many=True)
         return Response({'heading': 'Heading of dataa', 'description': 'description of data', 'data': serializer.data})
+
+
+class IndicatorApi(views.APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        queryset = Indicator.objects.all()
+        serializer = IndicatorSerializer(queryset, many=True)
+        return Response({'heading': 'Heading of data', 'description': 'description of data', 'data': serializer.data})
+
+
+# class IndicatorValueApi(views.APIView):
+#     permission_classes = [AllowAny]
+#     pagination_class = LimitOffsetPagination
+#
+#     def get(self, request):
+#         queryset = IndicatorValue.objects.all()
+#         paginator = LimitOffsetPagination()
+#         paginated_queryset = paginator.paginate_queryset(queryset, request)
+#         serializer = IndicatorValueSerializer(queryset, many=True)
+#         return Response({'heading': 'Heading of data', 'description': 'description of data', 'data': serializer.data})
+
+
+class IndicatorData(viewsets.ReadOnlyModelViewSet):
+    permission_classes = []
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id', 'indicator', 'gapanapa']
+
+    def get_queryset(self):
+        queryset = IndicatorValue.objects.select_related('gapanapa', 'indicator').order_by('gapanapa')
+        return queryset
+
+    def get_serializer_class(self):
+        serializer_class = IndicatorValueSerializer
+        return serializer_class
+
+    # print(queryset)
+    # if(a=0){}
+    # def list(self, request, *args, **kwargs):
+    #     print(self.get_queryset())
+    #     inidicator_data = self.serializer_class(self.get_queryset(), many=True).data
+    #     return Response({'heading': 'Heading of data', 'description': 'description of data'})

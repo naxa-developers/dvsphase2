@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Partner, Program, Sector, SubSector, MarkerCategory, MarkerValues, Province, District, GapaNapa, \
-    FiveW
+    FiveW, Indicator, IndicatorValue
 
 # Register your models here.
 
@@ -14,3 +14,5 @@ admin.site.register(Province)
 admin.site.register(District)
 admin.site.register(GapaNapa)
 admin.site.register(FiveW)
+admin.site.register(Indicator)
+admin.site.register(IndicatorValue)
