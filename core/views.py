@@ -1,11 +1,9 @@
-from django.shortcuts import render, get_object_or_404
 from .models import Partner, Program, MarkerValues, District, Province, GapaNapa, FiveW, Indicator, IndicatorValue, \
-    Sector
+    Sector, SubSector
 from rest_framework.permissions import AllowAny
-from rest_framework.pagination import LimitOffsetPagination
 from .serializers import PartnerSerializer, ProgramSerializer, MarkerValuesSerializer, DistrictSerializer, \
     ProvinceSerializer, GaanapaSerializer, FivewSerializer, \
-    IndicatorSerializer, IndicatorValueSerializer, SectorSerializer
+    IndicatorSerializer, IndicatorValueSerializer, SectorSerializer, SubsectorSerializer
 from rest_framework import viewsets, views
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
@@ -142,4 +140,18 @@ class SectorApi(viewsets.ReadOnlyModelViewSet):
 
     def get_serializer_class(self):
         serializer_class = SectorSerializer
+        return serializer_class
+
+
+class SubsectorApi(viewsets.ReadOnlyModelViewSet):
+    permission_classes = []
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id', 'sector', 'sub_sector_name']
+
+    def get_queryset(self):
+        queryset = SubSector.objects.select_related('sector').order_by('id')
+        return queryset
+
+    def get_serializer_class(self):
+        serializer_class = SubsectorSerializer
         return serializer_class
