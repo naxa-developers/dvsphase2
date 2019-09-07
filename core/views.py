@@ -137,7 +137,7 @@ class SectorApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
 
     def get_queryset(self):
-        queryset = Sector.objects.all()
+        queryset = Sector.objects.all().order_by('id')
         return queryset
 
     def get_serializer_class(self):
