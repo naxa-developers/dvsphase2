@@ -19,9 +19,9 @@ class Command(BaseCommand):
         try:
             district = [
                 District(
-                    province=Province.objects.get(province_name=df['province'][row]),
-                    district_name=df['district_name'][row],
-                    code=None,
+                    province=Province.objects.get(province_code=df['Province_id'][row]),
+                    district_name=(df['District_name'][row]).capitalize().strip(),
+                    district_code=int(df['District_id'][row]),
 
                 ) for row in range(0, upper_range)
             ]
@@ -32,4 +32,4 @@ class Command(BaseCommand):
 
 
         except Exception as e:
-            pass
+            print(e)

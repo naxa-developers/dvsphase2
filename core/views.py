@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Partner, Program, MarkerValues, District, Province, GapaNapa, FiveW, Indicator, IndicatorValue
+from .models import Partner, Program, MarkerValues, District, Province, GapaNapa, FiveW, Indicator, IndicatorValue, \
+    Sector
 from rest_framework.permissions import AllowAny
 from rest_framework.pagination import LimitOffsetPagination
 from .serializers import PartnerSerializer, ProgramSerializer, MarkerValuesSerializer, DistrictSerializer, \
     ProvinceSerializer, GaanapaSerializer, FivewSerializer, \
-    IndicatorSerializer, IndicatorValueSerializer
+    IndicatorSerializer, IndicatorValueSerializer, SectorSerializer
 from rest_framework import viewsets, views
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
@@ -130,3 +131,15 @@ class IndicatorData(viewsets.ReadOnlyModelViewSet):
     #     print(self.get_queryset())
     #     inidicator_data = self.serializer_class(self.get_queryset(), many=True).data
     #     return Response({'heading': 'Heading of data', 'description': 'description of data'})
+
+
+class SectorApi(viewsets.ReadOnlyModelViewSet):
+    permission_classes = []
+
+    def get_queryset(self):
+        queryset = Sector.objects.all()
+        return queryset
+
+    def get_serializer_class(self):
+        serializer_class = SectorSerializer
+        return serializer_class

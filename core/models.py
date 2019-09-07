@@ -37,6 +37,7 @@ class Sector(models.Model):
 class SubSector(models.Model):
     sector = models.ForeignKey(Sector, on_delete=models.CASCADE, related_name='Sector', null=True, blank=True)
     sub_sector_name = models.CharField(max_length=100, blank=True, null=True)
+    data = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return self.sub_sector_name
@@ -55,7 +56,7 @@ class Program(models.Model):
 
 class Province(models.Model):
     province_name = models.CharField(max_length=100, null=True, blank=True)
-    code = models.CharField(max_length=100, null=True, blank=True)
+    province_code = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.province_name
@@ -64,7 +65,7 @@ class Province(models.Model):
 class District(models.Model):
     province = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='DProvince', null=True, blank=True)
     district_name = models.CharField(max_length=100, null=True, blank=True)
-    code = models.CharField(max_length=100, null=True, blank=True)
+    district_code = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.district_name.strip()
@@ -74,7 +75,8 @@ class GapaNapa(models.Model):
     province = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='Province', null=True, blank=True)
     district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='District', null=True, blank=True)
     name = models.CharField(max_length=100, null=True, blank=True)
-    gn_type = models.CharField(max_length=100, null=True, blank=True)
+    gn_type_en = models.CharField(max_length=100, null=True, blank=True)
+    gn_type_np = models.CharField(max_length=100, null=True, blank=True)
     cbs_code = models.CharField(max_length=100, null=True, blank=True)
     hlcit_code = models.CharField(max_length=100, null=True, blank=True)
     p_code = models.CharField(max_length=100, null=True, blank=True)

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Partner, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
-    IndicatorValue
+    IndicatorValue, Sector
 
 
 class PartnerSerializer(serializers.ModelSerializer):
@@ -54,12 +54,18 @@ class IndicatorSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class SectorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sector
+        fields = '__all__'
+
+
 class DistrictSerializer(serializers.ModelSerializer):
     province = serializers.SerializerMethodField()
 
     class Meta:
         model = District
-        fields = ('id', 'province', 'district_name', 'code')
+        fields = ('id', 'province', 'district_name', 'district_code')
 
     def get_province(self, obj):
         return str(obj.province)
@@ -71,7 +77,7 @@ class GaanapaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GapaNapa
-        fields = ('id', 'province', 'district', 'name', 'gn_type', 'cbs_code', 'hlcit_code', 'p_code')
+        fields = ('id', 'province', 'district', 'name', 'gn_type_en', 'gn_type_np', 'cbs_code', 'hlcit_code', 'p_code')
 
     def get_province(self, obj):
         return str(obj.province)
