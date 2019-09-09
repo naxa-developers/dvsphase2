@@ -39,7 +39,8 @@ class ProgramSerializer(serializers.ModelSerializer):
         return MarkerValuesSerializer(qs, many=True, read_only=True).data
 
     def get_sub_sector(self, obj):
-        return str(obj.sub_sector)
+        qs = obj.sub_sector.all().order_by('id')
+        return SubsectorSerializer(qs, many=True, read_only=True).data
 
 
 class ProvinceSerializer(serializers.ModelSerializer):
@@ -65,7 +66,7 @@ class SubsectorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SubSector
-        fields = ('id', 'sector', 'sub_sector_name', 'data')
+        fields = ('id', 'sector', 'sub_sector_name', 'sub_sector_code')
 
     def get_sector(self, obj):
         return str(obj.sector)
