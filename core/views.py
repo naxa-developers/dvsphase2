@@ -1,9 +1,9 @@
 from .models import Partner, Program, MarkerValues, District, Province, GapaNapa, FiveW, Indicator, IndicatorValue, \
-    Sector, SubSector
+    Sector, SubSector, MarkerCategory
 from rest_framework.permissions import AllowAny
 from .serializers import PartnerSerializer, ProgramSerializer, MarkerValuesSerializer, DistrictSerializer, \
     ProvinceSerializer, GaanapaSerializer, FivewSerializer, \
-    IndicatorSerializer, IndicatorValueSerializer, SectorSerializer, SubsectorSerializer
+    IndicatorSerializer, IndicatorValueSerializer, SectorSerializer, SubsectorSerializer, MarkerCategorySerializer
 from rest_framework import viewsets, views
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
@@ -44,7 +44,17 @@ class ProgramView(views.APIView):
         return Response({'heading': 'Heading of data', 'description': 'description of data', 'data': serializer.data})
 
 
-class MarkerView(views.APIView):
+class MarkerCategoryApi(views.APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        queryset = MarkerCategory.objects.all()
+        serializer = MarkerCategorySerializer(queryset, many=True)
+        return Response({'heading': 'Heading of data', 'description': 'description of data', 'data': serializer.data})
+
+
+
+class MarkerValueApi(views.APIView):
     permissions_classes = [AllowAny]
 
     def get(self, request):

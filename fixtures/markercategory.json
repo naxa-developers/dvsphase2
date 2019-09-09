@@ -1,0 +1,58 @@
+[
+{
+  "model": "core.markercategory",
+  "pk": 1,
+  "fields": {
+    "marker_category": "Team Marker"
+  }
+},
+{
+  "model": "core.markercategory",
+  "pk": 2,
+  "fields": {
+    "marker_category": "Disability Marker"
+  }
+},
+{
+  "model": "core.markercategory",
+  "pk": 3,
+  "fields": {
+    "marker_category": "Rio_CCA"
+  }
+},
+{
+  "model": "core.markercategory",
+  "pk": 4,
+  "fields": {
+    "marker_category": "Rio_CCM"
+  }
+},
+{
+  "model": "core.markercategory",
+  "pk": 5,
+  "fields": {
+    "marker_category": "Rio_Biodiversity"
+  }
+},
+{
+  "model": "core.markercategory",
+  "pk": 6,
+  "fields": {
+    "marker_category": "HIV AIDS"
+  }
+},
+{
+  "model": "core.markercategory",
+  "pk": 7,
+  "fields": {
+    "marker_category": "Gender Marker"
+  }
+},
+{
+  "model": "core.markercategory",
+  "pk": 8,
+  "fields": {
+    "marker_category": "Rio_Dissertification"
+  }
+}
+]
