@@ -1,0 +1,695 @@
+[
+{
+  "model": "core.district",
+  "pk": 1,
+  "fields": {
+    "province": 1,
+    "district_name": "Bhojpur",
+    "district_code": "10"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 2,
+  "fields": {
+    "province": 1,
+    "district_name": "Terhathum",
+    "district_code": "8"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 3,
+  "fields": {
+    "province": 1,
+    "district_name": "Taplejung",
+    "district_code": "1"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 4,
+  "fields": {
+    "province": 1,
+    "district_name": "Khotang",
+    "district_code": "12"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 5,
+  "fields": {
+    "province": 1,
+    "district_name": "Jhapa",
+    "district_code": "4"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 6,
+  "fields": {
+    "province": 1,
+    "district_name": "Sunsari",
+    "district_code": "6"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 7,
+  "fields": {
+    "province": 1,
+    "district_name": "Udayapur",
+    "district_code": "14"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 8,
+  "fields": {
+    "province": 1,
+    "district_name": "Morang",
+    "district_code": "5"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 9,
+  "fields": {
+    "province": 1,
+    "district_name": "Sankhuwasabha",
+    "district_code": "9"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 10,
+  "fields": {
+    "province": 1,
+    "district_name": "Okhaldhunga",
+    "district_code": "13"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 11,
+  "fields": {
+    "province": 1,
+    "district_name": "Dhankuta",
+    "district_code": "7"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 12,
+  "fields": {
+    "province": 1,
+    "district_name": "Ilam",
+    "district_code": "3"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 13,
+  "fields": {
+    "province": 1,
+    "district_name": "Solukhumbu",
+    "district_code": "11"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 14,
+  "fields": {
+    "province": 1,
+    "district_name": "Panchthar",
+    "district_code": "2"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 15,
+  "fields": {
+    "province": 2,
+    "district_name": "Dhanusha",
+    "district_code": "17"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 16,
+  "fields": {
+    "province": 2,
+    "district_name": "Bara",
+    "district_code": "33"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 17,
+  "fields": {
+    "province": 2,
+    "district_name": "Saptari",
+    "district_code": "15"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 18,
+  "fields": {
+    "province": 2,
+    "district_name": "Siraha",
+    "district_code": "16"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 19,
+  "fields": {
+    "province": 2,
+    "district_name": "Mahottari",
+    "district_code": "18"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 20,
+  "fields": {
+    "province": 2,
+    "district_name": "Sarlahi",
+    "district_code": "19"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 21,
+  "fields": {
+    "province": 2,
+    "district_name": "Parsa",
+    "district_code": "34"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 22,
+  "fields": {
+    "province": 2,
+    "district_name": "Rautahat",
+    "district_code": "32"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 23,
+  "fields": {
+    "province": 3,
+    "district_name": "Lalitpur",
+    "district_code": "25"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 24,
+  "fields": {
+    "province": 3,
+    "district_name": "Makawanpur",
+    "district_code": "31"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 25,
+  "fields": {
+    "province": 3,
+    "district_name": "Dolakha",
+    "district_code": "22"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 26,
+  "fields": {
+    "province": 3,
+    "district_name": "Sindhupalchok",
+    "district_code": "23"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 27,
+  "fields": {
+    "province": 3,
+    "district_name": "Kabhrepalanchok",
+    "district_code": "24"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 28,
+  "fields": {
+    "province": 3,
+    "district_name": "Nuwakot",
+    "district_code": "28"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 29,
+  "fields": {
+    "province": 3,
+    "district_name": "Dhading",
+    "district_code": "30"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 30,
+  "fields": {
+    "province": 3,
+    "district_name": "Bhaktapur",
+    "district_code": "26"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 31,
+  "fields": {
+    "province": 3,
+    "district_name": "Chitawan",
+    "district_code": "35"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 32,
+  "fields": {
+    "province": 3,
+    "district_name": "Kathmandu",
+    "district_code": "27"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 33,
+  "fields": {
+    "province": 3,
+    "district_name": "Ramechhap",
+    "district_code": "21"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 34,
+  "fields": {
+    "province": 3,
+    "district_name": "Sindhuli",
+    "district_code": "20"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 35,
+  "fields": {
+    "province": 3,
+    "district_name": "Rasuwa",
+    "district_code": "29"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 36,
+  "fields": {
+    "province": 4,
+    "district_name": "Syangja",
+    "district_code": "41"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 37,
+  "fields": {
+    "province": 4,
+    "district_name": "Gorkha",
+    "district_code": "36"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 38,
+  "fields": {
+    "province": 4,
+    "district_name": "Tanahu",
+    "district_code": "40"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 39,
+  "fields": {
+    "province": 4,
+    "district_name": "Kaski",
+    "district_code": "39"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 40,
+  "fields": {
+    "province": 4,
+    "district_name": "Myagdi",
+    "district_code": "44"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 41,
+  "fields": {
+    "province": 4,
+    "district_name": "Baglung",
+    "district_code": "43"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 42,
+  "fields": {
+    "province": 4,
+    "district_name": "Nawalparasi east",
+    "district_code": "47"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 43,
+  "fields": {
+    "province": 4,
+    "district_name": "Mustang",
+    "district_code": "45"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 44,
+  "fields": {
+    "province": 4,
+    "district_name": "Lamjung",
+    "district_code": "37"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 45,
+  "fields": {
+    "province": 4,
+    "district_name": "Parbat",
+    "district_code": "42"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 46,
+  "fields": {
+    "province": 4,
+    "district_name": "Manang",
+    "district_code": "38"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 47,
+  "fields": {
+    "province": 5,
+    "district_name": "Nawalparasi west",
+    "district_code": "76"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 48,
+  "fields": {
+    "province": 5,
+    "district_name": "Pyuthan",
+    "district_code": "55"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 49,
+  "fields": {
+    "province": 5,
+    "district_name": "Dang",
+    "district_code": "56"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 50,
+  "fields": {
+    "province": 5,
+    "district_name": "Bardiya",
+    "district_code": "58"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 51,
+  "fields": {
+    "province": 5,
+    "district_name": "Palpa",
+    "district_code": "46"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 52,
+  "fields": {
+    "province": 5,
+    "district_name": "Banke",
+    "district_code": "57"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 53,
+  "fields": {
+    "province": 5,
+    "district_name": "Kapilbastu",
+    "district_code": "49"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 54,
+  "fields": {
+    "province": 5,
+    "district_name": "Arghakhanchi",
+    "district_code": "50"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 55,
+  "fields": {
+    "province": 5,
+    "district_name": "Rupandehi",
+    "district_code": "48"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 56,
+  "fields": {
+    "province": 5,
+    "district_name": "Gulmi",
+    "district_code": "51"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 57,
+  "fields": {
+    "province": 5,
+    "district_name": "Rolpa",
+    "district_code": "54"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 58,
+  "fields": {
+    "province": 5,
+    "district_name": "Rukum east",
+    "district_code": "52"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 59,
+  "fields": {
+    "province": 6,
+    "district_name": "Dailekh",
+    "district_code": "61"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 60,
+  "fields": {
+    "province": 6,
+    "district_name": "Humla",
+    "district_code": "66"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 61,
+  "fields": {
+    "province": 6,
+    "district_name": "Salyan",
+    "district_code": "53"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 62,
+  "fields": {
+    "province": 6,
+    "district_name": "Surkhet",
+    "district_code": "59"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 63,
+  "fields": {
+    "province": 6,
+    "district_name": "Jajarkot",
+    "district_code": "60"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 64,
+  "fields": {
+    "province": 6,
+    "district_name": "Jumla",
+    "district_code": "63"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 65,
+  "fields": {
+    "province": 6,
+    "district_name": "Dolpa",
+    "district_code": "62"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 66,
+  "fields": {
+    "province": 6,
+    "district_name": "Mugu",
+    "district_code": "65"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 67,
+  "fields": {
+    "province": 6,
+    "district_name": "Kalikot",
+    "district_code": "64"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 68,
+  "fields": {
+    "province": 6,
+    "district_name": "Rukum west",
+    "district_code": "77"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 69,
+  "fields": {
+    "province": 7,
+    "district_name": "Doti",
+    "district_code": "70"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 70,
+  "fields": {
+    "province": 7,
+    "district_name": "Dadeldhura",
+    "district_code": "73"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 71,
+  "fields": {
+    "province": 7,
+    "district_name": "Darchula",
+    "district_code": "75"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 72,
+  "fields": {
+    "province": 7,
+    "district_name": "Bajura",
+    "district_code": "68"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 73,
+  "fields": {
+    "province": 7,
+    "district_name": "Achham",
+    "district_code": "69"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 74,
+  "fields": {
+    "province": 7,
+    "district_name": "Kailali",
+    "district_code": "71"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 75,
+  "fields": {
+    "province": 7,
+    "district_name": "Kanchanpur",
+    "district_code": "72"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 76,
+  "fields": {
+    "province": 7,
+    "district_name": "Bajhang",
+    "district_code": "67"
+  }
+},
+{
+  "model": "core.district",
+  "pk": 77,
+  "fields": {
+    "province": 7,
+    "district_name": "Baitadi",
+    "district_code": "74"
+  }
+}
+]

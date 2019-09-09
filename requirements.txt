@@ -1,4 +1,4 @@
-Django==2.0.4
+Django==2.2.5
 djangorestframework==3.8.0
 pytest
 pytest-django
@@ -9,3 +9,4 @@ psycopg2-binary==2.8.3
 sentry-sdk==0.10.2
 django-filter
 pandas
+djangorestframework-camel-case==0.2.0

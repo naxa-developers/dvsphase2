@@ -40,3 +40,22 @@ class TestViews(APITestCase, APIRequestFactory):
         response = self.client.get(url, format='json')
         assert response.status_code == 200
 
+    def test_sector(self):
+        url = reverse('sector')
+        response = self.client.get(url, format='json')
+        assert response.status_code == 200
+
+    def test_indicator_list(self):
+        url = reverse('indicator-list')
+        response = self.client.get(url, format='json')
+        assert response.status_code == 200
+
+    def test_indicator_value(self):
+        url = reverse('indicator-value')
+        response = self.client.get(url, format='json')
+        assert response.status_code == 200
+
+    def test_sub_sector(self):
+        url = reverse('sub-sector')
+        response = self.client.get(url, format='json')
+        assert response.status_code == 200
