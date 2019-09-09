@@ -37,16 +37,16 @@ class Sector(models.Model):
 class SubSector(models.Model):
     sector = models.ForeignKey(Sector, on_delete=models.CASCADE, related_name='Sector', null=True, blank=True)
     sub_sector_name = models.CharField(max_length=100, blank=True, null=True)
-    data = models.CharField(max_length=100, blank=True, null=True)
+    sub_sector_code = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return self.sub_sector_name
+        return "{}--{}".format(self.sector, self.sub_sector_name)
 
 
 class Program(models.Model):
     program_name = models.CharField(max_length=100, null=True, blank=True)
     program_description = models.TextField(blank=True)
-    sub_sector = models.ForeignKey(SubSector, on_delete=models.CASCADE, related_name='SubSector', null=True, blank=True)
+    sub_sector = models.ManyToManyField(SubSector, related_name='SubSector', blank=True)
     marker = models.ManyToManyField(MarkerValues, related_name='MarkerValues', blank=True)
     program_code = models.CharField(max_length=100, blank=True, null=True)
 

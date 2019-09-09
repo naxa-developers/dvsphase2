@@ -1,0 +1,58 @@
+[
+{
+  "model": "core.province",
+  "pk": 1,
+  "fields": {
+    "province_name": "Province 1",
+    "province_code": "1"
+  }
+},
+{
+  "model": "core.province",
+  "pk": 2,
+  "fields": {
+    "province_name": "Province 2",
+    "province_code": "2"
+  }
+},
+{
+  "model": "core.province",
+  "pk": 3,
+  "fields": {
+    "province_name": "Province 3",
+    "province_code": "3"
+  }
+},
+{
+  "model": "core.province",
+  "pk": 4,
+  "fields": {
+    "province_name": "Gandaki Province",
+    "province_code": "4"
+  }
+},
+{
+  "model": "core.province",
+  "pk": 5,
+  "fields": {
+    "province_name": "Province 5",
+    "province_code": "5"
+  }
+},
+{
+  "model": "core.province",
+  "pk": 6,
+  "fields": {
+    "province_name": "Karnali Province",
+    "province_code": "6"
+  }
+},
+{
+  "model": "core.province",
+  "pk": 7,
+  "fields": {
+    "province_name": "Sudurpaschim Province",
+    "province_code": "7"
+  }
+}
+]
