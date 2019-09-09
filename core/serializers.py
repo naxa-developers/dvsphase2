@@ -9,7 +9,7 @@ class PartnerSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class MarkerCategorySerializers(serializers.ModelSerializer):
+class MarkerCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = MarkerCategory
         fields = '__all__'
