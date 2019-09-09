@@ -20,7 +20,7 @@ def uploadData(request):
             #         program_name=Program.objects.get(program_name='Naxa'),
             #         partner_name=Partner.objects.get(partner_name='Naxa')
             #     ) for row in range(0, 2)
-            #
+            #fggdfgfdgfdg
             # ]
             # five = FiveW.objects.bulk_create(fiveData)
             # list = []
