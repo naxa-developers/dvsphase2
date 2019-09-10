@@ -28,19 +28,32 @@ class MarkerValuesSerializer(serializers.ModelSerializer):
 
 class ProgramSerializer(serializers.ModelSerializer):
     marker = serializers.SerializerMethodField()
+    marker_category = serializers.SerializerMethodField()
     sub_sector = serializers.SerializerMethodField()
+    sector = serializers.SerializerMethodField()
 
     class Meta:
         model = Program
-        fields = ('id', 'program_name', 'program_description', 'sub_sector', 'marker')
+        fields = ('id', 'program_name', 'program_description', 'sector', 'sub_sector', 'marker_category', 'marker')
+
+    def get_marker_category(self, obj):
+        qs = obj.marker_category.all().order_by('id').values_list('marker_category', flat=True)
+        return qs
 
     def get_marker(self, obj):
         qs = obj.marker.all().order_by('id')
         return MarkerValuesSerializer(qs, many=True, read_only=True).data
 
     def get_sub_sector(self, obj):
+        # qs = obj.sub_sector.all().order_by('id').values_list('sub_sector_name', flat=True)
         qs = obj.sub_sector.all().order_by('id')
-        return SubsectorSerializer(qs, many=True, read_only=True).data
+        data = [{'sub_sector_name': sub.sub_sector_name, 'sector_name': sub.sector.sector_name} for sub in qs]
+        return data
+
+    def get_sector(self, obj):
+        qs = obj.sector.all().order_by('id').values_list('sector_name', flat=True)
+        # qs = obj.sub_sector.all().order_by('id').values('sub_sector_name', 'sub_sector_code')
+        return qs
 
 
 class ProvinceSerializer(serializers.ModelSerializer):
@@ -70,6 +83,7 @@ class SubsectorSerializer(serializers.ModelSerializer):
 
     def get_sector(self, obj):
         return str(obj.sector)
+
 
 class DistrictSerializer(serializers.ModelSerializer):
     province = serializers.SerializerMethodField()

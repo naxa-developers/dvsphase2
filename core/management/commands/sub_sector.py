@@ -28,8 +28,8 @@ class Command(BaseCommand):
             sub_sector = [
                 SubSector(
                     sector=Sector.objects.get(sector_name=str((df['sector'][row]).strip())),
-                    sub_sector_name=df['sub-sector'][row],
-                    data=df['data'][row],
+                    sub_sector_name=(df['sub-sector'][row]).strip(),
+                    sub_sector_code=df['data'][row],
 
                 ) for row in range(0, upper_range)
             ]

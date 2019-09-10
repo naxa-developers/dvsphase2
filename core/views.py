@@ -165,3 +165,16 @@ class SubsectorApi(viewsets.ReadOnlyModelViewSet):
     def get_serializer_class(self):
         serializer_class = SubsectorSerializer
         return serializer_class
+
+class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
+    permission_classes = []
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id', 'marker', 'marker_category', 'sector', 'sub_sector']
+
+    def get_queryset(self):
+        queryset = Program.objects.all()
+        return queryset
+
+    def get_serializer_class(self):
+        serializer_class = ProgramSerializer
+        return serializer_class

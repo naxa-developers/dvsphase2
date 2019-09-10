@@ -15,5 +15,6 @@ urlpatterns = [
     path('indicator-value/', views.IndicatorData.as_view({'get': 'list'}), name='indicator-value'),
     path('sector/', views.SectorApi.as_view({'get': 'list'}), name='sector'),
     path('sub-sector/', views.SubsectorApi.as_view({'get': 'list'}), name='sub-sector'),
+    path('program-test/', views.ProgramTestApi.as_view({'get': 'list'}), name='program-test'),
 
 ]
