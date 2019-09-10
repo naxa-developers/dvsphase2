@@ -126,7 +126,7 @@ class IndicatorData(viewsets.ReadOnlyModelViewSet):
     filterset_fields = ['id', 'indicator', 'gapanapa']
 
     def get_queryset(self):
-        queryset = IndicatorValue.objects.select_related('gapanapa', 'indicator').order_by('gapanapa')
+        queryset = IndicatorValue.objects.select_related('gapanapa', 'indicator').order_by('id')
         return queryset
 
     def get_serializer_class(self):
