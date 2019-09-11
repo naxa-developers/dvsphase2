@@ -1,4 +1,4 @@
-from django.db import models
+from django.contrib.gis.db import models
 
 
 # Create your models here.
@@ -25,7 +25,7 @@ class MarkerValues(models.Model):
 
     def __str__(self):
         return "{}-{}".format(self.marker_category, self.marker_values)
-
+    
 
 class Sector(models.Model):
     sector_name = models.CharField(max_length=100, blank=True, null=True)
