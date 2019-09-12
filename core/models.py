@@ -25,7 +25,7 @@ class MarkerValues(models.Model):
 
     def __str__(self):
         return "{}-{}".format(self.marker_category, self.marker_values)
-    
+
 
 class Sector(models.Model):
     sector_name = models.CharField(max_length=100, blank=True, null=True)
@@ -126,6 +126,7 @@ class Indicator(models.Model):
     def __str__(self):
         return self.indicator
 
+
 class IndicatorValue(models.Model):
     indicator = models.ForeignKey(Indicator, on_delete=models.CASCADE, related_name='Indicator', null=True, blank=True)
     gapanapa = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='IgapaNapa', null=True, blank=True)
@@ -133,3 +134,12 @@ class IndicatorValue(models.Model):
 
     def __float__(self):
         return self.value
+
+
+class TravelTime(models.Model):
+    gapanapa = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='TgapaNapa', null=True, blank=True)
+    population = models.CharField(max_length=100, null=True, blank=True)
+    category_population = models.CharField(max_length=100, null=True, blank=True)
+    season = models.CharField(max_length=100, null=True, blank=True)
+    geography = models.CharField(max_length=100, null=True, blank=True)
+    travel_value = models.CharField(max_length=100, null=True, blank=True)
