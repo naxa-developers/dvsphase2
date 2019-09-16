@@ -1,4 +1,4 @@
-from django.db import models
+from django.contrib.gis.db import models
 
 
 # Create your models here.
@@ -79,6 +79,8 @@ class GapaNapa(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
     gn_type_en = models.CharField(max_length=100, null=True, blank=True)
     gn_type_np = models.CharField(max_length=100, null=True, blank=True)
+    population = models.FloatField(null=True, blank=True)
+    geography = models.CharField(max_length=100, null=True, blank=True)
     cbs_code = models.CharField(max_length=100, null=True, blank=True)
     hlcit_code = models.CharField(max_length=100, null=True, blank=True)
     p_code = models.CharField(max_length=100, null=True, blank=True)
@@ -126,6 +128,7 @@ class Indicator(models.Model):
     def __str__(self):
         return self.indicator
 
+
 class IndicatorValue(models.Model):
     indicator = models.ForeignKey(Indicator, on_delete=models.CASCADE, related_name='Indicator', null=True, blank=True)
     gapanapa = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='IgapaNapa', null=True, blank=True)
@@ -133,3 +136,12 @@ class IndicatorValue(models.Model):
 
     def __float__(self):
         return self.value
+
+
+class TravelTime(models.Model):
+    gapanapa = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='TgapaNapa', null=True, blank=True)
+    facility_type = models.CharField(max_length=100, null=True, blank=True)
+    travel_category_population = models.FloatField(null=True, blank=True, default=None)
+    tc_pc_pop = models.FloatField(null=True, blank=True, default=None)
+    season = models.CharField(max_length=100, null=True, blank=True)
+    travel_category = models.CharField(max_length=100, null=True, blank=True)

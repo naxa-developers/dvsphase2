@@ -11,9 +11,13 @@ class TestUrls:
         path = reverse('program')
         assert resolve(path).view_name == "program"
 
-    def test_core_marker_url(self):
-        path = reverse('marker')
-        assert resolve(path).view_name == "marker"
+    def test_core_marker_category_url(self):
+        path = reverse('marker-category')
+        assert resolve(path).view_name == "marker-category"
+
+    def test_core_marker_value_url(self):
+        path = reverse('marker-value')
+        assert resolve(path).view_name == "marker-value"
 
     def test_core_district_url(self):
         path = reverse('district')

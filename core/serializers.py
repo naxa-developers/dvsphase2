@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Partner, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
-    IndicatorValue, Sector, SubSector
+    IndicatorValue, Sector, SubSector, TravelTime
 
 
 class PartnerSerializer(serializers.ModelSerializer):
@@ -171,3 +171,18 @@ class IndicatorValueSerializer(serializers.ModelSerializer):
 
     def get_gapanapa_code(self, obj):
         return str(obj.gapanapa.hlcit_code)
+
+
+class TravelTimeSerializer(serializers.ModelSerializer):
+    gapanapa = serializers.SerializerMethodField()
+    geography = serializers.SerializerMethodField()
+
+    class Meta:
+        model = TravelTime
+        fields = ('id', 'gapanapa', 'facility_type', 'travel_category_population', 'tc_pc_pop', 'season', 'geography', 'travel_category')
+
+    def get_gapanapa(self, obj):
+        return str(obj.gapanapa)
+
+    def get_geography(self, obj):
+        return str(obj.gapanapa.geography)
