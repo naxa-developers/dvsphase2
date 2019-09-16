@@ -36,13 +36,20 @@ class MarkerCategoryApi(views.APIView):
         return Response({'heading': 'Heading of data', 'description': 'description of data', 'data': serializer.data})
 
 
-class MarkerValueApi(views.APIView):
-    permissions_classes = [AllowAny]
+class MarkerValueApi(viewsets.ReadOnlyModelViewSet):
+    permission_classes = []
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id', 'marker_category']
 
-    def get(self, request):
-        queryset = MarkerValues.objects.all()
-        serializer = MarkerValuesSerializer(queryset, many=True)
-        return Response({'heading': 'Heading of data', 'description': 'description of data', 'data': serializer.data})
+    def get_queryset(self):
+        queryset = MarkerValues.objects.select_related('marker_category').order_by('id')
+        return queryset
+
+    def get_serializer_class(self):
+        serializer_class =  MarkerValuesSerializer
+        return serializer_class
+
+
 
 
 class DistrictApi(views.APIView):

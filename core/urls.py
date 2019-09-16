@@ -4,8 +4,8 @@ from core import views
 urlpatterns = [
     path('partner/', views.PartnerView.as_view(), name='partner'),
     # path('program/', views.ProgramView.as_view(), name='program'),
-    path('marker-category/', views.MarkerCategoryApi.as_view(), name='marker'),
-    path('marker-value/', views.MarkerValueApi.as_view(), name='marker'),
+    path('marker-category/', views.MarkerCategoryApi.as_view(), name='marker-category'),
+    path('marker-value/', views.MarkerValueApi.as_view({'get': 'list'}), name='marker-value'),
     path('district/', views.DistrictApi.as_view(), name='district'),
     path('province/', views.ProvinceApi.as_view(), name='province'),
     path('gapanapa/', views.GapaNapaApi.as_view({'get': 'list'}), name='gapanapa'),
