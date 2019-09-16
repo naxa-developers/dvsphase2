@@ -25,24 +25,6 @@ class PartnerView(views.APIView):
         return Response({'heading': 'Heading of data', 'description': 'description of data', 'data': serializer.data})
 
 
-class ProgramView(views.APIView):
-    """
-    get: lists of program
-            -example request url for search "/api/v1/core/program/?search=program_name/program_id"
-    """
-    permissions_classes = [AllowAny]
-
-    def get(self, request):
-        search_param = self.request.query_params.get('search', None)
-        print(search_param)
-        if search_param:
-            queryset = Program.objects.filter(Q(program_name__icontains=search_param) | Q(id__icontains=search_param))
-        else:
-            queryset = Program.objects.all()
-
-        print(queryset)
-        serializer = ProgramSerializer(queryset, many=True)
-        return Response({'heading': 'Heading of data', 'description': 'description of data', 'data': serializer.data})
 
 
 class MarkerCategoryApi(views.APIView):
@@ -81,13 +63,19 @@ class ProvinceApi(views.APIView):
         return Response({'heading': 'Heading of data', 'description': 'description of data', 'data': serializer.data})
 
 
-class GapaNapaApi(views.APIView):
-    permission_classes = [AllowAny]
+class GapaNapaApi(viewsets.ReadOnlyModelViewSet):
+    permission_classes = []
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id', 'hlcit_code']
 
-    def get(self, request):
-        queryset = GapaNapa.objects.select_related().all()
-        serializer = GaanapaSerializer(queryset, many=True)
-        return Response({'heading': 'Heading of data', 'description': 'description of data', 'data': serializer.data})
+    def get_queryset(self):
+        queryset = GapaNapa.objects.select_related('province', 'district').order_by('id')
+        return queryset
+
+    def get_serializer_class(self):
+        serializer_class = GaanapaSerializer
+        return serializer_class
+
 
 
 class Fivew(views.APIView):
@@ -108,16 +96,6 @@ class IndicatorApi(views.APIView):
         return Response({'heading': 'Heading of data', 'description': 'description of data', 'data': serializer.data})
 
 
-# class IndicatorValueApi(views.APIView):
-#     permission_classes = [AllowAny]
-#     pagination_class = LimitOffsetPagination
-#
-#     def get(self, request):
-#         queryset = IndicatorValue.objects.all()
-#         paginator = LimitOffsetPagination()
-#         paginated_queryset = paginator.paginate_queryset(queryset, request)
-#         serializer = IndicatorValueSerializer(queryset, many=True)
-#         return Response({'heading': 'Heading of data', 'description': 'description of data', 'data': serializer.data})
 
 
 class IndicatorData(viewsets.ReadOnlyModelViewSet):
@@ -133,12 +111,6 @@ class IndicatorData(viewsets.ReadOnlyModelViewSet):
         serializer_class = IndicatorValueSerializer
         return serializer_class
 
-    # print(queryset)
-    # if(a=0){}
-    # def list(self, request, *args, **kwargs):
-    #     print(self.get_queryset())
-    #     inidicator_data = self.serializer_class(self.get_queryset(), many=True).data
-    #     return Response({'heading': 'Heading of data', 'description': 'description of data'})
 
 
 class SectorApi(viewsets.ReadOnlyModelViewSet):
@@ -184,7 +156,7 @@ class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
 class TravelTimeApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'gapanapa', 'population', 'category_population', 'season', 'geography', 'travel_value']
+    filterset_fields = ['id', 'gapanapa', 'facility_type', 'travel_category_population', 'season',  'travel_category']
 
     def get_queryset(self):
         queryset = TravelTime.objects.select_related('gapanapa').order_by('id')

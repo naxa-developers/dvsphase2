@@ -2,11 +2,16 @@ from django.shortcuts import render
 import pandas as pd
 from django.http import HttpResponse
 import requests
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
+from .forms import UserForm
+from rest_framework.permissions import IsAuthenticated
 from core.models import Program, Partner, FiveW, District, GapaNapa
 
 
 # Create your views here.
 def uploadData(request):
+    permission_classes = [IsAuthenticated]
     if "GET" == request.method:
         return render(request, 'dashboard.html')
     else:
@@ -74,6 +79,7 @@ def uploadData(request):
 
 
 def ShapefileUpload(request):
+    permission_classes = [IsAuthenticated]
     if "GET" == request.method:
 
         return render(request, 'shapefile.html')
@@ -86,3 +92,20 @@ def ShapefileUpload(request):
         response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
         # print(response)
         return HttpResponse(response.status_code)
+
+
+def Invitation(request):
+    if "GET" == request.method:
+        form = UserForm()
+        return render(request, 'adduser.html', {'form': form})
+    else:
+        subject = 'Thank you for registering to our site'
+        message = render_to_string('mail.html', {'context': 'values'})
+        recipient_list = ['rounnn8@gmail.com']
+        email = EmailMessage(
+            subject, message, 'from@example.com', recipient_list
+        )
+        email.content_subtype = "html"
+        mail = email.send()
+
+        return HttpResponse(mail)

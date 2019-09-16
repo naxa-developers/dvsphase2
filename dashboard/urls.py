@@ -5,5 +5,6 @@ from dashboard import views
 urlpatterns = [
     path('upload/', views.uploadData, name='upload'),
     path('upload-shapefile/', views.ShapefileUpload, name='upload-shapefile'),
+    path('invitation/', views.Invitation, name='invitation'),
 
 ]

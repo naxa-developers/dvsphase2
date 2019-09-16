@@ -175,10 +175,14 @@ class IndicatorValueSerializer(serializers.ModelSerializer):
 
 class TravelTimeSerializer(serializers.ModelSerializer):
     gapanapa = serializers.SerializerMethodField()
+    geography = serializers.SerializerMethodField()
 
     class Meta:
         model = TravelTime
-        fields = ('id', 'gapanapa', 'population', 'category_population', 'season', 'geography', 'travel_value')
+        fields = ('id', 'gapanapa', 'facility_type', 'travel_category_population', 'tc_pc_pop', 'season', 'geography', 'travel_category')
 
     def get_gapanapa(self, obj):
         return str(obj.gapanapa)
+
+    def get_geography(self, obj):
+        return str(obj.gapanapa.geography)

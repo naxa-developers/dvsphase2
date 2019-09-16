@@ -79,6 +79,8 @@ class GapaNapa(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
     gn_type_en = models.CharField(max_length=100, null=True, blank=True)
     gn_type_np = models.CharField(max_length=100, null=True, blank=True)
+    population = models.FloatField(null=True, blank=True)
+    geography = models.CharField(max_length=100, null=True, blank=True)
     cbs_code = models.CharField(max_length=100, null=True, blank=True)
     hlcit_code = models.CharField(max_length=100, null=True, blank=True)
     p_code = models.CharField(max_length=100, null=True, blank=True)
@@ -138,8 +140,8 @@ class IndicatorValue(models.Model):
 
 class TravelTime(models.Model):
     gapanapa = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='TgapaNapa', null=True, blank=True)
-    population = models.CharField(max_length=100, null=True, blank=True)
-    category_population = models.CharField(max_length=100, null=True, blank=True)
+    facility_type = models.CharField(max_length=100, null=True, blank=True)
+    travel_category_population = models.FloatField(null=True, blank=True, default=None)
+    tc_pc_pop = models.FloatField(null=True, blank=True, default=None)
     season = models.CharField(max_length=100, null=True, blank=True)
-    geography = models.CharField(max_length=100, null=True, blank=True)
-    travel_value = models.CharField(max_length=100, null=True, blank=True)
+    travel_category = models.CharField(max_length=100, null=True, blank=True)

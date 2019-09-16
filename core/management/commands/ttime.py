@@ -26,12 +26,11 @@ class Command(BaseCommand):
             ttime = [
                 TravelTime(
                     gapanapa=GapaNapa.objects.get(hlcit_code=df['adm2_code'][row]),
-                    population=(df['adm2_pop'][row]),
-                    category_population=df['cat_pop'][row],
+                    facility_type=str(df['fac_type'][row]).strip(),
+                    travel_category_population=df['travel_cat_pop'][row],
+                    tc_pc_pop=df['tc_pc_pop'][row],
                     season=df['season'][row],
-                    geography=df['geog'][row],
-                    travel_value=df['trav_value'][row],
-
+                    travel_category=df['trav_cat'][row],
                 ) for row in range(0, upper_range)
             ]
 
