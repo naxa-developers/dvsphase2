@@ -1,0 +1,72 @@
+[
+{
+  "model": "core.sector",
+  "pk": 1,
+  "fields": {
+    "sector_name": "ED - Education"
+  }
+},
+{
+  "model": "core.sector",
+  "pk": 2,
+  "fields": {
+    "sector_name": "EI - Economic Infrastucture"
+  }
+},
+{
+  "model": "core.sector",
+  "pk": 3,
+  "fields": {
+    "sector_name": "EP - Environment Protection"
+  }
+},
+{
+  "model": "core.sector",
+  "pk": 4,
+  "fields": {
+    "sector_name": "GSB - Government and State Building"
+  }
+},
+{
+  "model": "core.sector",
+  "pk": 5,
+  "fields": {
+    "sector_name": "HA - Humanitarian Assistance"
+  }
+},
+{
+  "model": "core.sector",
+  "pk": 6,
+  "fields": {
+    "sector_name": "HE - Health"
+  }
+},
+{
+  "model": "core.sector",
+  "pk": 7,
+  "fields": {
+    "sector_name": "PS - Production Sector"
+  }
+},
+{
+  "model": "core.sector",
+  "pk": 8,
+  "fields": {
+    "sector_name": "RE - Research"
+  }
+},
+{
+  "model": "core.sector",
+  "pk": 9,
+  "fields": {
+    "sector_name": "SSI - Social Services and Infrastructure"
+  }
+},
+{
+  "model": "core.sector",
+  "pk": 10,
+  "fields": {
+    "sector_name": "WSS - Water Supply and Sanitation"
+  }
+}
+]

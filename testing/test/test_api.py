@@ -15,8 +15,13 @@ class TestViews(APITestCase, APIRequestFactory):
         response = self.client.get(url, format='json')
         assert response.status_code == 200
 
-    def test_markerapi(self):
-        url = reverse('marker')
+    def test_marker_category(self):
+        url = reverse('marker-category')
+        response = self.client.get(url, format='json')
+        assert response.status_code == 200
+
+    def test_marker_value(self):
+        url = reverse('marker-value')
         response = self.client.get(url, format='json')
         assert response.status_code == 200
 
@@ -40,3 +45,22 @@ class TestViews(APITestCase, APIRequestFactory):
         response = self.client.get(url, format='json')
         assert response.status_code == 200
 
+    def test_sector(self):
+        url = reverse('sector')
+        response = self.client.get(url, format='json')
+        assert response.status_code == 200
+
+    def test_indicator_list(self):
+        url = reverse('indicator-list')
+        response = self.client.get(url, format='json')
+        assert response.status_code == 200
+
+    def test_indicator_value(self):
+        url = reverse('indicator-value')
+        response = self.client.get(url, format='json')
+        assert response.status_code == 200
+
+    def test_sub_sector(self):
+        url = reverse('sub-sector')
+        response = self.client.get(url, format='json')
+        assert response.status_code == 200
