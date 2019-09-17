@@ -6,5 +6,7 @@ urlpatterns = [
     path('upload/', views.uploadData, name='upload'),
     path('upload-shapefile/', views.ShapefileUpload, name='upload-shapefile'),
     path('invitation/', views.Invitation, name='invitation'),
+    path('login/', views.login, name='login'),
+    # path('auth/', views.auth, name='auth'),
 
 ]
