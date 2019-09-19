@@ -5,6 +5,9 @@
 version: 2
 jobs:
   build:
+    environment:
+      CC_TEST_REPORTER_ID: 7ef1b29392f2f56e355e1f64b091089a2283d26651146ed5504f0ed9f6061d91
+
     docker:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
@@ -17,6 +20,7 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/postgres:9.4
+
 
     working_directory: ~/repo
 
@@ -54,10 +58,11 @@ jobs:
           command: |
             . venv/bin/activate
             python manage.py migrate
-            pytest
+            mkdir test-reports
+            pytest --junitxml=test-reports/junit.xml
 
       - store_test_results:
-          path: test-results
+          path: test-reports
 
       - store_artifacts:
           path: test-reports
