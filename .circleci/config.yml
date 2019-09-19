@@ -20,7 +20,6 @@ jobs:
 
     working_directory: ~/repo
 
-
     steps:
       - checkout
 
@@ -39,10 +38,6 @@ jobs:
             pip install -r requirements.txt
             sudo apt-get update &&\
                 sudo apt-get install -y binutils libproj-dev gdal-bin gettext
-            echo "my artifact file" > /repo/artifact-1;
-                        mkdir /repo/artifacts;
-                        echo "my artifact files in a dir" > /repo/artifacts/artifact-2;
-
 
       - save_cache:
           paths:
@@ -67,5 +62,5 @@ jobs:
           path: test-reports
 
       - store_artifacts:
-          path: /repo/artifact-1
-          destination: artifact-file
+          path: test-reports
+          destination: test-reports
