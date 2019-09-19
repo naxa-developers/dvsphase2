@@ -5,10 +5,10 @@ import requests
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from .forms import UserForm
-from rest_framework.permissions import AllowAny
-from django.contrib.auth import authenticate
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from rest_framework.decorators import api_view, permission_classes, renderer_classes
+from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
 from rest_framework.authtoken.models import Token
 from rest_framework.status import (
     HTTP_400_BAD_REQUEST,
@@ -16,7 +16,7 @@ from rest_framework.status import (
     HTTP_200_OK
 )
 from rest_framework.response import Response
-
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 
 from core.models import Program, Partner, FiveW, District, GapaNapa
 
@@ -24,15 +24,15 @@ from core.models import Program, Partner, FiveW, District, GapaNapa
 # Create your views here.
 
 
-def login(request):
+def login_test(request):
     user = authenticate(username='sumit', password='sumit1234')
 
+    # return HttpResponse(user)
     return HttpResponse(request.user.has_perm('core.can_add_district'))
 
 
 @login_required()
 def uploadData(request):
-    permission_classes = [IsAuthenticated]
     if "GET" == request.method:
         return render(request, 'dashboard.html')
     else:
@@ -100,7 +100,6 @@ def uploadData(request):
 
 
 def ShapefileUpload(request):
-    permission_classes = [IsAuthenticated]
     if "GET" == request.method:
 
         return render(request, 'shapefile.html')
@@ -131,18 +130,35 @@ def Invitation(request):
 
         return HttpResponse(mail)
 
-@permission_classes((AllowAny,))
-@api_view(['POST'])
+
+
+@authentication_classes([SessionAuthentication, ])
+@api_view()
 def auth(request):
-    username = request.data.get("username")
-    password = request.data.get("password")
-    if username is None or password is None:
-        return Response({'error': 'Please provide both username and password'},
+    user = request.user
+    # return HttpResponse(user)
+
+    if user is None:
+        return Response({'error': 'Please authorize first'},
                         status=HTTP_400_BAD_REQUEST)
-    user = authenticate(username=username, password=password)
     if not user:
         return Response({'error': 'Invalid Credentials'},
                         status=HTTP_404_NOT_FOUND)
     token, _ = Token.objects.get_or_create(user=user)
     return Response({'token': token.key},
                     status=HTTP_200_OK)
+
+
+def check_login(request):
+    if "GET" == request.method:
+        form = UserForm()
+        return render(request, 'adduser.html', {'form': form})
+    else:
+        username = request.POST["username"]
+        password = request.POST["password"]
+        users = authenticate(request, username=username, password=password)
+        if users is not None:
+            login(request, users)
+            return HttpResponse(request.user)
+        else:
+            return HttpResponse("login failed")

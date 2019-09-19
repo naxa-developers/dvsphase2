@@ -22,7 +22,7 @@ from rest_framework.schemas import SchemaGenerator
 schema_view = get_swagger_view(title='DFID API DOCS')
 
 urlpatterns = [
-    path('<int:pk>', views.product_detail, name='detail'),
+
     path('admin/', admin.site.urls),
     path('', schema_view),
     path('api/v1/core/', include('core.urls')),

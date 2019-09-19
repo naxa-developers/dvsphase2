@@ -64,3 +64,5 @@ class TestViews(APITestCase, APIRequestFactory):
         url = reverse('sub-sector')
         response = self.client.get(url, format='json')
         assert response.status_code == 200
+
+
