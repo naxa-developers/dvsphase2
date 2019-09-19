@@ -50,3 +50,7 @@ class TestUrls:
     def test_core_sub_sector(self):
         path = reverse('sub-sector')
         assert resolve(path).view_name == "sub-sector"
+
+    def test_dashboard_token(self):
+        path = reverse('token')
+        assert resolve(path).view_name == "token"

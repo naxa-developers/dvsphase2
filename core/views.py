@@ -1,6 +1,6 @@
 from .models import Partner, Program, MarkerValues, District, Province, GapaNapa, FiveW, Indicator, IndicatorValue, \
     Sector, SubSector, MarkerCategory, TravelTime
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import PartnerSerializer, ProgramSerializer, MarkerValuesSerializer, DistrictSerializer, \
     ProvinceSerializer, GaanapaSerializer, FivewSerializer, \
     IndicatorSerializer, IndicatorValueSerializer, SectorSerializer, SubsectorSerializer, MarkerCategorySerializer, \
@@ -8,6 +8,7 @@ from .serializers import PartnerSerializer, ProgramSerializer, MarkerValuesSeria
 from rest_framework import viewsets, views
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.authentication import TokenAuthentication, BasicAuthentication, SessionAuthentication
 from django.db.models import Q
 
 
@@ -23,8 +24,6 @@ class PartnerView(views.APIView):
         queryset = Partner.objects.all()
         serializer = PartnerSerializer(queryset, many=True)
         return Response({'heading': 'Heading of data', 'description': 'description of data', 'data': serializer.data})
-
-
 
 
 class MarkerCategoryApi(views.APIView):
@@ -46,10 +45,8 @@ class MarkerValueApi(viewsets.ReadOnlyModelViewSet):
         return queryset
 
     def get_serializer_class(self):
-        serializer_class =  MarkerValuesSerializer
+        serializer_class = MarkerValuesSerializer
         return serializer_class
-
-
 
 
 class DistrictApi(views.APIView):
@@ -84,7 +81,6 @@ class GapaNapaApi(viewsets.ReadOnlyModelViewSet):
         return serializer_class
 
 
-
 class Fivew(views.APIView):
     permission_classes = [AllowAny]
 
@@ -103,8 +99,6 @@ class IndicatorApi(views.APIView):
         return Response({'heading': 'Heading of data', 'description': 'description of data', 'data': serializer.data})
 
 
-
-
 class IndicatorData(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
@@ -117,7 +111,6 @@ class IndicatorData(viewsets.ReadOnlyModelViewSet):
     def get_serializer_class(self):
         serializer_class = IndicatorValueSerializer
         return serializer_class
-
 
 
 class SectorApi(viewsets.ReadOnlyModelViewSet):
@@ -162,8 +155,9 @@ class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
 
 class TravelTimeApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
+    # authentication_classes = (TokenAuthentication, SessionAuthentication, BasicAuthentication)
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'gapanapa', 'facility_type', 'travel_category_population', 'season',  'travel_category']
+    filterset_fields = ['id', 'gapanapa', 'facility_type', 'travel_category_population', 'season', 'travel_category']
 
     def get_queryset(self):
         queryset = TravelTime.objects.select_related('gapanapa').order_by('id')
