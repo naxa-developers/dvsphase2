@@ -61,6 +61,16 @@ jobs:
             mkdir test-reports
             pytest --junitxml=test-reports/junit.xml
 
+      - run:
+          name: upload test to code climate
+          command: |
+            ./cc-test-reporter test-reports/junit.xml
+
+
+
+
+
+
       - store_test_results:
           path: test-reports
 
