@@ -64,11 +64,7 @@ jobs:
       - run:
           name: upload test to code climate
           command: |
-            ./cc-test-reporter test-reports/junit.xml
-
-
-
-
+            ./cc-test-reporter /home/circleci/repo/test-reports/junit.xml
 
 
       - store_test_results:
