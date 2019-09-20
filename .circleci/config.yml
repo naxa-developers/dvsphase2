@@ -54,12 +54,22 @@ jobs:
       # https://pytest.org
       # https://nose.readthedocs.io
       - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            # download test reporter as a static binary
+                     curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+                     chmod +x ./cc-test-reporter
+
+      - run:
           name: run tests
           command: |
             . venv/bin/activate
             python manage.py migrate
             mkdir test-reports
+            ./cc-test-reporter before-build
             pytest --junitxml=test-reports/junit.xml
+            ./cc-test-reporter after-build 
+
 
 
       - store_test_results:
