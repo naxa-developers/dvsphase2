@@ -59,9 +59,7 @@ jobs:
             . venv/bin/activate
             python manage.py migrate
             mkdir test-reports
-            ./cc-test-reporter before-build
             pytest --junitxml=test-reports/junit.xml
-            ./cc-test-reporter after-build
 
 
       - store_test_results:
