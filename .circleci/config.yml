@@ -69,7 +69,7 @@ jobs:
             mkdir test-reports
             ./cc-test-reporter before-build
             pytest --junitxml=test-reports/junit.xml
-            ./cc-test-reporter after-build coverage.py
+            codeclimate-test-reporter
 
 
 
