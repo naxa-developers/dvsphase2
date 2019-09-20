@@ -72,7 +72,7 @@ jobs:
             ./cc-test-reporter before-build
             pytest --junitxml=test-reports/junit.xml
             coverage xml
-            ./cc-test-reporter coverage.py
+            ./cc-test-reporter --help
 
 
 
