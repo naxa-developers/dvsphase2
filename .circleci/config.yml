@@ -40,6 +40,7 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
+            pip install codeclimate-test-reporter
             sudo apt-get update &&\
                 sudo apt-get install -y binutils libproj-dev gdal-bin gettext
 
@@ -53,12 +54,12 @@ jobs:
       # other common Python testing frameworks include pytest and nose
       # https://pytest.org
       # https://nose.readthedocs.io
-      - run:
-          name: Setup Code Climate test-reporter
-          command: |
-            # download test reporter as a static binary
-                     curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-                     chmod +x ./cc-test-reporter
+#      - run:
+#          name: Setup Code Climate test-reporter
+#          command: |
+#            # download test reporter as a static binary
+#                     curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+#                     chmod +x ./cc-test-reporter
 
       - run:
           name: run tests
@@ -66,10 +67,16 @@ jobs:
             . venv/bin/activate
             python manage.py migrate
             mkdir test-reports
-            ./cc-test-reporter before-build
+#            ./cc-test-reporter before-build
             pytest --junitxml=test-reports/junit.xml
-            ./cc-test-reporter after-build --coverage.py
+#            ./cc-test-reporter after-build --coverage.py
 
+
+
+      - run:
+          name: Upload test To code climate
+          command: |
+            codeclimate-test-reporter
 
 
       - store_test_results:
