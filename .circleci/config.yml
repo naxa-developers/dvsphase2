@@ -71,7 +71,6 @@ jobs:
             mkdir test-reports
             ./cc-test-reporter before-build
             pytest --junitxml=test-reports/junit.xml
-#            ./cc-test-reporter before-build
             CODECLIMATE_REPO_TOKEN=[40763e6f2f62e4724ca338795a26de4d9e64cd4d7faa30d9584cb1e103cc323e] codeclimate-test-reporter
 
 
