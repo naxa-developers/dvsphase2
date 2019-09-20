@@ -71,6 +71,7 @@ jobs:
             mkdir test-reports
             ./cc-test-reporter before-build
             pytest --junitxml=test-reports/junit.xml
+            coverage xml
             ./cc-test-reporter format-coverage -t coverage.py -o ./.coverage
             ./cc-test-reporter upload-coverage
 
