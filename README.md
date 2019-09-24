@@ -2,6 +2,8 @@
 
 [![Requirements Status](https://requires.io/github/dfid-dvs/server/requirements.svg?branch=master)](https://requires.io/github/dfid-dvs/server/requirements/?branch=master)
 
+<a href="https://codeclimate.com/github/naxadeve/dvsphase2/maintainability"><img src="https://api.codeclimate.com/v1/badges/53490fd15b757a876b6a/maintainability" /></a>
+
 ### Pipeline Test Status :
 
 | Stages | Status |
