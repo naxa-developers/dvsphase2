@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     environment:
-      CC_TEST_REPORTER_ID: 7ef1b29392f2f56e355e1f64b091089a2283d26651146ed5504f0ed9f6061d91
+      CC_TEST_REPORTER_ID: 40763e6f2f62e4724ca338795a26de4d9e64cd4d7faa30d9584cb1e103cc323e
 
     docker:
       # specify the version you desire here
@@ -40,6 +40,8 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
+            pip install codeclimate-test-reporter
+            pip install coverage==4.3
             sudo apt-get update &&\
                 sudo apt-get install -y binutils libproj-dev gdal-bin gettext
 
@@ -53,13 +55,26 @@ jobs:
       # other common Python testing frameworks include pytest and nose
       # https://pytest.org
       # https://nose.readthedocs.io
+
+      - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            # download test reporter as a static binary
+                     curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+                     chmod +x ./cc-test-reporter
+
       - run:
           name: run tests
           command: |
             . venv/bin/activate
             python manage.py migrate
             mkdir test-reports
+            ./cc-test-reporter before-build
             pytest --junitxml=test-reports/junit.xml
+            coverage xml
+            ./cc-test-reporter after-build --coverage-input-type coverage.py
+
+
 
       - store_test_results:
           path: test-reports
