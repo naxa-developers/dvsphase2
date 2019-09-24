@@ -40,8 +40,6 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
-            pip install codeclimate-test-reporter
-            pip install coverage==4.3
             sudo apt-get update &&\
                 sudo apt-get install -y binutils libproj-dev gdal-bin gettext
 
