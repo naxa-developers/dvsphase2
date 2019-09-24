@@ -51,7 +51,7 @@ class ProgramSerializer(serializers.ModelSerializer):
         return data
 
     def get_sector(self, obj):
-        qs = obj.sector.all().order_by('id').values_list('sector_name', flat=True)
+        qs = obj.sector.all().order_by('id').values_list('id', flat=True)
         # qs = obj.sub_sector.all().order_by('id').values('sub_sector_name', 'sub_sector_code')
         return qs
 
