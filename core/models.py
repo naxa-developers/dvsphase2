@@ -12,32 +12,32 @@ class Partner(models.Model):
 
 
 class MarkerCategory(models.Model):
-    marker_category = models.CharField(max_length=100, null=True, blank=True)
+    name = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return self.marker_category
+        return self.name
 
 
 class MarkerValues(models.Model):
-    marker_category = models.ForeignKey(MarkerCategory, on_delete=models.CASCADE, related_name='MarkerCategory',
+    marker_category_id = models.ForeignKey(MarkerCategory, on_delete=models.CASCADE, related_name='MarkerCategory',
                                         null=True, blank=True)
-    marker_values = models.CharField(max_length=100, null=True, blank=True)
+    value = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return "{}-{}".format(self.marker_category, self.marker_values)
+        return "{}-{}".format(self.marker_category_id, self.value)
 
 
 class Sector(models.Model):
-    sector_name = models.CharField(max_length=100, blank=True, null=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return self.sector_name
+        return self.name
 
 
 class SubSector(models.Model):
-    sector = models.ForeignKey(Sector, on_delete=models.CASCADE, related_name='Sector', null=True, blank=True)
-    sub_sector_name = models.CharField(max_length=100, blank=True, null=True)
-    sub_sector_code = models.CharField(max_length=100, blank=True, null=True)
+    sector_id = models.ForeignKey(Sector, on_delete=models.CASCADE, related_name='Sector', null=True, blank=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
+    code = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return "{}--{}".format(self.sector, self.sub_sector_name)
@@ -49,7 +49,7 @@ class Program(models.Model):
     sector = models.ManyToManyField(Sector, related_name='Psector', blank=True)
     sub_sector = models.ManyToManyField(SubSector, related_name='SubSector', blank=True)
     marker_category = models.ManyToManyField(MarkerCategory, related_name='Pmarkercategory', blank=True)
-    marker = models.ManyToManyField(MarkerValues, related_name='MarkerValues', blank=True)
+    marker_value = models.ManyToManyField(MarkerValues, related_name='MarkerValues', blank=True)
     program_code = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
@@ -57,25 +57,25 @@ class Program(models.Model):
 
 
 class Province(models.Model):
-    province_name = models.CharField(max_length=100, null=True, blank=True)
-    province_code = models.CharField(max_length=100, null=True, blank=True)
+    name = models.CharField(max_length=100, null=True, blank=True)
+    code = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return self.province_name
+        return self.name
 
 
 class District(models.Model):
-    province = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='DProvince', null=True, blank=True)
-    district_name = models.CharField(max_length=100, null=True, blank=True)
-    district_code = models.CharField(max_length=100, null=True, blank=True)
+    province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='DProvince', null=True, blank=True)
+    name = models.CharField(max_length=100, null=True, blank=True)
+    code = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return self.district_name.strip()
+        return self.name
 
 
 class GapaNapa(models.Model):
-    province = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='Province', null=True, blank=True)
-    district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='District', null=True, blank=True)
+    province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='Province', null=True, blank=True)
+    district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='District', null=True, blank=True)
     name = models.CharField(max_length=100, null=True, blank=True)
     gn_type_en = models.CharField(max_length=100, null=True, blank=True)
     gn_type_np = models.CharField(max_length=100, null=True, blank=True)
@@ -130,8 +130,8 @@ class Indicator(models.Model):
 
 
 class IndicatorValue(models.Model):
-    indicator = models.ForeignKey(Indicator, on_delete=models.CASCADE, related_name='Indicator', null=True, blank=True)
-    gapanapa = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='IgapaNapa', null=True, blank=True)
+    indicator_id = models.ForeignKey(Indicator, on_delete=models.CASCADE, related_name='Indicator', null=True, blank=True)
+    gapanapa_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='IgapaNapa', null=True, blank=True)
     value = models.FloatField(null=True, blank=True, default=None)
 
     def __float__(self):
