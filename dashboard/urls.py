@@ -9,5 +9,7 @@ urlpatterns = [
     path('login/', views.login_test, name='login'),
     path('token/', views.auth, name='token'),
     path('check-login/', views.check_login, name='check-login'),
+    path('page_province/', views.province_list, name='page_province'),
+
 
 ]

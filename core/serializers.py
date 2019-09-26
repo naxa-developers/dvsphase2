@@ -20,35 +20,33 @@ class MarkerValuesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MarkerValues
-        fields = ('id', 'marker_values', 'marker_category')
+        fields = ('id', 'value', 'marker_category_id', 'marker_category')
 
     def get_marker_category(self, obj):
-        return str(obj.marker_category)
+        return str(obj.marker_category_id.name)
 
 
 class ProgramSerializer(serializers.ModelSerializer):
-    marker = serializers.SerializerMethodField()
+    marker_value = serializers.SerializerMethodField()
     marker_category = serializers.SerializerMethodField()
     sub_sector = serializers.SerializerMethodField()
     sector = serializers.SerializerMethodField()
 
     class Meta:
         model = Program
-        fields = ('id', 'program_name', 'program_description', 'sector', 'sub_sector', 'marker_category', 'marker')
+        fields = ('id', 'program_name', 'program_description', 'sector', 'sub_sector', 'marker_category', 'marker_value')
 
     def get_marker_category(self, obj):
-        qs = obj.marker_category.all().order_by('id').values_list('marker_category', flat=True)
+        qs = obj.marker_category.order_by('id').values_list('id', flat=True)
         return qs
 
-    def get_marker(self, obj):
-        qs = obj.marker.all().order_by('id')
-        return MarkerValuesSerializer(qs, many=True, read_only=True).data
+    def get_marker_value(self, obj):
+        qs = obj.marker_value.all().order_by('id').values_list('id', flat=True)
+        return qs
 
     def get_sub_sector(self, obj):
-        # qs = obj.sub_sector.all().order_by('id').values_list('sub_sector_name', flat=True)
-        qs = obj.sub_sector.all().order_by('id')
-        data = [{'sub_sector_name': sub.sub_sector_name, 'sector_name': sub.sector.sector_name} for sub in qs]
-        return data
+        qs = obj.sub_sector.all().order_by('id').values_list('id', flat=True)
+        return qs
 
     def get_sector(self, obj):
         qs = obj.sector.all().order_by('id').values_list('id', flat=True)
@@ -75,40 +73,43 @@ class SectorSerializer(serializers.ModelSerializer):
 
 
 class SubsectorSerializer(serializers.ModelSerializer):
-    sector = serializers.SerializerMethodField()
+    sector_name = serializers.SerializerMethodField()
 
     class Meta:
         model = SubSector
-        fields = ('id', 'sector', 'sub_sector_name', 'sub_sector_code')
+        fields = ('id', 'sector_id', 'sector_name', 'name', 'code')
 
-    def get_sector(self, obj):
-        return str(obj.sector)
+    def get_sector_name(self, obj):
+        return str(obj.sector_id.name)
 
 
 class DistrictSerializer(serializers.ModelSerializer):
-    province = serializers.SerializerMethodField()
+    province_name = serializers.SerializerMethodField()
 
     class Meta:
         model = District
-        fields = ('id', 'province', 'district_name', 'district_code')
+        fields = ('id', 'province_id', 'province_name', 'name', 'code')
 
-    def get_province(self, obj):
-        return str(obj.province)
+    def get_province_name(self, obj):
+        return str(obj.province_id.name)
 
 
 class GaanapaSerializer(serializers.ModelSerializer):
-    province = serializers.SerializerMethodField()
-    district = serializers.SerializerMethodField()
+    province_name = serializers.SerializerMethodField()
+    district_name = serializers.SerializerMethodField()
 
     class Meta:
         model = GapaNapa
-        fields = ('id', 'province', 'district', 'name', 'gn_type_en', 'gn_type_np', 'cbs_code', 'hlcit_code', 'p_code')
+        fields = (
+            'id', 'province_id', 'province_name', 'district_id', 'district_name', 'name', 'gn_type_en', 'gn_type_np',
+            'population', 'geography', 'cbs_code',
+            'hlcit_code', 'p_code')
 
-    def get_province(self, obj):
-        return str(obj.province)
+    def get_province_name(self, obj):
+        return str(obj.province_id.name)
 
-    def get_district(self, obj):
-        return str(obj.district)
+    def get_district_name(self, obj):
+        return str(obj.district_id.name)
 
 
 class FivewSerializer(serializers.ModelSerializer):
@@ -155,22 +156,18 @@ class FivewSerializer(serializers.ModelSerializer):
 
 
 class IndicatorValueSerializer(serializers.ModelSerializer):
-    indicator = serializers.SerializerMethodField()
-    gapanapa = serializers.SerializerMethodField()
-    gapanapa_code = serializers.SerializerMethodField()
+    gapanapa_hlcit_code = serializers.SerializerMethodField()
+    indicator_name = serializers.SerializerMethodField()
 
     class Meta:
         model = IndicatorValue
-        fields = ('id', 'indicator', 'gapanapa', 'gapanapa_code', 'value')
+        fields = ('id', 'indicator_id', 'indicator_name', 'gapanapa_id', 'gapanapa_hlcit_code', 'value')
 
-    def get_gapanapa(self, obj):
-        return str(obj.gapanapa.name)
+    def get_gapanapa_hlcit_code(self, obj):
+        return str(obj.gapanapa_id.hlcit_code)
 
-    def get_indicator(self, obj):
-        return str(obj.indicator.indicator)
-
-    def get_gapanapa_code(self, obj):
-        return str(obj.gapanapa.hlcit_code)
+    def get_indicator_name(self, obj):
+        return str(obj.indicator_id.indicator)
 
 
 class TravelTimeSerializer(serializers.ModelSerializer):
@@ -179,7 +176,8 @@ class TravelTimeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TravelTime
-        fields = ('id', 'gapanapa', 'facility_type', 'travel_category_population', 'tc_pc_pop', 'season', 'geography', 'travel_category')
+        fields = ('id', 'gapanapa', 'facility_type', 'travel_category_population', 'tc_pc_pop', 'season', 'geography',
+                  'travel_category')
 
     def get_gapanapa(self, obj):
         return str(obj.gapanapa)

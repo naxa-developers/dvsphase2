@@ -18,7 +18,7 @@ from rest_framework.status import (
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 
-from core.models import Program, Partner, FiveW, District, GapaNapa
+from core.models import Province, Program, FiveW, District, GapaNapa
 
 
 # Create your views here.
@@ -131,7 +131,6 @@ def Invitation(request):
         return HttpResponse(mail)
 
 
-
 @authentication_classes([SessionAuthentication, ])
 @api_view()
 def auth(request):
@@ -162,3 +161,12 @@ def check_login(request):
             return HttpResponse(request.user)
         else:
             return HttpResponse("login failed")
+
+
+def province_list(request):
+    template_name = 'province_list.html'
+    province = Program.objects.order_by('id')
+    data = {}
+    data['object_list'] = province
+    data['sumit'] = 'province'
+    return render(request, template_name, data)

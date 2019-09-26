@@ -1,0 +1,31 @@
+<h1>view program</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Pages</th>
+        <th>View</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for book in object_list %}
+    <tr>
+        <td>{{ book.program_name }}</td>
+        <td>{% for i in book.sector.all %}{{ i.name }}{% endfor %}</td>
+        <td>{{ sumit }}</td>
+
+
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% for book in object_list %}
+{% for i in book.sector.all %}
+<p>{{ i.name }}</p>
+
+{% endfor %}
+{% endfor %}
