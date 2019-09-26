@@ -37,13 +37,13 @@ jobs:
       - run:
           name: install dependencies
           command: |
+
             pip install -r requirements.txt
             sudo apt-get update &&\
                 sudo apt-get install -y binutils libproj-dev gdal-bin gettext
 
       - save_cache:
-          paths:
-            - ./venv
+          
           key: v1-dependencies-{{ checksum "requirements.txt" }}
 
       # run tests!

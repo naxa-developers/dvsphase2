@@ -4,4 +4,6 @@ omit = */tests/*
         */dvs/*
         */core/*
         */dashboard/*
+        */venv/*
+
 
