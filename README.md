@@ -1,8 +1,6 @@
 # Dvs
 
-[![Requirements Status](https://requires.io/github/dfid-dvs/server/requirements.svg?branch=master)](https://requires.io/github/dfid-dvs/server/requirements/?branch=master)
-
-<a href="https://codeclimate.com/github/naxadeve/dvsphase2/maintainability"><img src="https://api.codeclimate.com/v1/badges/53490fd15b757a876b6a/maintainability" /></a>
+[![Requirements Status](https://requires.io/github/dfid-dvs/server/requirements.svg?branch=master)](https://requires.io/github/dfid-dvs/server/requirements/?branch=master)     [![Maintainability](https://api.codeclimate.com/v1/badges/53490fd15b757a876b6a/maintainability)](https://codeclimate.com/github/naxadeve/dvsphase2/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/53490fd15b757a876b6a/test_coverage)](https://codeclimate.com/github/naxadeve/dvsphase2/test_coverage)
 
 ### Pipeline Test Status :
 
@@ -28,6 +26,11 @@
 - Rename .env_sample to .env and change it settings accordingly for the project
 
 - Inside dvs folder rename local_settings_sample.py to local_settings.py and change it settings accordingly for the project
+
+- Bulid docker image
+```sh
+   docker-compose build
+ ```
 
 - Run external services
 ```sh
