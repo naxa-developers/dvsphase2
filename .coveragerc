@@ -1,5 +1,9 @@
 [run]
-omit = */migrations/*
-        
+omit = */tests/*
+        */migrations/*
+        */dvs/*
+        */core/*
+        */dashboard/*
+        */venv/*
 
 
