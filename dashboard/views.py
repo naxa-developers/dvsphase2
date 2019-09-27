@@ -17,17 +17,18 @@ from rest_framework.status import (
 )
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
-
+from django.views.generic import ListView, DetailView
 from core.models import Province, Program, FiveW, District, GapaNapa
+from django.contrib.auth.models import User, Group
 
 
 # Create your views here.
 
 
 def login_test(request):
-    user = authenticate(username='sumit', password='sumit1234')
+    # user = authenticate(username='sumit', password='sumit1234')
 
-    # return HttpResponse(user)
+    # return HttpResponse(request.user)
     return HttpResponse(request.user.has_perm('core.can_add_district'))
 
 
@@ -151,7 +152,7 @@ def auth(request):
 def check_login(request):
     if "GET" == request.method:
         form = UserForm()
-        return render(request, 'adduser.html', {'form': form})
+        return render(request, 'sign_in.html', {'form': form})
     else:
         username = request.POST["username"]
         password = request.POST["password"]
@@ -170,3 +171,13 @@ def province_list(request):
     data['object_list'] = province
     data['sumit'] = 'province'
     return render(request, template_name, data)
+
+
+class ProgramList(ListView):
+    template_name = 'province_list.html'
+    model = Program
+    # context_object_name = 'usero'
+
+    def get_queryset(self):
+        qs = Program.objects.order_by('id')
+        return qs

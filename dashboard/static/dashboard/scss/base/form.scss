@@ -1,0 +1,41 @@
+form {
+    .form-group {
+        margin-bottom: 3rem;
+
+        label {
+            color: $blue-light;
+            text-transform: uppercase;
+            font-size: 1rem;
+            font-family: $montserrat;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            letter-spacing: .028rem;
+        }
+
+        .form-control {
+            padding: 0.5rem 1rem;
+            color: $color-primary;
+            background-color: $color-bg;
+            font-size: 1.1rem;
+            border: 0;
+            height: 55px;
+            line-height: 55px;
+            @include animate_all(all 0.5s);
+            -webkit-outline: none;
+            outline: none;
+
+            @include input-placeholder {
+                color: $color-bg-text;
+                font-size: 1.1rem;
+                text-transform: capitalize;
+            }
+
+            &:focus {
+                box-shadow: none;
+                background-color: $color-focus;
+                -webkit-outline: none;
+                outline: none;
+            }
+        }
+    }
+}

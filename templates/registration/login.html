@@ -1,0 +1,95 @@
+{% load static %}
+<!doctype html>
+<html class="no-js " lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive DFID Dashboard.">
+    <title>DFID Dashboard</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Favicon-->
+    <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/line-awesome.min.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap-datepicker.min.css' %}">
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+</head>
+
+<body class="">
+<!-- login page start -->
+
+<div class="authentication">
+    <!-- login info start -->
+    <div class="col-md-6 pd-0">
+        <div class="auth-form login-info">
+            <div class="header">
+                <img class="logo" src="{% static 'dashboard/images/dfid-logo.png' %}" alt="">
+            </div>
+            <div class="">
+                <div class="welcome">
+                    <span>Welcome to</span>
+                    <h2>DVS</h2>
+                </div>
+            </div>
+            <figure>
+                <img src="{% static 'dashboard/images/map.png' %}" alt="map"/>
+            </figure>
+            <div class="powered-by">
+                <span>Powered by</span><strong>DVS</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- login form start -->
+    <div class="col-md-6">
+        <div class="auth-form login-form">
+            <div class="login-wrap">
+                <div class="login-header">
+                    <h3>sign in</h3>
+                    <span>Enter your details below</span>
+                </div>
+
+
+                <form method="post" action="">
+                     {% csrf_token %}
+                    {% if form.errors %}
+                    {% for field in form %}
+                    {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                       <strong>{{ field.name|title }} {{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                       <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="" class="">Username</label>
+                        <input type="text" name="username" class="form-control" placeholder="username"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="">password</label>
+                        <input type="password" name="password" class="form-control" placeholder="password"/>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="dfid-button">Sign in</button>
+                    </div>
+                    <div class="forgot-password">
+                        <a href="#">Forgot your password ?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+
+</html>

@@ -1,0 +1,8 @@
+.col-5{
+    @include rowcol;
+    flex:0 0 20%;
+    -ms-flex:0 0 20%;
+    max-width: 20%;
+}
+
+
