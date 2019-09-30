@@ -1,0 +1,13 @@
+<form method="post" action="">
+    {% csrf_token %}
+    <input type="text" name="email" class="form-control" placeholder="email"/>
+    <select name="group">
+        {% for groups in group %}
+        <option value={{ groups.id }}>{{ groups }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="invite"/>
+</form>
+
+
+

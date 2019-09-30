@@ -5,7 +5,6 @@ import requests
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from .forms import UserForm
-from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -17,17 +16,23 @@ from rest_framework.status import (
 )
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
-
+from django.views.generic import ListView, DetailView
 from core.models import Province, Program, FiveW, District, GapaNapa
+from django.contrib.auth.models import User, Group
+from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.conf import settings
 
 
 # Create your views here.
 
-
+@login_required()
 def login_test(request):
-    user = authenticate(username='sumit', password='sumit1234')
+    # user = authenticate(username='sumit', password='sumit1234')
 
-    # return HttpResponse(user)
+    # return HttpResponse(request.user)
+    # return render(request, 'dashboard.html')
     return HttpResponse(request.user.has_perm('core.can_add_district'))
 
 
@@ -116,12 +121,15 @@ def ShapefileUpload(request):
 
 def Invitation(request):
     if "GET" == request.method:
-        form = UserForm()
-        return render(request, 'adduser.html', {'form': form})
+        group = Group.objects.all()
+        return render(request, 'invitation_form.html', {'group': group})
     else:
+        url = settings.SITE_URL
+        group = request.POST["group"]
+        email = request.POST["email"]
         subject = 'Thank you for registering to our site'
-        message = render_to_string('mail.html', {'context': 'values'})
-        recipient_list = ['rounnn8@gmail.com']
+        message = render_to_string('mail.html', {'group': group, 'url': url})
+        recipient_list = [email]
         email = EmailMessage(
             subject, message, 'from@example.com', recipient_list
         )
@@ -151,7 +159,7 @@ def auth(request):
 def check_login(request):
     if "GET" == request.method:
         form = UserForm()
-        return render(request, 'adduser.html', {'form': form})
+        return render(request, 'sign_in.html', {'form': form})
     else:
         username = request.POST["username"]
         password = request.POST["password"]
@@ -170,3 +178,38 @@ def province_list(request):
     data['object_list'] = province
     data['sumit'] = 'province'
     return render(request, template_name, data)
+
+
+class ProgramList(ListView):
+    template_name = 'province_list.html'
+    model = Program
+
+    # context_object_name = 'usero'
+
+    def get_queryset(self):
+        qs = Program.objects.order_by('id')
+        return qs
+
+
+class Dashboard(LoginRequiredMixin, TemplateView):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'dashboard.html')
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            grp = request.GET['type']
+            group = Group.objects.get(name=grp)
+            user.groups.add(group)
+            return HttpResponse('user created')
+    else:
+        form = UserCreationForm()
+        return render(request, 'signup.html', {'form': form})

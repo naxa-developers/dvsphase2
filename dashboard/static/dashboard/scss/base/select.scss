@@ -1,0 +1,118 @@
+.bootstrap-select {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    border-radius: 0;
+    box-shadow: none !important;
+    .dropdown-toggle {
+        border: 1px solid #ced4da;
+        padding: .375rem .75rem;
+        height: calc(2.25rem + 2px);
+        font-size: 15px;
+        line-height: 26px;
+        margin: 0;
+        &::after{
+            right: 10px;
+            position: absolute;
+            top: 17px;
+        }
+        &:active,
+        &:focus{
+            outline:none;
+        }
+    }
+    .bs-searchbox,
+    .bs-actionbox,
+    .bs-donebutton{
+        padding: 0 0 5px 0;
+        border-bottom: 1px solid $color-bg;
+        position: relative;
+    }
+    .dropdown-menu{
+        margin-top:0;
+        &.show{
+            display: none;
+            .dropdown-menu.inner{
+                display: block;
+            }
+        }
+        li{
+            &.selected{
+                a{
+                    background-color: $color-bg !important;
+                    color:$color-primary !important
+                }
+            }
+            &.active{
+                a{
+                    background-color: transparent;
+                }
+            }
+            
+        }
+        .notify{
+            background-color:$color-primary !important;
+            color: $color-white !important;
+            border: none !important
+        }
+
+    }
+    .bs-searchbox{
+        position: relative;
+        padding: 10px;
+        &:after{
+            font-size: 20px;
+            content: '\f1c3';
+            font-family: 'LineAwesome';
+            position: absolute;
+            top: 14px;
+            right: 20px;
+        }
+    }
+}
+
+
+.select2-container{
+    .select2-choice{
+        border: none;
+        background-image: none;
+        box-shadow: none;
+        padding: 0;
+        margin: 0;
+        &:focus,
+        &:active,
+        &:hover{
+            box-shadow: none !important;
+            border: 0 !important
+        }
+        .select2-arrow{
+            border-left: none;
+            background-image: none;
+            background: transparent;
+        }
+    }
+    &.select2-dropdown-open{
+        .select2-choice{
+            background: transparent;
+            box-shadow: none !important
+        }
+    }
+    
+}
+.select2-container-multi{
+    .select2-choices {
+        border: 0 !important;
+        padding: 0;
+        margin: 0;
+        background-image: none;
+        box-shadow: none !important;
+        &:focus,
+        &:active,
+        &:hover{
+            box-shadow: none !important;
+            border: none;
+            border: 0 !important
+        }
+    }
+}
+

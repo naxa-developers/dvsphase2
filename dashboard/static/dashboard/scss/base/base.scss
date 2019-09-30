@@ -1,0 +1,150 @@
+.z-index {
+    z-index: 9999
+}
+
+.mrt30 {
+    margin-top: 30px;
+}
+
+.mrb30 {
+    margin-bottom: 30px;
+}
+
+.pd-0 {
+    padding: 0 !important;
+}
+
+@media screen and (min-width:$mb-sm) {
+    .highlight-card {
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+@media screen and (min-width:$mb-md) {
+    .highlight-card {
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+@media screen and (min-width:$pt-tab) {
+    .highlight-card {
+        -ms-flex: 0 0 33.333333%;
+        flex: 0 0 33.333333%;
+        max-width: 33.333333%;
+    }
+}
+@media screen and (min-width:$desktop) {
+    .highlight-card {
+        -ms-flex: 0 0 16.6667%;
+        flex: 0 0 16.6667%;
+        max-width: 16.6667%;
+    }
+}
+
+
+.p-l-0,
+.sidebar .menu .list,
+.sidebar .menu .list .ml-menu,
+.dropdown-menu ul.menu,
+.invoice .nav-tabs {
+    padding-left: 0px
+}
+.pdtb-100{
+    padding:100px 0;
+}
+.mrtb-100{
+    margin:100px 0;
+}
+.pdt-100{
+    padding-top:100px;
+}
+.pdb-100{
+    padding-top:100px;
+}
+
+.mrt-100{
+    margin-top:100px;
+}
+.mrb-100{
+    margin-bottom:100px;
+}
+
+.section-title {
+    margin-bottom: 2rem;
+
+    h4 {
+        text-transform: uppercase;
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+}
+.flex{
+    @include flex;
+}
+.flex-start{
+    @include flexStart;
+}
+.flex-end{
+    @include flexEnd;
+}
+.flex-center{
+    @include flexCenter;
+}
+.flexvr{
+    @include flexvr;
+}
+
+.status{
+    min-width: 100px;
+    text-align: center;
+    text-transform: uppercase;;
+    font-size:.875rem;
+    font-family: $montserrat;
+    font-weight: 600;
+    padding:0.25rem 1rem;
+    &.yellow{
+        
+        background-color:rgba($color-error,0.15);
+        color:$color-error;
+       
+    }
+    &.green{
+        background-color:rgba($color-green,0.15);
+        color:$color-green;
+    }
+}
+.card {
+    @include animate_all(all .5s);
+    border: 0;
+    position: relative;
+    width: 100%;
+    box-shadow: none;
+    background: transparent;
+
+    .card-header {
+        background-color: $color-white;
+    }
+
+    .body {
+        font-weight: 400;
+        border-radius: .35rem;
+        background: $color-light;
+        font-size: 14px;
+        color: $color-primary;
+        padding: 20px;
+    }
+}
+
+main.dfid-main {
+    @include animate_all(all .5s);
+    position: relative;
+    padding: 0 1rem;
+}
+
+.page-wrapper {
+    @include animate_all(all 0.5s);
+    position: relative;
+    margin-left: 260px;
+}
