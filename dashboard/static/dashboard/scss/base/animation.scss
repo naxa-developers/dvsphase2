@@ -102,7 +102,14 @@
         -webkit-transform: translateY(0%)
     }
 }
-
+.dropdown-animation{
+    -webkit-animation-name: dropdownAnimation;
+  animation-name: dropdownAnimation;
+  -webkit-animation-duration: 350ms;
+  animation-duration: 350ms;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
 .slideUp2 {
     animation-name: slideUp2;
     -webkit-animation-name: slideUp2;
@@ -329,6 +336,28 @@
     }
 }
 
+@-webkit-keyframes dropdownAnimation {
+    from {
+      opacity: 0;
+      -webkit-transform: translate3d(0, 70px, 0);
+      -ms-transform: translate3d(0, 70px, 0);
+      transform: translate3d(0, 70px, 0); }
+    to {
+      opacity: 1;
+      -webkit-transform: translate3d(0, 0.6125rem, 0);
+      -ms-transform: translate3d(0, 0.6125rem, 0);
+      transform: translate3d(0, 0.6125rem, 0); } }
+  @keyframes dropdownAnimation {
+    from {
+      opacity: 0;
+      -webkit-transform: translate3d(0, 70px, 0);
+      -ms-transform: translate3d(0, 70px, 0);
+      transform: translate3d(0, 70px, 0); }
+    to {
+      opacity: 1;
+      -webkit-transform: translate3d(0, 0.6125rem, 0);
+      -ms-transform: translate3d(0, 0.6125rem, 0);
+      transform: translate3d(0, 0.6125rem, 0); } }
 .expandUp {
     animation-name: expandUp;
     -webkit-animation-name: expandUp;

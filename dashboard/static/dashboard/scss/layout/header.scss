@@ -1,4 +1,4 @@
-.main-header {
+.dfid-header {
     .navbar {
         margin-bottom: 0;
         border: none;
@@ -7,7 +7,7 @@
         padding: 0;
         border-bottom: 1px solid $color-bg;
         transition: margin-left 0.3s ease-in-out;
-        padding:0 1rem;
+        padding: 0 1rem;
 
         .search-form {
             position: relative;
@@ -41,36 +41,47 @@
         }
 
         .navbar-right {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
             .navbar-nav {
                 flex-direction: row;
                 align-items: center;
-                .dropdown-toggle{
+
+                .dropdown-toggle {
                     padding-right: 1.5rem;
-                    &::after{
+
+                    &::after {
                         display: none;
 
                     }
-                    &:before{
+
+                    &:before {
                         @include translatey;
-                        right:0;
+                        right: 0;
                         font-family: 'Material Icons';
-                        content:'expand_more';
+                        content: 'expand_more';
                         font-size: 1.5rem;
                     }
                 }
+
                 .dropdown-menu {
                     width: 300px;
                     right: .6125rem;
 
                     li {
                         border-bottom: 1px solid $color-white;
+
                         a {
                             display: block;
                             color: $color-bg-text;
                             font-size: 0.88rem;
                             padding: 0.625rem 1.25rem;
                         }
-                        &:last-child{
+
+                        &:last-child {
                             border-bottom: 0;
                         }
 
@@ -83,7 +94,7 @@
                             border-bottom: 1px solid $color-white;
                             padding-bottom: 0.94rem;
                             padding: 1.25rem 1.25rem 0.63rem;
-                            color:$color-primary;
+                            color: $color-primary;
                             font-size: 1rem;
                             margin-bottom: 0.63rem;
                         }
@@ -117,14 +128,15 @@
                         background-color: transparent;
                         box-shadow: none;
                         border: none;
-                        .notify{
+
+                        .notify {
                             position: absolute;
                             height: 8px;
-                            width:8px;
+                            width: 8px;
                             @include radius(50%);
                             background-color: $color-secondary;
-                            top:0;
-                            right:0;
+                            top: 0;
+                            right: 0;
                         }
                     }
 
@@ -141,24 +153,28 @@
                         border: none;
                         @include flex;
                         align-items: center;
-                        .user-info{
+
+                        .user-info {
                             text-align: left;
-                            padding-left:.6125rem;
-                            h6{
-                                font-size:1rem;
+                            padding-left: .6125rem;
+
+                            h6 {
+                                font-size: 1rem;
                                 text-transform: capitalize;
-                                margin:0;
+                                margin: 0;
                             }
-                            span{
-                                color:$color-bg-text;
+
+                            span {
+                                color: $color-bg-text;
                                 font-size: .775rem;
                             }
                         }
                     }
-                    .dropdown-menu{
+
+                    .dropdown-menu {
                         width: 240px;
-                        background-color:$color-bg;
-                        border:0;
+                        background-color: $color-bg;
+                        border: 0;
                         @include boxshadow($boxshadow:0 3px 10px rgba(0, 0, 0, 0.16));
                     }
 

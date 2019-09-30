@@ -3,15 +3,15 @@
 @import "partials/mixin";
 @import "base/base";
 @import "base/button";
-
 @import "base/table";
-@import "partials/function";
 @import "partials/variable";
+@import "layout/breadcrumb";
 @import "layout/sidebar";
 @import "base/active-menu";
 @import "layout/header";
 @import "layout/footer";
 @import "layout/login";
+@import "layout/accordion";
 @import "pages/home";
 @import "base/form";
 

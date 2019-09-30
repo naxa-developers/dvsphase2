@@ -1,7 +1,7 @@
 // Basic DataTable
 $(function(){
-	$('#basicExample').DataTable({
-		"scrollX": "1000px",
+	$('.program-table').DataTable({
+		"scrollX": true,
 		"scrollCollapse": true,
 		'iDisplayLength': 3,
 		
@@ -27,6 +27,8 @@ $(function(){
 		'iDisplayLength': 3,
 	});
 });
+
+
 
 
 // Row Selection

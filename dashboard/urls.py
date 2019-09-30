@@ -13,6 +13,10 @@ urlpatterns = [
     path('page_province/', views.province_list, name='page_province'),
     path('page_program/', views.ProgramList.as_view(), name='page_program'),
     path('login/', auth_views.login, name='login'),
+    path('main/', views.Dashboard.as_view(), name='main'),
+    path('signup/', views.signup, name='signup'),
+    path('logout/', auth_views.logout, {'next_page': '/dashboard/login/'}, name='logout'),
+
 
 
 

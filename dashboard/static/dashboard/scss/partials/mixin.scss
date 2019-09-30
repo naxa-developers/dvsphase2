@@ -13,25 +13,28 @@
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;  
+  flex-wrap: wrap;
 }
-@mixin flexjust {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
+@mixin flexBetween {
+    @include flex;
     justify-content: space-between;
-    flex-wrap: wrap;
+}
+@mixin flexCenter{
+    @include flex;
+    justify-content: center;
+    align-items: center;
+}
+@mixin flexStart {
+  @include flex;
+  justify-content: flex-start;
+}
+@mixin flexEnd {
+  @include flex;
+  justify-content: flex-end;
 }
 @mixin flexvr{
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: center;
+  @include flexCenter;
+  flex-direction: column;
 }
 @mixin rowflex {
     display: -webkit-box;
@@ -41,16 +44,16 @@
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
+    margin-right: -5px;
+    margin-left: -5px;
 }
 
 @mixin rowcol {
     position: relative;
     width: 100%;
     min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 @mixin coverbg {

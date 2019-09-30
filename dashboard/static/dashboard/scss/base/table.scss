@@ -1,3 +1,27 @@
+.dataTable{
+    width:100% !important;
+    thead{
+        background-color: $color-bg;
+        th{
+            color: $blue-light;
+            text-transform: uppercase;
+            font-family: $montserrat;
+            font-size:.875rem;
+            font-weight: 500;
+        }
+    }
+    tbody{
+        tr{
+            td{
+                font-weight: 500;
+                span.budget{
+                    color:$color-secondary;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+}
 .project_list{
     padding:30px;
     background-color:$color-light;
@@ -12,14 +36,10 @@
             border-bottom:2px solid rgba($color-secondary, 0.2);
             text-transform: capitalize;
         }
-        td{
-            &.action{
-            }
-        }
     }
 }
 .table-footer{
-    @include flexjust;
+    @include flexBetween;
     align-items: center;
 }
 ul.pagination {

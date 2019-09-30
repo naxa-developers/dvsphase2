@@ -1,6 +1,7 @@
 form {
     .form-group {
         margin-bottom: 3rem;
+        position: relative;
 
         label {
             color: $blue-light;
@@ -37,5 +38,117 @@ form {
                 outline: none;
             }
         }
+
+        textarea {
+            min-height: 140px;
+        }
+
+        .error-message {
+            color: $color-error;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            display: inline-block;
+
+            .error-icon {
+                color: $color-error;
+                @include translatey;
+                right: 1rem;
+            }
+        }
+
+        &.error {
+            .form-control {
+                background-color: rgba($color-error, 0.05);
+            }
+
+        }
+    }
+    &.program-form{
+        margin-top:3rem;
+    }
+    .default-form{
+        border-bottom: 1px solid $color-bg;
     }
 }
+
+.custom-checkbox{
+    .custom-control-label::before{
+        background-color: transparent;
+        border:1.2px solid $color-bg-text;
+        border-radius: 0;
+    }
+}
+.custom-checkbox {
+    .custom-control-input:checked~.custom-control-label::before {
+        background-color: $color-secondary;
+        border-color:$color-secondary;
+    }
+}
+.select-list{
+    h4{
+        color:$blue-light;
+        text-transform: uppercase;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        
+    }
+}
+.form-card{
+    margin-top:3rem;
+    h3{
+        font-size: 1.5rem;
+        margin-bottom: 3rem;
+        font-weight: 700;
+    }
+}
+.checklist-wrapper{
+    @include boxshadow($boxshadow:0 10px 16px rgba($color-primary, 0.40));
+    .checklist-body{
+        min-height: 200px;
+        .checklist-card{
+            display:block;
+            .checklist-header{
+                padding:.6125rem 1rem;
+                &.active{
+                    background-color:$red-light;
+                }
+            }
+            .custom-checkbox {
+                .custom-control-label {
+                    color:$color-bg-text;
+                }
+                .custom-control-input:checked~.custom-control-label{
+                    color:$color-secondary;
+                }
+            }
+            ul{
+                padding:0 2rem;
+                display: none;
+                li{
+                    padding:.6125rem 0;
+                    &.active{
+                        background-color: $red-light;
+                    }
+                }
+            }
+            
+        }
+        &.marker-body{
+            .checklist-card{
+               ul{
+                   display: block;
+               }
+            }
+        }
+    }
+}
+.marker-sector{
+    .checklist-wrapper{
+        box-shadow: none;
+        .marker-body{
+            background-color: $color-bg;
+        }
+    }
+}
+
+

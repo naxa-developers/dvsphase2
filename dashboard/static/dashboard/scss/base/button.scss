@@ -1,29 +1,74 @@
-button.dfid-button{
-    padding:1rem 2rem;
+button.dfid-button,a.dfid-button {
+    padding: 1rem 2rem;
     text-align: center;
     text-transform: capitalize;
-    font-size:1rem;
-    color:$color-white;
+    font-size: 1rem;
+    color: $color-white;
     background-color: $color-secondary;
     @include animate_all(all .5s);
     box-shadow: none;
-    border:none;
+    border: none;
     font-family: $montserrat;
     font-weight: 600;
     cursor: pointer;
-    &:hover{
+    min-width:110px;
+    display: inline-block;
+
+    &:hover {
         @include boxshadow($boxshadow:0 10px 25px rgba($color-secondary, 0.40));
     }
-}
-button{
-    -webkit-outline:none;
-    outline: none;
-    cursor: pointer;
-    &:focus{
-        -webkit-outline:none;
-        outline: none; 
+    &.border-button{
+        border:1px solid $color-secondary;
+        background-color: transparent;
+        color:$color-secondary;
+        text-transform: capitalize;
+        padding: 0.5rem 1rem;
+        &:hover {
+            @include boxshadow($boxshadow:0 10px 25px rgba($color-secondary, 0.40));
+        }
+    }
+    &.sm-button{
+        padding: 0.5rem 1rem;
+        border:1px solid $color-secondary;
     }
 }
+.action-btn{
+    width:100%;
+    .sm-button:last-child{
+        margin-left: 0.6125rem;
+    }
+}
+
+.mobile_menu {
+    box-shadow: none;
+    border:0;
+    background-color: transparent;
+    padding:0;
+    margin:0;
+    i {
+        color: $color-white;
+        background-color: $color-secondary;
+        border: 0;
+        padding: 0.5rem;
+        @include flexvr;
+        align-items: center;
+        flex-direction: column;
+        @include radius(5px);
+    }
+}
+
+button {
+    -webkit-outline: none;
+    outline: none;
+    cursor: pointer;
+
+    &:focus {
+        -webkit-outline: none;
+        outline: none;
+    }
+
+}
+
 .checkbox label,
 .radio label {
     display: inline-block;
@@ -31,8 +76,9 @@ button{
     cursor: pointer;
     padding-left: 33px;
     line-height: 27px;
+
     &::before,
-    &::after{
+    &::after {
         content: " ";
         display: inline-block;
         position: absolute;
@@ -53,7 +99,7 @@ button{
 }
 
 .checkbox {
-    label{
+    label {
         &::after {
             color: $color-white;
             font-size: 14px;
@@ -64,40 +110,45 @@ button{
             opacity: 0;
             border: 0;
             background-color: $color-secondary;
-            
+
         }
     }
-    input[type="checkbox"]{
+
+    input[type="checkbox"] {
         opacity: 0;
         position: absolute;
         visibility: hidden;
-        
-        &:checked+label:after{
+
+        &:checked+label:after {
             opacity: 1
         }
     }
-    
+
 }
-.radio{
+
+.radio {
     input[type="radio"] {
         opacity: 0;
         position: absolute;
         visibility: hidden
     }
-    input[type="radio"]+label:after{
+
+    input[type="radio"]+label:after {
         opacity: 0;
     }
+
     input[type="radio"]:checked+label::after {
         width: 8px;
         height: 8px;
         background-color: $color-secondary;
-        border-color:transparent;
-        top:9px;
-        left:9px;
+        border-color: transparent;
+        top: 9px;
+        left: 9px;
         opacity: 1
     }
+
     label::after,
-    label::before{
+    label::before {
         content: " ";
         width: 20px;
         height: 20px;
@@ -115,6 +166,7 @@ button{
         transition: opacity 0.3s linear
     }
 }
+
 .checkbox.checkbox-circle label::before {
     border-radius: 50%
 }

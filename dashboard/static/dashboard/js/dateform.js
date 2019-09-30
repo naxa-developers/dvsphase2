@@ -106,8 +106,8 @@
       $(this).find('.popOver').html(Math.round($percent) + '%');
       $(this).parent().find('.progress-value').html(" " + now);
   });
-    $('.select2').select2();
-    
+    // $('.select2').select2();
+    $('.collapse').collapse()
   })(jQuery);
 
 
