@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i> program</a>
+            </li>
+            <li>New</li>
+        </ul>
+    </div>
+    <!-- program form -->
+    <form class="program-form">
+
+        <!-- default form -->
+        <div class="default-form">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group error">
+                        <label for="" class="">program name</label>
+                        <input type="text" class="form-control" placeholder="Name"/>
+                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>
+                                        Please ennter name</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="" class="">Description</label>
+                        <textarea type="text" class="form-control" placeholder="Program description"
+                                  rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="" class="">Code</label>
+                        <input type="text" class="form-control" placeholder="e.g. 108538"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="" class="">IATI Identifier</label>
+                        <input type="text" class="form-control" placeholder="e.g. GB-1-204857-105"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="" class="">Budget</label>
+                        <input type="text" class="form-control" placeholder="e.g. GBP 89413"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+        </div>
+
+        <!-- category form -->
+        <div class="category-form form-card">
+            <div class="form-title">
+                <h3>Category</h3>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="category-sector select-list">
+                        <h4>Sector</h4>
+                        <div class="checklist-wrapper">
+                            <div class="checklist-body category-body">
+                                <div class="checklist-card">
+                                    <div class="checklist-header">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="check1"
+                                                   name="check1">
+                                            <label class="custom-control-label" for="check1">EP -Environment
+                                                Protection</label>
+                                        </div>
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="check2" name="check2">
+                                                <label class="custom-control-label"
+                                                       for="check2">BusinessSupport
+                                                    Services and Institutions (25010)</label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="check3" name="check23">
+                                                <label class="custom-control-label"
+                                                       for="check3">Education/Training in Banking and Financial
+                                                    Services (24081)</label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="check4" name="check4">
+                                                <label class="custom-control-label" for="check4">Financial
+                                                    Policy and Administrative Management (24010)</label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="checklist-card">
+                                    <div class="checklist-header">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="check5"
+                                                   name="check5">
+                                            <label class="custom-control-label" for="check5">EP -Environment
+                                                Protection</label>
+                                        </div>
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="check2" name="check2">
+                                                <label class="custom-control-label"
+                                                       for="check2">BusinessSupport
+                                                    Services and Institutions (25010)</label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="check3" name="check23">
+                                                <label class="custom-control-label"
+                                                       for="check3">Education/Training in Banking and Financial
+                                                    Services (24081)</label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="check4" name="check4">
+                                                <label class="custom-control-label" for="check4">Financial
+                                                    Policy and Administrative Management (24010)</label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="marker-sector select-list">
+                        <h4>Marker</h4>
+                        <div class="checklist-wrapper">
+                            <div class="checklist-body marker-body">
+                                <div class="checklist-card">
+                                    <ul>
+                                        <li>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="check8" name="check8">
+                                                <label class="custom-control-label" for="check8">Team
+                                                    Marker</label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="check9" name="check">
+                                                <label class="custom-control-label" for="check9">Disability
+                                                    Marker</label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="check10" name="check10">
+                                                <label class="custom-control-label"
+                                                       for="check10">Rio_CCA</label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="check11" name="check">
+                                                <label class="custom-control-label" for="check11">Rio_CCM
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="check12" name="check12">
+                                                <label class="custom-control-label"
+                                                       for="check12">Rio_Biodiversity</label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group mrt-100">
+            <button type="submit" class="dfid-button sm-button">Save</button>
+        </div>
+</main>
+
+{% endblock %}
+

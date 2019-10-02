@@ -17,7 +17,9 @@ from rest_framework.status import (
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from django.views.generic import ListView, DetailView
-from core.models import Province, Program, FiveW, District, GapaNapa
+from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
+    MarkerValues, Indicator, IndicatorValue
+from .models import UserProfile
 from django.contrib.auth.models import User, Group
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -181,20 +183,139 @@ def province_list(request):
 
 
 class ProgramList(ListView):
-    template_name = 'province_list.html'
+    template_name = 'program_list.html'
     model = Program
 
-    # context_object_name = 'usero'
+    def get_context_data(self, **kwargs):
+        data = super(ProgramList, self).get_context_data(**kwargs)
+        program_list = Program.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = program_list
+        data['user'] = user_data
+        data['active'] = 'program'
+        return data
 
-    def get_queryset(self):
-        qs = Program.objects.order_by('id')
-        return qs
+
+class PartnerList(ListView):
+    template_name = 'partner_list.html'
+    model = Partner
+
+    def get_context_data(self, **kwargs):
+        data = super(PartnerList, self).get_context_data(**kwargs)
+        partner_list = Partner.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = partner_list
+        data['user'] = user_data
+        data['active'] = 'partner'
+        return data
+
+
+class SectorList(ListView):
+    template_name = 'sector_list.html'
+    model = Sector
+
+    def get_context_data(self, **kwargs):
+        data = super(SectorList, self).get_context_data(**kwargs)
+        sector_list = Sector.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = sector_list
+        data['user'] = user_data
+        data['active'] = 'sector'
+        return data
+
+
+class SubSectorList(ListView):
+    template_name = 'sub_sector_list.html'
+    model = SubSector
+
+    def get_context_data(self, **kwargs):
+        data = super(SubSectorList, self).get_context_data(**kwargs)
+        sub_sector_list = SubSector.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = sub_sector_list
+        data['user'] = user_data
+        data['active'] = 'sector'
+        return data
+
+
+class MarkerList(ListView):
+    template_name = 'marker_list.html'
+    model = MarkerCategory
+
+    def get_context_data(self, **kwargs):
+        data = super(MarkerList, self).get_context_data(**kwargs)
+        marker_list = MarkerCategory.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = marker_list
+        data['user'] = user_data
+        data['active'] = 'marker'
+        return data
+
+
+class MarkerValueList(ListView):
+    template_name = 'marker_value_list.html'
+    model = MarkerValues
+
+    def get_context_data(self, **kwargs):
+        data = super(MarkerValueList, self).get_context_data(**kwargs)
+        markervalue_list = MarkerValues.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = markervalue_list
+        data['user'] = user_data
+        data['active'] = 'marker'
+        return data
+
+
+class IndicatorList(ListView):
+    template_name = 'indicator_list.html'
+    model = Indicator
+
+    def get_context_data(self, **kwargs):
+        data = super(IndicatorList, self).get_context_data(**kwargs)
+        indicator_list = Indicator.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = indicator_list
+        data['user'] = user_data
+        data['active'] = 'indicator'
+        return data
+
+
+class IndicatorValueList(ListView):
+    template_name = 'indicator_value_list.html'
+    model = Indicator
+
+    def get_context_data(self, **kwargs):
+        indicator = self.request.GET['id']
+        data = super(IndicatorValueList, self).get_context_data(**kwargs)
+        indicator_value_list = IndicatorValue.objects.filter(indicator_id=indicator).order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = indicator_value_list
+        data['user'] = user_data
+        data['active'] = 'indicator'
+        return data
 
 
 class Dashboard(LoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
-        return render(request, 'dashboard.html')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        return render(request, 'dashboard.html', {'user': user_data, 'active': 'dash'})
+
+
+#
+# class ProgramList(LoginRequiredMixin, TemplateView):
+#
+#     def get(self, request, *args, **kwargs):
+#         return render(request, 'program_list.html')
 
 
 def signup(request):

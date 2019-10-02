@@ -3,12 +3,18 @@ from django.contrib.gis.db import models
 
 # Create your models here.
 class Partner(models.Model):
-    partner_name = models.CharField(max_length=100, null=True, blank=True)
-    partner_description = models.TextField(null=True, blank=True)
-    partner_address = models.CharField(max_length=100, null=True, blank=True)
+    name = models.CharField(max_length=100, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    address = models.CharField(max_length=100, null=True, blank=True)
+    email = models.CharField(max_length=100, null=True, blank=True)
+    phone_number = models.CharField(max_length=100, null=True, blank=True)
+    contact_person_name = models.CharField(max_length=100, null=True, blank=True)
+    contact_person_email = models.CharField(max_length=100, null=True, blank=True)
+    contact_person_ph = models.CharField(max_length=100, null=True, blank=True)
+    image = models.ImageField(upload_to='upload/partner/', null=True, blank=True)
 
     def __str__(self):
-        return self.partner_name
+        return self.name
 
 
 class MarkerCategory(models.Model):
