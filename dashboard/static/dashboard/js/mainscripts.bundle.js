@@ -92,9 +92,16 @@ function checkbox(){
     });
   };
   checkbox();
+  function tableAction (){
+    $('.table-action a.more-action').on('click',function(e){
+        e.preventDefault();
+        $(this).closest('.table-action ').find('ul').slideToggle(200);
+    })
+  }
+  tableAction();
 
 var programmeHeight = $('.dfid-program .program-info').height();
-$('.dfid-program .about-programme').css({'min-height': programmeHeight});
+$('.dfid-program .about-program').css({'min-height': programmeHeight});
 
 
 $(function() {

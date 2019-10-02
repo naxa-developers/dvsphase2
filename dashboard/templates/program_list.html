@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i> program</a>
+            </li>
+            <li><a href="program-form.html" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
+            </li>
+        </ul>
+    </div>
+    <!-- dfid program table -->
+    <div class="table-tesponsive program-list">
+        <table class="program-table dataTable">
+            <thead>
+            <tr>
+                <th>Program</th>
+                <th>Code</th>
+                <th>Assigned org.</th>
+                <th>start date</th>
+                <th>budget</th>
+                <th>status</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for program in list %}
+            <tr>
+                <td>
+                    <strong><a href="#">{{program.name}}</a></strong>
+                </td>
+                <td>{{program.program_code}}</td>
+                <td>
+                    <div class="org-list">
+                        <a href="#">
+                            <img src="{% static 'dashboard/images/organization.svg' %}" alt="org"/>
+                        </a>
+                        <a href="#">
+                            <img src="{% static 'dashboard/images/org-1.svg' %}" alt="org"/>
+                        </a>
+                        <a href="#">
+                            <img src="{% static 'dashboard/images/org-2.svg' %}" alt="org"/>
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <time>june 03,2012</time>
+                </td>
+                {% if program.budget %}
+                <td><span class="budget">{{program.budget}}</span></td>
+                {% else %}
+                <td><span class="budget">No data</span></td>
+                {% endif %}
+
+                {% if program.status == 'ongoing' %}
+                <td><span class="status yellow">{{program.status}}</span></td>
+                {% else %}
+                <td><span class="status green">{{program.status}}</span></td>
+                {% endif %}
+
+                <td>
+                    <div class="table-action">
+                        <a href="#" class="more-action">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-animation">
+                            <li>
+                                <a href="#" class="flex-start">
+                                    <i class="material-icons">edit</i> Edit
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex-start">
+                                    <i class="material-icons">delete</i>delete
+                                </a>
+
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}

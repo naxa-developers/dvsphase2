@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
+  <g id="Group_3845" data-name="Group 3845" transform="translate(-347 -1156)">
+    <g id="Group_3702" data-name="Group 3702" transform="translate(0 -8)">
+      <g id="Group_3686" data-name="Group 3686" transform="translate(0 518)">
+        <g id="avatar" transform="translate(347 646)" fill="#f8bb43" stroke="#fff" stroke-width="1">
+          <circle cx="20" cy="20" r="20" stroke="none"/>
+          <circle cx="20" cy="20" r="19.5" fill="none"/>
+        </g>
+      </g>
+    </g>
+    <text id="Q" transform="translate(367 1183)" fill="#fff" font-size="19" font-family="Montserrat-ExtraBoldItalic, Montserrat" font-weight="800" font-style="italic" letter-spacing="0.15em"><tspan x="-8.037" y="0">Q</tspan></text>
+  </g>
+</svg>

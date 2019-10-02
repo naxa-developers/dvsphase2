@@ -23,6 +23,17 @@
                         margin:0 .6125rem;
                         text-transform: initial;
                 }
+                &.sm-button{
+                    padding:0.15rem .5rem;
+                    text-align: center;
+                    min-width: auto;
+                    i{
+                        margin-right: .25rem;
+                    }
+                    &::after{
+                        display: none;
+                    }
+                }
             }
         }
     }

@@ -70,6 +70,7 @@
                 .dropdown-menu {
                     width: 300px;
                     right: .6125rem;
+                    padding: 0;
 
                     li {
                         border-bottom: 1px solid $color-white;
@@ -109,6 +110,11 @@
                             a {
                                 padding: 0.94rem 1.25rem;
                                 font-weight: 600;
+                                @include flexStart;
+                                align-items: center;
+                                i{
+                                    margin-right: 0.5rem;
+                                }
                             }
                         }
                     }

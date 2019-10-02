@@ -1928,8 +1928,13 @@ button:focus {
   margin-top: 0;
 }
 
+.program-list {
+  margin-top: 3rem;
+}
+
 .dataTable {
   width: 100% !important;
+  margin-top: 1rem;
 }
 .dataTable thead {
   background-color: #f5f5f5;
@@ -1940,13 +1945,187 @@ button:focus {
   font-family: "Montserrat", sans-serif;
   font-size: 0.875rem;
   font-weight: 500;
+  padding: 1rem 0.6125rem;
+}
+.dataTable tbody tr {
+  border-bottom: 1px solid #E2E2E2;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
 }
 .dataTable tbody tr td {
   font-weight: 500;
+  font-family: "Montserrat", sans-serif;
+  padding: 1rem 0.6125rem;
 }
 .dataTable tbody tr td span.budget {
   color: #D9002A;
   font-weight: 500;
+}
+.dataTable tbody tr td strong {
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+}
+.dataTable tbody tr td .org-list {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.dataTable tbody tr td .org-list a {
+  max-width: 30px;
+  margin-left: -10px;
+  width: 30px;
+  height: 30px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+}
+.dataTable tbody tr td .org-list a img {
+  width: 30px;
+  height: 30px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+.dataTable tbody tr td .org-list a:hover img {
+  -moz-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -o-transform: scale(1.2);
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+}
+.dataTable tbody tr td .partner-info {
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.dataTable tbody tr td .partner-info img {
+  width: 30px;
+  height: 30px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+.dataTable tbody tr td .partner-info h6 {
+  font-size: 1rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  /* Needed to make it work */
+  overflow: hidden;
+  white-space: nowrap;
+}
+.dataTable tbody tr td a.name {
+  color: #96A5CD;
+  font-size: 1rem;
+  font-family: "Raleway", sans-serif;
+  text-transform: capitalize;
+  font-weight: 600;
+}
+.dataTable tbody tr td a.edit {
+  color: #D9002A;
+  align-items: center;
+}
+.dataTable tbody tr td a.edit i {
+  margin-right: 0.6125rem;
+  font-size: 1rem;
+}
+.dataTable tbody tr:hover {
+  -webkit-box-shadow: 0 17px 16px rgba(0, 0, 0, 0.16);
+  -ms-box-shadow: 0 17px 16px rgba(0, 0, 0, 0.16);
+  -o-box-shadow: 0 17px 16px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 17px 16px rgba(0, 0, 0, 0.16);
+}
+.dataTable .table-action {
+  position: relative;
+  display: inline-block;
+}
+.dataTable .table-action a i {
+  color: #B6B6B6;
+}
+.dataTable .table-action ul {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 100px;
+  display: none;
+  -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16);
+  -ms-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16);
+  -o-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16);
+  z-index: 999;
+  background-color: #ffffff;
+}
+.dataTable .table-action ul li a {
+  display: block;
+  padding: 0.5rem 1rem;
+  font-size: 0.775rem;
+  color: #B6B6B6;
+  align-items: center;
+}
+.dataTable .table-action ul li a i {
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+.dataTable .table-action ul li a:hover {
+  background-color: #D9002A;
+  color: #ffffff;
+}
+
+.dt-buttons {
+  float: right;
+}
+.dt-buttons .dt-button {
+  background: transparent;
+  border: 1px solid #e8e8e8;
+  color: #B6B6B6;
+  padding: 0.25rem 1rem;
+  font-size: 0.875rem;
+  font-family: "Montserrat", sans-serif;
+}
+
+.dataTables_info {
+  color: #B6B6B6;
+  font-size: 0.875rem;
+  font-family: "Montserrat", sans-serif;
+  float: left;
+  margin-top: 2rem;
+}
+
+.dataTables_paginate {
+  margin-top: 2rem;
+}
+
+.dataTables_filter label input.form-control {
+  border: 1px solid #e8e8e8;
+  color: #B6B6B6;
+  font-size: 0.875rem;
+  font-family: "Montserrat", sans-serif;
+  -webkit-outline: none;
+  outline: none;
+}
+.dataTables_filter label input.form-control:focus {
+  -webkit-outline: none;
+  outline: none;
+  box-shadow: none;
+  background-color: #E6E9F3;
 }
 
 .project_list {
@@ -1954,7 +2133,8 @@ button:focus {
   background-color: #ffffff;
   margin-bottom: 30px;
 }
-.project_list .table th, .project_list .table td {
+.project_list .table th,
+.project_list .table td {
   border: 1px solid rgba(0, 0, 0, 0.1);
   font-size: 0.875rem;
 }
@@ -1978,17 +2158,18 @@ ul.pagination {
   justify-content: flex-end;
   align-items: center;
 }
-ul.pagination li.page-item a.page-link {
+ul.pagination li a.page-link {
   color: #000000;
   background-color: #f5f5f5;
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
-ul.pagination li.page-item a.page-link:focus {
+ul.pagination li a.page-link:focus {
   outline: none;
 }
-ul.pagination li.page-item.active a.page-link, ul.pagination li.page-item:hover a.page-link {
+ul.pagination li.active a.page-link, ul.pagination li:hover a.page-link {
   background-color: #D9002A;
   color: #ffffff;
+  border-color: #D9002A;
 }
 
 .dfid-breadcrumb ul {
@@ -2025,6 +2206,17 @@ ul.pagination li.page-item.active a.page-link, ul.pagination li.page-item:hover 
   font-family: "Material Icons";
   margin: 0 0.6125rem;
   text-transform: initial;
+}
+.dfid-breadcrumb ul li a.sm-button {
+  padding: 0.15rem 0.5rem;
+  text-align: center;
+  min-width: auto;
+}
+.dfid-breadcrumb ul li a.sm-button i {
+  margin-right: 0.25rem;
+}
+.dfid-breadcrumb ul li a.sm-button::after {
+  display: none;
 }
 
 .sidebar {
@@ -2397,6 +2589,7 @@ ul.pagination li.page-item.active a.page-link, ul.pagination li.page-item:hover 
 .dfid-header .navbar .navbar-right .navbar-nav .dropdown-menu {
   width: 300px;
   right: 0.6125rem;
+  padding: 0;
 }
 .dfid-header .navbar .navbar-right .navbar-nav .dropdown-menu li {
   border-bottom: 1px solid #ffffff;
@@ -2433,6 +2626,17 @@ ul.pagination li.page-item.active a.page-link, ul.pagination li.page-item:hover 
 .dfid-header .navbar .navbar-right .navbar-nav .dropdown-menu li.dropdown-footer a {
   padding: 0.94rem 1.25rem;
   font-weight: 600;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+.dfid-header .navbar .navbar-right .navbar-nav .dropdown-menu li.dropdown-footer a i {
+  margin-right: 0.5rem;
 }
 .dfid-header .navbar .navbar-right .navbar-nav .notifications-menu {
   min-width: 70px;
