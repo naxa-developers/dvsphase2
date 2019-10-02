@@ -15,16 +15,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from testing import views
+from django.conf.urls.static import static
 from rest_framework_swagger.views import get_swagger_view
-from rest_framework.schemas import SchemaGenerator
+from django.conf import settings
+from django.contrib.auth import views as auth_views
 
 schema_view = get_swagger_view(title='DFID API DOCS')
 
 urlpatterns = [
 
     path('admin/', admin.site.urls),
-    path('', schema_view),
+    path('swagger/', schema_view),
     path('api/v1/core/', include('core.urls')),
     path('dashboard/', include('dashboard.urls')),
+    path('', auth_views.login, name='login'),
+
+
 ]
+
+if settings.DEBUG:
+   urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+   urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

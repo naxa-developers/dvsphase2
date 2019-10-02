@@ -1,0 +1,227 @@
+{% load static %}
+<!doctype html>
+<html class="no-js " lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive DFID Dashboard.">
+    <title>DFID Dashboard</title>
+    <link rel="icon" href="#" type="image/x-icon">
+    <!-- Favicon-->
+    <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap.min.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+</head>
+
+<body class="">
+<div class="dfid-wrapper">
+    <!-- Left Sidebar -->
+    <aside id="leftsidebar" class="sidebar">
+
+        <!-- brand start -->
+        <div class="navbar-brand">
+            <button class="btn-menu ls-toggle-btn" type="button"><i class="material-icons">menu</i></button>
+            <a href="index.html"><img src="{% static 'dashboard/images/logo.png' %}" width="100" alt="DFID"></a>
+        </div>
+        <!-- sidebar menu start -->
+        <div class="menu">
+            <ul class="list">
+                {% if active == 'dash' %}
+                <li class="menu-item active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+
+                    <a href="/dashboard/main/" class="active-red"><i
+                            class="material-icons">dashboard</i><span>Dashboard</span></a>
+
+                </li>
+
+                {% if active == 'program' %}
+                <li class="menu-item active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="/dashboard/program-list/" class="active-red"><i
+                            class="material-icons">assignment</i><span>programs</span></a>
+
+                </li>
+
+                {% if active == 'partner' %}
+                <li class="menu-item submenu active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="/dashboard/partner-list/" class="active-red">
+                    <i class="material-icons">person</i><span>partners</span></a>
+                </li>
+
+                {% if active == 'sector' %}
+                <li class="menu-item active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="javascript:void(0);" class="menu-toggle active-red"><i
+                        class="material-icons">category</i><span>Sectors</span></a>
+                    <ul class="ml-menu">
+                        <li><a href="/dashboard/sector-list/">Sectors</a></li>
+                        <li><a href="/dashboard/subsector-list/">Sub Sectors</a></li>
+                    </ul>
+                </li>
+
+                {% if active == 'marker' %}
+                <li class="menu-item active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="javascript:void(0);" class="menu-toggle active-red"><i
+                        class="material-icons">pie_chart</i><span>markers</span></a>
+                    <ul class="ml-menu">
+                        <li><a href="/dashboard/marker-list/">Marker Category</a></li>
+                        <li><a href="/dashboard/markervalue-list/">Marker Value</a></li>
+                    </ul>
+                </li>
+
+                {% if active == 'location' %}
+                <li class="menu-item active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="javascript:void(0);" class="menu-toggle active-red"><i
+                        class="material-icons">room</i><span>Locations</span></a>
+                    <ul class="ml-menu">
+                        <li><a href="province.html">Province</a></li>
+                        <li><a href="district.html">District</a></li>
+                        <li><a href="municipality.html">Municipalities</a></li>
+                    </ul>
+                </li>
+                {% if active == 'indicator' %}
+                <li class="menu-item active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="/dashboard/indicator-list/" class="active-red"><i
+                        class="material-icons">drag_indicator</i><span>Indicators</span></a></li>
+
+            </ul>
+        </div>
+    </aside>
+
+    <div class="page-wrapper">
+        <!-- header start -->
+
+        <header class="dfid-header" id="header">
+            <nav class="navbar navbar-static-top navbar-expand-lg">
+                <button class="btn-icon mobile_menu" type="button"><i class="material-icons">menu</i></button>
+
+
+                <div class="navbar-right ">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown notifications-menu">
+                            <button class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <i class="material-icons">notifications_none</i>
+                                <span class="notify"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right dropdown-animation">
+                                <li class="dropdown-header">You have 5 notifications</li>
+                                <li>
+                                    <a href="#">
+                                        New user registered
+                                        <span class=" font-size-12 d-inline-block float-right">10 AM</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        User deleted
+                                        <span class=" font-size-12 d-inline-block float-right"> 07 AM</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Sales report is ready
+                                        <span class=" font-size-12 d-inline-block float-right"> 12 PM</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        New client
+                                        <span class=" font-size-12 d-inline-block float-right">10 AM</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Server overloaded
+                                        <span class=" font-size-12 d-inline-block float-right"> 05 AM</span>
+                                    </a>
+                                </li>
+                                <li class="dropdown-footer">
+                                    <a class="text-center" href="#"> View All </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- User Account -->
+                        <li class="dropdown user-menu">
+                            <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"
+                                    aria-expanded="false">
+                                <img src="{% static 'dashboard/images/profile.png' %}" class="user-image"
+                                     alt="User Image">
+                                <div class="user-info">
+                                    <h6>{{ user.name}}</h6>
+                                    <span>Partner</span>
+                                </div>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right dropdown-animation">
+                                <!-- User image -->
+                                <li>
+                                    <a href="profile.html">
+                                        My Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#"> Account Setting </a>
+                                </li>
+
+                                <li class="dropdown-footer">
+                                    <a href="/dashboard/logout/"> <i class="material-icons">power_settings_new</i> Log
+                                        Out
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+
+        </header>
+
+        <!-- Main Content -->
+        {% block content %}
+        {% endblock %}
+        <!-- Main Content -->
+
+    </div>
+
+</div>
+
+
+<!-- Jquery Core Js -->
+
+<script src="{% static 'dashboard/js/jquery-3.4.1.min.js' %}"></script>
+<!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) -->
+<script src="{% static 'dashboard/js/bootstrap.min.js' %}"></script> <!-- slimscroll, waves Scripts Plugin Js -->
+<script src="{% static 'dashboard/js/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'dashboard/js/mainscripts.bundle.js' %}"></script>
+<script src="{% static 'dashboard/js/equalHeight.js' %}"></script>
+<script src="{% static 'dashboard/plugins/datatable/dataTables.min.js' %}"></script>
+<script src="{% static 'dashboard/plugins/datatable/dataTables.bootstrap.min.js' %}"></script>
+<script src="{% static 'dashboard/plugins/datatable/dataTables.button.js' %}"></script>
+<script src="{% static 'dashboard/plugins/datatable/jszip.min.js' %}"></script>
+<script src="{% static 'dashboard/plugins/datatable/buttons.html5.min.js' %}"></script>
+<script src="{% static 'dashboard/plugins/datatable/custom-datatables.js' %}"></script>
+
+
+</html>

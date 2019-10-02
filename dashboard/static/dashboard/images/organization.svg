@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 40 40">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#009199"/>
+      <stop offset="1" stop-color="#2aebd5"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_3686" data-name="Group 3686" transform="translate(-347 -646)">
+    <g id="avatar" transform="translate(347 646)" stroke="#fff" stroke-width="1" fill="url(#linear-gradient)">
+      <circle cx="20" cy="20" r="20" stroke="none"/>
+      <circle cx="20" cy="20" r="19.5" fill="none"/>
+    </g>
+    <g id="Group_3669" data-name="Group 3669" transform="translate(355.803 654.803)">
+      <g id="Logo_mark" data-name="Logo mark" transform="translate(0 0)">
+        <path id="Path" d="M19.245,10.52,13.743.99A1.973,1.973,0,0,0,12.04,0h-11A2.078,2.078,0,0,0,0,.3V.322A1.99,1.99,0,0,1,.645.99L3.407,5.778a2.069,2.069,0,0,1,.829-.184H8.794a1.926,1.926,0,0,1,1.7.99l2.279,3.936a2.021,2.021,0,0,1,0,1.98L10.5,16.436a2,2,0,0,1-1.7.99H4.259a1.986,1.986,0,0,1-.829-.184L.668,22.03a1.99,1.99,0,0,1-.645.668v.023a2.013,2.013,0,0,0,1.036.3H12.086a1.926,1.926,0,0,0,1.7-.99l5.5-9.53A2.023,2.023,0,0,0,19.245,10.52Z" transform="translate(2.964 0)" fill="#e2e2e2"/>
+        <path id="Path-2" data-name="Path" d="M9.11,10.2,6.371,5.456,3.608.668A1.99,1.99,0,0,0,2.964,0H2.941a1.754,1.754,0,0,0-.668.691L.224,4.259a1.642,1.642,0,0,0,0,1.657l2.486,4.3a1.869,1.869,0,0,1,.253.99,2.109,2.109,0,0,1-.253.99L.224,16.483a1.642,1.642,0,0,0,0,1.657L2.3,21.731a1.92,1.92,0,0,0,.668.691h.023a1.794,1.794,0,0,0,.645-.668l2.762-4.788,2.739-4.742A2.049,2.049,0,0,0,9.11,10.2Z" transform="translate(0 0.322)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

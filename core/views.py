@@ -95,7 +95,7 @@ class ProvinceApi(viewsets.ReadOnlyModelViewSet):
 class GapaNapaApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'province_id', 'district_id', 'hlcit_code']
+    filterset_fields = ['id', 'province_id', 'district_id', 'hlcit_code', 'gn_type_en', 'gn_type_np']
 
     def get_queryset(self):
         queryset = GapaNapa.objects.select_related('province_id', 'district_id').order_by('id')

@@ -1,0 +1,188 @@
+.authentication {
+    @include flexvr;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    .auth-form {
+        @include animate_all(all .5s);
+        height: 100vh;
+        @include flexvr;
+        align-items: flex-start;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        padding: 2rem 5rem;
+        position: relative;
+        overflow: hidden;
+
+        &.login-info {
+            background-image: linear-gradient(to bottom, #e6e9f3, #dce1ee, #d3d8ea, #c9d0e5, #bfc8e1);
+
+            .header {
+                img {
+                    max-width: 380px;
+                }
+            }
+
+            .welcome {
+                margin-top: 3rem;
+
+                span {
+                    font-size: 4rem;
+                    font-weight: 400;
+                    font-family: $montserrat;
+                    color: $color-blue;
+                }
+
+                h2 {
+                    font-size: 4rem;
+                    font-weight: 700;
+                    color: $color-blue;
+                }
+            }
+
+            figure {
+                position: absolute;
+                bottom: 2rem;
+                right: -100px;
+                margin: 0;
+            }
+
+            .powered-by {
+                position: absolute;
+                left: 5rem;
+                bottom: 1rem;
+                color: $blue-light;
+
+                span {
+                    text-transform: capitalize;
+                    margin-right: 0.5rem;
+                }
+
+                strong {
+                    font-family: $montserrat;
+                }
+            }
+        }
+        &.login-form{
+            .login-wrap{
+                width:100%;
+                .login-header{
+                    h3{
+                        font-size: 2rem;
+                        text-transform: capitalize;
+                        margin-bottom: 1rem;
+                    }
+                    span{
+                        font-weight: 500;
+                    }
+                }
+            }
+            form{
+                width:100%;
+                margin-top:3rem;
+                button{
+                    width:100%;
+                }
+                .forgot-password{
+                    text-align: center;
+                    a{
+                        color:$color-bg-text;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+@media only screen and (min-width: 280px) {
+    .authentication {
+        .auth-form {
+            .login-info {
+                padding: 2rem;
+
+                .header {
+                    img {
+                        max-width: 200px;
+                    }
+                }
+
+                .welcome {
+                    span {
+                        font-size: 1.5rem;
+                    }
+
+                    h2 {
+                        font-size: 1.5rem;
+                    }
+                }
+
+                figure {
+                    max-width: 400px;
+                    bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .authentication {
+        .auth-form {
+            &.login-info {
+                .welcome {
+                    span {
+                        font-size: 2rem;
+                    }
+
+                    h2 {
+                        font-size: 2rem;
+                    }
+                }
+
+                figure {
+                    max-width: 500px;
+                    bottom: 0;
+                }
+            }
+        }
+
+    }
+}
+
+@media only screen and (min-width: 1540px) {
+    .authentication {
+        .auth-form {
+            padding: 2rem 5rem;
+
+            &.login-info {
+                .header {
+                    img {
+                        max-width: 380px;
+                    }
+                }
+
+                .welcome {
+                    span {
+                        font-size: 4rem;
+                    }
+
+                    h2 {
+                        font-size: 4rem
+                    }
+                }
+
+                figure {
+                    right: -100px;
+                    max-width: 600px;
+                }
+
+                .powered-by {
+                    left: 5rem;
+                }
+            }
+        }
+    }
+}

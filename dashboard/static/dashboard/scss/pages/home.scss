@@ -1,0 +1,186 @@
+.dfid-highlight {
+    .highlight-wrapper {
+        padding: 0 5px;
+
+        .highlight-row {
+            @include rowflex;
+
+            .highlight-card {
+                @include rowcol;
+
+                .highlight-body {
+                    padding: 1rem;
+                    background-color: $color-bg;
+                    @include flexvr;
+                    flex-direction: column;
+                    @include animate_all(all .5s);
+                    min-height: 150px;
+
+                    h5 {
+                        color: $blue-light;
+                        text-transform: uppercase;
+                        font-size: .875rem;
+                        font-weight: 600;
+                        margin-bottom: 1rem;
+                        @include animate_all(all .5s);
+                        letter-spacing: .028rem;
+                    }
+
+                    h3 {
+                        margin: 0;
+                        font-size: 3rem;
+                        @include animate_all(all .5s);
+                        color: $color-blue;
+                        font-weight: 300;
+
+                        sup {
+                            font-weight: normal;
+                            font-size: 2rem;
+                        }
+                    }
+
+                    &:hover {
+                        background-color: $color-secondary;
+                        @include boxshadow($boxshadow:0 10px 25px rgba($color-secondary, 0.40));
+
+                        h5,
+                        h3 {
+                            color: $color-white;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+}
+
+.welcome-user {
+    margin-bottom: 2rem;
+
+    h2 {
+        color: $color-blue;
+        font-weight: 500;
+        font-size: 2rem;
+
+        span {
+            font-family: $raleway;
+            font-weight: 700;
+        }
+    }
+}
+
+.overview {
+    .dfid-program {
+        background-color: $color-bg;
+        margin-bottom: 2rem;
+        @include boxshadow($boxshadow:0 17px 16px rgba($color-primary, 0.16));
+        position: relative;
+        .status{
+            position: absolute;
+            right:1rem;
+            top:0;
+        }
+        ul {
+            li {
+                @include flexStart;
+                flex-wrap: nowrap;
+                margin-top:2.5rem;
+                i{
+                    max-width: 24px;
+                    margin-right: 1rem;
+                    color:$blue-light;
+                }
+                .content{
+                    h6{
+                        color:$color-bg-text;
+                        font-family: $raleway;
+                        font-size: 1rem;
+                        font-weight: 400;
+                        text-transform: capitalize;
+                    }
+                    h5{
+                        color:$color-secondary;
+                        font-family: $raleway;
+                        font-weight: 600;
+                        margin:0;
+                        font-size: 1rem;
+                    }
+                    p{
+                        margin:0;
+                        font-weight: 500;
+                        a{
+                            color:$color-blue;
+                        }
+                    }
+                }
+                // &:last-child{
+                //     margin-bottom: 1rem;
+                // }
+            }
+        }
+
+        .about-program {
+            background-color: $color-focus;
+            padding: 2.5rem 2rem;
+
+            .program-name {
+                h3 {
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    line-height: 2rem;
+                }
+
+            }
+
+            .organization {
+                flex-wrap: nowrap;
+                align-items: center;
+                margin: 3rem 0;
+
+                figure {
+                    margin: 0 1rem 0 0;
+                    max-width: 40px;
+
+                    img {
+                        width: 40px;
+                        height: 40px;
+                        @include radius(50%);
+                    }
+                }
+
+                h4 {
+                    font-size: 1rem;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .program-info {
+            
+            .program-details{
+                .mr-left{
+                    li{
+                        margin-left:2.5rem;
+                    }
+                }
+            }
+            .action-btn{
+                margin:1rem 0 2.5rem 0;
+            }
+        }
+        .program-footer{
+            border-top:1px solid $color-border;
+            padding:.6125rem 1rem;
+            a{
+                color:$color-secondary;
+                font-family: $montserrat;
+                font-weight: 600;
+                @include flexCenter;
+            }
+        }
+        .hide-details{
+            display: none;
+        }
+    }
+}

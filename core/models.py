@@ -3,12 +3,18 @@ from django.contrib.gis.db import models
 
 # Create your models here.
 class Partner(models.Model):
-    partner_name = models.CharField(max_length=100, null=True, blank=True)
-    partner_description = models.TextField(null=True, blank=True)
-    partner_address = models.CharField(max_length=100, null=True, blank=True)
+    name = models.CharField(max_length=100, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    address = models.CharField(max_length=100, null=True, blank=True)
+    email = models.CharField(max_length=100, null=True, blank=True)
+    phone_number = models.CharField(max_length=100, null=True, blank=True)
+    contact_person_name = models.CharField(max_length=100, null=True, blank=True)
+    contact_person_email = models.CharField(max_length=100, null=True, blank=True)
+    contact_person_ph = models.CharField(max_length=100, null=True, blank=True)
+    image = models.ImageField(upload_to='upload/partner/', null=True, blank=True)
 
     def __str__(self):
-        return self.partner_name
+        return self.name
 
 
 class MarkerCategory(models.Model):
@@ -20,7 +26,7 @@ class MarkerCategory(models.Model):
 
 class MarkerValues(models.Model):
     marker_category_id = models.ForeignKey(MarkerCategory, on_delete=models.CASCADE, related_name='MarkerCategory',
-                                        null=True, blank=True)
+                                           null=True, blank=True)
     value = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
@@ -40,20 +46,29 @@ class SubSector(models.Model):
     code = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return "{}--{}".format(self.sector, self.sub_sector_name)
+        return "{}--{}".format(self.sector_id, self.name)
 
 
 class Program(models.Model):
-    program_name = models.CharField(max_length=100, null=True, blank=True)
-    program_description = models.TextField(blank=True)
+    status = (
+        ('ongoing', 'Ongoing'),
+        ('completed', 'Completed'),
+
+    )
+
+    name = models.CharField(max_length=100, null=True, blank=True)
+    description = models.TextField(blank=True)
     sector = models.ManyToManyField(Sector, related_name='Psector', blank=True)
     sub_sector = models.ManyToManyField(SubSector, related_name='SubSector', blank=True)
     marker_category = models.ManyToManyField(MarkerCategory, related_name='Pmarkercategory', blank=True)
     marker_value = models.ManyToManyField(MarkerValues, related_name='MarkerValues', blank=True)
+    partner = models.ManyToManyField(Partner, related_name='Ppartner', blank=True)
     program_code = models.CharField(max_length=100, blank=True, null=True)
+    status = models.CharField(max_length=50, choices=status, default='ongoing')
+    budget = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return self.program_name
+        return self.name
 
 
 class Province(models.Model):
@@ -130,7 +145,8 @@ class Indicator(models.Model):
 
 
 class IndicatorValue(models.Model):
-    indicator_id = models.ForeignKey(Indicator, on_delete=models.CASCADE, related_name='Indicator', null=True, blank=True)
+    indicator_id = models.ForeignKey(Indicator, on_delete=models.CASCADE, related_name='Indicator', null=True,
+                                     blank=True)
     gapanapa_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='IgapaNapa', null=True, blank=True)
     value = models.FloatField(null=True, blank=True, default=None)
 

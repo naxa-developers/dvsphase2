@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i> program</a>
+            </li>
+            <li><a href="program-form.html" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
+            </li>
+        </ul>
+    </div>
+    <!-- dfid program table -->
+    <div class="table-tesponsive program-list">
+        <table class="program-table dataTable">
+            <thead>
+            <tr>
+                <th>Sn</th>
+                <th>Marker Category</th>
+                <th>Marker Value</th>
+
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for markervalue in list %}
+            <tr>
+                <td>{{ markervalue.id }}</td>
+                <td>
+                    <strong><a href="#">{{markervalue.marker_category_id}}</a></strong>
+                </td>
+                <td>{{markervalue.value}}</td>
+
+                <td>
+                    <div class="table-action">
+                        <a href="#" class="more-action">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-animation">
+                            <li>
+                                <a href="#" class="flex-start">
+                                    <i class="material-icons">edit</i> Edit
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex-start">
+                                    <i class="material-icons">delete</i>delete
+                                </a>
+
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}
