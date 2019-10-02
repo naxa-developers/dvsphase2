@@ -17,6 +17,7 @@
         <table class="program-table dataTable">
             <thead>
             <tr>
+                <th>Id</th>
                 <th>Name</th>
                 <th>Sector</th>
                 <th>Code</th>
@@ -27,6 +28,7 @@
             <tbody>
             {% for sub_sector_list in list %}
             <tr>
+                <td>{{ sub_sector_list.id }}</td>
                 <td>
                     <strong><a href="#">{{sub_sector_list.name}}</a></strong>
                 </td>

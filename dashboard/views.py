@@ -311,6 +311,14 @@ class Dashboard(LoginRequiredMixin, TemplateView):
         return render(request, 'dashboard.html', {'user': user_data, 'active': 'dash'})
 
 
+class ProgramAdd(LoginRequiredMixin, TemplateView):
+
+    def get(self, request, *args, **kwargs):
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        return render(request, 'program_add.html', {'user': user_data, 'active': 'program'})
+
+
 #
 # class ProgramList(LoginRequiredMixin, TemplateView):
 #
