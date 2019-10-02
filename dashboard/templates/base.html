@@ -24,7 +24,7 @@
         <!-- brand start -->
         <div class="navbar-brand">
             <button class="btn-menu ls-toggle-btn" type="button"><i class="material-icons">menu</i></button>
-            <a href="index.html"><img src="{% static 'dashboard/images/logo.png' %}" width="100" alt="DFID"></a>
+            <a href="/dashboard/main/"><img src="{% static 'dashboard/images/logo.png' %}" width="100" alt="DFID"></a>
         </div>
         <!-- sidebar menu start -->
         <div class="menu">
@@ -93,9 +93,9 @@
                     <a href="javascript:void(0);" class="menu-toggle active-red"><i
                         class="material-icons">room</i><span>Locations</span></a>
                     <ul class="ml-menu">
-                        <li><a href="province.html">Province</a></li>
-                        <li><a href="district.html">District</a></li>
-                        <li><a href="municipality.html">Municipalities</a></li>
+                        <li><a href="#">Province</a></li>
+                        <li><a href="#">District</a></li>
+                        <li><a href="#">Municipalities</a></li>
                     </ul>
                 </li>
                 {% if active == 'indicator' %}
@@ -166,7 +166,7 @@
                         <li class="dropdown user-menu">
                             <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"
                                     aria-expanded="false">
-                                <img src="{% static 'dashboard/images/profile.png' %}" class="user-image"
+                                <img src="{% static 'dashboard/images/admin.png' %}" class="user-image"
                                      alt="User Image">
                                 <div class="user-info">
                                     <h6>{{ user.name}}</h6>
@@ -175,14 +175,14 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right dropdown-animation">
                                 <!-- User image -->
-                                <li>
-                                    <a href="profile.html">
-                                        My Profile
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#"> Account Setting </a>
-                                </li>
+<!--                                <li>-->
+<!--                                    <a href="profile.html">-->
+<!--                                        My Profile-->
+<!--                                    </a>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <a href="#"> Account Setting </a>-->
+<!--                                </li>-->
 
                                 <li class="dropdown-footer">
                                     <a href="/dashboard/logout/"> <i class="material-icons">power_settings_new</i> Log

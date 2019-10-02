@@ -12,6 +12,7 @@ urlpatterns = [
     path('check-login/', views.check_login, name='check-login'),
     path('page_province/', views.province_list, name='page_province'),
     path('program-list/', views.ProgramList.as_view(), name='program-list'),
+    path('program-add/', views.ProgramAdd.as_view(), name='program-add'),
     path('partner-list/', views.PartnerList.as_view(), name='partner-list'),
     path('sector-list/', views.SectorList.as_view(), name='sector-list'),
     path('subsector-list/', views.SubSectorList.as_view(), name='subsector-list'),
