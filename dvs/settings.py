@@ -157,21 +157,12 @@ REST_FRAMEWORK = {
 
 }
 
-# SWAGGER_SETTINGS = {
-#     "exclude_namespaces": [],  # List URL namespaces to ignore
-#     "api_version": '0.1',  # Specify your API's version
-#     "api_path": "/",  # Specify the path to your API not a root level
-#     "enabled_methods": [  # Specify which methods to enable in Swagger UI
-#         'get',
-#         'post',
-#         'put',
-#         'patch',
-#         'delete'
-#     ],
-#     "api_key": '8933c5dd02de389ab5ee69c17a9af49f3d83b938',  # An API key
-#     "is_authenticated": False,  # Set to True to enforce user authentication,
-#     "is_superuser": False,  # Set to True to enforce admin only access
-# }
+SWAGGER_SETTINGS = {
+
+    "is_authenticated": False,  # Set to True to enforce user authentication,
+    "is_superuser": False,  # Set to True to enforce admin only access
+    "DOC_EXPANSION": "list",
+}
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
