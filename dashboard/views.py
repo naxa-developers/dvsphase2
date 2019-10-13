@@ -4,7 +4,7 @@ from django.http import HttpResponse
 import requests
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
-from .forms import UserForm
+from .forms import UserForm, ProgramCreateForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -16,7 +16,7 @@ from rest_framework.status import (
 )
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
     MarkerValues, Indicator, IndicatorValue
 from .models import UserProfile
@@ -25,6 +25,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.conf import settings
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -319,11 +320,42 @@ class ProgramAdd(LoginRequiredMixin, TemplateView):
         return render(request, 'program_add.html', {'user': user_data, 'active': 'program'})
 
 
-#
-# class ProgramList(LoginRequiredMixin, TemplateView):
-#
-#     def get(self, request, *args, **kwargs):
-#         return render(request, 'program_list.html')
+class ProgramCreate(CreateView):
+    model = Program
+    template_name = 'program_add.html'
+    form_class = ProgramCreateForm
+
+
+    def get_context_data(self, **kwargs):
+        data = super(ProgramCreate, self).get_context_data(**kwargs)
+        sectors = Sector.objects.all().prefetch_related('Sector').order_by('id')
+        markers = MarkerCategory.objects.all().prefetch_related('MarkerCategory').order_by('id')
+        partners = Partner.objects.all().order_by('id')
+        data['sectors'] = sectors
+        data['markers'] = markers
+        data['partners'] = partners
+        data['active'] = 'program'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('program-list')
+
+
+class ProgramUpdate(UpdateView):
+    model = Program
+    template_name = 'program_edit.html'
+    form_class = ProgramCreateForm
+
+    def get_context_data(self, **kwargs):
+        data = super(ProgramUpdate, self).get_context_data(**kwargs)
+        sectors = Sector.objects.all().prefetch_related('Sector').order_by('id')
+        markers = MarkerCategory.objects.all().prefetch_related('MarkerCategory').order_by('id')
+        partners = Partner.objects.all().order_by('id')
+        data['sectors'] = sectors
+        data['markers'] = markers
+        data['partners'] = partners
+        data['active'] = 'program'
+        return data
 
 
 def signup(request):

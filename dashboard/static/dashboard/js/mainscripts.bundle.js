@@ -2,7 +2,7 @@
 
 function CustomScrollbar() {
     $(".marker-body, .category-body").slimscroll({
-        height: "auto",
+        height: "300px",
         color: "#D9002A",
         position: "right",
         size: "3px",
@@ -74,7 +74,8 @@ $('.program-footer a').on('click',function(e){
 
 function checkbox(){
     $(".checklist-header .custom-control-input").change(function () {
-      $(this).closest('.checklist-card').find('.custom-checkbox input').prop('checked', $(this).prop("checked"));
+        console.log('checked');
+      $(this).closest('.checklist-card').find('.custom-control-input').prop('checked', $(this).prop("checked"));
       $(this).closest('.checklist-header').toggleClass('active');
       $(this).closest('.checklist-card').find('ul').slideToggle(300);
     });
@@ -84,10 +85,10 @@ function checkbox(){
         var checkedboxes = checkboxes.filter(':checked');
     
         if(checkboxes.length === checkedboxes.length) {
-        $(this).closest('.checklist-header').find('.custom-checkbox input').prop('checked', true);
+        $(this).closest('.checklist-header').find('.custom-checkbox-input').prop('checked', true);
         
         } else {
-          $(this).closest('.checklist-header').find('.custom-checkbox input').prop('checked', false);
+          $(this).closest('.checklist-header').find('.custom-control-input').prop('checked', false);
         }
     });
   };

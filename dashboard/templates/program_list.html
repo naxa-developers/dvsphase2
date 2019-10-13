@@ -34,16 +34,31 @@
                 </td>
                 <td>{{program.program_code}}</td>
                 <td>
+
                     <div class="org-list">
+
+                        {% for partner in program.partner.all %}
+
+                         {% if partner.image %}
+
                         <a href="#">
-                            <img src="{% static 'dashboard/images/organization.svg' %}" alt="org"/>
+                            <img src="{{ partner.image.url }}" alt="org"/>
                         </a>
-                        <a href="#">
-                            <img src="{% static 'dashboard/images/org-1.svg' %}" alt="org"/>
-                        </a>
-                        <a href="#">
-                            <img src="{% static 'dashboard/images/org-2.svg' %}" alt="org"/>
-                        </a>
+
+                        {% else %}
+
+
+
+
+                        {% endif %}
+
+                        {% endfor %}
+
+
+
+
+
+
                     </div>
                 </td>
                 <td>
