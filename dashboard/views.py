@@ -419,11 +419,19 @@ class PartnerUpdate(SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('partner-list')
 
+
 class ProgramDelete(SuccessMessageMixin, DeleteView):
     model = Program
     template_name = 'program_confirm_delete.html'
     success_message = 'Program successfully deleted'
     success_url = reverse_lazy('program-list')
+
+
+class PartnerDelete(SuccessMessageMixin, DeleteView):
+    model = Partner
+    template_name = 'partner_confirm_delete.html'
+    success_message = 'Partner successfully deleted'
+    success_url = reverse_lazy('partner-list')
 
 
 def signup(request):
