@@ -12,8 +12,18 @@
             </li>
         </ul>
     </div>
+
+
     <!-- dfid program table -->
     <div class="table-tesponsive program-list">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> {{message}}
+        </div>
+        {% endfor %}
+        {% endif %}
         <table class="program-table dataTable">
             <thead>
             <tr>
@@ -39,7 +49,7 @@
 
                         {% for partner in program.partner.all %}
 
-                         {% if partner.image %}
+                        {% if partner.image %}
 
                         <a href="#">
                             <img src="{{ partner.image.url }}" alt="org"/>
@@ -48,15 +58,9 @@
                         {% else %}
 
 
-
-
                         {% endif %}
 
                         {% endfor %}
-
-
-
-
 
 
                     </div>

@@ -26,6 +26,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.conf import settings
 from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 # Create your views here.
@@ -176,10 +177,19 @@ def check_login(request):
 
 def province_list(request):
     template_name = 'province_list.html'
-    province = Program.objects.order_by('id')
+    province = Program.objects.filter(id=5).order_by('id')
+    data_list = Program.objects.filter(id=5).values_list('sector', flat=True)
+
+    if (data_list):
+        filter_sector = Sector.objects.order_by('id')
+
+    else:
+        filter_sector = Sector.objects.exclude(id__in=data_list)
+
     data = {}
     data['object_list'] = province
-    data['sumit'] = 'province'
+    data['sector'] = Sector.objects.all().prefetch_related('Sector').order_by('id')
+    data['filtered'] = filter_sector
     return render(request, template_name, data)
 
 
@@ -324,7 +334,7 @@ class ProgramCreate(CreateView):
     model = Program
     template_name = 'program_add.html'
     form_class = ProgramCreateForm
-
+    success_message = 'Program successfully Created'
 
     def get_context_data(self, **kwargs):
         data = super(ProgramCreate, self).get_context_data(**kwargs)
@@ -341,21 +351,41 @@ class ProgramCreate(CreateView):
         return reverse_lazy('program-list')
 
 
-class ProgramUpdate(UpdateView):
+class ProgramUpdate(SuccessMessageMixin, UpdateView):
     model = Program
     template_name = 'program_edit.html'
     form_class = ProgramCreateForm
+    success_message = 'Program successfully updated'
 
     def get_context_data(self, **kwargs):
         data = super(ProgramUpdate, self).get_context_data(**kwargs)
-        sectors = Sector.objects.all().prefetch_related('Sector').order_by('id')
-        markers = MarkerCategory.objects.all().prefetch_related('MarkerCategory').order_by('id')
-        partners = Partner.objects.all().order_by('id')
-        data['sectors'] = sectors
-        data['markers'] = markers
-        data['partners'] = partners
+        sector_list = Program.objects.filter(id=self.kwargs['pk']).values_list('sector', flat=True)
+        marker_list = Program.objects.filter(id=self.kwargs['pk']).values_list('marker_category', flat=True)
+        partner_list = Program.objects.filter(id=self.kwargs['pk']).values_list('partner', flat=True)
+
+        if (sector_list):
+            filter_sector = Sector.objects.order_by('id')
+        else:
+            filter_sector = Sector.objects.exclude(id__in=sector_list)
+
+        if (marker_list):
+            filter_marker = MarkerCategory.objects.order_by('id')
+        else:
+            filter_marker = MarkerCategory.objects.exclude(id__in=marker_list)
+
+        if (partner_list):
+            filter_partners = Partner.objects.order_by('id')
+        else:
+            filter_partners = Partner.objects.exclude(id__in=partner_list)
+
+        data['sectors'] = filter_sector
+        data['markers'] = filter_marker
+        data['partners'] = filter_partners
         data['active'] = 'program'
         return data
+
+    def get_success_url(self):
+        return reverse_lazy('program-list')
 
 
 def signup(request):

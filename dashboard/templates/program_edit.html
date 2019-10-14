@@ -16,7 +16,7 @@
 
 
         {% csrf_token %}
-         {{ form.as_p }}
+
          {% if form.errors %}
                     {% for field in form %}
                     {% for error in field.errors %}
@@ -32,7 +32,7 @@
                     {% endfor %}
                     {% endif %}
 
-        <p>{{form.instance.sector}}</p>
+
 
         <div class="default-form">
             <div class="row">
@@ -54,7 +54,7 @@
                         <label for="id_description" class="">Description</label>
                         <textarea type="text" class="form-control" name="description" cols="40" rows="10"
                                   id="id_description" placeholder="Program description"
-                                  rows="5"></textarea>
+                                  rows="5">{{ form.instance.description }}</textarea>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -64,7 +64,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_program_code" class="">Code</label>
-                        <input type="text" class="form-control" name="program_code" maxlength="100" id="id_program_code"
+                        <input type="text" class="form-control" name="program_code" value="{{ form.instance.program_code }}" maxlength="100" id="id_program_code"
                                placeholder="e.g. 108538"/>
                     </div>
                 </div>
@@ -78,9 +78,8 @@
                     <div class="form-group">
                         <label for="id_status">Status</label>
                         <select name="status" id="id_status" class="custom-select">
-                            <option value="ongoing" selected>Ongoing</option>
-
-                            <option value="completed">Completed</option>
+                            <option value="ongoing" {% if form.instance.status == "ongoing" %} selected {% endif %}>Ongoing</option>
+                            <option value="completed"{% if form.instance.status == "completed" %} selected {% endif %}>Completed</option>
 
                         </select>
                     </div>
@@ -90,7 +89,7 @@
                 <div class="col-md-6">
                     <div class="form-group ">
                         <label for="id_budget" class="">Budget</label>
-                        <input type="text" class="form-control" name="budget" maxlength="100" id="id_budget"
+                        <input type="text" class="form-control" name="budget" value="{{ form.instance.budget }}" maxlength="100" id="id_budget"
                                placeholder="e.g. GBP 89413"/>
                     </div>
                 </div>
@@ -111,9 +110,41 @@
                         <h4>Sector</h4>
                         <div class="checklist-wrapper">
                             <div class="checklist-body category-body">
-                                {% for sector in sectors %}
-                                <div class="checklist-card">
-                                    <div class="checklist-header">
+
+                                {% for sector in form.instance.sector.all %}
+                                <div class="checklist-card ">
+                                    <div class="checklist-header active">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="sector"
+                                                   id="list{{sector.id}}"
+                                                   value="{{sector.id}}" checked>
+                                            <label class="custom-control-label"
+                                                   for="list{{sector.id}}">{{sector.name}}</label>
+
+                                        </div>
+                                    </div>
+                                    <ul style="display: block;">
+                                        {% for sub_sector in sector.Sector.all %}
+                                        <li>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="sublist{{sub_sector.id}}" name="sub_sector"
+                                                       value="{{sub_sector.id}}" {% for i in form.instance.sub_sector.all %} {% if i.id == sub_sector.id %} checked  {% endif %} {% endfor %}>
+                                                <label class="custom-control-label"
+                                                       for="sublist{{sub_sector.id}}">{{sub_sector.name}}</label>
+
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+
+                                    </ul>
+                                </div>
+                                {% endfor %}
+
+
+                                 {% for sector in sectors %}
+                                <div class="checklist-card ">
+                                    <div class="checklist-header ">
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" name="sector"
                                                    id="list{{sector.id}}"
@@ -141,6 +172,9 @@
                                 </div>
                                 {% endfor %}
 
+
+
+
                             </div>
                         </div>
                     </div>
@@ -152,6 +186,37 @@
 
                         <div class="checklist-wrapper">
                             <div class="checklist-body category-body">
+
+                                {% for marker in form.instance.marker_category.all %}
+                                <div class="checklist-card">
+                                    <div class="checklist-header active">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" name="marker_category"
+                                                   id="list_marker{{marker.id}}"
+                                                   value="{{marker.id}}" checked>
+                                            <label class="custom-control-label"
+                                                   for="list_marker{{marker.id}}">{{marker.name}}</label>
+
+                                        </div>
+                                    </div>
+                                    <ul style="display: block;">
+                                        {% for marker_value in marker.MarkerCategory.all %}
+                                        <li>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="sublist_marker{{marker_value.id}}" name="marker_value"
+                                                       value="{{marker_value.id}}" {% for i in form.instance.marker_value.all %} {% if i.id == marker_value.id %} checked  {% endif %} {% endfor %}>
+                                                <label class="custom-control-label"
+                                                       for="sublist_marker{{marker_value.id}}">{{marker_value.value}}</label>
+
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+
+                                    </ul>
+                                </div>
+                                {% endfor %}
+
                                 {% for marker in markers %}
                                 <div class="checklist-card">
                                     <div class="checklist-header">
@@ -182,6 +247,9 @@
                                 </div>
                                 {% endfor %}
 
+
+
+
                             </div>
                         </div>
 
@@ -194,6 +262,18 @@
                             <div class="checklist-body marker-body">
                                 <div class="checklist-card">
                                     <ul>
+                                        {% for partner in form.instance.partner.all %}
+                                        <li>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="partner{{partner.id}}" value="{{partner.id}}" name="partner" checked>
+                                                <label class="custom-control-label"  for="partner{{partner.id}}">{{partner.name}}</label>
+
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+
+
                                        {% for partner in partners %}
                                         <li>
                                             <div class="custom-control custom-checkbox">
