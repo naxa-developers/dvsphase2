@@ -29,6 +29,7 @@ urlpatterns = [
     path('partner-delete/<int:pk>', views.PartnerDelete.as_view(), name='partner-delete'),
 
     path('sector-list/', views.SectorList.as_view(), name='sector-list'),
+    path('sector-add/', views.SectorCreate.as_view(), name='sector-add'),
 
     path('subsector-list/', views.SubSectorList.as_view(), name='subsector-list'),
 

@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.forms import ModelForm
-from core.models import Program, Partner
+from core.models import Program, Partner, Sector
 
 
 class UserForm(ModelForm):
@@ -18,4 +18,10 @@ class ProgramCreateForm(ModelForm):
 class PartnerCreateForm(ModelForm):
     class Meta:
         model = Partner
+        fields = '__all__'
+
+
+class SectorCreateForm(ModelForm):
+    class Meta:
+        model = Sector
         fields = '__all__'
