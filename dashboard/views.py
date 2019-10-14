@@ -4,7 +4,7 @@ from django.http import HttpResponse
 import requests
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
-from .forms import UserForm, ProgramCreateForm
+from .forms import UserForm, ProgramCreateForm, PartnerCreateForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -214,7 +214,7 @@ class PartnerList(ListView):
 
     def get_context_data(self, **kwargs):
         data = super(PartnerList, self).get_context_data(**kwargs)
-        partner_list = Partner.objects.order_by('id')
+        partner_list = Partner.objects.all().order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['list'] = partner_list
@@ -351,6 +351,21 @@ class ProgramCreate(SuccessMessageMixin, CreateView):
         return reverse_lazy('program-list')
 
 
+class PartnerCreate(SuccessMessageMixin, CreateView):
+    model = Partner
+    template_name = 'partner_add.html'
+    form_class = PartnerCreateForm
+    success_message = 'Partner successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(PartnerCreate, self).get_context_data(**kwargs)
+        data['active'] = 'partner'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('partner-list')
+
+
 class ProgramUpdate(SuccessMessageMixin, UpdateView):
     model = Program
     template_name = 'program_edit.html'
@@ -395,6 +410,7 @@ class ProgramDelete(SuccessMessageMixin, DeleteView):
     template_name = 'program_confirm_delete.html'
     success_message = 'Program successfully deleted'
     success_url = reverse_lazy('program-list')
+
 
 def signup(request):
     if request.method == 'POST':

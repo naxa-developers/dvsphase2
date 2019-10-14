@@ -19,12 +19,12 @@ urlpatterns = [
     path('page_province/', views.province_list, name='page_province'),
 
     path('program-list/', views.ProgramList.as_view(), name='program-list'),
-    # path('program-add/', views.ProgramAdd.as_view(), name='program-add'),
     path('program-add/', views.ProgramCreate.as_view(), name='program-add'),
     path('program-edit/<int:pk>', views.ProgramUpdate.as_view(), name='program-edit'),
     path('program-delete/<int:pk>', views.ProgramDelete.as_view(), name='program-delete'),
 
     path('partner-list/', views.PartnerList.as_view(), name='partner-list'),
+    path('partner-add/', views.PartnerCreate.as_view(), name='partner-add'),
 
     path('sector-list/', views.SectorList.as_view(), name='sector-list'),
 
