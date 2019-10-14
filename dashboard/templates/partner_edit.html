@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i> Partner</a>
+            </li>
+            <li>New</li>
+        </ul>
+    </div>
+    <!-- program form -->
+    <form enctype="multipart/form-data" class="program-form" method="POST">
+
+
+        {% csrf_token %}
+
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ field.name|title }} {{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+        <div class="default-form">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_name" class="">Name</label>
+                        <input type="text" class="form-control" name="name" maxlength="100" id="id_name"
+                               placeholder="Name" value="{{ form.instance.name }}"/>
+<!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+<!--                                        Please ennter name</span>-->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_description" class="">Description</label>
+                        <textarea type="text" class="form-control" name="description" cols="40" rows="10"
+                                  id="id_description" placeholder="Program description"
+                                  rows="5">{{ form.instance.description }}</textarea>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="id_address" class="">Address</label>
+                        <input type="text" class="form-control" name="address" maxlength="100" id="id_address"
+                               placeholder="address" value="{{ form.instance.address }}"/>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="id_email" class="">Email</label>
+                        <input type="text" class="form-control" name="email" maxlength="100" id="id_email"
+                               placeholder="email" value="{{ form.instance.email }}"/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group ">
+                        <label for="id_phone_number" class="">Phone number</label>
+                        <input type="text" class="form-control" name="phone_number" maxlength="100" id="id_phone_number"
+                               placeholder="9454489413" value="{{ form.instance.phone_number }}"/>
+                    </div>
+                </div>
+                <div class="col-md-5">
+
+                    <div class="form-group ">
+                        <label for="id_contact_person_name" class="">Contact person name</label>
+                        <input type="text" class="form-control" name="contact_person_name" maxlength="100"
+                               id="id_contact_person_name"
+                               placeholder="Name" value="{{ form.instance.contact_person_name }}"/>
+                    </div>
+
+                    <div class="col-md-3">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group ">
+                        <label for="id_contact_person_email" class="">Contact person email</label>
+                        <input type="text" class="form-control" name="contact_person_email" maxlength="100"
+                               id="id_contact_person_email"
+                               placeholder="Email" value="{{ form.instance.contact_person_email }}"/>
+                    </div>
+                </div>
+                <div class="col-md-5">
+
+                    <div class="form-group ">
+                        <label for="id_contact_person_ph" class="">Contact person ph</label>
+                        <input type="text" class="form-control" name="contact_person_ph" maxlength="100"
+                               id="id_contact_person_ph"
+                               placeholder="Number" value="{{ form.instance.contact_person_ph }}"/>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group ">
+                        <label for="id_image" class="">Image</label>
+                        <input type="file" name="image" id="id_image"/>
+                    </div>
+
+                </div>
+
+                {% if form.instance.image %}
+
+                <div class="col-md-3">
+                    <div class="form-group ">
+                        <label>Current Image</label>
+                        <img src="{{ form.instance.image.url }}" height="20px" alt="org"/>
+                    </div>
+
+                    </div>
+
+                    {% endif %}
+
+
+                </div>
+
+
+                <div class="form-group mrt-100">
+                    <button type="submit" class="dfid-button sm-button">Save</button>
+                </div>
+
+
+                <!-- category form -->
+
+
+    </form>
+</main>
+
+{% endblock %}
+
