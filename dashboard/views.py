@@ -405,6 +405,20 @@ class ProgramUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('program-list')
 
 
+class PartnerUpdate(SuccessMessageMixin, UpdateView):
+    model = Partner
+    template_name = 'partner_edit.html'
+    form_class = PartnerCreateForm
+    success_message = 'Partner successfully updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(PartnerUpdate, self).get_context_data(**kwargs)
+        data['active'] = 'partner'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('partner-list')
+
 class ProgramDelete(SuccessMessageMixin, DeleteView):
     model = Program
     template_name = 'program_confirm_delete.html'
