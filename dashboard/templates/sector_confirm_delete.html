@@ -4,8 +4,8 @@
 <main class="dfid-main">
 
 
-    <h4>Partner Delete Confirmation</h4>
-     <form method="post" class="program-form">{% csrf_token %}
+    <h4>Sector Delete</h4>
+    <form method="post" class="program-form">{% csrf_token %}
         Are you sure you want to delete "{{ object }}" ?
 
 
@@ -14,7 +14,7 @@
             </div>
     </form>
      <div class="form-group ">
-                <a href="/dashboard/partner-list">
+                <a href="/dashboard/sector-list">
                     <button class="dfid-button  sm-button">No</button>
                 </a>
             </div>

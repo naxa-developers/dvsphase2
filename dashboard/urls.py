@@ -30,6 +30,8 @@ urlpatterns = [
 
     path('sector-list/', views.SectorList.as_view(), name='sector-list'),
     path('sector-add/', views.SectorCreate.as_view(), name='sector-add'),
+    path('sector-edit/<int:pk>', views.SectorUpdate.as_view(), name='sector-edit'),
+    path('sector-delete/<int:pk>', views.SectorDelete.as_view(), name='sector-delete'),
 
     path('subsector-list/', views.SubSectorList.as_view(), name='subsector-list'),
 

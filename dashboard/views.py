@@ -374,7 +374,7 @@ class SectorCreate(SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         data = super(SectorCreate, self).get_context_data(**kwargs)
-        data['active'] = 'marker'
+        data['active'] = 'sector'
         return data
 
     def get_success_url(self):
@@ -435,6 +435,21 @@ class PartnerUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('partner-list')
 
 
+class SectorUpdate(SuccessMessageMixin, UpdateView):
+    model = Sector
+    template_name = 'sector_edit.html'
+    form_class = SectorCreateForm
+    success_message = 'Sector successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(SectorUpdate, self).get_context_data(**kwargs)
+        data['active'] = 'sector'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('sector-list')
+
+
 class ProgramDelete(SuccessMessageMixin, DeleteView):
     model = Program
     template_name = 'program_confirm_delete.html'
@@ -447,6 +462,13 @@ class PartnerDelete(SuccessMessageMixin, DeleteView):
     template_name = 'partner_confirm_delete.html'
     success_message = 'Partner successfully deleted'
     success_url = reverse_lazy('partner-list')
+
+
+class SectorDelete(SuccessMessageMixin, DeleteView):
+    model = Sector
+    template_name = 'sector_confirm_delete.html'
+    success_message = 'Sector successfully deleted'
+    success_url = reverse_lazy('sector-list')
 
 
 def signup(request):
