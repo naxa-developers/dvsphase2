@@ -16,7 +16,7 @@ from rest_framework.status import (
 )
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
     MarkerValues, Indicator, IndicatorValue
 from .models import UserProfile
@@ -330,7 +330,7 @@ class ProgramAdd(LoginRequiredMixin, TemplateView):
         return render(request, 'program_add.html', {'user': user_data, 'active': 'program'})
 
 
-class ProgramCreate(CreateView):
+class ProgramCreate(SuccessMessageMixin, CreateView):
     model = Program
     template_name = 'program_add.html'
     form_class = ProgramCreateForm
@@ -363,22 +363,24 @@ class ProgramUpdate(SuccessMessageMixin, UpdateView):
         marker_list = Program.objects.filter(id=self.kwargs['pk']).values_list('marker_category', flat=True)
         partner_list = Program.objects.filter(id=self.kwargs['pk']).values_list('partner', flat=True)
 
-        if (sector_list):
+        if (sector_list[0] == None):
             filter_sector = Sector.objects.order_by('id')
+
         else:
             filter_sector = Sector.objects.exclude(id__in=sector_list)
 
-        if (marker_list):
+        if (marker_list[0] == None):
             filter_marker = MarkerCategory.objects.order_by('id')
         else:
             filter_marker = MarkerCategory.objects.exclude(id__in=marker_list)
 
-        if (partner_list):
+        if (partner_list[0] == None):
             filter_partners = Partner.objects.order_by('id')
         else:
             filter_partners = Partner.objects.exclude(id__in=partner_list)
 
         data['sectors'] = filter_sector
+        data['test'] = sector_list
         data['markers'] = filter_marker
         data['partners'] = filter_partners
         data['active'] = 'program'
@@ -387,6 +389,12 @@ class ProgramUpdate(SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('program-list')
 
+
+class ProgramDelete(SuccessMessageMixin, DeleteView):
+    model = Program
+    template_name = 'program_confirm_delete.html'
+    success_message = 'Program successfully deleted'
+    success_url = reverse_lazy('program-list')
 
 def signup(request):
     if request.method == 'POST':

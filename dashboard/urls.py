@@ -22,6 +22,7 @@ urlpatterns = [
     # path('program-add/', views.ProgramAdd.as_view(), name='program-add'),
     path('program-add/', views.ProgramCreate.as_view(), name='program-add'),
     path('program-edit/<int:pk>', views.ProgramUpdate.as_view(), name='program-edit'),
+    path('program-delete/<int:pk>', views.ProgramDelete.as_view(), name='program-delete'),
 
     path('partner-list/', views.PartnerList.as_view(), name='partner-list'),
 
