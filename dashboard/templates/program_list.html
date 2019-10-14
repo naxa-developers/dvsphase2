@@ -12,8 +12,18 @@
             </li>
         </ul>
     </div>
+
+
     <!-- dfid program table -->
     <div class="table-tesponsive program-list">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> {{message}}
+        </div>
+        {% endfor %}
+        {% endif %}
         <table class="program-table dataTable">
             <thead>
             <tr>
@@ -34,16 +44,25 @@
                 </td>
                 <td>{{program.program_code}}</td>
                 <td>
+
                     <div class="org-list">
+
+                        {% for partner in program.partner.all %}
+
+                        {% if partner.image %}
+
                         <a href="#">
-                            <img src="{% static 'dashboard/images/organization.svg' %}" alt="org"/>
+                            <img src="{{ partner.image.url }}" alt="org"/>
                         </a>
-                        <a href="#">
-                            <img src="{% static 'dashboard/images/org-1.svg' %}" alt="org"/>
-                        </a>
-                        <a href="#">
-                            <img src="{% static 'dashboard/images/org-2.svg' %}" alt="org"/>
-                        </a>
+
+                        {% else %}
+
+
+                        {% endif %}
+
+                        {% endfor %}
+
+
                     </div>
                 </td>
                 <td>
@@ -68,12 +87,12 @@
                         </a>
                         <ul class="dropdown-animation">
                             <li>
-                                <a href="#" class="flex-start">
+                                <a href="/dashboard/program-edit/{{ program.id }}" class="flex-start">
                                     <i class="material-icons">edit</i> Edit
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="flex-start">
+                                <a href="/dashboard/program-delete/{{ program.id }}" class="flex-start">
                                     <i class="material-icons">delete</i>delete
                                 </a>
 

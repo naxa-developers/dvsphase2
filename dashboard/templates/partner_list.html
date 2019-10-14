@@ -8,12 +8,21 @@
             <li>
                 <a href="#"><i class="material-icons">assignment</i> Partner</a>
             </li>
-<!--            <li><a href="program-form.html" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>-->
-<!--            </li>-->
+                        <li><a href="/dashboard/partner-add/" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
+                        </li>
         </ul>
     </div>
+
     <!-- dfid program table -->
     <div class="table-tesponsive program-list">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> {{message}}
+        </div>
+        {% endfor %}
+        {% endif %}
         <table class="program-table dataTable">
             <thead>
             <tr>
@@ -65,12 +74,12 @@
                         </a>
                         <ul class="dropdown-animation">
                             <li>
-                                <a href="#" class="flex-start">
+                                <a href="/dashboard/partner-edit/{{ partner.id }}" class="flex-start">
                                     <i class="material-icons">edit</i> Edit
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="flex-start">
+                                <a href="/dashboard/partner-delete/{{ partner.id }}" class="flex-start">
                                     <i class="material-icons">delete</i>delete
                                 </a>
 

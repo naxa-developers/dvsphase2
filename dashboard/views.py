@@ -4,7 +4,7 @@ from django.http import HttpResponse
 import requests
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
-from .forms import UserForm
+from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -16,7 +16,7 @@ from rest_framework.status import (
 )
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
     MarkerValues, Indicator, IndicatorValue
 from .models import UserProfile
@@ -25,6 +25,8 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.conf import settings
+from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 # Create your views here.
@@ -175,10 +177,19 @@ def check_login(request):
 
 def province_list(request):
     template_name = 'province_list.html'
-    province = Program.objects.order_by('id')
+    province = Program.objects.filter(id=5).order_by('id')
+    data_list = Program.objects.filter(id=5).values_list('sector', flat=True)
+
+    if (data_list):
+        filter_sector = Sector.objects.order_by('id')
+
+    else:
+        filter_sector = Sector.objects.exclude(id__in=data_list)
+
     data = {}
     data['object_list'] = province
-    data['sumit'] = 'province'
+    data['sector'] = Sector.objects.all().prefetch_related('Sector').order_by('id')
+    data['filtered'] = filter_sector
     return render(request, template_name, data)
 
 
@@ -203,7 +214,7 @@ class PartnerList(ListView):
 
     def get_context_data(self, **kwargs):
         data = super(PartnerList, self).get_context_data(**kwargs)
-        partner_list = Partner.objects.order_by('id')
+        partner_list = Partner.objects.all().order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['list'] = partner_list
@@ -319,11 +330,145 @@ class ProgramAdd(LoginRequiredMixin, TemplateView):
         return render(request, 'program_add.html', {'user': user_data, 'active': 'program'})
 
 
-#
-# class ProgramList(LoginRequiredMixin, TemplateView):
-#
-#     def get(self, request, *args, **kwargs):
-#         return render(request, 'program_list.html')
+class ProgramCreate(SuccessMessageMixin, CreateView):
+    model = Program
+    template_name = 'program_add.html'
+    form_class = ProgramCreateForm
+    success_message = 'Program successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(ProgramCreate, self).get_context_data(**kwargs)
+        sectors = Sector.objects.all().prefetch_related('Sector').order_by('id')
+        markers = MarkerCategory.objects.all().prefetch_related('MarkerCategory').order_by('id')
+        partners = Partner.objects.all().order_by('id')
+        data['sectors'] = sectors
+        data['markers'] = markers
+        data['partners'] = partners
+        data['active'] = 'program'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('program-list')
+
+
+class PartnerCreate(SuccessMessageMixin, CreateView):
+    model = Partner
+    template_name = 'partner_add.html'
+    form_class = PartnerCreateForm
+    success_message = 'Partner successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(PartnerCreate, self).get_context_data(**kwargs)
+        data['active'] = 'partner'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('partner-list')
+
+
+class SectorCreate(SuccessMessageMixin, CreateView):
+    model = Sector
+    template_name = 'sector_add.html'
+    form_class = SectorCreateForm
+    success_message = 'Sector successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(SectorCreate, self).get_context_data(**kwargs)
+        data['active'] = 'sector'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('sector-list')
+
+
+class ProgramUpdate(SuccessMessageMixin, UpdateView):
+    model = Program
+    template_name = 'program_edit.html'
+    form_class = ProgramCreateForm
+    success_message = 'Program successfully updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(ProgramUpdate, self).get_context_data(**kwargs)
+        sector_list = Program.objects.filter(id=self.kwargs['pk']).values_list('sector', flat=True)
+        marker_list = Program.objects.filter(id=self.kwargs['pk']).values_list('marker_category', flat=True)
+        partner_list = Program.objects.filter(id=self.kwargs['pk']).values_list('partner', flat=True)
+
+        if (sector_list[0] == None):
+            filter_sector = Sector.objects.order_by('id')
+
+        else:
+            filter_sector = Sector.objects.exclude(id__in=sector_list)
+
+        if (marker_list[0] == None):
+            filter_marker = MarkerCategory.objects.order_by('id')
+        else:
+            filter_marker = MarkerCategory.objects.exclude(id__in=marker_list)
+
+        if (partner_list[0] == None):
+            filter_partners = Partner.objects.order_by('id')
+        else:
+            filter_partners = Partner.objects.exclude(id__in=partner_list)
+
+        data['sectors'] = filter_sector
+        data['test'] = sector_list
+        data['markers'] = filter_marker
+        data['partners'] = filter_partners
+        data['active'] = 'program'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('program-list')
+
+
+class PartnerUpdate(SuccessMessageMixin, UpdateView):
+    model = Partner
+    template_name = 'partner_edit.html'
+    form_class = PartnerCreateForm
+    success_message = 'Partner successfully updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(PartnerUpdate, self).get_context_data(**kwargs)
+        data['active'] = 'partner'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('partner-list')
+
+
+class SectorUpdate(SuccessMessageMixin, UpdateView):
+    model = Sector
+    template_name = 'sector_edit.html'
+    form_class = SectorCreateForm
+    success_message = 'Sector successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(SectorUpdate, self).get_context_data(**kwargs)
+        data['active'] = 'sector'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('sector-list')
+
+
+class ProgramDelete(SuccessMessageMixin, DeleteView):
+    model = Program
+    template_name = 'program_confirm_delete.html'
+    success_message = 'Program successfully deleted'
+    success_url = reverse_lazy('program-list')
+
+
+class PartnerDelete(SuccessMessageMixin, DeleteView):
+    model = Partner
+    template_name = 'partner_confirm_delete.html'
+    success_message = 'Partner successfully deleted'
+    success_url = reverse_lazy('partner-list')
+
+
+class SectorDelete(SuccessMessageMixin, DeleteView):
+    model = Sector
+    template_name = 'sector_confirm_delete.html'
+    success_message = 'Sector successfully deleted'
+    success_url = reverse_lazy('sector-list')
 
 
 def signup(request):

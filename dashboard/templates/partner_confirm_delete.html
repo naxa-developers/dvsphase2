@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+
+
+    <h4>Partner Delete Confirmation</h4>
+     <form method="post" class="program-form">{% csrf_token %}
+        Are you sure you want to delete "{{ object }}" ?
+
+
+            <div class="form-group mrt-100 ">
+                <button type="submit" value="Submit" class="dfid-button sm-button">Yes</button>
+            </div>
+    </form>
+     <div class="form-group ">
+                <a href="/dashboard/partner-list">
+                    <button class="dfid-button  sm-button">No</button>
+                </a>
+            </div>
+
+</main>
+{% endblock %}
