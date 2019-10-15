@@ -4,7 +4,7 @@ from django.http import HttpResponse
 import requests
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
-from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm
+from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -379,6 +379,21 @@ class SectorCreate(SuccessMessageMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('sector-list')
+
+
+class SubSectorCreate(SuccessMessageMixin, CreateView):
+    model = SubSector
+    template_name = 'sub_sector_add.html'
+    form_class = SubSectorCreateForm
+    success_message = 'Sub Sector successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(SubSectorCreate, self).get_context_data(**kwargs)
+        data['active'] = 'sector'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('subsector-list')
 
 
 class ProgramUpdate(SuccessMessageMixin, UpdateView):
