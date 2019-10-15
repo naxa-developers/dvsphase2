@@ -36,6 +36,7 @@ urlpatterns = [
     path('subsector-list/', views.SubSectorList.as_view(), name='subsector-list'),
     path('subsector-add/', views.SubSectorCreate.as_view(), name='subsector-add'),
     path('subsector-edit/<int:pk>', views.SubSectorUpdate.as_view(), name='subsector-edit'),
+    path('subsector-delete/<int:pk>', views.SubSectorDelete.as_view(), name='subsector-delete'),
 
     path('marker-list/', views.MarkerList.as_view(), name='marker-list'),
     path('markervalue-list/', views.MarkerValueList.as_view(), name='markervalue-list'),

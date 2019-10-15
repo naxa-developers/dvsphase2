@@ -503,6 +503,13 @@ class SectorDelete(SuccessMessageMixin, DeleteView):
     success_url = reverse_lazy('sector-list')
 
 
+class SubSectorDelete(SuccessMessageMixin, DeleteView):
+    model = SubSector
+    template_name = 'sub_sector_confirm_delete.html'
+    success_message = 'Sub Sector successfully deleted'
+    success_url = reverse_lazy('subsector-list')
+
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
