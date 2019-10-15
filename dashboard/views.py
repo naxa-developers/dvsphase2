@@ -389,6 +389,7 @@ class SubSectorCreate(SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         data = super(SubSectorCreate, self).get_context_data(**kwargs)
+        data['sectors'] = Sector.objects.order_by('id')
         data['active'] = 'sector'
         return data
 
@@ -463,6 +464,22 @@ class SectorUpdate(SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('sector-list')
+
+
+class SubSectorUpdate(SuccessMessageMixin, UpdateView):
+    model = SubSector
+    template_name = 'sub_sector_edit.html'
+    form_class = SubSectorCreateForm
+    success_message = 'Sub Sector successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(SubSectorUpdate, self).get_context_data(**kwargs)
+        data['sectors'] = Sector.objects.order_by('id')
+        data['active'] = 'sector'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('subsector-list')
 
 
 class ProgramDelete(SuccessMessageMixin, DeleteView):
