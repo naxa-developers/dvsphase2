@@ -36,12 +36,12 @@
                 </td>
                 <td>{{indicator.full_title}}</td>
                 <td>
-                    {{ indicator.abstract }}
+                    {{ indicator.abstract|truncatewords:10 }}
                 </td>
                 <td>
                    {{ indicator.category }}
                 </td>
-                <td>{{ indicator.source }}</td>
+                <td>{% if indicator.source == 'nan' %} {% else %} {{ indicator.source }} {% endif %}</td>
                 <td>{{ indicator.federal_level }}</td>
 
                 <td>
