@@ -25,8 +25,8 @@ class MarkerCategory(models.Model):
 
 
 class MarkerValues(models.Model):
-    marker_category_id = models.ForeignKey(MarkerCategory, on_delete=models.CASCADE, related_name='MarkerCategory',
-                                           null=True, blank=True)
+    marker_category_id = models.ForeignKey(MarkerCategory, on_delete=models.CASCADE, related_name='MarkerCategory')
+
     value = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):

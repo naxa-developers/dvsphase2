@@ -45,16 +45,11 @@ urlpatterns = [
 
     path('markervalue-list/', views.MarkerValueList.as_view(), name='markervalue-list'),
     path('markervalue-add/', views.MarkerValueCreate.as_view(), name='markervalue-add'),
+    path('markervalue-edit/<int:pk>', views.MarkerValueUpdate.as_view(), name='markervalue-edit'),
+    path('markervalue-delete/<int:pk>', views.MarkerValueDelete.as_view(), name='markervalue-delete'),
 
     path('indicator-list/', views.IndicatorList.as_view(), name='indicator-list'),
     path('indicator-data/', views.IndicatorValueList.as_view(), name='indicator-data'),
     # path('program-list/', views.ProgramList.as_view(), name='program-list'),
-
-
-
-
-
-
-
 
 ]

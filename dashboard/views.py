@@ -529,6 +529,22 @@ class MarkerCategoryUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('marker-list')
 
 
+class MarkerValueUpdate(SuccessMessageMixin, UpdateView):
+    model = MarkerValues
+    template_name = 'marker_value_edit.html'
+    form_class = MarkerValueCreateForm
+    success_message = 'Marker Value successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(MarkerValueUpdate, self).get_context_data(**kwargs)
+        data['sectors'] = MarkerCategory.objects.order_by('id')
+        data['active'] = 'marker'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('markervalue-list')
+
+
 class ProgramDelete(SuccessMessageMixin, DeleteView):
     model = Program
     template_name = 'program_confirm_delete.html'
@@ -562,6 +578,13 @@ class MarkerCategoryDelete(SuccessMessageMixin, DeleteView):
     template_name = 'marker_cat_confirm_delete.html'
     success_message = 'Marker category successfully deleted'
     success_url = reverse_lazy('marker-list')
+
+
+class MarkerValueDelete(SuccessMessageMixin, DeleteView):
+    model = MarkerValues
+    template_name = 'marker_value_confirm_delete.html'
+    success_message = 'Marker category successfully deleted'
+    success_url = reverse_lazy('markervalue-list')
 
 
 def signup(request):
