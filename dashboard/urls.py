@@ -39,7 +39,12 @@ urlpatterns = [
     path('subsector-delete/<int:pk>', views.SubSectorDelete.as_view(), name='subsector-delete'),
 
     path('marker-list/', views.MarkerList.as_view(), name='marker-list'),
+    path('marker-cat-add/', views.MarkerCategoryCreate.as_view(), name='marker-cat-add'),
+    path('marker-cat-edit/<int:pk>', views.MarkerCategoryUpdate.as_view(), name='marker-cat-edit'),
+    path('marker-cat-delete/<int:pk>', views.MarkerCategoryDelete.as_view(), name='marker-cat-delete'),
+
     path('markervalue-list/', views.MarkerValueList.as_view(), name='markervalue-list'),
+    path('markervalue-add/', views.MarkerValueCreate.as_view(), name='markervalue-add'),
 
     path('indicator-list/', views.IndicatorList.as_view(), name='indicator-list'),
     path('indicator-data/', views.IndicatorValueList.as_view(), name='indicator-data'),

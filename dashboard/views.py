@@ -4,7 +4,8 @@ from django.http import HttpResponse
 import requests
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
-from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm
+from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
+    MarkerCategoryCreateForm, MarkerValueCreateForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -397,6 +398,37 @@ class SubSectorCreate(SuccessMessageMixin, CreateView):
         return reverse_lazy('subsector-list')
 
 
+class MarkerValueCreate(SuccessMessageMixin, CreateView):
+    model = MarkerValues
+    template_name = 'marker_value_add.html'
+    form_class = MarkerValueCreateForm
+    success_message = 'Marker Value successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(MarkerValueCreate, self).get_context_data(**kwargs)
+        data['sectors'] = MarkerCategory.objects.order_by('id')
+        data['active'] = 'marker'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('markervalue-list')
+
+
+class MarkerCategoryCreate(SuccessMessageMixin, CreateView):
+    model = MarkerCategory
+    template_name = 'marker_cat_add.html'
+    form_class = MarkerCategoryCreateForm
+    success_message = 'Marker successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(MarkerCategoryCreate, self).get_context_data(**kwargs)
+        data['active'] = 'marker'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('marker-list')
+
+
 class ProgramUpdate(SuccessMessageMixin, UpdateView):
     model = Program
     template_name = 'program_edit.html'
@@ -482,6 +514,21 @@ class SubSectorUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('subsector-list')
 
 
+class MarkerCategoryUpdate(SuccessMessageMixin, UpdateView):
+    model = MarkerCategory
+    template_name = 'marker_cat_edit.html'
+    form_class = MarkerCategoryCreateForm
+    success_message = 'Marker Category successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(MarkerCategoryUpdate, self).get_context_data(**kwargs)
+        data['active'] = 'marker'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('marker-list')
+
+
 class ProgramDelete(SuccessMessageMixin, DeleteView):
     model = Program
     template_name = 'program_confirm_delete.html'
@@ -508,6 +555,13 @@ class SubSectorDelete(SuccessMessageMixin, DeleteView):
     template_name = 'sub_sector_confirm_delete.html'
     success_message = 'Sub Sector successfully deleted'
     success_url = reverse_lazy('subsector-list')
+
+
+class MarkerCategoryDelete(SuccessMessageMixin, DeleteView):
+    model = MarkerCategory
+    template_name = 'marker_cat_confirm_delete.html'
+    success_message = 'Marker category successfully deleted'
+    success_url = reverse_lazy('marker-list')
 
 
 def signup(request):

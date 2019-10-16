@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.forms import ModelForm
-from core.models import Program, Partner, Sector, SubSector
+from core.models import Program, Partner, Sector, SubSector, MarkerCategory, MarkerValues
 
 
 class UserForm(ModelForm):
@@ -30,4 +30,16 @@ class SectorCreateForm(ModelForm):
 class SubSectorCreateForm(ModelForm):
     class Meta:
         model = SubSector
+        fields = '__all__'
+
+
+class MarkerCategoryCreateForm(ModelForm):
+    class Meta:
+        model = MarkerCategory
+        fields = '__all__'
+
+
+class MarkerValueCreateForm(ModelForm):
+    class Meta:
+        model = MarkerValues
         fields = '__all__'
