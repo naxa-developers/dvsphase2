@@ -30,6 +30,7 @@ from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from zipfile import ZipFile
 import os
+from django.contrib import messages
 
 
 # Create your views here.
@@ -111,13 +112,28 @@ def uploadData(request):
             return HttpResponse(e)
 
 
+# def ShapefileUpload(request):
+#     if "GET" == request.method:
+#
+#         return render(request, 'shapefile.html')
+#     else:
+#         shapefile = request.FILES["shapefile"]
+#         url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/river/file.shp'
+#         headers = {
+#             'Content-type': 'application/zip',
+#         }
+#         response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
+#         # print(response)
+#         return HttpResponse(response.status_code)
+
+
 def ShapefileUpload(request):
     if "GET" == request.method:
 
         return render(request, 'shapefile.html')
     else:
         shapefile = request.FILES["shapefile"]
-        url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/river/file.shp'
+        url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/coveragestores/dvs/file.geotiff'
         headers = {
             'Content-type': 'application/zip',
         }
@@ -296,6 +312,22 @@ class IndicatorList(ListView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['list'] = indicator_list
+        data['user'] = user_data
+        data['active'] = 'indicator'
+        return data
+
+
+class IndicatorValueList(ListView):
+    template_name = 'indicator_value_list.html'
+    model = Indicator
+
+    def get_context_data(self, **kwargs):
+        indicator = self.request.GET['id']
+        data = super(IndicatorValueList, self).get_context_data(**kwargs)
+        indicator_value_list = IndicatorValue.objects.filter(indicator_id=indicator).order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = indicator_value_list
         data['user'] = user_data
         data['active'] = 'indicator'
         return data
@@ -612,17 +644,12 @@ def gisLayer_create(request):
     form = GisLayerCreateForm(request.POST or None)
     if form.is_valid():
 
+        shapefile = request.FILES["shapefile"]
+        zipfile = ZipFile(shapefile)
+        names = zipfile.namelist()
+        layer_name = os.path.splitext(names[0])[0]
+
         if request.POST['type'] == 'vector':
-
-            shapefile = request.FILES["shapefile"]
-            zipfile = ZipFile(shapefile)
-            names = zipfile.namelist()
-            layer_name = os.path.splitext(names[0])[0]
-
-            # with ZipFile('foo.zip', 'r') as f:
-            #     names = f.namelist()
-            print (names)
-            print (layer_name)
 
             url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/river/file.shp'
             headers = {
@@ -630,21 +657,26 @@ def gisLayer_create(request):
             }
             response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
 
-            if response.status_code == 201:
-                obj = form.save(commit=False)
-                obj.workspace = 'Naxa'
-                obj.layer_name = layer_name
-                obj.geoserver_url = 'http://139.59.67.104:8080/geoserver/gwc/service/tms/1.0.0/Naxa:' + layer_name + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf'
+        else:
 
-                obj.save()
-                print('done')
-            else:
-                print('not-done')
+            url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/coveragestores/dvs/file.geotiff'
+            headers = {
+                'Content-type': 'application/zip',
+            }
+            response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
 
+        if response.status_code == 201:
+            obj = form.save(commit=False)
+            obj.workspace = 'Naxa'
+            obj.layer_name = layer_name
+            obj.geoserver_url = 'http://139.59.67.104:8080/geoserver/gwc/service/tms/1.0.0/Naxa:' + layer_name + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf'
+
+            obj.save()
+            messages.success(request, "Layer successfully uploaded")
+            return HttpResponse(response.status_code)
+        else:
+            messages.error(request, "Layer could not be  uploaded !! Please Try again")
             return HttpResponse(response.status_code)
 
-        else:
-            print('raster')
-        # form.save()
-        return redirect('book_list')
+        return redirect('gis_layer_list')
     return render(request, template_name, {'form': form})
