@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import pandas as pd
 from django.http import HttpResponse
 import requests
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
-    MarkerCategoryCreateForm, MarkerValueCreateForm
+    MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -28,6 +28,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.conf import settings
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
+from zipfile import ZipFile
+import os
 
 
 # Create your views here.
@@ -603,3 +605,46 @@ def signup(request):
     else:
         form = UserCreationForm()
         return render(request, 'signup.html', {'form': form})
+
+
+def gisLayer_create(request):
+    template_name = 'gis_add.html'
+    form = GisLayerCreateForm(request.POST or None)
+    if form.is_valid():
+
+        if request.POST['type'] == 'vector':
+
+            shapefile = request.FILES["shapefile"]
+            zipfile = ZipFile(shapefile)
+            names = zipfile.namelist()
+            layer_name = os.path.splitext(names[0])[0]
+
+            # with ZipFile('foo.zip', 'r') as f:
+            #     names = f.namelist()
+            print (names)
+            print (layer_name)
+
+            url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/river/file.shp'
+            headers = {
+                'Content-type': 'application/zip',
+            }
+            response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
+
+            if response.status_code == 201:
+                obj = form.save(commit=False)
+                obj.workspace = 'Naxa'
+                obj.layer_name = layer_name
+                obj.geoserver_url = 'http://139.59.67.104:8080/geoserver/gwc/service/tms/1.0.0/Naxa:' + layer_name + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf'
+
+                obj.save()
+                print('done')
+            else:
+                print('not-done')
+
+            return HttpResponse(response.status_code)
+
+        else:
+            print('raster')
+        # form.save()
+        return redirect('book_list')
+    return render(request, template_name, {'form': form})

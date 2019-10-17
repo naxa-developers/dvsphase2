@@ -161,3 +161,20 @@ class TravelTime(models.Model):
     tc_pc_pop = models.FloatField(null=True, blank=True, default=None)
     season = models.CharField(max_length=100, null=True, blank=True)
     travel_category = models.CharField(max_length=100, null=True, blank=True)
+
+
+class GisLayer(models.Model):
+    type = (
+        ('vector', 'Vector'),
+        ('raster', 'Raster'),
+
+    )
+
+    name = models.CharField(max_length=100, null=True, blank=True)
+    layer_name = models.CharField(max_length=100, null=True, blank=True)
+    workspace = models.CharField(max_length=100, null=True, blank=True)
+    geoserver_url = models.CharField(max_length=300, null=True, blank=True)
+    type = models.CharField(max_length=50, choices=type, default='vector')
+    category = models.CharField(max_length=100, null=True, blank=True)
+    filename = models.CharField(max_length=100, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)

@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.forms import ModelForm
-from core.models import Program, Partner, Sector, SubSector, MarkerCategory, MarkerValues
+from core.models import Program, Partner, Sector, SubSector, MarkerCategory, MarkerValues, GisLayer
 
 
 class UserForm(ModelForm):
@@ -42,4 +42,10 @@ class MarkerCategoryCreateForm(ModelForm):
 class MarkerValueCreateForm(ModelForm):
     class Meta:
         model = MarkerValues
+        fields = '__all__'
+
+
+class GisLayerCreateForm(ModelForm):
+    class Meta:
+        model = GisLayer
         fields = '__all__'
