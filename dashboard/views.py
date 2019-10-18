@@ -677,6 +677,54 @@ class MarkerValueUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('markervalue-list')
 
 
+class ProvinceUpdate(SuccessMessageMixin, UpdateView):
+    model = Province
+    template_name = 'province_edit.html'
+    form_class = ProvinceCreateForm
+    success_message = 'Province successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(ProvinceUpdate, self).get_context_data(**kwargs)
+        data['active'] = 'location'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('province-list')
+
+
+class DistrictUpdate(SuccessMessageMixin, UpdateView):
+    model = District
+    template_name = 'district_edit.html'
+    form_class = DistrictCreateForm
+    success_message = 'District successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(DistrictUpdate, self).get_context_data(**kwargs)
+        data['province'] = Province.objects.order_by('id')
+        data['active'] = 'location'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('district-list')
+
+
+class PalilkaUpdate(SuccessMessageMixin, UpdateView):
+    model = GapaNapa
+    template_name = 'palika_edit.html'
+    form_class = PalikaCreateForm
+    success_message = 'Palika successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(PalilkaUpdate, self).get_context_data(**kwargs)
+        data['province'] = Province.objects.order_by('id')
+        data['district'] = District.objects.order_by('id')
+        data['active'] = 'location'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('palika-list')
+
+
 class ProgramDelete(SuccessMessageMixin, DeleteView):
     model = Program
     template_name = 'program_confirm_delete.html'
