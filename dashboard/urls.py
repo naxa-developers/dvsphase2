@@ -57,7 +57,12 @@ urlpatterns = [
     path('layer-add/', views.gisLayer_create, name='layer-add'),
 
     path('province-list/', views.ProvinceList.as_view(), name='province-list'),
+    path('province-add/', views.ProvinceCreate.as_view(), name='province-add'),
+
     path('district-list/', views.DistrictList.as_view(), name='district-list'),
+    path('district-add/', views.DistrictCreate.as_view(), name='district-add'),
+
     path('palika-list/', views.PalikaList.as_view(), name='palika-list'),
+    path('palika-add/', views.PalilkaCreate.as_view(), name='palika-add'),
 
 ]

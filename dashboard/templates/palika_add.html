@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i> District</a>
+            </li>
+            <li>New</li>
+        </ul>
+    </div>
+    <!-- program form -->
+    <form class="program-form" method="POST">
+
+        {% csrf_token %}
+        
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ field.name|title }} {{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+        <div class="default-form">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_province_id">Select Province</label>
+                        <select name="province_id" id="id_province_id" class="custom-select" required>
+                            <option value="" selected>----Select Province----</option>
+                            {% for i in province %}
+
+                            <option value="{{i.id}}">{{i.name}}</option>
+
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+               <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_district_id">Select District</label>
+                        <select name="district_id" id="id_district_id" class="custom-select" required>
+                            <option value="" selected>----Select district----</option>
+                            {% for i in district %}
+
+                            <option value="{{i.id}}">{{i.name}}</option>
+
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_name" class="">Name</label>
+                        <input type="text" class="form-control" name="name" maxlength="100" id="id_name"
+                               placeholder="Name" required/>
+                        <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+                        <!--                                        Please ennter name</span>-->
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_gn_type_en" class="">Palika Type(en)</label>
+                        <input type="text" class="form-control" name="gn_type_en" maxlength="100" id="id_gn_type_en"
+                               placeholder="Municipality" required/>
+                        <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+                        <!--                                        Please ennter name</span>-->
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_gn_type_np" class="">Palika Type(nep)</label>
+                        <input type="text" class="form-control" name="gn_type_np" maxlength="100" id="id_gn_type_np"
+                               placeholder="84349" required/>
+                        <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+                        <!--                                        Please ennter name</span>-->
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_population" class="">Population</label>
+                        <input type="text" class="form-control" name="population" step="any" id="id_population"
+                               placeholder="1133434" required/>
+                        <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+                        <!--                                        Please ennter name</span>-->
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_geography" class="">Geography</label>
+                        <input type="text" class="form-control" name="geography" maxlength="100" id="id_geography"
+                               placeholder="Terai" required/>
+                        <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+                        <!--                                        Please ennter name</span>-->
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_cbs_code" class="">Cbs Code</label>
+                        <input type="text" class="form-control" name="cbs_code" maxlength="100" id="id_cbs_code"
+                               placeholder="123" required/>
+                        <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+                        <!--                                        Please ennter name</span>-->
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_hlcit_code" class="">Hlcit Code</label>
+                        <input type="text" class="form-control" name="hlcit_code" maxlength="100" id="id_hlcit_code"
+                               placeholder="84349" required/>
+                        <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+                        <!--                                        Please ennter name</span>-->
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_p_code" class="">P Code</label>
+                        <input type="text" class="form-control" name="p_code" maxlength="100" id="id_p_code"
+                               placeholder="84349" required/>
+                        <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+                        <!--                                        Please ennter name</span>-->
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+            <div class="form-group mrt-100">
+                <button type="submit" class="dfid-button sm-button">Save</button>
+            </div>
+
+        </div>
+
+
+        <!-- category form -->
+
+
+    </form>
+</main>
+
+{% endblock %}
+

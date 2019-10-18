@@ -5,7 +5,8 @@ import requests
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
-    MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm
+    MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
+    PalikaCreateForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -120,9 +121,9 @@ def ShapefileUpload(request):
     else:
         shapefile = request.FILES["shapefile"]
         layer_name = 'sumit' + str(randint(0, 9999))
-        return HttpResponse(layer_name)
+        # return HttpResponse(layer_name)
         url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/' + layer_name + '/file.shp'
-        return HttpResponse(url)
+        # return HttpResponse(url)
 
         headers = {
             'Content-type': 'application/zip',
@@ -479,6 +480,54 @@ class SubSectorCreate(SuccessMessageMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('subsector-list')
+
+
+class ProvinceCreate(SuccessMessageMixin, CreateView):
+    model = Province
+    template_name = 'province_add.html'
+    form_class = ProvinceCreateForm
+    success_message = 'Province successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(ProvinceCreate, self).get_context_data(**kwargs)
+        data['active'] = 'location'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('province-list')
+
+
+class DistrictCreate(SuccessMessageMixin, CreateView):
+    model = District
+    template_name = 'district_add.html'
+    form_class = DistrictCreateForm
+    success_message = 'District successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(DistrictCreate, self).get_context_data(**kwargs)
+        data['province'] = Province.objects.order_by('id')
+        data['active'] = 'location'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('district-list')
+
+
+class PalilkaCreate(SuccessMessageMixin, CreateView):
+    model = GapaNapa
+    template_name = 'palika_add.html'
+    form_class = PalikaCreateForm
+    success_message = 'Palika successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(PalilkaCreate, self).get_context_data(**kwargs)
+        data['province'] = Province.objects.order_by('id')
+        data['district'] = District.objects.order_by('id')
+        data['active'] = 'location'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('palika-list')
 
 
 class MarkerValueCreate(SuccessMessageMixin, CreateView):
