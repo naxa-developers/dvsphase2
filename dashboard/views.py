@@ -19,7 +19,7 @@ from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
-    MarkerValues, Indicator, IndicatorValue
+    MarkerValues, Indicator, IndicatorValue, GisLayer
 from .models import UserProfile
 from django.contrib.auth.models import User, Group
 from django.views.generic import TemplateView
@@ -31,6 +31,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from zipfile import ZipFile
 import os
 from django.contrib import messages
+from random import randint
 
 
 # Create your views here.
@@ -112,34 +113,38 @@ def uploadData(request):
             return HttpResponse(e)
 
 
-# def ShapefileUpload(request):
-#     if "GET" == request.method:
-#
-#         return render(request, 'shapefile.html')
-#     else:
-#         shapefile = request.FILES["shapefile"]
-#         url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/river/file.shp'
-#         headers = {
-#             'Content-type': 'application/zip',
-#         }
-#         response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
-#         # print(response)
-#         return HttpResponse(response.status_code)
-
-
 def ShapefileUpload(request):
     if "GET" == request.method:
 
         return render(request, 'shapefile.html')
     else:
         shapefile = request.FILES["shapefile"]
-        url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/coveragestores/dvs/file.geotiff'
+        layer_name = 'sumit' + str(randint(0, 9999))
+        return HttpResponse(layer_name)
+        url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/' + layer_name + '/file.shp'
+        return HttpResponse(url)
+
         headers = {
             'Content-type': 'application/zip',
         }
         response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
         # print(response)
         return HttpResponse(response.status_code)
+
+
+# def ShapefileUpload(request):
+#     if "GET" == request.method:
+#
+#         return render(request, 'shapefile.html')
+#     else:
+#         shapefile = request.FILES["shapefile"]
+#         url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/coveragestores/dfid/file.geotiff'
+#         headers = {
+#             'Content-type': 'application/zip',
+#         }
+#         response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
+#         # print(response)
+#         return HttpResponse(response.status_code)
 
 
 def Invitation(request):
@@ -333,19 +338,18 @@ class IndicatorValueList(ListView):
         return data
 
 
-class IndicatorValueList(ListView):
-    template_name = 'indicator_value_list.html'
-    model = Indicator
+class GisLayerList(ListView):
+    template_name = 'gis_layer_list.html'
+    model = GisLayer
 
     def get_context_data(self, **kwargs):
-        indicator = self.request.GET['id']
-        data = super(IndicatorValueList, self).get_context_data(**kwargs)
-        indicator_value_list = IndicatorValue.objects.filter(indicator_id=indicator).order_by('id')
+        data = super(GisLayerList, self).get_context_data(**kwargs)
+        gis_layer_list = GisLayer.objects.order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
-        data['list'] = indicator_value_list
+        data['list'] = gis_layer_list
         data['user'] = user_data
-        data['active'] = 'indicator'
+        data['active'] = 'gis'
         return data
 
 
@@ -645,13 +649,14 @@ def gisLayer_create(request):
     if form.is_valid():
 
         shapefile = request.FILES["shapefile"]
-        zipfile = ZipFile(shapefile)
-        names = zipfile.namelist()
-        layer_name = os.path.splitext(names[0])[0]
+        store_named = request.POST["name"]
+        store_name = store_named.replace(" ", "_").lower() + str(randint(0, 99999))
+
+        # return HttpResponse(layer_name)
 
         if request.POST['type'] == 'vector':
 
-            url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/river/file.shp'
+            url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/' + store_name + '/file.shp'
             headers = {
                 'Content-type': 'application/zip',
             }
@@ -659,13 +664,17 @@ def gisLayer_create(request):
 
         else:
 
-            url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/coveragestores/dvs/file.geotiff'
+            url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/coveragestores/' + store_name + '/file.geotiff'
             headers = {
                 'Content-type': 'application/zip',
             }
             response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
+            # return HttpResponse(response)
 
         if response.status_code == 201:
+            zipfile = ZipFile(shapefile)
+            names = zipfile.namelist()
+            layer_name = os.path.splitext(names[0])[0]
             obj = form.save(commit=False)
             obj.workspace = 'Naxa'
             obj.layer_name = layer_name
@@ -673,10 +682,9 @@ def gisLayer_create(request):
 
             obj.save()
             messages.success(request, "Layer successfully uploaded")
-            return HttpResponse(response.status_code)
+
         else:
             messages.error(request, "Layer could not be  uploaded !! Please Try again")
-            return HttpResponse(response.status_code)
 
-        return redirect('gis_layer_list')
+        return redirect('gis-layer-list')
     return render(request, template_name, {'form': form})

@@ -53,4 +53,6 @@ urlpatterns = [
     path('indicator-data/', views.IndicatorValueList.as_view(), name='indicator-data'),
     # path('program-list/', views.ProgramList.as_view(), name='program-list'),
 
+    path('gis-layer-list/', views.GisLayerList.as_view(), name='gis-layer-list'),
+
 ]
