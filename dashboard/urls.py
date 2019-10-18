@@ -6,7 +6,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('upload/', views.uploadData, name='upload'),
     path('upload-shapefile/', views.ShapefileUpload, name='upload-shapefile'),
-    path('layer-add/', views.gisLayer_create, name='layer-add'),
+
 
     path('invitation/', views.Invitation, name='invitation'),
     path('login-test/', views.login_test, name='login-test'),
@@ -54,5 +54,10 @@ urlpatterns = [
     # path('program-list/', views.ProgramList.as_view(), name='program-list'),
 
     path('gis-layer-list/', views.GisLayerList.as_view(), name='gis-layer-list'),
+    path('layer-add/', views.gisLayer_create, name='layer-add'),
+
+    path('province-list/', views.ProvinceList.as_view(), name='province-list'),
+    path('district-list/', views.DistrictList.as_view(), name='district-list'),
+    path('palika-list/', views.PalikaList.as_view(), name='palika-list'),
 
 ]

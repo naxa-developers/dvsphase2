@@ -353,6 +353,51 @@ class GisLayerList(ListView):
         return data
 
 
+class ProvinceList(ListView):
+    template_name = 'provinces_list.html'
+    model = Province
+
+    def get_context_data(self, **kwargs):
+        data = super(ProvinceList, self).get_context_data(**kwargs)
+        province = Province.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = province
+        data['user'] = user_data
+        data['active'] = 'location'
+        return data
+
+
+class DistrictList(ListView):
+    template_name = 'district_list.html'
+    model = District
+
+    def get_context_data(self, **kwargs):
+        data = super(DistrictList, self).get_context_data(**kwargs)
+        district = District.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = district
+        data['user'] = user_data
+        data['active'] = 'location'
+        return data
+
+
+class PalikaList(ListView):
+    template_name = 'palika_list.html'
+    model = GapaNapa
+
+    def get_context_data(self, **kwargs):
+        data = super(PalikaList, self).get_context_data(**kwargs)
+        palika = GapaNapa.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = palika
+        data['user'] = user_data
+        data['active'] = 'location'
+        return data
+
+
 class Dashboard(LoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):

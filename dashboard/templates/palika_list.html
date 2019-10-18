@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i> Palika</a>
+            </li>
+            <li><a href="/dashboard/sector-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
+            </li>
+        </ul>
+    </div>
+    <!-- dfid program table -->
+    <div class="table-tesponsive program-list">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> {{message}}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <table class="program-table dataTable">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>province</th>
+                <th>district</th>
+                <th>Name</th>
+                <th>palika type(en)</th>
+                <th>palika type(nep)</th>
+                <th>population</th>
+                <th>geography</th>
+                <th>cbs code</th>
+                <th>hlcit code</th>
+                <th>p code</th>
+
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for palika in list %}
+            <tr>
+                <td>{{ palika.id }}</td>
+                <td>{{ palika.province_id }}</td>
+                <td>{{ palika.district_id }}</td>
+                <td>
+                    <strong><a href="#">{{palika.name}}</a></strong>
+                </td>
+                <td>{{ palika.gn_type_en }}</td>
+                <td>{{ palika.gn_type_np }}</td>
+                <td>{{ palika.population }}</td>
+                <td>{{ palika.geography }}</td>
+                <td>{{ palika.cbs_code }}</td>
+                <td>{{ palika.hlcit_code }}</td>
+                <td>{{ palika.p_code }}</td>
+
+                <td>
+                    <div class="table-action">
+                        <a href="#" class="more-action">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-animation">
+                            <li>
+                                <a href="/dashboard/sector-edit/{{ palika.id }}" class="flex-start">
+                                    <i class="material-icons">edit</i> Edit
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/dashboard/sector-delete/{{ palika.id }}" class="flex-start">
+                                    <i class="material-icons">delete</i>delete
+                                </a>
+
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}

@@ -85,19 +85,20 @@
                     </ul>
                 </li>
 
-                <!--                {% if active == 'location' %}-->
-                <!--                <li class="menu-item active">-->
-                <!--                    {% else %}-->
-                <!--                <li class="menu-item">-->
-                <!--                    {% endif %}-->
-                <!--                    <a href="javascript:void(0);" class="menu-toggle active-red"><i-->
-                <!--                        class="material-icons">room</i><span>Locations</span></a>-->
-                <!--                    <ul class="ml-menu">-->
-                <!--                        <li><a href="#">Province</a></li>-->
-                <!--                        <li><a href="#">District</a></li>-->
-                <!--                        <li><a href="#">Municipalities</a></li>-->
-                <!--                    </ul>-->
-                <!--                </li>-->
+                {% if active == 'location' %}
+                <li class="menu-item active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="javascript:void(0);" class="menu-toggle active-red"><i
+                            class="material-icons">room</i><span>Locations</span></a>
+                    <ul class="ml-menu">
+                        <li><a href="/dashboard/province-list/">Province</a></li>
+                        <li><a href="/dashboard/district-list/">District</a></li>
+                        <li><a href="/dashboard/palika-list/">Municipalities</a></li>
+                    </ul>
+                </li>
+
                 {% if active == 'indicator' %}
                 <li class="menu-item active">
                     {% else %}
@@ -119,10 +120,10 @@
                 <li class="menu-item">
                     {% endif %}
                     <a href="/dashboard/gis-layer-list/" class=""><i
-                        class="material-icons">drag_indicator</i><span>Gis Layer</span></a>
+                            class="material-icons">map</i><span>Gis Layer</span></a>
 
 
-            </li>
+                </li>
 
             </ul>
         </div>
