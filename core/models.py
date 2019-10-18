@@ -89,13 +89,40 @@ class District(models.Model):
 
 
 class GapaNapa(models.Model):
+    geog = (
+        ('Terai', 'Terai'),
+        ('Hill', 'Hill'),
+        ('Shivalik', 'Shivalik'),
+        ('Mountain', 'Mountain'),
+        ('High Mountain', 'High Mountain'),
+    )
+
+    gn_en = (
+        ('Rural municipality', 'Rural municipality'),
+        ('Urban municipality', 'Urban municipality'),
+        ('Designated area', 'Designated area'),
+        ('Sub metropolitan', 'Sub metropolitan'),
+        ('Metropolitan', 'Metropolitan'),
+    )
+
+    gn_nep = (
+        ('Development area', 'Development area'),
+        ('Gaunpalika', 'Gaunpalika'),
+        ('Hunting reserve', 'Hunting reserve'),
+        ('Nagarpalika', 'Nagarpalika'),
+        ('Mahanagarpalika', 'Mahanagarpalika'),
+        ('Upamahanagarpalika', 'Upamahanagarpalika'),
+        ('Wildlife reserve', 'Wildlife reserve'),
+        ('Watershed and wildlife reserve', 'Watershed and wildlife reserve'),
+    )
+
     province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='Province', null=True, blank=True)
     district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='District', null=True, blank=True)
     name = models.CharField(max_length=100, null=True, blank=True)
-    gn_type_en = models.CharField(max_length=100, null=True, blank=True)
-    gn_type_np = models.CharField(max_length=100, null=True, blank=True)
+    gn_type_en = models.CharField(max_length=50, choices=gn_en, default='Rural municipality')
+    gn_type_np = models.CharField(max_length=50, choices=gn_nep, default='Gaunpalika')
     population = models.FloatField(null=True, blank=True)
-    geography = models.CharField(max_length=100, null=True, blank=True)
+    geography = models.CharField(max_length=50, choices=geog, default='Terai')
     cbs_code = models.CharField(max_length=100, null=True, blank=True)
     hlcit_code = models.CharField(max_length=100, null=True, blank=True)
     p_code = models.CharField(max_length=100, null=True, blank=True)
