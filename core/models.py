@@ -160,12 +160,19 @@ class FiveW(models.Model):
 
 
 class Indicator(models.Model):
+
+    fed = (
+        ('palika level', 'Palika Level'),
+        ('district level', 'District Level'),
+        ('province level', 'Province Level'),
+    )
+
     indicator = models.CharField(max_length=100, null=True, blank=True)
     full_title = models.CharField(max_length=500, null=True, blank=True)
     abstract = models.CharField(max_length=1500, null=True, blank=True)
     category = models.CharField(max_length=500, null=True, blank=True)
     source = models.CharField(max_length=1500, null=True, blank=True)
-    federal_level = models.CharField(max_length=100, null=True, blank=True)
+    federal_level = models.CharField(max_length=50, choices=fed, default='palika level')
 
     def __str__(self):
         return self.indicator

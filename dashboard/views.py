@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
-    PalikaCreateForm
+    PalikaCreateForm, IndicatorCreateForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -561,6 +561,21 @@ class MarkerCategoryCreate(SuccessMessageMixin, CreateView):
         return reverse_lazy('marker-list')
 
 
+class IndicatorCreate(SuccessMessageMixin, CreateView):
+    model = Indicator
+    template_name = 'indicator_add.html'
+    form_class = IndicatorCreateForm
+    success_message = 'Indicator successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(IndicatorCreate, self).get_context_data(**kwargs)
+        data['active'] = 'indicator'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('indicator-list')
+
+
 class ProgramUpdate(SuccessMessageMixin, UpdateView):
     model = Program
     template_name = 'program_edit.html'
@@ -725,6 +740,21 @@ class PalilkaUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('palika-list')
 
 
+class IndicatorUpdate(SuccessMessageMixin, UpdateView):
+    model = Indicator
+    template_name = 'indicator_edit.html'
+    form_class = IndicatorCreateForm
+    success_message = 'Indicator successfully Edited'
+
+    def get_context_data(self, **kwargs):
+        data = super(IndicatorUpdate, self).get_context_data(**kwargs)
+        data['active'] = 'indicator'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('indicator-list')
+
+
 class ProgramDelete(SuccessMessageMixin, DeleteView):
     model = Program
     template_name = 'program_confirm_delete.html'
@@ -786,6 +816,13 @@ class PalikaDelete(SuccessMessageMixin, DeleteView):
     template_name = 'palika_confirm_delete.html'
     success_message = 'Plaika successfully deleted'
     success_url = reverse_lazy('palika-list')
+
+
+class IndicatorDelete(SuccessMessageMixin, DeleteView):
+    model = Indicator
+    template_name = 'indicator_confirm_delete.html'
+    success_message = 'Indicator successfully deleted'
+    success_url = reverse_lazy('indicator-list')
 
 
 def signup(request):
