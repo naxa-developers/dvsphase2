@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import pandas as pd
 from django.http import HttpResponse
 import requests
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
-from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm
+from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
+    MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
+    PalikaCreateForm, IndicatorCreateForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -18,7 +20,7 @@ from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
-    MarkerValues, Indicator, IndicatorValue
+    MarkerValues, Indicator, IndicatorValue, GisLayer
 from .models import UserProfile
 from django.contrib.auth.models import User, Group
 from django.views.generic import TemplateView
@@ -27,6 +29,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.conf import settings
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
+from zipfile import ZipFile
+import os
+from django.contrib import messages
+from random import randint
 
 
 # Create your views here.
@@ -114,13 +120,32 @@ def ShapefileUpload(request):
         return render(request, 'shapefile.html')
     else:
         shapefile = request.FILES["shapefile"]
-        url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/river/file.shp'
+        layer_name = 'sumit' + str(randint(0, 9999))
+        # return HttpResponse(layer_name)
+        url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/' + layer_name + '/file.shp'
+        # return HttpResponse(url)
+
         headers = {
             'Content-type': 'application/zip',
         }
         response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
         # print(response)
         return HttpResponse(response.status_code)
+
+
+# def ShapefileUpload(request):
+#     if "GET" == request.method:
+#
+#         return render(request, 'shapefile.html')
+#     else:
+#         shapefile = request.FILES["shapefile"]
+#         url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/coveragestores/dfid/file.geotiff'
+#         headers = {
+#             'Content-type': 'application/zip',
+#         }
+#         response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
+#         # print(response)
+#         return HttpResponse(response.status_code)
 
 
 def Invitation(request):
@@ -314,6 +339,66 @@ class IndicatorValueList(ListView):
         return data
 
 
+class GisLayerList(ListView):
+    template_name = 'gis_layer_list.html'
+    model = GisLayer
+
+    def get_context_data(self, **kwargs):
+        data = super(GisLayerList, self).get_context_data(**kwargs)
+        gis_layer_list = GisLayer.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = gis_layer_list
+        data['user'] = user_data
+        data['active'] = 'gis'
+        return data
+
+
+class ProvinceList(ListView):
+    template_name = 'provinces_list.html'
+    model = Province
+
+    def get_context_data(self, **kwargs):
+        data = super(ProvinceList, self).get_context_data(**kwargs)
+        province = Province.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = province
+        data['user'] = user_data
+        data['active'] = 'location'
+        return data
+
+
+class DistrictList(ListView):
+    template_name = 'district_list.html'
+    model = District
+
+    def get_context_data(self, **kwargs):
+        data = super(DistrictList, self).get_context_data(**kwargs)
+        district = District.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = district
+        data['user'] = user_data
+        data['active'] = 'location'
+        return data
+
+
+class PalikaList(ListView):
+    template_name = 'palika_list.html'
+    model = GapaNapa
+
+    def get_context_data(self, **kwargs):
+        data = super(PalikaList, self).get_context_data(**kwargs)
+        palika = GapaNapa.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = palika
+        data['user'] = user_data
+        data['active'] = 'location'
+        return data
+
+
 class Dashboard(LoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
@@ -379,6 +464,116 @@ class SectorCreate(SuccessMessageMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('sector-list')
+
+
+class SubSectorCreate(SuccessMessageMixin, CreateView):
+    model = SubSector
+    template_name = 'sub_sector_add.html'
+    form_class = SubSectorCreateForm
+    success_message = 'Sub Sector successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(SubSectorCreate, self).get_context_data(**kwargs)
+        data['sectors'] = Sector.objects.order_by('id')
+        data['active'] = 'sector'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('subsector-list')
+
+
+class ProvinceCreate(SuccessMessageMixin, CreateView):
+    model = Province
+    template_name = 'province_add.html'
+    form_class = ProvinceCreateForm
+    success_message = 'Province successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(ProvinceCreate, self).get_context_data(**kwargs)
+        data['active'] = 'location'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('province-list')
+
+
+class DistrictCreate(SuccessMessageMixin, CreateView):
+    model = District
+    template_name = 'district_add.html'
+    form_class = DistrictCreateForm
+    success_message = 'District successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(DistrictCreate, self).get_context_data(**kwargs)
+        data['province'] = Province.objects.order_by('id')
+        data['active'] = 'location'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('district-list')
+
+
+class PalilkaCreate(SuccessMessageMixin, CreateView):
+    model = GapaNapa
+    template_name = 'palika_add.html'
+    form_class = PalikaCreateForm
+    success_message = 'Palika successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(PalilkaCreate, self).get_context_data(**kwargs)
+        data['province'] = Province.objects.order_by('id')
+        data['district'] = District.objects.order_by('id')
+        data['active'] = 'location'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('palika-list')
+
+
+class MarkerValueCreate(SuccessMessageMixin, CreateView):
+    model = MarkerValues
+    template_name = 'marker_value_add.html'
+    form_class = MarkerValueCreateForm
+    success_message = 'Marker Value successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(MarkerValueCreate, self).get_context_data(**kwargs)
+        data['sectors'] = MarkerCategory.objects.order_by('id')
+        data['active'] = 'marker'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('markervalue-list')
+
+
+class MarkerCategoryCreate(SuccessMessageMixin, CreateView):
+    model = MarkerCategory
+    template_name = 'marker_cat_add.html'
+    form_class = MarkerCategoryCreateForm
+    success_message = 'Marker successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(MarkerCategoryCreate, self).get_context_data(**kwargs)
+        data['active'] = 'marker'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('marker-list')
+
+
+class IndicatorCreate(SuccessMessageMixin, CreateView):
+    model = Indicator
+    template_name = 'indicator_add.html'
+    form_class = IndicatorCreateForm
+    success_message = 'Indicator successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(IndicatorCreate, self).get_context_data(**kwargs)
+        data['active'] = 'indicator'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('indicator-list')
 
 
 class ProgramUpdate(SuccessMessageMixin, UpdateView):
@@ -450,6 +645,116 @@ class SectorUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('sector-list')
 
 
+class SubSectorUpdate(SuccessMessageMixin, UpdateView):
+    model = SubSector
+    template_name = 'sub_sector_edit.html'
+    form_class = SubSectorCreateForm
+    success_message = 'Sub Sector successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(SubSectorUpdate, self).get_context_data(**kwargs)
+        data['sectors'] = Sector.objects.order_by('id')
+        data['active'] = 'sector'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('subsector-list')
+
+
+class MarkerCategoryUpdate(SuccessMessageMixin, UpdateView):
+    model = MarkerCategory
+    template_name = 'marker_cat_edit.html'
+    form_class = MarkerCategoryCreateForm
+    success_message = 'Marker Category successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(MarkerCategoryUpdate, self).get_context_data(**kwargs)
+        data['active'] = 'marker'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('marker-list')
+
+
+class MarkerValueUpdate(SuccessMessageMixin, UpdateView):
+    model = MarkerValues
+    template_name = 'marker_value_edit.html'
+    form_class = MarkerValueCreateForm
+    success_message = 'Marker Value successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(MarkerValueUpdate, self).get_context_data(**kwargs)
+        data['sectors'] = MarkerCategory.objects.order_by('id')
+        data['active'] = 'marker'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('markervalue-list')
+
+
+class ProvinceUpdate(SuccessMessageMixin, UpdateView):
+    model = Province
+    template_name = 'province_edit.html'
+    form_class = ProvinceCreateForm
+    success_message = 'Province successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(ProvinceUpdate, self).get_context_data(**kwargs)
+        data['active'] = 'location'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('province-list')
+
+
+class DistrictUpdate(SuccessMessageMixin, UpdateView):
+    model = District
+    template_name = 'district_edit.html'
+    form_class = DistrictCreateForm
+    success_message = 'District successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(DistrictUpdate, self).get_context_data(**kwargs)
+        data['province'] = Province.objects.order_by('id')
+        data['active'] = 'location'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('district-list')
+
+
+class PalilkaUpdate(SuccessMessageMixin, UpdateView):
+    model = GapaNapa
+    template_name = 'palika_edit.html'
+    form_class = PalikaCreateForm
+    success_message = 'Palika successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(PalilkaUpdate, self).get_context_data(**kwargs)
+        data['province'] = Province.objects.order_by('id')
+        data['district'] = District.objects.order_by('id')
+        data['active'] = 'location'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('palika-list')
+
+
+class IndicatorUpdate(SuccessMessageMixin, UpdateView):
+    model = Indicator
+    template_name = 'indicator_edit.html'
+    form_class = IndicatorCreateForm
+    success_message = 'Indicator successfully Edited'
+
+    def get_context_data(self, **kwargs):
+        data = super(IndicatorUpdate, self).get_context_data(**kwargs)
+        data['active'] = 'indicator'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('indicator-list')
+
+
 class ProgramDelete(SuccessMessageMixin, DeleteView):
     model = Program
     template_name = 'program_confirm_delete.html'
@@ -471,6 +776,55 @@ class SectorDelete(SuccessMessageMixin, DeleteView):
     success_url = reverse_lazy('sector-list')
 
 
+class SubSectorDelete(SuccessMessageMixin, DeleteView):
+    model = SubSector
+    template_name = 'sub_sector_confirm_delete.html'
+    success_message = 'Sub Sector successfully deleted'
+    success_url = reverse_lazy('subsector-list')
+
+
+class MarkerCategoryDelete(SuccessMessageMixin, DeleteView):
+    model = MarkerCategory
+    template_name = 'marker_cat_confirm_delete.html'
+    success_message = 'Marker category successfully deleted'
+    success_url = reverse_lazy('marker-list')
+
+
+class MarkerValueDelete(SuccessMessageMixin, DeleteView):
+    model = MarkerValues
+    template_name = 'marker_value_confirm_delete.html'
+    success_message = 'Marker category successfully deleted'
+    success_url = reverse_lazy('markervalue-list')
+
+
+class ProvinceDelete(SuccessMessageMixin, DeleteView):
+    model = Province
+    template_name = 'province_confirm_delete.html'
+    success_message = 'Province successfully deleted'
+    success_url = reverse_lazy('province-list')
+
+
+class DistrictDelete(SuccessMessageMixin, DeleteView):
+    model = District
+    template_name = 'district_confirm_delete.html'
+    success_message = 'District successfully deleted'
+    success_url = reverse_lazy('district-list')
+
+
+class PalikaDelete(SuccessMessageMixin, DeleteView):
+    model = GapaNapa
+    template_name = 'palika_confirm_delete.html'
+    success_message = 'Plaika successfully deleted'
+    success_url = reverse_lazy('palika-list')
+
+
+class IndicatorDelete(SuccessMessageMixin, DeleteView):
+    model = Indicator
+    template_name = 'indicator_confirm_delete.html'
+    success_message = 'Indicator successfully deleted'
+    success_url = reverse_lazy('indicator-list')
+
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -487,3 +841,50 @@ def signup(request):
     else:
         form = UserCreationForm()
         return render(request, 'signup.html', {'form': form})
+
+
+def gisLayer_create(request):
+    template_name = 'gis_add.html'
+    form = GisLayerCreateForm(request.POST or None)
+    if form.is_valid():
+
+        shapefile = request.FILES["shapefile"]
+        store_named = request.POST["name"]
+        store_name = store_named.replace(" ", "_").lower() + str(randint(0, 99999))
+
+        # return HttpResponse(layer_name)
+
+        if request.POST['type'] == 'vector':
+
+            url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/' + store_name + '/file.shp'
+            headers = {
+                'Content-type': 'application/zip',
+            }
+            response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
+
+        else:
+
+            url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/coveragestores/' + store_name + '/file.geotiff'
+            headers = {
+                'Content-type': 'application/zip',
+            }
+            response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
+            # return HttpResponse(response)
+
+        if response.status_code == 201:
+            zipfile = ZipFile(shapefile)
+            names = zipfile.namelist()
+            layer_name = os.path.splitext(names[0])[0]
+            obj = form.save(commit=False)
+            obj.workspace = 'Naxa'
+            obj.layer_name = layer_name
+            obj.geoserver_url = 'http://139.59.67.104:8080/geoserver/gwc/service/tms/1.0.0/Naxa:' + layer_name + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf'
+
+            obj.save()
+            messages.success(request, "Layer successfully uploaded")
+
+        else:
+            messages.error(request, "Layer could not be  uploaded !! Please Try again")
+
+        return redirect('gis-layer-list')
+    return render(request, template_name, {'form': form})

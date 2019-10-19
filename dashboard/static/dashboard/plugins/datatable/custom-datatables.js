@@ -4,10 +4,10 @@ $(function(){
 		language: { search: '', searchPlaceholder: "Search..." },
 		"scrollX": true,
 		"scrollCollapse": true,
-		'iDisplayLength': 18,
+		'iDisplayLength': 100,
 		"ordering": true,
-		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-		dom: 'Bfrtip',
+		"lengthMenu": [[100, 200, 300, -1], [100, 200, 300, "All"]],
+		dom: 'lBfrtip',
         buttons: [
             'excelHtml5',
             'csvHtml5',

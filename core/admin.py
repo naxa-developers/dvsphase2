@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Partner, Program, Sector, SubSector, MarkerCategory, MarkerValues, Province, District, GapaNapa, \
-    FiveW, Indicator, IndicatorValue, TravelTime
+    FiveW, Indicator, IndicatorValue, TravelTime, GisLayer
 
 # Register your models here.
 
@@ -17,3 +17,4 @@ admin.site.register(FiveW)
 admin.site.register(Indicator)
 admin.site.register(IndicatorValue)
 admin.site.register(TravelTime)
+admin.site.register(GisLayer)
