@@ -59,13 +59,15 @@ urlpatterns = [
     path('province-list/', views.ProvinceList.as_view(), name='province-list'),
     path('province-add/', views.ProvinceCreate.as_view(), name='province-add'),
     path('province-edit/<int:pk>', views.ProvinceUpdate.as_view(), name='province-edit'),
+    path('province-delete/<int:pk>', views.ProvinceDelete.as_view(), name='province-delete'),
 
     path('district-list/', views.DistrictList.as_view(), name='district-list'),
     path('district-add/', views.DistrictCreate.as_view(), name='district-add'),
     path('district-edit/<int:pk>', views.DistrictUpdate.as_view(), name='district-edit'),
+    path('district-delete/<int:pk>', views.DistrictDelete.as_view(), name='district-delete'),
 
     path('palika-list/', views.PalikaList.as_view(), name='palika-list'),
     path('palika-add/', views.PalilkaCreate.as_view(), name='palika-add'),
-    path('palika-edit/<int:pk>', views.PalilkaUpdate.as_view(), name='palika-edit'),
+    path('palika-delete/<int:pk>', views.PalikaDelete.as_view(), name='palika-delete'),
 
 ]

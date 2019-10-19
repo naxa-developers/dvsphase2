@@ -767,6 +767,27 @@ class MarkerValueDelete(SuccessMessageMixin, DeleteView):
     success_url = reverse_lazy('markervalue-list')
 
 
+class ProvinceDelete(SuccessMessageMixin, DeleteView):
+    model = Province
+    template_name = 'province_confirm_delete.html'
+    success_message = 'Province successfully deleted'
+    success_url = reverse_lazy('province-list')
+
+
+class DistrictDelete(SuccessMessageMixin, DeleteView):
+    model = District
+    template_name = 'district_confirm_delete.html'
+    success_message = 'District successfully deleted'
+    success_url = reverse_lazy('district-list')
+
+
+class PalikaDelete(SuccessMessageMixin, DeleteView):
+    model = GapaNapa
+    template_name = 'palika_confirm_delete.html'
+    success_message = 'Plaika successfully deleted'
+    success_url = reverse_lazy('palika-list')
+
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
