@@ -39,7 +39,7 @@
                     <div class="form-group ">
                         <label for="id_name" class="">Name</label>
                         <input type="text" class="form-control" name="name" maxlength="100" id="id_name"
-                               placeholder="Name"/>
+                               placeholder="Name" required/>
 <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
 <!--                                        Please ennter name</span>-->
                     </div>
@@ -65,7 +65,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_type">Select Type</label>
-                        <select name="type" id="id_type" class="custom-select">
+                        <select name="type" id="id_type" class="custom-select" required>
                             <option value="" selected>----Select Type----</option>
 
 
@@ -115,7 +115,7 @@
             <div class="col-md-5">
                 <div class="form-group ">
                     <label for="vector" class="">File</label>
-                    <input  type="file" name="shapefile" id="vector"/>
+                    <input  type="file" name="shapefile" id="vector" required/>
                 </div>
             </div>
 

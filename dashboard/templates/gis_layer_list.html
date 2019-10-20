@@ -33,7 +33,7 @@
                 <th>category</th>
                 <th>filename</th>
 
-                <th></th>
+<!--                <th></th>-->
             </tr>
             </thead>
             <tbody>
@@ -49,26 +49,26 @@
                 <td>{{ gis.category }}</td>
                 <td>{{ gis.filename }}</td>
 
-                <td>
-                    <div class="table-action">
-                        <a href="#" class="more-action">
-                            <i class="material-icons">more_vert</i>
-                        </a>
-                        <ul class="dropdown-animation">
-                            <li>
-                                <a href="/dashboard/marker-cat-edit/{{ gis.id }}" class="flex-start">
-                                    <i class="material-icons">edit</i> Edit
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/dashboard/marker-cat-delete/{{ gis.id }}" class="flex-start">
-                                    <i class="material-icons">delete</i>Delete
-                                </a>
+<!--                <td>-->
+<!--                    <div class="table-action">-->
+<!--                        <a href="#" class="more-action">-->
+<!--                            <i class="material-icons">more_vert</i>-->
+<!--                        </a>-->
+<!--                        <ul class="dropdown-animation">-->
+<!--                            <li>-->
+<!--                                <a href="/dashboard/marker-cat-edit/{{ gis.id }}" class="flex-start">-->
+<!--                                    <i class="material-icons">edit</i> Edit-->
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <a href="/dashboard/marker-cat-delete/{{ gis.id }}" class="flex-start">-->
+<!--                                    <i class="material-icons">delete</i>Delete-->
+<!--                                </a>-->
 
-                            </li>
-                        </ul>
-                    </div>
-                </td>
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </td>-->
             </tr>
             {% endfor %}
 
