@@ -33,6 +33,8 @@ from zipfile import ZipFile
 import os
 from django.contrib import messages
 from random import randint
+from django.contrib.admin.models import LogEntry
+
 
 
 # Create your views here.
@@ -204,6 +206,8 @@ def province_list(request):
     template_name = 'province_list.html'
     province = Program.objects.filter(id=5).order_by('id')
     data_list = Program.objects.filter(id=5).values_list('sector', flat=True)
+    user = request.user
+    # LogEntry.objects.all().delete()
 
     if (data_list):
         filter_sector = Sector.objects.order_by('id')
@@ -213,6 +217,7 @@ def province_list(request):
 
     data = {}
     data['object_list'] = province
+    data['log'] = LogEntry.objects.filter(user_id=user).order_by('-id')[:5]
     data['sector'] = Sector.objects.all().prefetch_related('Sector').order_by('id')
     data['filtered'] = filter_sector
     return render(request, template_name, data)
