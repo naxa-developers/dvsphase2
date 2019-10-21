@@ -11,11 +11,6 @@
             <li>New</li>
         </ul>
     </div>
-
-    <div class="alert alert-info">
-  <strong>Important Note !</strong> Vector and Raster folder should be in commpressed form (zip) before uploading and all filenames inside zip folder should not have spaces ( example_shapefile.shp , example_raster.tif ).
-</div>
-
     <!-- program form -->
     <form enctype="multipart/form-data" class="program-form" method="POST">
 
@@ -44,9 +39,9 @@
                     <div class="form-group ">
                         <label for="id_name" class="">Name</label>
                         <input type="text" class="form-control" name="name" maxlength="100" id="id_name"
-                               placeholder="Name" required/>
-<!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
-<!--                                        Please ennter name</span>-->
+                               placeholder="Name" value=" {{ form.instance.name }} " required/>
+                        <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+                        <!--                                        Please ennter name</span>-->
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -59,14 +54,14 @@
                         <label for="id_description" class="">Description</label>
                         <textarea type="text" class="form-control" name="description" cols="40" rows="10"
                                   id="id_description" placeholder="description"
-                                  rows="5"></textarea>
+                                  rows="5">{{ form.instance.description }}</textarea>
                     </div>
                 </div>
                 <div class="col-md-6">
                 </div>
             </div>
 
-                        <div class="row">
+            <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_type">Select Type</label>
@@ -74,11 +69,7 @@
                             <option value="" selected>----Select Type----</option>
 
 
-                            <option value="vector">Vector</option>
-                            <option value="raster">Raster</option>
-
-
-
+                            <option value="{{form.instance.type}}" selected>{{form.instance.type}}</option>
 
 
                         </select>
@@ -89,48 +80,34 @@
 
             </div>
 
+
             <div class="row">
                 <div class="col-md-5">
                     <div class="form-group ">
                         <label for="id_category" class="">Category</label>
                         <input type="text" class="form-control" name="category" maxlength="100" id="id_category"
-                               placeholder="Category"/>
+                               placeholder="Category" value="{{ form.instance.category }}"/>
                     </div>
                 </div>
-                <div class="col-md-5">
+
+              <div class="col-md-5">
 
                     <div class="form-group ">
-                        <label for="id_filename" class="">Filename</label>
+<!--                        <label for="id_filename" class="">Filename</label>-->
                         <input type="text" class="form-control" name="filename" maxlength="100" id="id_filename"
-                               placeholder="Filename" required/>
+                               placeholder="Filename" value="{{ form.instance.filename }}"  hidden/>
                     </div>
 
 
                 </div>
+
             </div>
 
 
-
-
-
-        <div class="row">
-            <div class="col-md-5">
-                <div class="form-group ">
-                    <label for="vector" class="">File</label>
-                    <input  type="file" name="shapefile" id="vector" required/>
-                </div>
-            </div>
-
-
-
-
-
-        </div>
 
         <div class="form-group mrt-100">
             <button type="submit" class="dfid-button sm-button">Save</button>
         </div>
-
 
 
         <!-- category form -->
