@@ -7,6 +7,7 @@ urlpatterns = [
     path('upload/', views.uploadData, name='upload'),
     path('upload-shapefile/', views.ShapefileUpload, name='upload-shapefile'),
 
+
     path('invitation/', views.Invitation, name='invitation'),
     path('login-test/', views.login_test, name='login-test'),
     path('logout/', auth_views.logout, {'next_page': '/dashboard/login/'}, name='logout'),
@@ -34,19 +35,44 @@ urlpatterns = [
     path('sector-delete/<int:pk>', views.SectorDelete.as_view(), name='sector-delete'),
 
     path('subsector-list/', views.SubSectorList.as_view(), name='subsector-list'),
+    path('subsector-add/', views.SubSectorCreate.as_view(), name='subsector-add'),
+    path('subsector-edit/<int:pk>', views.SubSectorUpdate.as_view(), name='subsector-edit'),
+    path('subsector-delete/<int:pk>', views.SubSectorDelete.as_view(), name='subsector-delete'),
 
     path('marker-list/', views.MarkerList.as_view(), name='marker-list'),
+    path('marker-cat-add/', views.MarkerCategoryCreate.as_view(), name='marker-cat-add'),
+    path('marker-cat-edit/<int:pk>', views.MarkerCategoryUpdate.as_view(), name='marker-cat-edit'),
+    path('marker-cat-delete/<int:pk>', views.MarkerCategoryDelete.as_view(), name='marker-cat-delete'),
+
     path('markervalue-list/', views.MarkerValueList.as_view(), name='markervalue-list'),
+    path('markervalue-add/', views.MarkerValueCreate.as_view(), name='markervalue-add'),
+    path('markervalue-edit/<int:pk>', views.MarkerValueUpdate.as_view(), name='markervalue-edit'),
+    path('markervalue-delete/<int:pk>', views.MarkerValueDelete.as_view(), name='markervalue-delete'),
 
     path('indicator-list/', views.IndicatorList.as_view(), name='indicator-list'),
+    path('indicator-add/', views.IndicatorCreate.as_view(), name='indicator-add'),
+    path('indicator-edit/<int:pk>', views.IndicatorUpdate.as_view(), name='indicator-edit'),
+    path('indicator-delete/<int:pk>', views.IndicatorDelete.as_view(), name='indicator-delete'),
+
     path('indicator-data/', views.IndicatorValueList.as_view(), name='indicator-data'),
     # path('program-list/', views.ProgramList.as_view(), name='program-list'),
 
+    path('gis-layer-list/', views.GisLayerList.as_view(), name='gis-layer-list'),
+    path('layer-add/', views.gisLayer_create, name='layer-add'),
+    path('gis-edit/<int:pk>', views.GisLayerUpdate.as_view(), name='gis-edit'),
 
+    path('province-list/', views.ProvinceList.as_view(), name='province-list'),
+    path('province-add/', views.ProvinceCreate.as_view(), name='province-add'),
+    path('province-edit/<int:pk>', views.ProvinceUpdate.as_view(), name='province-edit'),
+    path('province-delete/<int:pk>', views.ProvinceDelete.as_view(), name='province-delete'),
 
+    path('district-list/', views.DistrictList.as_view(), name='district-list'),
+    path('district-add/', views.DistrictCreate.as_view(), name='district-add'),
+    path('district-edit/<int:pk>', views.DistrictUpdate.as_view(), name='district-edit'),
+    path('district-delete/<int:pk>', views.DistrictDelete.as_view(), name='district-delete'),
 
-
-
-
+    path('palika-list/', views.PalikaList.as_view(), name='palika-list'),
+    path('palika-add/', views.PalilkaCreate.as_view(), name='palika-add'),
+    path('palika-delete/<int:pk>', views.PalikaDelete.as_view(), name='palika-delete'),
 
 ]

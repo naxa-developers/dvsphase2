@@ -6,16 +6,15 @@
     <div class="dfid-breadcrumb pdt-100">
         <ul class="flex-start">
             <li>
-                <a href="#"><i class="material-icons">assignment</i> Sector</a>
+                <a href="#"><i class="material-icons">assignment</i> Marker</a>
             </li>
-            <li>Edit</li>
+            <li>New</li>
         </ul>
     </div>
     <!-- program form -->
     <form class="program-form" method="POST">
 
         {% csrf_token %}
-
         {% if form.errors %}
         {% for field in form %}
         {% for error in field.errors %}
@@ -38,7 +37,7 @@
                     <div class="form-group ">
                         <label for="id_name" class="">Name</label>
                         <input type="text" class="form-control" name="name" maxlength="100" id="id_name"
-                               placeholder="Name" value="{{ form.instance.name }}" required/>
+                               placeholder="Name" required/>
 <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
 <!--                                        Please ennter name</span>-->
                     </div>

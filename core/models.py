@@ -25,8 +25,8 @@ class MarkerCategory(models.Model):
 
 
 class MarkerValues(models.Model):
-    marker_category_id = models.ForeignKey(MarkerCategory, on_delete=models.CASCADE, related_name='MarkerCategory',
-                                           null=True, blank=True)
+    marker_category_id = models.ForeignKey(MarkerCategory, on_delete=models.CASCADE, related_name='MarkerCategory')
+
     value = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
@@ -89,13 +89,40 @@ class District(models.Model):
 
 
 class GapaNapa(models.Model):
+    geog = (
+        ('Terai', 'Terai'),
+        ('Hill', 'Hill'),
+        ('Shivalik', 'Shivalik'),
+        ('Mountain', 'Mountain'),
+        ('High Mountain', 'High Mountain'),
+    )
+
+    gn_en = (
+        ('Rural municipality', 'Rural municipality'),
+        ('Urban municipality', 'Urban municipality'),
+        ('Designated area', 'Designated area'),
+        ('Sub metropolitan', 'Sub metropolitan'),
+        ('Metropolitan', 'Metropolitan'),
+    )
+
+    gn_nep = (
+        ('Development area', 'Development area'),
+        ('Gaunpalika', 'Gaunpalika'),
+        ('Hunting reserve', 'Hunting reserve'),
+        ('Nagarpalika', 'Nagarpalika'),
+        ('Mahanagarpalika', 'Mahanagarpalika'),
+        ('Upamahanagarpalika', 'Upamahanagarpalika'),
+        ('Wildlife reserve', 'Wildlife reserve'),
+        ('Watershed and wildlife reserve', 'Watershed and wildlife reserve'),
+    )
+
     province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='Province', null=True, blank=True)
     district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='District', null=True, blank=True)
     name = models.CharField(max_length=100, null=True, blank=True)
-    gn_type_en = models.CharField(max_length=100, null=True, blank=True)
-    gn_type_np = models.CharField(max_length=100, null=True, blank=True)
+    gn_type_en = models.CharField(max_length=50, choices=gn_en, default='Rural municipality')
+    gn_type_np = models.CharField(max_length=50, choices=gn_nep, default='Gaunpalika')
     population = models.FloatField(null=True, blank=True)
-    geography = models.CharField(max_length=100, null=True, blank=True)
+    geography = models.CharField(max_length=50, choices=geog, default='Terai')
     cbs_code = models.CharField(max_length=100, null=True, blank=True)
     hlcit_code = models.CharField(max_length=100, null=True, blank=True)
     p_code = models.CharField(max_length=100, null=True, blank=True)
@@ -133,12 +160,19 @@ class FiveW(models.Model):
 
 
 class Indicator(models.Model):
+
+    fed = (
+        ('palika level', 'Palika Level'),
+        ('district level', 'District Level'),
+        ('province level', 'Province Level'),
+    )
+
     indicator = models.CharField(max_length=100, null=True, blank=True)
     full_title = models.CharField(max_length=500, null=True, blank=True)
     abstract = models.CharField(max_length=1500, null=True, blank=True)
     category = models.CharField(max_length=500, null=True, blank=True)
     source = models.CharField(max_length=1500, null=True, blank=True)
-    federal_level = models.CharField(max_length=100, null=True, blank=True)
+    federal_level = models.CharField(max_length=50, choices=fed, default='palika level')
 
     def __str__(self):
         return self.indicator
@@ -161,3 +195,20 @@ class TravelTime(models.Model):
     tc_pc_pop = models.FloatField(null=True, blank=True, default=None)
     season = models.CharField(max_length=100, null=True, blank=True)
     travel_category = models.CharField(max_length=100, null=True, blank=True)
+
+
+class GisLayer(models.Model):
+    type = (
+        ('vector', 'Vector'),
+        ('raster', 'Raster'),
+
+    )
+
+    name = models.CharField(max_length=100, null=True, blank=True)
+    layer_name = models.CharField(max_length=100, null=True, blank=True)
+    workspace = models.CharField(max_length=100, null=True, blank=True)
+    geoserver_url = models.CharField(max_length=300, null=True, blank=True)
+    type = models.CharField(max_length=50, choices=type, default='vector')
+    category = models.CharField(max_length=100, null=True, blank=True)
+    filename = models.CharField(max_length=100, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)

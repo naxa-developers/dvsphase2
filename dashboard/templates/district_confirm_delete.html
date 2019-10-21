@@ -4,24 +4,24 @@
 <main class="dfid-main">
 
 
-    <h4>Partner Delete Confirmation</h4>
+    <h4> District Delete</h4>
     <form method="post" class="program-form">{% csrf_token %}
         Are you sure you want to delete "{{ object }}" ?
-
 
         <div class="row">
             <div class="form-group mrt-100 col-md-1">
                 <button type="submit" value="Submit" class="dfid-button sm-button">Yes</button>
             </div>
 
-            <div class="form-group mrt-100 ">
-                <a href="/dashboard/partner-list ">
+        <div class="form-group mrt-100 ">
+                <a href="/dashboard/district-list ">
                     <button type="button" class="dfid-button  sm-button">No</button>
                 </a>
             </div>
 
-        </div>
+            </div>
     </form>
+
 
 </main>
 {% endblock %}

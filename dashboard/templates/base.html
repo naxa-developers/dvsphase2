@@ -56,7 +56,7 @@
                 <li class="menu-item">
                     {% endif %}
                     <a href="/dashboard/partner-list/" class="active-red">
-                    <i class="material-icons">person</i><span>partners</span></a>
+                        <i class="material-icons">person</i><span>partners</span></a>
                 </li>
 
                 {% if active == 'sector' %}
@@ -65,12 +65,13 @@
                 <li class="menu-item">
                     {% endif %}
                     <a href="javascript:void(0);" class="menu-toggle active-red"><i
-                        class="material-icons">category</i><span>Sectors</span></a>
+                            class="material-icons">category</i><span>Sectors</span></a>
                     <ul class="ml-menu">
                         <li><a href="/dashboard/sector-list/">Sectors</a></li>
                         <li><a href="/dashboard/subsector-list/">Sub Sectors</a></li>
                     </ul>
                 </li>
+
 
                 {% if active == 'marker' %}
                 <li class="menu-item active">
@@ -78,33 +79,53 @@
                 <li class="menu-item">
                     {% endif %}
                     <a href="javascript:void(0);" class="menu-toggle active-red"><i
-                        class="material-icons">pie_chart</i><span>markers</span></a>
+                            class="material-icons">pie_chart</i><span>markers</span></a>
                     <ul class="ml-menu">
-                        <li><a href="/dashboard/marker-list/">Marker Category</a></li>
-                        <li><a href="/dashboard/markervalue-list/">Marker Value</a></li>
+                        <li><a href="/dashboard/marker-list/">Marker Categories</a></li>
+                        <li><a href="/dashboard/markervalue-list/">Marker Values</a></li>
                     </ul>
                 </li>
 
-<!--                {% if active == 'location' %}-->
-<!--                <li class="menu-item active">-->
-<!--                    {% else %}-->
-<!--                <li class="menu-item">-->
-<!--                    {% endif %}-->
-<!--                    <a href="javascript:void(0);" class="menu-toggle active-red"><i-->
-<!--                        class="material-icons">room</i><span>Locations</span></a>-->
-<!--                    <ul class="ml-menu">-->
-<!--                        <li><a href="#">Province</a></li>-->
-<!--                        <li><a href="#">District</a></li>-->
-<!--                        <li><a href="#">Municipalities</a></li>-->
-<!--                    </ul>-->
-<!--                </li>-->
+
                 {% if active == 'indicator' %}
                 <li class="menu-item active">
                     {% else %}
                 <li class="menu-item">
                     {% endif %}
-                    <a href="/dashboard/indicator-list/" class="active-red"><i
-                        class="material-icons">drag_indicator</i><span>Indicators</span></a></li>
+                    <a href="javascript:void(0);" class="menu-toggle active-red"><i
+                            class="material-icons">drag_indicator</i><span>Indicators</span></a>
+                    <ul class="ml-menu">
+                        <li><a href="#">Province Level</a></li>
+                        <li><a href="#">District Level</a></li>
+                        <li><a href="/dashboard/indicator-list/">Municipality Level</a></li>
+                    </ul>
+
+                </li>
+
+                {% if active == 'location' %}
+                <li class="menu-item active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="javascript:void(0);" class="menu-toggle active-red"><i
+                            class="material-icons">room</i><span>Locations</span></a>
+                    <ul class="ml-menu">
+                        <li><a href="/dashboard/province-list/">Province</a></li>
+                        <li><a href="/dashboard/district-list/">Districts</a></li>
+                        <li><a href="/dashboard/palika-list/">Municipalities</a></li>
+                    </ul>
+                </li>
+
+                {% if active == 'gis' %}
+                <li class="menu-item active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="/dashboard/gis-layer-list/" class=""><i
+                            class="material-icons">map</i><span>Map Layers</span></a>
+
+
+                </li>
 
             </ul>
         </div>
@@ -170,19 +191,19 @@
                                      alt="User Image">
                                 <div class="user-info">
                                     <h6>{{ user.name}}</h6>
-                                    <span>Partner</span>
+                                    <span>Admin</span>
                                 </div>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right dropdown-animation">
                                 <!-- User image -->
-<!--                                <li>-->
-<!--                                    <a href="profile.html">-->
-<!--                                        My Profile-->
-<!--                                    </a>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <a href="#"> Account Setting </a>-->
-<!--                                </li>-->
+                                <!--                                <li>-->
+                                <!--                                    <a href="profile.html">-->
+                                <!--                                        My Profile-->
+                                <!--                                    </a>-->
+                                <!--                                </li>-->
+                                <!--                                <li>-->
+                                <!--                                    <a href="#"> Account Setting </a>-->
+                                <!--                                </li>-->
 
                                 <li class="dropdown-footer">
                                     <a href="/dashboard/logout/"> <i class="material-icons">power_settings_new</i> Log

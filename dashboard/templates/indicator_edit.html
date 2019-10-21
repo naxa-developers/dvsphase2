@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i> Indicator</a>
+            </li>
+            <li>Edit</li>
+        </ul>
+    </div>
+    <!-- program form -->
+    <form enctype="multipart/form-data" class="program-form" method="POST">
+
+
+        {% csrf_token %}
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ field.name|title }} {{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+        <div class="default-form">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_indicator" class="">Indicator</label>
+                        <input type="text" class="form-control" name="indicator" maxlength="100" id="id_indicator"
+                               placeholder="indicator" value="{{ form.instance.indicator }}" required/>
+                        <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+                        <!--                                        Please ennter name</span>-->
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_federal_level">Select Federal Level</label>
+                        <select name="federal_level" id="id_federal_level" class="custom-select" required>
+
+                            {% if form.instance.federal_level == "palika level" %}
+
+                            <option value="palika level" selected>Palika Level</option>
+                            <option value="district level">District Level</option>
+                            <option value="province level">Province Level</option>
+
+                            {% elif form.instance.federal_level == "district level" %}
+
+                            <option value="palika level">Palika Level</option>
+                            <option value="district level" selected>District Level</option>
+                            <option value="province level">Province Level</option>
+
+                            {% else %}
+
+                            <option value="palika level" selected>Palika Level</option>
+                            <option value="district level">District Level</option>
+                            <option value="province level" selected>Province Level</option>
+
+                            {% endif %}
+
+
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="id_full_title" class="">Full Title</label>
+                        <input type="text" class="form-control" name="full_title" maxlength="500" id="id_full_title"
+                               placeholder="Full Title" value="{{ form.instance.full_title }}"/>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="id_abstract" class="">Abstract</label>
+                        <input type="text" class="form-control" name="abstract" maxlength="1500" id="id_abstract"
+                               placeholder="abstract" value="{{ form.instance.abstract }}"/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_source" class="">Source</label>
+                        <input type="text" class="form-control" name="source" maxlength="1500" id="id_source"
+                               placeholder="source" value="{{ form.instance.source }}"/>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_category" class="">Category</label>
+                        <input type="text" class="form-control" name="category" maxlength="500" id="id_category"
+                               placeholder="category" required/>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="form-group mrt-100">
+                <button type="submit" class="dfid-button sm-button">Save</button>
+            </div>
+
+
+            <!-- category form -->
+
+
+    </form>
+</main>
+
+{% endblock %}
+

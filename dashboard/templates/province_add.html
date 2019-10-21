@@ -6,9 +6,9 @@
     <div class="dfid-breadcrumb pdt-100">
         <ul class="flex-start">
             <li>
-                <a href="#"><i class="material-icons">assignment</i> Sector</a>
+                <a href="#"><i class="material-icons">assignment</i> Province</a>
             </li>
-            <li>Edit</li>
+            <li>New</li>
         </ul>
     </div>
     <!-- program form -->
@@ -38,7 +38,21 @@
                     <div class="form-group ">
                         <label for="id_name" class="">Name</label>
                         <input type="text" class="form-control" name="name" maxlength="100" id="id_name"
-                               placeholder="Name" value="{{ form.instance.name }}" required/>
+                               placeholder="Name" required/>
+<!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+<!--                                        Please ennter name</span>-->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_code" class="">Code</label>
+                        <input type="text" class="form-control" name="code" maxlength="100" id="id_code"
+                               placeholder="Code" required/>
 <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
 <!--                                        Please ennter name</span>-->
                     </div>

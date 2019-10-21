@@ -6,9 +6,9 @@
     <div class="dfid-breadcrumb pdt-100">
         <ul class="flex-start">
             <li>
-                <a href="#"><i class="material-icons">assignment</i> Indicators</a>
+                <a href="#"><i class="material-icons">assignment</i> Palika</a>
             </li>
-            <li><a href="/dashboard/indicator-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
+            <li><a href="/dashboard/palika-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
             </li>
         </ul>
     </div>
@@ -25,32 +25,37 @@
         <table class="program-table dataTable">
             <thead>
             <tr>
-                <th>Indicator</th>
-                <th>Full Title</th>
-                <th>Abstract</th>
-                <th>Category</th>
-                <th>Source</th>
-                <th>Federal Level</th>
+                <th>Id</th>
+                <th>province</th>
+                <th>district</th>
+                <th>Name</th>
+                <th>palika type(en)</th>
+                <th>palika type(nep)</th>
+                <th>population</th>
+                <th>geography</th>
+                <th>cbs code</th>
+                <th>hlcit code</th>
+                <th>p code</th>
+
                 <th></th>
             </tr>
             </thead>
             <tbody>
-
-            {% for indicator in list %}
-
+            {% for palika in list %}
             <tr>
+                <td>{{ palika.id }}</td>
+                <td>{{ palika.province_id }}</td>
+                <td>{{ palika.district_id }}</td>
                 <td>
-                    <strong><a href="/dashboard/indicator-data/?id={{ indicator.id }}">{{indicator.indicator}}</a></strong>
+                    <strong><a href="#">{{palika.name}}</a></strong>
                 </td>
-                <td>{{indicator.full_title}}</td>
-                <td>
-                    {{ indicator.abstract|truncatewords:10 }}
-                </td>
-                <td>
-                   {{ indicator.category }}
-                </td>
-                <td>{% if indicator.source == 'nan' %} {% else %} {{ indicator.source }} {% endif %}</td>
-                <td>{{ indicator.federal_level }}</td>
+                <td>{{ palika.gn_type_en }}</td>
+                <td>{{ palika.gn_type_np }}</td>
+                <td>{{ palika.population }}</td>
+                <td>{{ palika.geography }}</td>
+                <td>{{ palika.cbs_code }}</td>
+                <td>{{ palika.hlcit_code }}</td>
+                <td>{{ palika.p_code }}</td>
 
                 <td>
                     <div class="table-action">
@@ -59,12 +64,12 @@
                         </a>
                         <ul class="dropdown-animation">
                             <li>
-                                <a href="/dashboard/indicator-edit/{{ indicator.id }}" class="flex-start">
+                                <a href="/dashboard/palika-edit/{{ palika.id }}" class="flex-start">
                                     <i class="material-icons">edit</i> Edit
                                 </a>
                             </li>
                             <li>
-                                <a href="/dashboard/indicator-delete/{{ indicator.id }}" class="flex-start">
+                                <a href="/dashboard/palika-delete/{{ palika.id }}" class="flex-start">
                                     <i class="material-icons">delete</i>Delete
                                 </a>
 
@@ -73,7 +78,6 @@
                     </div>
                 </td>
             </tr>
-
             {% endfor %}
 
             </tbody>

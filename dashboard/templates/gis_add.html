@@ -6,11 +6,16 @@
     <div class="dfid-breadcrumb pdt-100">
         <ul class="flex-start">
             <li>
-                <a href="#"><i class="material-icons">assignment</i> Partner</a>
+                <a href="#"><i class="material-icons">assignment</i> Gis Layer</a>
             </li>
             <li>New</li>
         </ul>
     </div>
+
+    <div class="alert alert-info">
+  <strong>Important Note !</strong> Vector and Raster folder should be in commpressed form (zip) before uploading and all filenames inside zip folder should not have spaces ( example_shapefile.shp , example_raster.tif ).
+</div>
+
     <!-- program form -->
     <form enctype="multipart/form-data" class="program-form" method="POST">
 
@@ -53,7 +58,7 @@
                     <div class="form-group">
                         <label for="id_description" class="">Description</label>
                         <textarea type="text" class="form-control" name="description" cols="40" rows="10"
-                                  id="id_description" placeholder="Program description"
+                                  id="id_description" placeholder="description"
                                   rows="5"></textarea>
                     </div>
                 </div>
@@ -61,76 +66,58 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-5">
+                        <div class="row">
+                <div class="col-md-6">
                     <div class="form-group">
-                        <label for="id_address" class="">Address</label>
-                        <input type="text" class="form-control" name="address" maxlength="100" id="id_address"
-                               placeholder="address"/>
+                        <label for="id_type">Select Type</label>
+                        <select name="type" id="id_type" class="custom-select" required>
+                            <option value="" selected>----Select Type----</option>
+
+
+                            <option value="vector">Vector</option>
+                            <option value="raster">Raster</option>
+
+
+
+
+
+                        </select>
                     </div>
+
                 </div>
 
-                <div class="col-md-5">
-                    <div class="form-group">
-                        <label for="id_email" class="">Email</label>
-                        <input type="text" class="form-control" name="email" maxlength="100" id="id_email"
-                               placeholder="email"/>
-                    </div>
-                </div>
 
             </div>
 
             <div class="row">
                 <div class="col-md-5">
                     <div class="form-group ">
-                        <label for="id_phone_number" class="">Phone number</label>
-                        <input type="text" class="form-control" name="phone_number" maxlength="100" id="id_phone_number"
-                               placeholder="9454489413"/>
+                        <label for="id_category" class="">Category</label>
+                        <input type="text" class="form-control" name="category" maxlength="100" id="id_category"
+                               placeholder="Category"/>
                     </div>
                 </div>
                 <div class="col-md-5">
 
                     <div class="form-group ">
-                        <label for="id_contact_person_name" class="">Contact person name</label>
-                        <input type="text" class="form-control" name="contact_person_name" maxlength="100"
-                               id="id_contact_person_name"
-                               placeholder="Name"/>
+                        <label for="id_filename" class="">Filename</label>
+                        <input type="text" class="form-control" name="filename" maxlength="100" id="id_filename"
+                               placeholder="Filename" required/>
                     </div>
 
-                    <div class="col-md-3">
 
-                    </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-5">
-                    <div class="form-group ">
-                        <label for="id_contact_person_email" class="">Contact person email</label>
-                        <input type="text" class="form-control" name="contact_person_email" maxlength="100"
-                               id="id_contact_person_email"
-                               placeholder="Email"/>
-                    </div>
-                </div>
-                <div class="col-md-5">
 
-                    <div class="form-group ">
-                        <label for="id_contact_person_ph" class="">Contact person ph</label>
-                        <input type="text" class="form-control" name="contact_person_ph" maxlength="100"
-                               id="id_contact_person_ph"
-                               placeholder="Number"/>
-                    </div>
-
-                </div>
-            </div>
 
 
 
         <div class="row">
             <div class="col-md-5">
                 <div class="form-group ">
-                    <label for="id_image" class="">Image</label>
-                    <input  type="file" name="image" id="id_image"/>
+                    <label for="vector" class="">File</label>
+                    <input  type="file" name="shapefile" id="vector" required/>
                 </div>
             </div>
 

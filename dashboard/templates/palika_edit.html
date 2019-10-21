@@ -1,0 +1,379 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i> District</a>
+            </li>
+            <li>New</li>
+        </ul>
+    </div>
+    <!-- program form -->
+    <form class="program-form" method="POST">
+
+        {% csrf_token %}
+
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ field.name|title }} {{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+        <div class="default-form">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_province_id">Select Province</label>
+                        <select name="province_id" id="id_province_id" class="custom-select" required>
+                            {% for i in province %}
+
+                            {% if i.id == form.instance.province_id.id %}
+
+                            <option value="{{i.id}}" selected>{{i.name}}</option>
+
+                            {% else %}
+
+                            <option value="{{i.id}}">{{i.name}}</option>
+
+                            {% endif %}
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_district_id">Select District</label>
+                        <select name="district_id" id="id_district_id" class="custom-select" required>
+                            {% for i in district %}
+
+                            {% if i.id == form.instance.district_id.id %}
+
+                            <option value="{{i.id}}" selected>{{i.name}}</option>
+
+                            {% else %}
+
+                            <option value="{{i.id}}">{{i.name}}</option>
+
+                            {% endif %}
+
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_name" class="">Name</label>
+                        <input type="text" class="form-control" name="name" maxlength="100" id="id_name"
+                               placeholder="Name" value="{{ form.instance.name }}" required/>
+                        <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+                        <!--                                        Please ennter name</span>-->
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_gn_type_np">Palika Type(np)</label>
+                        <select name="gn_type_np" id="id_gn_type_np" class="custom-select" required>
+
+                            {% if form.instance.gn_type_np == "Development area" %}
+
+                            <option value="Development area" selected>Development area</option>
+                            <option value="Gaunpalika">Gaunpalika</option>
+                            <option value="Hunting reserve">Hunting reserve</option>
+                            <option value="Nagarpalika">Nagarpalika</option>
+                            <option value="Mahanagarpalika">Mahanagarpalika</option>
+                            <option value="Upamahanagarpalika">Upamahanagarpalika</option>
+                            <option value="Wildlife reserve">Wildlife reserve</option>
+                            <option value="Watershed and wildlife reserve">Watershed and wildlife reserve</option>
+
+                            {% elif form.instance.gn_type_np == "Gaunpalika" %}
+
+                            <option value="Development area">Development area</option>
+                            <option value="Gaunpalika" selected>Gaunpalika</option>
+                            <option value="Hunting reserve">Hunting reserve</option>
+                            <option value="Nagarpalika">Nagarpalika</option>
+                            <option value="Mahanagarpalika">Mahanagarpalika</option>
+                            <option value="Upamahanagarpalika">Upamahanagarpalika</option>
+                            <option value="Wildlife reserve">Wildlife reserve</option>
+                            <option value="Watershed and wildlife reserve">Watershed and wildlife reserve</option>
+
+                            {% elif form.instance.gn_type_np == "Hunting reserve" %}
+
+                            <option value="Development area">Development area</option>
+                            <option value="Gaunpalika" >Gaunpalika</option>
+                            <option value="Hunting reserve" selected>Hunting reserve</option>
+                            <option value="Nagarpalika">Nagarpalika</option>
+                            <option value="Mahanagarpalika">Mahanagarpalika</option>
+                            <option value="Upamahanagarpalika">Upamahanagarpalika</option>
+                            <option value="Wildlife reserve">Wildlife reserve</option>
+                            <option value="Watershed and wildlife reserve">Watershed and wildlife reserve</option>
+
+                            {% elif form.instance.gn_type_np == "Nagarpalika" %}
+
+                            <option value="Development area">Development area</option>
+                            <option value="Gaunpalika" >Gaunpalika</option>
+                            <option value="Hunting reserve">Hunting reserve</option>
+                            <option value="Nagarpalika" selected>Nagarpalika</option>
+                            <option value="Mahanagarpalika">Mahanagarpalika</option>
+                            <option value="Upamahanagarpalika">Upamahanagarpalika</option>
+                            <option value="Wildlife reserve">Wildlife reserve</option>
+                            <option value="Watershed and wildlife reserve">Watershed and wildlife reserve</option>
+
+                            {% elif form.instance.gn_type_np == "Mahanagarpalika" %}
+
+                            <option value="Development area">Development area</option>
+                            <option value="Gaunpalika">Gaunpalika</option>
+                            <option value="Hunting reserve">Hunting reserve</option>
+                            <option value="Nagarpalika">Nagarpalika</option>
+                            <option value="Mahanagarpalika" selected>Mahanagarpalika</option>
+                            <option value="Upamahanagarpalika">Upamahanagarpalika</option>
+                            <option value="Wildlife reserve">Wildlife reserve</option>
+                            <option value="Watershed and wildlife reserve">Watershed and wildlife reserve</option>
+
+                            {% elif form.instance.gn_type_np == "Upamahanagarpalika" %}
+
+                            <option value="Development area">Development area</option>
+                            <option value="Gaunpalika">Gaunpalika</option>
+                            <option value="Hunting reserve">Hunting reserve</option>
+                            <option value="Nagarpalika">Nagarpalika</option>
+                            <option value="Mahanagarpalika">Mahanagarpalika</option>
+                            <option value="Upamahanagarpalika" selected>Upamahanagarpalika</option>
+                            <option value="Wildlife reserve">Wildlife reserve</option>
+                            <option value="Watershed and wildlife reserve">Watershed and wildlife reserve</option>
+
+                            {% elif form.instance.gn_type_np == "Wildlife reserve" %}
+
+                            <option value="Development area">Development area</option>
+                            <option value="Gaunpalika">Gaunpalika</option>
+                            <option value="Hunting reserve">Hunting reserve</option>
+                            <option value="Nagarpalika">Nagarpalika</option>
+                            <option value="Mahanagarpalika">Mahanagarpalika</option>
+                            <option value="Upamahanagarpalika">Upamahanagarpalika</option>
+                            <option value="Wildlife reserve" selected>Wildlife reserve</option>
+                            <option value="Watershed and wildlife reserve">Watershed and wildlife reserve</option>
+
+                            {% else %}
+
+                            <option value="Development area">Development area</option>
+                            <option value="Gaunpalika">Gaunpalika</option>
+                            <option value="Hunting reserve">Hunting reserve</option>
+                            <option value="Nagarpalika">Nagarpalika</option>
+                            <option value="Mahanagarpalika">Mahanagarpalika</option>
+                            <option value="Upamahanagarpalika">Upamahanagarpalika</option>
+                            <option value="Wildlife reserve">Wildlife reserve</option>
+                            <option value="Watershed and wildlife reserve" selected>Watershed and wildlife reserve</option>
+
+                            {% endif %}
+
+
+
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_gn_type_en">Palika Type(en)</label>
+                        <select name="gn_type_en" id="id_gn_type_en" class="custom-select" required>
+
+                            {% if form.instance.gn_type_en == "Rural municipality" %}
+
+                            <option value="Rural municipality" selected>Rural municipality</option>
+                            <option value="Urban municipality">Urban municipality</option>
+                            <option value="Designated area">Designated area</option>
+                            <option value="Sub metropolitan">Sub metropolitan</option>
+                            <option value="Metropolitan">Metropolitan</option>
+
+                            {% elif form.instance.gn_type_en == "Urban municipality" %}
+
+                            <option value="Rural municipality">Rural municipality</option>
+                            <option value="Urban municipality" selected>Urban municipality</option>
+                            <option value="Designated area">Designated area</option>
+                            <option value="Sub metropolitan">Sub metropolitan</option>
+                            <option value="Metropolitan">Metropolitan</option>
+
+                            {% elif form.instance.gn_type_en == "Designated area" %}
+
+                            <option value="Rural municipality" >Rural municipality</option>
+                            <option value="Urban municipality">Urban municipality</option>
+                            <option value="Designated area" selected>Designated area</option>
+                            <option value="Sub metropolitan">Sub metropolitan</option>
+                            <option value="Metropolitan">Metropolitan</option>
+
+                            {% elif form.instance.gn_type_en == "Sub metropolitan" %}
+
+                            <option value="Rural municipality">Rural municipality</option>
+                            <option value="Urban municipality">Urban municipality</option>
+                            <option value="Designated area">Designated area</option>
+                            <option value="Sub metropolitan" selected>Sub metropolitan</option>
+                            <option value="Metropolitan">Metropolitan</option>
+
+                            {% else %}
+
+                            <option value="Rural municipality" >Rural municipality</option>
+                            <option value="Urban municipality">Urban municipality</option>
+                            <option value="Designated area">Designated area</option>
+                            <option value="Sub metropolitan">Sub metropolitan</option>
+                            <option value="Metropolitan" selected>Metropolitan</option>
+
+                            {% endif %}
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_geography">Geography</label>
+                        <select name="geography" id="id_geography" class="custom-select" required>
+
+                            {% if form.instance.geography == "Terai" %}
+
+                            <option value="Terai" selected>Terai</option>
+                            <option value="Hill">Hill</option>
+                            <option value="Shivalik">Shivalik</option>
+                            <option value="Mountain">Mountain</option>
+                            <option value="High Mountain">High Mountain</option>
+
+                            {% elif form.instance.geography == "Hill" %}
+
+                            <option value="Terai" selected>Terai</option>
+                            <option value="Hill" selected>Hill</option>
+                            <option value="Shivalik">Shivalik</option>
+                            <option value="Mountain">Mountain</option>
+                            <option value="High Mountain">High Mountain</option>
+
+                            {% elif form.instance.geography == "Shivalik" %}
+
+                            <option value="Terai" selected>Terai</option>
+                            <option value="Hill">Hill</option>
+                            <option value="Shivalik" selected>Shivalik</option>
+                            <option value="Mountain">Mountain</option>
+                            <option value="High Mountain">High Mountain</option>
+
+                            {% elif form.instance.geography == "Mountain" %}
+
+                            <option value="Terai" selected>Terai</option>
+                            <option value="Hill">Hill</option>
+                            <option value="Shivalik">Shivalik</option>
+                            <option value="Mountain" selected>Mountain</option>
+                            <option value="High Mountain">High Mountain</option>
+
+                            {% else %}
+
+                            <option value="Terai">Terai</option>
+                            <option value="Hill">Hill</option>
+                            <option value="Shivalik">Shivalik</option>
+                            <option value="Mountain">Mountain</option>
+                            <option value="High Mountain" selected>High Mountain</option>
+
+                            {% endif %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_population" class="">Population</label>
+                        <input type="text" class="form-control" name="population" step="any" id="id_population"
+                               placeholder="1133434" value="{{ form.instance.population }}" required/>
+                        <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+                        <!--                                        Please ennter name</span>-->
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_cbs_code" class="">Cbs Code</label>
+                        <input type="text" class="form-control" name="cbs_code" maxlength="100"
+                               id="id_cbs_code"
+                               placeholder="123" value="{{ form.instance.cbs_code }}" required/>
+                        <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+                        <!--                                        Please ennter name</span>-->
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_hlcit_code" class="">Hlcit Code</label>
+                        <input type="text" class="form-control" name="hlcit_code" maxlength="100"
+                               id="id_hlcit_code"
+                               placeholder="84349" value="{{ form.instance.hlcit_code }}" required/>
+                        <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+                        <!--                                        Please ennter name</span>-->
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_p_code" class="">P Code</label>
+                        <input type="text" class="form-control" name="p_code" maxlength="100" id="id_p_code"
+                               placeholder="84349" value="{{ form.instance.p_code }}" required/>
+                        <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+                        <!--                                        Please ennter name</span>-->
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <div class="form-group mrt-100">
+                <button type="submit" class="dfid-button sm-button">Save</button>
+            </div>
+
+        </div>
+
+
+        <!-- category form -->
+
+
+    </form>
+</main>
+
+{% endblock %}
+

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i> Marker Value</a>
+            </li>
+            <li>New</li>
+        </ul>
+    </div>
+    <!-- program form -->
+    <form class="program-form" method="POST">
+
+        {% csrf_token %}
+
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ field.name|title }} {{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+        <div class="default-form">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_marker_category_id">Select Marker Category</label>
+                        <select name="marker_category_id" id="id_marker_category_id" class="custom-select" required>
+                            <option value="" selected>----Select Marker----</option>
+                            {% for sector in sectors %}
+
+                            <option value="{{sector.id}}">{{sector.name}}</option>
+
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_value" class="">Marker Value</label>
+                        <input type="text" class="form-control" name="value" maxlength="100" id="id_value"
+                               placeholder="Value" required/>
+                        <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+                        <!--                                        Please ennter name</span>-->
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+            <div class="form-group mrt-100">
+                <button type="submit" class="dfid-button sm-button">Save</button>
+            </div>
+
+        </div>
+
+
+        <!-- category form -->
+
+
+    </form>
+</main>
+
+{% endblock %}
+
