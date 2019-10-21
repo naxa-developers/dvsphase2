@@ -755,6 +755,21 @@ class IndicatorUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('indicator-list')
 
 
+class GisLayerUpdate(SuccessMessageMixin, UpdateView):
+    model = GisLayer
+    template_name = 'gis_layer_edit.html'
+    form_class = GisLayerCreateForm
+    success_message = 'Map Layer successfully Edited'
+
+    def get_context_data(self, **kwargs):
+        data = super(GisLayerUpdate, self).get_context_data(**kwargs)
+        data['active'] = 'gis'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('gis-layer-list')
+
+
 class ProgramDelete(SuccessMessageMixin, DeleteView):
     model = Program
     template_name = 'program_confirm_delete.html'
@@ -849,7 +864,7 @@ def gisLayer_create(request):
     if form.is_valid():
 
         shapefile = request.FILES["shapefile"]
-        store_named = request.POST["name"]
+        store_named = request.POST["filename"]
         store_name = store_named.replace(" ", "_").lower() + str(randint(0, 99999))
 
         # return HttpResponse(layer_name)

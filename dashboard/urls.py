@@ -59,6 +59,7 @@ urlpatterns = [
 
     path('gis-layer-list/', views.GisLayerList.as_view(), name='gis-layer-list'),
     path('layer-add/', views.gisLayer_create, name='layer-add'),
+    path('gis-edit/<int:pk>', views.GisLayerUpdate.as_view(), name='gis-edit'),
 
     path('province-list/', views.ProvinceList.as_view(), name='province-list'),
     path('province-add/', views.ProvinceCreate.as_view(), name='province-add'),

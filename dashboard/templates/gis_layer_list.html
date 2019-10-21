@@ -27,13 +27,12 @@
             <tr>
                 <th>Sn</th>
                 <th>Name</th>
-                <th>Layer Name</th>
-                <th>workspace</th>
+                <th>Description</th>
                 <th>type</th>
                 <th>category</th>
                 <th>filename</th>
 
-<!--                <th></th>-->
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -43,32 +42,31 @@
                 <td>
                     <strong><a href="#">{{gis.name}}</a></strong>
                 </td>
-                <td>{{ gis.layer_name }}</td>
-                <td>{{ gis.workspace }}</td>
+                <td>{{ gis.description }}</td>
                 <td>{{ gis.type }}</td>
                 <td>{{ gis.category }}</td>
                 <td>{{ gis.filename }}</td>
 
-<!--                <td>-->
-<!--                    <div class="table-action">-->
-<!--                        <a href="#" class="more-action">-->
-<!--                            <i class="material-icons">more_vert</i>-->
-<!--                        </a>-->
-<!--                        <ul class="dropdown-animation">-->
-<!--                            <li>-->
-<!--                                <a href="/dashboard/marker-cat-edit/{{ gis.id }}" class="flex-start">-->
-<!--                                    <i class="material-icons">edit</i> Edit-->
-<!--                                </a>-->
-<!--                            </li>-->
+                <td>
+                    <div class="table-action">
+                        <a href="#" class="more-action">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-animation">
+                            <li>
+                                <a href="/dashboard/gis-edit/{{ gis.id }}" class="flex-start">
+                                    <i class="material-icons">edit</i> Edit
+                                </a>
+                            </li>
 <!--                            <li>-->
 <!--                                <a href="/dashboard/marker-cat-delete/{{ gis.id }}" class="flex-start">-->
 <!--                                    <i class="material-icons">delete</i>Delete-->
 <!--                                </a>-->
 
 <!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-<!--                </td>-->
+                        </ul>
+                    </div>
+                </td>
             </tr>
             {% endfor %}
 
