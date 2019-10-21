@@ -375,6 +375,7 @@ class DistrictList(ListView):
 
     def get_context_data(self, **kwargs):
         data = super(DistrictList, self).get_context_data(**kwargs)
+
         district = District.objects.order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
@@ -656,7 +657,9 @@ class PartnerUpdate(SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         data = super(PartnerUpdate, self).get_context_data(**kwargs)
-
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['active'] = 'partner'
         return data
 
