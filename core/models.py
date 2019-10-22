@@ -184,8 +184,8 @@ class IndicatorValue(models.Model):
     gapanapa_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='IgapaNapa', null=True, blank=True)
     value = models.FloatField(null=True, blank=True, default=None)
 
-    def __float__(self):
-        return self.value
+    def __str__(self):
+        return self.indicator_id
 
 
 class TravelTime(models.Model):
@@ -212,3 +212,6 @@ class GisLayer(models.Model):
     category = models.CharField(max_length=100, null=True, blank=True)
     filename = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name

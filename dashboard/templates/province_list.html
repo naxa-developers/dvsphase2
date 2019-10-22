@@ -17,3 +17,13 @@
 
 
     <p>{% for f in filtered %} <p>{{ f.name }} </p> {% endfor %}</p>
+
+
+    {% for logs in log %}
+
+
+    <h4 color="red">{{ logs }}</h4>
+    <h4 color="red">{{ logs.action_time }}</h4>
+
+
+    {% endfor %}

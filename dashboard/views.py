@@ -33,6 +33,8 @@ from zipfile import ZipFile
 import os
 from django.contrib import messages
 from random import randint
+from django.contrib.admin.models import LogEntry
+
 
 
 # Create your views here.
@@ -204,6 +206,8 @@ def province_list(request):
     template_name = 'province_list.html'
     province = Program.objects.filter(id=5).order_by('id')
     data_list = Program.objects.filter(id=5).values_list('sector', flat=True)
+    user = request.user
+    # LogEntry.objects.all().delete()
 
     if (data_list):
         filter_sector = Sector.objects.order_by('id')
@@ -213,6 +217,7 @@ def province_list(request):
 
     data = {}
     data['object_list'] = province
+    data['log'] = LogEntry.objects.filter(user_id=user).order_by('-id')[:5]
     data['sector'] = Sector.objects.all().prefetch_related('Sector').order_by('id')
     data['filtered'] = filter_sector
     return render(request, template_name, data)
@@ -375,6 +380,7 @@ class DistrictList(ListView):
 
     def get_context_data(self, **kwargs):
         data = super(DistrictList, self).get_context_data(**kwargs)
+
         district = District.objects.order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
@@ -393,8 +399,8 @@ class PalikaList(ListView):
         palika = GapaNapa.objects.order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
-        data['list'] = palika
         data['user'] = user_data
+        data['list'] = palika
         data['active'] = 'location'
         return data
 
@@ -426,6 +432,9 @@ class ProgramCreate(SuccessMessageMixin, CreateView):
         sectors = Sector.objects.all().prefetch_related('Sector').order_by('id')
         markers = MarkerCategory.objects.all().prefetch_related('MarkerCategory').order_by('id')
         partners = Partner.objects.all().order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['sectors'] = sectors
         data['markers'] = markers
         data['partners'] = partners
@@ -444,6 +453,9 @@ class PartnerCreate(SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         data = super(PartnerCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['active'] = 'partner'
         return data
 
@@ -459,6 +471,9 @@ class SectorCreate(SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         data = super(SectorCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['active'] = 'sector'
         return data
 
@@ -474,6 +489,9 @@ class SubSectorCreate(SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         data = super(SubSectorCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['sectors'] = Sector.objects.order_by('id')
         data['active'] = 'sector'
         return data
@@ -490,6 +508,9 @@ class ProvinceCreate(SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         data = super(ProvinceCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['active'] = 'location'
         return data
 
@@ -505,6 +526,9 @@ class DistrictCreate(SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         data = super(DistrictCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['province'] = Province.objects.order_by('id')
         data['active'] = 'location'
         return data
@@ -521,6 +545,9 @@ class PalilkaCreate(SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         data = super(PalilkaCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['province'] = Province.objects.order_by('id')
         data['district'] = District.objects.order_by('id')
         data['active'] = 'location'
@@ -538,6 +565,9 @@ class MarkerValueCreate(SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         data = super(MarkerValueCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['sectors'] = MarkerCategory.objects.order_by('id')
         data['active'] = 'marker'
         return data
@@ -554,6 +584,9 @@ class MarkerCategoryCreate(SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         data = super(MarkerCategoryCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['active'] = 'marker'
         return data
 
@@ -569,6 +602,9 @@ class IndicatorCreate(SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         data = super(IndicatorCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['active'] = 'indicator'
         return data
 
@@ -587,6 +623,8 @@ class ProgramUpdate(SuccessMessageMixin, UpdateView):
         sector_list = Program.objects.filter(id=self.kwargs['pk']).values_list('sector', flat=True)
         marker_list = Program.objects.filter(id=self.kwargs['pk']).values_list('marker_category', flat=True)
         partner_list = Program.objects.filter(id=self.kwargs['pk']).values_list('partner', flat=True)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
 
         if (sector_list[0] == None):
             filter_sector = Sector.objects.order_by('id')
@@ -604,6 +642,7 @@ class ProgramUpdate(SuccessMessageMixin, UpdateView):
         else:
             filter_partners = Partner.objects.exclude(id__in=partner_list)
 
+        data['user'] = user_data
         data['sectors'] = filter_sector
         data['test'] = sector_list
         data['markers'] = filter_marker
@@ -623,6 +662,9 @@ class PartnerUpdate(SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         data = super(PartnerUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['active'] = 'partner'
         return data
 
@@ -638,6 +680,9 @@ class SectorUpdate(SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         data = super(SectorUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['active'] = 'sector'
         return data
 
@@ -653,6 +698,9 @@ class SubSectorUpdate(SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         data = super(SubSectorUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['sectors'] = Sector.objects.order_by('id')
         data['active'] = 'sector'
         return data
@@ -669,6 +717,9 @@ class MarkerCategoryUpdate(SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         data = super(MarkerCategoryUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['active'] = 'marker'
         return data
 
@@ -684,6 +735,9 @@ class MarkerValueUpdate(SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         data = super(MarkerValueUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['sectors'] = MarkerCategory.objects.order_by('id')
         data['active'] = 'marker'
         return data
@@ -700,6 +754,9 @@ class ProvinceUpdate(SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         data = super(ProvinceUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['active'] = 'location'
         return data
 
@@ -715,6 +772,9 @@ class DistrictUpdate(SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         data = super(DistrictUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['province'] = Province.objects.order_by('id')
         data['active'] = 'location'
         return data
@@ -731,6 +791,9 @@ class PalilkaUpdate(SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         data = super(PalilkaUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['province'] = Province.objects.order_by('id')
         data['district'] = District.objects.order_by('id')
         data['active'] = 'location'
@@ -748,6 +811,9 @@ class IndicatorUpdate(SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         data = super(IndicatorUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['active'] = 'indicator'
         return data
 
@@ -763,6 +829,9 @@ class GisLayerUpdate(SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         data = super(GisLayerUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
         data['active'] = 'gis'
         return data
 
@@ -774,7 +843,17 @@ class ProgramDelete(SuccessMessageMixin, DeleteView):
     model = Program
     template_name = 'program_confirm_delete.html'
     success_message = 'Program successfully deleted'
-    success_url = reverse_lazy('program-list')
+    # success_url = reverse_lazy('program-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(ProgramDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('program-list')
 
 
 class PartnerDelete(SuccessMessageMixin, DeleteView):
@@ -783,12 +862,26 @@ class PartnerDelete(SuccessMessageMixin, DeleteView):
     success_message = 'Partner successfully deleted'
     success_url = reverse_lazy('partner-list')
 
+    def get_context_data(self, **kwargs):
+        data = super(PartnerDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
 
 class SectorDelete(SuccessMessageMixin, DeleteView):
     model = Sector
     template_name = 'sector_confirm_delete.html'
     success_message = 'Sector successfully deleted'
     success_url = reverse_lazy('sector-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(SectorDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
 
 
 class SubSectorDelete(SuccessMessageMixin, DeleteView):
@@ -797,12 +890,26 @@ class SubSectorDelete(SuccessMessageMixin, DeleteView):
     success_message = 'Sub Sector successfully deleted'
     success_url = reverse_lazy('subsector-list')
 
+    def get_context_data(self, **kwargs):
+        data = super(SubSectorDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
 
 class MarkerCategoryDelete(SuccessMessageMixin, DeleteView):
     model = MarkerCategory
     template_name = 'marker_cat_confirm_delete.html'
     success_message = 'Marker category successfully deleted'
     success_url = reverse_lazy('marker-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(MarkerCategoryDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
 
 
 class MarkerValueDelete(SuccessMessageMixin, DeleteView):
@@ -811,12 +918,26 @@ class MarkerValueDelete(SuccessMessageMixin, DeleteView):
     success_message = 'Marker category successfully deleted'
     success_url = reverse_lazy('markervalue-list')
 
+    def get_context_data(self, **kwargs):
+        data = super(MarkerValueDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
 
 class ProvinceDelete(SuccessMessageMixin, DeleteView):
     model = Province
     template_name = 'province_confirm_delete.html'
     success_message = 'Province successfully deleted'
     success_url = reverse_lazy('province-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(ProvinceDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
 
 
 class DistrictDelete(SuccessMessageMixin, DeleteView):
@@ -825,6 +946,13 @@ class DistrictDelete(SuccessMessageMixin, DeleteView):
     success_message = 'District successfully deleted'
     success_url = reverse_lazy('district-list')
 
+    def get_context_data(self, **kwargs):
+        data = super(DistrictDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
 
 class PalikaDelete(SuccessMessageMixin, DeleteView):
     model = GapaNapa
@@ -832,12 +960,26 @@ class PalikaDelete(SuccessMessageMixin, DeleteView):
     success_message = 'Plaika successfully deleted'
     success_url = reverse_lazy('palika-list')
 
+    def get_context_data(self, **kwargs):
+        data = super(PalikaDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
 
 class IndicatorDelete(SuccessMessageMixin, DeleteView):
     model = Indicator
     template_name = 'indicator_confirm_delete.html'
     success_message = 'Indicator successfully deleted'
     success_url = reverse_lazy('indicator-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(IndicatorDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
 
 
 def signup(request):
