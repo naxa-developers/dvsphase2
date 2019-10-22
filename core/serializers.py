@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Partner, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
-    IndicatorValue, Sector, SubSector, TravelTime
+    IndicatorValue, Sector, SubSector, TravelTime, GisLayer
 
 
 class PartnerSerializer(serializers.ModelSerializer):
@@ -12,6 +12,12 @@ class PartnerSerializer(serializers.ModelSerializer):
 class MarkerCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = MarkerCategory
+        fields = '__all__'
+
+
+class GisLayerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GisLayer
         fields = '__all__'
 
 
