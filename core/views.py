@@ -1,10 +1,10 @@
 from .models import Partner, Program, MarkerValues, District, Province, GapaNapa, FiveW, Indicator, IndicatorValue, \
-    Sector, SubSector, MarkerCategory, TravelTime
+    Sector, SubSector, MarkerCategory, TravelTime, GisLayer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import PartnerSerializer, ProgramSerializer, MarkerValuesSerializer, DistrictSerializer, \
     ProvinceSerializer, GaanapaSerializer, FivewSerializer, \
     IndicatorSerializer, IndicatorValueSerializer, SectorSerializer, SubsectorSerializer, MarkerCategorySerializer, \
-    TravelTimeSerializer
+    TravelTimeSerializer, GisLayerSerializer
 from rest_framework import viewsets, views
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
@@ -29,8 +29,6 @@ class PartnerView(viewsets.ReadOnlyModelViewSet):
         return serializer_class
 
 
-
-
 class MarkerCategoryApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     filter_backends = [DjangoFilterBackend]
@@ -44,6 +42,19 @@ class MarkerCategoryApi(viewsets.ReadOnlyModelViewSet):
         serializer_class = MarkerCategorySerializer
         return serializer_class
 
+
+class GisApi(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id']
+
+    def get_queryset(self):
+        queryset = GisLayer.objects.order_by('id')
+        return queryset
+
+    def get_serializer_class(self):
+        serializer_class = GisLayerSerializer
+        return serializer_class
 
 
 class MarkerValueApi(viewsets.ReadOnlyModelViewSet):
@@ -74,8 +85,6 @@ class DistrictApi(viewsets.ReadOnlyModelViewSet):
         return serializer_class
 
 
-
-
 class ProvinceApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     filter_backends = [DjangoFilterBackend]
@@ -88,8 +97,6 @@ class ProvinceApi(viewsets.ReadOnlyModelViewSet):
     def get_serializer_class(self):
         serializer_class = ProvinceSerializer
         return serializer_class
-
-
 
 
 class GapaNapaApi(viewsets.ReadOnlyModelViewSet):
@@ -127,8 +134,6 @@ class IndicatorApi(viewsets.ReadOnlyModelViewSet):
     def get_serializer_class(self):
         serializer_class = IndicatorSerializer
         return serializer_class
-
-
 
 
 class IndicatorData(viewsets.ReadOnlyModelViewSet):
