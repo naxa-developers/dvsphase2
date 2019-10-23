@@ -36,7 +36,6 @@ from random import randint
 from django.contrib.admin.models import LogEntry
 
 
-
 # Create your views here.
 
 @login_required()
@@ -116,38 +115,41 @@ def uploadData(request):
             return HttpResponse(e)
 
 
-def ShapefileUpload(request):
-    if "GET" == request.method:
-
-        return render(request, 'shapefile.html')
-    else:
-        shapefile = request.FILES["shapefile"]
-        layer_name = 'sumit' + str(randint(0, 9999))
-        # return HttpResponse(layer_name)
-        url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/' + layer_name + '/file.shp'
-        # return HttpResponse(url)
-
-        headers = {
-            'Content-type': 'application/zip',
-        }
-        response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
-        # print(response)
-        return HttpResponse(response.status_code)
-
-
 # def ShapefileUpload(request):
 #     if "GET" == request.method:
 #
 #         return render(request, 'shapefile.html')
 #     else:
 #         shapefile = request.FILES["shapefile"]
-#         url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/coveragestores/dfid/file.geotiff'
+#         layer_name = 'sumit' + str(randint(0, 9999))
+#         # return HttpResponse(layer_name)
+#         url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/' + layer_name + '/file.shp'
+#         # return HttpResponse(url)
+#
 #         headers = {
 #             'Content-type': 'application/zip',
 #         }
 #         response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
 #         # print(response)
 #         return HttpResponse(response.status_code)
+
+
+def ShapefileUpload(request):
+    if "GET" == request.method:
+
+        return render(request, 'shapefile.html')
+    else:
+        # shapefile = request.FILES["shapefile"]
+        get_store_name = GisLayer.objects.filter(id=19).values_list('store_name', flat=True)
+
+        url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/' + get_store_name[
+            0] + '?recurse=true'
+        headers = {
+            'Content-type': '',
+        }
+        response = requests.delete(url, headers=headers, auth=('admin', 'geoserver'))
+        # print(response)
+        return HttpResponse(response.status_code)
 
 
 def Invitation(request):
@@ -843,6 +845,7 @@ class ProgramDelete(SuccessMessageMixin, DeleteView):
     model = Program
     template_name = 'program_confirm_delete.html'
     success_message = 'Program successfully deleted'
+
     # success_url = reverse_lazy('program-list')
 
     def get_context_data(self, **kwargs):
@@ -1035,6 +1038,7 @@ def gisLayer_create(request):
             obj = form.save(commit=False)
             obj.workspace = 'Naxa'
             obj.layer_name = layer_name
+            obj.store_name = store_name
             obj.geoserver_url = 'http://139.59.67.104:8080/geoserver/gwc/service/tms/1.0.0/Naxa:' + layer_name + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf'
 
             obj.save()
@@ -1045,3 +1049,112 @@ def gisLayer_create(request):
 
         return redirect('gis-layer-list')
     return render(request, template_name, {'form': form})
+
+
+def gisLayer_replace(request, **kwargs):
+    template_name = 'gis_replace.html'
+    instance = GisLayer.objects.get(id=kwargs['pk'])
+    get_store_name = GisLayer.objects.filter(id=kwargs['pk']).values_list('store_name', flat=True)
+    form = GisLayerCreateForm(request.POST or None, instance=instance)
+    if form.is_valid():
+
+        shapefile = request.FILES["shapefile"]
+        store_named = request.POST["filename"]
+        store_names = store_named.replace(" ", "_").lower() + str(randint(0, 99999999))
+
+        # return HttpResponse(layer_name)
+
+        if request.POST['type'] == 'vector':
+
+            store_check_url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/' + get_store_name[
+                0] + '?recurse=true'
+
+            headers = {
+                'Content-type': '',
+            }
+            response = requests.delete(store_check_url, headers=headers, auth=('admin', 'geoserver'))
+            # return HttpResponse(response.status_code)
+
+            url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/' + store_names + '/file.shp'
+            headers = {
+                'Content-type': 'application/zip',
+            }
+            response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
+
+        else:
+
+            store_check_url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/coveragestores/' + \
+                              get_store_name[0] + '?recurse=true'
+            headers = {
+                'Content-type': '',
+            }
+            requests.delete(store_check_url, headers=headers, auth=('admin', 'geoserver'))
+
+            url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/coveragestores/' + store_names + '/file.geotiff'
+            headers = {
+                'Content-type': 'application/zip',
+            }
+            response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
+            # return HttpResponse(response)
+
+        if response.status_code == 201:
+            zipfile = ZipFile(shapefile)
+            names = zipfile.namelist()
+            layer_name = os.path.splitext(names[0])[0]
+            obj = form.save(commit=False)
+            obj.workspace = 'Naxa'
+            obj.store_name = store_names
+            obj.layer_name = layer_name
+            obj.geoserver_url = 'http://139.59.67.104:8080/geoserver/gwc/service/tms/1.0.0/Naxa:' + layer_name + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf'
+
+            obj.save()
+            messages.success(request, "Layer successfully replaced")
+
+        else:
+            messages.error(request, "Layer could not be  replaced !! Please Try again")
+
+        return redirect('gis-layer-list')
+    return render(request, template_name, {'form': form})
+
+
+def gisLayer_delete(request, **kwargs):
+    get_store_name = GisLayer.objects.filter(id=kwargs['pk']).values_list('store_name', flat=True)
+    type = GisLayer.objects.filter(id=kwargs['pk']).values_list('type', flat=True)
+
+    if type[0] == 'vector':
+        store = 'datastores'
+    else:
+        store = 'coveragestores'
+
+    store_check_url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/' + store + '/' + get_store_name[0] + '?recurse=true'
+
+    headers = {
+        'Content-type': '',
+    }
+    response = requests.get(store_check_url, headers=headers, auth=('admin', 'geoserver'))
+
+    if response.status_code == 200:
+
+        delete_url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/' + store + '/' + get_store_name[0] + '?recurse=true'
+
+        headers = {
+            'Content-type': '',
+        }
+        delete_response = requests.delete(delete_url, headers=headers, auth=('admin', 'geoserver'))
+
+        if delete_response.status_code == 200:
+            delete = GisLayer.objects.filter(id=kwargs['pk']).delete()
+
+        else:
+            messages.success(request, "Layer could not be deleted")
+            return redirect('gis-layer-list')
+    else:
+
+        delete = GisLayer.objects.filter(id=kwargs['pk']).delete()
+
+    if delete:
+        messages.success(request, "Layer successfully deleted")
+        return redirect('gis-layer-list')
+    else:
+        messages.success(request, "Layer could not be Deleted")
+        return redirect('gis-layer-list')
