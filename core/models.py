@@ -160,7 +160,6 @@ class FiveW(models.Model):
 
 
 class Indicator(models.Model):
-
     fed = (
         ('palika level', 'Palika Level'),
         ('district level', 'District Level'),
@@ -208,6 +207,7 @@ class GisLayer(models.Model):
     layer_name = models.CharField(max_length=100, null=True, blank=True)
     workspace = models.CharField(max_length=100, null=True, blank=True)
     geoserver_url = models.CharField(max_length=300, null=True, blank=True)
+    store_name = models.CharField(max_length=300, null=True, blank=True)
     type = models.CharField(max_length=50, choices=type, default='vector')
     category = models.CharField(max_length=100, null=True, blank=True)
     filename = models.CharField(max_length=100, null=True, blank=True)
