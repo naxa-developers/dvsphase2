@@ -155,7 +155,9 @@ def ShapefileUpload(request):
 def Invitation(request):
     if "GET" == request.method:
         group = Group.objects.all()
-        return render(request, 'invitation_form.html', {'group': group})
+        partner = Partner.objects.all()
+        program = Program.objects.all()
+        return render(request, 'invitation_form.html', {'group': group, 'partners': partner, 'programs': program})
     else:
         url = settings.SITE_URL
         group = request.POST["group"]
@@ -715,6 +717,12 @@ class ProgramUpdate(SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('program-list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Program " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class PartnerUpdate(SuccessMessageMixin, UpdateView):
     model = Partner
@@ -732,6 +740,12 @@ class PartnerUpdate(SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('partner-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Partner " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class SectorUpdate(SuccessMessageMixin, UpdateView):
@@ -776,6 +790,12 @@ class SubSectorUpdate(SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('subsector-list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Sub sector " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class MarkerCategoryUpdate(SuccessMessageMixin, UpdateView):
     model = MarkerCategory
@@ -793,6 +813,12 @@ class MarkerCategoryUpdate(SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('marker-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Marker Category " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class MarkerValueUpdate(SuccessMessageMixin, UpdateView):
@@ -813,6 +839,12 @@ class MarkerValueUpdate(SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('markervalue-list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Marker Value " + self.object.value + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class ProvinceUpdate(SuccessMessageMixin, UpdateView):
     model = Province
@@ -830,6 +862,12 @@ class ProvinceUpdate(SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('province-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Province" + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class DistrictUpdate(SuccessMessageMixin, UpdateView):
@@ -849,6 +887,12 @@ class DistrictUpdate(SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('district-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "District " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class PalilkaUpdate(SuccessMessageMixin, UpdateView):
@@ -870,6 +914,12 @@ class PalilkaUpdate(SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('palika-list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Municipality " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class IndicatorUpdate(SuccessMessageMixin, UpdateView):
     model = Indicator
@@ -888,6 +938,12 @@ class IndicatorUpdate(SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('indicator-list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Indicator " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class GisLayerUpdate(SuccessMessageMixin, UpdateView):
     model = GisLayer
@@ -905,6 +961,12 @@ class GisLayerUpdate(SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('gis-layer-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Map Layer " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class ProgramDelete(SuccessMessageMixin, DeleteView):
@@ -1075,6 +1137,7 @@ def gisLayer_create(request):
     if form.is_valid():
 
         shapefile = request.FILES["shapefile"]
+        named = request.POST["name"]
         store_named = request.POST["filename"]
         store_name = store_named.replace(" ", "_").lower() + str(randint(0, 99999))
 
@@ -1108,6 +1171,8 @@ def gisLayer_create(request):
             obj.geoserver_url = 'http://139.59.67.104:8080/geoserver/gwc/service/tms/1.0.0/Naxa:' + layer_name + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf'
 
             obj.save()
+            messaged = "Map Layer " + named + "  has been added by " + request.user.username
+            log = Log.objects.create(user=request.user, message=messaged, type="create")
             messages.success(request, "Layer successfully uploaded")
 
         else:
@@ -1127,6 +1192,7 @@ def gisLayer_replace(request, **kwargs):
     if form.is_valid():
 
         shapefile = request.FILES["shapefile"]
+        named = request.POST["name"]
         store_named = request.POST["filename"]
         store_names = store_named.replace(" ", "_").lower() + str(randint(0, 99999999))
 
@@ -1176,6 +1242,8 @@ def gisLayer_replace(request, **kwargs):
             obj.geoserver_url = 'http://139.59.67.104:8080/geoserver/gwc/service/tms/1.0.0/Naxa:' + layer_name + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf'
 
             obj.save()
+            messaged = "Map Layer " + named + "  has been edited by " + request.user.username
+            log = Log.objects.create(user=request.user, message=messaged, type="edited")
             messages.success(request, "Layer successfully replaced")
 
         else:
