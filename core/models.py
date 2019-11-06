@@ -126,6 +126,7 @@ class GapaNapa(models.Model):
     cbs_code = models.CharField(max_length=100, null=True, blank=True)
     hlcit_code = models.CharField(max_length=100, null=True, blank=True)
     p_code = models.CharField(max_length=100, null=True, blank=True)
+    boundary = models.MultiPolygonField(srid=4326, null=True)
 
     def __str__(self):
         return self.name
