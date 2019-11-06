@@ -20,7 +20,7 @@ from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
-    MarkerValues, Indicator, IndicatorValue, GisLayer
+    MarkerValues, Indicator, IndicatorValue, GisLayer, Project
 from .models import UserProfile, Log
 from django.contrib.auth.models import User, Group
 from django.views.generic import TemplateView
@@ -39,12 +39,13 @@ from django.contrib.admin.models import LogEntry
 # Create your views here.
 
 @login_required()
-def login_test(request):
+def login_test(request, **kwargs):
     # user = authenticate(username='sumit', password='sumit1234')
 
     # return HttpResponse(request.user)
+    return HttpResponse(kwargs['group'] + kwargs['partner'])
     # return render(request, 'dashboard.html')
-    return HttpResponse(request.user.has_perm('core.can_add_district'))
+    # return HttpResponse(request.user.has_perm('core.can_add_district'))
 
 
 @login_required()
@@ -157,13 +158,20 @@ def Invitation(request):
         group = Group.objects.all()
         partner = Partner.objects.all()
         program = Program.objects.all()
-        return render(request, 'invitation_form.html', {'group': group, 'partners': partner, 'programs': program})
+        project = Project.objects.all()
+        return render(request, 'invitation_form.html',
+                      {'group': group, 'partners': partner, 'programs': program, 'projects': project})
     else:
         url = settings.SITE_URL
         group = request.POST["group"]
         email = request.POST["email"]
+        partnered = request.POST["partner"]
+        programed = request.POST["program"]
+        projected = request.POST["project"]
+        email = request.POST["email"]
         subject = 'Thank you for registering to our site'
-        message = render_to_string('mail.html', {'group': group, 'url': url})
+        message = render_to_string('mail.html', {'group': group, 'url': url, 'partner': partnered, 'program': programed,
+                                                 'project': projected})
         recipient_list = [email]
         email = EmailMessage(
             subject, message, 'from@example.com', recipient_list
@@ -172,6 +180,39 @@ def Invitation(request):
         mail = email.send()
 
         return HttpResponse(mail)
+
+
+def signup(request, **kwargs):
+    if request.method == 'POST':
+        # return HttpResponse(request.POST['partner'])
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            if kwargs['group'] != 0:
+                group = Group.objects.get(pk=kwargs['group'])
+                user.groups.add(group)
+
+            UserProfile.objects.create(user=user, name=request.POST['name'], email=request.POST['email'],
+                                       partner_id=int(request.POST['partner']), program_id=int(request.POST['program']),
+                                       project_id=int(request.POST['project']), image=request.FILES['image'])
+            return HttpResponse('user created')
+    else:
+        form = UserCreationForm()
+        if kwargs['group'] == 0:
+            partner = Partner.objects.all()
+            program = Program.objects.all()
+            project = Project.objects.all()
+        else:
+            partner = Partner.objects.filter(id=kwargs['partner'])
+            program = Program.objects.filter(id=kwargs['program'])
+            project = Project.objects.filter(id=kwargs['project'])
+
+        return render(request, 'signup.html',
+                      {'form': form, 'partners': partner, 'programs': program, 'projects': project})
 
 
 @authentication_classes([SessionAuthentication, ])
@@ -1111,24 +1152,6 @@ class IndicatorDelete(SuccessMessageMixin, DeleteView):
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
         return data
-
-
-def signup(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            grp = request.GET['type']
-            group = Group.objects.get(name=grp)
-            user.groups.add(group)
-            return HttpResponse('user created')
-    else:
-        form = UserCreationForm()
-        return render(request, 'signup.html', {'form': form})
 
 
 def gisLayer_create(request):

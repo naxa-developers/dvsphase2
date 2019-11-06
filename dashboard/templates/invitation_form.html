@@ -16,6 +16,11 @@
         <option value={{ program.id }}>{{ program.name }}</option>
         {% endfor %}
     </select>
+    <select name="project">
+        {% for project in projects %}
+        <option value={{ project.id }}>{{ project.name }}</option>
+        {% endfor %}
+    </select>
     <input type="submit" value="invite"/>
 </form>
 
