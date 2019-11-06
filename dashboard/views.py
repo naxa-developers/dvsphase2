@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 import pandas as pd
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 import requests
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
@@ -20,9 +20,9 @@ from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
-    MarkerValues, Indicator, IndicatorValue, GisLayer
-from .models import UserProfile
-from django.contrib.auth.models import User, Group
+    MarkerValues, Indicator, IndicatorValue, GisLayer, Project
+from .models import UserProfile, Log
+from django.contrib.auth.models import User, Group, Permission
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
@@ -39,12 +39,13 @@ from django.contrib.admin.models import LogEntry
 # Create your views here.
 
 @login_required()
-def login_test(request):
+def login_test(request, **kwargs):
     # user = authenticate(username='sumit', password='sumit1234')
 
     # return HttpResponse(request.user)
+    return HttpResponse(kwargs['group'] + kwargs['partner'])
     # return render(request, 'dashboard.html')
-    return HttpResponse(request.user.has_perm('core.can_add_district'))
+    # return HttpResponse(request.user.has_perm('core.can_add_district'))
 
 
 @login_required()
@@ -155,13 +156,22 @@ def ShapefileUpload(request):
 def Invitation(request):
     if "GET" == request.method:
         group = Group.objects.all()
-        return render(request, 'invitation_form.html', {'group': group})
+        partner = Partner.objects.all()
+        program = Program.objects.all()
+        project = Project.objects.all()
+        return render(request, 'invitation_form.html',
+                      {'group': group, 'partners': partner, 'programs': program, 'projects': project})
     else:
         url = settings.SITE_URL
         group = request.POST["group"]
         email = request.POST["email"]
+        partnered = request.POST["partner"]
+        programed = request.POST["program"]
+        projected = request.POST["project"]
+        email = request.POST["email"]
         subject = 'Thank you for registering to our site'
-        message = render_to_string('mail.html', {'group': group, 'url': url})
+        message = render_to_string('mail.html', {'group': group, 'url': url, 'partner': partnered, 'program': programed,
+                                                 'project': projected})
         recipient_list = [email]
         email = EmailMessage(
             subject, message, 'from@example.com', recipient_list
@@ -170,6 +180,39 @@ def Invitation(request):
         mail = email.send()
 
         return HttpResponse(mail)
+
+
+def signup(request, **kwargs):
+    if request.method == 'POST':
+        # return HttpResponse(request.POST['partner'])
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            if kwargs['group'] != 0:
+                group = Group.objects.get(pk=kwargs['group'])
+                user.groups.add(group)
+
+            UserProfile.objects.create(user=user, name=request.POST['name'], email=request.POST['email'],
+                                       partner_id=int(request.POST['partner']), program_id=int(request.POST['program']),
+                                       project_id=int(request.POST['project']), image=request.FILES['image'])
+            return HttpResponse('user created')
+    else:
+        form = UserCreationForm()
+        if kwargs['group'] == 0:
+            partner = Partner.objects.all()
+            program = Program.objects.all()
+            project = Project.objects.all()
+        else:
+            partner = Partner.objects.filter(id=kwargs['partner'])
+            program = Program.objects.filter(id=kwargs['program'])
+            project = Project.objects.filter(id=kwargs['project'])
+
+        return render(request, 'signup.html',
+                      {'form': form, 'partners': partner, 'programs': program, 'projects': project})
 
 
 @authentication_classes([SessionAuthentication, ])
@@ -446,6 +489,12 @@ class ProgramCreate(SuccessMessageMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('program-list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "New program " + self.object.name + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class PartnerCreate(SuccessMessageMixin, CreateView):
     model = Partner
@@ -464,6 +513,12 @@ class PartnerCreate(SuccessMessageMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('partner-list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "New partner " + self.object.name + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class SectorCreate(SuccessMessageMixin, CreateView):
     model = Sector
@@ -481,6 +536,12 @@ class SectorCreate(SuccessMessageMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('sector-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "New sector " + self.object.name + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class SubSectorCreate(SuccessMessageMixin, CreateView):
@@ -501,6 +562,12 @@ class SubSectorCreate(SuccessMessageMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('subsector-list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "New Sub Sector " + self.object.name + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class ProvinceCreate(SuccessMessageMixin, CreateView):
     model = Province
@@ -518,6 +585,12 @@ class ProvinceCreate(SuccessMessageMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('province-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "New province " + self.object.name + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class DistrictCreate(SuccessMessageMixin, CreateView):
@@ -537,6 +610,12 @@ class DistrictCreate(SuccessMessageMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('district-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "New District " + self.object.name + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class PalilkaCreate(SuccessMessageMixin, CreateView):
@@ -558,6 +637,12 @@ class PalilkaCreate(SuccessMessageMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('palika-list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "New Municipality " + self.object.name + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class MarkerValueCreate(SuccessMessageMixin, CreateView):
     model = MarkerValues
@@ -577,6 +662,12 @@ class MarkerValueCreate(SuccessMessageMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('markervalue-list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "New Marker Value " + self.object.value + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class MarkerCategoryCreate(SuccessMessageMixin, CreateView):
     model = MarkerCategory
@@ -595,6 +686,12 @@ class MarkerCategoryCreate(SuccessMessageMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('marker-list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "New Marker Category " + self.object.name + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class IndicatorCreate(SuccessMessageMixin, CreateView):
     model = Indicator
@@ -612,6 +709,12 @@ class IndicatorCreate(SuccessMessageMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('indicator-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "New Indicator " + self.object.name + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class ProgramUpdate(SuccessMessageMixin, UpdateView):
@@ -655,6 +758,12 @@ class ProgramUpdate(SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('program-list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Program " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class PartnerUpdate(SuccessMessageMixin, UpdateView):
     model = Partner
@@ -673,6 +782,12 @@ class PartnerUpdate(SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('partner-list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Partner " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class SectorUpdate(SuccessMessageMixin, UpdateView):
     model = Sector
@@ -690,6 +805,12 @@ class SectorUpdate(SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('sector-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Sector " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class SubSectorUpdate(SuccessMessageMixin, UpdateView):
@@ -710,6 +831,12 @@ class SubSectorUpdate(SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('subsector-list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Sub sector " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class MarkerCategoryUpdate(SuccessMessageMixin, UpdateView):
     model = MarkerCategory
@@ -727,6 +854,12 @@ class MarkerCategoryUpdate(SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('marker-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Marker Category " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class MarkerValueUpdate(SuccessMessageMixin, UpdateView):
@@ -747,6 +880,12 @@ class MarkerValueUpdate(SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('markervalue-list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Marker Value " + self.object.value + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class ProvinceUpdate(SuccessMessageMixin, UpdateView):
     model = Province
@@ -764,6 +903,12 @@ class ProvinceUpdate(SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('province-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Province" + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class DistrictUpdate(SuccessMessageMixin, UpdateView):
@@ -783,6 +928,12 @@ class DistrictUpdate(SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('district-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "District " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class PalilkaUpdate(SuccessMessageMixin, UpdateView):
@@ -804,6 +955,12 @@ class PalilkaUpdate(SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('palika-list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Municipality " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class IndicatorUpdate(SuccessMessageMixin, UpdateView):
     model = Indicator
@@ -822,6 +979,12 @@ class IndicatorUpdate(SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('indicator-list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Indicator " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class GisLayerUpdate(SuccessMessageMixin, UpdateView):
     model = GisLayer
@@ -839,6 +1002,12 @@ class GisLayerUpdate(SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('gis-layer-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Map Layer " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class ProgramDelete(SuccessMessageMixin, DeleteView):
@@ -985,30 +1154,13 @@ class IndicatorDelete(SuccessMessageMixin, DeleteView):
         return data
 
 
-def signup(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            grp = request.GET['type']
-            group = Group.objects.get(name=grp)
-            user.groups.add(group)
-            return HttpResponse('user created')
-    else:
-        form = UserCreationForm()
-        return render(request, 'signup.html', {'form': form})
-
-
 def gisLayer_create(request):
     template_name = 'gis_add.html'
     form = GisLayerCreateForm(request.POST or None)
     if form.is_valid():
 
         shapefile = request.FILES["shapefile"]
+        named = request.POST["name"]
         store_named = request.POST["filename"]
         store_name = store_named.replace(" ", "_").lower() + str(randint(0, 99999))
 
@@ -1042,6 +1194,8 @@ def gisLayer_create(request):
             obj.geoserver_url = 'http://139.59.67.104:8080/geoserver/gwc/service/tms/1.0.0/Naxa:' + layer_name + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf'
 
             obj.save()
+            messaged = "Map Layer " + named + "  has been added by " + request.user.username
+            log = Log.objects.create(user=request.user, message=messaged, type="create")
             messages.success(request, "Layer successfully uploaded")
 
         else:
@@ -1056,13 +1210,16 @@ def gisLayer_replace(request, **kwargs):
     instance = GisLayer.objects.get(id=kwargs['pk'])
     get_store_name = GisLayer.objects.filter(id=kwargs['pk']).values_list('store_name', flat=True)
     form = GisLayerCreateForm(request.POST or None, instance=instance)
+    # return HttpResponse(instance.store_name)
+
     if form.is_valid():
 
         shapefile = request.FILES["shapefile"]
+        named = request.POST["name"]
         store_named = request.POST["filename"]
         store_names = store_named.replace(" ", "_").lower() + str(randint(0, 99999999))
 
-        # return HttpResponse(layer_name)
+        # return HttpResponse(instance.layer_name)
 
         if request.POST['type'] == 'vector':
 
@@ -1108,6 +1265,8 @@ def gisLayer_replace(request, **kwargs):
             obj.geoserver_url = 'http://139.59.67.104:8080/geoserver/gwc/service/tms/1.0.0/Naxa:' + layer_name + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf'
 
             obj.save()
+            messaged = "Map Layer " + named + "  has been edited by " + request.user.username
+            log = Log.objects.create(user=request.user, message=messaged, type="edited")
             messages.success(request, "Layer successfully replaced")
 
         else:
@@ -1126,7 +1285,8 @@ def gisLayer_delete(request, **kwargs):
     else:
         store = 'coveragestores'
 
-    store_check_url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/' + store + '/' + get_store_name[0] + '?recurse=true'
+    store_check_url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/' + store + '/' + get_store_name[
+        0] + '?recurse=true'
 
     headers = {
         'Content-type': '',
@@ -1135,7 +1295,8 @@ def gisLayer_delete(request, **kwargs):
 
     if response.status_code == 200:
 
-        delete_url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/' + store + '/' + get_store_name[0] + '?recurse=true'
+        delete_url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/' + store + '/' + get_store_name[
+            0] + '?recurse=true'
 
         headers = {
             'Content-type': '',

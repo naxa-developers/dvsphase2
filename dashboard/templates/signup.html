@@ -1,6 +1,63 @@
 <h2>Sign up</h2>
-  <form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
+
+    <p>
+        <label for="id_username">Username:</label>
+        <input type="text" name="username" maxlength="150" autofocus required id="id_username"/>
+    </p>
+
+    <p>
+        <label for="id_password1">Password:</label>
+        <input type="password" name="password1" required id="id_password1"/>
+    </p>
+
+    <p>
+        <label for="id_password2">Password confirmation:</label>
+        <input type="password" name="password2" required id="id_password2"/>
+    </p>
+
+    <p>
+        <label for="id_name">Full Name:</label>
+        <input type="text" name="name" required id="id_name"/>
+    </p>
+
+    <p>
+        <label for="id_email">Email:</label>
+        <input type="email" name="email" required id="id_email"/>
+    </p>
+
+    <p>
+        <label for="id_partner">Partner:</label>
+        <select name="partner" id="id_partner">
+            {% for partner in partners %}
+            <option value={{ partner.id }}>{{ partner }}</option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <p>
+        <label for="id_program">Program:</label>
+        <select name="program" id="id_program">
+            {% for program in programs %}
+            <option value={{ program.id }}>{{ program.name }}</option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <p>
+        <label for="id_project">Project:</label>
+        <select name="project" id="id_project">
+            {% for project in projects %}
+            <option value={{ project.id }}>{{ project }}</option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <p>
+        <label for="id_image" class="">Image</label>
+        <input type="file" name="image" id="id_image"/>
+    </p>
+
     <button type="submit">Sign up</button>
-  </form>
+</form>

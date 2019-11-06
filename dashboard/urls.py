@@ -9,9 +9,10 @@ urlpatterns = [
 
 
     path('invitation/', views.Invitation, name='invitation'),
-    path('login-test/', views.login_test, name='login-test'),
+    # path('login-test/', views.login_test, name='login-test'),
+    path('login-test/<int:group>/<int:partner>', views.login_test, name='login-test'),
     path('logout/', auth_views.logout, {'next_page': '/dashboard/login/'}, name='logout'),
-    path('signup/', views.signup, name='signup'),
+    path('signup/<int:group>/<int:partner>/<int:program>/<int:project>', views.signup, name='signup'),
     path('login/', auth_views.login, name='login'),
     path('check-login/', views.check_login, name='check-login'),
     path('token/', views.auth, name='token'),
