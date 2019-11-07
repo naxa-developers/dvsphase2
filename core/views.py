@@ -10,6 +10,8 @@ from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.authentication import TokenAuthentication, BasicAuthentication, SessionAuthentication
 from django.db.models import Q
+from django.db import connection
+from django.http import Http404, HttpResponse
 
 
 # Create your views here.
@@ -203,3 +205,72 @@ class TravelTimeApi(viewsets.ReadOnlyModelViewSet):
     def get_serializer_class(self):
         serializer_class = TravelTimeSerializer
         return serializer_class
+
+
+def municipality_tile(request, zoom, x, y):
+    """
+    Custom view to serve Mapbox Vector Tiles for the custom polygon model.
+    """
+
+    if len(request.GET) == 0:
+        sql_data = "SELECT ST_AsMVT(tile) FROM (SELECT id, name, hlcit_code, province_id_id, district_id_id, ST_AsMVTGeom(boundary, TileBBox(%s, %s, %s, 4326)) FROM  core_gapanapa) AS tile"
+    else:
+        try:
+            mun = request.GET['palika']
+            sql_data = "SELECT ST_AsMVT(tile) FROM (SELECT id, name, hlcit_code, province_id_id, district_id_id, ST_AsMVTGeom(boundary, TileBBox(%s, %s, %s, 4326)) FROM  core_gapanapa where id = " + mun + ") AS tile"
+        except:
+            print("")
+
+        try:
+            dist = request.GET['district']
+            sql_data = "SELECT ST_AsMVT(tile) FROM (SELECT id, name, hlcit_code, province_id_id, district_id_id, ST_AsMVTGeom(boundary, TileBBox(%s, %s, %s, 4326)) FROM  core_gapanapa where district_id_id = " + dist + ") AS tile"
+        except:
+            print("")
+
+        try:
+            prov = request.GET['province']
+            sql_data = "SELECT ST_AsMVT(tile) FROM (SELECT id, name, hlcit_code, province_id_id, district_id_id, ST_AsMVTGeom(boundary, TileBBox(%s, %s, %s, 4326)) FROM  core_gapanapa where province_id_id = " + prov + ") AS tile"
+        except:
+            print("")
+
+    with connection.cursor() as cursor:
+        cursor.execute(sql_data, [zoom, x, y])
+
+        tile = bytes(cursor.fetchone()[0])
+        # return HttpResponse(len(tile))
+
+        if not len(tile):
+            raise Http404()
+    return HttpResponse(tile, content_type="application/x-protobuf")
+
+
+def district_tile(request, zoom, x, y):
+    """
+    Custom view to serve Mapbox Vector Tiles for the custom polygon model.
+    """
+
+    if len(request.GET) == 0:
+        sql_data = "SELECT ST_AsMVT(tile) FROM (SELECT id, name, code, province_id_id, ST_AsMVTGeom(boundary, TileBBox(%s, %s, %s, 4326)) FROM  core_district) AS tile"
+    else:
+
+        try:
+            dist = request.GET['district']
+            sql_data = "SELECT ST_AsMVT(tile) FROM (SELECT id, name, code, province_id_id, ST_AsMVTGeom(boundary, TileBBox(%s, %s, %s, 4326)) FROM  core_district where id = " + dist + ") AS tile"
+        except:
+            print("")
+
+        try:
+            prov = request.GET['province']
+            sql_data = "SELECT ST_AsMVT(tile) FROM (SELECT id, name, code, province_id_id, ST_AsMVTGeom(boundary, TileBBox(%s, %s, %s, 4326)) FROM  core_district where province_id_id = " + prov + ") AS tile"
+        except:
+            print("")
+
+    with connection.cursor() as cursor:
+        cursor.execute(sql_data, [zoom, x, y])
+
+        tile = bytes(cursor.fetchone()[0])
+        # return HttpResponse(len(tile))
+
+        if not len(tile):
+            raise Http404()
+    return HttpResponse(tile, content_type="application/x-protobuf")

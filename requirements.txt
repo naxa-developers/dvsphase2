@@ -11,3 +11,4 @@ django-filter==2.2.0
 pandas
 djangorestframework-camel-case==0.2.0
 pillow
+django-cors-headers
