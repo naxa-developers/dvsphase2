@@ -43,9 +43,9 @@ def login_test(request, **kwargs):
     # user = authenticate(username='sumit', password='sumit1234')
 
     # return HttpResponse(request.user)
-    return HttpResponse(kwargs['group'] + kwargs['partner'])
+    # return HttpResponse(kwargs['group'] + kwargs['partner'])
     # return render(request, 'dashboard.html')
-    # return HttpResponse(request.user.has_perm('core.can_add_district'))
+    return HttpResponse(request.user.has_perm('core.add_program'))
 
 
 @login_required()
@@ -153,6 +153,22 @@ def ShapefileUpload(request):
         return HttpResponse(response.status_code)
 
 
+def create_role(request):
+    if "GET" == request.method:
+        permissions = Permission.objects.all()
+        return render(request, 'create_role.html', {'permissions': permissions})
+
+    else:
+        role = request.POST['role']
+        permission_list = request.POST.getlist('permission')
+        group = Group.objects.create(name=role)
+        for permissions in permission_list:
+            permission_check = Permission.objects.get(id=permissions)
+            group.permissions.add(permission_check)
+
+        return HttpResponse('success')
+
+
 def Invitation(request):
     if "GET" == request.method:
         group = Group.objects.all()
@@ -187,11 +203,13 @@ def signup(request, **kwargs):
         # return HttpResponse(request.POST['partner'])
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
+            user = form.save()
+            user.is_active = False
+            user.save()
+            # username = form.cleaned_data.get('username')
+            # raw_password = form.cleaned_data.get('password1')
+            # user = authenticate(username=username, password=raw_password)
+            # login(request, user)
             if kwargs['group'] != 0:
                 group = Group.objects.get(pk=kwargs['group'])
                 user.groups.add(group)

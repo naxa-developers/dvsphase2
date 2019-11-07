@@ -17,5 +17,6 @@ urlpatterns = [
     path('travel-time/', views.TravelTimeApi.as_view({'get': 'list'}), name='travel-time'),
     path('map-layer/', views.GisApi.as_view({'get': 'list'}), name='map-layer'),
     path('palika-tile/<int:zoom>/<int:x>/<int:y>', views.municipality_tile, name="palika-tile"),
+    path('district-tile/<int:zoom>/<int:x>/<int:y>', views.district_tile, name="district-tile"),
 
 ]
