@@ -83,6 +83,7 @@ class District(models.Model):
     province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='DProvince', null=True, blank=True)
     name = models.CharField(max_length=100, null=True, blank=True)
     code = models.CharField(max_length=100, null=True, blank=True)
+    boundary = models.MultiPolygonField(srid=4326, null=True)
 
     def __str__(self):
         return self.name

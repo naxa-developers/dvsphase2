@@ -1,0 +1,62 @@
+<form class="program-form" method="POST">
+
+    {% csrf_token %}
+
+    <p>
+        <label for="id_role" class="">Budget</label>
+        <input type="text" class="form-control" name="role" maxlength="100" id="id_role"
+               placeholder="e.g. GBP 89413"/>
+    </p>
+
+
+    <p>Program Permissions</p>
+    {% for permission in permissions %}
+    {% if permission.content_type.model == 'program' %}
+    <p>
+        <input type="checkbox" class="custom-control-input" id="program{{permission.id}}" value="{{permission.id}}"
+               name="permission">
+        <label class="custom-control-label" for="program{{permission.id}}">{{permission.name}}</label>
+    </p>
+    {% endif %}
+    {% endfor %}
+
+
+    <p>Partner Permissions</p>
+    {% for permission in permissions %}
+    {% if permission.content_type.model == 'partner' %}
+    <p>
+        <input type="checkbox" class="custom-control-input" id="partner{{permission.id}}" value="{{permission.id}}"
+               name="permission">
+        <label class="custom-control-label" for="partner{{permission.id}}">{{permission.name}}</label>
+    </p>
+    {% endif %}
+    {% endfor %}
+
+
+    <p>Sector Permissions</p>
+    {% for permission in permissions %}
+    {% if permission.content_type.model == 'sector' %}
+    <p>
+        <input type="checkbox" class="custom-control-input" id="sector{{permission.id}}" value="{{permission.id}}"
+               name="permission">
+        <label class="custom-control-label" for="sector{{permission.id}}">{{permission.name}}</label>
+    </p>
+    {% endif %}
+    {% endfor %}
+
+
+    <p>Sub Sector Permissions</p>
+    {% for permission in permissions %}
+    {% if permission.content_type.model == 'subsector' %}
+    <p>
+        <input type="checkbox" class="custom-control-input" id="subsector{{permission.id}}" value="{{permission.id}}"
+               name="permission">
+        <label class="custom-control-label" for="subsector{{permission.id}}">{{permission.name}}</label>
+    </p>
+    {% endif %}
+    {% endfor %}
+
+    <div class="form-group mrt-100">
+        <button type="submit" class="dfid-button sm-button">Save</button>
+    </div>
+</form>
