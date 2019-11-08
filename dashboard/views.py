@@ -218,20 +218,13 @@ def Invitation(request):
             return redirect('user-list')
 
 
-
-
 def signup(request, **kwargs):
     if request.method == 'POST':
-        # return HttpResponse(request.POST['partner'])
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             user.is_active = False
             user.save()
-            # username = form.cleaned_data.get('username')
-            # raw_password = form.cleaned_data.get('password1')
-            # user = authenticate(username=username, password=raw_password)
-            # login(request, user)
             if kwargs['group'] != 0:
                 group = Group.objects.get(pk=kwargs['group'])
                 user.groups.add(group)
@@ -239,7 +232,9 @@ def signup(request, **kwargs):
             UserProfile.objects.create(user=user, name=request.POST['name'], email=request.POST['email'],
                                        partner_id=int(request.POST['partner']), program_id=int(request.POST['program']),
                                        project_id=int(request.POST['project']), image=request.FILES['image'])
-            return HttpResponse('user created')
+
+            return render(request, 'created_user.html', {'user': request.POST['name']})
+
     else:
         form = UserCreationForm()
         if kwargs['group'] == 0:
