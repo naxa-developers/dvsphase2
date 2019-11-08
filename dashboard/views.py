@@ -233,6 +233,13 @@ def signup(request, **kwargs):
                       {'form': form, 'partners': partner, 'programs': program, 'projects': project})
 
 
+def activate_user(request, **kwargs):
+    user = User.objects.get(id=kwargs['id'])
+    user.is_active = True
+    user.save()
+    return redirect('user-list')
+
+
 @authentication_classes([SessionAuthentication, ])
 @api_view()
 def auth(request):
@@ -298,6 +305,21 @@ class ProgramList(ListView):
         data['list'] = program_list
         data['user'] = user_data
         data['active'] = 'program'
+        return data
+
+
+class UserList(ListView):
+    template_name = 'user_list.html'
+    model = Program
+
+    def get_context_data(self, **kwargs):
+        data = super(UserList, self).get_context_data(**kwargs)
+        user_list = UserProfile.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = user_list
+        data['user'] = user_data
+        data['active'] = 'user'
         return data
 
 
