@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i> Assign Role</a>
+            </li>
+            <li>Choose Role</li>
+        </ul>
+    </div>
+    <!-- program form -->
+    <form class="program-form" method="POST">
+
+        {% csrf_token %}
+
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ field.name|title }} {{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+        <div class="default-form">
+            <div class="row">
+
+
+                <div class="col-md-6">
+                    <label for="id_group">Roles :</label>
+                    <select name="group_id" id="id_group" class="custom-select">
+                        {% for group in groups %}
+                        <option value={{ group.id }}>{{ group.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-1">
+                    <div class="form-group ">
+
+                        <input type="text" class="form-control" name="user" maxlength="100" id="id_user"
+                               placeholder="Name" value="{{ user_id }}" hidden/>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group mrt-100">
+                <button type="submit" class="dfid-button sm-button">Save</button>
+            </div>
+
+        </div>
+
+
+        <!-- category form -->
+
+
+    </form>
+</main>
+
+{% endblock %}
+

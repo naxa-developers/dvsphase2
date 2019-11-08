@@ -81,5 +81,6 @@ urlpatterns = [
 
     path('user-list/', views.UserList.as_view(), name='user-list'),
     path('activate/<int:id>', views.activate_user, name='activate'),
+    path('assign-role/<int:id>', views.assign_role, name='assign-role'),
 
 ]
