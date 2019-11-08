@@ -8,7 +8,7 @@
             <li>
                 <a href="#"><i class="material-icons">assignment</i> User</a>
             </li>
-            <li><a href="/dashboard/user-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
+            <li><a href="/dashboard/invitation" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Invite user</a>
             </li>
         </ul>
     </div>
@@ -42,7 +42,14 @@
             <tr>
                 <td>{{ user.id }}</td>
                 <td>
-                    <strong><a href="#">{{user.name}}</a></strong>
+                    <a href="#" class="partner-info flex-start">
+                        {% if user.image %}
+                        <img src="{{ user.image.url }}" alt="org"/>
+                        {% else %}
+                        <img src="{% static 'dashboard/images/organization.svg' %}" alt="org"/>
+                        {% endif %}
+                        <h6>{{user.name}}</h6>
+                    </a>
                 </td>
                 <td>{{ user.email }}</td>
                 <td>

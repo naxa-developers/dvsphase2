@@ -195,22 +195,29 @@ def Invitation(request):
     else:
         url = settings.SITE_URL
         group = request.POST["group"]
-        email = request.POST["email"]
+        emails = request.POST["email"]
         partnered = request.POST["partner"]
         programed = request.POST["program"]
         projected = request.POST["project"]
-        email = request.POST["email"]
         subject = 'Thank you for registering to our site'
         message = render_to_string('mail.html', {'group': group, 'url': url, 'partner': partnered, 'program': programed,
                                                  'project': projected})
-        recipient_list = [email]
+        recipient_list = [emails]
         email = EmailMessage(
             subject, message, 'from@example.com', recipient_list
         )
         email.content_subtype = "html"
         mail = email.send()
+        if mail == 1:
+            msg = emails + " was successfully invited"
+            messages.success(request, msg)
+            return redirect('user-list')
+        else:
+            msg = emails + " could not be invited "
+            messages.success(request, msg)
+            return redirect('user-list')
 
-        return HttpResponse(mail)
+
 
 
 def signup(request, **kwargs):

@@ -1,28 +1,126 @@
-<form method="post" action="">
-    {% csrf_token %}
-    <input type="text" name="email" class="form-control" placeholder="email"/>
-    <select name="group">
-        {% for groups in group %}
-        <option value={{ groups.id }}>{{ groups }}</option>
-        {% endfor %}
-    </select>
-    <select name="partner">
-        {% for partner in partners %}
-        <option value={{ partner.id }}>{{ partner.name }}</option>
-        {% endfor %}
-    </select>
-    <select name="program">
-        {% for program in programs %}
-        <option value={{ program.id }}>{{ program.name }}</option>
-        {% endfor %}
-    </select>
-    <select name="project">
-        {% for project in projects %}
-        <option value={{ project.id }}>{{ project.name }}</option>
-        {% endfor %}
-    </select>
-    <input type="submit" value="invite"/>
-</form>
 
 
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i> User Invitation</a>
+            </li>
+<!--            <li>New</li>-->
+        </ul>
+    </div>
+    <!-- program form -->
+    <form class="program-form" method="POST">
+
+        {% csrf_token %}
+
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ field.name|title }} {{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+        <div class="default-form">
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_email" class="">Email</label>
+                        <input type="email" class="form-control" name="email" maxlength="100" id="id_email"
+                               placeholder="abc@gmail.com" required/>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_group">Select Role For User</label>
+                        <select name="group" id="id_group" class="custom-select" required>
+                            {% for groups in group %}
+                            <option value={{ groups.id }}>{{ groups }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_partner">Select Partner For User</label>
+                        <select name="partner" id="id_partner" class="custom-select" required>
+                            {% for partner in partners %}
+                            <option value={{ partner.id }}>{{ partner.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_program">Select Program For User</label>
+                        <select name="program" id="id_program" class="custom-select" required>
+                            {% for program in programs %}
+                            <option value={{ program.id }}>{{ program.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="form-group" >
+                        <label for="id_project">Select Project For User</label>
+                        <select name="project" id="id_project" class="custom-select" required>
+                            {% for project in projects %}
+                            <option value={{ project.id }}>{{ project.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <div class="form-group mrt-100">
+                <button type="submit" class="dfid-button sm-button">Invite</button>
+            </div>
+
+        </div>
+
+
+        <!-- category form -->
+
+
+    </form>
+</main>
+
+{% endblock %}
 
