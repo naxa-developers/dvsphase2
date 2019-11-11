@@ -169,6 +169,21 @@ def create_role(request):
         return HttpResponse('success')
 
 
+def assign_role(request, **kwargs):
+    if "GET" == request.method:
+        groups = Group.objects.all()
+        user = request.user
+        user_data = UserProfile.objects.get(user=user)
+        return render(request, 'assign_role.html', {'user': user_data, 'groups': groups, 'user_id': kwargs['id']})
+    else:
+        user_id = request.POST['user']
+        group_id = request.POST['group_id']
+        user = User.objects.get(id=user_id)
+        group = Group.objects.get(id=group_id)
+        user.groups.add(group)
+        return redirect('user-list')
+
+
 def Invitation(request):
     if "GET" == request.method:
         group = Group.objects.all()
@@ -180,36 +195,36 @@ def Invitation(request):
     else:
         url = settings.SITE_URL
         group = request.POST["group"]
-        email = request.POST["email"]
+        emails = request.POST["email"]
         partnered = request.POST["partner"]
         programed = request.POST["program"]
         projected = request.POST["project"]
-        email = request.POST["email"]
         subject = 'Thank you for registering to our site'
         message = render_to_string('mail.html', {'group': group, 'url': url, 'partner': partnered, 'program': programed,
                                                  'project': projected})
-        recipient_list = [email]
+        recipient_list = [emails]
         email = EmailMessage(
             subject, message, 'from@example.com', recipient_list
         )
         email.content_subtype = "html"
         mail = email.send()
-
-        return HttpResponse(mail)
+        if mail == 1:
+            msg = emails + " was successfully invited"
+            messages.success(request, msg)
+            return redirect('user-list')
+        else:
+            msg = emails + " could not be invited "
+            messages.success(request, msg)
+            return redirect('user-list')
 
 
 def signup(request, **kwargs):
     if request.method == 'POST':
-        # return HttpResponse(request.POST['partner'])
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             user.is_active = False
             user.save()
-            # username = form.cleaned_data.get('username')
-            # raw_password = form.cleaned_data.get('password1')
-            # user = authenticate(username=username, password=raw_password)
-            # login(request, user)
             if kwargs['group'] != 0:
                 group = Group.objects.get(pk=kwargs['group'])
                 user.groups.add(group)
@@ -217,7 +232,9 @@ def signup(request, **kwargs):
             UserProfile.objects.create(user=user, name=request.POST['name'], email=request.POST['email'],
                                        partner_id=int(request.POST['partner']), program_id=int(request.POST['program']),
                                        project_id=int(request.POST['project']), image=request.FILES['image'])
-            return HttpResponse('user created')
+
+            return render(request, 'created_user.html', {'user': request.POST['name']})
+
     else:
         form = UserCreationForm()
         if kwargs['group'] == 0:
@@ -231,6 +248,13 @@ def signup(request, **kwargs):
 
         return render(request, 'signup.html',
                       {'form': form, 'partners': partner, 'programs': program, 'projects': project})
+
+
+def activate_user(request, **kwargs):
+    user = User.objects.get(id=kwargs['id'])
+    user.is_active = True
+    user.save()
+    return redirect('user-list')
 
 
 @authentication_classes([SessionAuthentication, ])
@@ -298,6 +322,21 @@ class ProgramList(ListView):
         data['list'] = program_list
         data['user'] = user_data
         data['active'] = 'program'
+        return data
+
+
+class UserList(ListView):
+    template_name = 'user_list.html'
+    model = Program
+
+    def get_context_data(self, **kwargs):
+        data = super(UserList, self).get_context_data(**kwargs)
+        user_list = UserProfile.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = user_list
+        data['user'] = user_data
+        data['active'] = 'user'
         return data
 
 
