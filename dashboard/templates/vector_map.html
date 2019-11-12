@@ -54,18 +54,12 @@
                      }
                  }
 
-<!--     var url = "http://localhost:8001/vector/mvt-tiles/{z}/{x}/{y}.pbf";-->
-<!--     var dvsurl = "http://localhost:8000/api/v1/core/palika-tile/{z}/{x}/{y}";-->
-<!--     var dvsurl = "http://dvs.naxa.com.np/api/v1/core/district-tile/{z}/{x}/{y}.pbf";-->
-     var dvsurl = baseUrl+"api/v1/core/palika-tile/{z}/{x}/{y}";
-<!--     var dvsurl = "http://localhost:8000/api/v1/core/district-tile/{z}/{x}/{y}.pbf?province=1";-->
 
-     // var districtUrl = 'https://geoserver.naxa.com.np/geoserver/gwc/service/tms/1.0.0/Bipad:Province@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf';
-     var districtUrl = 'http://139.59.67.104:8080/geoserver/gwc/service/tms/1.0.0/Naxa:River_Shankharapur@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf?CQL_FILTER=OBJECTID=3769';
+     var dvsurl = baseUrl+"api/v1/core/palika-tile/{z}/{x}/{y}";
+
+
 
       district = L.vectorGrid.protobuf(dvsurl).addTo(map, vectorTileOptions);
-      // district = L.vectorGrid.protobuf(districtUrl).addTo(map, vectorTileOptions);
-      console.log(district)
 
 
      </script>
