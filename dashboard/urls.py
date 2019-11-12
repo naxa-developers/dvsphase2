@@ -85,4 +85,6 @@ urlpatterns = [
 
     path('project-list/', views.ProjectList.as_view(), name='project-list'),
 
+    path('vector-map/', views.VectorMap.as_view(), name='vector-map'),
+
 ]

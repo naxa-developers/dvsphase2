@@ -1,0 +1,73 @@
+
+{% load static %}
+
+
+   <html>
+   <head>
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin=""/>
+
+        <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+        integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+        crossorigin=""></script>
+
+        <script  type="text/javascript" src="{% static 'dashboard/js/Leaflet.VectorGrid.bundled.js' %}"></script>
+
+        <style>
+        #mapid {
+          height: 700px;
+          width: 1000px;
+        }
+        </style>
+
+   </head>
+
+   <body>
+     <div id="mapid"></div>
+     <script>
+     var getUrl = window.location;
+     var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[0];
+     console.log(baseUrl)
+     var map = L.map('mapid').setView([28.9, 85], 7);
+     var AmapboxTiles = L.tileLayer('https://api.mapbox.com/styles/v1/upendraoli/cjuvhnbms0ulh1fngemx4xaui/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoidXBlbmRyYW9saSIsImEiOiJjaWYwcnFnNmYwMGY4dGZseWNwOTVtdW1tIn0.uhY72SyqmMJNTKa0bY-Oyw').addTo(map);
+
+     vectorTileOptions = {
+                     tms: true,
+                     vectorTileLayerStyles: {
+                         'test': function () {
+                             return {
+                                 fillColor: "blue",
+                                 fillOpacity: 0,
+                                 weight: 1,
+                                 opacity: 1,
+                                 color: '#a3b7e3',
+                                 fill: true,
+                             }
+                         }
+                     },
+                     interactive: true, // Make sure that this VectorGrid fires mouse/pointer events
+
+                     getFeatureId: function (feature) {
+                        console.log(feature)
+
+                     }
+                 }
+
+<!--     var url = "http://localhost:8001/vector/mvt-tiles/{z}/{x}/{y}.pbf";-->
+<!--     var dvsurl = "http://localhost:8000/api/v1/core/palika-tile/{z}/{x}/{y}";-->
+<!--     var dvsurl = "http://dvs.naxa.com.np/api/v1/core/district-tile/{z}/{x}/{y}.pbf";-->
+     var dvsurl = baseUrl+"api/v1/core/palika-tile/{z}/{x}/{y}";
+<!--     var dvsurl = "http://localhost:8000/api/v1/core/district-tile/{z}/{x}/{y}.pbf?province=1";-->
+
+     // var districtUrl = 'https://geoserver.naxa.com.np/geoserver/gwc/service/tms/1.0.0/Bipad:Province@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf';
+     var districtUrl = 'http://139.59.67.104:8080/geoserver/gwc/service/tms/1.0.0/Naxa:River_Shankharapur@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf?CQL_FILTER=OBJECTID=3769';
+
+      district = L.vectorGrid.protobuf(dvsurl).addTo(map, vectorTileOptions);
+      // district = L.vectorGrid.protobuf(districtUrl).addTo(map, vectorTileOptions);
+      console.log(district)
+
+
+     </script>
+   </body>
+   </html>
