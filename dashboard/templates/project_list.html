@@ -6,13 +6,12 @@
     <div class="dfid-breadcrumb pdt-100">
         <ul class="flex-start">
             <li>
-                <a href="#"><i class="material-icons">assignment</i> Partners</a>
+                <a href="#"><i class="material-icons">assignment</i> Projects</a>
             </li>
-                        <li><a href="/dashboard/partner-add/" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
-                        </li>
+            <li><a href="/dashboard/Project-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
+            </li>
         </ul>
     </div>
-
     <!-- dfid program table -->
     <div class="table-tesponsive program-list">
         {% if messages %}
@@ -25,51 +24,25 @@
         {% endif %}
         <table class="program-table dataTable">
             <thead>
-
             <tr>
+                <th>Id</th>
                 <th>Name</th>
-                <th>Address</th>
-                <th>Email</th>
-                <th>Phone Number</th>
-                <th>Contact Person Detail</th>
-                <th>Contact Person Email</th>
+                <th>Program</th>
+                <th>Code</th>
+
                 <th></th>
             </tr>
-
-
             </thead>
             <tbody>
-
-            {% for partner in list %}
+            {% for project in list %}
             <tr>
-
+                <td>{{ project.id }}</td>
                 <td>
-
-
-                    <a href="#" class="partner-info flex-start">
-                        {% if partner.image %}
-                        <img src="{{ partner.image.url }}" alt="org"/>
-                        {% else %}
-                        <img src="{% static 'dashboard/images/organization.svg' %}" alt="org"/>
-                        {% endif %}
-                        <h6>{{partner.name}}</h6>
-                    </a>
-
-
+                    <strong><a href="#">{{project.name}}</a></strong>
                 </td>
+                <td>{{ project.program }}</td>
+                <td>{{ project.code }}</td>
 
-
-                <td>{{partner.address}}</td>
-                <td>{{partner.email}}</td>
-                <td>
-                    {{partner.phone_number}}
-                </td>
-                <td>
-
-                    <a href="#" class="name">{{partner.contact_person_name}}</a>
-
-                </td>
-                <td>{{partner.contact_person_email}}</td>
 
                 <td>
                     <div class="table-action">
@@ -78,13 +51,13 @@
                         </a>
                         <ul class="dropdown-animation">
                             <li>
-                                <a href="/dashboard/partner-edit/{{ partner.id }}" class="flex-start">
+                                <a href="/dashboard/project-edit/{{ project.id }}" class="flex-start">
                                     <i class="material-icons">edit</i> Edit
                                 </a>
                             </li>
                             <li>
-                                <a href="/dashboard/partner-delete/{{ partner.id }}" class="flex-start">
-                                    <i class="material-icons">delete</i>Delete
+                                <a href="/dashboard/project-delete/{{ project.id }}" class="flex-start">
+                                    <i class="material-icons">delete</i>delete
                                 </a>
 
                             </li>
@@ -93,7 +66,6 @@
                 </td>
             </tr>
             {% endfor %}
-
 
             </tbody>
         </table>

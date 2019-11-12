@@ -20,7 +20,7 @@ from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
-    MarkerValues, Indicator, IndicatorValue, GisLayer, Project
+    MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact
 from .models import UserProfile, Log
 from django.contrib.auth.models import User, Group, Permission
 from django.views.generic import TemplateView
@@ -347,6 +347,7 @@ class PartnerList(ListView):
     def get_context_data(self, **kwargs):
         data = super(PartnerList, self).get_context_data(**kwargs)
         partner_list = Partner.objects.all().order_by('id')
+        contact_list = PartnerContact.objects.all().order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['list'] = partner_list
@@ -367,6 +368,21 @@ class SectorList(ListView):
         data['list'] = sector_list
         data['user'] = user_data
         data['active'] = 'sector'
+        return data
+
+
+class ProjectList(ListView):
+    template_name = 'project_list.html'
+    model = Project
+
+    def get_context_data(self, **kwargs):
+        data = super(ProjectList, self).get_context_data(**kwargs)
+        project_list = Project.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = project_list
+        data['user'] = user_data
+        data['active'] = 'project'
         return data
 
 
@@ -523,6 +539,12 @@ class ProgramAdd(LoginRequiredMixin, TemplateView):
         return render(request, 'program_add.html', {'user': user_data, 'active': 'program'})
 
 
+class VectorMap(LoginRequiredMixin, TemplateView):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'vector_map.html')
+
+
 class ProgramCreate(SuccessMessageMixin, CreateView):
     model = Program
     template_name = 'program_add.html'
@@ -570,11 +592,38 @@ class PartnerCreate(SuccessMessageMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('partner-list')
 
-    def form_valid(self, form):
-        self.object = form.save()
-        message = "New partner " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
-        return HttpResponseRedirect(self.get_success_url())
+
+class ProjectCreate(SuccessMessageMixin, CreateView):
+    model = Project
+    template_name = 'partner_add.html'
+    form_class = PartnerCreateForm
+    success_message = 'Partner successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(ProjectCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'partner'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('partner-list')
+
+
+def form_valid(self, form):
+    self.object = form.save()
+    contact_names = self.request.POST.getlist('contact_person_name')
+    emails = self.request.POST.getlist('contact_person_email')
+    numbers = self.request.POST.getlist('contact_person_ph')
+    upper_range = len(contact_names)
+    for row in range(0, upper_range):
+        PartnerContact.objects.create(partner_id=self.object, name=contact_names[row], email=emails[row],
+                                      phone_number=numbers[row])
+
+    message = "New partner " + self.object.name + "  has been added by " + self.request.user.username
+    log = Log.objects.create(user=self.request.user, message=message, type="create")
+    return HttpResponseRedirect(self.get_success_url())
 
 
 class SectorCreate(SuccessMessageMixin, CreateView):

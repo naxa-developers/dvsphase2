@@ -83,4 +83,8 @@ urlpatterns = [
     path('activate/<int:id>', views.activate_user, name='activate'),
     path('assign-role/<int:id>', views.assign_role, name='assign-role'),
 
+    path('project-list/', views.ProjectList.as_view(), name='project-list'),
+
+    path('vector-map/', views.VectorMap.as_view(), name='vector-map'),
+
 ]

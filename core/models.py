@@ -8,10 +8,20 @@ class Partner(models.Model):
     address = models.CharField(max_length=100, null=True, blank=True)
     email = models.CharField(max_length=100, null=True, blank=True)
     phone_number = models.CharField(max_length=100, null=True, blank=True)
-    contact_person_name = models.CharField(max_length=100, null=True, blank=True)
-    contact_person_email = models.CharField(max_length=100, null=True, blank=True)
-    contact_person_ph = models.CharField(max_length=100, null=True, blank=True)
+    # contact_person_name = models.CharField(max_length=100, null=True, blank=True)
+    # contact_person_email = models.CharField(max_length=100, null=True, blank=True)
+    # contact_person_ph = models.CharField(max_length=100, null=True, blank=True)
     image = models.ImageField(upload_to='upload/partner/', null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class PartnerContact(models.Model):
+    partner_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='PartnerContact')
+    name = models.CharField(max_length=100, null=True, blank=True)
+    email = models.CharField(max_length=100, null=True, blank=True)
+    phone_number = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -221,6 +231,7 @@ class GisLayer(models.Model):
 
 class Project(models.Model):
     program = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='ProjectProgram', null=True, blank=True)
+    partner = models.ManyToManyField(Partner, related_name='ProjectProgram', blank=True)
     name = models.CharField(max_length=100, null=True, blank=True)
     code = models.CharField(max_length=100, null=True, blank=True)
 
