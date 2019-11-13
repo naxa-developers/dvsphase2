@@ -120,46 +120,47 @@ class GaanapaSerializer(serializers.ModelSerializer):
 
 
 class FivewSerializer(serializers.ModelSerializer):
-    partner_name = serializers.SerializerMethodField()
-    program_name = serializers.SerializerMethodField()
-    province = serializers.SerializerMethodField()
-    district = serializers.SerializerMethodField()
-    gapa_napa = serializers.SerializerMethodField()
-    implenting_partner_first = serializers.SerializerMethodField()
-    implenting_partner_second = serializers.SerializerMethodField()
-    implenting_partner_third = serializers.SerializerMethodField()
+    # partner_name = serializers.SerializerMethodField()
+    # program_name = serializers.SerializerMethodField()
+    # province = serializers.SerializerMethodField()
+    # district = serializers.SerializerMethodField()
+    # gapa_napa = serializers.SerializerMethodField()
+    # implenting_partner_first = serializers.SerializerMethodField()
+    # implenting_partner_second = serializers.SerializerMethodField()
+    # implenting_partner_third = serializers.SerializerMethodField()
 
     class Meta:
         model = FiveW
-        fields = (
-            'id', 'partner_name', 'program_name', 'province', 'district', 'gapa_napa', 'status', 'start_date',
-            'end_date',
-            'reporting_ministry_line', 'implenting_partner_first', 'implenting_partner_second',
-            'implenting_partner_third')
-
-    def get_partner_name(self, obj):
-        return str(obj.partner_name)
-
-    def get_program_name(self, obj):
-        return str(obj.program_name)
-
-    def get_province(self, obj):
-        return str(obj.province)
-
-    def get_district(self, obj):
-        return str(obj.district)
-
-    def get_gapa_napa(self, obj):
-        return str(obj.gapa_napa.name)
-
-    def get_implenting_partner_first(self, obj):
-        return str(obj.implenting_partner_first)
-
-    def get_implenting_partner_second(self, obj):
-        return str(obj.implenting_partner_second)
-
-    def get_implenting_partner_third(self, obj):
-        return str(obj.implenting_partner_third)
+        fields = '__all__'
+    #     fields = (
+    #         'id', 'partner_name', 'program_name', 'province', 'district', 'gapa_napa', 'status', 'start_date',
+    #         'end_date',
+    #         'reporting_ministry_line', 'implenting_partner_first', 'implenting_partner_second',
+    #         'implenting_partner_third')
+    #
+    # def get_partner_name(self, obj):
+    #     return str(obj.partner_name)
+    #
+    # def get_program_name(self, obj):
+    #     return str(obj.program_name)
+    #
+    # def get_province(self, obj):
+    #     return str(obj.province)
+    #
+    # def get_district(self, obj):
+    #     return str(obj.district)
+    #
+    # def get_gapa_napa(self, obj):
+    #     return str(obj.gapa_napa.name)
+    #
+    # def get_implenting_partner_first(self, obj):
+    #     return str(obj.implenting_partner_first)
+    #
+    # def get_implenting_partner_second(self, obj):
+    #     return str(obj.implenting_partner_second)
+    #
+    # def get_implenting_partner_third(self, obj):
+    #     return str(obj.implenting_partner_third)
 
 
 class IndicatorValueSerializer(serializers.ModelSerializer):
