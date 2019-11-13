@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
-    PalikaCreateForm, IndicatorCreateForm
+    PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -592,38 +592,19 @@ class PartnerCreate(SuccessMessageMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('partner-list')
 
+    def form_valid(self, form):
+        self.object = form.save()
+        contact_names = self.request.POST.getlist('contact_person_name')
+        emails = self.request.POST.getlist('contact_person_email')
+        numbers = self.request.POST.getlist('contact_person_ph')
+        upper_range = len(contact_names)
+        for row in range(0, upper_range):
+            PartnerContact.objects.create(partner_id=self.object, name=contact_names[row], email=emails[row],
+                                          phone_number=numbers[row])
 
-class ProjectCreate(SuccessMessageMixin, CreateView):
-    model = Project
-    template_name = 'partner_add.html'
-    form_class = PartnerCreateForm
-    success_message = 'Partner successfully Created'
-
-    def get_context_data(self, **kwargs):
-        data = super(ProjectCreate, self).get_context_data(**kwargs)
-        user = self.request.user
-        user_data = UserProfile.objects.get(user=user)
-        data['user'] = user_data
-        data['active'] = 'partner'
-        return data
-
-    def get_success_url(self):
-        return reverse_lazy('partner-list')
-
-
-def form_valid(self, form):
-    self.object = form.save()
-    contact_names = self.request.POST.getlist('contact_person_name')
-    emails = self.request.POST.getlist('contact_person_email')
-    numbers = self.request.POST.getlist('contact_person_ph')
-    upper_range = len(contact_names)
-    for row in range(0, upper_range):
-        PartnerContact.objects.create(partner_id=self.object, name=contact_names[row], email=emails[row],
-                                      phone_number=numbers[row])
-
-    message = "New partner " + self.object.name + "  has been added by " + self.request.user.username
-    log = Log.objects.create(user=self.request.user, message=message, type="create")
-    return HttpResponseRedirect(self.get_success_url())
+        message = "New partner " + self.object.name + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class SectorCreate(SuccessMessageMixin, CreateView):
@@ -646,6 +627,31 @@ class SectorCreate(SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         self.object = form.save()
         message = "New sector " + self.object.name + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class ProjectCreate(SuccessMessageMixin, CreateView):
+    model = Project
+    template_name = 'project_add.html'
+    form_class = ProjectCreateForm
+    success_message = 'Project successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(ProjectCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['programs'] = Program.objects.order_by('id')
+        data['user'] = user_data
+        data['active'] = 'project'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('project-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "New project " + self.object.name + "  has been added by " + self.request.user.username
         log = Log.objects.create(user=self.request.user, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
@@ -919,6 +925,31 @@ class SectorUpdate(SuccessMessageMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+class ProjectUpdate(SuccessMessageMixin, UpdateView):
+    model = Project
+    template_name = 'project_edit.html'
+    form_class = ProjectCreateForm
+    success_message = 'Project successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(ProjectUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['programs'] = Program.objects.order_by('id')
+        data['user'] = user_data
+        data['active'] = 'project'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('project-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Project " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
+
 class SubSectorUpdate(SuccessMessageMixin, UpdateView):
     model = SubSector
     template_name = 'sub_sector_edit.html'
@@ -1174,6 +1205,26 @@ class SubSectorDelete(SuccessMessageMixin, DeleteView):
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
         return data
+
+
+class ProjectDelete(SuccessMessageMixin, DeleteView):
+    model = Project
+    template_name = 'project_confirm_delete.html'
+    success_message = 'Project successfully deleted'
+    success_url = reverse_lazy('project-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(ProjectDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
+    def delete(self, request, *args, **kwargs):
+        delete_data = Project.objects.filter(id=kwargs['pk']).delete()
+        message = "Project  has been deleted by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="delete")
+        return redirect('project-list')
 
 
 class MarkerCategoryDelete(SuccessMessageMixin, DeleteView):

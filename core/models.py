@@ -230,8 +230,7 @@ class GisLayer(models.Model):
 
 
 class Project(models.Model):
-    program = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='ProjectProgram', null=True, blank=True)
-    partner = models.ManyToManyField(Partner, related_name='ProjectProgram', blank=True)
+    program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='ProjectProgram', null=True, blank=True)
     name = models.CharField(max_length=100, null=True, blank=True)
     code = models.CharField(max_length=100, null=True, blank=True)
 

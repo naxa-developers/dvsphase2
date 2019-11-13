@@ -50,6 +50,17 @@
 
                 </li>
 
+                {% if active == 'project' %}
+                <li class="menu-item active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="/dashboard/project-list/" class="active-red"><i
+                            class="material-icons">assignment</i><span>projects</span></a>
+
+                </li>
+
+
                 {% if active == 'partner' %}
                 <li class="menu-item submenu active">
                     {% else %}

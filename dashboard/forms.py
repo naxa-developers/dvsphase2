@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from core.models import Program, Partner, Sector, SubSector, MarkerCategory, MarkerValues, GisLayer, Province, District, \
-    GapaNapa, Indicator
+    GapaNapa, Indicator, Project
 
 
 class UserForm(ModelForm):
@@ -73,4 +73,10 @@ class PalikaCreateForm(ModelForm):
 class IndicatorCreateForm(ModelForm):
     class Meta:
         model = Indicator
+        fields = '__all__'
+
+
+class ProjectCreateForm(ModelForm):
+    class Meta:
+        model = Project
         fields = '__all__'
