@@ -50,6 +50,8 @@
 
                 </li>
 
+                {% if perms.core.view_project %}
+
                 {% if active == 'project' %}
                 <li class="menu-item active">
                     {% else %}
@@ -59,7 +61,7 @@
                             class="material-icons">assignment</i><span>projects</span></a>
 
                 </li>
-
+                {% endif %}
 
                 {% if active == 'partner' %}
                 <li class="menu-item submenu active">

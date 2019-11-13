@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Partner, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
-    IndicatorValue, Sector, SubSector, TravelTime, GisLayer
+    IndicatorValue, Sector, SubSector, TravelTime, GisLayer, Project
 
 
 class PartnerSerializer(serializers.ModelSerializer):
@@ -88,6 +88,12 @@ class SubsectorSerializer(serializers.ModelSerializer):
 
     def get_sector_name(self, obj):
         return str(obj.sector_id.name)
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = '__all__'
 
 
 class DistrictSerializer(serializers.ModelSerializer):

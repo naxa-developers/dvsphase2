@@ -12,11 +12,11 @@
     {% endfor %}
 
 
-
     {% endfor %}
 
 
-    <p>{% for f in filtered %} <p>{{ f.name }} </p> {% endfor %}</p>
+    <p>{% for f in filtered %}
+    <p>{{ f.name }} </p> {% endfor %}</p>
 
 
     {% for logs in log %}
@@ -27,3 +27,6 @@
 
 
     {% endfor %}
+
+
+    {{ perms.core.view_project }}

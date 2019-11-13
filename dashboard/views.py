@@ -528,6 +528,9 @@ class Dashboard(LoginRequiredMixin, TemplateView):
     def get(self, request, *args, **kwargs):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
+        program_view = user.has_perm('core.view_program')
+        sector_view = user.has_perm('core.view_program')
+        five_view = user.has_perm('core.view_program')
         return render(request, 'dashboard.html', {'user': user_data, 'active': 'dash'})
 
 
