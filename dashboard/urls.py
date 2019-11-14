@@ -88,6 +88,11 @@ urlpatterns = [
     path('project-edit/<int:pk>', views.ProjectUpdate.as_view(), name='project-edit'),
     path('project-delete/<int:pk>', views.ProjectDelete.as_view(), name='project-delete'),
 
+    path('permission-list/', views.PermissionList.as_view(), name='permission-list'),
+    path('permission-add/', views.PermissionCreate.as_view(), name='permission-add'),
+    path('permission-edit/<int:pk>', views.PermissionUpdate.as_view(), name='permission-edit'),
+    path('permission-delete/<int:pk>', views.PermissionDelete.as_view(), name='permission-delete'),
+
     path('vector-map/', views.VectorMap.as_view(), name='vector-map'),
 
 ]

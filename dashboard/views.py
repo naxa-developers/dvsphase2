@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
-    PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm
+    PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -322,6 +322,21 @@ class ProgramList(ListView):
         data['list'] = program_list
         data['user'] = user_data
         data['active'] = 'program'
+        return data
+
+
+class PermissionList(ListView):
+    template_name = 'permission_list.html'
+    model = Program
+
+    def get_context_data(self, **kwargs):
+        data = super(PermissionList, self).get_context_data(**kwargs)
+        permission_list = Permission.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = permission_list
+        data['user'] = user_data
+        data['active'] = 'permission'
         return data
 
 
@@ -659,6 +674,30 @@ class ProjectCreate(SuccessMessageMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+class PermissionCreate(SuccessMessageMixin, CreateView):
+    model = Permission
+    template_name = 'permission_add.html'
+    form_class = PermissionForm
+    success_message = 'Permission successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(PermissionCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'permission'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('permission-list')
+
+    # def form_valid(self, form):
+    #     self.object = form.save()
+    #     message = "New project " + self.object.name + "  has been added by " + self.request.user.username
+    #     log = Log.objects.create(user=self.request.user, message=message, type="create")
+    #     return HttpResponseRedirect(self.get_success_url())
+
+
 class SubSectorCreate(SuccessMessageMixin, CreateView):
     model = SubSector
     template_name = 'sub_sector_add.html'
@@ -902,6 +941,24 @@ class PartnerUpdate(SuccessMessageMixin, UpdateView):
         message = "Partner " + self.object.name + "  has been edited by " + self.request.user.username
         log = Log.objects.create(user=self.request.user, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
+
+
+class PermissionUpdate(SuccessMessageMixin, UpdateView):
+    model = Permission
+    template_name = 'permission_add.html'
+    form_class = PermissionForm
+    success_message = 'Permission successfully edited'
+
+    def get_context_data(self, **kwargs):
+        data = super(PermissionUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'permission'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('permission-list')
 
 
 class SectorUpdate(SuccessMessageMixin, UpdateView):
@@ -1252,6 +1309,20 @@ class MarkerValueDelete(SuccessMessageMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         data = super(MarkerValueDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
+
+class PermissionDelete(SuccessMessageMixin, DeleteView):
+    model = Permission
+    template_name = 'permission_confirm_delete.html'
+    success_message = 'Permission successfully deleted'
+    success_url = reverse_lazy('permission-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(PermissionDelete, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
