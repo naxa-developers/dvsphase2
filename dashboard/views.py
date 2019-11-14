@@ -340,6 +340,21 @@ class PermissionList(ListView):
         return data
 
 
+class FiveList(ListView):
+    template_name = 'five_list.html'
+    model = FiveW
+
+    def get_context_data(self, **kwargs):
+        data = super(FiveList, self).get_context_data(**kwargs)
+        five = FiveW.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = five
+        data['user'] = user_data
+        data['active'] = 'permission'
+        return data
+
+
 class UserList(ListView):
     template_name = 'user_list.html'
     model = Program

@@ -16,7 +16,7 @@
 
 
         {% csrf_token %}
-
+         {{ form.as_p }}
         {% if form.errors %}
         {% for field in form %}
         {% for error in field.errors %}
@@ -86,6 +86,15 @@
                             <input type="text" class="form-control" name="phone_number" maxlength="100"
                                    id="id_phone_number"
                                    placeholder="9454489413"/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="form-group ">
+                            <label for="id_type_of_institution" class="">Type Of Institution</label>
+                            <input type="text" class="form-control" name="type_of_institution" maxlength="100"
+                                   id="id_type_of_institution"
+                                   placeholder="NGO">
                         </div>
                     </div>
                 </div>

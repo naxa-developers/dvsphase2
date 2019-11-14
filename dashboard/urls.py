@@ -93,6 +93,8 @@ urlpatterns = [
     path('permission-edit/<int:pk>', views.PermissionUpdate.as_view(), name='permission-edit'),
     path('permission-delete/<int:pk>', views.PermissionDelete.as_view(), name='permission-delete'),
 
+    path('five-list/', views.FiveList.as_view(), name='five-list'),
+
     path('vector-map/', views.VectorMap.as_view(), name='vector-map'),
 
 ]

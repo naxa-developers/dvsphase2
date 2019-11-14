@@ -72,6 +72,15 @@
                         <i class="material-icons">person</i><span>partners</span></a>
                 </li>
 
+                {% if active == 'five' %}
+                <li class="menu-item submenu active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="/dashboard/five-list/" class="active-red">
+                        <i class="material-icons">table</i><span>Five W</span></a>
+                </li>
+
                 {% if active == 'sector' %}
                 <li class="menu-item active">
                     {% else %}
