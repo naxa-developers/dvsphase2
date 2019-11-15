@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
-    PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm
+    PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -351,7 +351,7 @@ class FiveList(ListView):
         user_data = UserProfile.objects.get(user=user)
         data['list'] = five
         data['user'] = user_data
-        data['active'] = 'permission'
+        data['active'] = 'five'
         return data
 
 
@@ -660,6 +660,41 @@ class SectorCreate(SuccessMessageMixin, CreateView):
     def form_valid(self, form):
         self.object = form.save()
         message = "New sector " + self.object.name + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class FiveCreate(SuccessMessageMixin, CreateView):
+    model = FiveW
+    template_name = 'five_add.html'
+    form_class = FiveCreateForm
+    success_message = 'Five W successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(FiveCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        partner = Partner.objects.all().order_by('id')
+        program = Program.objects.all().order_by('id')
+        province = Province.objects.all().order_by('id')
+        district = District.objects.all().order_by('id')
+        municipality = GapaNapa.objects.all().order_by('id')
+        contact = PartnerContact.objects.all().order_by('id')
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['partners'] = partner
+        data['programs'] = program
+        data['provinces'] = province
+        data['districts'] = district
+        data['municipalities'] = municipality
+        data['contacts'] = contact
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('five-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "New Five W " + str(self.object.partner_id) + "  has been added by " + self.request.user.username
         log = Log.objects.create(user=self.request.user, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 

@@ -94,6 +94,7 @@ urlpatterns = [
     path('permission-delete/<int:pk>', views.PermissionDelete.as_view(), name='permission-delete'),
 
     path('five-list/', views.FiveList.as_view(), name='five-list'),
+    path('five-add/', views.FiveCreate.as_view(), name='five-add'),
 
     path('vector-map/', views.VectorMap.as_view(), name='vector-map'),
 

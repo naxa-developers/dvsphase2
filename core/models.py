@@ -157,6 +157,7 @@ class FiveW(models.Model):
     district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='FDistrict', null=True, blank=True)
     municipality_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='GapaNapa', null=True,
                                         blank=True)
+    ward = models.CharField(max_length=200, null=True, blank=True)
     consortium_partner_first_id = models.ForeignKey(Partner, on_delete=models.CASCADE,
                                                     related_name='ConsortiumPartnerF',
                                                     null=True, blank=True)
