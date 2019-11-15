@@ -993,6 +993,41 @@ class PartnerUpdate(SuccessMessageMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+class FiveUpdate(SuccessMessageMixin, UpdateView):
+    model = FiveW
+    template_name = 'five_edit.html'
+    form_class = FiveCreateForm
+    success_message = 'Five W successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(FiveUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        partner = Partner.objects.all().order_by('id')
+        program = Program.objects.all().order_by('id')
+        province = Province.objects.all().order_by('id')
+        district = District.objects.all().order_by('id')
+        municipality = GapaNapa.objects.all().order_by('id')
+        contact = PartnerContact.objects.all().order_by('id')
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['partners'] = partner
+        data['programs'] = program
+        data['provinces'] = province
+        data['districts'] = district
+        data['municipalities'] = municipality
+        data['contacts'] = contact
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('five-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "New Five W " + str(self.object.partner_id) + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
+
 class PermissionUpdate(SuccessMessageMixin, UpdateView):
     model = Permission
     template_name = 'permission_add.html'
