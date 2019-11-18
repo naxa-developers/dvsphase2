@@ -316,9 +316,9 @@ class ProgramList(ListView):
 
     def get_context_data(self, **kwargs):
         data = super(ProgramList, self).get_context_data(**kwargs)
-        program_list = Program.objects.order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
+        program_list = Program.objects.filter(id=user_data.program.id)
         data['list'] = program_list
         data['user'] = user_data
         data['active'] = 'program'
@@ -376,10 +376,10 @@ class PartnerList(ListView):
 
     def get_context_data(self, **kwargs):
         data = super(PartnerList, self).get_context_data(**kwargs)
-        partner_list = Partner.objects.all().order_by('id')
         contact_list = PartnerContact.objects.all().order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
+        partner_list = Partner.objects.filter(id=user_data.partner.id)
         data['list'] = partner_list
         data['user'] = user_data
         data['active'] = 'partner'
@@ -407,9 +407,9 @@ class ProjectList(ListView):
 
     def get_context_data(self, **kwargs):
         data = super(ProjectList, self).get_context_data(**kwargs)
-        project_list = Project.objects.order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
+        project_list = Project.objects.filter(id=user_data.project.id)
         data['list'] = project_list
         data['user'] = user_data
         data['active'] = 'project'
