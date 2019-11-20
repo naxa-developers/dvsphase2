@@ -12,6 +12,10 @@
             <li><a href="/dashboard/five-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
             </li>
             {% endif %}
+            {% if perms.core.add_fivew %}
+            <li><a href="/dashboard/five-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Bulk Upload</a>
+            </li>
+            {% endif %}
         </ul>
     </div>
     <!-- dfid program table -->

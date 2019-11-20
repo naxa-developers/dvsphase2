@@ -51,12 +51,11 @@ def login_test(request, **kwargs):
 @login_required()
 def uploadData(request):
     if "GET" == request.method:
-        return render(request, 'dashboard.html')
+        return render(request, 'shapefile.html')
     else:
-        csv = request.FILES["csv_file"]
+        csv = request.FILES["shapefile"]
         df = pd.read_csv(csv)
         upper_range = len(df)
-        org_col = df['ORGANIZATION NAME']
 
         try:
             # fiveData = [
@@ -64,54 +63,124 @@ def uploadData(request):
             #         program_name=Program.objects.get(program_name='Naxa'),
             #         partner_name=Partner.objects.get(partner_name='Naxa')
             #     ) for row in range(0, 2)
-
-            # sdaadassda sadsad
-
             # ]
+
             # five = FiveW.objects.bulk_create(fiveData)
             # list = []
-            # for row in range(0, upper_range):
+            for row in range(0, upper_range):
 
-            # try:
-            #     imp_partner_1 = Partner.objects.get(program_name=df['IMPLEMENTING PARNTER 1'][row])
-            #
-            # except:
-            #     imp_partner_1 = None
-            #
-            #
-            # try:
-            #     imp_partner_2 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER2'][row])
-            #
-            # except:
-            #     imp_partner_2 = None
-            #
-            # try:
-            #     imp_partner_3 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
-            #
-            # except:
-            #     imp_partner_3 = None
-            #
-            # try:
-            #     program = Program.objects.get(program_name=df['PROGRAMME NAME'][row])
-            #
-            # except:
-            #     program = None
-            #
-            # try:
-            #     district = District.objects.get(program_name=df['DISTRICT'][row])
-            #
-            # except:
-            #     district = None
-            #
-            # try:
-            #     nagarpalika = GapaNapa.objects.get(program_name=df['Nagarpalika'][row])
-            #
-            # except:
-            #     nagarpalika = None
+                try:
+                    partner = Partner.objects.get(program_name=df['IMPLEMENTING PARNTER 1'][row])
+
+                except:
+                    partner = None
+
+                try:
+                    program = Program.objects.get(program_name=df['PROGRAMME NAME'][row])
+
+                except:
+                    program = None
+
+                try:
+                    prov = District.objects.get(program_name=df['DISTRICT'][row])
+
+                except:
+                    prov = None
+
+                try:
+                    district = District.objects.get(program_name=df['DISTRICT'][row])
+
+                except:
+                    district = None
+
+                try:
+                    palika = GapaNapa.objects.get(program_name=df['Nagarpalika'][row])
+
+                except:
+                    palika = None
+
+                try:
+                    consortium_1 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER2'][row])
+
+                except:
+                    consortium_1 = None
+
+                try:
+                    consortium_2 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
+
+                except:
+                    consortium_2 = None
+
+                try:
+                    consortium_3 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
+
+                except:
+                    consortium_3 = None
+
+                try:
+                    implementing_1 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
+
+                except:
+                    implementing_1 = None
+
+                try:
+                    implementing_2 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
+
+                except:
+                    implementing_2 = None
+
+                try:
+                    implementing_3 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
+
+                except:
+                    implementing_3 = None
+
+                try:
+                    implementing_4 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
+
+                except:
+                    implementing_4 = None
+
+                try:
+                    local_1 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
+
+                except:
+                    local_1 = None
+
+                try:
+                    local_2 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
+
+                except:
+                    local_2 = None
+
+                try:
+                    local_3 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
+
+                except:
+                    local_3 = None
+
+                five = FiveW.objects.create(partner_id=partner, program_id=program, province_id=prov,
+                                            district_id=district, municipality_id=palika, ward=df['ward'][row],
+                                            consortium_partner_first_id=consortium_1,
+                                            consortium_partner_second_id=consortium_2,
+                                            consortium_partner_third_id=consortium_3,
+                                            implementing_partner_first_id=implementing_1,
+                                            implementing_partner_second_id=implementing_2,
+                                            implementing_partner_third_id=implementing_3,
+                                            implementing_partner_fourth_id=implementing_4,
+                                            local_partner_first_id=local_1, local_partner_second_id=local_2,
+                                            local_partner_third_id=local_3, status=df['status'][row],
+                                            reporting_ministry_line=df['reporting_ministry_line'][row],
+                                            budget=df['budget'][row])
 
             # FiveW.objects.create(fiveData)
+            # data_list = [1, 2]
+            # a = PartnerContact.objects.get(partner_id=58, name='sumit')
+            # prog = Partner.objects.get(id='2')
+            # progg = Program.objects.get(id='31')
+            # progg.partner.add(prog)
 
-            return HttpResponse(df['ORGANIZATION NAME'][0])
+            return HttpResponse(five)
         except Exception as e:
             return HttpResponse(e)
 
