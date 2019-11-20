@@ -264,3 +264,46 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Output(models.Model):
+    indicator = models.CharField(max_length=100, null=True, blank=True)
+    male_forecast_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
+    female_forecast_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
+    male_achieved_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
+    female_achieved_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
+    male_forecast_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
+    female_forecast_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
+    male_achieved_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
+    female_achieved_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
+    male_forecast_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
+    female_forecast_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
+    male_achieved_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
+    female_achieved_2011_2019 = models.IntegerField(null=True, blank=True,  default=0)
+
+    def __str__(self):
+        return self.indicator
+
+    @property
+    def total_forecast_2011_2015(self):
+        return self.male_forecast_2011_2015 + self.female_forecast_2011_2015
+
+    @property
+    def total_achieved_2011_2015(self):
+        return self.male_achieved_2011_2015 + self.female_achieved_2011_2015
+
+    @property
+    def total_forecast_2015_2019(self):
+        return self.male_forecast_2015_2019 + self.female_forecast_2015_2019
+
+    @property
+    def total_achieved_2015_2019(self):
+        return self.male_achieved_2015_2019 + self.female_achieved_2015_2019
+
+    @property
+    def total_forecast_2011_2019(self):
+        return self.male_forecast_2011_2019 + self.female_forecast_2011_2019
+
+    @property
+    def total_achieved_2011_2019(self):
+        return self.male_achieved_2011_2019 + self.female_achieved_2011_2019

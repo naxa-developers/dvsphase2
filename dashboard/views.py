@@ -20,7 +20,7 @@ from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
-    MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact
+    MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output
 from .models import UserProfile, Log
 from django.contrib.auth.models import User, Group, Permission
 from django.views.generic import TemplateView
@@ -391,6 +391,21 @@ class ProgramList(ListView):
         data['list'] = program_list
         data['user'] = user_data
         data['active'] = 'program'
+        return data
+
+
+class OutputList(ListView):
+    template_name = 'province_list.html'
+    model = Program
+
+    def get_context_data(self, **kwargs):
+        data = super(OutputList, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        output_list = Output.objects.all()
+        data['list'] = output_list
+        data['user'] = user_data
+        data['active'] = 'output'
         return data
 
 

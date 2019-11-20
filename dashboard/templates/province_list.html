@@ -1,32 +1,41 @@
-{% for program in object_list %}
+<!--{% for program in object_list %}-->
 
-<h3>{{ program.name }}<h3/>
-
-
-    {% for psector in program.sector.all %}
+<!--<h3>{{ program.name }}<h3/>-->
 
 
-    <h4 color="red">{{ psector.name }}</h4>
+<!--    {% for psector in program.sector.all %}-->
 
 
-    {% endfor %}
+<!--    <h4 color="red">{{ psector.name }}</h4>-->
 
 
-    {% endfor %}
+<!--    {% endfor %}-->
 
 
-    <p>{% for f in filtered %}
-    <p>{{ f.name }} </p> {% endfor %}</p>
+<!--    {% endfor %}-->
 
 
-    {% for logs in log %}
+<!--    <p>{% for f in filtered %}-->
+<!--    <p>{{ f.name }} </p> {% endfor %}</p>-->
 
 
-    <h4 color="red">{{ logs }}</h4>
-    <h4 color="red">{{ logs.action_time }}</h4>
+<!--    {% for logs in log %}-->
 
 
-    {% endfor %}
+<!--    <h4 color="red">{{ logs }}</h4>-->
+<!--    <h4 color="red">{{ logs.action_time }}</h4>-->
 
 
-    {{ perms.core.view_project }}
+<!--    {% endfor %}-->
+
+
+<!--    {{ perms.core.view_project }}-->
+
+{% for program in list %}
+
+{{program.total_forecast_2011_2015}}
+{{program.total_forecast_2011_2019}}
+
+
+
+{% endfor %}

@@ -1,10 +1,10 @@
 from .models import Partner, Program, MarkerValues, District, Province, GapaNapa, FiveW, Indicator, IndicatorValue, \
-    Sector, SubSector, MarkerCategory, TravelTime, GisLayer, Project
+    Sector, SubSector, MarkerCategory, TravelTime, GisLayer, Project, Output
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import PartnerSerializer, ProgramSerializer, MarkerValuesSerializer, DistrictSerializer, \
     ProvinceSerializer, GaanapaSerializer, FivewSerializer, \
     IndicatorSerializer, IndicatorValueSerializer, SectorSerializer, SubsectorSerializer, MarkerCategorySerializer, \
-    TravelTimeSerializer, GisLayerSerializer, ProjectSerializer
+    TravelTimeSerializer, GisLayerSerializer, ProjectSerializer, OutputSerializer
 from rest_framework import viewsets, views
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
@@ -161,6 +161,18 @@ class SectorApi(viewsets.ReadOnlyModelViewSet):
 
     def get_serializer_class(self):
         serializer_class = SectorSerializer
+        return serializer_class
+
+
+class OutputApi(viewsets.ReadOnlyModelViewSet):
+    permission_classes = []
+
+    def get_queryset(self):
+        queryset = Output.objects.order_by('id')
+        return queryset
+
+    def get_serializer_class(self):
+        serializer_class = OutputSerializer
         return serializer_class
 
 
