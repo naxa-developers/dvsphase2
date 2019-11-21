@@ -16,7 +16,6 @@
 
 
         {% csrf_token %}
-         {{ form.as_p }}
         {% if form.errors %}
         {% for field in form %}
         {% for error in field.errors %}

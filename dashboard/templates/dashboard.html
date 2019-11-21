@@ -64,43 +64,51 @@
             <h4>Overview</h4>
         </div>
         <!-- program -->
+        {% for five in fives %}
         <div class="dfid-program">
-            <div class="status green">
-                Comleted
-            </div>
+            {% if five.status == 'completed' %}
+            <div class="status green">Completed</div>
+            {% else %}
+            <div class="status yellow">Ongoing</div>
+            {% endif %}
+
+
             <div class="row">
                 <div class="col-xl-3 col-lg-4">
                     <div class="about-program">
                         <div class="program-name">
-                            <h3>NERF-Stock Piles</h3>
+                            <h3>{{five.program_id}}</h3>
                         </div>
                         <div class="organization flex-start">
                             <figure>
                                 <img src="{% static 'dashboard/images/organization.svg' %}" alt="organization"/>
                             </figure>
-                            <h4>ActionAid International</h4>
+                            <h4>{{five.partner_id}}</h4>
                         </div>
                         <!-- hide Content -->
                         <ul class="program-content hide-details">
+                            {% for contact in five.partner_id.PartnerContact.all %}
                             <li>
 
                                 <div class="content">
                                     <h6>Representative</h6>
-                                    <p><a href="#">Dinesh Gurung</a></p>
-                                    <p>01 4002177</p>
-                                    <p>dinesh.gurung@actionaid.org</p>
+                                    <p><a href="#">{{contact.name}}</a></p>
+                                    <p>{{contact.phone_number}}</p>
+                                    <p>{{contact.email}}</p>
                                 </div>
+
                             </li>
+                            {% endfor %}
                             <li>
                                 <div class="content">
                                     <h6>Code</h6>
-                                    <p>108538</p>
+                                    <p>{{five.partner_id.code}}</p>
                                 </div>
                             </li>
                             <li>
                                 <div class="content">
                                     <h6>IATI Identifier</h6>
-                                    <p>GB-1-204857-105</p>
+                                    <p>{{five.partner_id.code}}</p>
                                 </div>
                             </li>
                         </ul>
@@ -115,16 +123,16 @@
                                         <i class="material-icons">category</i>
                                         <div class="content">
                                             <h6>Broad Sectors</h6>
-                                            <p>EP - Environment Protection
-                                                (Climate Change, Environment - Adaptation (41093))</p>
+                                            {% for sector in five.program_id.sector.all %}
+                                            <p>{{ sector }}</p>
+                                            {% endfor %}
                                         </div>
                                     </li>
                                     <li class="equalHeight">
                                         <i class="material-icons">room</i>
                                         <div class="content">
                                             <h6>Province</h6>
-                                            <p>Gandaki</p>
-                                            <p>Karnali</p>
+                                            <p>{{five.province_id}}</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -134,15 +142,13 @@
                                         <li>
                                             <div class="content">
                                                 <h6>District</h6>
-                                                <p>Terhathum</p>
-                                                <p>Morang</p>
+                                                <p>{{ five.district_id }}</p>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="content">
                                                 <h6>Municipality</h6>
-                                                <p>Aathrai Gaunpalika</p>
-                                                <p>Biratnagar Mahanagarpalika</p>
+                                                <p>{{five.municipality_id}}</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -152,15 +158,19 @@
                                 <ul class="program-content">
                                     <li class="equalHeight">
                                         <div class="content">
-                                            <h6>Implementing Partner</h6>
-                                            <p>Deurali Society</p>
-                                            <p>Nari Bikas Sangh</p>
+                                            <h6>Implementing Partners</h6>
+                                            <p>{{five.implementing_partner_first_id}}</p>
+                                            <p>{{five.implementing_partner_second_id}}</p>
+                                            <p>{{five.implementing_partner_third_id}}</p>
+                                            <p>{{five.implementing_partner_fourth_id}}</p>
                                         </div>
                                     </li>
                                     <li class="equalHeight">
                                         <div class="content">
-                                            <h6>Local Partner</h6>
-                                            <p>Dalit Awareness Society</p>
+                                            <h6>Local Partners</h6>
+                                            <p>{{five.local_partner_first_id}}</p>
+                                            <p>{{five.local_partner_second_id}}</p>
+                                            <p>{{five.local_partner_third_id}}</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -170,13 +180,16 @@
                                         <li class="equalHeight">
                                             <div class="content">
                                                 <h6>Marker</h6>
-                                                <p>Dissertification (Significant)</p>
+
+                                                {% for marker in five.program_id.marker_value.all %}
+                                                <p>{{ marker }}</p>
+                                                {% endfor %}
                                             </div>
                                         </li>
                                         <li class="equalHeight">
                                             <div class="content">
                                                 <h6>Reporting Ministry Line</h6>
-                                                <p>Ministry of Health and Population</p>
+                                                <p>{{five.reporting_ministry_line}}</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -188,14 +201,14 @@
                                         <i class="material-icons">monetization_on</i>
                                         <div class="content">
                                             <h6>Budget</h6>
-                                            <h5>GBP 89,413</h5>
+                                            <h5>{{five.budget}}</h5>
                                         </div>
                                     </li>
                                     <li class="equalHeight">
                                         <i class="material-icons">calendar_today</i>
                                         <div class="content">
                                             <h6>Start date</h6>
-                                            <p>June 03, 2012</p>
+                                            <p>{{five.start_date}}</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -203,9 +216,10 @@
                                 <div class="program-details hide-details">
                                     <ul class="program-content">
                                         <li class="equalHeight">
+                                            <i class="material-icons">calendar_today</i>
                                             <div class="content">
                                                 <h6>End Date</h6>
-                                                <p>April 30, 2020</p>
+                                                <p>{{five.end_date}}</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -217,13 +231,13 @@
                         <div class="description hide-details">
                             <ul class="program-content">
                                 <li>
-                                    <div class="content">
-                                        <h6>Description</h6>
-                                        <p>Under this project, AAIN has maintained stocks in its western and
-                                            eastern regional offices and does partnership during emergencies
-                                            for distribution of stocks but does not do financial transaction
-                                        </p>
-                                    </div>
+<!--                                    <div class="content">-->
+<!--                                        <h6>Description</h6>-->
+<!--                                        <p>Under this project, AAIN has maintained stocks in its western and-->
+<!--                                            eastern regional offices and does partnership during emergencies-->
+<!--                                            for distribution of stocks but does not do financial transaction-->
+<!--                                        </p>-->
+<!--                                    </div>-->
                                 </li>
                             </ul>
                             <div class="action-btn flex-end">
@@ -239,174 +253,176 @@
             </div>
 
         </div>
-        <div class="dfid-program">
-            <div class="status yellow">
-                ongoging
-            </div>
-            <div class="row">
-                <div class="col-xl-3 col-lg-4">
-                    <div class="about-program">
-                        <div class="program-name">
-                            <h3>Post-Earthquake Reconstruction in Nepal</h3>
-                        </div>
-                        <div class="organization flex-start">
-                            <figure>
-                                <img src="{% static 'dashboard/images/organization.svg' %}" alt="organization"/>
-                            </figure>
-                            <h4>ActionAid International</h4>
-                        </div>
-                        <ul class="program-content hide-details">
-                            <li>
+        <!--        <div class="dfid-program">-->
+        <!--            <div class="status yellow">-->
+        <!--                ongoging-->
+        <!--            </div>-->
+        <!--            <div class="row">-->
+        <!--                <div class="col-xl-3 col-lg-4">-->
+        <!--                    <div class="about-program">-->
+        <!--                        <div class="program-name">-->
+        <!--                            <h3>Post-Earthquake Reconstruction in Nepal</h3>-->
+        <!--                        </div>-->
+        <!--                        <div class="organization flex-start">-->
+        <!--                            <figure>-->
+        <!--                                <img src="{% static 'dashboard/images/organization.svg' %}" alt="organization"/>-->
+        <!--                            </figure>-->
+        <!--                            <h4>ActionAid International</h4>-->
+        <!--                        </div>-->
+        <!--                        <ul class="program-content hide-details">-->
+        <!--                            <li>-->
 
-                                <div class="content">
-                                    <h6>Representative</h6>
-                                    <p><a href="#">Dinesh Gurung</a></p>
-                                    <p>01 4002177</p>
-                                    <p>dinesh.gurung@actionaid.org</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="content">
-                                    <h6>Code</h6>
-                                    <p>108538</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="content">
-                                    <h6>IATI Identifier</h6>
-                                    <p>GB-1-204857-105</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-xl-9 col-lg-8">
-                    <div class="program-info">
-                        <div class="row">
-                            <div class="col-lg-4 col-md-6">
-                                <ul class="program-content">
-                                    <li>
-                                        <i class="material-icons">category</i>
-                                        <div class="content">
-                                            <h6>Broad Sectors</h6>
-                                            <p>EP - Environment Protection</p>
-                                            <p>PS - Production Sector</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <i class="material-icons">room</i>
-                                        <div class="content">
-                                            <h6>Province</h6>
-                                            <p>Gandaki</p>
-                                            <p>Karnali</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="program-details hide-details">
-                                    <ul class="mr-left">
-                                        <li>
-                                            <div class="content">
-                                                <h6>District</h6>
-                                                <p>Terhathum</p>
-                                                <p>Morang</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="content">
-                                                <h6>Municipality</h6>
-                                                <p>Aathrai Gaunpalika</p>
-                                                <p>Biratnagar Mahanagarpalika</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <ul class="program-content">
-                                    <li>
-                                        <div class="content">
-                                            <h6>Implementing Partner</h6>
-                                            <p>Bagmati Welfare Society</p>
-                                            <p>Nari Bikas Sangh</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="content">
-                                            <h6>Local Partner</h6>
-                                            <p>Dalit Awareness Society</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="program-details hide-details">
-                                    <ul class="program-content">
-                                        <li>
-                                            <div class="content">
-                                                <h6>Marker</h6>
-                                                <p>Dissertification (Significant)</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="content">
-                                                <h6>Reporting Ministry Line</h6>
-                                                <p>Ministry of Health and Population</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6">
-                                <ul class="program-content">
-                                    <li>
-                                        <i class="material-icons">monetization_on</i>
-                                        <div class="content">
-                                            <h6>Budget</h6>
-                                            <h5>GBP 89,413</h5>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <i class="material-icons">calendar_today</i>
-                                        <div class="content">
-                                            <h6>Start date</h6>
-                                            <p>June 03, 2012</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="program-details hide-details">
-                                    <ul class="program-content">
-                                        <li>
-                                            <div class="content">
-                                                <h6>End Date</h6>
-                                                <p>April 30, 2020</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="description hide-details">
-                            <ul class="program-content">
-                                <li>
-                                    <div class="content">
-                                        <h6>Description</h6>
-                                        <p>Under this project, AAIN has maintained stocks in its western and
-                                            eastern regional offices and does partnership during emergencies
-                                            for distribution of stocks but does not do financial transaction
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                            <div class="action-btn flex-end">
-                                <a href="#" class="border-button dfid-button sm-button">Delete</a>
-                                <a href="#" class="dfid-button sm-button">Edit</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="program-footer flex-center">
-                <a href="#">View details <i class="material-icons">expand_less</i></a>
-            </div>
-        </div>
+        <!--                                <div class="content">-->
+        <!--                                    <h6>Representative</h6>-->
+        <!--                                    <p><a href="#">Dinesh Gurung</a></p>-->
+        <!--                                    <p>01 4002177</p>-->
+        <!--                                    <p>dinesh.gurung@actionaid.org</p>-->
+        <!--                                </div>-->
+        <!--                            </li>-->
+        <!--                            <li>-->
+        <!--                                <div class="content">-->
+        <!--                                    <h6>Code</h6>-->
+        <!--                                    <p>108538</p>-->
+        <!--                                </div>-->
+        <!--                            </li>-->
+        <!--                            <li>-->
+        <!--                                <div class="content">-->
+        <!--                                    <h6>IATI Identifier</h6>-->
+        <!--                                    <p>GB-1-204857-105</p>-->
+        <!--                                </div>-->
+        <!--                            </li>-->
+        <!--                        </ul>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--                <div class="col-xl-9 col-lg-8">-->
+        <!--                    <div class="program-info">-->
+        <!--                        <div class="row">-->
+        <!--                            <div class="col-lg-4 col-md-6">-->
+        <!--                                <ul class="program-content">-->
+        <!--                                    <li>-->
+        <!--                                        <i class="material-icons">category</i>-->
+        <!--                                        <div class="content">-->
+        <!--                                            <h6>Broad Sectors</h6>-->
+        <!--                                            <p>EP - Environment Protection</p>-->
+        <!--                                            <p>PS - Production Sector</p>-->
+        <!--                                        </div>-->
+        <!--                                    </li>-->
+        <!--                                    <li>-->
+        <!--                                        <i class="material-icons">room</i>-->
+        <!--                                        <div class="content">-->
+        <!--                                            <h6>Province</h6>-->
+        <!--                                            <p>Gandaki</p>-->
+        <!--                                            <p>Karnali</p>-->
+        <!--                                        </div>-->
+        <!--                                    </li>-->
+        <!--                                </ul>-->
+        <!--                                <div class="program-details hide-details">-->
+        <!--                                    <ul class="mr-left">-->
+        <!--                                        <li>-->
+        <!--                                            <div class="content">-->
+        <!--                                                <h6>District</h6>-->
+        <!--                                                <p>Terhathum</p>-->
+        <!--                                                <p>Morang</p>-->
+        <!--                                            </div>-->
+        <!--                                        </li>-->
+        <!--                                        <li>-->
+        <!--                                            <div class="content">-->
+        <!--                                                <h6>Municipality</h6>-->
+        <!--                                                <p>Aathrai Gaunpalika</p>-->
+        <!--                                                <p>Biratnagar Mahanagarpalika</p>-->
+        <!--                                            </div>-->
+        <!--                                        </li>-->
+        <!--                                    </ul>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                            <div class="col-lg-4 col-md-6">-->
+        <!--                                <ul class="program-content">-->
+        <!--                                    <li>-->
+        <!--                                        <div class="content">-->
+        <!--                                            <h6>Implementing Partner</h6>-->
+        <!--                                            <p>Bagmati Welfare Society</p>-->
+        <!--                                            <p>Nari Bikas Sangh</p>-->
+        <!--                                        </div>-->
+        <!--                                    </li>-->
+        <!--                                    <li>-->
+        <!--                                        <div class="content">-->
+        <!--                                            <h6>Local Partner</h6>-->
+        <!--                                            <p>Dalit Awareness Society</p>-->
+        <!--                                        </div>-->
+        <!--                                    </li>-->
+        <!--                                </ul>-->
+        <!--                                <div class="program-details hide-details">-->
+        <!--                                    <ul class="program-content">-->
+        <!--                                        <li>-->
+        <!--                                            <div class="content">-->
+        <!--                                                <h6>Marker</h6>-->
+        <!--                                                <p>Dissertification (Significant)</p>-->
+        <!--                                            </div>-->
+        <!--                                        </li>-->
+        <!--                                        <li>-->
+        <!--                                            <div class="content">-->
+        <!--                                                <h6>Reporting Ministry Line</h6>-->
+        <!--                                                <p>Ministry of Health and Population</p>-->
+        <!--                                            </div>-->
+        <!--                                        </li>-->
+        <!--                                    </ul>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                            <div class="col-lg-4 col-md-6">-->
+        <!--                                <ul class="program-content">-->
+        <!--                                    <li>-->
+        <!--                                        <i class="material-icons">monetization_on</i>-->
+        <!--                                        <div class="content">-->
+        <!--                                            <h6>Budget</h6>-->
+        <!--                                            <h5>GBP 89,413</h5>-->
+        <!--                                        </div>-->
+        <!--                                    </li>-->
+        <!--                                    <li>-->
+        <!--                                        <i class="material-icons">calendar_today</i>-->
+        <!--                                        <div class="content">-->
+        <!--                                            <h6>Start date</h6>-->
+        <!--                                            <p>June 03, 2012</p>-->
+        <!--                                        </div>-->
+        <!--                                    </li>-->
+        <!--                                </ul>-->
+        <!--                                <div class="program-details hide-details">-->
+        <!--                                    <ul class="program-content">-->
+        <!--                                        <li>-->
+        <!--                                            <div class="content">-->
+        <!--                                                <h6>End Date</h6>-->
+        <!--                                                <p>April 30, 2020</p>-->
+        <!--                                            </div>-->
+        <!--                                        </li>-->
+        <!--                                    </ul>-->
+        <!--                                </div>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                        <div class="description hide-details">-->
+        <!--                            <ul class="program-content">-->
+        <!--                                <li>-->
+        <!--                                    <div class="content">-->
+        <!--                                        <h6>Description</h6>-->
+        <!--                                        <p>Under this project, AAIN has maintained stocks in its western and-->
+        <!--                                            eastern regional offices and does partnership during emergencies-->
+        <!--                                            for distribution of stocks but does not do financial transaction-->
+        <!--                                        </p>-->
+        <!--                                    </div>-->
+        <!--                                </li>-->
+        <!--                            </ul>-->
+        <!--                            <div class="action-btn flex-end">-->
+        <!--                                <a href="#" class="border-button dfid-button sm-button">Delete</a>-->
+        <!--                                <a href="#" class="dfid-button sm-button">Edit</a>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--            <div class="program-footer flex-center">-->
+        <!--                <a href="#">View details <i class="material-icons">expand_less</i></a>-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+        {% endfor %}
     </section>
 </main>
 {% endblock %}

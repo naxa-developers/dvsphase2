@@ -41,11 +41,12 @@ from django.contrib.admin.models import LogEntry
 @login_required()
 def login_test(request, **kwargs):
     # user = authenticate(username='sumit', password='sumit1234')
+    group = Group.objects.get(user=request.user)
 
-    # return HttpResponse(request.user)
+    return HttpResponse(group.name)
     # return HttpResponse(kwargs['group'] + kwargs['partner'])
     # return render(request, 'dashboard.html')
-    return HttpResponse(request.user.has_perm('core.add_program'))
+    # return HttpResponse(request.user.has_perm('core.add_program'))
 
 
 @login_required()
@@ -387,7 +388,11 @@ class ProgramList(ListView):
         data = super(ProgramList, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
-        program_list = Program.objects.filter(id=user_data.program.id)
+        group = Group.objects.get(user=user)
+        if group.name == 'admin':
+            program_list = Program.objects.order_by('id')
+        else:
+            program_list = Program.objects.filter(id=user_data.program.id)
         data['list'] = program_list
         data['user'] = user_data
         data['active'] = 'program'
@@ -430,9 +435,13 @@ class FiveList(ListView):
 
     def get_context_data(self, **kwargs):
         data = super(FiveList, self).get_context_data(**kwargs)
-        five = FiveW.objects.order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
+        group = Group.objects.get(user=user)
+        if group.name == 'admin':
+            five = FiveW.objects.order_by('id')
+        else:
+            five = FiveW.objects.filter(partner_id=user_data.partner.id)
         data['list'] = five
         data['user'] = user_data
         data['active'] = 'five'
@@ -463,7 +472,12 @@ class PartnerList(ListView):
         contact_list = PartnerContact.objects.all().order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
-        partner_list = Partner.objects.filter(id=user_data.partner.id)
+        group = Group.objects.get(user=user)
+        if group.name == 'admin':
+            partner_list = Partner.objects.order_by('id')
+        else:
+            partner_list = Partner.objects.filter(id=user_data.partner.id)
+
         data['list'] = partner_list
         data['user'] = user_data
         data['active'] = 'partner'
@@ -493,7 +507,12 @@ class ProjectList(ListView):
         data = super(ProjectList, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
-        project_list = Project.objects.filter(id=user_data.project.id)
+        group = Group.objects.get(user=user)
+        if group.name == 'admin':
+            project_list = Project.objects.order_by('id')
+        else:
+            project_list = Project.objects.filter(id=user_data.project.id)
+
         data['list'] = project_list
         data['user'] = user_data
         data['active'] = 'project'
@@ -642,10 +661,12 @@ class Dashboard(LoginRequiredMixin, TemplateView):
     def get(self, request, *args, **kwargs):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
-        program_view = user.has_perm('core.view_program')
-        sector_view = user.has_perm('core.view_program')
-        five_view = user.has_perm('core.view_program')
-        return render(request, 'dashboard.html', {'user': user_data, 'active': 'dash'})
+        group = Group.objects.get(user=user)
+        if group.name == 'admin':
+            five = FiveW.objects.order_by('id')
+        else:
+            five = FiveW.objects.select_related('partner_id').filter(partner_id=user_data.partner.id)
+        return render(request, 'dashboard.html', {'user': user_data, 'active': 'dash', 'fives': five})
 
 
 class ProgramAdd(LoginRequiredMixin, TemplateView):
