@@ -5,6 +5,7 @@ from django.contrib.gis.db import models
 class Partner(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
+    type_of_institution = models.CharField(max_length=100, null=True, blank=True)
     address = models.CharField(max_length=100, null=True, blank=True)
     email = models.CharField(max_length=100, null=True, blank=True)
     phone_number = models.CharField(max_length=100, null=True, blank=True)
@@ -84,6 +85,7 @@ class Program(models.Model):
 class Province(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
     code = models.CharField(max_length=100, null=True, blank=True)
+    boundary = models.MultiPolygonField(srid=4326, null=True)
 
     def __str__(self):
         return self.name
@@ -144,31 +146,57 @@ class GapaNapa(models.Model):
 
 
 class FiveW(models.Model):
-    partner_name = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='Partner', null=True, blank=True)
-    program_name = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='Program', null=True, blank=True)
-    province = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='FProvince', null=True, blank=True)
-    district = models.ForeignKey(District, on_delete=models.CASCADE, related_name='FDistrict', null=True, blank=True)
-    gapa_napa = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='GapaNapa', null=True, blank=True)
-    implenting_partner_first = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='FPartner', null=True,
-                                                 blank=True)
-    implenting_partner_second = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='SPartner', null=True,
-                                                  blank=True)
-    implenting_partner_third = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='TPartner', null=True,
-                                                 blank=True)
-    implenting_partner_fourth = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='FOPartner',
-                                                  null=True, blank=True)
-    status = models.CharField(max_length=100, null=True, blank=True)
-    start_date = models.CharField(max_length=100, null=True, blank=True)
-    end_date = models.CharField(max_length=100, null=True, blank=True)
+    status = (
+        ('ongoing', 'Ongoing'),
+        ('completed', 'Completed'),
+
+    )
+
+    partner_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='Partner', null=True, blank=True)
+    program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='Program', null=True, blank=True)
+    province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='FProvince', null=True, blank=True)
+    district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='FDistrict', null=True, blank=True)
+    municipality_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='GapaNapa', null=True,
+                                        blank=True)
+    ward = models.CharField(max_length=200, null=True, blank=True)
+    consortium_partner_first_id = models.ForeignKey(Partner, on_delete=models.CASCADE,
+                                                    related_name='ConsortiumPartnerF',
+                                                    null=True, blank=True)
+    consortium_partner_second_id = models.ForeignKey(Partner, on_delete=models.CASCADE,
+                                                     related_name='ConsortiumPartnerS',
+                                                     null=True, blank=True)
+    consortium_partner_third_id = models.ForeignKey(Partner, on_delete=models.CASCADE,
+                                                    related_name='ConsortiumPartnerT',
+                                                    null=True, blank=True)
+    implementing_partner_first_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='FPartner',
+                                                      null=True,
+                                                      blank=True)
+    implementing_partner_second_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='SPartner',
+                                                       null=True,
+                                                       blank=True)
+    implementing_partner_third_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='TPartner',
+                                                      null=True,
+                                                      blank=True)
+    implementing_partner_fourth_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='FOPartner',
+                                                       null=True, blank=True)
+    local_partner_first_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='LocalPartnerF',
+                                               null=True, blank=True)
+    local_partner_second_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='LocalPartnerS',
+                                                null=True, blank=True)
+    local_partner_third_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='LocalPartnerT',
+                                               null=True, blank=True)
+    status = models.CharField(max_length=50, choices=status, default='ongoing')
+    start_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
     reporting_ministry_line = models.CharField(max_length=100, null=True, blank=True)
     budget = models.FloatField(null=True, blank=True, default=None)
-    rp_name = models.CharField(max_length=200, null=True, blank=True)
-    rp_contact_name = models.CharField(max_length=200, null=True, blank=True)
-    rp_email = models.CharField(max_length=100, null=True, blank=True)
+    representative_person = models.ForeignKey(PartnerContact, on_delete=models.CASCADE, related_name='PartnerContact',
+                                              null=True,
+                                              blank=True)
     remarks = models.TextField(blank=True)
 
     def __str__(self):
-        return self.partner_name.partner_name
+        return self.partner_id.name
 
 
 class Indicator(models.Model):
@@ -230,10 +258,59 @@ class GisLayer(models.Model):
 
 
 class Project(models.Model):
-    program = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='ProjectProgram', null=True, blank=True)
-    partner = models.ManyToManyField(Partner, related_name='ProjectProgram', blank=True)
+    program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='ProjectProgram', null=True,
+                                   blank=True)
     name = models.CharField(max_length=100, null=True, blank=True)
     code = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+
+class Output(models.Model):
+    indicator = models.CharField(max_length=100, null=True, blank=True)
+    male_forecast_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
+    disability_forecast_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
+    female_forecast_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
+    male_achieved_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
+    female_achieved_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
+    disability_achieved_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
+    male_forecast_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
+    female_forecast_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
+    disability_forecast_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
+    male_achieved_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
+    female_achieved_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
+    disability_achieved_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
+    male_forecast_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
+    female_forecast_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
+    disability_forecast_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
+    male_achieved_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
+    female_achieved_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
+    disability_achieved_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
+
+    def __str__(self):
+        return self.indicator
+
+    @property
+    def total_forecast_2011_2015(self):
+        return self.male_forecast_2011_2015 + self.female_forecast_2011_2015
+
+    @property
+    def total_achieved_2011_2015(self):
+        return self.male_achieved_2011_2015 + self.female_achieved_2011_2015
+
+    @property
+    def total_forecast_2015_2019(self):
+        return self.male_forecast_2015_2019 + self.female_forecast_2015_2019
+
+    @property
+    def total_achieved_2015_2019(self):
+        return self.male_achieved_2015_2019 + self.female_achieved_2015_2019
+
+    @property
+    def total_forecast_2011_2019(self):
+        return self.male_forecast_2011_2019 + self.female_forecast_2011_2019
+
+    @property
+    def total_achieved_2011_2019(self):
+        return self.male_achieved_2011_2019 + self.female_achieved_2011_2019

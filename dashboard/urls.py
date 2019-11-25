@@ -84,6 +84,23 @@ urlpatterns = [
     path('assign-role/<int:id>', views.assign_role, name='assign-role'),
 
     path('project-list/', views.ProjectList.as_view(), name='project-list'),
+    path('project-add/', views.ProjectCreate.as_view(), name='project-add'),
+    path('project-edit/<int:pk>', views.ProjectUpdate.as_view(), name='project-edit'),
+    path('project-delete/<int:pk>', views.ProjectDelete.as_view(), name='project-delete'),
+
+    path('permission-list/', views.PermissionList.as_view(), name='permission-list'),
+    path('permission-add/', views.PermissionCreate.as_view(), name='permission-add'),
+    path('permission-edit/<int:pk>', views.PermissionUpdate.as_view(), name='permission-edit'),
+    path('permission-delete/<int:pk>', views.PermissionDelete.as_view(), name='permission-delete'),
+
+    path('five-list/', views.FiveList.as_view(), name='five-list'),
+    path('five-add/', views.FiveCreate.as_view(), name='five-add'),
+    path('five-edit/<int:pk>', views.FiveUpdate.as_view(), name='five-edit'),
+
+    path('output-list/', views.OutputList.as_view(), name='output-list'),
+    path('output-add/', views.OutputCreate.as_view(), name='output-add'),
+    path('output-edit/<int:pk>', views.OutputUpdate.as_view(), name='output-edit'),
+
 
     path('vector-map/', views.VectorMap.as_view(), name='vector-map'),
 

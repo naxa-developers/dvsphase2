@@ -8,8 +8,10 @@
             <li>
                 <a href="#"><i class="material-icons">assignment</i> Sectors</a>
             </li>
+            {% if perms.core.add_sector %}
             <li><a href="/dashboard/sector-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
             </li>
+            {% endif %}
         </ul>
     </div>
     <!-- dfid program table -->
@@ -46,17 +48,21 @@
                             <i class="material-icons">more_vert</i>
                         </a>
                         <ul class="dropdown-animation">
+                            {% if perms.core.change_sector %}
                             <li>
                                 <a href="/dashboard/sector-edit/{{ sector.id }}" class="flex-start">
                                     <i class="material-icons">edit</i> Edit
                                 </a>
                             </li>
+                            {% endif %}
+                            {% if perms.core.delete_sector %}
                             <li>
                                 <a href="/dashboard/sector-delete/{{ sector.id }}" class="flex-start">
                                     <i class="material-icons">delete</i>delete
                                 </a>
 
                             </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </td>

@@ -1,13 +1,19 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.forms import ModelForm
 from core.models import Program, Partner, Sector, SubSector, MarkerCategory, MarkerValues, GisLayer, Province, District, \
-    GapaNapa, Indicator
+    GapaNapa, Indicator, Project, FiveW, Output
 
 
 class UserForm(ModelForm):
     class Meta:
         model = User
         fields = ('username', 'password')
+
+
+class PermissionForm(ModelForm):
+    class Meta:
+        model = Permission
+        fields = '__all__'
 
 
 class ProgramCreateForm(ModelForm):
@@ -73,4 +79,22 @@ class PalikaCreateForm(ModelForm):
 class IndicatorCreateForm(ModelForm):
     class Meta:
         model = Indicator
+        fields = '__all__'
+
+
+class ProjectCreateForm(ModelForm):
+    class Meta:
+        model = Project
+        fields = '__all__'
+
+
+class FiveCreateForm(ModelForm):
+    class Meta:
+        model = FiveW
+        fields = '__all__'
+
+
+class OutputCreateForm(ModelForm):
+    class Meta:
+        model = Output
         fields = '__all__'

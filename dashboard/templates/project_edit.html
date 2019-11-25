@@ -6,7 +6,7 @@
     <div class="dfid-breadcrumb pdt-100">
         <ul class="flex-start">
             <li>
-                <a href="#"><i class="material-icons">assignment</i> Sector</a>
+                <a href="#"><i class="material-icons">assignment</i> Program</a>
             </li>
             <li>New</li>
         </ul>
@@ -15,7 +15,6 @@
     <form class="program-form" method="POST">
 
         {% csrf_token %}
-
         {% if form.errors %}
         {% for field in form %}
         {% for error in field.errors %}
@@ -36,15 +35,15 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="id_sector_id">Select Sector</label>
-                        <select name="sector_id" id="id_sector_id" class="custom-select">
-                            <option value="" selected>----Select Sector----</option>
-                            {% for sector in sectors %}
+                        <label for="id_program">Select Program</label>
+                        <select name="program_id" id="id_program" class="custom-select">
 
-                            <option value="{{sector.id}}">{{sector.name}}</option>
-
-
-
+                            {% for program in programs %}
+                            {% if form.instance.program_id.id == program.id %}
+                            <option value="{{program.id}}" selected>{{program.name}}</option>
+                            {% else %}
+                            <option value="{{program.id}}">{{program.name}}</option>
+                            {% endif %}
                             {% endfor %}
 
                         </select>
@@ -61,9 +60,8 @@
                     <div class="form-group ">
                         <label for="id_name" class="">Name</label>
                         <input type="text" class="form-control" name="name" maxlength="100" id="id_name"
-                               placeholder="Name"/>
-                        <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
-                        <!--                                        Please ennter name</span>-->
+                               placeholder="Name" value="{{ form.instance.name }}"/>
+
                     </div>
                 </div>
 
@@ -71,7 +69,7 @@
                     <div class="form-group ">
                         <label for="id_code" class="">Code</label>
                         <input type="text" class="form-control" name="code" maxlength="100" id="id_code"
-                               placeholder="84349"/>
+                               placeholder="84349" value="{{ form.instance.code }}"/>
 
                     </div>
                 </div>

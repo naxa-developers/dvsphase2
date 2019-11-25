@@ -6,12 +6,10 @@
     <div class="dfid-breadcrumb pdt-100">
         <ul class="flex-start">
             <li>
-                <a href="#"><i class="material-icons">assignment</i> Marker Values</a>
+                <a href="#"><i class="material-icons">assignment</i> Permissions</a>
             </li>
-            {% if perms.core.add_markervalues %}
-            <li><a href="/dashboard/markervalue-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
+            <li><a href="/dashboard/permission-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
             </li>
-            {% endif %}
         </ul>
     </div>
     <!-- dfid program table -->
@@ -27,21 +25,24 @@
         <table class="program-table dataTable">
             <thead>
             <tr>
-                <th>Sn</th>
-                <th>Marker Category</th>
-                <th>Marker Value</th>
+                <th>Id</th>
+                <th>name</th>
+                <th>content_type</th>
+                <th>codename</th>
+
 
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            {% for markervalue in list %}
+            {% for permission in list %}
             <tr>
-                <td>{{ markervalue.id }}</td>
-                <td>
-                    <strong><a href="#">{{markervalue.marker_category_id}}</a></strong>
-                </td>
-                <td>{{markervalue.value}}</td>
+                <td>{{ permission.id }}</td>
+                <td>{{ permission.name }}</td>
+                <td>{{ permission.content_type }}</td>
+
+                <td>{{ permission.codename }}</td>
+
 
                 <td>
                     <div class="table-action">
@@ -49,27 +50,22 @@
                             <i class="material-icons">more_vert</i>
                         </a>
                         <ul class="dropdown-animation">
-                            {% if perms.core.change_markervalues %}
                             <li>
-                                <a href="/dashboard/markervalue-edit/{{markervalue.id}}" class="flex-start">
+                                <a href="/dashboard/permission-edit/{{ permission.id }}" class="flex-start">
                                     <i class="material-icons">edit</i> Edit
                                 </a>
                             </li>
-                            {% endif %}
-                            {% if perms.core.delete_markervalues %}
                             <li>
-                                <a href="/dashboard/markervalue-delete/{{markervalue.id}}" class="flex-start">
+                                <a href="/dashboard/permission-delete/{{ permission.id }}" class="flex-start">
                                     <i class="material-icons">delete</i>Delete
                                 </a>
 
                             </li>
-                            {% endif %}
                         </ul>
                     </div>
                 </td>
             </tr>
             {% endfor %}
-
 
             </tbody>
         </table>

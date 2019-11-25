@@ -6,7 +6,7 @@
     <div class="dfid-breadcrumb pdt-100">
         <ul class="flex-start">
             <li>
-                <a href="#"><i class="material-icons">assignment</i> Sector</a>
+                <a href="#"><i class="material-icons">assignment</i> Program</a>
             </li>
             <li>New</li>
         </ul>
@@ -36,12 +36,14 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="id_sector_id">Select Sector</label>
-                        <select name="sector_id" id="id_sector_id" class="custom-select">
-                            <option value="" selected>----Select Sector----</option>
-                            {% for sector in sectors %}
+                        <label for="id_program_id">Select Program</label>
+                        <select name="program_id" id="id_program_id" class="custom-select">
+                             <option value="" selected>----Select Program----</option>
+                            {% for program in programs %}
 
-                            <option value="{{sector.id}}">{{sector.name}}</option>
+
+
+                            <option value="{{program.id}}">{{program.name}}</option>
 
 
 
@@ -72,7 +74,8 @@
                         <label for="id_code" class="">Code</label>
                         <input type="text" class="form-control" name="code" maxlength="100" id="id_code"
                                placeholder="84349"/>
-
+                        <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+                        <!--                                        Please ennter name</span>-->
                     </div>
                 </div>
 

@@ -88,7 +88,39 @@
                                placeholder="9454489413" value="{{ form.instance.phone_number }}"/>
                     </div>
                 </div>
-                <div class="col-md-5">
+
+                 <div class="col-md-5">
+                        <div class="form-group ">
+                            <label for="id_type_of_institution" class="">Type Of Institution</label>
+                            <input type="text" class="form-control" name="type_of_institution" maxlength="100"
+                                   id="id_type_of_institution"
+                                   placeholder="NGO" value="{{ form.instance.type_of_institution }}">
+                        </div>
+                    </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_contact_person_email" class="">Contact person email</label>
+                        <input type="text" class="form-control" name="contact_person_email" maxlength="100"
+                               id="id_contact_person_email"
+                               placeholder="Email" value="{{ form.instance.contact_person_email }}"/>
+                    </div>
+                </div>
+                <div class="col-md-4">
+
+                    <div class="form-group ">
+                        <label for="id_contact_person_ph" class="">Contact person ph</label>
+                        <input type="text" class="form-control" name="contact_person_ph" maxlength="100"
+                               id="id_contact_person_ph"
+                               placeholder="Number" value="{{ form.instance.contact_person_ph }}"/>
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
 
                     <div class="form-group ">
                         <label for="id_contact_person_name" class="">Contact person name</label>
@@ -97,29 +129,6 @@
                                placeholder="Name" value="{{ form.instance.contact_person_name }}"/>
                     </div>
 
-                    <div class="col-md-3">
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-5">
-                    <div class="form-group ">
-                        <label for="id_contact_person_email" class="">Contact person email</label>
-                        <input type="text" class="form-control" name="contact_person_email" maxlength="100"
-                               id="id_contact_person_email"
-                               placeholder="Email" value="{{ form.instance.contact_person_email }}"/>
-                    </div>
-                </div>
-                <div class="col-md-5">
-
-                    <div class="form-group ">
-                        <label for="id_contact_person_ph" class="">Contact person ph</label>
-                        <input type="text" class="form-control" name="contact_person_ph" maxlength="100"
-                               id="id_contact_person_ph"
-                               placeholder="Number" value="{{ form.instance.contact_person_ph }}"/>
-                    </div>
 
                 </div>
             </div>
