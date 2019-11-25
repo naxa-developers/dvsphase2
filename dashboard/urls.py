@@ -98,6 +98,8 @@ urlpatterns = [
     path('five-edit/<int:pk>', views.FiveUpdate.as_view(), name='five-edit'),
 
     path('output-list/', views.OutputList.as_view(), name='output-list'),
+    path('output-add/', views.OutputCreate.as_view(), name='output-add'),
+    path('output-edit/<int:pk>', views.OutputUpdate.as_view(), name='output-edit'),
 
 
     path('vector-map/', views.VectorMap.as_view(), name='vector-map'),

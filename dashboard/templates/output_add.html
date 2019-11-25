@@ -1,0 +1,229 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i> program</a>
+            </li>
+            <li>New</li>
+        </ul>
+    </div>
+    <!-- program form -->
+    <form class="program-form" method="post">
+
+        {% csrf_token %}
+
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ field.name|title }} {{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <!-- default form -->
+        <div class="default-form">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_indicator" class="">Indicators-title</label>
+                        <input type="text" class="form-control" name="indicator" maxlength="100" id="id_indicator"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                </div>
+            </div>
+        </div>
+
+        <!-- category form -->
+        <div class="collapse-section">
+            <div class="accordion" id="accordionExample">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h2 class="mb-0 btn-heading">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+                                    aria-expanded="false" aria-controls="collapseOne">
+                                2011 - 2015
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="row-wrapper">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-wrapper">
+                                        <div class="title">
+                                            <span>Target</span>
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="id_male_forecast_2011_2015" class="">Male</label>
+                                            <input  class="form-control" type="number" name="male_forecast_2011_2015" value="0" id="id_male_forecast_2011_2015"/>
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="id_female_forecast_2011_2015" class="">Female</label>
+                                            <input  class="form-control" type="number" name="female_forecast_2011_2015" value="0" id="id_female_forecast_2011_2015"/>
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="id_disability_forecast_2011_2015" class="">Disability</label>
+                                            <input class="form-control" type="number" name="disability_forecast_2011_2015" value="0" id="id_disability_forecast_2011_2015"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-wrapper">
+                                        <div class="title">
+                                            <span>Achieved</span>
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="id_male_achieved_2011_2015" class="">Male</label>
+                                            <input class="form-control" type="number" name="male_achieved_2011_2015" value="0" id="id_male_achieved_2011_2015"/>
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="id_female_achieved_2011_2015" class="">Female</label>
+                                            <input class="form-control" type="number" name="female_achieved_2011_2015" value="0" id="id_female_achieved_2011_2015" />
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="id_disability_achieved_2011_2015" class="">Disability</label>
+                                            <input class="form-control" type="number" name="disability_achieved_2011_2015" value="0" id="id_disability_achieved_2011_2015"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header" id="headingtwo">
+                        <h2 class="mb-0 btn-heading">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsetwo"
+                                    aria-expanded="false" aria-controls="collapseOne">
+                                2015 - 2019
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="collapsetwo" class="collapse" aria-labelledby="headingtwo" data-parent="#accordionExample">
+                        <div class="row-wrapper">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-wrapper">
+                                        <div class="title">
+                                            <span>Target</span>
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="id_male_forecast_2015_2019" class="">Male</label>
+                                            <input class="form-control" type="number" name="male_forecast_2015_2019" value="0" id="id_male_forecast_2015_2019"/>
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="id_female_forecast_2015_2019" class="">Female</label>
+                                            <input class="form-control" type="number" name="female_forecast_2015_2019" value="0" id="id_female_forecast_2015_2019"/>
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="id_disability_forecast_2015_2019" class="">Disability</label>
+                                            <input  class="form-control" type="number" name="disability_forecast_2015_2019" value="0" id="id_disability_forecast_2015_2019"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-wrapper">
+                                        <div class="title">
+                                            <span>Achieved</span>
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="id_male_achieved_2015_2019" class="">Male</label>
+                                            <input  class="form-control" type="number" name="male_achieved_2015_2019" value="0" id="id_male_achieved_2015_2019"/>
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="id_female_achieved_2015_2019" class="">Female</label>
+                                            <input  class="form-control" type="number" name="female_achieved_2015_2019" value="0" id="id_female_achieved_2015_2019"/>
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="id_disability_achieved_2015_2019" class="">Disability</label>
+                                            <input  class="form-control" type="number" name="disability_achieved_2015_2019" value="0" id="id_disability_achieved_2015_2019"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header" id="headingthree">
+                        <h2 class="mb-0 btn-heading">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    data-target="#collapsethree" aria-expanded="false" aria-controls="collapseOne">
+                                2011 - 2019
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="collapsethree" class="collapse" aria-labelledby="headingthree"
+                         data-parent="#accordionExample">
+                        <div class="row-wrapper">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-wrapper">
+                                        <div class="title">
+                                            <span>Target</span>
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="id_male_forecast_2011_2019" class="">Male</label>
+                                            <input  class="form-control" type="number" name="male_forecast_2011_2019" value="0" id="id_male_forecast_2011_2019"/>
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="id_female_forecast_2011_2019" class="">Female</label>
+                                            <input class="form-control" type="number" name="female_forecast_2011_2019" value="0" id="id_female_forecast_2011_2019"/>
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="id_disability_forecast_2011_2019" class="">Disability</label>
+                                            <input  class="form-control" type="number" name="disability_forecast_2011_2019" value="0" id="id_disability_forecast_2011_2019"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-wrapper">
+                                        <div class="title">
+                                            <span>Achieved</span>
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="id_male_achieved_2011_2019" class="">Male</label>
+                                            <input  class="form-control" type="number" name="male_achieved_2011_2019" value="0" id="id_male_achieved_2011_2019"/>
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="id_female_achieved_2011_2019" class="">Female</label>
+                                            <input  class="form-control" type="number" name="female_achieved_2011_2019" value="0" id="id_female_achieved_2011_2019"/>
+                                        </div>
+                                        <div class="form-group ">
+                                            <label for="id_disability_achieved_2011_2019" class="">Disability</label>
+                                            <input  class="form-control" type="number" name="disability_achieved_2011_2019" value="0" id="id_disability_achieved_2011_2019"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group mrt-100">
+            <button type="submit" class="dfid-button sm-button">Save</button>
+        </div>
+
+    </form>
+</main>
+{% endblock %}

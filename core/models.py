@@ -85,6 +85,7 @@ class Program(models.Model):
 class Province(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
     code = models.CharField(max_length=100, null=True, blank=True)
+    boundary = models.MultiPolygonField(srid=4326, null=True)
 
     def __str__(self):
         return self.name
@@ -269,17 +270,23 @@ class Project(models.Model):
 class Output(models.Model):
     indicator = models.CharField(max_length=100, null=True, blank=True)
     male_forecast_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
+    disability_forecast_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
     female_forecast_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
     male_achieved_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
     female_achieved_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
+    disability_achieved_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
     male_forecast_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
     female_forecast_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
+    disability_forecast_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
     male_achieved_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
     female_achieved_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
+    disability_achieved_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
     male_forecast_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
     female_forecast_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
+    disability_forecast_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
     male_achieved_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
-    female_achieved_2011_2019 = models.IntegerField(null=True, blank=True,  default=0)
+    female_achieved_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
+    disability_achieved_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
 
     def __str__(self):
         return self.indicator

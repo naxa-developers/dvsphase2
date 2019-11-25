@@ -6,12 +6,10 @@
     <div class="dfid-breadcrumb pdt-100">
         <ul class="flex-start">
             <li>
-                <a href="#"><i class="material-icons">assignment</i> Sectors</a>
+                <a href="#"><i class="material-icons">assignment</i> Output</a>
             </li>
-            {% if perms.core.add_sector %}
-            <li><a href="/dashboard/sector-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
+            <li><a href="/dashboard/output-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
             </li>
-            {% endif %}
         </ul>
     </div>
     <!-- dfid program table -->
@@ -24,50 +22,98 @@
         </div>
         {% endfor %}
         {% endif %}
-        <table class="program-table dataTable">
+
+        <table class="program-table dataTable table-border">
             <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
+                <!-- <th>SNo.</th> -->
+<!--                <th rowspan="3">Sector</th>-->
+                <th rowspan="3" style="width:300px;">Indicator</th>
+                <th colspan="8">2011 - 2015</th>
+                <th colspan="8">2015 - 2019</th>
+                <th colspan="8">2011 - 2019</th>
+                <th rowspan="3">Action</th>
+            </tr>
 
-                <th></th>
+            <tr>
+                <th colspan="4">Forecast</th>
+                <th colspan="4">Achieved</th>
+                <th colspan="4">Forecast</th>
+                <th colspan="4">Achieved</th>
+                <th colspan="4">Forecast</th>
+                <th colspan="4">Achieved</th>
+            </tr>
+
+            <tr>
+                <th>Male</th>
+                <th>Female</th>
+                <th>Disability</th>
+                <th>Total</th>
+                <th>Male</th>
+                <th>Female</th>
+                <th>Disability</th>
+                <th>Total</th>
+                <th>Male</th>
+                <th>Female</th>
+                <th>Disability</th>
+                <th>Total</th>
+                <th>Male</th>
+                <th>Female</th>
+                <th>Disability</th>
+                <th>Total</th>
+                <th>Male</th>
+                <th>Female</th>
+                <th>Disability</th>
+                <th>Total</th>
+                <th>Male</th>
+                <th>Female</th>
+                <th>Disability</th>
+                <th>Total</th>
             </tr>
             </thead>
+
             <tbody>
-            {% for sector in list %}
+            <!-- data1 -->
+
+           {% for output in list %}
             <tr>
-                <td>{{ sector.id }}</td>
+<!--                <td>{{ output.sector }}</td>-->
+                <td>{{output.indicator}}</td>
+                <td>{{output.male_forecast_2011_2015}}</td>
+                <td>{{output.female_forecast_2011_2015}}</td>
+                <td>{{output.disability_forecast_2011_2015}}</td>
+                <td>{{output.total_forecast_2011_2015}}</td>
+                <td>{{output.male_achieved_2011_2015}}</td>
+                <td>{{output.female_achieved_2011_2015}}</td>
+                <td>{{output.disability_achieved_2011_2015}}</td>
+                <td>{{output.total_achieved_2011_2015}}</td>
+                <td>{{output.male_forecast_2015_2019}}</td>
+                <td>{{output.female_forecast_2015_2019}}</td>
+                <td>{{output.disability_forecast_2015_2019}}</td>
+                <td>{{output.total_forecast_2015_2019}}</td>
+                <td>{{output.male_achieved_2015_2019}}</td>
+                <td>{{output.female_achieved_2015_2019}}</td>
+                <td>{{output.disability_achieved_2015_2019}}</td>
+                <td>{{output.total_achieved_2015_2019}}</td>
+                <td>{{output.male_forecast_2011_2019}}</td>
+                <td>{{output.female_forecast_2011_2019}}</td>
+                <td>{{output.disability_forecast_2011_2019}}</td>
+                <td>{{output.total_forecast_2011_2019}}</td>
+                <td>{{output.male_achieved_2011_2019}}</td>
+                <td>{{output.female_achieved_2011_2019}}</td>
+                <td>{{output.disability_achieved_2011_2019}}</td>
+                <td>{{output.total_achieved_2011_2019}}</td>
                 <td>
-                    <strong><a href="#">{{sector.name}}</a></strong>
-                </td>
-
-
-                <td>
-                    <div class="table-action">
-                        <a href="#" class="more-action">
-                            <i class="material-icons">more_vert</i>
-                        </a>
-                        <ul class="dropdown-animation">
-                            {% if perms.core.change_sector %}
-                            <li>
-                                <a href="/dashboard/sector-edit/{{ sector.id }}" class="flex-start">
-                                    <i class="material-icons">edit</i> Edit
-                                </a>
-                            </li>
-                            {% endif %}
-                            {% if perms.core.delete_sector %}
-                            <li>
-                                <a href="/dashboard/sector-delete/{{ sector.id }}" class="flex-start">
-                                    <i class="material-icons">delete</i>delete
-                                </a>
-
-                            </li>
-                            {% endif %}
-                        </ul>
-                    </div>
+                    <a href="/dashboard/output-edit/{{output.id}}" class="edit">
+                        <i class="material-icons">edit</i>
+                    </a>
+<!--                    <a href="#" class="edit">-->
+<!--                        <i class="material-icons">delete</i>-->
+<!--                    </a>-->
                 </td>
             </tr>
-            {% endfor %}
+    {% endfor %}
+
 
             </tbody>
         </table>

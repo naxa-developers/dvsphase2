@@ -175,6 +175,17 @@
                 </li>
                 {% endif %}
 
+                {% if perms.core.view_output %}
+                {% if active == 'output' %}
+                <li class="menu-item active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="/dashboard/output-list/" class=""><i
+                            class="material-icons">person</i><span>Output</span></a>
+                </li>
+                {% endif %}
+
                 {% if perms.auth.view_user %}
                 {% if active == 'user' %}
                 <li class="menu-item active">

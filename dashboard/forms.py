@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User, Permission
 from django.forms import ModelForm
 from core.models import Program, Partner, Sector, SubSector, MarkerCategory, MarkerValues, GisLayer, Province, District, \
-    GapaNapa, Indicator, Project, FiveW
+    GapaNapa, Indicator, Project, FiveW, Output
 
 
 class UserForm(ModelForm):
@@ -91,4 +91,10 @@ class ProjectCreateForm(ModelForm):
 class FiveCreateForm(ModelForm):
     class Meta:
         model = FiveW
+        fields = '__all__'
+
+
+class OutputCreateForm(ModelForm):
+    class Meta:
+        model = Output
         fields = '__all__'

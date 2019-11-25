@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
-    PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm
+    PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -400,7 +400,7 @@ class ProgramList(ListView):
 
 
 class OutputList(ListView):
-    template_name = 'province_list.html'
+    template_name = 'output_list.html'
     model = Program
 
     def get_context_data(self, **kwargs):
@@ -769,6 +769,30 @@ class SectorCreate(SuccessMessageMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+class OutputCreate(SuccessMessageMixin, CreateView):
+    model = Output
+    template_name = 'output_add.html'
+    form_class = OutputCreateForm
+    success_message = 'Sector successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(OutputCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'output'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('output-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "New ouput " + self.object.indicator + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
+
 class FiveCreate(SuccessMessageMixin, CreateView):
     model = FiveW
     template_name = 'five_add.html'
@@ -1094,6 +1118,30 @@ class PartnerUpdate(SuccessMessageMixin, UpdateView):
     def form_valid(self, form):
         self.object = form.save()
         message = "Partner " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class OutputUpdate(SuccessMessageMixin, UpdateView):
+    model = Output
+    template_name = 'output_edit.html'
+    form_class = OutputCreateForm
+    success_message = 'Sector successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(OutputUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'output'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('output-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Output " + self.object.indicator + "  has been edited by " + self.request.user.username
         log = Log.objects.create(user=self.request.user, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
