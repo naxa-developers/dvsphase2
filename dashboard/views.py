@@ -804,6 +804,7 @@ class FiveCreate(SuccessMessageMixin, CreateView):
         user = self.request.user
         partner = Partner.objects.all().order_by('id')
         program = Program.objects.all().order_by('id')
+        project = Project.objects.all().order_by('id')
         province = Province.objects.all().order_by('id')
         district = District.objects.all().order_by('id')
         municipality = GapaNapa.objects.all().order_by('id')
@@ -812,6 +813,7 @@ class FiveCreate(SuccessMessageMixin, CreateView):
         data['user'] = user_data
         data['partners'] = partner
         data['programs'] = program
+        data['projects'] = project
         data['provinces'] = province
         data['districts'] = district
         data['municipalities'] = municipality
@@ -1158,6 +1160,7 @@ class FiveUpdate(SuccessMessageMixin, UpdateView):
         partner = Partner.objects.all().order_by('id')
         program = Program.objects.all().order_by('id')
         province = Province.objects.all().order_by('id')
+        project = Project.objects.all().order_by('id')
         district = District.objects.all().order_by('id')
         municipality = GapaNapa.objects.all().order_by('id')
         contact = PartnerContact.objects.all().order_by('id')
@@ -1165,6 +1168,7 @@ class FiveUpdate(SuccessMessageMixin, UpdateView):
         data['user'] = user_data
         data['partners'] = partner
         data['programs'] = program
+        data['projects'] = project
         data['provinces'] = province
         data['districts'] = district
         data['municipalities'] = municipality

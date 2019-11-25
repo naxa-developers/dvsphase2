@@ -145,6 +145,16 @@ class GapaNapa(models.Model):
         return self.name
 
 
+class Project(models.Model):
+    program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='ProjectProgram', null=True,
+                                   blank=True)
+    name = models.CharField(max_length=100, null=True, blank=True)
+    code = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class FiveW(models.Model):
     status = (
         ('ongoing', 'Ongoing'),
@@ -154,6 +164,7 @@ class FiveW(models.Model):
 
     partner_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='Partner', null=True, blank=True)
     program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='Program', null=True, blank=True)
+    project_id = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='FProject', null=True, blank=True)
     province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='FProvince', null=True, blank=True)
     district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='FDistrict', null=True, blank=True)
     municipality_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='GapaNapa', null=True,
@@ -252,16 +263,6 @@ class GisLayer(models.Model):
     category = models.CharField(max_length=100, null=True, blank=True)
     filename = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Project(models.Model):
-    program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='ProjectProgram', null=True,
-                                   blank=True)
-    name = models.CharField(max_length=100, null=True, blank=True)
-    code = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.name
