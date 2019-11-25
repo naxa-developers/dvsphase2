@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
-    PalikaCreateForm, IndicatorCreateForm
+    PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -20,7 +20,7 @@ from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
-    MarkerValues, Indicator, IndicatorValue, GisLayer, Project
+    MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output
 from .models import UserProfile, Log
 from django.contrib.auth.models import User, Group, Permission
 from django.views.generic import TemplateView
@@ -41,22 +41,22 @@ from django.contrib.admin.models import LogEntry
 @login_required()
 def login_test(request, **kwargs):
     # user = authenticate(username='sumit', password='sumit1234')
+    group = Group.objects.get(user=request.user)
 
-    # return HttpResponse(request.user)
+    return HttpResponse(group.name)
     # return HttpResponse(kwargs['group'] + kwargs['partner'])
     # return render(request, 'dashboard.html')
-    return HttpResponse(request.user.has_perm('core.add_program'))
+    # return HttpResponse(request.user.has_perm('core.add_program'))
 
 
 @login_required()
 def uploadData(request):
     if "GET" == request.method:
-        return render(request, 'dashboard.html')
+        return render(request, 'shapefile.html')
     else:
-        csv = request.FILES["csv_file"]
+        csv = request.FILES["shapefile"]
         df = pd.read_csv(csv)
         upper_range = len(df)
-        org_col = df['ORGANIZATION NAME']
 
         try:
             # fiveData = [
@@ -64,54 +64,124 @@ def uploadData(request):
             #         program_name=Program.objects.get(program_name='Naxa'),
             #         partner_name=Partner.objects.get(partner_name='Naxa')
             #     ) for row in range(0, 2)
-
-            # sdaadassda sadsad
-
             # ]
+
             # five = FiveW.objects.bulk_create(fiveData)
             # list = []
-            # for row in range(0, upper_range):
+            for row in range(0, upper_range):
 
-            # try:
-            #     imp_partner_1 = Partner.objects.get(program_name=df['IMPLEMENTING PARNTER 1'][row])
-            #
-            # except:
-            #     imp_partner_1 = None
-            #
-            #
-            # try:
-            #     imp_partner_2 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER2'][row])
-            #
-            # except:
-            #     imp_partner_2 = None
-            #
-            # try:
-            #     imp_partner_3 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
-            #
-            # except:
-            #     imp_partner_3 = None
-            #
-            # try:
-            #     program = Program.objects.get(program_name=df['PROGRAMME NAME'][row])
-            #
-            # except:
-            #     program = None
-            #
-            # try:
-            #     district = District.objects.get(program_name=df['DISTRICT'][row])
-            #
-            # except:
-            #     district = None
-            #
-            # try:
-            #     nagarpalika = GapaNapa.objects.get(program_name=df['Nagarpalika'][row])
-            #
-            # except:
-            #     nagarpalika = None
+                try:
+                    partner = Partner.objects.get(program_name=df['IMPLEMENTING PARNTER 1'][row])
+
+                except:
+                    partner = None
+
+                try:
+                    program = Program.objects.get(program_name=df['PROGRAMME NAME'][row])
+
+                except:
+                    program = None
+
+                try:
+                    prov = District.objects.get(program_name=df['DISTRICT'][row])
+
+                except:
+                    prov = None
+
+                try:
+                    district = District.objects.get(program_name=df['DISTRICT'][row])
+
+                except:
+                    district = None
+
+                try:
+                    palika = GapaNapa.objects.get(program_name=df['Nagarpalika'][row])
+
+                except:
+                    palika = None
+
+                try:
+                    consortium_1 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER2'][row])
+
+                except:
+                    consortium_1 = None
+
+                try:
+                    consortium_2 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
+
+                except:
+                    consortium_2 = None
+
+                try:
+                    consortium_3 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
+
+                except:
+                    consortium_3 = None
+
+                try:
+                    implementing_1 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
+
+                except:
+                    implementing_1 = None
+
+                try:
+                    implementing_2 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
+
+                except:
+                    implementing_2 = None
+
+                try:
+                    implementing_3 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
+
+                except:
+                    implementing_3 = None
+
+                try:
+                    implementing_4 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
+
+                except:
+                    implementing_4 = None
+
+                try:
+                    local_1 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
+
+                except:
+                    local_1 = None
+
+                try:
+                    local_2 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
+
+                except:
+                    local_2 = None
+
+                try:
+                    local_3 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
+
+                except:
+                    local_3 = None
+
+                five = FiveW.objects.create(partner_id=partner, program_id=program, province_id=prov,
+                                            district_id=district, municipality_id=palika, ward=df['ward'][row],
+                                            consortium_partner_first_id=consortium_1,
+                                            consortium_partner_second_id=consortium_2,
+                                            consortium_partner_third_id=consortium_3,
+                                            implementing_partner_first_id=implementing_1,
+                                            implementing_partner_second_id=implementing_2,
+                                            implementing_partner_third_id=implementing_3,
+                                            implementing_partner_fourth_id=implementing_4,
+                                            local_partner_first_id=local_1, local_partner_second_id=local_2,
+                                            local_partner_third_id=local_3, status=df['status'][row],
+                                            reporting_ministry_line=df['reporting_ministry_line'][row],
+                                            budget=df['budget'][row])
 
             # FiveW.objects.create(fiveData)
+            # data_list = [1, 2]
+            # a = PartnerContact.objects.get(partner_id=58, name='sumit')
+            # prog = Partner.objects.get(id='2')
+            # progg = Program.objects.get(id='31')
+            # progg.partner.add(prog)
 
-            return HttpResponse(df['ORGANIZATION NAME'][0])
+            return HttpResponse(five)
         except Exception as e:
             return HttpResponse(e)
 
@@ -169,6 +239,21 @@ def create_role(request):
         return HttpResponse('success')
 
 
+def assign_role(request, **kwargs):
+    if "GET" == request.method:
+        groups = Group.objects.all()
+        user = request.user
+        user_data = UserProfile.objects.get(user=user)
+        return render(request, 'assign_role.html', {'user': user_data, 'groups': groups, 'user_id': kwargs['id']})
+    else:
+        user_id = request.POST['user']
+        group_id = request.POST['group_id']
+        user = User.objects.get(id=user_id)
+        group = Group.objects.get(id=group_id)
+        user.groups.add(group)
+        return redirect('user-list')
+
+
 def Invitation(request):
     if "GET" == request.method:
         group = Group.objects.all()
@@ -180,36 +265,36 @@ def Invitation(request):
     else:
         url = settings.SITE_URL
         group = request.POST["group"]
-        email = request.POST["email"]
+        emails = request.POST["email"]
         partnered = request.POST["partner"]
         programed = request.POST["program"]
         projected = request.POST["project"]
-        email = request.POST["email"]
         subject = 'Thank you for registering to our site'
         message = render_to_string('mail.html', {'group': group, 'url': url, 'partner': partnered, 'program': programed,
                                                  'project': projected})
-        recipient_list = [email]
+        recipient_list = [emails]
         email = EmailMessage(
             subject, message, 'from@example.com', recipient_list
         )
         email.content_subtype = "html"
         mail = email.send()
-
-        return HttpResponse(mail)
+        if mail == 1:
+            msg = emails + " was successfully invited"
+            messages.success(request, msg)
+            return redirect('user-list')
+        else:
+            msg = emails + " could not be invited "
+            messages.success(request, msg)
+            return redirect('user-list')
 
 
 def signup(request, **kwargs):
     if request.method == 'POST':
-        # return HttpResponse(request.POST['partner'])
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             user.is_active = False
             user.save()
-            # username = form.cleaned_data.get('username')
-            # raw_password = form.cleaned_data.get('password1')
-            # user = authenticate(username=username, password=raw_password)
-            # login(request, user)
             if kwargs['group'] != 0:
                 group = Group.objects.get(pk=kwargs['group'])
                 user.groups.add(group)
@@ -217,7 +302,9 @@ def signup(request, **kwargs):
             UserProfile.objects.create(user=user, name=request.POST['name'], email=request.POST['email'],
                                        partner_id=int(request.POST['partner']), program_id=int(request.POST['program']),
                                        project_id=int(request.POST['project']), image=request.FILES['image'])
-            return HttpResponse('user created')
+
+            return render(request, 'created_user.html', {'user': request.POST['name']})
+
     else:
         form = UserCreationForm()
         if kwargs['group'] == 0:
@@ -231,6 +318,13 @@ def signup(request, **kwargs):
 
         return render(request, 'signup.html',
                       {'form': form, 'partners': partner, 'programs': program, 'projects': project})
+
+
+def activate_user(request, **kwargs):
+    user = User.objects.get(id=kwargs['id'])
+    user.is_active = True
+    user.save()
+    return redirect('user-list')
 
 
 @authentication_classes([SessionAuthentication, ])
@@ -292,12 +386,80 @@ class ProgramList(ListView):
 
     def get_context_data(self, **kwargs):
         data = super(ProgramList, self).get_context_data(**kwargs)
-        program_list = Program.objects.order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
+        group = Group.objects.get(user=user)
+        if group.name == 'admin':
+            program_list = Program.objects.order_by('id')
+        else:
+            program_list = Program.objects.filter(id=user_data.program.id)
         data['list'] = program_list
         data['user'] = user_data
         data['active'] = 'program'
+        return data
+
+
+class OutputList(ListView):
+    template_name = 'output_list.html'
+    model = Program
+
+    def get_context_data(self, **kwargs):
+        data = super(OutputList, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        output_list = Output.objects.all()
+        data['list'] = output_list
+        data['user'] = user_data
+        data['active'] = 'output'
+        return data
+
+
+class PermissionList(ListView):
+    template_name = 'permission_list.html'
+    model = Program
+
+    def get_context_data(self, **kwargs):
+        data = super(PermissionList, self).get_context_data(**kwargs)
+        permission_list = Permission.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = permission_list
+        data['user'] = user_data
+        data['active'] = 'permission'
+        return data
+
+
+class FiveList(ListView):
+    template_name = 'five_list.html'
+    model = FiveW
+
+    def get_context_data(self, **kwargs):
+        data = super(FiveList, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        group = Group.objects.get(user=user)
+        if group.name == 'admin':
+            five = FiveW.objects.order_by('id')
+        else:
+            five = FiveW.objects.filter(partner_id=user_data.partner.id)
+        data['list'] = five
+        data['user'] = user_data
+        data['active'] = 'five'
+        return data
+
+
+class UserList(ListView):
+    template_name = 'user_list.html'
+    model = Program
+
+    def get_context_data(self, **kwargs):
+        data = super(UserList, self).get_context_data(**kwargs)
+        user_list = UserProfile.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = user_list
+        data['user'] = user_data
+        data['active'] = 'user'
         return data
 
 
@@ -307,9 +469,15 @@ class PartnerList(ListView):
 
     def get_context_data(self, **kwargs):
         data = super(PartnerList, self).get_context_data(**kwargs)
-        partner_list = Partner.objects.all().order_by('id')
+        contact_list = PartnerContact.objects.all().order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
+        group = Group.objects.get(user=user)
+        if group.name == 'admin':
+            partner_list = Partner.objects.order_by('id')
+        else:
+            partner_list = Partner.objects.filter(id=user_data.partner.id)
+
         data['list'] = partner_list
         data['user'] = user_data
         data['active'] = 'partner'
@@ -328,6 +496,26 @@ class SectorList(ListView):
         data['list'] = sector_list
         data['user'] = user_data
         data['active'] = 'sector'
+        return data
+
+
+class ProjectList(ListView):
+    template_name = 'project_list.html'
+    model = Project
+
+    def get_context_data(self, **kwargs):
+        data = super(ProjectList, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        group = Group.objects.get(user=user)
+        if group.name == 'admin':
+            project_list = Project.objects.order_by('id')
+        else:
+            project_list = Project.objects.filter(id=user_data.project.id)
+
+        data['list'] = project_list
+        data['user'] = user_data
+        data['active'] = 'project'
         return data
 
 
@@ -473,7 +661,12 @@ class Dashboard(LoginRequiredMixin, TemplateView):
     def get(self, request, *args, **kwargs):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
-        return render(request, 'dashboard.html', {'user': user_data, 'active': 'dash'})
+        group = Group.objects.get(user=user)
+        if group.name == 'admin':
+            five = FiveW.objects.order_by('id')
+        else:
+            five = FiveW.objects.select_related('partner_id').filter(partner_id=user_data.partner.id)
+        return render(request, 'dashboard.html', {'user': user_data, 'active': 'dash', 'fives': five})
 
 
 class ProgramAdd(LoginRequiredMixin, TemplateView):
@@ -482,6 +675,12 @@ class ProgramAdd(LoginRequiredMixin, TemplateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         return render(request, 'program_add.html', {'user': user_data, 'active': 'program'})
+
+
+class VectorMap(LoginRequiredMixin, TemplateView):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'vector_map.html')
 
 
 class ProgramCreate(SuccessMessageMixin, CreateView):
@@ -533,6 +732,14 @@ class PartnerCreate(SuccessMessageMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
+        contact_names = self.request.POST.getlist('contact_person_name')
+        emails = self.request.POST.getlist('contact_person_email')
+        numbers = self.request.POST.getlist('contact_person_ph')
+        upper_range = len(contact_names)
+        for row in range(0, upper_range):
+            PartnerContact.objects.create(partner_id=self.object, name=contact_names[row], email=emails[row],
+                                          phone_number=numbers[row])
+
         message = "New partner " + self.object.name + "  has been added by " + self.request.user.username
         log = Log.objects.create(user=self.request.user, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
@@ -560,6 +767,114 @@ class SectorCreate(SuccessMessageMixin, CreateView):
         message = "New sector " + self.object.name + "  has been added by " + self.request.user.username
         log = Log.objects.create(user=self.request.user, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
+
+
+class OutputCreate(SuccessMessageMixin, CreateView):
+    model = Output
+    template_name = 'output_add.html'
+    form_class = OutputCreateForm
+    success_message = 'Sector successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(OutputCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'output'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('output-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "New ouput " + self.object.indicator + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class FiveCreate(SuccessMessageMixin, CreateView):
+    model = FiveW
+    template_name = 'five_add.html'
+    form_class = FiveCreateForm
+    success_message = 'Five W successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(FiveCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        partner = Partner.objects.all().order_by('id')
+        program = Program.objects.all().order_by('id')
+        province = Province.objects.all().order_by('id')
+        district = District.objects.all().order_by('id')
+        municipality = GapaNapa.objects.all().order_by('id')
+        contact = PartnerContact.objects.all().order_by('id')
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['partners'] = partner
+        data['programs'] = program
+        data['provinces'] = province
+        data['districts'] = district
+        data['municipalities'] = municipality
+        data['contacts'] = contact
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('five-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "New Five W " + str(self.object.partner_id) + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class ProjectCreate(SuccessMessageMixin, CreateView):
+    model = Project
+    template_name = 'project_add.html'
+    form_class = ProjectCreateForm
+    success_message = 'Project successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(ProjectCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['programs'] = Program.objects.order_by('id')
+        data['user'] = user_data
+        data['active'] = 'project'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('project-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "New project " + self.object.name + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class PermissionCreate(SuccessMessageMixin, CreateView):
+    model = Permission
+    template_name = 'permission_add.html'
+    form_class = PermissionForm
+    success_message = 'Permission successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(PermissionCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'permission'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('permission-list')
+
+    # def form_valid(self, form):
+    #     self.object = form.save()
+    #     message = "New project " + self.object.name + "  has been added by " + self.request.user.username
+    #     log = Log.objects.create(user=self.request.user, message=message, type="create")
+    #     return HttpResponseRedirect(self.get_success_url())
 
 
 class SubSectorCreate(SuccessMessageMixin, CreateView):
@@ -807,6 +1122,83 @@ class PartnerUpdate(SuccessMessageMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+class OutputUpdate(SuccessMessageMixin, UpdateView):
+    model = Output
+    template_name = 'output_edit.html'
+    form_class = OutputCreateForm
+    success_message = 'Sector successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(OutputUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'output'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('output-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Output " + self.object.indicator + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class FiveUpdate(SuccessMessageMixin, UpdateView):
+    model = FiveW
+    template_name = 'five_edit.html'
+    form_class = FiveCreateForm
+    success_message = 'Five W successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(FiveUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        partner = Partner.objects.all().order_by('id')
+        program = Program.objects.all().order_by('id')
+        province = Province.objects.all().order_by('id')
+        district = District.objects.all().order_by('id')
+        municipality = GapaNapa.objects.all().order_by('id')
+        contact = PartnerContact.objects.all().order_by('id')
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['partners'] = partner
+        data['programs'] = program
+        data['provinces'] = province
+        data['districts'] = district
+        data['municipalities'] = municipality
+        data['contacts'] = contact
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('five-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "New Five W " + str(self.object.partner_id) + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class PermissionUpdate(SuccessMessageMixin, UpdateView):
+    model = Permission
+    template_name = 'permission_add.html'
+    form_class = PermissionForm
+    success_message = 'Permission successfully edited'
+
+    def get_context_data(self, **kwargs):
+        data = super(PermissionUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'permission'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('permission-list')
+
+
 class SectorUpdate(SuccessMessageMixin, UpdateView):
     model = Sector
     template_name = 'sector_edit.html'
@@ -827,6 +1219,31 @@ class SectorUpdate(SuccessMessageMixin, UpdateView):
     def form_valid(self, form):
         self.object = form.save()
         message = "Sector " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class ProjectUpdate(SuccessMessageMixin, UpdateView):
+    model = Project
+    template_name = 'project_edit.html'
+    form_class = ProjectCreateForm
+    success_message = 'Project successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(ProjectUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['programs'] = Program.objects.order_by('id')
+        data['user'] = user_data
+        data['active'] = 'project'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('project-list')
+
+    def form_valid(self, form):
+        self.object = form.save()
+        message = "Project " + self.object.name + "  has been edited by " + self.request.user.username
         log = Log.objects.create(user=self.request.user, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1088,6 +1505,26 @@ class SubSectorDelete(SuccessMessageMixin, DeleteView):
         return data
 
 
+class ProjectDelete(SuccessMessageMixin, DeleteView):
+    model = Project
+    template_name = 'project_confirm_delete.html'
+    success_message = 'Project successfully deleted'
+    success_url = reverse_lazy('project-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(ProjectDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
+    def delete(self, request, *args, **kwargs):
+        delete_data = Project.objects.filter(id=kwargs['pk']).delete()
+        message = "Project  has been deleted by " + self.request.user.username
+        log = Log.objects.create(user=self.request.user, message=message, type="delete")
+        return redirect('project-list')
+
+
 class MarkerCategoryDelete(SuccessMessageMixin, DeleteView):
     model = MarkerCategory
     template_name = 'marker_cat_confirm_delete.html'
@@ -1110,6 +1547,20 @@ class MarkerValueDelete(SuccessMessageMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         data = super(MarkerValueDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
+
+class PermissionDelete(SuccessMessageMixin, DeleteView):
+    model = Permission
+    template_name = 'permission_confirm_delete.html'
+    success_message = 'Permission successfully deleted'
+    success_url = reverse_lazy('permission-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(PermissionDelete, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data

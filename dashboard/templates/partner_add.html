@@ -16,7 +16,6 @@
 
 
         {% csrf_token %}
-
         {% if form.errors %}
         {% for field in form %}
         {% for error in field.errors %}
@@ -34,116 +33,134 @@
 
 
         <div class="default-form">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group ">
-                        <label for="id_name" class="">Name</label>
-                        <input type="text" class="form-control" name="name" maxlength="100" id="id_name"
-                               placeholder="Name" required/>
-<!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
-<!--                                        Please ennter name</span>-->
-                    </div>
-                </div>
-                <div class="col-md-6">
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="id_description" class="">Description</label>
-                        <textarea type="text" class="form-control" name="description" cols="40" rows="10"
-                                  id="id_description" placeholder="Program description"
-                                  rows="5"></textarea>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                </div>
-            </div>
+            <div id="contact_form">
 
-            <div class="row">
-                <div class="col-md-5">
-                    <div class="form-group">
-                        <label for="id_address" class="">Address</label>
-                        <input type="text" class="form-control" name="address" maxlength="100" id="id_address"
-                               placeholder="address"/>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group ">
+                            <label for="id_name" class="">Name</label>
+                            <input type="text" class="form-control" name="name" maxlength="100" id="id_name"
+                                   placeholder="Name" required/>
+                            <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
+                            <!--                                        Please ennter name</span>-->
+                        </div>
                     </div>
                 </div>
 
-                <div class="col-md-5">
-                    <div class="form-group">
-                        <label for="id_email" class="">Email</label>
-                        <input type="text" class="form-control" name="email" maxlength="100" id="id_email"
-                               placeholder="email"/>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="id_description" class="">Description</label>
+                            <textarea type="text" class="form-control" name="description" cols="40" rows="10"
+                                      id="id_description" placeholder="Program description"
+                                      rows="5"></textarea>
+                        </div>
                     </div>
                 </div>
 
-            </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="id_address" class="">Address</label>
+                            <input type="text" class="form-control" name="address" maxlength="100" id="id_address"
+                                   placeholder="address"/>
+                        </div>
+                    </div>
 
-            <div class="row">
-                <div class="col-md-5">
-                    <div class="form-group ">
-                        <label for="id_phone_number" class="">Phone number</label>
-                        <input type="text" class="form-control" name="phone_number" maxlength="100" id="id_phone_number"
-                               placeholder="9454489413"/>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="id_email" class="">Email</label>
+                            <input type="text" class="form-control" name="email" maxlength="100" id="id_email"
+                                   placeholder="email"/>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group ">
+                            <label for="id_phone_number" class="">Phone number</label>
+                            <input type="text" class="form-control" name="phone_number" maxlength="100"
+                                   id="id_phone_number"
+                                   placeholder="9454489413"/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5">
+                        <div class="form-group ">
+                            <label for="id_type_of_institution" class="">Type Of Institution</label>
+                            <input type="text" class="form-control" name="type_of_institution" maxlength="100"
+                                   id="id_type_of_institution"
+                                   placeholder="NGO">
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-5">
 
-                    <div class="form-group ">
-                        <label for="id_contact_person_name" class="">Contact person name</label>
-                        <input type="text" class="form-control" name="contact_person_name" maxlength="100"
-                               id="id_contact_person_name"
-                               placeholder="Name"/>
+                <div class="row" id="contact_div">
+
+                    <div class="col-md-4">
+                        <div class="form-group ">
+                            <label for="id_contact_person_name" class="">Contact person name</label>
+                            <input type="text" class="form-control" name="contact_person_name" maxlength="100"
+                                   id="id_contact_person_name"
+                                   placeholder="Name"/>
+                        </div>
                     </div>
 
                     <div class="col-md-3">
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-5">
-                    <div class="form-group ">
-                        <label for="id_contact_person_email" class="">Contact person email</label>
-                        <input type="text" class="form-control" name="contact_person_email" maxlength="100"
-                               id="id_contact_person_email"
-                               placeholder="Email"/>
-                    </div>
-                </div>
-                <div class="col-md-5">
-
-                    <div class="form-group ">
-                        <label for="id_contact_person_ph" class="">Contact person ph</label>
-                        <input type="text" class="form-control" name="contact_person_ph" maxlength="100"
-                               id="id_contact_person_ph"
-                               placeholder="Number"/>
+                        <div class="form-group ">
+                            <label for="id_contact_person_email" class="">Contact person email</label>
+                            <input type="text" class="form-control" name="contact_person_email" maxlength="100"
+                                   id="id_contact_person_email"
+                                   placeholder="Email"/>
+                        </div>
                     </div>
 
+                    <div class="col-md-3">
+                        <div class="form-group ">
+                            <label for="id_contact_person_ph" class="">Contact person ph</label>
+                            <input type="text" class="form-control" name="contact_person_ph" maxlength="100"
+                                   id="id_contact_person_ph"
+                                   placeholder="Number"/>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2">
+
+                    <span>
+                        <a href="javascript:void(0);" id="add_contact" ><i class="material-icons"
+                                                                          style="margin-top:50px">add_circle</i></a>
+                    </span>
+
+                    </div>
+
+
                 </div>
-            </div>
+
+                 </div>
 
 
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group ">
+                            <label for="id_image" class="">Image</label>
+                            <input type="file" name="image" id="id_image"/>
+                        </div>
+                    </div>
 
-        <div class="row">
-            <div class="col-md-5">
-                <div class="form-group ">
-                    <label for="id_image" class="">Image</label>
-                    <input  type="file" name="image" id="id_image"/>
+
                 </div>
+
+
+
+            <div class="form-group mrt-100">
+                <button type="submit" class="dfid-button sm-button">Save</button>
             </div>
-
-
-
-
 
         </div>
-
-        <div class="form-group mrt-100">
-            <button type="submit" class="dfid-button sm-button">Save</button>
-        </div>
-
 
 
         <!-- category form -->

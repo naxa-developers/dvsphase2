@@ -1,0 +1,542 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i> Five W</a>
+            </li>
+            <li>New</li>
+        </ul>
+    </div>
+    <!-- program form -->
+    <form class="program-form" method="POST">
+
+        {% csrf_token %}
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ field.name|title }} {{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+        <div class="default-form">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_partner_id">Select Partner</label>
+                        <select name="partner_id" id="id_partner_id" class="custom-select">
+                            {% for partner in partners %}
+
+                            {% if form.instance.partner_id.id == partner.id %}
+
+                            <option value="{{partner.id}}" selected>{{partner.name}}</option>
+
+                            {% else %}
+
+                            <option value="{{partner.id}}">{{partner.name}}</option>
+
+                            {% endif %}
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_program_id">Select Program</label>
+                        <select name="program_id" id="id_program_id" class="custom-select">
+                            {% for program in programs %}
+
+                            {% if form.instance.program_id.id == program.id %}
+
+                            <option value="{{program.id}}" selected>{{program.name}}</option>
+
+                            {% else %}
+
+                            <option value="{{program.id}}">{{program.name}}</option>
+
+                            {% endif %}
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_province_id">Select Province</label>
+                        <select name="province_id" id="id_province_id" class="custom-select">
+                            {% for province in provinces %}
+
+                            {% if form.instance.province_id.id == province.id %}
+
+                            <option value="{{province.id}}" selected>{{province.name}}</option>
+
+                            {% else %}
+
+                            <option value="{{province.id}}">{{province.name}}</option>
+
+                            {% endif %}
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_district_id">Select District</label>
+                        <select name="district_id" id="id_district_id" class="custom-select">
+                            {% for district in districts %}
+
+                            {% if form.instance.district_id.id == district.id %}
+
+                            <option value="{{district.id}}" selected>{{district.name}}</option>
+
+                            {% else %}
+
+                            <option value="{{district.id}}">{{district.name}}</option>
+
+                            {% endif %}
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_municipality_id">Select Municipality</label>
+                        <select name="municipality_id" id="id_municipality_id" class="custom-select">
+                            {% for mun in municipalities %}
+
+                            {% if form.instance.municipality_id.id == mun.id %}
+
+                            <option value="{{mun.id}}" selected>{{mun.name}}</option>
+
+                            {% else %}
+
+                            <option value="{{mun.id}}">{{mun.name}}</option>
+
+                            {% endif %}
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_consortium_partner_first_id">Select Consortium partner first</label>
+                        <select name="consortium_partner_first_id" id="id_consortium_partner_first_id"
+                                class="custom-select">
+                            {% for partner in partners %}
+
+                            {% if form.instance.consortium_partner_first_id.id == partner.id %}
+
+                            <option value="{{partner.id}}" selected>{{partner.name}}</option>
+
+                            {% else %}
+
+                            <option value="{{partner.id}}">{{partner.name}}</option>
+
+                            {% endif %}
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_consortium_partner_second_id">Select Consortium partner second</label>
+                        <select name="consortium_partner_second_id" id="id_consortium_partner_second_id"
+                                class="custom-select">
+                            {% for partner in partners %}
+
+                            {% if form.instance.consortium_partner_second_id.id == partner.id %}
+
+                            <option value="{{partner.id}}" selected>{{partner.name}}</option>
+
+                            {% else %}
+
+                            <option value="{{partner.id}}">{{partner.name}}</option>
+
+                            {% endif %}
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_consortium_partner_third_id">Select Consortium partner third</label>
+                        <select name="consortium_partner_third_id" id="id_consortium_partner_third_id"
+                                class="custom-select">
+                            {% for partner in partners %}
+
+                            {% if form.instance.consortium_partner_third_id.id == partner.id %}
+
+                            <option value="{{partner.id}}" selected>{{partner.name}}</option>
+
+                            {% else %}
+
+                            <option value="{{partner.id}}">{{partner.name}}</option>
+
+                            {% endif %}
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_implementing_partner_first_id">Select Implementing partner first</label>
+                        <select name="implementing_partner_first_id" id="id_implementing_partner_first_id"
+                                class="custom-select">
+                            {% for partner in partners %}
+
+                            {% if form.instance.implementing_partner_first_id.id == partner.id %}
+
+                            <option value="{{partner.id}}" selected>{{partner.name}}</option>
+
+                            {% else %}
+
+                            <option value="{{partner.id}}">{{partner.name}}</option>
+
+                            {% endif %}
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_implementing_partner_second_id">Select Implementing partner second</label>
+                        <select name="implementing_partner_second_id" id="id_implementing_partner_second_id"
+                                class="custom-select">
+                            {% for partner in partners %}
+
+                            {% if form.instance.implementing_partner_second_id.id == partner.id %}
+
+                            <option value="{{partner.id}}" selected>{{partner.name}}</option>
+
+                            {% else %}
+
+                            <option value="{{partner.id}}">{{partner.name}}</option>
+
+                            {% endif %}
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_implementing_partner_third_id">Select Implementing partner third</label>
+                        <select name="implementing_partner_third_id" id="id_implementing_partner_third_id"
+                                class="custom-select">
+                            {% for partner in partners %}
+
+                            {% if form.instance.implementing_partner_third_id.id == partner.id %}
+
+                            <option value="{{partner.id}}" selected>{{partner.name}}</option>
+
+                            {% else %}
+
+                            <option value="{{partner.id}}">{{partner.name}}</option>
+
+                            {% endif %}
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="id_implementing_partner_fourth_id">Select Implementing partner fourth</label>
+                        <select name="implementing_partner_fourth_id" id="id_implementing_partner_fourth_id"
+                                class="custom-select">
+                            {% for partner in partners %}
+
+                            {% if form.instance.implementing_partner_fourth_id.id == partner.id %}
+
+                            <option value="{{partner.id}}" selected>{{partner.name}}</option>
+
+                            {% else %}
+
+                            <option value="{{partner.id}}">{{partner.name}}</option>
+
+                            {% endif %}
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_local_partner_first_id">Select Local partner first</label>
+                        <select name="local_partner_first_id" id="id_local_partner_first_id" class="custom-select">
+                            {% for partner in partners %}
+
+                            {% if form.instance.local_partner_first_id.id == partner.id %}
+
+                            <option value="{{partner.id}}" selected>{{partner.name}}</option>
+
+                            {% else %}
+
+                            <option value="{{partner.id}}">{{partner.name}}</option>
+
+                            {% endif %}
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_local_partner_second_id">Select Local partner second</label>
+                        <select name="local_partner_second_id" id="id_local_partner_second_id" class="custom-select">
+                            {% for partner in partners %}
+
+                            {% if form.instance.local_partner_second_id.id == partner.id %}
+
+                            <option value="{{partner.id}}" selected>{{partner.name}}</option>
+
+                            {% else %}
+
+                            <option value="{{partner.id}}">{{partner.name}}</option>
+
+                            {% endif %}
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_local_partner_third_id">Select Local partner third</label>
+                        <select name="local_partner_third_id" id="id_local_partner_third_id" class="custom-select">
+                            {% for partner in partners %}
+
+                            {% if form.instance.local_partner_third_id.id == partner.id %}
+
+                            <option value="{{partner.id}}" selected>{{partner.name}}</option>
+
+                            {% else %}
+
+                            <option value="{{partner.id}}">{{partner.name}}</option>
+
+                            {% endif %}
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_representative_person">Select Local partner third</label>
+                        <select name="representative_person" id="id_representative_person" class="custom-select">
+                            {% for contact in contacts %}
+
+                            {% if form.instance.representative_person.id == contact.id %}
+
+                            <option value="{{ contact.id }}" selected>{{ contact.name }}</option>
+
+                            {% else %}
+
+                            <option value="{{ contact.id }}">{{ contact.name }}</option>
+
+                            {% endif %}
+
+                            {% endfor %}
+
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_status">Select status</label>
+                        <select name="status" id="id_status" class="custom-select">
+                            {% if form.instance.status == 'ongoing' %}
+                            <option value="ongoing" selected>Ongoing</option>
+
+                            {% else %}
+                            <option value="completed" selected>Completed</option>
+                            {% endif %}
+
+
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_start_date" class="">Start Date</label>
+                        <input type="text" class="form-control" name="start_date" maxlength="100" id="id_start_date"
+                               value="{{ form.instance.start_date }}"/>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_end_date" class="">End Date</label>
+                        <input type="text" class="form-control" name="end_date" maxlength="100" id="id_end_date"
+                               value="{{form.instance.end_date}}"/>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_ward" class="">Ward</label>
+                        <input type="text" class="form-control" name="ward" maxlength="200" id="id_ward"
+                               value="{{ form.instance.ward }}"/>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_reporting_ministry_line" class="">Reporting ministry line</label>
+                        <input type="text" class="form-control" name="reporting_ministry_line" maxlength="100"
+                               id="id_reporting_ministry_line"
+                               value="{{ form.instance.reporting_ministry_line }}"/>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_budget" class="">Budget</label>
+                        <input type="number" class="form-control" name="budget" step="any" maxlength="100"
+                               id="id_budget"
+                               value="{{ form.instance.budget }}"/>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="form-group mrt-100">
+                <button type="submit" class="dfid-button sm-button">Save</button>
+            </div>
+
+        </div>
+
+
+        <!-- category form -->
+
+
+    </form>
+</main>
+
+{% endblock %}
+

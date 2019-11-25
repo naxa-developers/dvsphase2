@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i> User</a>
+            </li>
+            <li><a href="/dashboard/invitation" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Invite user</a>
+            </li>
+        </ul>
+    </div>
+    <!-- dfid program table -->
+    <div class="table-tesponsive program-list">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> {{message}}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <table class="program-table dataTable">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>User Status</th>
+                <th>role</th>
+                <th>Partner</th>
+                <th>Program</th>
+                <th>Project</th>
+
+                <!--                <th></th>-->
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in list %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>
+                    <a href="#" class="partner-info flex-start">
+                        {% if user.image %}
+                        <img src="{{ user.image.url }}" alt="org"/>
+                        {% else %}
+                        <img src="{% static 'dashboard/images/organization.svg' %}" alt="org"/>
+                        {% endif %}
+                        <h6>{{user.name}}</h6>
+                    </a>
+                </td>
+                <td>{{ user.email }}</td>
+                <td>
+
+
+                    {% if user.user.is_active %}
+
+                    <span class="status green">Active</span>
+
+                    {% else %}
+
+                    <a href="/dashboard/activate/{{ user.user.id }}">
+                        <button type="button" class="btn btn-outline-info">Activate</button>
+                    </a>
+
+                    {% endif %}
+
+
+                </td>
+                <td>
+                    {% if user.user.is_superuser %}
+                        admin
+                    {% else %}
+
+                    {% if user.user.groups.all.exists %}
+
+                    {% for grp in user.user.groups.all %}
+                    {{ grp.name }}
+                    {% endfor %}
+
+                    {% else %}
+
+                    <a href="/dashboard/assign-role/{{ user.user.id }}"><button type="button" class="btn btn-outline-info">Assign Role</button></a>
+
+                    {% endif %}
+                    {% endif %}
+
+                </td>
+                <td>{{ user.partner }}</td>
+                <td>{{ user.program }}</td>
+                <td>{{ user.project }}</td>
+
+                <!--                <td>-->
+                <!--                    <div class="table-action">-->
+                <!--                        <a href="#" class="more-action">-->
+                <!--                            <i class="material-icons">more_vert</i>-->
+                <!--                        </a>-->
+                <!--                        <ul class="dropdown-animation">-->
+                <!--                            <li>-->
+                <!--                                <a href="/dashboard/user-edit/{{ user.id }}" class="flex-start">-->
+                <!--                                    <i class="material-icons">edit</i> Edit-->
+                <!--                                </a>-->
+                <!--                            </li>-->
+                <!--                            <li>-->
+                <!--                                <a href="/dashboard/user-delete/{{ user.id }}" class="flex-start">-->
+                <!--                                    <i class="material-icons">delete</i>Delete-->
+                <!--                                </a>-->
+
+                <!--                            </li>-->
+                <!--                        </ul>-->
+                <!--                    </div>-->
+                <!--                </td>-->
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}

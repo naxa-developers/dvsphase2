@@ -1,63 +1,147 @@
-<h2>Sign up</h2>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
 
-    <p>
-        <label for="id_username">Username:</label>
-        <input type="text" name="username" maxlength="150" autofocus required id="id_username"/>
-    </p>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i> User Invitation</a>
+            </li>
+            <!--            <li>New</li>-->
+        </ul>
+    </div>
+    <!-- program form -->
+    <form class="program-form" method="POST" enctype="multipart/form-data">
 
-    <p>
-        <label for="id_password1">Password:</label>
-        <input type="password" name="password1" required id="id_password1"/>
-    </p>
+        {% csrf_token %}
 
-    <p>
-        <label for="id_password2">Password confirmation:</label>
-        <input type="password" name="password2" required id="id_password2"/>
-    </p>
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ field.name|title }} {{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
 
-    <p>
-        <label for="id_name">Full Name:</label>
-        <input type="text" name="name" required id="id_name"/>
-    </p>
 
-    <p>
-        <label for="id_email">Email:</label>
-        <input type="email" name="email" required id="id_email"/>
-    </p>
+        <div class="default-form">
 
-    <p>
-        <label for="id_partner">Partner:</label>
-        <select name="partner" id="id_partner">
-            {% for partner in partners %}
-            <option value={{ partner.id }}>{{ partner }}</option>
-            {% endfor %}
-        </select>
-    </p>
 
-    <p>
-        <label for="id_program">Program:</label>
-        <select name="program" id="id_program">
-            {% for program in programs %}
-            <option value={{ program.id }}>{{ program.name }}</option>
-            {% endfor %}
-        </select>
-    </p>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_username" class="">Username:</label>
+                        <input type="text" name="username" class="form-control" maxlength="150" autofocus required id="id_username"/>
 
-    <p>
-        <label for="id_project">Project:</label>
-        <select name="project" id="id_project">
-            {% for project in projects %}
-            <option value={{ project.id }}>{{ project }}</option>
-            {% endfor %}
-        </select>
-    </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
 
-    <p>
-        <label for="id_image" class="">Image</label>
-        <input type="file" name="image" id="id_image"/>
-    </p>
+                </div>
+            </div>
 
-    <button type="submit">Sign up</button>
-</form>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_password1">Password:</label>
+                        <input type="password" class="form-control" name="password1" required id="id_password1"/>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_password2">Password confirmation:</label>
+                        <input type="password" class="form-control" name="password2" required id="id_password2"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_name">Full Name:</label>
+                        <input type="text" class="form-control" name="name" required id="id_name"/>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_email">Email:</label>
+                        <input type="email" class="form-control" name="email" required id="id_email"/>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_partner">Select Partner For User</label>
+                        <select name="partner" id="id_partner" class="custom-select" required>
+                            {% for partner in partners %}
+                            <option value={{ partner.id }}>{{ partner.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_program">Select Program For User</label>
+                        <select name="program" id="id_program" class="custom-select" required>
+                            {% for program in programs %}
+                            <option value={{ program.id }}>{{ program.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_project">Select Project For User</label>
+                        <select name="project" id="id_project" class="custom-select" required>
+                            {% for project in projects %}
+                            <option value={{ project.id }}>{{ project.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_image" class="">Image</label>
+                        <input type="file" name="image" id="id_image"/>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group mrt-100">
+                <button type="submit" class="dfid-button sm-button">Invite</button>
+            </div>
+
+        </div>
+
+
+        <!-- category form -->
+
+
+    </form>
+</main>
+
+{% endblock %}
+
