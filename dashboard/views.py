@@ -6,7 +6,8 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
-    PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm
+    PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm, \
+    GroupForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -237,7 +238,25 @@ def create_role(request):
             permission_check = Permission.objects.get(id=permissions)
             group.permissions.add(permission_check)
 
-        return HttpResponse('success')
+        return redirect('role-list')
+
+
+@login_required()
+def edit_role(request):
+    if "GET" == request.method:
+        permissions_e = Permission.objects.filter(group__id=9)
+        permissions = Permission.objects.all()
+        return render(request, 'edit_role.html', {'permissions': permissions, 'permission_e': permissions_e})
+
+    else:
+        role = request.POST['role']
+        permission_list = request.POST.getlist('permission')
+        group = Group.objects.create(name=role)
+        for permissions in permission_list:
+            permission_check = Permission.objects.get(id=permissions)
+            group.permissions.add(permission_check)
+
+        return redirect('role-list')
 
 
 @login_required()
@@ -427,6 +446,21 @@ class PermissionList(LoginRequiredMixin, ListView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['list'] = permission_list
+        data['user'] = user_data
+        data['active'] = 'permission'
+        return data
+
+
+class RoleList(LoginRequiredMixin, ListView):
+    template_name = 'role_list.html'
+    model = Group
+
+    def get_context_data(self, **kwargs):
+        data = super(RoleList, self).get_context_data(**kwargs)
+        role_list = Group.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = role_list
         data['user'] = user_data
         data['active'] = 'permission'
         return data
@@ -746,6 +780,31 @@ class PartnerCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         message = "New partner " + self.object.name + "  has been added by " + self.request.user.username
         log = Log.objects.create(user=self.request.user, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
+
+
+class RoleCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+    model = Group
+    template_name = 'create_role.html'
+    form_class = GroupForm
+    success_message = 'Role successfully added'
+
+    def get_context_data(self, **kwargs):
+        data = super(RoleCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'role'
+        data['permissions'] = Permission.objects.all()
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('role-list')
+
+    # def form_valid(self, form):
+    #     self.object = form.save()
+    #     message = "Partner " + self.object.name + "  has been edited by " + self.request.user.username
+    #     log = Log.objects.create(user=self.request.user, message=message, type="update")
+    #     return HttpResponseRedirect(self.get_success_url())
 
 
 class SectorCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
@@ -1125,6 +1184,31 @@ class PartnerUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         message = "Partner " + self.object.name + "  has been edited by " + self.request.user.username
         log = Log.objects.create(user=self.request.user, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
+
+
+class RoleUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = Group
+    template_name = 'edit_role.html'
+    form_class = GroupForm
+    success_message = 'Role successfully updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(RoleUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'role'
+        data['permissions'] = Permission.objects.all()
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('role-list')
+
+    # def form_valid(self, form):
+    #     self.object = form.save()
+    #     message = "Partner " + self.object.name + "  has been edited by " + self.request.user.username
+    #     log = Log.objects.create(user=self.request.user, message=message, type="update")
+    #     return HttpResponseRedirect(self.get_success_url())
 
 
 class OutputUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
@@ -1525,11 +1609,11 @@ class ProjectDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
         data['user'] = user_data
         return data
 
-    def delete(self, request, *args, **kwargs):
-        delete_data = Project.objects.filter(id=kwargs['pk']).delete()
-        message = "Project  has been deleted by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="delete")
-        return redirect('project-list')
+    # def delete(self, request, *args, **kwargs):
+    #     delete_data = Project.objects.filter(id=kwargs['pk']).delete()
+    #     message = "Project  has been deleted by " + self.request.user.username
+    #     log = Log.objects.create(user=self.request.user, message=message, type="delete")
+    #     return redirect('project-list')
 
 
 class MarkerCategoryDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
@@ -1568,6 +1652,20 @@ class PermissionDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         data = super(PermissionDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
+
+class RoleDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = Group
+    template_name = 'role_confirm_delete.html'
+    success_message = 'Permission successfully deleted'
+    success_url = reverse_lazy('role-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(RoleDelete, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data

@@ -26,8 +26,7 @@
     <form class="program-form" method="POST">
 
         {% csrf_token %}
-
-          {% if form.errors %}
+        {% if form.errors %}
         {% for field in form %}
         {% for error in field.errors %}
         <div class="alert alert-danger">
@@ -47,7 +46,8 @@
                 <div class="col-md-6">
                     <div class="form-group ">
                         <label for="id_name" class="">Role</label>
-                        <input class="form-control" type="text" name="name"  maxlength="80" required id="id_name"/>
+                        <input class="form-control" type="text" name="name" value="{{form.instance.name}}"
+                               maxlength="80" required id="id_name"/>
                     </div>
                 </div>
 
@@ -70,11 +70,16 @@
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" value="{{permission.id}}"
                                                        class="custom-control-input"
-                                                       id="program{{permission.id}}" name="permissions">
+                                                       id="program{{permission.id}}" name="permissions"
+                                                       {% for e in form.instance.permissions.all %}
+                                                        {% if e.id == permission.id %} checked
+                                                       {%endif%} {% endfor %}>
                                                 <label class="custom-control-label" for="program{{permission.id}}">{{permission.name}}
                                                 </label>
                                             </div>
                                         </li>
+
+
                                         {% endif %}
                                         {% endfor %}
 
@@ -98,7 +103,10 @@
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input"
                                                        id="partner{{permission.id}}" value="{{permission.id}}"
-                                                       name="permissions">
+                                                       name="permissions"
+                                                       {% for e in form.instance.permissions.all %}
+                                                       {% if e.id == permission.id %} checked
+                                                       {%endif%} {% endfor %}>
                                                 <label class="custom-control-label" for="partner{{permission.id}}">{{permission.name}}</label>
                                             </div>
                                         </li>
@@ -124,7 +132,10 @@
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input"
                                                        id="sector{{permission.id}}" value="{{permission.id}}"
-                                                       name="permissions">
+                                                       name="permissions"
+                                                       {% for e in form.instance.permissions.all %}
+                                                       {% if e.id == permission.id %} checked
+                                                       {%endif%} {% endfor %}>
                                                 <label class="custom-control-label" for="sector{{permission.id}}">{{permission.name}}</label>
                                             </div>
                                         </li>
@@ -151,7 +162,11 @@
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input"
                                                        id="subsector{{permission.id}}" value="{{permission.id}}"
-                                                       name="permissions">
+                                                       name="permissions"
+                                                       {% for e in form.instance.permissions.all %}
+                                                       {% if e.id == permission.id %} checked
+                                                       {%endif%} {% endfor %}>
+
                                                 <label class="custom-control-label" for="subsector{{permission.id}}">{{permission.name}}</label>
                                             </div>
                                         </li>
@@ -177,7 +192,10 @@
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input"
                                                        id="project{{permission.id}}" value="{{permission.id}}"
-                                                       name="permissions">
+                                                       name="permissions"
+                                                       {% for e in form.instance.permissions.all %}
+                                                       {% if e.id == permission.id %} checked
+                                                       {%endif%} {% endfor %}>
                                                 <label class="custom-control-label" for="project{{permission.id}}">{{permission.name}}</label>
                                             </div>
                                         </li>
@@ -203,7 +221,10 @@
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input"
                                                        id="fivew{{permission.id}}" value="{{permission.id}}"
-                                                       name="permissions">
+                                                       name="permissions"
+                                                       {% for e in form.instance.permissions.all %}
+                                                       {% if e.id == permission.id %} checked
+                                                       {%endif%} {% endfor %}>
                                                 <label class="custom-control-label" for="fivew{{permission.id}}">{{permission.name}}</label>
                                             </div>
                                         </li>
@@ -229,7 +250,9 @@
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input"
                                                        id="marker{{permission.id}}" value="{{permission.id}}"
-                                                       name="permissions">
+                                                       name="permissions"
+                                                       {% for e in form.instance.permissions.all %}{% if e.id == permission.id %} checked
+                                                       {%endif%} {% endfor %}>
                                                 <label class="custom-control-label" for="marker{{permission.id}}">{{permission.name}}</label>
                                             </div>
                                         </li>
@@ -255,7 +278,9 @@
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input"
                                                        id="markers{{permission.id}}" value="{{permission.id}}"
-                                                       name="permissions">
+                                                       name="permissions"
+                                                       {% for e in form.instance.permissions.all %}{% if e.id == permission.id %} checked
+                                                       {%endif%} {% endfor %}>
                                                 <label class="custom-control-label" for="markers{{permission.id}}">{{permission.name}}</label>
                                             </div>
                                         </li>
@@ -282,7 +307,9 @@
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input"
                                                        id="indicator{{permission.id}}" value="{{permission.id}}"
-                                                       name="permissions">
+                                                       name="permissions"
+                                                       {% for e in form.instance.permissions.all %}{% if e.id == permission.id %} checked
+                                                       {%endif%} {% endfor %}>
                                                 <label class="custom-control-label" for="indicator{{permission.id}}">{{permission.name}}</label>
                                             </div>
                                         </li>
@@ -308,7 +335,9 @@
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input"
                                                        id="province{{permission.id}}" value="{{permission.id}}"
-                                                       name="permissions">
+                                                       name="permissions"
+                                                       {% for e in form.instance.permissions.all %}{% if e.id == permission.id %} checked
+                                                       {%endif%} {% endfor %}>
                                                 <label class="custom-control-label" for="province{{permission.id}}">{{permission.name}}</label>
                                             </div>
                                         </li>
@@ -335,7 +364,9 @@
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input"
                                                        id="district{{permission.id}}" value="{{permission.id}}"
-                                                       name="permissions">
+                                                       name="permissions"
+                                                       {% for e in form.instance.permissions.all %}{% if e.id == permission.id %} checked
+                                                       {%endif%} {% endfor %}>
                                                 <label class="custom-control-label" for="district{{permission.id}}">{{permission.name}}</label>
                                             </div>
                                         </li>
@@ -361,7 +392,9 @@
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input"
                                                        id="gapanapa{{permission.id}}" value="{{permission.id}}"
-                                                       name="permissions">
+                                                       name="permissions"
+                                                       {% for e in form.instance.permissions.all %}{% if e.id == permission.id %} checked
+                                                       {%endif%} {% endfor %}>
                                                 <label class="custom-control-label" for="gapanapa{{permission.id}}">{{permission.name}}</label>
                                             </div>
                                         </li>
@@ -388,7 +421,9 @@
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input"
                                                        id="gislayer{{permission.id}}" value="{{permission.id}}"
-                                                       name="permissions">
+                                                       name="permissions"
+                                                       {% for e in form.instance.permissions.all %}{% if e.id == permission.id %} checked
+                                                       {%endif%} {% endfor %}>
                                                 <label class="custom-control-label" for="gislayer{{permission.id}}">{{permission.name}}</label>
                                             </div>
                                         </li>
@@ -415,7 +450,9 @@
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input"
                                                        id="output{{permission.id}}" value="{{permission.id}}"
-                                                       name="permissions">
+                                                       name="permissions"
+                                                       {% for e in form.instance.permissions.all %}{% if e.id == permission.id %} checked
+                                                       {%endif%} {% endfor %}>
                                                 <label class="custom-control-label" for="output{{permission.id}}">{{permission.name}}</label>
                                             </div>
                                         </li>
