@@ -1,90 +1,64 @@
+﻿{% load static %}﻿
+<!doctype html>
+<html class="no-js " lang="en">
 
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
-<main class="dfid-main">
-    <!-- dfid breadcrumb -->
-    <div class="dfid-breadcrumb pdt-100">
-        <ul class="flex-start">
-            <li>
-                <a href="#"><i class="material-icons">assignment</i> User Signup</a>
-            </li>
-            <!--            <li>New</li>-->
-        </ul>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive DFID Dashboard.">
+    <title>DFID Dashboard</title>
+    <link rel="icon" href="{% static 'dashboard/images/favicon.icon' %}" type="image/x-icon">
+    <!-- Favicon-->
+    <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap.min.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+</head>
+
+<body class="">
+<!-- login page start -->
+<div class="registration-heading" style="margin-top: -24px;">
+    <div class="header">
+        <img class="logo" src="{% static 'dashboard/images/dfid-logo.png' %}" alt="">
+        <img src="{% static 'dashboard/images/map.png' %}" alt="map" class="img-map"/>
     </div>
-    <!-- program form -->
-    <form class="program-form" method="POST" enctype="multipart/form-data">
+</div>
+<div class="authentication registration">
+    <!-- login form start -->
 
-        {% csrf_token %}
-
-        {% if form.errors %}
-        {% for field in form %}
-        {% for error in field.errors %}
-        <div class="alert alert-danger">
-            <strong>{{ field.name|title }} {{ error|escape }}</strong>
-        </div>
-        {% endfor %}
-        {% endfor %}
-        {% for error in form.non_field_errors %}
-        <div class="alert alert-danger">
-            <strong>{{ error|escape }}</strong>
-        </div>
-        {% endfor %}
-        {% endif %}
-
-
-        <div class="default-form">
-
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group ">
+    <div class="col-9 col-sm-8 col-md-8 col-lg-6">
+        <div class="auth-form login-form registration-form">
+            <div class="login-wrap">
+                <div class="login-header">
+                    <h3>User Signup</h3>
+                </div>
+                <form>
+                    <div class="form-group">
                         <label for="id_username" class="">Username:</label>
                         <input type="text" name="username" class="form-control" maxlength="150" autofocus required id="id_username"/>
-
                     </div>
-                </div>
-                <div class="col-md-6">
 
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_password1">Password:</label>
                         <input type="password" class="form-control" name="password1" required id="id_password1"/>
                     </div>
-                </div>
 
-                <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_password2">Password confirmation:</label>
                         <input type="password" class="form-control" name="password2" required id="id_password2"/>
                     </div>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_name">Full Name:</label>
                         <input type="text" class="form-control" name="name" required id="id_name"/>
                     </div>
-                </div>
 
-                <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_email">Email:</label>
                         <input type="email" class="form-control" name="email" required id="id_email"/>
                     </div>
-                </div>
-            </div>
 
-
-            <div class="row">
-                <div class="col-md-4">
                     <div class="form-group">
                         <label for="id_partner">Select Partner For User</label>
                         <select name="partner" id="id_partner" class="custom-select" required>
@@ -93,9 +67,7 @@
                             {% endfor %}
                         </select>
                     </div>
-                </div>
 
-                <div class="col-md-4">
                     <div class="form-group">
                         <label for="id_program">Select Program For User</label>
                         <select name="program" id="id_program" class="custom-select" required>
@@ -104,10 +76,7 @@
                             {% endfor %}
                         </select>
                     </div>
-                </div>
 
-
-                <div class="col-md-4">
                     <div class="form-group">
                         <label for="id_project">Select Project For User</label>
                         <select name="project" id="id_project" class="custom-select" required>
@@ -116,32 +85,34 @@
                             {% endfor %}
                         </select>
                     </div>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-6">
                     <div class="form-group ">
                         <label for="id_image" class="">Image</label>
-                        <input type="file" name="image" id="id_image"/>
-
+                        <input type="file" name="image" id="id_image">
                     </div>
-                </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="dfid-button">Invite</button>
+                    </div>
+                </form>
             </div>
-
-
-            <div class="form-group mrt-100">
-                <button type="submit" class="dfid-button sm-button">Invite</button>
-            </div>
-
         </div>
+    </div>
+</div>
+
+<!-- Jquery Core Js -->
+<!--<script src="js/jquery-3.4.1.min.js"></script>-->
+<!--<script src="js/bootstrap.min.js"></script>-->
+<!--<script src="js/jquery.slimscroll.min.js"></script>-->
+<!--<script src="js/mainscripts.bundle.js"></script>-->
+<!--<script src="js/equalHeight.js"></script>-->
+<!--<script src="plugins/datatable/dataTables.min.js"></script>-->
+<!--<script src="plugins/datatable/dataTables.bootstrap.min.js"></script>-->
+<!--<script src="plugins/datatable/dataTables.button.js"></script>-->
+<!--<script src="plugins/datatable/jszip.min.js"></script>-->
+<!--<script src="plugins/datatable/buttons.html5.min.js"></script>-->
+<!--<script src="plugins/datatable/custom-datatables.js"></script>-->
+</body>
 
 
-        <!-- category form -->
-
-
-    </form>
-</main>
-
-{% endblock %}
-
+</html>

@@ -338,7 +338,7 @@ def signup(request, **kwargs):
             program = Program.objects.filter(id=kwargs['program'])
             project = Project.objects.filter(id=kwargs['project'])
 
-        return render(request, 'signup.html',
+        return render(request, 'signups.html',
                       {'form': form, 'partners': partner, 'programs': program, 'projects': project})
 
 
