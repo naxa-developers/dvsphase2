@@ -7,9 +7,7 @@ urlpatterns = [
     path('upload/', views.uploadData, name='upload'),
     path('upload-shapefile/', views.ShapefileUpload, name='upload-shapefile'),
 
-
     path('invitation/', views.Invitation, name='invitation'),
-    path('create-role/', views.create_role, name='create-role'),
     path('login-test/', views.login_test, name='login-test'),
     # path('login-test/<int:group>/<int:partner>', views.login_test, name='login-test'),
     path('logout/', auth_views.logout, {'next_page': '/dashboard/login/'}, name='logout'),
@@ -101,6 +99,12 @@ urlpatterns = [
     path('output-add/', views.OutputCreate.as_view(), name='output-add'),
     path('output-edit/<int:pk>', views.OutputUpdate.as_view(), name='output-edit'),
 
+    path('role-list/', views.RoleList.as_view(), name='role-list'),
+    path('create-role/', views.RoleCreate.as_view(), name='create-role'),
+    # path('create-role/', views.create_role, name='create-role'),
+    path('role-delete/<int:pk>', views.RoleDelete.as_view(), name='role-delete'),
+    # path('role-edit/', views.edit_role, name='role-edit'),
+    path('role-edit/<int:pk>', views.RoleUpdate.as_view(), name='role-edit'),
 
     path('vector-map/', views.VectorMap.as_view(), name='vector-map'),
 

@@ -2146,6 +2146,19 @@ ul.pagination {
         width: 40px;
         border-radius: .25rem; }
 
+.registration-heading {
+  background: #80bdff;
+  position: relative;
+  -webkit-box-shadow: 0 1px 10px #96A5CD;
+  -ms-box-shadow: 0 1px 10px #96A5CD;
+  -o-box-shadow: 0 1px 10px #96A5CD;
+  box-shadow: 0 1px 10px #96A5CD; }
+  .registration-heading .header .img-map {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 260px; }
+
 .authentication {
   display: -webkit-box;
   display: -moz-box;
@@ -2181,6 +2194,85 @@ ul.pagination {
     padding: 2rem 5rem;
     position: relative;
     overflow: hidden; }
+    .authentication .auth-form.registration-form {
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      -ms-border-radius: 10px;
+      border-radius: 10px;
+      margin: 5rem 0  4rem;
+      padding: 2rem 4rem;
+      overflow: visible;
+      height: auto;
+      -webkit-box-shadow: 0px 1px 6px #96A5CD;
+      -ms-box-shadow: 0px 1px 6px #96A5CD;
+      -o-box-shadow: 0px 1px 6px #96A5CD;
+      box-shadow: 0px 1px 6px #96A5CD;
+      background: #eaf0ff; }
+      .authentication .auth-form.registration-form .login-wrap .login-header h3 {
+        margin-bottom: 1rem;
+        font-size: 1.875rem; }
+      .authentication .auth-form.registration-form .login-wrap form .file-select input {
+        font-size: 1rem; }
+      .authentication .auth-form.registration-form .login-wrap form .form-group {
+        margin-bottom: 3rem; }
+        .authentication .auth-form.registration-form .login-wrap form .form-group:last-child {
+          margin: 4rem 0rem 1rem;
+          display: -webkit-box;
+          display: -moz-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center; }
+        .authentication .auth-form.registration-form .login-wrap form .form-group label {
+          margin-bottom: 0.5rem;
+          font-size: 1rem;
+          color: #7387bd; }
+        .authentication .auth-form.registration-form .login-wrap form .form-group .form-control {
+          background: #ffffff;
+          height: 40px;
+          line-height: 40px;
+          font-size: 1rem;
+          color: #27293d;
+          border: 1px solid #ced4da;
+          -moz-transition: all 0.6s;
+          -o-transition: all 0.6s;
+          -webkit-transition: all 0.6s;
+          transition: all 0.6s;
+          -webkit-border-radius: 0.25rem;
+          -moz-border-radius: 0.25rem;
+          -ms-border-radius: 0.25rem;
+          border-radius: 0.25rem; }
+          .authentication .auth-form.registration-form .login-wrap form .form-group .form-control::placeholder {
+            font-size: 1rem; }
+          .authentication .auth-form.registration-form .login-wrap form .form-group .form-control:focus {
+            border-color: #80bdff;
+            -webkit-box-shadow: 0px 0px 2px #80bdff;
+            -ms-box-shadow: 0px 0px 2px #80bdff;
+            -o-box-shadow: 0px 0px 2px #80bdff;
+            box-shadow: 0px 0px 2px #80bdff;
+            color: #cacaca; }
+        .authentication .auth-form.registration-form .login-wrap form .form-group select {
+          font-size: 1rem;
+          height: calc(2.25rem + 2px); }
+        .authentication .auth-form.registration-form .login-wrap form .form-group button {
+          width: 20%;
+          font-size: 1rem;
+          padding: 0.5rem 2rem;
+          background: #05367D;
+          color: #96A5CD;
+          -webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          -ms-border-radius: 5px;
+          border-radius: 5px;
+          -moz-transition: all 0.6s;
+          -o-transition: all 0.6s;
+          -webkit-transition: all 0.6s;
+          transition: all 0.6s; }
+          .authentication .auth-form.registration-form .login-wrap form .form-group button:hover {
+            background: #0960df;
+            color: #dbe0ee; }
     .authentication .auth-form.login-info {
       background-image: linear-gradient(to bottom, #e6e9f3, #dce1ee, #d3d8ea, #c9d0e5, #bfc8e1); }
       .authentication .auth-form.login-info .header img {
@@ -2241,6 +2333,101 @@ ul.pagination {
     .authentication .auth-form .login-info figure {
       max-width: 400px;
       bottom: 0; } }
+/* less than 767px; */
+@media only screen and (max-width: 767px) {
+  .authentication .auth-form.registration-form {
+    height: auto;
+    padding: 2rem 3rem; }
+    .authentication .auth-form.registration-form .login-wrap .login-header {
+      margin-top: 1rem; }
+      .authentication .auth-form.registration-form .login-wrap .login-header h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem; }
+    .authentication .auth-form.registration-form .login-wrap form {
+      margin-top: 2rem; }
+      .authentication .auth-form.registration-form .login-wrap form .file-select input {
+        font-size: 0.875rem; }
+      .authentication .auth-form.registration-form .login-wrap form .form-group {
+        margin-bottom: 3rem; }
+        .authentication .auth-form.registration-form .login-wrap form .form-group label {
+          margin-bottom: 0.5rem;
+          font-size: 0.875rem; }
+        .authentication .auth-form.registration-form .login-wrap form .form-group .form-control {
+          height: 35px;
+          line-height: 35px;
+          font-size: 0.875rem; }
+        .authentication .auth-form.registration-form .login-wrap form .form-group #id_image {
+          font-size: 0.875rem; }
+        .authentication .auth-form.registration-form .login-wrap form .form-group select {
+          font-size: 0.875rem;
+          height: calc(2.25rem + 2px); }
+        .authentication .auth-form.registration-form .login-wrap form .form-group button {
+          width: 20%;
+          font-size: 0.75rem;
+          padding: 0.5rem 2rem; } }
+/* less than 567px; */
+@media only screen and (max-width: 576px) {
+  .authentication .auth-form.registration-form {
+    height: auto;
+    padding: 2rem; }
+    .authentication .auth-form.registration-form .login-wrap .login-header {
+      margin-top: 2rem; }
+      .authentication .auth-form.registration-form .login-wrap .login-header h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem; }
+    .authentication .auth-form.registration-form .login-wrap form .file-select input {
+      font-size: 0.75rem; }
+    .authentication .auth-form.registration-form .login-wrap form .form-group {
+      margin-bottom: 2rem; }
+      .authentication .auth-form.registration-form .login-wrap form .form-group label {
+        margin-bottom: 0.5rem;
+        font-size: 0.75rem; }
+      .authentication .auth-form.registration-form .login-wrap form .form-group .form-control {
+        height: 35px;
+        line-height: 35px;
+        font-size: 0.75rem; }
+      .authentication .auth-form.registration-form .login-wrap form .form-group #id_image {
+        font-size: 0.75rem; }
+      .authentication .auth-form.registration-form .login-wrap form .form-group select {
+        font-size: 0.75rem;
+        height: calc(2.25rem + 2px); }
+      .authentication .auth-form.registration-form .login-wrap form .form-group button {
+        width: 20%;
+        font-size: 0.75rem;
+        padding: 0.5rem 2rem; } }
+/* less than 480px; */
+@media only screen and (max-width: 480px) {
+  .authentication .auth-form.registration-form {
+    height: auto;
+    padding: 1rem; }
+    .authentication .auth-form.registration-form .login-wrap .login-header {
+      margin-top: 1rem; }
+      .authentication .auth-form.registration-form .login-wrap .login-header h3 {
+        font-size: 1.25rem;
+        margin-bottom: 1rem !important; }
+    .authentication .auth-form.registration-form .login-wrap form .file-select input {
+      font-size: 0.75rem; }
+    .authentication .auth-form.registration-form .login-wrap form .form-group {
+      margin-bottom: 2rem; }
+      .authentication .auth-form.registration-form .login-wrap form .form-group label {
+        margin-bottom: 0.5rem;
+        font-size: 0.75rem; }
+      .authentication .auth-form.registration-form .login-wrap form .form-group .form-control {
+        height: 25px;
+        line-height: 25px;
+        font-size: 0.75rem;
+        padding: 0rem 0.5rem; }
+        .authentication .auth-form.registration-form .login-wrap form .form-group .form-control::placeholder {
+          font-size: 0.75rem; }
+      .authentication .auth-form.registration-form .login-wrap form .form-group #id_image {
+        font-size: 0.75rem; }
+      .authentication .auth-form.registration-form .login-wrap form .form-group select {
+        font-size: 0.75rem;
+        height: calc(2.25rem + 2px); }
+      .authentication .auth-form.registration-form .login-wrap form .form-group button {
+        width: 20%;
+        font-size: 0.75rem;
+        padding: 0.5rem 2rem; } }
 @media only screen and (min-width: 992px) {
   .authentication .auth-form.login-info .welcome span {
     font-size: 2rem; }
@@ -2564,6 +2751,11 @@ form .default-form {
   box-shadow: none; }
   .marker-sector .checklist-wrapper .marker-body {
     background-color: #f5f5f5; }
+
+.marker-select-block {
+  margin-bottom: 3rem; }
+  .marker-select-block:last-child {
+    margin-bottom: 0; }
 
 .dfid-wrapper .page-wrapper main .program-form .collapse-section:last-child {
   margin-bottom: 0; }
