@@ -268,11 +268,24 @@
                         <li class="dropdown user-menu">
                             <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"
                                     aria-expanded="false">
+                                {% if user.image %}
+                                <img src="{{ user.image.url }}" class="user-image"
+                                     alt="User Image">
+                                {% else %}
                                 <img src="{% static 'dashboard/images/admin.png' %}" class="user-image"
                                      alt="User Image">
+                                {% endif %}
+
                                 <div class="user-info">
                                     <h6>{{ user.name}}</h6>
-                                    <span>Admin</span>
+                                    <span>
+                                        {% if user.user.groups.all.exists %}
+                                        {% for grp in user.user.groups.all %}
+                                        {{ grp.name }}
+                                        {% endfor %}
+                                        {% else %}
+                                        {% endif %}
+                                    </span>
                                 </div>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right dropdown-animation">

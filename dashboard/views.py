@@ -285,15 +285,17 @@ def Invitation(request):
         return render(request, 'invitation_form.html',
                       {'group': group, 'partners': partner, 'programs': program, 'projects': project})
     else:
+        user = request.user
+        user_data = UserProfile.objects.get(user=user)
         url = settings.SITE_URL
         group = request.POST["group"]
         emails = request.POST["email"]
         partnered = request.POST["partner"]
         programed = request.POST["program"]
         projected = request.POST["project"]
-        subject = 'Thank you for registering to our site'
+        subject = 'User Invitation'
         message = render_to_string('mail.html', {'group': group, 'url': url, 'partner': partnered, 'program': programed,
-                                                 'project': projected})
+                                                 'project': projected, 'user': user_data})
         recipient_list = [emails]
         email = EmailMessage(
             subject, message, 'from@example.com', recipient_list
@@ -325,7 +327,19 @@ def signup(request, **kwargs):
                                        partner_id=int(request.POST['partner']), program_id=int(request.POST['program']),
                                        project_id=int(request.POST['project']), image=request.FILES['image'])
 
-            return render(request, 'created_user.html', {'user': request.POST['name']})
+            return render(request, 'registered_message.html', {'user': request.POST['name']})
+        else:
+            if kwargs['group'] == 0:
+                partner = Partner.objects.all()
+                program = Program.objects.all()
+                project = Project.objects.all()
+            else:
+                partner = Partner.objects.filter(id=kwargs['partner'])
+                program = Program.objects.filter(id=kwargs['program'])
+                project = Project.objects.filter(id=kwargs['project'])
+
+            return render(request, 'signups.html',
+                          {'form': form, 'partners': partner, 'programs': program, 'projects': project})
 
     else:
         form = UserCreationForm()
@@ -699,11 +713,13 @@ class Dashboard(LoginRequiredMixin, TemplateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         group = Group.objects.get(user=user)
+        log = Log.objects.all().order_by('-id')
         if group.name == 'admin':
             five = FiveW.objects.order_by('id')
         else:
             five = FiveW.objects.select_related('partner_id').filter(partner_id=user_data.partner.id)
-        return render(request, 'dashboard.html', {'user': user_data, 'active': 'dash', 'fives': five})
+        return render(request, 'dashboard.html',
+                      {'user': user_data, 'active': 'dash', 'fives': five, 'logs': log, 'group': group})
 
 
 class ProgramAdd(LoginRequiredMixin, TemplateView):
@@ -744,9 +760,10 @@ class ProgramCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return reverse_lazy('program-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New program " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -768,6 +785,7 @@ class PartnerCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return reverse_lazy('partner-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         contact_names = self.request.POST.getlist('contact_person_name')
         emails = self.request.POST.getlist('contact_person_email')
@@ -778,7 +796,7 @@ class PartnerCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
                                           phone_number=numbers[row])
 
         message = "New partner " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -825,9 +843,10 @@ class SectorCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return reverse_lazy('sector-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New sector " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -849,9 +868,10 @@ class OutputCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return reverse_lazy('output-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New ouput " + self.object.indicator + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -886,9 +906,10 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return reverse_lazy('five-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New Five W " + str(self.object.partner_id) + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -911,9 +932,10 @@ class ProjectCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return reverse_lazy('project-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New project " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -960,9 +982,10 @@ class SubSectorCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return reverse_lazy('subsector-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New Sub Sector " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1009,9 +1032,10 @@ class DistrictCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return reverse_lazy('district-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New District " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1035,9 +1059,10 @@ class PalilkaCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return reverse_lazy('palika-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New Municipality " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1060,9 +1085,10 @@ class MarkerValueCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return reverse_lazy('markervalue-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New Marker Value " + self.object.value + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1084,9 +1110,10 @@ class MarkerCategoryCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return reverse_lazy('marker-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New Marker Category " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1108,9 +1135,10 @@ class IndicatorCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return reverse_lazy('indicator-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New Indicator " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1156,9 +1184,10 @@ class ProgramUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('program-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Program " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1180,9 +1209,10 @@ class PartnerUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('partner-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Partner " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1229,9 +1259,10 @@ class OutputUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('output-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Output " + self.object.indicator + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1266,9 +1297,10 @@ class FiveUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('five-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New Five W " + str(self.object.partner_id) + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1308,9 +1340,10 @@ class SectorUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('sector-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Sector " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1358,9 +1391,10 @@ class SubSectorUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('subsector-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Sub sector " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1382,9 +1416,10 @@ class MarkerCategoryUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('marker-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Marker Category " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1407,9 +1442,10 @@ class MarkerValueUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('markervalue-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Marker Value " + self.object.value + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1431,9 +1467,10 @@ class ProvinceUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('province-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Province" + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1456,9 +1493,10 @@ class DistrictUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('district-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=user)
         self.object = form.save()
         message = "District " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1482,9 +1520,10 @@ class PalilkaUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('palika-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Municipality " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1506,9 +1545,10 @@ class IndicatorUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('indicator-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Indicator " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1530,9 +1570,10 @@ class GisLayerUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('gis-layer-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Map Layer " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1731,6 +1772,7 @@ class IndicatorDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
 def gisLayer_create(request):
     template_name = 'gis_add.html'
     form = GisLayerCreateForm(request.POST or None)
+    user_data = UserProfile.objects.get(user=request.user)
     if form.is_valid():
 
         shapefile = request.FILES["shapefile"]
@@ -1769,18 +1811,19 @@ def gisLayer_create(request):
 
             obj.save()
             messaged = "Map Layer " + named + "  has been added by " + request.user.username
-            log = Log.objects.create(user=request.user, message=messaged, type="create")
+            log = Log.objects.create(user=user_data, message=messaged, type="create")
             messages.success(request, "Layer successfully uploaded")
 
         else:
             messages.error(request, "Layer could not be  uploaded !! Please Try again")
 
         return redirect('gis-layer-list')
-    return render(request, template_name, {'form': form})
+    return render(request, template_name, {'form': form, 'user': user_data})
 
 
 def gisLayer_replace(request, **kwargs):
     template_name = 'gis_replace.html'
+    user_data = UserProfile.objects.get(user=request.user)
     instance = GisLayer.objects.get(id=kwargs['pk'])
     get_store_name = GisLayer.objects.filter(id=kwargs['pk']).values_list('store_name', flat=True)
     form = GisLayerCreateForm(request.POST or None, instance=instance)
@@ -1840,14 +1883,14 @@ def gisLayer_replace(request, **kwargs):
 
             obj.save()
             messaged = "Map Layer " + named + "  has been edited by " + request.user.username
-            log = Log.objects.create(user=request.user, message=messaged, type="edited")
+            log = Log.objects.create(user=user_data, message=messaged, type="edited")
             messages.success(request, "Layer successfully replaced")
 
         else:
             messages.error(request, "Layer could not be  replaced !! Please Try again")
 
         return redirect('gis-layer-list')
-    return render(request, template_name, {'form': form})
+    return render(request, template_name, {'form': form, 'user': user_data})
 
 
 def gisLayer_delete(request, **kwargs):
