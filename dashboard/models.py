@@ -20,7 +20,7 @@ class UserProfile(models.Model):
 
 class Log(models.Model):
     message = models.CharField(max_length=300, null=True, blank=True)
-    user = models.CharField(max_length=300, null=True, blank=True)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='UserProfile', null=True, blank=True)
     type = models.CharField(max_length=300, null=True, blank=True)
     date = models.DateField(auto_now_add=True)
 

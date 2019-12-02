@@ -6,7 +6,8 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
-    PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm
+    PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm, \
+    GroupForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -223,6 +224,7 @@ def ShapefileUpload(request):
         return HttpResponse(response.status_code)
 
 
+@login_required()
 def create_role(request):
     if "GET" == request.method:
         permissions = Permission.objects.all()
@@ -236,9 +238,28 @@ def create_role(request):
             permission_check = Permission.objects.get(id=permissions)
             group.permissions.add(permission_check)
 
-        return HttpResponse('success')
+        return redirect('role-list')
 
 
+@login_required()
+def edit_role(request):
+    if "GET" == request.method:
+        permissions_e = Permission.objects.filter(group__id=9)
+        permissions = Permission.objects.all()
+        return render(request, 'edit_role.html', {'permissions': permissions, 'permission_e': permissions_e})
+
+    else:
+        role = request.POST['role']
+        permission_list = request.POST.getlist('permission')
+        group = Group.objects.create(name=role)
+        for permissions in permission_list:
+            permission_check = Permission.objects.get(id=permissions)
+            group.permissions.add(permission_check)
+
+        return redirect('role-list')
+
+
+@login_required()
 def assign_role(request, **kwargs):
     if "GET" == request.method:
         groups = Group.objects.all()
@@ -254,6 +275,7 @@ def assign_role(request, **kwargs):
         return redirect('user-list')
 
 
+@login_required()
 def Invitation(request):
     if "GET" == request.method:
         group = Group.objects.all()
@@ -263,15 +285,17 @@ def Invitation(request):
         return render(request, 'invitation_form.html',
                       {'group': group, 'partners': partner, 'programs': program, 'projects': project})
     else:
+        user = request.user
+        user_data = UserProfile.objects.get(user=user)
         url = settings.SITE_URL
         group = request.POST["group"]
         emails = request.POST["email"]
         partnered = request.POST["partner"]
         programed = request.POST["program"]
         projected = request.POST["project"]
-        subject = 'Thank you for registering to our site'
+        subject = 'User Invitation'
         message = render_to_string('mail.html', {'group': group, 'url': url, 'partner': partnered, 'program': programed,
-                                                 'project': projected})
+                                                 'project': projected, 'user': user_data})
         recipient_list = [emails]
         email = EmailMessage(
             subject, message, 'from@example.com', recipient_list
@@ -303,7 +327,19 @@ def signup(request, **kwargs):
                                        partner_id=int(request.POST['partner']), program_id=int(request.POST['program']),
                                        project_id=int(request.POST['project']), image=request.FILES['image'])
 
-            return render(request, 'created_user.html', {'user': request.POST['name']})
+            return render(request, 'registered_message.html', {'user': request.POST['name']})
+        else:
+            if kwargs['group'] == 0:
+                partner = Partner.objects.all()
+                program = Program.objects.all()
+                project = Project.objects.all()
+            else:
+                partner = Partner.objects.filter(id=kwargs['partner'])
+                program = Program.objects.filter(id=kwargs['program'])
+                project = Project.objects.filter(id=kwargs['project'])
+
+            return render(request, 'signups.html',
+                          {'form': form, 'partners': partner, 'programs': program, 'projects': project})
 
     else:
         form = UserCreationForm()
@@ -316,7 +352,7 @@ def signup(request, **kwargs):
             program = Program.objects.filter(id=kwargs['program'])
             project = Project.objects.filter(id=kwargs['project'])
 
-        return render(request, 'signup.html',
+        return render(request, 'signups.html',
                       {'form': form, 'partners': partner, 'programs': program, 'projects': project})
 
 
@@ -380,7 +416,7 @@ def province_list(request):
     return render(request, template_name, data)
 
 
-class ProgramList(ListView):
+class ProgramList(LoginRequiredMixin, ListView):
     template_name = 'program_list.html'
     model = Program
 
@@ -399,7 +435,7 @@ class ProgramList(ListView):
         return data
 
 
-class OutputList(ListView):
+class OutputList(LoginRequiredMixin, ListView):
     template_name = 'output_list.html'
     model = Program
 
@@ -414,7 +450,7 @@ class OutputList(ListView):
         return data
 
 
-class PermissionList(ListView):
+class PermissionList(LoginRequiredMixin, ListView):
     template_name = 'permission_list.html'
     model = Program
 
@@ -429,7 +465,22 @@ class PermissionList(ListView):
         return data
 
 
-class FiveList(ListView):
+class RoleList(LoginRequiredMixin, ListView):
+    template_name = 'role_list.html'
+    model = Group
+
+    def get_context_data(self, **kwargs):
+        data = super(RoleList, self).get_context_data(**kwargs)
+        role_list = Group.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = role_list
+        data['user'] = user_data
+        data['active'] = 'permission'
+        return data
+
+
+class FiveList(LoginRequiredMixin, ListView):
     template_name = 'five_list.html'
     model = FiveW
 
@@ -448,7 +499,7 @@ class FiveList(ListView):
         return data
 
 
-class UserList(ListView):
+class UserList(LoginRequiredMixin, ListView):
     template_name = 'user_list.html'
     model = Program
 
@@ -463,7 +514,7 @@ class UserList(ListView):
         return data
 
 
-class PartnerList(ListView):
+class PartnerList(LoginRequiredMixin, ListView):
     template_name = 'partner_list.html'
     model = Partner
 
@@ -484,7 +535,7 @@ class PartnerList(ListView):
         return data
 
 
-class SectorList(ListView):
+class SectorList(LoginRequiredMixin, ListView):
     template_name = 'sector_list.html'
     model = Sector
 
@@ -499,7 +550,7 @@ class SectorList(ListView):
         return data
 
 
-class ProjectList(ListView):
+class ProjectList(LoginRequiredMixin, ListView):
     template_name = 'project_list.html'
     model = Project
 
@@ -519,7 +570,7 @@ class ProjectList(ListView):
         return data
 
 
-class SubSectorList(ListView):
+class SubSectorList(LoginRequiredMixin, ListView):
     template_name = 'sub_sector_list.html'
     model = SubSector
 
@@ -534,7 +585,7 @@ class SubSectorList(ListView):
         return data
 
 
-class MarkerList(ListView):
+class MarkerList(LoginRequiredMixin, ListView):
     template_name = 'marker_list.html'
     model = MarkerCategory
 
@@ -549,7 +600,7 @@ class MarkerList(ListView):
         return data
 
 
-class MarkerValueList(ListView):
+class MarkerValueList(LoginRequiredMixin, ListView):
     template_name = 'marker_value_list.html'
     model = MarkerValues
 
@@ -564,7 +615,7 @@ class MarkerValueList(ListView):
         return data
 
 
-class IndicatorList(ListView):
+class IndicatorList(LoginRequiredMixin, ListView):
     template_name = 'indicator_list.html'
     model = Indicator
 
@@ -579,7 +630,7 @@ class IndicatorList(ListView):
         return data
 
 
-class IndicatorValueList(ListView):
+class IndicatorValueList(LoginRequiredMixin, ListView):
     template_name = 'indicator_value_list.html'
     model = Indicator
 
@@ -595,7 +646,7 @@ class IndicatorValueList(ListView):
         return data
 
 
-class GisLayerList(ListView):
+class GisLayerList(LoginRequiredMixin, ListView):
     template_name = 'gis_layer_list.html'
     model = GisLayer
 
@@ -610,7 +661,7 @@ class GisLayerList(ListView):
         return data
 
 
-class ProvinceList(ListView):
+class ProvinceList(LoginRequiredMixin, ListView):
     template_name = 'provinces_list.html'
     model = Province
 
@@ -625,7 +676,7 @@ class ProvinceList(ListView):
         return data
 
 
-class DistrictList(ListView):
+class DistrictList(LoginRequiredMixin, ListView):
     template_name = 'district_list.html'
     model = District
 
@@ -641,7 +692,7 @@ class DistrictList(ListView):
         return data
 
 
-class PalikaList(ListView):
+class PalikaList(LoginRequiredMixin, ListView):
     template_name = 'palika_list.html'
     model = GapaNapa
 
@@ -662,11 +713,13 @@ class Dashboard(LoginRequiredMixin, TemplateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         group = Group.objects.get(user=user)
+        log = Log.objects.all().order_by('-id')
         if group.name == 'admin':
             five = FiveW.objects.order_by('id')
         else:
             five = FiveW.objects.select_related('partner_id').filter(partner_id=user_data.partner.id)
-        return render(request, 'dashboard.html', {'user': user_data, 'active': 'dash', 'fives': five})
+        return render(request, 'dashboard.html',
+                      {'user': user_data, 'active': 'dash', 'fives': five, 'logs': log, 'group': group})
 
 
 class ProgramAdd(LoginRequiredMixin, TemplateView):
@@ -683,7 +736,7 @@ class VectorMap(LoginRequiredMixin, TemplateView):
         return render(request, 'vector_map.html')
 
 
-class ProgramCreate(SuccessMessageMixin, CreateView):
+class ProgramCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Program
     template_name = 'program_add.html'
     form_class = ProgramCreateForm
@@ -707,13 +760,14 @@ class ProgramCreate(SuccessMessageMixin, CreateView):
         return reverse_lazy('program-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New program " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class PartnerCreate(SuccessMessageMixin, CreateView):
+class PartnerCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Partner
     template_name = 'partner_add.html'
     form_class = PartnerCreateForm
@@ -731,6 +785,7 @@ class PartnerCreate(SuccessMessageMixin, CreateView):
         return reverse_lazy('partner-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         contact_names = self.request.POST.getlist('contact_person_name')
         emails = self.request.POST.getlist('contact_person_email')
@@ -741,11 +796,36 @@ class PartnerCreate(SuccessMessageMixin, CreateView):
                                           phone_number=numbers[row])
 
         message = "New partner " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class SectorCreate(SuccessMessageMixin, CreateView):
+class RoleCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+    model = Group
+    template_name = 'create_role.html'
+    form_class = GroupForm
+    success_message = 'Role successfully added'
+
+    def get_context_data(self, **kwargs):
+        data = super(RoleCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'role'
+        data['permissions'] = Permission.objects.all()
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('role-list')
+
+    # def form_valid(self, form):
+    #     self.object = form.save()
+    #     message = "Partner " + self.object.name + "  has been edited by " + self.request.user.username
+    #     log = Log.objects.create(user=self.request.user, message=message, type="update")
+    #     return HttpResponseRedirect(self.get_success_url())
+
+
+class SectorCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Sector
     template_name = 'sector_add.html'
     form_class = SectorCreateForm
@@ -763,13 +843,14 @@ class SectorCreate(SuccessMessageMixin, CreateView):
         return reverse_lazy('sector-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New sector " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class OutputCreate(SuccessMessageMixin, CreateView):
+class OutputCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Output
     template_name = 'output_add.html'
     form_class = OutputCreateForm
@@ -787,13 +868,14 @@ class OutputCreate(SuccessMessageMixin, CreateView):
         return reverse_lazy('output-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New ouput " + self.object.indicator + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class FiveCreate(SuccessMessageMixin, CreateView):
+class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = FiveW
     template_name = 'five_add.html'
     form_class = FiveCreateForm
@@ -804,6 +886,7 @@ class FiveCreate(SuccessMessageMixin, CreateView):
         user = self.request.user
         partner = Partner.objects.all().order_by('id')
         program = Program.objects.all().order_by('id')
+        project = Project.objects.all().order_by('id')
         province = Province.objects.all().order_by('id')
         district = District.objects.all().order_by('id')
         municipality = GapaNapa.objects.all().order_by('id')
@@ -812,6 +895,7 @@ class FiveCreate(SuccessMessageMixin, CreateView):
         data['user'] = user_data
         data['partners'] = partner
         data['programs'] = program
+        data['projects'] = project
         data['provinces'] = province
         data['districts'] = district
         data['municipalities'] = municipality
@@ -822,13 +906,14 @@ class FiveCreate(SuccessMessageMixin, CreateView):
         return reverse_lazy('five-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New Five W " + str(self.object.partner_id) + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class ProjectCreate(SuccessMessageMixin, CreateView):
+class ProjectCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Project
     template_name = 'project_add.html'
     form_class = ProjectCreateForm
@@ -847,13 +932,14 @@ class ProjectCreate(SuccessMessageMixin, CreateView):
         return reverse_lazy('project-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New project " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class PermissionCreate(SuccessMessageMixin, CreateView):
+class PermissionCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Permission
     template_name = 'permission_add.html'
     form_class = PermissionForm
@@ -877,7 +963,7 @@ class PermissionCreate(SuccessMessageMixin, CreateView):
     #     return HttpResponseRedirect(self.get_success_url())
 
 
-class SubSectorCreate(SuccessMessageMixin, CreateView):
+class SubSectorCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = SubSector
     template_name = 'sub_sector_add.html'
     form_class = SubSectorCreateForm
@@ -896,13 +982,14 @@ class SubSectorCreate(SuccessMessageMixin, CreateView):
         return reverse_lazy('subsector-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New Sub Sector " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class ProvinceCreate(SuccessMessageMixin, CreateView):
+class ProvinceCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Province
     template_name = 'province_add.html'
     form_class = ProvinceCreateForm
@@ -926,7 +1013,7 @@ class ProvinceCreate(SuccessMessageMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class DistrictCreate(SuccessMessageMixin, CreateView):
+class DistrictCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = District
     template_name = 'district_add.html'
     form_class = DistrictCreateForm
@@ -945,13 +1032,14 @@ class DistrictCreate(SuccessMessageMixin, CreateView):
         return reverse_lazy('district-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New District " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class PalilkaCreate(SuccessMessageMixin, CreateView):
+class PalilkaCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = GapaNapa
     template_name = 'palika_add.html'
     form_class = PalikaCreateForm
@@ -971,13 +1059,14 @@ class PalilkaCreate(SuccessMessageMixin, CreateView):
         return reverse_lazy('palika-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New Municipality " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class MarkerValueCreate(SuccessMessageMixin, CreateView):
+class MarkerValueCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = MarkerValues
     template_name = 'marker_value_add.html'
     form_class = MarkerValueCreateForm
@@ -996,13 +1085,14 @@ class MarkerValueCreate(SuccessMessageMixin, CreateView):
         return reverse_lazy('markervalue-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New Marker Value " + self.object.value + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class MarkerCategoryCreate(SuccessMessageMixin, CreateView):
+class MarkerCategoryCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = MarkerCategory
     template_name = 'marker_cat_add.html'
     form_class = MarkerCategoryCreateForm
@@ -1020,13 +1110,14 @@ class MarkerCategoryCreate(SuccessMessageMixin, CreateView):
         return reverse_lazy('marker-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New Marker Category " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class IndicatorCreate(SuccessMessageMixin, CreateView):
+class IndicatorCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Indicator
     template_name = 'indicator_add.html'
     form_class = IndicatorCreateForm
@@ -1044,13 +1135,14 @@ class IndicatorCreate(SuccessMessageMixin, CreateView):
         return reverse_lazy('indicator-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New Indicator " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class ProgramUpdate(SuccessMessageMixin, UpdateView):
+class ProgramUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Program
     template_name = 'program_edit.html'
     form_class = ProgramCreateForm
@@ -1092,13 +1184,14 @@ class ProgramUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('program-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Program " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class PartnerUpdate(SuccessMessageMixin, UpdateView):
+class PartnerUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Partner
     template_name = 'partner_edit.html'
     form_class = PartnerCreateForm
@@ -1116,13 +1209,39 @@ class PartnerUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('partner-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Partner " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class OutputUpdate(SuccessMessageMixin, UpdateView):
+class RoleUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = Group
+    template_name = 'edit_role.html'
+    form_class = GroupForm
+    success_message = 'Role successfully updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(RoleUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'role'
+        data['permissions'] = Permission.objects.all()
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('role-list')
+
+    # def form_valid(self, form):
+    #     self.object = form.save()
+    #     message = "Partner " + self.object.name + "  has been edited by " + self.request.user.username
+    #     log = Log.objects.create(user=self.request.user, message=message, type="update")
+    #     return HttpResponseRedirect(self.get_success_url())
+
+
+class OutputUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Output
     template_name = 'output_edit.html'
     form_class = OutputCreateForm
@@ -1140,13 +1259,14 @@ class OutputUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('output-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Output " + self.object.indicator + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class FiveUpdate(SuccessMessageMixin, UpdateView):
+class FiveUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = FiveW
     template_name = 'five_edit.html'
     form_class = FiveCreateForm
@@ -1158,6 +1278,7 @@ class FiveUpdate(SuccessMessageMixin, UpdateView):
         partner = Partner.objects.all().order_by('id')
         program = Program.objects.all().order_by('id')
         province = Province.objects.all().order_by('id')
+        project = Project.objects.all().order_by('id')
         district = District.objects.all().order_by('id')
         municipality = GapaNapa.objects.all().order_by('id')
         contact = PartnerContact.objects.all().order_by('id')
@@ -1165,6 +1286,7 @@ class FiveUpdate(SuccessMessageMixin, UpdateView):
         data['user'] = user_data
         data['partners'] = partner
         data['programs'] = program
+        data['projects'] = project
         data['provinces'] = province
         data['districts'] = district
         data['municipalities'] = municipality
@@ -1175,13 +1297,14 @@ class FiveUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('five-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New Five W " + str(self.object.partner_id) + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class PermissionUpdate(SuccessMessageMixin, UpdateView):
+class PermissionUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Permission
     template_name = 'permission_add.html'
     form_class = PermissionForm
@@ -1199,7 +1322,7 @@ class PermissionUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('permission-list')
 
 
-class SectorUpdate(SuccessMessageMixin, UpdateView):
+class SectorUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Sector
     template_name = 'sector_edit.html'
     form_class = SectorCreateForm
@@ -1217,13 +1340,14 @@ class SectorUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('sector-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Sector " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class ProjectUpdate(SuccessMessageMixin, UpdateView):
+class ProjectUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Project
     template_name = 'project_edit.html'
     form_class = ProjectCreateForm
@@ -1248,7 +1372,7 @@ class ProjectUpdate(SuccessMessageMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class SubSectorUpdate(SuccessMessageMixin, UpdateView):
+class SubSectorUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = SubSector
     template_name = 'sub_sector_edit.html'
     form_class = SubSectorCreateForm
@@ -1267,13 +1391,14 @@ class SubSectorUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('subsector-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Sub sector " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class MarkerCategoryUpdate(SuccessMessageMixin, UpdateView):
+class MarkerCategoryUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = MarkerCategory
     template_name = 'marker_cat_edit.html'
     form_class = MarkerCategoryCreateForm
@@ -1291,13 +1416,14 @@ class MarkerCategoryUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('marker-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Marker Category " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class MarkerValueUpdate(SuccessMessageMixin, UpdateView):
+class MarkerValueUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = MarkerValues
     template_name = 'marker_value_edit.html'
     form_class = MarkerValueCreateForm
@@ -1316,13 +1442,14 @@ class MarkerValueUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('markervalue-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Marker Value " + self.object.value + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class ProvinceUpdate(SuccessMessageMixin, UpdateView):
+class ProvinceUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Province
     template_name = 'province_edit.html'
     form_class = ProvinceCreateForm
@@ -1340,13 +1467,14 @@ class ProvinceUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('province-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Province" + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class DistrictUpdate(SuccessMessageMixin, UpdateView):
+class DistrictUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = District
     template_name = 'district_edit.html'
     form_class = DistrictCreateForm
@@ -1365,13 +1493,14 @@ class DistrictUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('district-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=user)
         self.object = form.save()
         message = "District " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class PalilkaUpdate(SuccessMessageMixin, UpdateView):
+class PalilkaUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = GapaNapa
     template_name = 'palika_edit.html'
     form_class = PalikaCreateForm
@@ -1391,13 +1520,14 @@ class PalilkaUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('palika-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Municipality " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class IndicatorUpdate(SuccessMessageMixin, UpdateView):
+class IndicatorUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Indicator
     template_name = 'indicator_edit.html'
     form_class = IndicatorCreateForm
@@ -1415,13 +1545,14 @@ class IndicatorUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('indicator-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Indicator " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class GisLayerUpdate(SuccessMessageMixin, UpdateView):
+class GisLayerUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = GisLayer
     template_name = 'gis_layer_edit.html'
     form_class = GisLayerCreateForm
@@ -1439,13 +1570,14 @@ class GisLayerUpdate(SuccessMessageMixin, UpdateView):
         return reverse_lazy('gis-layer-list')
 
     def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Map Layer " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
-class ProgramDelete(SuccessMessageMixin, DeleteView):
+class ProgramDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = Program
     template_name = 'program_confirm_delete.html'
     success_message = 'Program successfully deleted'
@@ -1463,7 +1595,7 @@ class ProgramDelete(SuccessMessageMixin, DeleteView):
         return reverse_lazy('program-list')
 
 
-class PartnerDelete(SuccessMessageMixin, DeleteView):
+class PartnerDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = Partner
     template_name = 'partner_confirm_delete.html'
     success_message = 'Partner successfully deleted'
@@ -1477,7 +1609,7 @@ class PartnerDelete(SuccessMessageMixin, DeleteView):
         return data
 
 
-class SectorDelete(SuccessMessageMixin, DeleteView):
+class SectorDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = Sector
     template_name = 'sector_confirm_delete.html'
     success_message = 'Sector successfully deleted'
@@ -1491,7 +1623,7 @@ class SectorDelete(SuccessMessageMixin, DeleteView):
         return data
 
 
-class SubSectorDelete(SuccessMessageMixin, DeleteView):
+class SubSectorDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = SubSector
     template_name = 'sub_sector_confirm_delete.html'
     success_message = 'Sub Sector successfully deleted'
@@ -1505,7 +1637,7 @@ class SubSectorDelete(SuccessMessageMixin, DeleteView):
         return data
 
 
-class ProjectDelete(SuccessMessageMixin, DeleteView):
+class ProjectDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = Project
     template_name = 'project_confirm_delete.html'
     success_message = 'Project successfully deleted'
@@ -1518,14 +1650,14 @@ class ProjectDelete(SuccessMessageMixin, DeleteView):
         data['user'] = user_data
         return data
 
-    def delete(self, request, *args, **kwargs):
-        delete_data = Project.objects.filter(id=kwargs['pk']).delete()
-        message = "Project  has been deleted by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="delete")
-        return redirect('project-list')
+    # def delete(self, request, *args, **kwargs):
+    #     delete_data = Project.objects.filter(id=kwargs['pk']).delete()
+    #     message = "Project  has been deleted by " + self.request.user.username
+    #     log = Log.objects.create(user=self.request.user, message=message, type="delete")
+    #     return redirect('project-list')
 
 
-class MarkerCategoryDelete(SuccessMessageMixin, DeleteView):
+class MarkerCategoryDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = MarkerCategory
     template_name = 'marker_cat_confirm_delete.html'
     success_message = 'Marker category successfully deleted'
@@ -1539,7 +1671,7 @@ class MarkerCategoryDelete(SuccessMessageMixin, DeleteView):
         return data
 
 
-class MarkerValueDelete(SuccessMessageMixin, DeleteView):
+class MarkerValueDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = MarkerValues
     template_name = 'marker_value_confirm_delete.html'
     success_message = 'Marker category successfully deleted'
@@ -1553,7 +1685,7 @@ class MarkerValueDelete(SuccessMessageMixin, DeleteView):
         return data
 
 
-class PermissionDelete(SuccessMessageMixin, DeleteView):
+class PermissionDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = Permission
     template_name = 'permission_confirm_delete.html'
     success_message = 'Permission successfully deleted'
@@ -1567,7 +1699,21 @@ class PermissionDelete(SuccessMessageMixin, DeleteView):
         return data
 
 
-class ProvinceDelete(SuccessMessageMixin, DeleteView):
+class RoleDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = Group
+    template_name = 'role_confirm_delete.html'
+    success_message = 'Permission successfully deleted'
+    success_url = reverse_lazy('role-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(RoleDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
+
+class ProvinceDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = Province
     template_name = 'province_confirm_delete.html'
     success_message = 'Province successfully deleted'
@@ -1581,7 +1727,7 @@ class ProvinceDelete(SuccessMessageMixin, DeleteView):
         return data
 
 
-class DistrictDelete(SuccessMessageMixin, DeleteView):
+class DistrictDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = District
     template_name = 'district_confirm_delete.html'
     success_message = 'District successfully deleted'
@@ -1595,7 +1741,7 @@ class DistrictDelete(SuccessMessageMixin, DeleteView):
         return data
 
 
-class PalikaDelete(SuccessMessageMixin, DeleteView):
+class PalikaDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = GapaNapa
     template_name = 'palika_confirm_delete.html'
     success_message = 'Plaika successfully deleted'
@@ -1609,7 +1755,7 @@ class PalikaDelete(SuccessMessageMixin, DeleteView):
         return data
 
 
-class IndicatorDelete(SuccessMessageMixin, DeleteView):
+class IndicatorDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = Indicator
     template_name = 'indicator_confirm_delete.html'
     success_message = 'Indicator successfully deleted'
@@ -1626,6 +1772,7 @@ class IndicatorDelete(SuccessMessageMixin, DeleteView):
 def gisLayer_create(request):
     template_name = 'gis_add.html'
     form = GisLayerCreateForm(request.POST or None)
+    user_data = UserProfile.objects.get(user=request.user)
     if form.is_valid():
 
         shapefile = request.FILES["shapefile"]
@@ -1664,18 +1811,19 @@ def gisLayer_create(request):
 
             obj.save()
             messaged = "Map Layer " + named + "  has been added by " + request.user.username
-            log = Log.objects.create(user=request.user, message=messaged, type="create")
+            log = Log.objects.create(user=user_data, message=messaged, type="create")
             messages.success(request, "Layer successfully uploaded")
 
         else:
             messages.error(request, "Layer could not be  uploaded !! Please Try again")
 
         return redirect('gis-layer-list')
-    return render(request, template_name, {'form': form})
+    return render(request, template_name, {'form': form, 'user': user_data})
 
 
 def gisLayer_replace(request, **kwargs):
     template_name = 'gis_replace.html'
+    user_data = UserProfile.objects.get(user=request.user)
     instance = GisLayer.objects.get(id=kwargs['pk'])
     get_store_name = GisLayer.objects.filter(id=kwargs['pk']).values_list('store_name', flat=True)
     form = GisLayerCreateForm(request.POST or None, instance=instance)
@@ -1735,14 +1883,14 @@ def gisLayer_replace(request, **kwargs):
 
             obj.save()
             messaged = "Map Layer " + named + "  has been edited by " + request.user.username
-            log = Log.objects.create(user=request.user, message=messaged, type="edited")
+            log = Log.objects.create(user=user_data, message=messaged, type="edited")
             messages.success(request, "Layer successfully replaced")
 
         else:
             messages.error(request, "Layer could not be  replaced !! Please Try again")
 
         return redirect('gis-layer-list')
-    return render(request, template_name, {'form': form})
+    return render(request, template_name, {'form': form, 'user': user_data})
 
 
 def gisLayer_delete(request, **kwargs):

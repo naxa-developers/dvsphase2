@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User, Permission
+from django.contrib.auth.models import User, Permission, Group
 from django.forms import ModelForm
 from core.models import Program, Partner, Sector, SubSector, MarkerCategory, MarkerValues, GisLayer, Province, District, \
     GapaNapa, Indicator, Project, FiveW, Output
@@ -19,6 +19,12 @@ class PermissionForm(ModelForm):
 class ProgramCreateForm(ModelForm):
     class Meta:
         model = Program
+        fields = '__all__'
+
+
+class GroupForm(ModelForm):
+    class Meta:
+        model = Group
         fields = '__all__'
 
 

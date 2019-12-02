@@ -145,6 +145,16 @@ class GapaNapa(models.Model):
         return self.name
 
 
+class Project(models.Model):
+    program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='ProjectProgram', null=True,
+                                   blank=True)
+    name = models.CharField(max_length=100, null=True, blank=True)
+    code = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
 class FiveW(models.Model):
     status = (
         ('ongoing', 'Ongoing'),
@@ -154,6 +164,7 @@ class FiveW(models.Model):
 
     partner_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='Partner', null=True, blank=True)
     program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='Program', null=True, blank=True)
+    project_id = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='FProject', null=True, blank=True)
     province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='FProvince', null=True, blank=True)
     district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='FDistrict', null=True, blank=True)
     municipality_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='GapaNapa', null=True,
@@ -257,16 +268,6 @@ class GisLayer(models.Model):
         return self.name
 
 
-class Project(models.Model):
-    program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='ProjectProgram', null=True,
-                                   blank=True)
-    name = models.CharField(max_length=100, null=True, blank=True)
-    code = models.CharField(max_length=100, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-
 class Output(models.Model):
     indicator = models.CharField(max_length=100, null=True, blank=True)
     male_forecast_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
@@ -314,3 +315,8 @@ class Output(models.Model):
     @property
     def total_achieved_2011_2019(self):
         return self.male_achieved_2011_2019 + self.female_achieved_2011_2019
+
+
+class ProvinceDummy(models.Model):
+    province_id = models.IntegerField(blank=True, null=True)
+    geom_char = models.TextField(blank=True, null=True)

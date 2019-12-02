@@ -81,6 +81,30 @@
 
                 </div>
 
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_project_id">Select Project</label>
+                        <select name="project_id" id="id_project_id" class="custom-select">
+                            {% for project in projects %}
+
+                            {% if form.instance.project_id.id == project.id %}
+
+                            <option value="{{project.id}}" selected>{{project.name}}</option>
+
+                            {% else %}
+
+                            <option value="{{project.id}}" >{{project.name}}</option>
+
+                            {% endif %}
+
+
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+
 
             </div>
 
@@ -426,7 +450,7 @@
 
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="id_representative_person">Select Local partner third</label>
+                        <label for="id_representative_person">Select contact representative</label>
                         <select name="representative_person" id="id_representative_person" class="custom-select">
                             {% for contact in contacts %}
 
