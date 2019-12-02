@@ -315,3 +315,8 @@ class Output(models.Model):
     @property
     def total_achieved_2011_2019(self):
         return self.male_achieved_2011_2019 + self.female_achieved_2011_2019
+
+
+class ProvinceDummy(models.Model):
+    province_id = models.IntegerField(blank=True, null=True)
+    geom_char = models.TextField(blank=True, null=True)
