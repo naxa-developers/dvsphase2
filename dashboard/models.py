@@ -14,8 +14,8 @@ class UserProfile(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='ProfileProject', null=True, blank=True)
     image = models.ImageField(upload_to='upload/profile/', null=True, blank=True)
 
-    def __str__(self):
-        return self.name
+    # def __str__(self):
+    #     return self.name
 
 
 class Log(models.Model):
