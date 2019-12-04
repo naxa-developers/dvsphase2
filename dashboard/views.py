@@ -358,8 +358,28 @@ def signup(request, **kwargs):
 
 def activate_user(request, **kwargs):
     user = User.objects.get(id=kwargs['id'])
+    user_data = UserProfile.objects.get(user=user)
+    emails = user_data.email
+    url = settings.SITE_URL
     user.is_active = True
     user.save()
+    subject = 'User Invitation'
+    message = render_to_string('confirmation_mail.html', {'url': url, 'user': user_data})
+
+    recipient_list = [emails]
+    email = EmailMessage(
+        subject, message, 'from@example.com', recipient_list
+    )
+    email.content_subtype = "html"
+    mail = email.send()
+    if mail == 1:
+        msg = emails + " was successfully activated"
+        messages.success(request, msg)
+
+    else:
+        msg = emails + " could not be activated "
+        messages.success(request, msg)
+
     return redirect('user-list')
 
 

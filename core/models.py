@@ -201,9 +201,9 @@ class FiveW(models.Model):
     end_date = models.DateField(null=True, blank=True)
     reporting_ministry_line = models.CharField(max_length=100, null=True, blank=True)
     budget = models.FloatField(null=True, blank=True, default=None)
-    representative_person = models.ForeignKey(PartnerContact, on_delete=models.CASCADE, related_name='PartnerContact',
-                                              null=True,
-                                              blank=True)
+    # representative_person = models.ForeignKey(PartnerContact, on_delete=models.CASCADE, related_name='PartnerContact',
+    #                                           null=True,
+    #                                           blank=True)
     remarks = models.TextField(blank=True)
 
     def __str__(self):
