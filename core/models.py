@@ -278,7 +278,6 @@ class Output(models.Model):
     female_achieved_2011 = models.IntegerField(null=True, blank=True, default=0)
     disability_achieved_2011 = models.IntegerField(null=True, blank=True, default=0)
     total_achieved_2011 = models.IntegerField(null=True, blank=True, default=0)
-
     male_forecast_2012 = models.IntegerField(null=True, blank=True, default=0)
     female_forecast_2012 = models.IntegerField(null=True, blank=True, default=0)
     disability_forecast_2012 = models.IntegerField(null=True, blank=True, default=0)
@@ -287,7 +286,6 @@ class Output(models.Model):
     female_achieved_2012 = models.IntegerField(null=True, blank=True, default=0)
     disability_achieved_2012 = models.IntegerField(null=True, blank=True, default=0)
     total_achieved_2012 = models.IntegerField(null=True, blank=True, default=0)
-
     male_forecast_2013 = models.IntegerField(null=True, blank=True, default=0)
     female_forecast_2013 = models.IntegerField(null=True, blank=True, default=0)
     disability_forecast_2013 = models.IntegerField(null=True, blank=True, default=0)
@@ -296,7 +294,6 @@ class Output(models.Model):
     female_achieved_2013 = models.IntegerField(null=True, blank=True, default=0)
     disability_achieved_2013 = models.IntegerField(null=True, blank=True, default=0)
     total_achieved_2013 = models.IntegerField(null=True, blank=True, default=0)
-
     male_forecast_2014 = models.IntegerField(null=True, blank=True, default=0)
     female_forecast_2014 = models.IntegerField(null=True, blank=True, default=0)
     disability_forecast_2014 = models.IntegerField(null=True, blank=True, default=0)
@@ -305,7 +302,6 @@ class Output(models.Model):
     female_achieved_2014 = models.IntegerField(null=True, blank=True, default=0)
     disability_achieved_2014 = models.IntegerField(null=True, blank=True, default=0)
     total_achieved_2014 = models.IntegerField(null=True, blank=True, default=0)
-
     male_forecast_2015 = models.IntegerField(null=True, blank=True, default=0)
     female_forecast_2015 = models.IntegerField(null=True, blank=True, default=0)
     disability_forecast_2015 = models.IntegerField(null=True, blank=True, default=0)
@@ -314,7 +310,6 @@ class Output(models.Model):
     female_achieved_2015 = models.IntegerField(null=True, blank=True, default=0)
     disability_achieved_2015 = models.IntegerField(null=True, blank=True, default=0)
     total_achieved_2015 = models.IntegerField(null=True, blank=True, default=0)
-
     male_forecast_2016 = models.IntegerField(null=True, blank=True, default=0)
     female_forecast_2016 = models.IntegerField(null=True, blank=True, default=0)
     disability_forecast_2016 = models.IntegerField(null=True, blank=True, default=0)
@@ -323,7 +318,6 @@ class Output(models.Model):
     female_achieved_2016 = models.IntegerField(null=True, blank=True, default=0)
     disability_achieved_2016 = models.IntegerField(null=True, blank=True, default=0)
     total_achieved_2016 = models.IntegerField(null=True, blank=True, default=0)
-
     male_forecast_2017 = models.IntegerField(null=True, blank=True, default=0)
     female_forecast_2017 = models.IntegerField(null=True, blank=True, default=0)
     disability_forecast_2017 = models.IntegerField(null=True, blank=True, default=0)
@@ -332,7 +326,6 @@ class Output(models.Model):
     female_achieved_2017 = models.IntegerField(null=True, blank=True, default=0)
     disability_achieved_2017 = models.IntegerField(null=True, blank=True, default=0)
     total_achieved_2017 = models.IntegerField(null=True, blank=True, default=0)
-
     male_forecast_2018 = models.IntegerField(null=True, blank=True, default=0)
     female_forecast_2018 = models.IntegerField(null=True, blank=True, default=0)
     disability_forecast_2018 = models.IntegerField(null=True, blank=True, default=0)
@@ -341,7 +334,6 @@ class Output(models.Model):
     female_achieved_2018 = models.IntegerField(null=True, blank=True, default=0)
     disability_achieved_2018 = models.IntegerField(null=True, blank=True, default=0)
     total_achieved_2018 = models.IntegerField(null=True, blank=True, default=0)
-
     male_forecast_2019 = models.IntegerField(null=True, blank=True, default=0)
     female_forecast_2019 = models.IntegerField(null=True, blank=True, default=0)
     disability_forecast_2019 = models.IntegerField(null=True, blank=True, default=0)
@@ -351,8 +343,8 @@ class Output(models.Model):
     disability_achieved_2019 = models.IntegerField(null=True, blank=True, default=0)
     total_achieved_2019 = models.IntegerField(null=True, blank=True, default=0)
 
-    # def __str__(self):
-    #     return self.indicator
+    def __str__(self):
+        return self.indicator
 
 
 class ProvinceDummy(models.Model):
