@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Partner, Program, Sector, SubSector, MarkerCategory, MarkerValues, Province, District, GapaNapa, \
-    FiveW, Indicator, IndicatorValue, TravelTime, GisLayer, Project, PartnerContact, Output, ProvinceDummy
+    FiveW, Indicator, IndicatorValue, TravelTime, GisLayer, Project, PartnerContact, Output, ProvinceDummy, Notification
 
 # Register your models here.
 
@@ -22,3 +22,4 @@ admin.site.register(Project)
 admin.site.register(PartnerContact)
 admin.site.register(Output)
 admin.site.register(ProvinceDummy)
+admin.site.register(Notification)

@@ -17,6 +17,7 @@ urlpatterns = [
     path('program/', views.ProgramTestApi.as_view({'get': 'list'}), name='program'),
     path('project/', views.ProjectApi.as_view({'get': 'list'}), name='project'),
     path('travel-time/', views.TravelTimeApi.as_view({'get': 'list'}), name='travel-time'),
+    path('notification/', views.NotifyApi.as_view({'get': 'list'}), name='notification'),
     path('map-layer/', views.GisApi.as_view({'get': 'list'}), name='map-layer'),
     path('palika-tile/<int:zoom>/<int:x>/<int:y>', views.municipality_tile, name="palika-tile"),
     path('district-tile/<int:zoom>/<int:x>/<int:y>', views.district_tile, name="district-tile"),

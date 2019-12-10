@@ -1,4 +1,5 @@
 from django.contrib.gis.db import models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -350,3 +351,11 @@ class Output(models.Model):
 class ProvinceDummy(models.Model):
     province_id = models.IntegerField(blank=True, null=True)
     geom_char = models.TextField(blank=True, null=True)
+
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='User', null=True, blank=True)
+    message = models.CharField(max_length=500, null=True, blank=True)
+    type = models.CharField(max_length=100, null=True, blank=True)
+    link = models.CharField(max_length=100, null=True, blank=True)
+    date = models.DateField(auto_now_add=True)
