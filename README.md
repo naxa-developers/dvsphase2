@@ -1,6 +1,7 @@
+![Imgur](https://i.imgur.com/ZtIe5vn.png)
 # Dvs
 
-[![Requirements Status](https://requires.io/github/dfid-dvs/server/requirements.svg?branch=master)](https://requires.io/github/dfid-dvs/server/requirements/?branch=master)     [![Maintainability](https://api.codeclimate.com/v1/badges/53490fd15b757a876b6a/maintainability)](https://codeclimate.com/github/naxadeve/dvsphase2/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/53490fd15b757a876b6a/test_coverage)](https://codeclimate.com/github/naxadeve/dvsphase2/test_coverage)
+[![Requirements Status](https://requires.io/github/dfid-dvs/server/requirements.svg?branch=master)](https://requires.io/github/dfid-dvs/server/requirements/?branch=master)     [![Maintainability](https://api.codeclimate.com/v1/badges/53490fd15b757a876b6a/maintainability)](https://codeclimate.com/github/naxadeve/dvsphase2/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/53490fd15b757a876b6a/test_coverage)](https://codeclimate.com/github/naxadeve/dvsphase2/test_coverage) ![version](https://img.shields.io/badge/python-v3.6-blue)
 
 ### Pipeline Test Status :
 
