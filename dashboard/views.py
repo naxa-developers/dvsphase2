@@ -21,7 +21,7 @@ from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
-    MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output
+    MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output, Notification
 from .models import UserProfile, Log
 from django.contrib.auth.models import User, Group, Permission
 from django.views.generic import TemplateView
@@ -272,6 +272,9 @@ def assign_role(request, **kwargs):
         user = User.objects.get(id=user_id)
         group = Group.objects.get(id=group_id)
         user.groups.add(group)
+        notify_message = user.username + ' was assigned ' + group.name + ' role by ' + request.user.username
+        notify = Notification.objects.create(user=user, message=notify_message, type='role',
+                                             link='/dashboard/user-list')
         return redirect('user-list')
 
 
@@ -305,6 +308,9 @@ def Invitation(request):
         if mail == 1:
             msg = emails + " was successfully invited"
             messages.success(request, msg)
+            notify_message = emails + ' was invited to create account by ' + user_data.name
+            notify = Notification.objects.create(user=user, message=notify_message, type='invitation',
+                                                 link='/dashboard/user-list')
             return redirect('user-list')
         else:
             msg = emails + " could not be invited "
@@ -327,6 +333,14 @@ def signup(request, **kwargs):
                                        partner_id=int(request.POST['partner']), program_id=int(request.POST['program']),
                                        project_id=int(request.POST['project']), image=request.FILES['image'])
 
+            notify_message = request.POST['email'] + ' has created account by username ' + request.POST['username']
+
+            notify_messages = 'Activate account for user ' + request.POST['username']
+
+            notify = Notification.objects.create(user=user, message=notify_message, type='signup',
+                                                 link='/dashboard/user-list')
+            notified = Notification.objects.create(user=user, message=notify_messages, type='signup',
+                                                   link='/dashboard/user-list')
             return render(request, 'registered_message.html', {'user': request.POST['name']})
         else:
             if kwargs['group'] == 0:
@@ -358,8 +372,33 @@ def signup(request, **kwargs):
 
 def activate_user(request, **kwargs):
     user = User.objects.get(id=kwargs['id'])
+    user_data = UserProfile.objects.get(user=user)
+    emails = user_data.email
+    url = settings.SITE_URL
     user.is_active = True
     user.save()
+    subject = 'Login'
+    message = render_to_string('confirmation_mail.html', {'url': url, 'user': user_data})
+
+    recipient_list = [emails]
+    email = EmailMessage(
+        subject, message, 'from@example.com', recipient_list
+    )
+    email.content_subtype = "html"
+    mail = email.send()
+    if mail == 1:
+        msg = emails + " was successfully activated"
+        messages.success(request, msg)
+
+        notify_message = 'Account for username ' + user.username + ' was activated by ' + request.user.username
+
+        notify = Notification.objects.create(user=request.user, message=notify_message, type='activation',
+                                             link='/dashboard/user-list')
+
+    else:
+        msg = emails + " could not be activated "
+        messages.success(request, msg)
+
     return redirect('user-list')
 
 

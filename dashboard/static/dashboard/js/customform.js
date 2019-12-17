@@ -51,6 +51,64 @@ contact_num = 1;
 
  })
 
+new_notify_count = 'null';
+setInterval(function(){
+$.ajax({
+    url: 'http://localhost:8000/api/v1/core/notification/',
+//    headers: {
+//        'Authorization': "Token 8933c5dd02de389ab5ee69c17a9af49f3d83b938",
+//    },
+    method: 'GET',
+    success: function(result){
+          item = localStorage.getItem('notify-item');
+      if (item == null){
+      localStorage.setItem('notify-item', 0)
 
+      }else{
+
+      if ( result.count <= item) {
+//      localStorage.clear()
+      localStorage.setItem('notify-item', result.count)
+
+
+      }else{
+//      localStorage.clear()
+
+      $('#notify-active-bar').addClass('notify')
+
+
+      }
+
+
+      }
+
+      new_notify_count = result.count
+      $('#notifyBar').html('');
+      var notify = '';
+      notify += '<li class="dropdown-header">You have '+result.results.length+' notifications</li>';
+      for (var i = 0; i < result.results.length; i++) {
+
+        notify += '<li class = "notification-new"> <a href="'+result.results[i]['link']+'"> '+result.results[i]['message']+' <span class=" font-size-12 d-inline-block float-right">'+result.results[i]['date']+'</span></a></li>';
+
+       }
+
+       $('#notifyBar').append(notify);
+       //localStorage.removeItem('notify-item');
+
+
+    }
+  });
+  }, 5000);
+
+$('#notify-id-div').on('click',function(){
+
+   if(new_notify_count == 'null') {
+
+   }else{
+  localStorage.setItem('notify-item', new_notify_count)
+   }
+ $('#notify-active-bar').removeClass()
+
+})
 
 }); // document end

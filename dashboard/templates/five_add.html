@@ -6,7 +6,7 @@
     <div class="dfid-breadcrumb pdt-100">
         <ul class="flex-start">
             <li>
-                <a href="#"><i class="material-icons">assignment</i> Five W</a>
+                <a href="/dashboard/five-list/"><i class="material-icons">assignment</i> Five W</a>
             </li>
             <li>New</li>
         </ul>
@@ -386,6 +386,44 @@
 
 
             <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_budget_of">Budget Of</label>
+                        <select name="budget_of" id="id_budget_of" class="custom-select">
+
+                            <option value="national" selected>National</option>
+                            <option value="province">Province</option>
+                            <option value="district">District</option>
+                            <option value="municipality">Municipality</option>
+
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_approved_budget" class="">Budget Approved</label>
+                        <input class="form-control" type="number" name="approved_budget" step="any"
+                               id="id_approved_budget"
+                               placeholder="3000"/>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_spend_budget" class="">Budget Spend</label>
+                        <input class="form-control" type="number" name="spend_budget" step="any" id="id_spend_budget"
+                               placeholder="20000"/>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="row">
 
                 <div class="col-md-4">
                     <div class="form-group ">
@@ -397,15 +435,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4">
-                    <div class="form-group ">
-                        <label for="id_budget" class="">Budget</label>
-                        <input type="number" class="form-control" name="budget" step="any" maxlength="100"
-                               id="id_budget"
-                               placeholder="84349"/>
 
-                    </div>
-                </div>
 
             </div>
 
