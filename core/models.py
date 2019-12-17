@@ -163,6 +163,14 @@ class FiveW(models.Model):
 
     )
 
+    admin_level = (
+        ('national', 'National'),
+        ('province', 'Province'),
+        ('district', 'District'),
+        ('municipality', 'Municipality'),
+
+    )
+
     partner_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='Partner', null=True, blank=True)
     program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='Program', null=True, blank=True)
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='FProject', null=True, blank=True)
@@ -201,7 +209,9 @@ class FiveW(models.Model):
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
     reporting_ministry_line = models.CharField(max_length=100, null=True, blank=True)
-    budget = models.FloatField(null=True, blank=True, default=None)
+    approved_budget = models.FloatField(null=True, blank=True, default=None)
+    spend_budget = models.FloatField(null=True, blank=True, default=None)
+    budget_of = models.CharField(max_length=100, choices=admin_level, default='national')
     # representative_person = models.ForeignKey(PartnerContact, on_delete=models.CASCADE, related_name='PartnerContact',
     #                                           null=True,
     #                                           blank=True)
