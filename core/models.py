@@ -209,13 +209,14 @@ class FiveW(models.Model):
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
     reporting_ministry_line = models.CharField(max_length=100, null=True, blank=True)
-    approved_budget = models.FloatField(null=True, blank=True, default=None)
-    spend_budget = models.FloatField(null=True, blank=True, default=None)
-    budget_of = models.CharField(max_length=100, choices=admin_level, default='national')
+    contract_value = models.FloatField(null=True, blank=True, default=None)
+    # approved_budget = models.FloatField(null=True, blank=True, default=None)
+    # spend_budget = models.FloatField(null=True, blank=True, default=None)
+    # budget_of = models.CharField(max_length=100, choices=admin_level, default='national')
     # representative_person = models.ForeignKey(PartnerContact, on_delete=models.CASCADE, related_name='PartnerContact',
     #                                           null=True,
     #                                           blank=True)
-    remarks = models.TextField(blank=True)
+    # remarks = models.TextField(blank=True)
 
     def __str__(self):
         return self.partner_id.name
