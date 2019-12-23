@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Custom Css -->
     <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/custom-my.css' %}">
 </head>
 
 <body class="">
@@ -222,46 +223,14 @@
 
                 <div class="navbar-right ">
                     <ul class="nav navbar-nav">
-                        <li class="dropdown notifications-menu">
-                            <button class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <i class="material-icons">notifications_none</i>
-                                <span class="notify"></span>
+                        <li class="dropdown notifications-menu" >
+                            <button class="dropdown-toggle" id="notify-id-div" data-toggle="dropdown" aria-expanded="false">
+                                <i class="material-icons" >notifications_none</i>
+                                <span class="" id="notify-active-bar"></span>
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-right dropdown-animation">
-                                <li class="dropdown-header">You have 5 notifications</li>
-                                <li>
-                                    <a href="#">
-                                        New user registered
-                                        <span class=" font-size-12 d-inline-block float-right">10 AM</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        User deleted
-                                        <span class=" font-size-12 d-inline-block float-right"> 07 AM</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        Sales report is ready
-                                        <span class=" font-size-12 d-inline-block float-right"> 12 PM</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        New client
-                                        <span class=" font-size-12 d-inline-block float-right">10 AM</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        Server overloaded
-                                        <span class=" font-size-12 d-inline-block float-right"> 05 AM</span>
-                                    </a>
-                                </li>
-                                <li class="dropdown-footer">
-                                    <a class="text-center" href="#"> View All </a>
-                                </li>
+                            <ul class="dropdown-menu dropdown-menu-right dropdown-animation" id ="notifyBar">
+                                <li class="dropdown-header">You have 0 new notifications</li>
+
                             </ul>
                         </li>
                         <!-- User Account -->

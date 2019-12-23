@@ -1,4 +1,5 @@
 from django.contrib.gis.db import models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -162,6 +163,14 @@ class FiveW(models.Model):
 
     )
 
+    admin_level = (
+        ('national', 'National'),
+        ('province', 'Province'),
+        ('district', 'District'),
+        ('municipality', 'Municipality'),
+
+    )
+
     partner_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='Partner', null=True, blank=True)
     program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='Program', null=True, blank=True)
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='FProject', null=True, blank=True)
@@ -200,10 +209,12 @@ class FiveW(models.Model):
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
     reporting_ministry_line = models.CharField(max_length=100, null=True, blank=True)
-    budget = models.FloatField(null=True, blank=True, default=None)
-    representative_person = models.ForeignKey(PartnerContact, on_delete=models.CASCADE, related_name='PartnerContact',
-                                              null=True,
-                                              blank=True)
+    approved_budget = models.FloatField(null=True, blank=True, default=None)
+    spend_budget = models.FloatField(null=True, blank=True, default=None)
+    budget_of = models.CharField(max_length=100, choices=admin_level, default='national')
+    # representative_person = models.ForeignKey(PartnerContact, on_delete=models.CASCADE, related_name='PartnerContact',
+    #                                           null=True,
+    #                                           blank=True)
     remarks = models.TextField(blank=True)
 
     def __str__(self):
@@ -270,53 +281,91 @@ class GisLayer(models.Model):
 
 class Output(models.Model):
     indicator = models.CharField(max_length=100, null=True, blank=True)
-    male_forecast_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
-    disability_forecast_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
-    female_forecast_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
-    male_achieved_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
-    female_achieved_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
-    disability_achieved_2011_2015 = models.IntegerField(null=True, blank=True, default=0)
-    male_forecast_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
-    female_forecast_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
-    disability_forecast_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
-    male_achieved_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
-    female_achieved_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
-    disability_achieved_2015_2019 = models.IntegerField(null=True, blank=True, default=0)
-    male_forecast_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
-    female_forecast_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
-    disability_forecast_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
-    male_achieved_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
-    female_achieved_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
-    disability_achieved_2011_2019 = models.IntegerField(null=True, blank=True, default=0)
+    male_forecast_2011 = models.IntegerField(null=True, blank=True, default=0)
+    disability_forecast_2011 = models.IntegerField(null=True, blank=True, default=0)
+    female_forecast_2011 = models.IntegerField(null=True, blank=True, default=0)
+    total_forecast_2011 = models.IntegerField(null=True, blank=True, default=0)
+    male_achieved_2011 = models.IntegerField(null=True, blank=True, default=0)
+    female_achieved_2011 = models.IntegerField(null=True, blank=True, default=0)
+    disability_achieved_2011 = models.IntegerField(null=True, blank=True, default=0)
+    total_achieved_2011 = models.IntegerField(null=True, blank=True, default=0)
+    male_forecast_2012 = models.IntegerField(null=True, blank=True, default=0)
+    female_forecast_2012 = models.IntegerField(null=True, blank=True, default=0)
+    disability_forecast_2012 = models.IntegerField(null=True, blank=True, default=0)
+    total_forecast_2012 = models.IntegerField(null=True, blank=True, default=0)
+    male_achieved_2012 = models.IntegerField(null=True, blank=True, default=0)
+    female_achieved_2012 = models.IntegerField(null=True, blank=True, default=0)
+    disability_achieved_2012 = models.IntegerField(null=True, blank=True, default=0)
+    total_achieved_2012 = models.IntegerField(null=True, blank=True, default=0)
+    male_forecast_2013 = models.IntegerField(null=True, blank=True, default=0)
+    female_forecast_2013 = models.IntegerField(null=True, blank=True, default=0)
+    disability_forecast_2013 = models.IntegerField(null=True, blank=True, default=0)
+    total_forecast_2013 = models.IntegerField(null=True, blank=True, default=0)
+    male_achieved_2013 = models.IntegerField(null=True, blank=True, default=0)
+    female_achieved_2013 = models.IntegerField(null=True, blank=True, default=0)
+    disability_achieved_2013 = models.IntegerField(null=True, blank=True, default=0)
+    total_achieved_2013 = models.IntegerField(null=True, blank=True, default=0)
+    male_forecast_2014 = models.IntegerField(null=True, blank=True, default=0)
+    female_forecast_2014 = models.IntegerField(null=True, blank=True, default=0)
+    disability_forecast_2014 = models.IntegerField(null=True, blank=True, default=0)
+    total_forecast_2014 = models.IntegerField(null=True, blank=True, default=0)
+    male_achieved_2014 = models.IntegerField(null=True, blank=True, default=0)
+    female_achieved_2014 = models.IntegerField(null=True, blank=True, default=0)
+    disability_achieved_2014 = models.IntegerField(null=True, blank=True, default=0)
+    total_achieved_2014 = models.IntegerField(null=True, blank=True, default=0)
+    male_forecast_2015 = models.IntegerField(null=True, blank=True, default=0)
+    female_forecast_2015 = models.IntegerField(null=True, blank=True, default=0)
+    disability_forecast_2015 = models.IntegerField(null=True, blank=True, default=0)
+    total_forecast_2015 = models.IntegerField(null=True, blank=True, default=0)
+    male_achieved_2015 = models.IntegerField(null=True, blank=True, default=0)
+    female_achieved_2015 = models.IntegerField(null=True, blank=True, default=0)
+    disability_achieved_2015 = models.IntegerField(null=True, blank=True, default=0)
+    total_achieved_2015 = models.IntegerField(null=True, blank=True, default=0)
+    male_forecast_2016 = models.IntegerField(null=True, blank=True, default=0)
+    female_forecast_2016 = models.IntegerField(null=True, blank=True, default=0)
+    disability_forecast_2016 = models.IntegerField(null=True, blank=True, default=0)
+    total_forecast_2016 = models.IntegerField(null=True, blank=True, default=0)
+    male_achieved_2016 = models.IntegerField(null=True, blank=True, default=0)
+    female_achieved_2016 = models.IntegerField(null=True, blank=True, default=0)
+    disability_achieved_2016 = models.IntegerField(null=True, blank=True, default=0)
+    total_achieved_2016 = models.IntegerField(null=True, blank=True, default=0)
+    male_forecast_2017 = models.IntegerField(null=True, blank=True, default=0)
+    female_forecast_2017 = models.IntegerField(null=True, blank=True, default=0)
+    disability_forecast_2017 = models.IntegerField(null=True, blank=True, default=0)
+    total_forecast_2017 = models.IntegerField(null=True, blank=True, default=0)
+    male_achieved_2017 = models.IntegerField(null=True, blank=True, default=0)
+    female_achieved_2017 = models.IntegerField(null=True, blank=True, default=0)
+    disability_achieved_2017 = models.IntegerField(null=True, blank=True, default=0)
+    total_achieved_2017 = models.IntegerField(null=True, blank=True, default=0)
+    male_forecast_2018 = models.IntegerField(null=True, blank=True, default=0)
+    female_forecast_2018 = models.IntegerField(null=True, blank=True, default=0)
+    disability_forecast_2018 = models.IntegerField(null=True, blank=True, default=0)
+    total_forecast_2018 = models.IntegerField(null=True, blank=True, default=0)
+    male_achieved_2018 = models.IntegerField(null=True, blank=True, default=0)
+    female_achieved_2018 = models.IntegerField(null=True, blank=True, default=0)
+    disability_achieved_2018 = models.IntegerField(null=True, blank=True, default=0)
+    total_achieved_2018 = models.IntegerField(null=True, blank=True, default=0)
+    male_forecast_2019 = models.IntegerField(null=True, blank=True, default=0)
+    female_forecast_2019 = models.IntegerField(null=True, blank=True, default=0)
+    disability_forecast_2019 = models.IntegerField(null=True, blank=True, default=0)
+    total_forecast_2019 = models.IntegerField(null=True, blank=True, default=0)
+    male_achieved_2019 = models.IntegerField(null=True, blank=True, default=0)
+    female_achieved_2019 = models.IntegerField(null=True, blank=True, default=0)
+    disability_achieved_2019 = models.IntegerField(null=True, blank=True, default=0)
+    total_achieved_2019 = models.IntegerField(null=True, blank=True, default=0)
 
     def __str__(self):
         return self.indicator
-
-    @property
-    def total_forecast_2011_2015(self):
-        return self.male_forecast_2011_2015 + self.female_forecast_2011_2015
-
-    @property
-    def total_achieved_2011_2015(self):
-        return self.male_achieved_2011_2015 + self.female_achieved_2011_2015
-
-    @property
-    def total_forecast_2015_2019(self):
-        return self.male_forecast_2015_2019 + self.female_forecast_2015_2019
-
-    @property
-    def total_achieved_2015_2019(self):
-        return self.male_achieved_2015_2019 + self.female_achieved_2015_2019
-
-    @property
-    def total_forecast_2011_2019(self):
-        return self.male_forecast_2011_2019 + self.female_forecast_2011_2019
-
-    @property
-    def total_achieved_2011_2019(self):
-        return self.male_achieved_2011_2019 + self.female_achieved_2011_2019
 
 
 class ProvinceDummy(models.Model):
     province_id = models.IntegerField(blank=True, null=True)
     geom_char = models.TextField(blank=True, null=True)
+
+
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='User', null=True, blank=True)
+    message = models.CharField(max_length=500, null=True, blank=True)
+    type = models.CharField(max_length=100, null=True, blank=True)
+    link = models.CharField(max_length=100, null=True, blank=True)
+    date = models.DateField(auto_now_add=True)
