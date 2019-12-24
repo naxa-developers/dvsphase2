@@ -50,11 +50,12 @@ contact_num = 1;
 
 
  })
-
+var getUrl = window.location;
+var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[0];
 new_notify_count = 'null';
 setInterval(function(){
 $.ajax({
-    url: 'http://localhost:8000/api/v1/core/notification/',
+    url: baseUrl+'api/v1/core/notification/',
 //    headers: {
 //        'Authorization': "Token 8933c5dd02de389ab5ee69c17a9af49f3d83b938",
 //    },
