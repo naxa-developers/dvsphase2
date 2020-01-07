@@ -283,10 +283,10 @@ def Invitation(request):
     if "GET" == request.method:
         group = Group.objects.all()
         partner = Partner.objects.all()
-        program = Program.objects.all()
-        project = Project.objects.all()
-        return render(request, 'invitation_form.html',
-                      {'group': group, 'partners': partner, 'programs': program, 'projects': project})
+        # program = Program.objects.all()
+        # project = Project.objects.all()
+        return render(request, 'invitation_form.html', {'group': group, 'partners': partner, })
+
     else:
         user = request.user
         user_data = UserProfile.objects.get(user=user)
@@ -294,11 +294,11 @@ def Invitation(request):
         group = request.POST["group"]
         emails = request.POST["email"]
         partnered = request.POST["partner"]
-        programed = request.POST["program"]
-        projected = request.POST["project"]
+        # programed = request.POST["program"]
+        # projected = request.POST["project"]
         subject = 'User Invitation'
-        message = render_to_string('mail.html', {'group': group, 'url': url, 'partner': partnered, 'program': programed,
-                                                 'project': projected, 'user': user_data})
+        message = render_to_string('mail.html', {'group': group, 'url': url, 'partner': partnered, 'user': user_data, })
+
         recipient_list = [emails]
         email = EmailMessage(
             subject, message, 'from@example.com', recipient_list
@@ -330,8 +330,7 @@ def signup(request, **kwargs):
                 user.groups.add(group)
 
             UserProfile.objects.create(user=user, name=request.POST['name'], email=request.POST['email'],
-                                       partner_id=int(request.POST['partner']), program_id=int(request.POST['program']),
-                                       project_id=int(request.POST['project']), image=request.FILES['image'])
+                                       partner_id=int(request.POST['partner']), image=request.FILES['image'])
 
             notify_message = request.POST['email'] + ' has created account by username ' + request.POST['username']
 
@@ -345,29 +344,29 @@ def signup(request, **kwargs):
         else:
             if kwargs['group'] == 0:
                 partner = Partner.objects.all()
-                program = Program.objects.all()
-                project = Project.objects.all()
+                # program = Program.objects.all()
+                # project = Project.objects.all()
             else:
                 partner = Partner.objects.filter(id=kwargs['partner'])
-                program = Program.objects.filter(id=kwargs['program'])
-                project = Project.objects.filter(id=kwargs['project'])
+                # program = Program.objects.filter(id=kwargs['program'])
+                # project = Project.objects.filter(id=kwargs['project'])
 
             return render(request, 'signups.html',
-                          {'form': form, 'partners': partner, 'programs': program, 'projects': project})
+                          {'form': form, 'partners': partner, })
 
     else:
         form = UserCreationForm()
         if kwargs['group'] == 0:
             partner = Partner.objects.all()
-            program = Program.objects.all()
-            project = Project.objects.all()
+            # program = Program.objects.all()
+            # project = Project.objects.all()
         else:
             partner = Partner.objects.filter(id=kwargs['partner'])
-            program = Program.objects.filter(id=kwargs['program'])
-            project = Project.objects.filter(id=kwargs['project'])
+            # program = Program.objects.filter(id=kwargs['program'])
+            # project = Project.objects.filter(id=kwargs['project'])
 
         return render(request, 'signups.html',
-                      {'form': form, 'partners': partner, 'programs': program, 'projects': project})
+                      {'form': form, 'partners': partner, })
 
 
 def activate_user(request, **kwargs):

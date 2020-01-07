@@ -112,4 +112,20 @@ $('#notify-id-div').on('click',function(){
 
 })
 
+//ajax request for district
+//$('#notify-id-div').on('click',function(){
+$.ajax({
+    url: baseUrl+'api/v1/core/district/?province_id=2',
+//    headers: {
+//        'Authorization': "Token 8933c5dd02de389ab5ee69c17a9af49f3d83b938",
+//    },
+    method: 'GET',
+    success: function(result){
+
+    console.log(result)
+
+    }});
+//    });
+
 }); // document end
+
