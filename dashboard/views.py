@@ -915,7 +915,7 @@ class OutputCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 
 class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = FiveW
-    template_name = 'five_add.html'
+    template_name = 'five_adds.html'
     form_class = FiveCreateForm
     success_message = 'Five W successfully Created'
 
@@ -946,7 +946,7 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "New Five W " + str(self.object.partner_id) + "  has been added by " + self.request.user.username
+        message = "New Five W " + str(self.object.supplier_id) + "  has been added by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 

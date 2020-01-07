@@ -171,45 +171,53 @@ class FiveW(models.Model):
 
     )
 
-    partner_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='Partner', null=True, blank=True)
+    supplier_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='Partner', null=True, blank=True)
+    second_tier_partner = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='SPartner', null=True, blank=True)
     program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='Program', null=True, blank=True)
-    project_id = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='FProject', null=True, blank=True)
+    component_id = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='FProject', null=True, blank=True)
     province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='FProvince', null=True, blank=True)
     district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='FDistrict', null=True, blank=True)
     municipality_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='GapaNapa', null=True,
                                         blank=True)
     ward = models.CharField(max_length=200, null=True, blank=True)
-    consortium_partner_first_id = models.ForeignKey(Partner, on_delete=models.CASCADE,
-                                                    related_name='ConsortiumPartnerF',
-                                                    null=True, blank=True)
-    consortium_partner_second_id = models.ForeignKey(Partner, on_delete=models.CASCADE,
-                                                     related_name='ConsortiumPartnerS',
-                                                     null=True, blank=True)
-    consortium_partner_third_id = models.ForeignKey(Partner, on_delete=models.CASCADE,
-                                                    related_name='ConsortiumPartnerT',
-                                                    null=True, blank=True)
-    implementing_partner_first_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='FPartner',
-                                                      null=True,
-                                                      blank=True)
-    implementing_partner_second_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='SPartner',
-                                                       null=True,
-                                                       blank=True)
-    implementing_partner_third_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='TPartner',
-                                                      null=True,
-                                                      blank=True)
-    implementing_partner_fourth_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='FOPartner',
-                                                       null=True, blank=True)
-    local_partner_first_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='LocalPartnerF',
-                                               null=True, blank=True)
-    local_partner_second_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='LocalPartnerS',
-                                                null=True, blank=True)
-    local_partner_third_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='LocalPartnerT',
-                                               null=True, blank=True)
-    status = models.CharField(max_length=50, choices=status, default='ongoing')
+    local_partner = models.CharField(max_length=500, null=True, blank=True)
+    project_title = models.CharField(max_length=500, null=True, blank=True)
+    # consortium_partner_first_id = models.ForeignKey(Partner, on_delete=models.CASCADE,
+    #                                                 related_name='ConsortiumPartnerF',
+    #                                                 null=True, blank=True)
+    # consortium_partner_second_id = models.ForeignKey(Partner, on_delete=models.CASCADE,
+    #                                                  related_name='ConsortiumPartnerS',
+    #                                                  null=True, blank=True)
+    # consortium_partner_third_id = models.ForeignKey(Partner, on_delete=models.CASCADE,
+    #                                                 related_name='ConsortiumPartnerT',
+    #                                                 null=True, blank=True)
+    # implementing_partner_first_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='FPartner',
+    #                                                   null=True,
+    #                                                   blank=True)
+    # implementing_partner_second_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='SPartner',
+    #                                                    null=True,
+    #                                                    blank=True)
+    # implementing_partner_third_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='TPartner',
+    #                                                   null=True,
+    #                                                   blank=True)
+    # implementing_partner_fourth_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='FOPartner',
+    #                                                    null=True, blank=True)
+    # local_partner_first_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='LocalPartnerF',
+    #                                            null=True, blank=True)
+    # local_partner_second_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='LocalPartnerS',
+    #                                             null=True, blank=True)
+    # local_partner_third_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='LocalPartnerT',
+    #                                            null=True, blank=True)
+    status = models.CharField(max_length=100, choices=status, default='ongoing')
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
-    reporting_ministry_line = models.CharField(max_length=100, null=True, blank=True)
-    contract_value = models.FloatField(null=True, blank=True, default=None)
+    allocated_budget = models.FloatField(null=True, blank=True, default=0)
+    male_beneficiary = models.IntegerField(null=True, blank=True, default=0)
+    female_beneficiary = models.IntegerField(null=True, blank=True, default=0)
+    total_beneficiary = models.IntegerField(null=True, blank=True, default=0)
+    # reporting_ministry_line = models.CharField(max_length=100, null=True, blank=True)
+    contract_value = models.FloatField(null=True, blank=True, default=0)
+
     # approved_budget = models.FloatField(null=True, blank=True, default=None)
     # spend_budget = models.FloatField(null=True, blank=True, default=None)
     # budget_of = models.CharField(max_length=100, choices=admin_level, default='national')
@@ -219,7 +227,7 @@ class FiveW(models.Model):
     # remarks = models.TextField(blank=True)
 
     def __str__(self):
-        return self.partner_id.name
+        return self.supplier_id.name
 
 
 class Indicator(models.Model):
