@@ -113,19 +113,26 @@ $('#notify-id-div').on('click',function(){
 })
 
 //ajax request for district
-//$('#notify-id-div').on('click',function(){
+$('#id_province_id').on('change',function(){
+prov_id = $(this).val()
 $.ajax({
-    url: baseUrl+'api/v1/core/district/?province_id=2',
+    url: baseUrl+'api/v1/core/district/?province_id='+prov_id,
 //    headers: {
 //        'Authorization': "Token 8933c5dd02de389ab5ee69c17a9af49f3d83b938",
 //    },
     method: 'GET',
     success: function(result){
 
-    console.log(result)
+
+
+    $('#id_district_id').html("");
+    for(var i = 0 ; i<district.length;i++){
+    var prov_div="<option value="+district[i].id+">"+district[i].name+"</option>"
+    $('#id_district_id').append(prov_div);
+    }
 
     }});
-//    });
+    });
 
 }); // document end
 
