@@ -1,10 +1,11 @@
 from .models import Partner, Program, MarkerValues, District, Province, GapaNapa, FiveW, Indicator, IndicatorValue, \
-    Sector, SubSector, MarkerCategory, TravelTime, GisLayer, Project, Output, Notification
+    Sector, SubSector, MarkerCategory, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import PartnerSerializer, ProgramSerializer, MarkerValuesSerializer, DistrictSerializer, \
     ProvinceSerializer, GaanapaSerializer, FivewSerializer, \
     IndicatorSerializer, IndicatorValueSerializer, SectorSerializer, SubsectorSerializer, MarkerCategorySerializer, \
-    TravelTimeSerializer, GisLayerSerializer, ProjectSerializer, OutputSerializer, NotificationSerializer
+    TravelTimeSerializer, GisLayerSerializer, ProjectSerializer, OutputSerializer, NotificationSerializer, \
+    ContractSumSerializer
 from rest_framework import viewsets, views
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
@@ -131,27 +132,20 @@ class Fivew(viewsets.ReadOnlyModelViewSet):
         return serializer_class
 
 
-class FiveContract(viewsets.ReadOnlyModelViewSet):
+class ContractSum(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
 
     # filter_backends = [DjangoFilterBackend]
-    # filterset_fields = ['id', 'supplier_id', 'program_id', 'component_id', 'second_tier_partner', 'province_id',
-    #                     'district_id', 'municipality_id']
+    filterset_fields = ['id', 'supplier_id', 'program_id', 'component_id', 'second_tier_partner', ]
 
     def get_queryset(self):
-        supplier = self.request.query_params.get('supplier')
-        second_tier = self.request.query_params.get('second')
-        program = self.request.query_params.get('program')
-        component = self.request.query_params.get('component')
-        queryset = FiveW.objects.select_related('supplier_id', 'second_tier_partner', 'program_id', 'component_id',
-                                                'province_id', 'district_id', 'municipality_id').filter(
-            supplier_id=supplier, second_tier_partner=second_tier, program_id=program,
-            component_id=component, ).exclude(contract_value=0)
+        queryset = BudgetToSecondTier.objects.select_related('supplier_id', 'second_tier_partner', 'program_id',
+                                                             'component_id', ).all()
 
         return queryset
 
     def get_serializer_class(self):
-        serializer_class = FivewSerializer
+        serializer_class = ContractSumSerializer
         return serializer_class
 
 

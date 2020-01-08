@@ -172,7 +172,8 @@ class FiveW(models.Model):
     )
 
     supplier_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='Partner', null=True, blank=True)
-    second_tier_partner = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='SPartner', null=True, blank=True)
+    second_tier_partner = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='SPartner', null=True,
+                                            blank=True)
     program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='Program', null=True, blank=True)
     component_id = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='FProject', null=True, blank=True)
     province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='FProvince', null=True, blank=True)
@@ -215,8 +216,8 @@ class FiveW(models.Model):
     male_beneficiary = models.IntegerField(null=True, blank=True, default=0)
     female_beneficiary = models.IntegerField(null=True, blank=True, default=0)
     total_beneficiary = models.IntegerField(null=True, blank=True, default=0)
+
     # reporting_ministry_line = models.CharField(max_length=100, null=True, blank=True)
-    contract_value = models.FloatField(null=True, blank=True, default=0)
 
     # approved_budget = models.FloatField(null=True, blank=True, default=None)
     # spend_budget = models.FloatField(null=True, blank=True, default=None)
@@ -378,3 +379,25 @@ class Notification(models.Model):
     type = models.CharField(max_length=100, null=True, blank=True)
     link = models.CharField(max_length=100, null=True, blank=True)
     date = models.DateField(auto_now_add=True)
+
+
+class BudgetToSecondTier(models.Model):
+    supplier_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='BsPartner', null=True, )
+    second_tier_partner = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='BPartner', null=True, )
+    program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='BProgram', null=True, blank=True)
+    component_id = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='BProject', null=True, blank=True)
+    contract_value = models.FloatField(null=True, blank=True, default=0)
+
+    def __str__(self):
+        return self.supplier_id.name
+
+
+class BudgetToFirstTier(models.Model):
+    supplier_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='BFPartner', null=True, )
+    program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='BFProgram', null=True, blank=True)
+    component_id = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='BFProject', null=True, blank=True)
+    approved_budget = models.FloatField(null=True, blank=True, default=0)
+    spend_budget = models.FloatField(null=True, blank=True, default=0)
+
+    def __str__(self):
+        return self.supplier_id.name

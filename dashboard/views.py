@@ -21,7 +21,7 @@ from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
-    MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output, Notification
+    MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output, Notification, BudgetToSecondTier
 from .models import UserProfile, Log
 from django.contrib.auth.models import User, Group, Permission
 from django.views.generic import TemplateView
@@ -924,6 +924,7 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         partner = Partner.objects.filter(id=user_data.partner.id).order_by('id')
+        all_partner = Partner.objects.order_by('id')
         program = Program.objects.all().order_by('id')
         project = Project.objects.all().order_by('id')
         province = Province.objects.all().order_by('id')
@@ -932,6 +933,7 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         contact = PartnerContact.objects.all().order_by('id')
         data['user'] = user_data
         data['partners'] = partner
+        data['all_partner'] = all_partner
         data['programs'] = program
         data['projects'] = project
         data['provinces'] = province
@@ -944,9 +946,33 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return reverse_lazy('five-list')
 
     def form_valid(self, form):
-        print(type(self.request.POST['start_date']))
+        print(self.request.POST['contract_value_id'])
+        print(self.request.POST['contract_value'])
+        contract_id = self.request.POST['contract_value_id']
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
+        if contract_id == '0':
+            data_filter = budget_to_second_tier = BudgetToSecondTier.objects.filter(
+                supplier_id_id=self.request.POST['supplier_id'],
+                second_tier_partner_id=self.request.POST['second_tier_partner'],
+                program_id_id=self.request.POST['program_id'],
+                component_id_id=self.request.POST['component_id'], )
+
+            print(data_filter.count())
+            if data_filter.count() == 0:
+                budget_to_second_tier = BudgetToSecondTier.objects.create(
+                    supplier_id_id=self.request.POST['supplier_id'],
+                    second_tier_partner_id=self.request.POST['second_tier_partner'],
+                    program_id_id=self.request.POST['program_id'],
+                    component_id_id=self.request.POST['component_id'],
+                    contract_value=self.request.POST['contract_value'])
+
+
+
+        else:
+            budget_to_second_tier = BudgetToSecondTier.objects.filter(id=contract_id).update(
+                contract_value=self.request.POST['contract_value'])
+
         message = "New Five W " + str(self.object.supplier_id) + "  has been added by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
