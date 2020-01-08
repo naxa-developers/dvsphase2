@@ -55,7 +55,7 @@
                                             <select name="supplier_id" id="id_supplier_id" class="custom-select">
                                                 {% for partner in partners %}
 
-                                                {% if form.instance.partner_id.id == partner.id %}
+                                                {% if form.instance.supplier_id.id == partner.id %}
 
                                                 <option value="{{partner.id}}" selected>{{partner.name}}</option>
 
@@ -395,10 +395,10 @@
                                     <div class="form-group ">
                                         <label for="id_start_date" class="">Start Date</label>
                                         <div class="input-group date" data-provide="datepicker">
-                                        <input type="text" class="form-control" name="start_date" maxlength="100"
-                                               id="id_start_date"
-                                               value="{{ form.instance.start_date }}"
-                                               placeholder="2019-11-20"/>
+                                            <input type="text" class="form-control" name="start_date" maxlength="100"
+                                                   id="id_start_date"
+                                                   value="{{ form.instance.start_date |date:'m/d/Y' }}"
+                                                   placeholder="2019-11-20"/>
                                         </div>
 
                                     </div>
@@ -408,10 +408,10 @@
                                     <div class="form-group ">
                                         <label for="id_end_date" class="">End Date</label>
                                         <div class="input-group date" data-provide="datepicker">
-                                        <input type="text" class="form-control" name="end_date" maxlength="100"
-                                               id="id_end_date"
-                                               value="{{form.instance.end_date}}"
-                                               placeholder="2019-11-20"/>
+                                            <input type="text" class="form-control" name="end_date" maxlength="100"
+                                                   id="id_end_date"
+                                                   value="{{form.instance.end_date |date:'m/d/Y'}}"
+                                                   placeholder="2019-11-20"/>
                                         </div>
                                     </div>
                                 </div>

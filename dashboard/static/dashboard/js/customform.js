@@ -191,12 +191,31 @@ $.ajax({
 
 
    $('#checkbox_id').on('change',function(){
-
+     var sup=$('#id_supplier_id').val()
+     var prog=$('#id_program_id').val()
+     var comp=$('#id_component_id').val()
+     var second=$('#id_second_tier_partner').val()
+     console.log(second)
 //   console.log('aaa');
 //   console.log($('#checkbox_id').is(":checked"));
    var check=$('#checkbox_id').is(":checked")
    if (check){
    $('#second_tier').css('display','')
+   $.ajax({
+    url: baseUrl+'api/v1/core/five-filter/?supplier='+sup+'&second='+second+'&program='+prog+'&component='+comp,
+//    headers: {
+//        'Authorization': "Token 8933c5dd02de389ab5ee69c17a9af49f3d83b938",
+//    },
+    method: 'GET',
+    success: function(result){
+
+    if(result.results.length >= 1 ){
+    console.log(result.results)
+    }
+
+
+    }});
+
    }else{
     $('#second_tier').css('display','None')
    }

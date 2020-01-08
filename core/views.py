@@ -133,14 +133,21 @@ class Fivew(viewsets.ReadOnlyModelViewSet):
 
 class FiveContract(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'supplier_id', 'program_id', 'component_id', 'second_tier_partner', 'province_id',
-                        'district_id', 'municipality_id']
+
+    # filter_backends = [DjangoFilterBackend]
+    # filterset_fields = ['id', 'supplier_id', 'program_id', 'component_id', 'second_tier_partner', 'province_id',
+    #                     'district_id', 'municipality_id']
 
     def get_queryset(self):
-        category = self.request.query_params.get('category')
+        supplier = self.request.query_params.get('supplier')
+        second_tier = self.request.query_params.get('second')
+        program = self.request.query_params.get('program')
+        component = self.request.query_params.get('component')
         queryset = FiveW.objects.select_related('supplier_id', 'second_tier_partner', 'program_id', 'component_id',
-                                                'province_id', 'district_id', 'municipality_id').filter()
+                                                'province_id', 'district_id', 'municipality_id').filter(
+            supplier_id=supplier, second_tier_partner=second_tier, program_id=program,
+            component_id=component, ).exclude(contract_value=0)
+
         return queryset
 
     def get_serializer_class(self):
