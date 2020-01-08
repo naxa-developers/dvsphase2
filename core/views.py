@@ -115,13 +115,37 @@ class GapaNapaApi(viewsets.ReadOnlyModelViewSet):
         return serializer_class
 
 
-class Fivew(views.APIView):
+class Fivew(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id', 'supplier_id', 'program_id', 'component_id', 'second_tier_partner', 'province_id',
+                        'district_id', 'municipality_id']
 
-    def get(self, request, *args, **kwargs):
-        queryset = FiveW.objects.select_related().all()
-        serializer = FivewSerializer(queryset, many=True)
-        return Response({'heading': 'Heading of dataa', 'description': 'description of data', 'data': serializer.data})
+    def get_queryset(self):
+        queryset = FiveW.objects.select_related('supplier_id', 'second_tier_partner', 'program_id', 'component_id',
+                                                'province_id', 'district_id', 'municipality_id').all()
+        return queryset
+
+    def get_serializer_class(self):
+        serializer_class = FivewSerializer
+        return serializer_class
+
+
+class FiveContract(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id', 'supplier_id', 'program_id', 'component_id', 'second_tier_partner', 'province_id',
+                        'district_id', 'municipality_id']
+
+    def get_queryset(self):
+        category = self.request.query_params.get('category')
+        queryset = FiveW.objects.select_related('supplier_id', 'second_tier_partner', 'program_id', 'component_id',
+                                                'province_id', 'district_id', 'municipality_id').filter()
+        return queryset
+
+    def get_serializer_class(self):
+        serializer_class = FivewSerializer
+        return serializer_class
 
 
 class IndicatorApi(viewsets.ReadOnlyModelViewSet):
@@ -178,6 +202,7 @@ class OutputApi(viewsets.ReadOnlyModelViewSet):
 
 class NotifyApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
+
     # authentication_classes = (TokenAuthentication, BasicAuthentication)
 
     def get_queryset(self):
@@ -206,7 +231,7 @@ class SubsectorApi(viewsets.ReadOnlyModelViewSet):
 class ProjectApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'name']
+    filterset_fields = ['id', 'name', 'program_id']
 
     def get_queryset(self):
         queryset = Project.objects.order_by('id')

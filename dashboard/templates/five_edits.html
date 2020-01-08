@@ -55,7 +55,15 @@
                                             <select name="supplier_id" id="id_supplier_id" class="custom-select">
                                                 {% for partner in partners %}
 
+                                                {% if form.instance.partner_id.id == partner.id %}
+
+                                                <option value="{{partner.id}}" selected>{{partner.name}}</option>
+
+                                                {% else %}
+
                                                 <option value="{{partner.id}}">{{partner.name}}</option>
+
+                                                {% endif %}
 
 
                                                 {% endfor %}
@@ -71,7 +79,15 @@
                                             <select name="program_id" id="id_program_id" class="custom-select">
                                                 {% for program in programs %}
 
+                                                {% if form.instance.program_id.id == program.id %}
+
+                                                <option value="{{program.id}}" selected>{{program.name}}</option>
+
+                                                {% else %}
+
                                                 <option value="{{program.id}}">{{program.name}}</option>
+
+                                                {% endif %}
 
 
                                                 {% endfor %}
@@ -90,7 +106,15 @@
                                             <select name="component_id" id="id_component_id" class="custom-select">
                                                 {% for project in projects %}
 
+                                                {% if form.instance.component_id.id == project.id %}
+
+                                                <option value="{{project.id}}" selected>{{project.name}}</option>
+
+                                                {% else %}
+
                                                 <option value="{{project.id}}">{{project.name}}</option>
+
+                                                {% endif %}
 
 
                                                 {% endfor %}
@@ -104,7 +128,8 @@
                                         <div class="form-group form-flex">
                                             <label for="id_project_title">Enter Project Title</label>
                                             <input type="text" name="project_title" maxlength="500"
-                                                   id="id_project_title" class="form-control"
+                                                   id="id_project_title" value={{ form.instance.project_title }}
+                                                   class="form-control"
                                                    placeholder="Enter Project Title">
                                         </div>
                                     </div>
@@ -135,7 +160,15 @@
                                                     class="custom-select">
                                                 {% for partner in partners %}
 
+                                                {% if form.instance.second_tier_partner.id == partner.id %}
+
+                                                <option value="{{partner.id}}" selected>{{partner.name}}</option>
+
+                                                {% else %}
+
                                                 <option value="{{partner.id}}">{{partner.name}}</option>
+
+                                                {% endif %}
 
 
                                                 {% endfor %}
@@ -152,15 +185,16 @@
                                                         <span>Do you want to enter the overall budget for the partner ? If yes (YES / NO TOGGLE)
                                                         </span>
                                             <label class="switch">
-                                                <input type="checkbox" id="checkbox_id">
+                                                <input type="checkbox">
                                                 <span class="slider round"></span>
                                             </label>
                                         </div>
-                                        <div class="form-group form-flex" id="second_tier" style="display:none">
+                                        <div class="form-group form-flex">
                                             <label for="id_contract_value" class="Sum">Enter Contract Value</label>
                                             <input type="number" name="contract_value" step="any"
-                                                   id="id_contract_value" value="0" class=" form-control"
-                                                   placeholder="Enter Project Title">
+                                                   id="id_contract_value" value="{{form.instance.contract_value}}"
+                                                   class=" form-control"
+                                                   placeholder="contract sum">
                                         </div>
                                     </div>
                                 </div>
@@ -190,7 +224,15 @@
                                             <select name="province_id" id="id_province_id" class="custom-select">
                                                 {% for province in provinces %}
 
+                                                {% if form.instance.province_id.id == province.id %}
+
+                                                <option value="{{province.id}}" selected>{{province.name}}</option>
+
+                                                {% else %}
+
                                                 <option value="{{province.id}}">{{province.name}}</option>
+
+                                                {% endif %}
 
 
                                                 {% endfor %}
@@ -206,7 +248,15 @@
                                             <select name="district_id" id="id_district_id" class="custom-select">
                                                 {% for district in districts %}
 
+                                                {% if form.instance.district_id.id == district.id %}
+
+                                                <option value="{{district.id}}" selected>{{district.name}}</option>
+
+                                                {% else %}
+
                                                 <option value="{{district.id}}">{{district.name}}</option>
+
+                                                {% endif %}
 
 
                                                 {% endfor %}
@@ -226,7 +276,15 @@
                                                     class="custom-select">
                                                 {% for mun in municipalities %}
 
+                                                {% if form.instance.municipality_id.id == mun.id %}
+
+                                                <option value="{{mun.id}}" selected>{{mun.name}}</option>
+
+                                                {% else %}
+
                                                 <option value="{{mun.id}}">{{mun.name}}</option>
+
+                                                {% endif %}
 
 
                                                 {% endfor %}
@@ -239,7 +297,8 @@
                                     <div class="col-wrapper">
                                         <div class="form-group form-flex">
                                             <label for="id_allocated_budget">Enter Allocated Budget</label>
-                                            <input type="number" name="allocated_budget" value="0" step="any"
+                                            <input type="number" name="allocated_budget"
+                                                   value="{{form.instance.allocated_budget}}" step="any"
                                                    id="id_allocated_budget" class="form-control" placeholder="">
                                         </div>
                                     </div>
@@ -251,7 +310,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group ">
                                         <label for="id_male_beneficiary" class="">Male Beneficiary</label>
-                                        <input type="number" name="male_beneficiary" value="0" id="id_male_beneficiary"
+                                        <input type="number" name="male_beneficiary"
+                                               value="{{form.instance.male_beneficiary}}" id="id_male_beneficiary"
                                                class="form-control"
                                                placeholder=""/>
 
@@ -261,7 +321,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group ">
                                         <label for="id_female_beneficiary" class="">Female Beneficiary</label>
-                                        <input type="number" name="female_beneficiary" value="0" class="form-control"
+                                        <input type="number" name="female_beneficiary"
+                                               value="{{form.instance.female_beneficiary}}" class="form-control"
                                                id="id_female_beneficiary"
                                                placeholder=""/>
 
@@ -277,7 +338,8 @@
                                     <div class="col-wrapper">
                                         <div class="form-group form-flex">
                                             <label for="id_total_beneficiary">Total Beneficiary</label>
-                                            <input type="number" name="total_beneficiary" value="0"
+                                            <input type="number" name="total_beneficiary"
+                                                   value="{{form.instance.total_beneficiary}}"
                                                    id="id_total_beneficiary" class="form-control"
                                                    placeholder="  ">
                                         </div>
@@ -289,6 +351,7 @@
                                             <label for="id_ward" class="">Ward</label>
                                             <input type="text" class="form-control" name="ward" maxlength="200"
                                                    id="id_ward"
+                                                   value="{{form.instance.ward}}"
                                                    placeholder="1"/>
                                         </div>
                                     </div>
@@ -301,7 +364,8 @@
                                         <div class="form-group form-flex">
                                             <label for="id_local_partner">Local Partners</label>
                                             <input type="text" name="local_partner" maxlength="500"
-                                                   id="id_local_partner" class="form-control" placeholder="">
+                                                   id="id_local_partner" value="{{form.instance.local_partner}}"
+                                                   class="form-control" placeholder="">
                                         </div>
                                     </div>
                                 </div>
@@ -311,8 +375,12 @@
                                         <label for="id_status">Select status</label>
                                         <select name="status" id="id_status" class="custom-select">
 
-                                            <option value="ongoing">Ongoing</option>
-                                            <option value="completed">Completed</option>
+                                            {% if form.instance.status == 'ongoing' %}
+                                            <option value="ongoing" selected>Ongoing</option>
+
+                                            {% else %}
+                                            <option value="completed" selected>Completed</option>
+                                            {% endif %}
 
 
                                         </select>
@@ -329,6 +397,7 @@
                                         <div class="input-group date" data-provide="datepicker">
                                         <input type="text" class="form-control" name="start_date" maxlength="100"
                                                id="id_start_date"
+                                               value="{{ form.instance.start_date }}"
                                                placeholder="2019-11-20"/>
                                         </div>
 
@@ -339,12 +408,11 @@
                                     <div class="form-group ">
                                         <label for="id_end_date" class="">End Date</label>
                                         <div class="input-group date" data-provide="datepicker">
-                                            <input type="text" class="form-control" name="end_date" maxlength="100"
-                                                   id="id_end_date"
-                                                   placeholder="2019-11-20"/>
-
+                                        <input type="text" class="form-control" name="end_date" maxlength="100"
+                                               id="id_end_date"
+                                               value="{{form.instance.end_date}}"
+                                               placeholder="2019-11-20"/>
                                         </div>
-
                                     </div>
                                 </div>
 

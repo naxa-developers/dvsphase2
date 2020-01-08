@@ -31,31 +31,22 @@
         <table class="program-table dataTable">
             <thead>
             <tr>
-                <th>Partner</th>
+                <th>Supplier</th>
                 <th>Program</th>
-                <th>Project</th>
+                <th>Component</th>
+                <th>Project Title</th>
+                <th>second Tier Partner</th>
                 <th>Province</th>
-                <th>Disrict</th>
+                <th>District</th>
                 <th>Municipality</th>
+                <th>allocated budget</th>
                 <th>Ward</th>
-                <th>Consortium partner first</th>
-                <th>Consortium partner second</th>
-                <th>Consortium partner third</th>
-                <th>implementing partner first</th>
-                <th>implementing partner second</th>
-                <th>implementing partner third</th>
-                <th>implementing partner fourth</th>
-                <th>local partner first</th>
-                <th>local partner second</th>
-                <th>local partner third</th>
+                <th>local partner </th>
+                <th>Contract Value </th>
                 <th>status</th>
                 <th>Start date</th>
                 <th>end data</th>
-<!--                <th>reporting ministry line</th>-->
-<!--                <th>budget of</th>-->
-                <th>contract value</th>
-<!--                <th>spend budget</th>-->
-<!--                <th>representative name</th>-->
+
 
                 <th></th>
             </tr>
@@ -63,33 +54,24 @@
             <tbody>
             {% for five in list %}
             <tr>
-                <td>{{ five.partner_id }}</td>
+                <td>{{ five.supplier_id }}</td>
                 <td>{{ five.program_id }}</td>
-                <td>{{ five.project_id }}</td>
+                <td>{{ five.component_id }}</td>
+                <td>{{ five.project_title }}</td>
+                <td>{{ five.second_tier_partner }}</td>
                 <td>{{ five.province_id }}</td>
                 <td>
                     {{ five.district_id }}
                 </td>
                 <td>{{ five.municipality_id }}</td>
+                <td>{{ five.allocated_budget }}</td>
                 <td>{{ five.ward }}</td>
-                <td>{{ five.consortium_partner_first_id }}</td>
-                <td>{{ five.consortium_partner_second_id }}</td>
-                <td>{{ five.consortium_partner_third_id }}</td>
-                <td>{{ five.implementing_partner_first_id }}</td>
-                <td>{{ five.implementing_partner_second_id }}</td>
-                <td>{{ five.implementing_partner_third_id }}</td>
-                <td>{{ five.implementing_partner_fourth_id }}</td>
-                <td>{{ five.local_partner_first_id }}</td>
-                <td>{{ five.local_partner_second_id }}</td>
-                <td>{{ five.local_partner_third_id }}</td>
+                <td>{{ five.local_partner }}</td>
+                <td>{{ five.contract_value }}</td>
                 <td>{{ five.status }}</td>
                 <td>{{ five.start_date }}</td>
                 <td>{{ five.end_date }}</td>
-<!--                <td>{{ five.reporting_ministry_line }}</td>-->
-<!--                <td>{{ five.budget_of }}</td>-->
-                <td>{{ five.contract_value }}</td>
-<!--                <td>{{ five.spend_budget }}</td>-->
-<!--                <td>{{ five.representative_person }}</td>-->
+
 
                 <td>
                     <div class="table-action">

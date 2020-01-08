@@ -922,14 +922,14 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         data = super(FiveCreate, self).get_context_data(**kwargs)
         user = self.request.user
-        partner = Partner.objects.all().order_by('id')
+        user_data = UserProfile.objects.get(user=user)
+        partner = Partner.objects.filter(id=user_data.partner.id).order_by('id')
         program = Program.objects.all().order_by('id')
         project = Project.objects.all().order_by('id')
         province = Province.objects.all().order_by('id')
         district = District.objects.all().order_by('id')
         municipality = GapaNapa.objects.all().order_by('id')
         contact = PartnerContact.objects.all().order_by('id')
-        user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
         data['partners'] = partner
         data['programs'] = program
@@ -944,6 +944,7 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return reverse_lazy('five-list')
 
     def form_valid(self, form):
+        print(type(self.request.POST['start_date']))
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New Five W " + str(self.object.supplier_id) + "  has been added by " + self.request.user.username
@@ -1306,7 +1307,7 @@ class OutputUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
 class FiveUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = FiveW
-    template_name = 'five_edit.html'
+    template_name = 'five_edits.html'
     form_class = FiveCreateForm
     success_message = 'Five W successfully Created'
 
@@ -1337,7 +1338,7 @@ class FiveUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "New Five W " + str(self.object.partner_id) + "  has been edited by " + self.request.user.username
+        message = "New Five W " + str(self.object.supplier_id) + "  has been edited by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
