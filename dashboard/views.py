@@ -1689,6 +1689,37 @@ class GisLayerUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+class BudgetUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = BudgetToFirstTier
+    template_name = 'budget_edit.html'
+    form_class = BudgetCreateForm
+    success_message = 'Budget edited Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(BudgetUpdate, self).get_context_data(**kwargs)
+        program = Program.objects.all().order_by('id')
+        project = Project.objects.all().order_by('id')
+        partners = Partner.objects.all().order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['programs'] = program
+        data['projects'] = project
+        data['partners'] = partners
+        data['active'] = 'budget'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('budget-list')
+
+    def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
+        self.object = form.save()
+        message = " Budget For " + self.object.supplier_id.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=user_data, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
+
 class ProgramDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = Program
     template_name = 'program_confirm_delete.html'
