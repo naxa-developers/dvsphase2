@@ -106,6 +106,9 @@ urlpatterns = [
     # path('role-edit/', views.edit_role, name='role-edit'),
     path('role-edit/<int:pk>', views.RoleUpdate.as_view(), name='role-edit'),
 
+    path('budget-list/', views.BudgetList.as_view(), name='budget-list'),
+    path('budget-add/', views.BudgetCreate.as_view(), name='budget-add'),
+
     path('vector-map/', views.VectorMap.as_view(), name='vector-map'),
 
 ]

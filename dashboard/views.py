@@ -7,7 +7,7 @@ from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
     PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm, \
-    GroupForm
+    GroupForm, BudgetCreateForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -21,7 +21,8 @@ from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
-    MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output, Notification, BudgetToSecondTier
+    MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output, Notification, \
+    BudgetToSecondTier, BudgetToFirstTier
 from .models import UserProfile, Log
 from django.contrib.auth.models import User, Group, Permission
 from django.views.generic import TemplateView
@@ -623,6 +624,21 @@ class SubSectorList(LoginRequiredMixin, ListView):
         return data
 
 
+class BudgetList(LoginRequiredMixin, ListView):
+    template_name = 'budget_list.html'
+    model = BudgetToFirstTier
+
+    def get_context_data(self, **kwargs):
+        data = super(BudgetList, self).get_context_data(**kwargs)
+        budget_list = BudgetToFirstTier.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = budget_list
+        data['user'] = user_data
+        data['active'] = 'budget'
+        return data
+
+
 class MarkerList(LoginRequiredMixin, ListView):
     template_name = 'marker_list.html'
     model = MarkerCategory
@@ -1203,6 +1219,37 @@ class IndicatorCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "New Indicator " + self.object.name + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=user_data, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class BudgetCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+    model = Program
+    template_name = 'budget_add.html'
+    form_class = BudgetCreateForm
+    success_message = 'Budget successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(BudgetCreate, self).get_context_data(**kwargs)
+        program = Program.objects.all().order_by('id')
+        project = Project.objects.all().order_by('id')
+        partners = Partner.objects.all().order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['programs'] = program
+        data['projects'] = project
+        data['partners'] = partners
+        data['active'] = 'budget'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('budget-list')
+
+    def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
+        self.object = form.save()
+        message = "New Budget For " + self.object.supplier_id.name + "  has been added by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 

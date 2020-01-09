@@ -210,6 +210,17 @@
                 </li>
                 {% endif %}
 
+                {% if perms.core.view_budgettofirsttier %}
+                {% if active == 'budget' %}
+                <li class="menu-item active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="/dashboard/budget-list/" class=""><i
+                            class="material-icons">person</i><span>Budget</span></a>
+                </li>
+                {% endif %}
+
             </ul>
         </div>
     </aside>
