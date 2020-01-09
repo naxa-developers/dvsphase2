@@ -1912,6 +1912,20 @@ class IndicatorDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
         return data
 
 
+class BudgetDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = BudgetToFirstTier
+    template_name = 'budget_confirm_delete.html'
+    success_message = 'Budget successfully deleted'
+    success_url = reverse_lazy('budget-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(BudgetDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
+
 def gisLayer_create(request):
     template_name = 'gis_add.html'
     form = GisLayerCreateForm(request.POST or None)

@@ -109,6 +109,7 @@ urlpatterns = [
     path('budget-list/', views.BudgetList.as_view(), name='budget-list'),
     path('budget-add/', views.BudgetCreate.as_view(), name='budget-add'),
     path('budget-edit/<int:pk>', views.BudgetUpdate.as_view(), name='budget-edit'),
+    path('budget-delete/<int:pk>', views.BudgetDelete.as_view(), name='budget-delete'),
 
     path('vector-map/', views.VectorMap.as_view(), name='vector-map'),
 
