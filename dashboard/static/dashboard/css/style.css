@@ -1333,6 +1333,94 @@ main.dfid-main {
   position: relative;
   margin-left: 260px; }
 
+form.fiveW-form .collapse-section {
+  padding: 0 40px; }
+  form.fiveW-form .collapse-section .accordion .card {
+    margin-bottom: 20px; }
+    form.fiveW-form .collapse-section .accordion .card .card-header {
+      padding: 0 1.25rem;
+      background: #dbe0ee; }
+      form.fiveW-form .collapse-section .accordion .card .card-header button {
+        text-align: left;
+        color: #05367D;
+        -moz-transition: all 0.5s linear;
+        -o-transition: all 0.5s linear;
+        -webkit-transition: all 0.5s linear;
+        transition: all 0.5s linear;
+        position: relative; }
+        form.fiveW-form .collapse-section .accordion .card .card-header button:hover {
+          text-decoration: none; }
+        form.fiveW-form .collapse-section .accordion .card .card-header button:after {
+          font-family: 'Material Icons';
+          content: 'arrow_drop_down';
+          color: #05367D;
+          font-size: 28px;
+          position: absolute;
+          right: 0;
+          top: -12px; }
+    form.fiveW-form .collapse-section .accordion .card .collapse .row-wrapper {
+      padding: 1rem; }
+      form.fiveW-form .collapse-section .accordion .card .collapse .row-wrapper .col-wrapper .title {
+        margin: .938rem 0 1.125rem; }
+        form.fiveW-form .collapse-section .accordion .card .collapse .row-wrapper .col-wrapper .title .switch {
+          margin-top: 10px;
+          position: relative;
+          display: inline-block;
+          width: 50px;
+          height: 25px; }
+          form.fiveW-form .collapse-section .accordion .card .collapse .row-wrapper .col-wrapper .title .switch .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #e3e3e3;
+            -moz-transition: all 0.2s linear;
+            -o-transition: all 0.2s linear;
+            -webkit-transition: all 0.2s linear;
+            transition: all 0.2s linear; }
+            form.fiveW-form .collapse-section .accordion .card .collapse .row-wrapper .col-wrapper .title .switch .slider:before {
+              position: absolute;
+              content: "";
+              height: 18px;
+              width: 18px;
+              -moz-transition: all 0.4s linear;
+              -o-transition: all 0.4s linear;
+              -webkit-transition: all 0.4s linear;
+              transition: all 0.4s linear;
+              background-color: #ffffff;
+              left: 4px;
+              bottom: 4px; }
+            form.fiveW-form .collapse-section .accordion .card .collapse .row-wrapper .col-wrapper .title .switch .slider.round {
+              -webkit-border-radius: 50px;
+              -moz-border-radius: 50px;
+              -ms-border-radius: 50px;
+              border-radius: 50px; }
+              form.fiveW-form .collapse-section .accordion .card .collapse .row-wrapper .col-wrapper .title .switch .slider.round:before {
+                border-radius: 50%; }
+          form.fiveW-form .collapse-section .accordion .card .collapse .row-wrapper .col-wrapper .title .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0; }
+            form.fiveW-form .collapse-section .accordion .card .collapse .row-wrapper .col-wrapper .title .switch input:checked ~ .slider {
+              background: #96A5CD; }
+              form.fiveW-form .collapse-section .accordion .card .collapse .row-wrapper .col-wrapper .title .switch input:checked ~ .slider:before {
+                transform: translateX(26px); }
+        form.fiveW-form .collapse-section .accordion .card .collapse .row-wrapper .col-wrapper .title span {
+          display: block;
+          color: #010c1b; }
+      form.fiveW-form .collapse-section .accordion .card .collapse .row-wrapper .col-wrapper .form-group.form-flex {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column; }
+      form.fiveW-form .collapse-section .accordion .card .collapse .row-wrapper .col-wrapper .form-group .custom-select.select-choice {
+        height: calc(3.25rem + 2px); }
+
 button.dfid-button, a.dfid-button {
   padding: 1rem 2rem;
   text-align: center;

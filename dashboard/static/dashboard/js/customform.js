@@ -1,5 +1,10 @@
 $(document).ready(function () {
 
+$('.datepicker').datepicker({
+    format: 'yyyy/mm/dd',
+    startDate: '-3d'
+});
+
 contact_num = 1;
  $('#add_contact').on('click', function () {
 
@@ -112,4 +117,112 @@ $('#notify-id-div').on('click',function(){
 
 })
 
+//ajax request for district
+$('#id_province_id').on('change',function(){
+prov_id = $(this).val()
+$.ajax({
+    url: baseUrl+'api/v1/core/district/?province_id='+prov_id,
+//    headers: {
+//        'Authorization': "Token 8933c5dd02de389ab5ee69c17a9af49f3d83b938",
+//    },
+    method: 'GET',
+    success: function(result){
+
+
+    var district = result.results
+    $('#id_district_id').html("");
+    for(var i = 0 ; i<district.length;i++){
+    var prov_div="<option value="+district[i].id+">"+district[i].name+"</option>"
+    $('#id_district_id').append(prov_div);
+    }
+
+    }});
+    }); // end
+
+//ajax request for mun
+$('#id_district_id').on('change',function(){
+dist_id = $(this).val()
+$.ajax({
+    url: baseUrl+'api/v1/core/gapanapa/?district_id='+dist_id,
+//    headers: {
+//        'Authorization': "Token 8933c5dd02de389ab5ee69c17a9af49f3d83b938",
+//    },
+    method: 'GET',
+    success: function(result){
+
+
+
+    $('#id_municipality_id').html("");
+    var mun = result.results
+    for(var i = 0 ; i<mun.length;i++){
+    var prov_div="<option value="+mun[i].id+">"+mun[i].name+"</option>"
+    $('#id_municipality_id').append(prov_div);
+    }
+
+    }});
+    }); // end
+
+$('#id_program_id').on('change',function(){
+dist_id = $(this).val()
+$.ajax({
+    url: baseUrl+'api/v1/core/project/?program_id='+dist_id,
+//    headers: {
+//        'Authorization': "Token 8933c5dd02de389ab5ee69c17a9af49f3d83b938",
+//    },
+    method: 'GET',
+    success: function(result){
+
+
+
+    $('#id_component_id').html("");
+    var project = result.results
+    for(var i = 0 ; i<project.length;i++){
+    var prov_div="<option value="+project[i].id+">"+project[i].name+"</option>"
+    $('#id_component_id').append(prov_div);
+    }
+    if(project.length < 1){
+    console.log('comp', project.length)
+    var prov_div="<option value=''>No component for selected program</option>";
+    $('#id_component_id').append(prov_div);
+    }
+
+    }});
+    }); // end
+
+
+   $('#checkbox_id').on('change',function(){
+     var sup=$('#id_supplier_id').val()
+     var prog=$('#id_program_id').val()
+     var comp=$('#id_component_id').val()
+     var second=$('#id_second_tier_partner').val()
+    // console.log(second)
+//   console.log('aaa');
+//   console.log($('#checkbox_id').is(":checked"));
+   var check=$('#checkbox_id').is(":checked")
+   if (check){
+   $('#second_tier').css('display','')
+   $.ajax({
+    url: baseUrl+'api/v1/core/contract-sum/?supplier='+sup+'&second='+second+'&program='+prog+'&component='+comp,
+//    headers: {
+//        'Authorization': "Token 8933c5dd02de389ab5ee69c17a9af49f3d83b938",
+//    },
+    method: 'GET',
+    success: function(result){
+
+    if(result.results.length >= 1 ){
+    console.log(result.results[0])
+    $('#id_contract_value').val(result.results[0].contractValue)
+    $('#id_contract_value_id').val(result.results[0].id)
+    }
+
+
+    }});
+
+   }else{
+    $('#second_tier').css('display','None')
+   }
+
+   });
+
 }); // document end
+
