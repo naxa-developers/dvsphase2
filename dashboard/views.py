@@ -962,8 +962,6 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return reverse_lazy('five-list')
 
     def form_valid(self, form):
-        print(self.request.POST['contract_value_id'])
-        print(self.request.POST['contract_value'])
         contract_id = self.request.POST['contract_value_id']
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
@@ -1409,8 +1407,30 @@ class FiveUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('five-list')
 
     def form_valid(self, form):
+        contract_id = self.request.POST['contract_value_id']
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
+        if contract_id == '0':
+            data_filter = budget_to_second_tier = BudgetToSecondTier.objects.filter(
+                supplier_id_id=self.request.POST['supplier_id'],
+                second_tier_partner_id=self.request.POST['second_tier_partner'],
+                program_id_id=self.request.POST['program_id'],
+                component_id_id=self.request.POST['component_id'], )
+
+            print(data_filter.count())
+            if data_filter.count() == 0:
+                budget_to_second_tier = BudgetToSecondTier.objects.create(
+                    supplier_id_id=self.request.POST['supplier_id'],
+                    second_tier_partner_id=self.request.POST['second_tier_partner'],
+                    program_id_id=self.request.POST['program_id'],
+                    component_id_id=self.request.POST['component_id'],
+                    contract_value=self.request.POST['contract_value'])
+
+
+
+        else:
+            budget_to_second_tier = BudgetToSecondTier.objects.filter(id=contract_id).update(
+                contract_value=self.request.POST['contract_value'])
         message = "New Five W " + str(self.object.supplier_id) + "  has been edited by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
