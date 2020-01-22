@@ -34,7 +34,7 @@
                 <th>Address</th>
                 <th>Email</th>
                 <th>Phone Number</th>
-                <th>Manage contact Person</th>
+                <th>contact Person</th>
                 <th>Description</th>
 
                 <th></th>
@@ -70,8 +70,12 @@
                     {{partner.phone_number}}
                 </td>
                 <td>
+                    {% if  partner.PartnerContact.all.count < 1 %}
+                    <a href="/dashboard/partner-contact-add/{{ partner.id }}"><button type="button" class="btn btn-outline-danger">Add</button></a>
+                    {% else %}
+                    <a href="/dashboard/partner-contact-list?id={{ partner.id }}"><button type="button" class="btn btn-outline-success">Manage</button></a>
+                    {% endif %}
 
-                    <a href="/dashboard/partner-contact-list?id={{ partner.id }}" class="border-button dfid-button sm-button">Manage</a>
 
                 </td>
                 <td>{{partner.description}}</td>

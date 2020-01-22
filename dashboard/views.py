@@ -585,6 +585,7 @@ class PartnerContactList(LoginRequiredMixin, ListView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['list'] = partner_contact
+        data['count'] = partner_contact.count()
         data['user'] = user_data
         data['active'] = 'partner'
         return data
@@ -868,6 +869,22 @@ class PartnerCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         message = "New partner " + self.object.name + "  has been added by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
+
+
+def AddPartnerContact(request, **kwargs):
+    if "GET" == request.method:
+        user = request.user
+        user_data = UserProfile.objects.get(user=user)
+        return render(request, 'partnerContact_add.html', {'user': user_data, 'user_id': kwargs['id']})
+    else:
+        contact_names = request.POST.getlist('contact_person_name')
+        emails = request.POST.getlist('contact_person_email')
+        numbers = request.POST.getlist('contact_person_ph')
+        upper_range = len(contact_names)
+        for row in range(0, upper_range):
+            PartnerContact.objects.create(partner_id_id=int(kwargs['id']), name=contact_names[row], email=emails[row],
+                                          phone_number=numbers[row])
+        return redirect('partner-list')
 
 
 class RoleCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):

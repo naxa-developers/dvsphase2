@@ -4,14 +4,12 @@
 <main class="dfid-main">
     <!-- dfid breadcrumb -->
     <div class="dfid-breadcrumb pdt-100">
+        <h4 style="text-align:center"> List Of Contact Person For {{ list.first.partner_id.name }}</h4>
         <ul class="flex-start">
             <li>
-                <a href="#"><i class="material-icons">assignment</i> Sectors</a>
+                <a href="/dashboard/partner-list"><i class="material-icons">assignment</i> Partners</a>
             </li>
-            {% if perms.core.add_partnercontact %}
-            <li><a href="/dashboard/sector-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
-            </li>
-            {% endif %}
+
         </ul>
     </div>
     <!-- dfid program table -->
@@ -38,7 +36,7 @@
             <tbody>
             {% for contact in list %}
             <tr>
-                <td>{{ sector.id }}</td>
+                <td>{{ contact.id }}</td>
                 <td>
                     <strong><a href="#">{{contact.name}}</a></strong>
                 </td>
