@@ -574,6 +574,22 @@ class PartnerList(LoginRequiredMixin, ListView):
         return data
 
 
+class PartnerContactList(LoginRequiredMixin, ListView):
+    template_name = 'partnerContact_list.html'
+    model = PartnerContact
+
+    def get_context_data(self, **kwargs):
+        data = super(PartnerContactList, self).get_context_data(**kwargs)
+        partner = self.request.GET['id']
+        partner_contact = PartnerContact.objects.filter(partner_id__id=partner).order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = partner_contact
+        data['user'] = user_data
+        data['active'] = 'partner'
+        return data
+
+
 class SectorList(LoginRequiredMixin, ListView):
     template_name = 'sector_list.html'
     model = Sector

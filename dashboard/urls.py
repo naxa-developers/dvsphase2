@@ -28,6 +28,7 @@ urlpatterns = [
     path('partner-add/', views.PartnerCreate.as_view(), name='partner-add'),
     path('partner-edit/<int:pk>', views.PartnerUpdate.as_view(), name='partner-edit'),
     path('partner-delete/<int:pk>', views.PartnerDelete.as_view(), name='partner-delete'),
+    path('partner-contact-list', views.PartnerContactList.as_view(), name='partner-contact-list'),
 
     path('sector-list/', views.SectorList.as_view(), name='sector-list'),
     path('sector-add/', views.SectorCreate.as_view(), name='sector-add'),

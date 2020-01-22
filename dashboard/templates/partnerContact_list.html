@@ -6,15 +6,14 @@
     <div class="dfid-breadcrumb pdt-100">
         <ul class="flex-start">
             <li>
-                <a href="#"><i class="material-icons">assignment</i> Partners</a>
+                <a href="#"><i class="material-icons">assignment</i> Sectors</a>
             </li>
-            {% if perms.core.add_partner %}
-            <li><a href="/dashboard/partner-add/" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
+            {% if perms.core.add_partnercontact %}
+            <li><a href="/dashboard/sector-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
             </li>
             {% endif %}
         </ul>
     </div>
-
     <!-- dfid program table -->
     <div class="table-tesponsive program-list">
         {% if messages %}
@@ -27,54 +26,24 @@
         {% endif %}
         <table class="program-table dataTable">
             <thead>
-
             <tr>
+                <th>Id</th>
                 <th>Name</th>
-                <th>Type of institution</th>
-                <th>Address</th>
-                <th>Email</th>
+                <th>email</th>
                 <th>Phone Number</th>
-                <th>Manage contact Person</th>
-                <th>Description</th>
 
                 <th></th>
             </tr>
-
-
             </thead>
             <tbody>
-
-            {% for partner in list %}
+            {% for contact in list %}
             <tr>
-
+                <td>{{ sector.id }}</td>
                 <td>
-
-
-                    <a href="#" class="partner-info flex-start">
-                        {% if partner.image %}
-                        <img src="{{ partner.image.url }}" alt="org"/>
-                        {% else %}
-                        <img src="{% static 'dashboard/images/organization.svg' %}" alt="org"/>
-                        {% endif %}
-                        <h6>{{partner.name}}</h6>
-                    </a>
-
-
+                    <strong><a href="#">{{contact.name}}</a></strong>
                 </td>
-
-
-                <td>{{partner.type_of_institution}}</td>
-                <td>{{partner.address}}</td>
-                <td>{{partner.email}}</td>
-                <td>
-                    {{partner.phone_number}}
-                </td>
-                <td>
-
-                    <a href="/dashboard/partner-contact-list?id={{ partner.id }}" class="border-button dfid-button sm-button">Manage</a>
-
-                </td>
-                <td>{{partner.description}}</td>
+                <td>{{ contact.email }}</td>
+                <td>{{ contact.phone_number }}</td>
 
                 <td>
                     <div class="table-action">
@@ -82,18 +51,19 @@
                             <i class="material-icons">more_vert</i>
                         </a>
                         <ul class="dropdown-animation">
-                            {% if perms.core.change_partner %}
+                            {% if perms.core.change_partnercontact %}
                             <li>
-                                <a href="/dashboard/partner-edit/{{ partner.id }}" class="flex-start">
+                                <a href="/dashboard/sector-edit/{{ contact.id }}" class="flex-start">
                                     <i class="material-icons">edit</i> Edit
                                 </a>
                             </li>
                             {% endif %}
-                            {% if perms.core.delete_partner %}
+                            {% if perms.core.delete_partnercontact %}
                             <li>
-                                <a href="/dashboard/partner-delete/{{ partner.id }}" class="flex-start">
-                                    <i class="material-icons">delete</i>Delete
+                                <a href="/dashboard/sector-delete/{{ contact.id }}" class="flex-start">
+                                    <i class="material-icons">delete</i>delete
                                 </a>
+
                             </li>
                             {% endif %}
                         </ul>
@@ -101,7 +71,6 @@
                 </td>
             </tr>
             {% endfor %}
-
 
             </tbody>
         </table>
