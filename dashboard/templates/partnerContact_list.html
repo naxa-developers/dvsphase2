@@ -51,14 +51,14 @@
                         <ul class="dropdown-animation">
                             {% if perms.core.change_partnercontact %}
                             <li>
-                                <a href="/dashboard/sector-edit/{{ contact.id }}" class="flex-start">
+                                <a href="/dashboard/partner-contact-edit/{{ contact.id }}" class="flex-start">
                                     <i class="material-icons">edit</i> Edit
                                 </a>
                             </li>
                             {% endif %}
                             {% if perms.core.delete_partnercontact %}
                             <li>
-                                <a href="/dashboard/sector-delete/{{ contact.id }}" class="flex-start">
+                                <a href="/dashboard/partner-contact-delete/{{ contact.id }}" class="flex-start">
                                     <i class="material-icons">delete</i>delete
                                 </a>
 

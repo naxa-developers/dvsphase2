@@ -30,6 +30,8 @@ urlpatterns = [
     path('partner-delete/<int:pk>', views.PartnerDelete.as_view(), name='partner-delete'),
     path('partner-contact-list', views.PartnerContactList.as_view(), name='partner-contact-list'),
     path('partner-contact-add/<int:id>', views.AddPartnerContact, name='partner-contact-add'),
+    path('partner-contact-edit/<int:pk>', views.PartnerContactUpdate.as_view(), name='partner-contact-edit'),
+    path('partner-contact-delete/<int:pk>', views.PartnerContactDelete.as_view(), name='partner-contact-delete'),
 
     path('sector-list/', views.SectorList.as_view(), name='sector-list'),
     path('sector-add/', views.SectorCreate.as_view(), name='sector-add'),

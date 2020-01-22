@@ -7,7 +7,7 @@ from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
     PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm, \
-    GroupForm, BudgetCreateForm
+    GroupForm, BudgetCreateForm, PartnerContactForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -1359,6 +1359,31 @@ class PartnerUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+class PartnerContactUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = PartnerContact
+    template_name = 'partnerContact_edit.html'
+    form_class = PartnerContactForm
+    success_message = 'Partner Contact successfully updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(PartnerContactUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'partner'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('partner-list')
+
+    def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
+        self.object = form.save()
+        message = "Partner contact" + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=user_data, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
+
 class RoleUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Group
     template_name = 'edit_role.html'
@@ -1799,6 +1824,20 @@ class PartnerDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         data = super(PartnerDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
+
+class PartnerContactDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = PartnerContact
+    template_name = 'partnerContact_confirm_delete.html'
+    success_message = 'Partner successfully deleted'
+    success_url = reverse_lazy('partner-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(PartnerContactDelete, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
