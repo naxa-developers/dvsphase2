@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User, Permission, Group
 from django.forms import ModelForm
 from core.models import Program, Partner, Sector, SubSector, MarkerCategory, MarkerValues, GisLayer, Province, District, \
-    GapaNapa, Indicator, Project, FiveW, Output, BudgetToFirstTier
+    GapaNapa, Indicator, Project, FiveW, Output, BudgetToFirstTier, PartnerContact
 
 
 class UserForm(ModelForm):
@@ -109,4 +109,10 @@ class OutputCreateForm(ModelForm):
 class BudgetCreateForm(ModelForm):
     class Meta:
         model = BudgetToFirstTier
+        fields = '__all__'
+
+
+class PartnerContactForm(ModelForm):
+    class Meta:
+        model = PartnerContact
         fields = '__all__'

@@ -7,7 +7,7 @@ from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
     PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm, \
-    GroupForm, BudgetCreateForm
+    GroupForm, BudgetCreateForm, PartnerContactForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -574,6 +574,23 @@ class PartnerList(LoginRequiredMixin, ListView):
         return data
 
 
+class PartnerContactList(LoginRequiredMixin, ListView):
+    template_name = 'partnerContact_list.html'
+    model = PartnerContact
+
+    def get_context_data(self, **kwargs):
+        data = super(PartnerContactList, self).get_context_data(**kwargs)
+        partner = self.request.GET['id']
+        partner_contact = PartnerContact.objects.filter(partner_id__id=partner).order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = partner_contact
+        data['count'] = partner_contact.count()
+        data['user'] = user_data
+        data['active'] = 'partner'
+        return data
+
+
 class SectorList(LoginRequiredMixin, ListView):
     template_name = 'sector_list.html'
     model = Sector
@@ -771,7 +788,7 @@ class Dashboard(LoginRequiredMixin, TemplateView):
         if group.name == 'admin':
             five = FiveW.objects.order_by('id')
         else:
-            five = FiveW.objects.select_related('partner_id').filter(partner_id=user_data.partner.id)
+            five = FiveW.objects.select_related('supplier_id').filter(supplier_id=user_data.partner.id)
         return render(request, 'dashboard.html',
                       {'user': user_data, 'active': 'dash', 'fives': five, 'logs': log, 'group': group})
 
@@ -852,6 +869,22 @@ class PartnerCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         message = "New partner " + self.object.name + "  has been added by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
+
+
+def AddPartnerContact(request, **kwargs):
+    if "GET" == request.method:
+        user = request.user
+        user_data = UserProfile.objects.get(user=user)
+        return render(request, 'partnerContact_add.html', {'user': user_data, 'user_id': kwargs['id']})
+    else:
+        contact_names = request.POST.getlist('contact_person_name')
+        emails = request.POST.getlist('contact_person_email')
+        numbers = request.POST.getlist('contact_person_ph')
+        upper_range = len(contact_names)
+        for row in range(0, upper_range):
+            PartnerContact.objects.create(partner_id_id=int(kwargs['id']), name=contact_names[row], email=emails[row],
+                                          phone_number=numbers[row])
+        return redirect('partner-list')
 
 
 class RoleCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
@@ -1326,6 +1359,31 @@ class PartnerUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+class PartnerContactUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = PartnerContact
+    template_name = 'partnerContact_edit.html'
+    form_class = PartnerContactForm
+    success_message = 'Partner Contact successfully updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(PartnerContactUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'partner'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('partner-list')
+
+    def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
+        self.object = form.save()
+        message = "Partner contact" + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=user_data, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
+
 class RoleUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Group
     template_name = 'edit_role.html'
@@ -1625,7 +1683,7 @@ class DistrictUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('district-list')
 
     def form_valid(self, form):
-        user_data = UserProfile.objects.get(user=user)
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "District " + self.object.name + "  has been edited by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="update")
@@ -1766,6 +1824,20 @@ class PartnerDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         data = super(PartnerDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
+
+class PartnerContactDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = PartnerContact
+    template_name = 'partnerContact_confirm_delete.html'
+    success_message = 'Partner successfully deleted'
+    success_url = reverse_lazy('partner-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(PartnerContactDelete, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data

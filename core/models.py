@@ -223,6 +223,7 @@ class FiveW(models.Model):
     # spend_budget = models.FloatField(null=True, blank=True, default=None)
     # budget_of = models.CharField(max_length=100, choices=admin_level, default='national')
     # representative_person = models.ForeignKey(PartnerContact, on_delete=models.CASCADE, related_name='PartnerContact',
+    # representative_person = models.ForeignKey(PartnerContact, on_delete=models.CASCADE, related_name='PartnerContact',
     #                                           null=True,
     #                                           blank=True)
     # remarks = models.TextField(blank=True)
