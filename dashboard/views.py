@@ -788,7 +788,7 @@ class Dashboard(LoginRequiredMixin, TemplateView):
         if group.name == 'admin':
             five = FiveW.objects.order_by('id')
         else:
-            five = FiveW.objects.select_related('partner_id').filter(partner_id=user_data.partner.id)
+            five = FiveW.objects.select_related('supplier_id').filter(supplier_id=user_data.partner.id)
         return render(request, 'dashboard.html',
                       {'user': user_data, 'active': 'dash', 'fives': five, 'logs': log, 'group': group})
 
@@ -1683,7 +1683,7 @@ class DistrictUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('district-list')
 
     def form_valid(self, form):
-        user_data = UserProfile.objects.get(user=user)
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "District " + self.object.name + "  has been edited by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="update")
