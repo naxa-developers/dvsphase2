@@ -15,6 +15,7 @@
     <!-- Custom Css -->
     <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'dashboard/css/custom-my.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap-datepicker.min.css' %}">
 </head>
 
 <body class="">
@@ -209,6 +210,17 @@
                 </li>
                 {% endif %}
 
+                {% if perms.core.view_budgettofirsttier %}
+                {% if active == 'budget' %}
+                <li class="menu-item active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="/dashboard/budget-list/" class=""><i
+                            class="material-icons">person</i><span>Budget</span></a>
+                </li>
+                {% endif %}
+
             </ul>
         </div>
     </aside>
@@ -300,6 +312,7 @@
 <script src="{% static 'dashboard/js/jquery.slimscroll.min.js' %}"></script>
 <script src="{% static 'dashboard/js/mainscripts.bundle.js' %}"></script>
 <script src="{% static 'dashboard/js/customform.js' %}"></script>
+<script src="{% static 'dashboard/js/bootstrap-datepicker.min.js' %}"></script>
 <script src="{% static 'dashboard/js/equalHeight.js' %}"></script>
 <script src="{% static 'dashboard/plugins/datatable/dataTables.min.js' %}"></script>
 <script src="{% static 'dashboard/plugins/datatable/dataTables.bootstrap.min.js' %}"></script>

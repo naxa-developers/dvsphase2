@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <h4 style="text-align:center"> List Of Contact Person For {{ list.first.partner_id.name }}</h4>
+        <ul class="flex-start">
+            <li>
+                <a href="/dashboard/partner-list"><i class="material-icons">assignment</i> Partners</a>
+            </li>
+
+        </ul>
+    </div>
+    <!-- dfid program table -->
+    <div class="table-tesponsive program-list">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> {{message}}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <table class="program-table dataTable">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>email</th>
+                <th>Phone Number</th>
+
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for contact in list %}
+            <tr>
+                <td>{{ contact.id }}</td>
+                <td>
+                    <strong><a href="#">{{contact.name}}</a></strong>
+                </td>
+                <td>{{ contact.email }}</td>
+                <td>{{ contact.phone_number }}</td>
+
+                <td>
+                    <div class="table-action">
+                        <a href="#" class="more-action">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-animation">
+                            {% if perms.core.change_partnercontact %}
+                            <li>
+                                <a href="/dashboard/partner-contact-edit/{{ contact.id }}" class="flex-start">
+                                    <i class="material-icons">edit</i> Edit
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if perms.core.delete_partnercontact %}
+                            <li>
+                                <a href="/dashboard/partner-contact-delete/{{ contact.id }}" class="flex-start">
+                                    <i class="material-icons">delete</i>delete
+                                </a>
+
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</main>
+{% endblock %}

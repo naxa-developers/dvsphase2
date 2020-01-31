@@ -11,7 +11,7 @@ urlpatterns = [
     path('login-test/', views.login_test, name='login-test'),
     # path('login-test/<int:group>/<int:partner>', views.login_test, name='login-test'),
     path('logout/', auth_views.logout, {'next_page': '/dashboard/login/'}, name='logout'),
-    path('signup/<int:group>/<int:partner>/<int:program>/<int:project>', views.signup, name='signup'),
+    path('signup/<int:group>/<int:partner>', views.signup, name='signup'),
     path('login/', auth_views.login, name='login'),
     path('check-login/', views.check_login, name='check-login'),
     path('token/', views.auth, name='token'),
@@ -28,6 +28,10 @@ urlpatterns = [
     path('partner-add/', views.PartnerCreate.as_view(), name='partner-add'),
     path('partner-edit/<int:pk>', views.PartnerUpdate.as_view(), name='partner-edit'),
     path('partner-delete/<int:pk>', views.PartnerDelete.as_view(), name='partner-delete'),
+    path('partner-contact-list', views.PartnerContactList.as_view(), name='partner-contact-list'),
+    path('partner-contact-add/<int:id>', views.AddPartnerContact, name='partner-contact-add'),
+    path('partner-contact-edit/<int:pk>', views.PartnerContactUpdate.as_view(), name='partner-contact-edit'),
+    path('partner-contact-delete/<int:pk>', views.PartnerContactDelete.as_view(), name='partner-contact-delete'),
 
     path('sector-list/', views.SectorList.as_view(), name='sector-list'),
     path('sector-add/', views.SectorCreate.as_view(), name='sector-add'),
@@ -105,6 +109,11 @@ urlpatterns = [
     path('role-delete/<int:pk>', views.RoleDelete.as_view(), name='role-delete'),
     # path('role-edit/', views.edit_role, name='role-edit'),
     path('role-edit/<int:pk>', views.RoleUpdate.as_view(), name='role-edit'),
+
+    path('budget-list/', views.BudgetList.as_view(), name='budget-list'),
+    path('budget-add/', views.BudgetCreate.as_view(), name='budget-add'),
+    path('budget-edit/<int:pk>', views.BudgetUpdate.as_view(), name='budget-edit'),
+    path('budget-delete/<int:pk>', views.BudgetDelete.as_view(), name='budget-delete'),
 
     path('vector-map/', views.VectorMap.as_view(), name='vector-map'),
 

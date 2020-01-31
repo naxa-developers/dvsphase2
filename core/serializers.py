@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Partner, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
-    IndicatorValue, Sector, SubSector, TravelTime, GisLayer, Project, Output, Notification
+    IndicatorValue, Sector, SubSector, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier
 
 
 class PartnerSerializer(serializers.ModelSerializer):
@@ -105,6 +105,12 @@ class SubsectorSerializer(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
+        fields = '__all__'
+
+
+class ContractSumSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BudgetToSecondTier
         fields = '__all__'
 
 

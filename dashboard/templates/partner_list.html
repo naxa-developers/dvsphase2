@@ -30,11 +30,13 @@
 
             <tr>
                 <th>Name</th>
+                <th>Type of institution</th>
                 <th>Address</th>
                 <th>Email</th>
                 <th>Phone Number</th>
-                <th>Contact Person Detail</th>
-                <th>Contact Person Email</th>
+                <th>contact Person</th>
+                <th>Description</th>
+
                 <th></th>
             </tr>
 
@@ -61,17 +63,22 @@
                 </td>
 
 
+                <td>{{partner.type_of_institution}}</td>
                 <td>{{partner.address}}</td>
                 <td>{{partner.email}}</td>
                 <td>
                     {{partner.phone_number}}
                 </td>
                 <td>
+                    {% if  partner.PartnerContact.all.count < 1 %}
+                    <a href="/dashboard/partner-contact-add/{{ partner.id }}"><button type="button" class="btn btn-outline-danger">Add</button></a>
+                    {% else %}
+                    <a href="/dashboard/partner-contact-list?id={{ partner.id }}"><button type="button" class="btn btn-outline-success">Manage</button></a>
+                    {% endif %}
 
-                    <a href="#" class="name">{{partner.contact_person_name}}</a>
 
                 </td>
-                <td>{{partner.contact_person_email}}</td>
+                <td>{{partner.description}}</td>
 
                 <td>
                     <div class="table-action">

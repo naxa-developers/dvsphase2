@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="/dashboard/partner-list/"><i class="material-icons">assignment</i> Partner Contact</a>
+            </li>
+            <li>New</li>
+        </ul>
+    </div>
+    <!-- program form -->
+    <form enctype="multipart/form-data" class="program-form" method="POST">
+
+
+        {% csrf_token %}
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ field.name|title }} {{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+        <div class="default-form">
+
+            <div id="contact_form">
+
+
+
+                <div class="row" id="contact_div">
+
+                    <div class="col-md-4">
+                        <div class="form-group ">
+                            <label for="id_contact_person_name" class="">Contact person name</label>
+                            <input type="text" class="form-control" name="contact_person_name" maxlength="100"
+                                   id="id_contact_person_name"
+                                   placeholder="Name"/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group ">
+                            <label for="id_contact_person_email" class="">Contact person email</label>
+                            <input type="text" class="form-control" name="contact_person_email" maxlength="100"
+                                   id="id_contact_person_email"
+                                   placeholder="Email"/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group ">
+                            <label for="id_contact_person_ph" class="">Contact person ph</label>
+                            <input type="text" class="form-control" name="contact_person_ph" maxlength="100"
+                                   id="id_contact_person_ph"
+                                   placeholder="Number"/>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-2">
+
+                    <span>
+                        <a href="javascript:void(0);" id="add_contact" ><i class="material-icons"
+                                                                          style="margin-top:50px">add_circle</i></a>
+                    </span>
+
+                    </div>
+
+
+                </div>
+
+                 </div>
+
+
+
+
+
+
+            <div class="form-group mrt-100">
+                <button type="submit" class="dfid-button sm-button">Save</button>
+            </div>
+
+        </div>
+
+
+        <!-- category form -->
+
+
+    </form>
+</main>
+
+{% endblock %}
+

@@ -7,7 +7,7 @@ from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
     PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm, \
-    GroupForm
+    GroupForm, BudgetCreateForm, PartnerContactForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -21,7 +21,8 @@ from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
-    MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output, Notification
+    MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output, Notification, \
+    BudgetToSecondTier, BudgetToFirstTier
 from .models import UserProfile, Log
 from django.contrib.auth.models import User, Group, Permission
 from django.views.generic import TemplateView
@@ -283,10 +284,10 @@ def Invitation(request):
     if "GET" == request.method:
         group = Group.objects.all()
         partner = Partner.objects.all()
-        program = Program.objects.all()
-        project = Project.objects.all()
-        return render(request, 'invitation_form.html',
-                      {'group': group, 'partners': partner, 'programs': program, 'projects': project})
+        # program = Program.objects.all()
+        # project = Project.objects.all()
+        return render(request, 'invitation_form.html', {'group': group, 'partners': partner, })
+
     else:
         user = request.user
         user_data = UserProfile.objects.get(user=user)
@@ -294,11 +295,11 @@ def Invitation(request):
         group = request.POST["group"]
         emails = request.POST["email"]
         partnered = request.POST["partner"]
-        programed = request.POST["program"]
-        projected = request.POST["project"]
+        # programed = request.POST["program"]
+        # projected = request.POST["project"]
         subject = 'User Invitation'
-        message = render_to_string('mail.html', {'group': group, 'url': url, 'partner': partnered, 'program': programed,
-                                                 'project': projected, 'user': user_data})
+        message = render_to_string('mail.html', {'group': group, 'url': url, 'partner': partnered, 'user': user_data, })
+
         recipient_list = [emails]
         email = EmailMessage(
             subject, message, 'from@example.com', recipient_list
@@ -330,8 +331,7 @@ def signup(request, **kwargs):
                 user.groups.add(group)
 
             UserProfile.objects.create(user=user, name=request.POST['name'], email=request.POST['email'],
-                                       partner_id=int(request.POST['partner']), program_id=int(request.POST['program']),
-                                       project_id=int(request.POST['project']), image=request.FILES['image'])
+                                       partner_id=int(request.POST['partner']), image=request.FILES['image'])
 
             notify_message = request.POST['email'] + ' has created account by username ' + request.POST['username']
 
@@ -345,29 +345,29 @@ def signup(request, **kwargs):
         else:
             if kwargs['group'] == 0:
                 partner = Partner.objects.all()
-                program = Program.objects.all()
-                project = Project.objects.all()
+                # program = Program.objects.all()
+                # project = Project.objects.all()
             else:
                 partner = Partner.objects.filter(id=kwargs['partner'])
-                program = Program.objects.filter(id=kwargs['program'])
-                project = Project.objects.filter(id=kwargs['project'])
+                # program = Program.objects.filter(id=kwargs['program'])
+                # project = Project.objects.filter(id=kwargs['project'])
 
             return render(request, 'signups.html',
-                          {'form': form, 'partners': partner, 'programs': program, 'projects': project})
+                          {'form': form, 'partners': partner, })
 
     else:
         form = UserCreationForm()
         if kwargs['group'] == 0:
             partner = Partner.objects.all()
-            program = Program.objects.all()
-            project = Project.objects.all()
+            # program = Program.objects.all()
+            # project = Project.objects.all()
         else:
             partner = Partner.objects.filter(id=kwargs['partner'])
-            program = Program.objects.filter(id=kwargs['program'])
-            project = Project.objects.filter(id=kwargs['project'])
+            # program = Program.objects.filter(id=kwargs['program'])
+            # project = Project.objects.filter(id=kwargs['project'])
 
         return render(request, 'signups.html',
-                      {'form': form, 'partners': partner, 'programs': program, 'projects': project})
+                      {'form': form, 'partners': partner, })
 
 
 def activate_user(request, **kwargs):
@@ -574,6 +574,23 @@ class PartnerList(LoginRequiredMixin, ListView):
         return data
 
 
+class PartnerContactList(LoginRequiredMixin, ListView):
+    template_name = 'partnerContact_list.html'
+    model = PartnerContact
+
+    def get_context_data(self, **kwargs):
+        data = super(PartnerContactList, self).get_context_data(**kwargs)
+        partner = self.request.GET['id']
+        partner_contact = PartnerContact.objects.filter(partner_id__id=partner).order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = partner_contact
+        data['count'] = partner_contact.count()
+        data['user'] = user_data
+        data['active'] = 'partner'
+        return data
+
+
 class SectorList(LoginRequiredMixin, ListView):
     template_name = 'sector_list.html'
     model = Sector
@@ -621,6 +638,21 @@ class SubSectorList(LoginRequiredMixin, ListView):
         data['list'] = sub_sector_list
         data['user'] = user_data
         data['active'] = 'sector'
+        return data
+
+
+class BudgetList(LoginRequiredMixin, ListView):
+    template_name = 'budget_list.html'
+    model = BudgetToFirstTier
+
+    def get_context_data(self, **kwargs):
+        data = super(BudgetList, self).get_context_data(**kwargs)
+        budget_list = BudgetToFirstTier.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = budget_list
+        data['user'] = user_data
+        data['active'] = 'budget'
         return data
 
 
@@ -756,7 +788,7 @@ class Dashboard(LoginRequiredMixin, TemplateView):
         if group.name == 'admin':
             five = FiveW.objects.order_by('id')
         else:
-            five = FiveW.objects.select_related('partner_id').filter(partner_id=user_data.partner.id)
+            five = FiveW.objects.select_related('supplier_id').filter(supplier_id=user_data.partner.id)
         return render(request, 'dashboard.html',
                       {'user': user_data, 'active': 'dash', 'fives': five, 'logs': log, 'group': group})
 
@@ -839,6 +871,22 @@ class PartnerCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+def AddPartnerContact(request, **kwargs):
+    if "GET" == request.method:
+        user = request.user
+        user_data = UserProfile.objects.get(user=user)
+        return render(request, 'partnerContact_add.html', {'user': user_data, 'user_id': kwargs['id']})
+    else:
+        contact_names = request.POST.getlist('contact_person_name')
+        emails = request.POST.getlist('contact_person_email')
+        numbers = request.POST.getlist('contact_person_ph')
+        upper_range = len(contact_names)
+        for row in range(0, upper_range):
+            PartnerContact.objects.create(partner_id_id=int(kwargs['id']), name=contact_names[row], email=emails[row],
+                                          phone_number=numbers[row])
+        return redirect('partner-list')
+
+
 class RoleCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Group
     template_name = 'create_role.html'
@@ -916,23 +964,25 @@ class OutputCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 
 class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = FiveW
-    template_name = 'five_add.html'
+    template_name = 'five_adds.html'
     form_class = FiveCreateForm
     success_message = 'Five W successfully Created'
 
     def get_context_data(self, **kwargs):
         data = super(FiveCreate, self).get_context_data(**kwargs)
         user = self.request.user
-        partner = Partner.objects.all().order_by('id')
+        user_data = UserProfile.objects.get(user=user)
+        partner = Partner.objects.filter(id=user_data.partner.id).order_by('id')
+        all_partner = Partner.objects.order_by('id')
         program = Program.objects.all().order_by('id')
         project = Project.objects.all().order_by('id')
         province = Province.objects.all().order_by('id')
         district = District.objects.all().order_by('id')
         municipality = GapaNapa.objects.all().order_by('id')
         contact = PartnerContact.objects.all().order_by('id')
-        user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
         data['partners'] = partner
+        data['all_partner'] = all_partner
         data['programs'] = program
         data['projects'] = project
         data['provinces'] = province
@@ -945,9 +995,32 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return reverse_lazy('five-list')
 
     def form_valid(self, form):
+        contract_id = self.request.POST['contract_value_id']
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "New Five W " + str(self.object.partner_id) + "  has been added by " + self.request.user.username
+        if contract_id == '0':
+            data_filter = budget_to_second_tier = BudgetToSecondTier.objects.filter(
+                supplier_id_id=self.request.POST['supplier_id'],
+                second_tier_partner_id=self.request.POST['second_tier_partner'],
+                program_id_id=self.request.POST['program_id'],
+                component_id_id=self.request.POST['component_id'], )
+
+            print(data_filter.count())
+            if data_filter.count() == 0:
+                budget_to_second_tier = BudgetToSecondTier.objects.create(
+                    supplier_id_id=self.request.POST['supplier_id'],
+                    second_tier_partner_id=self.request.POST['second_tier_partner'],
+                    program_id_id=self.request.POST['program_id'],
+                    component_id_id=self.request.POST['component_id'],
+                    contract_value=self.request.POST['contract_value'])
+
+
+
+        else:
+            budget_to_second_tier = BudgetToSecondTier.objects.filter(id=contract_id).update(
+                contract_value=self.request.POST['contract_value'])
+
+        message = "New Five W " + str(self.object.supplier_id) + "  has been added by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1181,6 +1254,37 @@ class IndicatorCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+class BudgetCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+    model = Program
+    template_name = 'budget_add.html'
+    form_class = BudgetCreateForm
+    success_message = 'Budget successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(BudgetCreate, self).get_context_data(**kwargs)
+        program = Program.objects.all().order_by('id')
+        project = Project.objects.all().order_by('id')
+        partners = Partner.objects.all().order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['programs'] = program
+        data['projects'] = project
+        data['partners'] = partners
+        data['active'] = 'budget'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('budget-list')
+
+    def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
+        self.object = form.save()
+        message = "New Budget For " + self.object.supplier_id.name + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=user_data, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
+
 class ProgramUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Program
     template_name = 'program_edit.html'
@@ -1255,6 +1359,31 @@ class PartnerUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+class PartnerContactUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = PartnerContact
+    template_name = 'partnerContact_edit.html'
+    form_class = PartnerContactForm
+    success_message = 'Partner Contact successfully updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(PartnerContactUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'partner'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('partner-list')
+
+    def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
+        self.object = form.save()
+        message = "Partner contact" + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=user_data, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
+
 class RoleUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Group
     template_name = 'edit_role.html'
@@ -1307,7 +1436,7 @@ class OutputUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
 class FiveUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = FiveW
-    template_name = 'five_edit.html'
+    template_name = 'five_edits.html'
     form_class = FiveCreateForm
     success_message = 'Five W successfully Created'
 
@@ -1336,9 +1465,31 @@ class FiveUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('five-list')
 
     def form_valid(self, form):
+        contract_id = self.request.POST['contract_value_id']
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "New Five W " + str(self.object.partner_id) + "  has been edited by " + self.request.user.username
+        if contract_id == '0':
+            data_filter = budget_to_second_tier = BudgetToSecondTier.objects.filter(
+                supplier_id_id=self.request.POST['supplier_id'],
+                second_tier_partner_id=self.request.POST['second_tier_partner'],
+                program_id_id=self.request.POST['program_id'],
+                component_id_id=self.request.POST['component_id'], )
+
+            print(data_filter.count())
+            if data_filter.count() == 0:
+                budget_to_second_tier = BudgetToSecondTier.objects.create(
+                    supplier_id_id=self.request.POST['supplier_id'],
+                    second_tier_partner_id=self.request.POST['second_tier_partner'],
+                    program_id_id=self.request.POST['program_id'],
+                    component_id_id=self.request.POST['component_id'],
+                    contract_value=self.request.POST['contract_value'])
+
+
+
+        else:
+            budget_to_second_tier = BudgetToSecondTier.objects.filter(id=contract_id).update(
+                contract_value=self.request.POST['contract_value'])
+        message = "New Five W " + str(self.object.supplier_id) + "  has been edited by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
@@ -1532,7 +1683,7 @@ class DistrictUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('district-list')
 
     def form_valid(self, form):
-        user_data = UserProfile.objects.get(user=user)
+        user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "District " + self.object.name + "  has been edited by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="update")
@@ -1616,6 +1767,37 @@ class GisLayerUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+class BudgetUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = BudgetToFirstTier
+    template_name = 'budget_edit.html'
+    form_class = BudgetCreateForm
+    success_message = 'Budget edited Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(BudgetUpdate, self).get_context_data(**kwargs)
+        program = Program.objects.all().order_by('id')
+        project = Project.objects.all().order_by('id')
+        partners = Partner.objects.all().order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['programs'] = program
+        data['projects'] = project
+        data['partners'] = partners
+        data['active'] = 'budget'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('budget-list')
+
+    def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
+        self.object = form.save()
+        message = " Budget For " + self.object.supplier_id.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=user_data, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
+
 class ProgramDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = Program
     template_name = 'program_confirm_delete.html'
@@ -1642,6 +1824,20 @@ class PartnerDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         data = super(PartnerDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
+
+class PartnerContactDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = PartnerContact
+    template_name = 'partnerContact_confirm_delete.html'
+    success_message = 'Partner successfully deleted'
+    success_url = reverse_lazy('partner-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(PartnerContactDelete, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
@@ -1802,6 +1998,20 @@ class IndicatorDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         data = super(IndicatorDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
+
+class BudgetDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = BudgetToFirstTier
+    template_name = 'budget_confirm_delete.html'
+    success_message = 'Budget successfully deleted'
+    success_url = reverse_lazy('budget-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(BudgetDelete, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
