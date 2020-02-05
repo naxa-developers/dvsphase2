@@ -107,8 +107,12 @@ class GapaNapaApi(viewsets.ReadOnlyModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['id', 'province_id', 'district_id', 'hlcit_code', 'gn_type_en', 'gn_type_np']
 
+    # renderer_classes = [JSONRenderer]
+
     def get_queryset(self):
-        queryset = GapaNapa.objects.select_related('province_id', 'district_id').order_by('id')
+        queryset = GapaNapa.objects.only('id', 'province_id', 'district_id', 'name', 'gn_type_np',
+                                         'hlcit_code').order_by('id')
+
         return queryset
 
     def get_serializer_class(self):
@@ -139,8 +143,7 @@ class ContractSum(viewsets.ReadOnlyModelViewSet):
     filterset_fields = ['id', 'supplier_id', 'program_id', 'component_id', 'second_tier_partner', ]
 
     def get_queryset(self):
-        queryset = BudgetToSecondTier.objects.select_related('supplier_id', 'second_tier_partner', 'program_id',
-                                                             'component_id', ).all()
+        queryset = BudgetToSecondTier.objects.order_by('id')
 
         return queryset
 
