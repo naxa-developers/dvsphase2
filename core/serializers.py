@@ -132,9 +132,7 @@ class GaanapaSerializer(serializers.ModelSerializer):
     class Meta:
         model = GapaNapa
         fields = (
-            'id', 'province_id',  'district_id',  'name', 'gn_type_en', 'gn_type_np',
-            'population', 'geography', 'cbs_code',
-            'hlcit_code', 'p_code')
+            'id', 'province_id', 'district_id', 'name', 'gn_type_np', 'hlcit_code')
 
     # def get_province_name(self, obj):
     #     return str(obj.province_id.name)
