@@ -126,21 +126,21 @@ class DistrictSerializer(serializers.ModelSerializer):
 
 
 class GaanapaSerializer(serializers.ModelSerializer):
-    province_name = serializers.SerializerMethodField()
-    district_name = serializers.SerializerMethodField()
+    # province_name = serializers.SerializerMethodField()
+    # district_name = serializers.SerializerMethodField()
 
     class Meta:
         model = GapaNapa
         fields = (
-            'id', 'province_id', 'province_name', 'district_id', 'district_name', 'name', 'gn_type_en', 'gn_type_np',
+            'id', 'province_id',  'district_id',  'name', 'gn_type_en', 'gn_type_np',
             'population', 'geography', 'cbs_code',
             'hlcit_code', 'p_code')
 
-    def get_province_name(self, obj):
-        return str(obj.province_id.name)
-
-    def get_district_name(self, obj):
-        return str(obj.district_id.name)
+    # def get_province_name(self, obj):
+    #     return str(obj.province_id.name)
+    #
+    # def get_district_name(self, obj):
+    #     return str(obj.district_id.name)
 
 
 class FivewSerializer(serializers.ModelSerializer):
