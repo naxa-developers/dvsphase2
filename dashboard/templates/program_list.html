@@ -51,10 +51,10 @@
 
                         {% for partner in program.partner.all %}
 
-                        {% if partner.image %}
+                        {% if partner.thumbnail %}
 
                         <a href="#">
-                            <img src="{{ partner.image.url }}" alt="org"/>
+                            <img src="{{ partner.thumbnail.url }}" alt="org"/>
                         </a>
 
                         {% else %}
