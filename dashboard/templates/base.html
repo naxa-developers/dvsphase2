@@ -249,8 +249,8 @@
                         <li class="dropdown user-menu">
                             <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"
                                     aria-expanded="false">
-                                {% if user.image %}
-                                <img src="{{ user.image.url }}" class="user-image"
+                                {% if user.thumbnail %}
+                                <img src="{{ user.thumbnail.url }}" class="user-image"
                                      alt="User Image">
                                 {% else %}
                                 <img src="{% static 'dashboard/images/admin.png' %}" class="user-image"

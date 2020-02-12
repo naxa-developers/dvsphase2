@@ -51,8 +51,8 @@
 
 
                     <a href="#" class="partner-info flex-start">
-                        {% if partner.image %}
-                        <img src="{{ partner.image.url }}" alt="org"/>
+                        {% if partner.thumbnail %}
+                        <img src="{{ partner.thumbnail.url }}" alt="org"/>
                         {% else %}
                         <img src="{% static 'dashboard/images/organization.svg' %}" alt="org"/>
                         {% endif %}
