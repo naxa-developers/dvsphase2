@@ -1136,7 +1136,7 @@ class DistrictCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
-        data['province'] = Province.objects.order_by('id')
+        data['province'] = Province.objects.values('id', 'name').order_by('id')
         data['active'] = 'location'
         return data
 
@@ -1162,8 +1162,8 @@ class PalilkaCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
-        data['province'] = Province.objects.order_by('id')
-        data['district'] = District.objects.order_by('id')
+        data['province'] = Province.objects.values('id', 'name').order_by('id')
+        data['district'] = District.objects.values('id', 'name').order_by('id')
         data['active'] = 'location'
         return data
 
@@ -1701,8 +1701,8 @@ class PalilkaUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
-        data['province'] = Province.objects.order_by('id')
-        data['district'] = District.objects.order_by('id')
+        data['province'] = Province.objects.values('id', 'name').order_by('id')
+        data['district'] = District.objects.values('id', 'name').order_by('id')
         data['active'] = 'location'
         return data
 
