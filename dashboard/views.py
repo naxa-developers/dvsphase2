@@ -559,7 +559,6 @@ class PartnerList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         data = super(PartnerList, self).get_context_data(**kwargs)
-        contact_list = PartnerContact.objects.all().order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         group = Group.objects.get(user=user)
