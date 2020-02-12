@@ -43,10 +43,10 @@
                 <td>{{ user.id }}</td>
                 <td>
                     <a href="#" class="partner-info flex-start">
-                        {% if user.image %}
-                        <img src="{{ user.image.url }}" alt="org"/>
+                        {% if user.thumbnail %}
+                        <img src="{{ user.thumbnail.url }}" alt="org"/>
                         {% else %}
-                        <img src="{% static 'dashboard/images/organization.svg' %}" alt="org"/>
+                        <img src="{% static 'dashboard/images/admin.png' %}" alt="org"/>
                         {% endif %}
                         <h6>{{user.name}}</h6>
                     </a>

@@ -559,7 +559,6 @@ class PartnerList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         data = super(PartnerList, self).get_context_data(**kwargs)
-        contact_list = PartnerContact.objects.all().order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         group = Group.objects.get(user=user)
@@ -738,7 +737,7 @@ class ProvinceList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         data = super(ProvinceList, self).get_context_data(**kwargs)
-        province = Province.objects.order_by('id')
+        province = Province.objects.values('id', 'name', 'code').order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['list'] = province
@@ -754,7 +753,7 @@ class DistrictList(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         data = super(DistrictList, self).get_context_data(**kwargs)
 
-        district = District.objects.order_by('id')
+        district = District.objects.values('id', 'name', 'code', 'province_id').order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['list'] = district
@@ -769,7 +768,8 @@ class PalikaList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         data = super(PalikaList, self).get_context_data(**kwargs)
-        palika = GapaNapa.objects.order_by('id')
+        palika = GapaNapa.objects.values('id', 'name', 'province_id', 'district_id', 'gn_type_en', 'gn_type_np',
+                                         'population', 'geography', 'cbs_code', 'hlcit_code', 'p_code').order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
@@ -973,13 +973,13 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         partner = Partner.objects.filter(id=user_data.partner.id).order_by('id')
-        all_partner = Partner.objects.order_by('id')
-        program = Program.objects.all().order_by('id')
-        project = Project.objects.all().order_by('id')
-        province = Province.objects.all().order_by('id')
-        district = District.objects.all().order_by('id')
-        municipality = GapaNapa.objects.all().order_by('id')
-        contact = PartnerContact.objects.all().order_by('id')
+        all_partner = Partner.objects.values('id', 'name').order_by('id')
+        program = Program.objects.values('id', 'name').order_by('id')
+        project = Project.objects.values('id', 'name').order_by('id')
+        province = Province.objects.values('id', 'name').order_by('id')
+        district = District.objects.values('id', 'name').order_by('id')
+        municipality = GapaNapa.objects.values('id', 'name').order_by('id')
+        contact = PartnerContact.objects.values('id', 'name').order_by('id')
         data['user'] = user_data
         data['partners'] = partner
         data['all_partner'] = all_partner
@@ -1136,7 +1136,7 @@ class DistrictCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
-        data['province'] = Province.objects.order_by('id')
+        data['province'] = Province.objects.values('id', 'name').order_by('id')
         data['active'] = 'location'
         return data
 
@@ -1162,8 +1162,8 @@ class PalilkaCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
-        data['province'] = Province.objects.order_by('id')
-        data['district'] = District.objects.order_by('id')
+        data['province'] = Province.objects.values('id', 'name').order_by('id')
+        data['district'] = District.objects.values('id', 'name').order_by('id')
         data['active'] = 'location'
         return data
 
@@ -1443,12 +1443,12 @@ class FiveUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         data = super(FiveUpdate, self).get_context_data(**kwargs)
         user = self.request.user
-        partner = Partner.objects.all().order_by('id')
-        program = Program.objects.all().order_by('id')
-        province = Province.objects.all().order_by('id')
-        project = Project.objects.all().order_by('id')
-        district = District.objects.all().order_by('id')
-        municipality = GapaNapa.objects.all().order_by('id')
+        partner = Partner.objects.values('id', 'name').order_by('id')
+        program = Program.objects.values('id', 'name').order_by('id')
+        province = Province.objects.values('id', 'name').order_by('id')
+        project = Project.objects.values('id', 'name').order_by('id')
+        district = District.objects.values('id', 'name').order_by('id')
+        municipality = GapaNapa.objects.values('id', 'name').order_by('id')
         contact = PartnerContact.objects.all().order_by('id')
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
@@ -1701,8 +1701,8 @@ class PalilkaUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
-        data['province'] = Province.objects.order_by('id')
-        data['district'] = District.objects.order_by('id')
+        data['province'] = Province.objects.values('id', 'name').order_by('id')
+        data['district'] = District.objects.values('id', 'name').order_by('id')
         data['active'] = 'location'
         return data
 
