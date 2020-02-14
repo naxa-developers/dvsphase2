@@ -19,6 +19,7 @@ class Partner(models.Model):
     # contact_person_ph = models.CharField(max_length=100, null=True, blank=True)
     image = models.ImageField(upload_to='upload/partner/', null=True, blank=True)
     thumbnail = models.ImageField(upload_to='upload/partner/', editable=False, null=True, blank=True)
+    code = models.CharField(max_length=100, null=True, blank=True)
 
     def make_thumbnail(self):
         image = Image.open(self.image)
