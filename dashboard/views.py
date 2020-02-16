@@ -36,6 +36,7 @@ import os
 from django.contrib import messages
 from random import randint
 from django.contrib.admin.models import LogEntry
+from datetime import datetime, timedelta
 
 
 # Create your views here.
@@ -71,111 +72,151 @@ def uploadData(request):
             # five = FiveW.objects.bulk_create(fiveData)
             # list = []
             for row in range(0, upper_range):
+                print(row)
+                print(df['New Local Unit'][row])
+                # supplier_id = Partner.objects.get(code=str(int(df['Tier 1_Partner'][row])))
+                # second_tier_partner = Partner.objects.get(code=str(int(df['Tier 2_Partner_code'][row])))
+                # component_id = Project.objects.get(code=str(df['Component'][row]))
+                # program_id = Program.objects.get(code=str(int(df['Programme'][row])))
+                # province_id = Province.objects.get(code=str(int(df['State'][row])))
+                # district_id = District.objects.get(name=df['Project District'][row])
+                municipality_id = GapaNapa.objects.get(name=df['New Local Unit'][row], district_id__name=df['Project District'][row])
+                # ward = None
+                # local_partner = None
+                # project_title = df['Name of the Project'][row]
+                # status = df['Status'][row]
+                # start_date = df['Start date'][row]
+                # end_date = df['End Date'][row]
+                # allocated_budget = float(df['Allocated Funds to Local Units'][row])
+                # male_beneficiary = (int(df['Total Beneficiaries'][row]) - int(df['Female Beneficiaries'][row]))
+                # female_beneficiary = int(df['Female Beneficiaries'][row])
+                # total_beneficiary = int(df['Total Beneficiaries'][row])
 
-                try:
-                    partner = Partner.objects.get(program_name=df['IMPLEMENTING PARNTER 1'][row])
+                # try:
+                #     supplier_id = Partner.objects.get(code=int(df['Tier 1_Partner'][row]))
+                #
+                # except:
+                #     supplier_id = None
+                #
+                # try:
+                #     second_tier_partner = Partner.objects.get(code=int(df['Tier 2_Partner_code'][row]))
+                #
+                # except:
+                #     second_tier_partner = None
+                #
+                # try:
+                #     component_id = Partner.objects.get(code=int(df['Component'][row]))
+                #
+                # except:
+                #     component_id = None
+                #
+                # try:
+                #     program_id = Program.objects.get(code=int(df['Programme'][row]))
+                #
+                # except:
+                #     program_id = None
+                #
+                # try:
+                #     province_id = Province.objects.get(code=int(df['State'][row]))
+                #
+                # except:
+                #     province_id = None
+                #
+                # try:
+                #     district_id = District.objects.get(name=df['Project District'][row])
+                #
+                # except:
+                #     district_id = None
+                #
+                # try:
+                #     municipality_id = GapaNapa.objects.get(name=df['New Local Unit'][row])
+                #
+                # except:
+                #     municipality_id = None
+                #
+                # try:
+                #     ward = None
+                #
+                # except:
+                #     ward = None
+                #
+                # try:
+                #     local_partner = None
+                #
+                # except:
+                #     local_partner = None
+                #
+                # try:
+                #     project_title = df['Name of the Project'][row]
+                #
+                # except:
+                #     project_title = None
+                #
+                # try:
+                #     status = df['Status'][row]
+                #
+                # except:
+                #     status = 'Ongoing'
+                #
+                # try:
+                #     start_date = df['Start date'][row]
+                #
+                # except:
+                #     start_date = None
+                #
+                # try:
+                #     end_date = df['End Date'][row]
+                #
+                # except:
+                #     end_date = None
+                #
+                # try:
+                #     allocated_budget = float(df['Allocated Funds to Local Units'][row])
+                #
+                # except:
+                #     allocated_budget = 0
+                #
+                # try:
+                #     male_beneficiary = (int(df['Total Beneficiaries'][row]) - int(df['Female Beneficiaries'][row]))
+                #
+                # except:
+                #     male_beneficiary = 0
+                #
+                # try:
+                #     female_beneficiary = int(df['Female Beneficiaries'][row])
+                #
+                # except:
+                #     female_beneficiary = 0
+                #
+                # try:
+                #     total_beneficiary = int(df['Total Beneficiaries'][row])
+                #
+                # except:
+                #     total_beneficiary = 0
 
-                except:
-                    partner = None
 
-                try:
-                    program = Program.objects.get(program_name=df['PROGRAMME NAME'][row])
+                # print(datetime.datetime.strptime(df['Start date'][row], '%Y-%m-%d'))
+                # print(start_date)
+                # print(df['New Local Unit'][row])
+                # print(GapaNapa.objects.get(name=df['New Local Unit'][row]))
 
-                except:
-                    program = None
+                # five = FiveW.objects.create(supplier_id=supplier_id, second_tier_partner=second_tier_partner,
+                #                             program_id=program_id,
+                #                             component_id=component_id, province_id=province_id, district_id=district_id,
+                #                             municipality_id=municipality_id,
+                #                             ward=ward,
+                #                             local_partner=local_partner,
+                #                             project_title=project_title,
+                #                             status=status,
+                #                             start_date=start_date,
+                #                             end_date=end_date,
+                #                             allocated_budget=allocated_budget,
+                #                             male_beneficiary=male_beneficiary, female_beneficiary=female_beneficiary,
+                #                             total_beneficiary=total_beneficiary,
+                #                             )
 
-                try:
-                    prov = District.objects.get(program_name=df['DISTRICT'][row])
-
-                except:
-                    prov = None
-
-                try:
-                    district = District.objects.get(program_name=df['DISTRICT'][row])
-
-                except:
-                    district = None
-
-                try:
-                    palika = GapaNapa.objects.get(program_name=df['Nagarpalika'][row])
-
-                except:
-                    palika = None
-
-                try:
-                    consortium_1 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER2'][row])
-
-                except:
-                    consortium_1 = None
-
-                try:
-                    consortium_2 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
-
-                except:
-                    consortium_2 = None
-
-                try:
-                    consortium_3 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
-
-                except:
-                    consortium_3 = None
-
-                try:
-                    implementing_1 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
-
-                except:
-                    implementing_1 = None
-
-                try:
-                    implementing_2 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
-
-                except:
-                    implementing_2 = None
-
-                try:
-                    implementing_3 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
-
-                except:
-                    implementing_3 = None
-
-                try:
-                    implementing_4 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
-
-                except:
-                    implementing_4 = None
-
-                try:
-                    local_1 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
-
-                except:
-                    local_1 = None
-
-                try:
-                    local_2 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
-
-                except:
-                    local_2 = None
-
-                try:
-                    local_3 = Partner.objects.get(program_name=df['IMPLEMENTING PARTNER 3'][row])
-
-                except:
-                    local_3 = None
-
-                five = FiveW.objects.create(partner_id=partner, program_id=program, province_id=prov,
-                                            district_id=district, municipality_id=palika, ward=df['ward'][row],
-                                            consortium_partner_first_id=consortium_1,
-                                            consortium_partner_second_id=consortium_2,
-                                            consortium_partner_third_id=consortium_3,
-                                            implementing_partner_first_id=implementing_1,
-                                            implementing_partner_second_id=implementing_2,
-                                            implementing_partner_third_id=implementing_3,
-                                            implementing_partner_fourth_id=implementing_4,
-                                            local_partner_first_id=local_1, local_partner_second_id=local_2,
-                                            local_partner_third_id=local_3, status=df['status'][row],
-                                            reporting_ministry_line=df['reporting_ministry_line'][row],
-                                            budget=df['budget'][row])
-
+            print(supplier_id)
+            print('success')
             # FiveW.objects.create(fiveData)
             # data_list = [1, 2]
             # a = PartnerContact.objects.get(partner_id=58, name='sumit')
@@ -183,7 +224,7 @@ def uploadData(request):
             # progg = Program.objects.get(id='31')
             # progg.partner.add(prog)
 
-            return HttpResponse(five)
+            return HttpResponse('five')
         except Exception as e:
             return HttpResponse(e)
 
@@ -862,9 +903,12 @@ class PartnerCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         emails = self.request.POST.getlist('contact_person_email')
         numbers = self.request.POST.getlist('contact_person_ph')
         upper_range = len(contact_names)
-        for row in range(0, upper_range):
-            PartnerContact.objects.create(partner_id=self.object, name=contact_names[row], email=emails[row],
-                                          phone_number=numbers[row])
+        print(upper_range)
+        print(contact_names[0])
+        if contact_names[0]:
+            for row in range(0, upper_range):
+                PartnerContact.objects.create(partner_id=self.object, name=contact_names[row], email=emails[row],
+                                              phone_number=numbers[row])
 
         message = "New partner " + self.object.name + "  has been added by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="create")
