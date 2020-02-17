@@ -127,8 +127,7 @@ class Fivew(viewsets.ReadOnlyModelViewSet):
                         'district_id', 'municipality_id']
 
     def get_queryset(self):
-        queryset = FiveW.objects.select_related('supplier_id', 'second_tier_partner', 'program_id', 'component_id',
-                                                'province_id', 'district_id', 'municipality_id').order_by('id')
+        queryset = FiveW.objects.order_by('id')
         return queryset
 
     def get_serializer_class(self):
