@@ -22,32 +22,37 @@ class Partner(models.Model):
     code = models.CharField(max_length=100, null=True, blank=True)
 
     def make_thumbnail(self):
-        image = Image.open(self.image)
-        image.thumbnail((200, 150), Image.ANTIALIAS)
-        thumb_name, thumb_extension = os.path.splitext(self.image.name)
-        thumb_extension = thumb_extension.lower()
-        thumb_filename = thumb_name + '_thumb' + thumb_extension
-        if thumb_extension in ['.jpg', '.jpeg']:
-            FTYPE = 'JPEG'
-        elif thumb_extension == '.gif':
-            FTYPE = 'GIF'
-        elif thumb_extension == '.png':
-            FTYPE = 'PNG'
-        else:
-            return False  # Unrecognized file type
-        # Save thumbnail to in-memory file as StringIO
-        temp_thumb = BytesIO()
-        image.save(temp_thumb, FTYPE)
-        temp_thumb.seek(0)
-        # set save=False, otherwise it will run in an infinite loop
-        self.thumbnail.save(thumb_filename, ContentFile(temp_thumb.read()), save=False)
-        temp_thumb.close()
-        return True
+        try:
+            image = Image.open(self.image)
+            print(image)
+            image.thumbnail((200, 150), Image.ANTIALIAS)
+            thumb_name, thumb_extension = os.path.splitext(self.image.name)
+            thumb_extension = thumb_extension.lower()
+            thumb_filename = thumb_name + '_thumb' + thumb_extension
+            if thumb_extension in ['.jpg', '.jpeg']:
+                FTYPE = 'JPEG'
+            elif thumb_extension == '.gif':
+                FTYPE = 'GIF'
+            elif thumb_extension == '.png':
+                FTYPE = 'PNG'
+            else:
+                return False  # Unrecognized file type
+            # Save thumbnail to in-memory file as StringIO
+            temp_thumb = BytesIO()
+            image.save(temp_thumb, FTYPE)
+            temp_thumb.seek(0)
+            # set save=False, otherwise it will run in an infinite loop
+            self.thumbnail.save(thumb_filename, ContentFile(temp_thumb.read()), save=False)
+            temp_thumb.close()
+            return True
+        except:
+            return False
 
     def save(self, *args, **kwargs):
         if not self.make_thumbnail():
+            print('ok')
             # set to a default thumbnail
-            raise Exception('Could not create thumbnail - is the file type valid?')
+            # raise Exception('Could not create thumbnail - is the file type valid?')
         super(Partner, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -110,7 +115,7 @@ class Program(models.Model):
     marker_category = models.ManyToManyField(MarkerCategory, related_name='Pmarkercategory', blank=True)
     marker_value = models.ManyToManyField(MarkerValues, related_name='MarkerValues', blank=True)
     partner = models.ManyToManyField(Partner, related_name='Ppartner', blank=True)
-    program_code = models.CharField(max_length=100, blank=True, null=True)
+    code = models.CharField(max_length=100, blank=True, null=True)
     status = models.CharField(max_length=50, choices=status, default='ongoing')
     budget = models.CharField(max_length=100, null=True, blank=True)
 
