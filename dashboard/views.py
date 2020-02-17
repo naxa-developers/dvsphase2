@@ -81,7 +81,7 @@ def uploadData(request):
                 program_id = Program.objects.get(code=str(int(df['Programme'][row])))
                 province_id = Province.objects.get(code=str(int(df['State'][row])))
                 district_id = District.objects.get(name=df['Project District'][row])
-                municipality_id = GapaNapa.objects.get(name=df['New Local Unit'][row], district_id__name=df['Project District'][row])
+                municipality_id = GapaNapa.objects.get(hlcit_code=df['hlcit_code'][row])
                 ward = None
                 local_partner = None
                 project_title = df['Name of the Project'][row]
