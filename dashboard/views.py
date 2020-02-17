@@ -74,23 +74,24 @@ def uploadData(request):
             for row in range(0, upper_range):
                 print(row)
                 print(df['New Local Unit'][row])
-                # supplier_id = Partner.objects.get(code=str(int(df['Tier 1_Partner'][row])))
-                # second_tier_partner = Partner.objects.get(code=str(int(df['Tier 2_Partner_code'][row])))
-                # component_id = Project.objects.get(code=str(df['Component'][row]))
-                # program_id = Program.objects.get(code=str(int(df['Programme'][row])))
-                # province_id = Province.objects.get(code=str(int(df['State'][row])))
-                # district_id = District.objects.get(name=df['Project District'][row])
+
+                supplier_id = Partner.objects.get(code=str(int(df['Tier 1_Partner'][row])))
+                second_tier_partner = Partner.objects.get(code=str(int(df['Tier 2_Partner_code'][row])))
+                component_id = Project.objects.get(code=str(df['Component'][row]))
+                program_id = Program.objects.get(code=str(int(df['Programme'][row])))
+                province_id = Province.objects.get(code=str(int(df['State'][row])))
+                district_id = District.objects.get(name=df['Project District'][row])
                 municipality_id = GapaNapa.objects.get(name=df['New Local Unit'][row], district_id__name=df['Project District'][row])
-                # ward = None
-                # local_partner = None
-                # project_title = df['Name of the Project'][row]
-                # status = df['Status'][row]
-                # start_date = df['Start date'][row]
-                # end_date = df['End Date'][row]
-                # allocated_budget = float(df['Allocated Funds to Local Units'][row])
-                # male_beneficiary = (int(df['Total Beneficiaries'][row]) - int(df['Female Beneficiaries'][row]))
-                # female_beneficiary = int(df['Female Beneficiaries'][row])
-                # total_beneficiary = int(df['Total Beneficiaries'][row])
+                ward = None
+                local_partner = None
+                project_title = df['Name of the Project'][row]
+                status = df['Status'][row]
+                start_date = datetime.strptime(df['Start date'][row], "%m/%d/%Y").strftime('%Y-%m-%d')
+                end_date = datetime.strptime(df['End Date'][row], "%m/%d/%Y").strftime('%Y-%m-%d')
+                allocated_budget = float(df['Allocated Funds to Local Units'][row])
+                male_beneficiary = (int(df['Total Beneficiaries'][row]) - int(df['Female Beneficiaries'][row]))
+                female_beneficiary = int(df['Female Beneficiaries'][row])
+                total_beneficiary = int(df['Total Beneficiaries'][row])
 
                 # try:
                 #     supplier_id = Partner.objects.get(code=int(df['Tier 1_Partner'][row]))
@@ -200,20 +201,20 @@ def uploadData(request):
                 # print(df['New Local Unit'][row])
                 # print(GapaNapa.objects.get(name=df['New Local Unit'][row]))
 
-                # five = FiveW.objects.create(supplier_id=supplier_id, second_tier_partner=second_tier_partner,
-                #                             program_id=program_id,
-                #                             component_id=component_id, province_id=province_id, district_id=district_id,
-                #                             municipality_id=municipality_id,
-                #                             ward=ward,
-                #                             local_partner=local_partner,
-                #                             project_title=project_title,
-                #                             status=status,
-                #                             start_date=start_date,
-                #                             end_date=end_date,
-                #                             allocated_budget=allocated_budget,
-                #                             male_beneficiary=male_beneficiary, female_beneficiary=female_beneficiary,
-                #                             total_beneficiary=total_beneficiary,
-                #                             )
+                five = FiveW.objects.create(supplier_id=supplier_id, second_tier_partner=second_tier_partner,
+                                            program_id=program_id,
+                                            component_id=component_id, province_id=province_id, district_id=district_id,
+                                            municipality_id=municipality_id,
+                                            ward=ward,
+                                            local_partner=local_partner,
+                                            project_title=project_title,
+                                            status=status,
+                                            start_date=start_date,
+                                            end_date=end_date,
+                                            allocated_budget=allocated_budget,
+                                            male_beneficiary=male_beneficiary, female_beneficiary=female_beneficiary,
+                                            total_beneficiary=total_beneficiary,
+                                            )
 
             print(supplier_id)
             print('success')
