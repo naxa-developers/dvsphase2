@@ -571,9 +571,9 @@ class FiveList(LoginRequiredMixin, ListView):
         user_data = UserProfile.objects.get(user=user)
         group = Group.objects.get(user=user)
         if group.name == 'admin':
-            five = FiveW.objects.order_by('id')
+            five = FiveW.objects.defer('municipality_id').order_by('id')
         else:
-            five = FiveW.objects.filter(partner_id=user_data.partner.id)
+            five = FiveW.objects.filter(supplier_id=user_data.partner.id)[:200]
         data['list'] = five
         data['user'] = user_data
         data['active'] = 'five'
