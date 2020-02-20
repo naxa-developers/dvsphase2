@@ -830,7 +830,7 @@ class Dashboard(LoginRequiredMixin, TemplateView):
         if group.name == 'admin':
             five = FiveW.objects.order_by('id')
         else:
-            five = FiveW.objects.select_related('supplier_id').filter(supplier_id=user_data.partner.id)[:200]
+            five = FiveW.objects.select_related('supplier_id').filter(supplier_id=user_data.partner.id)[:10]
         return render(request, 'dashboard.html',
                       {'user': user_data, 'active': 'dash', 'fives': five, 'logs': log, 'group': group})
 
