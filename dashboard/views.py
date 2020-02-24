@@ -37,6 +37,7 @@ from django.contrib import messages
 from random import randint
 from django.contrib.admin.models import LogEntry
 from datetime import datetime, timedelta
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -563,6 +564,7 @@ class RoleList(LoginRequiredMixin, ListView):
 
 class FiveList(LoginRequiredMixin, ListView):
     template_name = 'five_list.html'
+    paginate_by = 2
     model = FiveW
 
     def get_context_data(self, **kwargs):
@@ -573,8 +575,23 @@ class FiveList(LoginRequiredMixin, ListView):
         if group.name == 'admin':
             five = FiveW.objects.defer('municipality_id').order_by('id')
         else:
-            five = FiveW.objects.filter(supplier_id=user_data.partner.id)[:200]
-        data['list'] = five
+            five = FiveW.objects.filter(supplier_id=user_data.partner.id).order_by('id')
+
+        paginator = Paginator(five, 100)
+        page_numbers_range = 100
+        max_index = len(paginator.page_range)
+        print(paginator)
+        page_number = self.request.GET.get('page')
+        current_page = int(page_number) if page_number else 1
+        page_obj = paginator.get_page(page_number)
+        start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+        end_index = start_index + page_numbers_range
+        if end_index >= max_index:
+            end_index = max_index
+
+        page_range = paginator.page_range[start_index:end_index]
+        data['page_range'] = page_range
+        data['list'] = page_obj
         data['user'] = user_data
         data['active'] = 'five'
         return data
