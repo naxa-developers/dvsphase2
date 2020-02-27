@@ -56,16 +56,16 @@
             {% for five in list %}
             <tr>
                 <td>{{ five.id }}</td>
-                <td>{{ five.supplier_id }}</td>
-                <td>{{ five.program_id }}</td>
-                <td>{{ five.component_id }}</td>
+                <td>{{ five.supplier_id__name }}</td>
+                <td>{{ five.program_id__name }}</td>
+                <td>{{ five.component_id__name }}</td>
                 <td>{{ five.project_title }}</td>
-                <td>{{ five.second_tier_partner }}</td>
-                <td>{{ five.province_id }}</td>
+                <td>{{ five.second_tier_partner__name }}</td>
+                <td>{{ five.province_id__name }}</td>
                 <td>
-                    {{ five.district_id }}
+                    {{ five.district_id__name }}
                 </td>
-                <td>{{ five.municipality_id }}</td>
+                <td>{{ five.municipality_id__name }}</td>
                 <td>{{ five.allocated_budget }}</td>
                 <td>{{ five.ward }}</td>
                 <td>{{ five.local_partner }}</td>

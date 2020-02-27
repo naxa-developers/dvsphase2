@@ -7,7 +7,7 @@ from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
     PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm, \
-    GroupForm, BudgetCreateForm, PartnerContactForm
+    GroupForm, BudgetCreateForm, PartnerContactForm, CmpForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -22,7 +22,7 @@ from rest_framework.authentication import TokenAuthentication, SessionAuthentica
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
     MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output, Notification, \
-    BudgetToSecondTier, BudgetToFirstTier
+    BudgetToSecondTier, BudgetToFirstTier, Cmp
 from .models import UserProfile, Log
 from django.contrib.auth.models import User, Group, Permission
 from django.views.generic import TemplateView
@@ -195,7 +195,6 @@ def uploadData(request):
                 #
                 # except:
                 #     total_beneficiary = 0
-
 
                 # print(datetime.datetime.strptime(df['Start date'][row], '%Y-%m-%d'))
                 # print(start_date)
@@ -532,6 +531,23 @@ class OutputList(LoginRequiredMixin, ListView):
         return data
 
 
+class CmpList(LoginRequiredMixin, ListView):
+    template_name = 'cmp_list.html'
+    model = Program
+
+    def get_context_data(self, **kwargs):
+        data = super(CmpList, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        cmp_list = Cmp.objects.values('project_code', 'project_name', 'total_project_budget', 'percentage_in_country',
+                                      'budget_country_fy', 'sro_name', 'category', 'poc', 'poc_email', 'remarks',
+                                      'province_id__name', 'district_id__name', 'municipality_id__name').order_by('id')
+        data['list'] = cmp_list
+        data['user'] = user_data
+        data['active'] = 'cmp'
+        return data
+
+
 class PermissionList(LoginRequiredMixin, ListView):
     template_name = 'permission_list.html'
     model = Program
@@ -573,12 +589,30 @@ class FiveList(LoginRequiredMixin, ListView):
         user_data = UserProfile.objects.get(user=user)
         group = Group.objects.get(user=user)
         if group.name == 'admin':
-            five = FiveW.objects.defer('municipality_id').order_by('id')
+            five = FiveW.objects.values('id', 'supplier_id__name', 'second_tier_partner__name', 'program_id__name',
+                                        'component_id__name',
+                                        'ward', 'local_partner', 'project_title', 'status', 'start_date', 'end_date',
+                                        'province_id__name', 'district_id__name', 'municipality_id__name',
+                                        'allocated_budget', 'male_beneficiary', 'female_beneficiary',
+                                        'total_beneficiary').order_by(
+                'id')
         else:
-            five = FiveW.objects.filter(supplier_id=user_data.partner.id).order_by('id')
+            five = FiveW.objects.filter(supplier_id=user_data.partner.id).values('id', 'supplier_id__name',
+                                                                                 'second_tier_partner__name',
+                                                                                 'program_id__name',
+                                                                                 'component_id__name',
+                                                                                 'ward', 'local_partner',
+                                                                                 'project_title', 'status',
+                                                                                 'start_date', 'end_date',
+                                                                                 'province_id__name',
+                                                                                 'district_id__name',
+                                                                                 'municipality_id__name',
+                                                                                 'allocated_budget', 'male_beneficiary',
+                                                                                 'female_beneficiary',
+                                                                                 'total_beneficiary').order_by('id')
 
-        paginator = Paginator(five, 100)
-        page_numbers_range = 100
+        paginator = Paginator(five, 2000)
+        page_numbers_range = 500
         max_index = len(paginator.page_range)
         print(paginator)
         page_number = self.request.GET.get('page')
