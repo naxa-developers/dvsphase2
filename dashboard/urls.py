@@ -115,6 +115,10 @@ urlpatterns = [
     path('budget-edit/<int:pk>', views.BudgetUpdate.as_view(), name='budget-edit'),
     path('budget-delete/<int:pk>', views.BudgetDelete.as_view(), name='budget-delete'),
 
+    path('cmp-list/', views.CmpList.as_view(), name='cmp-list'),
+
+
+
     path('vector-map/', views.VectorMap.as_view(), name='vector-map'),
 
 ]

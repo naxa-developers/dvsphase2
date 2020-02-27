@@ -442,3 +442,31 @@ class BudgetToFirstTier(models.Model):
 
     def __str__(self):
         return self.supplier_id.name
+
+
+class Cmp(models.Model):
+    cat = (
+        ('collaborate', 'Collaborate'),
+        ('contribute', 'Contribute'),
+        ('aware', 'Aware'),
+
+    )
+
+    project_code = models.CharField(max_length=100, null=True, blank=True)
+    project_name = models.CharField(max_length=100, null=True, blank=True)
+    total_project_budget = models.FloatField(null=True, blank=True, default=0)
+    percentage_in_country = models.FloatField(null=True, blank=True, default=0)
+    budget_country_fy = models.FloatField(null=True, blank=True, default=0)
+    sro_name = models.CharField(max_length=100, null=True, blank=True)
+    category = models.CharField(max_length=50, choices=cat, null=True, blank=True)
+    poc = models.CharField(max_length=100, null=True, blank=True)
+    poc_email = models.CharField(max_length=100, null=True, blank=True)
+    remarks = models.TextField(blank=True, null=True)
+    province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='CmProvince', null=True,
+                                    blank=True)
+    district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='CmDistrict', null=True,
+                                    blank=True)
+    municipality_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='CmGapaNapa', null=True)
+
+    def __str__(self):
+        return self.project_name
