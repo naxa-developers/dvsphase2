@@ -611,7 +611,7 @@ class FiveList(LoginRequiredMixin, ListView):
                                                                                  'female_beneficiary',
                                                                                  'total_beneficiary').order_by('id')
 
-        paginator = Paginator(five, 2000)
+        paginator = Paginator(five, 500)
         page_numbers_range = 500
         max_index = len(paginator.page_range)
         print(paginator)
