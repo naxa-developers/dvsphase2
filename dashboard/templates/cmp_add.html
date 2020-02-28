@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="/dashboard/indicator-list/"><i class="material-icons">assignment</i> Centrally Managed
+                    Programme</a>
+            </li>
+            <li>New</li>
+        </ul>
+    </div>
+    <!-- program form -->
+    <form enctype="multipart/form-data" class="program-form" method="POST">
+
+        {% csrf_token %}
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ field.name|title }} {{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+        <div class="default-form">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_project_code" class="">Project code</label>
+                        <input type="text" class="form-control" name="project_code" maxlength="100" id="id_project_code"
+                               placeholder="project code" required/>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_category">Select Category</label>
+                        <select name="category" id="id_category" class="custom-select" required>
+                            <option value="" selected>----Select Federal----</option>
+
+
+                            <option value="collaborate">Collaborate</option>
+
+                            <option value="contribute">Contribute</option>
+
+                            <option value="aware">Aware</option>
+
+
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="id_project_name" class="">Project name</label>
+                        <input type="text" class="form-control" name="project_name" maxlength="500" id="id_project_name"
+                               placeholder="Project Name"/>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="id_total_project_budget" class="">Current total project budget</label>
+                        <input class="form-control" type="number" name="total_project_budget" value="0" step="any"
+                               id="id_total_project_budget"
+                               placeholder=" "/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="id_percentage_in_country" class="">Percentage in country</label>
+                        <input class="form-control" type="number" name="percentage_in_country" value="0" step="any"
+                               id="id_percentage_in_country"
+                               placeholder="Percentage in country"/>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="id_budget_country_fy" class="">Budget country fy</label>
+                        <input class="form-control" type="number" name="budget_country_fy" value="0" step="any"
+                               id="id_budget_country_fy"
+                               placeholder=" "/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="col-wrapper">
+                        <div class="form-group">
+                            <label for="id_province_id">Select Province</label>
+                            <select name="province_id" id="id_province_id" class="custom-select">
+                                {% for province in provinces %}
+
+                                <option value="{{province.id}}">{{province.name}}</option>
+
+
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="col-wrapper">
+                        <div class="form-group">
+                            <label for="id_district_id">Select District</label>
+                            <select name="district_id" id="id_district_id" class="custom-select">
+
+
+                                <option value="0">Select Province</option>
+
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="col-wrapper">
+                        <div class="form-group">
+                            <label for="id_municipality_id">Select Municipality</label>
+                            <select name="municipality_id" id="id_municipality_id"
+                                    class="custom-select">
+                                <option value="0">Select District</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_sro_name" class="">SRO Name</label>
+                        <input class="form-control" type="text" name="sro_name" maxlength="100" id="id_sro_name"
+                               placeholder=" "/>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_poc" class="">DFID Nepal Point of Contact (POC)</label>
+                        <input class="form-control" type="text" name="poc" maxlength="100" id="id_poc"
+                               placeholder=""/>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="id_budget_country_fy" class="">Poc email</label>
+                        <input class="form-control" type="text" name="poc_email" maxlength="100" id="id_poc_email"
+                               placeholder=" "/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="id_poc" class="">Remarks</label>
+                        <textarea class="form-control" name="remarks" cols="40" rows="10" id="id_remarks"></textarea>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+            <div class="form-group mrt-100">
+                <button type="submit" class="dfid-button sm-button">Save</button>
+            </div>
+
+        </div>
+        <!-- category form -->
+
+
+    </form>
+</main>
+
+{% endblock %}
+

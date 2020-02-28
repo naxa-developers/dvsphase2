@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+console.log('aaaa')
+
 $('.datepicker').datepicker({
     format: 'yyyy/mm/dd',
     startDate: '-3d'
@@ -119,6 +121,7 @@ $('#notify-id-div').on('click',function(){
 
 //ajax request for district
 $('#id_province_id').on('change',function(){
+console.log('change')
 prov_id = $(this).val()
 $.ajax({
     url: baseUrl+'api/v1/core/district/?province_id='+prov_id,
@@ -127,7 +130,7 @@ $.ajax({
 //    },
     method: 'GET',
     success: function(result){
-
+    console.log(result)
 
     var district = result.results
     $('#id_district_id').html("");
