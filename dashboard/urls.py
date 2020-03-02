@@ -118,6 +118,7 @@ urlpatterns = [
     path('cmp-list/', views.CmpList.as_view(), name='cmp-list'),
     path('cmp-add/', views.CmpCreate.as_view(), name='cmp-add'),
     path('cmp-edit/<int:pk>', views.CmpUpdate.as_view(), name='cmp-edit'),
+    path('cmp-delete/<int:pk>', views.CmpDelete.as_view(), name='cmp-delete'),
 
 
 

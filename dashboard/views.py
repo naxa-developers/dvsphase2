@@ -2173,6 +2173,20 @@ class BudgetDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
         return data
 
 
+class CmpDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = Cmp
+    template_name = 'cmp_confirm_delete.html'
+    success_message = 'Cmp successfully deleted'
+    success_url = reverse_lazy('cmp-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(CmpDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
+
 def gisLayer_create(request):
     template_name = 'gis_add.html'
     form = GisLayerCreateForm(request.POST or None)
