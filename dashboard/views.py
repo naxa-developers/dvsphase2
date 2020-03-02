@@ -541,7 +541,8 @@ class CmpList(LoginRequiredMixin, ListView):
         user_data = UserProfile.objects.get(user=user)
         cmp_list = Cmp.objects.values('project_code', 'project_name', 'total_project_budget', 'percentage_in_country',
                                       'budget_country_fy', 'sro_name', 'category', 'poc', 'poc_email', 'remarks',
-                                      'province_id__name', 'district_id__name', 'municipality_id__name').order_by('id')
+                                      'province_id__name', 'district_id__name', 'municipality_id__name', 'id').order_by(
+            'id')
         data['list'] = cmp_list
         data['user'] = user_data
         data['active'] = 'cmp'
@@ -1147,6 +1148,33 @@ class ProjectCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+class CmpCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+    model = Project
+    template_name = 'cmp_add.html'
+    form_class = CmpForm
+    success_message = 'Cmp successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(CmpCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        province = Province.objects.values('id', 'name').order_by('id')
+        data['provinces'] = province
+        data['user'] = user_data
+        data['active'] = 'cmp'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('cmp-list')
+
+    def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
+        self.object = form.save()
+        message = "New cmp " + self.object.project_name + "  has been added by " + self.request.user.username
+        log = Log.objects.create(user=user_data, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
+
 class PermissionCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Permission
     template_name = 'permission_add.html'
@@ -1451,6 +1479,37 @@ class PartnerUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
         message = "Partner " + self.object.name + "  has been edited by " + self.request.user.username
+        log = Log.objects.create(user=user_data, message=message, type="update")
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class CmpUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = Cmp
+    template_name = 'cmp_edit.html'
+    form_class = CmpForm
+    success_message = 'Cmp successfully Created'
+
+    def get_context_data(self, **kwargs):
+        data = super(CmpUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        province = Province.objects.values('id', 'name').order_by('id')
+        district = District.objects.values('id', 'name').order_by('id')
+        municipality = GapaNapa.objects.values('id', 'name').order_by('id')
+        data['provinces'] = province
+        data['districts'] = district
+        data['municipalities'] = municipality
+        data['user'] = user_data
+        data['active'] = 'cmp'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('cmp-list')
+
+    def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
+        self.object = form.save()
+        message = "In cmp " + self.object.project_name + "  has been edit by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
@@ -2108,6 +2167,20 @@ class BudgetDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
 
     def get_context_data(self, **kwargs):
         data = super(BudgetDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
+
+class CmpDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = Cmp
+    template_name = 'cmp_confirm_delete.html'
+    success_message = 'Cmp successfully deleted'
+    success_url = reverse_lazy('cmp-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(CmpDelete, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data

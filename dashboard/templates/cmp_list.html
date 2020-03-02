@@ -6,10 +6,10 @@
     <div class="dfid-breadcrumb pdt-100">
         <ul class="flex-start">
             <li>
-                <a href="#"><i class="material-icons">assignment</i>Centrally Managed Program</a>
+                <a href="/dashboard/cmp-list/"><i class="material-icons">assignment</i>Centrally Managed Program</a>
             </li>
             {% if perms.core.add_cmp %}
-            <li><a href="/dashboard/budget-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
+            <li><a href="/dashboard/cmp-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
             </li>
             {% endif %}
         </ul>
@@ -29,11 +29,11 @@
             <tr>
                 <th>Id</th>
                 <th>Project Code</th>
-                <th>project_name</th>
+                <th>project name</th>
                 <th>Current total project budget</th>
                 <th>% in country</th>
                 <th>Project budget in country this FY</th>
-                <th>sro_name</th>
+                <th>sro name</th>
                 <th>category</th>
                 <th>DFID Nepal Point of Contact (POC)</th>
                 <th>POC E-mail ID</th>
@@ -41,7 +41,6 @@
                 <th>province</th>
                 <th>District</th>
                 <th>Municipality</th>
-                <th>action</th>
 
                 <th></th>
             </tr>
@@ -73,14 +72,14 @@
                         <ul class="dropdown-animation">
                             {% if perms.core.change_cmp %}
                             <li>
-                                <a href="/dashboard/budget-edit/{{ budget.id }}" class="flex-start">
+                                <a href="/dashboard/cmp-edit/{{ cmp.id }}" class="flex-start">
                                     <i class="material-icons">edit</i> Edit
                                 </a>
                             </li>
                             {% endif %}
                             {% if perms.core.delete_cmp %}
                             <li>
-                                <a href="/dashboard/budget-delete/{{ budget.id }}" class="flex-start">
+                                <a href="/dashboard/cmp-delete/{{ cmp.id }}" class="flex-start">
                                     <i class="material-icons">delete</i>delete
                                 </a>
                             </li>
