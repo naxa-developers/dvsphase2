@@ -53,7 +53,7 @@ class ProgramSerializer(serializers.ModelSerializer):
     class Meta:
         model = Program
         fields = ('id', 'name', 'description', 'sector', 'sub_sector', 'marker_category', 'marker_value', 'partner',
-                  'program_code', 'budget')
+                  'code', 'budget')
 
     def get_marker_category(self, obj):
         qs = obj.marker_category.order_by('id').values_list('id', flat=True)
