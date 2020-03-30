@@ -13,6 +13,8 @@ from rest_framework.authentication import TokenAuthentication, BasicAuthenticati
 from django.db.models import Q
 from django.db import connection
 from django.http import Http404, HttpResponse
+import json
+from django.db.models import Sum
 
 
 # Create your views here.
@@ -30,6 +32,50 @@ class PartnerView(viewsets.ReadOnlyModelViewSet):
     def get_serializer_class(self):
         serializer_class = PartnerSerializer
         return serializer_class
+
+
+class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+
+    # filter_backends = [DjangoFilterBackend]
+    # filterset_fields = ['id']
+
+    def list(self, request, **kwargs):
+        data = []
+        district = District.objects.values('name', 'id', ).order_by('id')
+        id_indicator = self.kwargs['indicator_id']
+        print(self.kwargs['indicator_id'])
+
+        for dist in district:
+            value_sum = 0
+            dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
+                district_id=dist['id']).aggregate(
+                Sum('population'))
+            indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value', 'gapanapa_id__population').filter(
+                indicator_id=id_indicator,
+                gapanapa_id__district_id=dist['id'])
+            for ind in indicator:
+                indicator_value = (ind['value'] * ind['gapanapa_id__population'])
+                # print(indicator_value)
+                value_sum = (value_sum + indicator_value)
+
+            # print(value_sum)
+            # print(dist_pop_sum['population__sum'])
+            value = (value_sum / dist_pop_sum['population__sum'])
+
+            data.append(
+                {
+                    'indicator_id': ind['indicator_id'],
+                    'district_name': dist['name'],
+                    'district_id': dist['id'],
+                    # 'value_sum': value_sum,
+                    # 'population': dist_pop_sum['population__sum'],
+                    'value': value
+
+                }
+            )
+
+        return Response({"data": data})
 
 
 class MarkerCategoryApi(viewsets.ReadOnlyModelViewSet):

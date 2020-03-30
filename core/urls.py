@@ -23,5 +23,6 @@ urlpatterns = [
     path('palika-tile/<int:zoom>/<int:x>/<int:y>', views.municipality_tile, name="palika-tile"),
     path('district-tile/<int:zoom>/<int:x>/<int:y>', views.district_tile, name="district-tile"),
     path('province-tile/<int:zoom>/<int:x>/<int:y>', views.province_tile, name="province-tile"),
+    path('district-indicator/<int:indicator_id>', views.DistrictIndicator.as_view({'get': 'list'}), name="district-indicator"),
 
 ]
