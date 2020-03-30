@@ -50,10 +50,8 @@ class TestViews(APITestCase, APIRequestFactory):
         response = self.client.get(url, format='json')
         assert response.status_code == 200
 
-    
-
     def test_indicator_value(self):
-        url = reverse('indicator-value')
+        url = reverse('municipality-indicator')
         response = self.client.get(url, format='json')
         assert response.status_code == 200
 
@@ -61,5 +59,3 @@ class TestViews(APITestCase, APIRequestFactory):
         url = reverse('sub-sector')
         response = self.client.get(url, format='json')
         assert response.status_code == 200
-
-

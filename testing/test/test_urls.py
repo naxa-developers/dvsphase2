@@ -44,8 +44,8 @@ class TestUrls:
         assert resolve(path).view_name == "indicator-list"
 
     def test_core_indicator_value(self):
-        path = reverse('indicator-value')
-        assert resolve(path).view_name == "indicator-value"
+        path = reverse('municipality-indicator')
+        assert resolve(path).view_name == "municipality-indicator"
 
     def test_core_sub_sector(self):
         path = reverse('sub-sector')

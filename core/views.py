@@ -60,7 +60,6 @@ class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
                 # print(math.isnan(ind['value']))
 
                 if math.isnan(ind['value']) == False:
-                    
                     indicator_value = (ind['value'] * ind['gapanapa_id__population'])
                     # print(indicator_value)
                     value_sum = (value_sum + indicator_value)
@@ -76,6 +75,54 @@ class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
                     'indicator_id': ind['indicator_id'],
                     'district_name': dist['name'],
                     'district_id': dist['id'],
+                    # 'value_sum': value_sum,
+                    # 'population': dist_pop_sum['population__sum'],
+                    'value': value
+
+                }
+            )
+
+        return Response({"data": data})
+
+
+class ProvinceIndicator(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+
+    def list(self, request, **kwargs):
+        data = []
+        province = Province.objects.values('name', 'id', ).order_by('id')
+        id_indicator = self.kwargs['indicator_id']
+        # print(self.kwargs['indicator_id'])
+
+        for dist in province:
+            value_sum = 0
+            dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
+                province_id=dist['id']).aggregate(
+                Sum('population'))
+            indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value', 'gapanapa_id__population').filter(
+                indicator_id=id_indicator,
+                gapanapa_id__province_id=dist['id'])
+            for ind in indicator:
+                # print(ind['value'])
+                # print(dist_pop_sum['population__sum'])
+                # print(math.isnan(ind['value']))
+
+                if math.isnan(ind['value']) == False:
+                    indicator_value = (ind['value'] * ind['gapanapa_id__population'])
+                    # print(indicator_value)
+                    value_sum = (value_sum + indicator_value)
+                else:
+                    value_sum = (value_sum + 0)
+
+            # print(value_sum)
+            # print(dist_pop_sum)
+            value = (value_sum / dist_pop_sum['population__sum'])
+
+            data.append(
+                {
+                    'indicator_id': ind['indicator_id'],
+                    'province_name': dist['name'],
+                    'province_id': dist['id'],
                     # 'value_sum': value_sum,
                     # 'population': dist_pop_sum['population__sum'],
                     'value': value
