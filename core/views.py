@@ -15,6 +15,7 @@ from django.db import connection
 from django.http import Http404, HttpResponse
 import json
 from django.db.models import Sum
+import math
 
 
 # Create your views here.
@@ -55,9 +56,16 @@ class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
                 indicator_id=id_indicator,
                 gapanapa_id__district_id=dist['id'])
             for ind in indicator:
-                indicator_value = (ind['value'] * ind['gapanapa_id__population'])
-                # print(indicator_value)
-                value_sum = (value_sum + indicator_value)
+                # print(ind['value'])
+                # print(math.isnan(ind['value']))
+
+                if math.isnan(ind['value']) == False:
+                    
+                    indicator_value = (ind['value'] * ind['gapanapa_id__population'])
+                    # print(indicator_value)
+                    value_sum = (value_sum + indicator_value)
+                else:
+                    value_sum = (value_sum + 0)
 
             # print(value_sum)
             # print(dist_pop_sum['population__sum'])
