@@ -49,17 +49,23 @@
                      interactive: true, // Make sure that this VectorGrid fires mouse/pointer events
 
                      getFeatureId: function (feature) {
-                        console.log(feature)
+                     console.log("adadasdasdad")
 
                      }
                  }
 
 
-     var dist_dvsurl = baseUrl+"api/v1/core/palika-tile/{z}/{x}/{y}?district=45";
+     var dist_dvsurl = baseUrl+"api/v1/core/palika-tile/{z}/{x}/{y}";
 
 
+province = L.vectorGrid.protobuf(dist_dvsurl, vectorTileOptions).addTo(map);
 
-      district = L.vectorGrid.protobuf(dist_dvsurl).addTo(map, vectorTileOptions);
+<!--      district = L.vectorGrid.protobuf(dist_dvsurl).addTo(map, vectorTileOptions);-->
+<!--      district.on('click', function(e) {-->
+<!--      console.log(e)-->
+
+<!--      })-->
+<!--      console.log(district)-->
 <!--      mun = L.vectorGrid.protobuf(dvsurl).addTo(map, vectorTileOptions);-->
 
 

@@ -20,10 +20,13 @@ class Command(BaseCommand):
 
         try:
             for row in range(0, upper_range):
-                print(df['id'][row])
+                print(df['hlcitId'][row])
 
-                palika_update = District.objects.filter(code=df['id'][row]).update(
-                    boundary=GEOSGeometry(df['geom'][row]))
+                # palika_update = District.objects.filter(code=df['id'][row]).update(
+                #     boundary=GEOSGeometry(df['geom'][row]))
+
+                palika_update = District.objects.filter(code=df['hlcitId'][row]).update(
+                    n_code=int(df['districtId'][row]))
 
             if palika_update:
                 self.stdout.write('Successfully  updated data ..')

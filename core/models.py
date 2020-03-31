@@ -136,6 +136,7 @@ class District(models.Model):
     province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='DProvince', null=True, blank=True)
     name = models.CharField(max_length=100, null=True, blank=True)
     code = models.CharField(max_length=100, null=True, blank=True)
+    n_code = models.IntegerField(null=True, blank=True)
     boundary = models.MultiPolygonField(srid=4326, null=True)
 
     def __str__(self):
@@ -180,6 +181,7 @@ class GapaNapa(models.Model):
     cbs_code = models.CharField(max_length=100, null=True, blank=True)
     hlcit_code = models.CharField(max_length=100, null=True, blank=True)
     p_code = models.CharField(max_length=100, null=True, blank=True)
+    code = models.IntegerField(null=True, blank=True)
     boundary = models.MultiPolygonField(srid=4326, null=True)
 
     def __str__(self):

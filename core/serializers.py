@@ -119,26 +119,17 @@ class DistrictSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = District
-        fields = ('id', 'province_id', 'province_name', 'name', 'code')
+        fields = ('id', 'province_id', 'province_name', 'name', 'code', 'n_code')
 
     def get_province_name(self, obj):
         return str(obj.province_id.name)
 
 
 class GaanapaSerializer(serializers.ModelSerializer):
-    # province_name = serializers.SerializerMethodField()
-    # district_name = serializers.SerializerMethodField()
-
     class Meta:
         model = GapaNapa
-        fields = (
-            'id', 'province_id', 'district_id', 'name', 'gn_type_np', 'hlcit_code', 'population')
-
-    # def get_province_name(self, obj):
-    #     return str(obj.province_id.name)
-    #
-    # def get_district_name(self, obj):
-    #     return str(obj.district_id.name)
+        fields = ('id', 'province_id', 'district_id', 'hlcit_code', 'name', 'gn_type_np',
+                  'code', 'population')
 
 
 class FivewSerializer(serializers.ModelSerializer):
@@ -186,18 +177,18 @@ class FivewSerializer(serializers.ModelSerializer):
 
 
 class IndicatorValueSerializer(serializers.ModelSerializer):
-    gapanapa_hlcit_code = serializers.SerializerMethodField()
-    indicator_name = serializers.SerializerMethodField()
+    code = serializers.SerializerMethodField()
+    # indicator_name = serializers.SerializerMethodField()
 
     class Meta:
         model = IndicatorValue
-        fields = ('id', 'indicator_id', 'indicator_name', 'gapanapa_id', 'gapanapa_hlcit_code', 'value')
+        fields = ('id', 'indicator_id', 'code', 'value')
 
-    def get_gapanapa_hlcit_code(self, obj):
-        return str(obj.gapanapa_id.hlcit_code)
+    def get_code(self, obj):
+        return int(obj.gapanapa_id.code)
 
-    def get_indicator_name(self, obj):
-        return str(obj.indicator_id.indicator)
+    # def get_indicator_name(self, obj):
+    #     return str(obj.indicator_id.indicator)
 
 
 class TravelTimeSerializer(serializers.ModelSerializer):

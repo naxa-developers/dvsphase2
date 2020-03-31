@@ -43,7 +43,7 @@ class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, **kwargs):
         data = []
-        district = District.objects.values('name', 'id', ).order_by('id')
+        district = District.objects.values('name', 'id', 'n_code').order_by('id')
         id_indicator = self.kwargs['indicator_id']
         print(self.kwargs['indicator_id'])
 
@@ -72,17 +72,15 @@ class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
 
             data.append(
                 {
+                    'id': ind['id'],
                     'indicator_id': ind['indicator_id'],
-                    'district_name': dist['name'],
-                    'district_id': dist['id'],
-                    # 'value_sum': value_sum,
-                    # 'population': dist_pop_sum['population__sum'],
+                    'code': dist['n_code'],
                     'value': value
 
                 }
             )
 
-        return Response({"data": data})
+        return Response({"results": data})
 
 
 class ProvinceIndicator(viewsets.ReadOnlyModelViewSet):
@@ -90,7 +88,7 @@ class ProvinceIndicator(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, **kwargs):
         data = []
-        province = Province.objects.values('name', 'id', ).order_by('id')
+        province = Province.objects.values('name', 'id', 'code').order_by('id')
         id_indicator = self.kwargs['indicator_id']
         # print(self.kwargs['indicator_id'])
 
@@ -120,9 +118,9 @@ class ProvinceIndicator(viewsets.ReadOnlyModelViewSet):
 
             data.append(
                 {
+                    'id': ind['id'],
                     'indicator_id': ind['indicator_id'],
-                    'province_name': dist['name'],
-                    'province_id': dist['id'],
+                    'code': int(dist['code']),
                     # 'value_sum': value_sum,
                     # 'population': dist_pop_sum['population__sum'],
                     'value': value
@@ -130,7 +128,7 @@ class ProvinceIndicator(viewsets.ReadOnlyModelViewSet):
                 }
             )
 
-        return Response({"data": data})
+        return Response({"results": data})
 
 
 class MarkerCategoryApi(viewsets.ReadOnlyModelViewSet):
@@ -207,18 +205,9 @@ class GapaNapaApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['id', 'province_id', 'district_id', 'hlcit_code', 'gn_type_en', 'gn_type_np']
-
-    # renderer_classes = [JSONRenderer]
-
-    def get_queryset(self):
-        queryset = GapaNapa.objects.only('id', 'province_id', 'district_id', 'name', 'gn_type_np',
-                                         'hlcit_code').order_by('id')
-
-        return queryset
-
-    def get_serializer_class(self):
-        serializer_class = GaanapaSerializer
-        return serializer_class
+    queryset = GapaNapa.objects.only('id', 'province_id', 'district_id', 'hlcit_code', 'name', 'gn_type_np',
+                                     'code', 'population').order_by('id')
+    serializer_class = GaanapaSerializer
 
 
 class Fivew(viewsets.ReadOnlyModelViewSet):
@@ -407,6 +396,7 @@ def municipality_tile(request, zoom, x, y):
         tile = bytes(cursor.fetchone()[0])
         # return HttpResponse(len(tile))
 
+        print(cursor.execute(sql_data, [zoom, x, y]))
         if not len(tile):
             raise Http404()
     return HttpResponse(tile, content_type="application/x-protobuf")
