@@ -287,6 +287,7 @@ class Indicator(models.Model):
     category = models.CharField(max_length=500, null=True, blank=True)
     source = models.CharField(max_length=1500, null=True, blank=True)
     federal_level = models.CharField(max_length=50, choices=fed, default='palika level')
+    is_covid = models.BooleanField(default=False)
 
     def __str__(self):
         return self.indicator

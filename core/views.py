@@ -244,7 +244,7 @@ class ContractSum(viewsets.ReadOnlyModelViewSet):
 class IndicatorApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'category', 'indicator']
+    filterset_fields = ['id', 'category', 'indicator', 'is_covid']
 
     def get_queryset(self):
         queryset = Indicator.objects.order_by('id')
