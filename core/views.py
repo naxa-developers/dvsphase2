@@ -37,6 +37,7 @@ class PartnerView(viewsets.ReadOnlyModelViewSet):
 
 class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
+    queryset = True
 
     # filter_backends = [DjangoFilterBackend]
     # filterset_fields = ['id']
@@ -45,35 +46,44 @@ class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
         data = []
         district = District.objects.values('name', 'id', 'n_code').order_by('id')
         id_indicator = self.kwargs['indicator_id']
-        print(self.kwargs['indicator_id'])
-
+        health_id = Indicator.objects.get(indicator='number_hospitals')
+        # print(health_id.id)
         for dist in district:
-            value_sum = 0
-            dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
-                district_id=dist['id']).aggregate(
-                Sum('population'))
-            indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value', 'gapanapa_id__population').filter(
+            indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
+                                                      'gapanapa_id__population').filter(
                 indicator_id=id_indicator,
                 gapanapa_id__district_id=dist['id'])
-            for ind in indicator:
-                # print(ind['value'])
-                # print(math.isnan(ind['value']))
+            if id_indicator != health_id.id:
+                value_sum = 0
+                dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
+                    district_id=dist['id']).aggregate(
+                    Sum('population'))
 
-                if math.isnan(ind['value']) == False:
-                    indicator_value = (ind['value'] * ind['gapanapa_id__population'])
-                    # print(indicator_value)
-                    value_sum = (value_sum + indicator_value)
-                else:
-                    value_sum = (value_sum + 0)
+                for ind in indicator:
+                    # print(ind['value'])
+                    # print(math.isnan(ind['value']))
 
-            # print(value_sum)
-            # print(dist_pop_sum['population__sum'])
-            value = (value_sum / dist_pop_sum['population__sum'])
+                    if math.isnan(ind['value']) == False:
+                        indicator_value = (ind['value'] * ind['gapanapa_id__population'])
+                        # print(indicator_value)
+                        value_sum = (value_sum + indicator_value)
+                    else:
+                        value_sum = (value_sum + 0)
+
+                # print(value_sum)
+                # print(dist_pop_sum['population__sum'])
+                value = (value_sum / dist_pop_sum['population__sum'])
+            else:
+                dist_health_num = IndicatorValue.objects.values('id', 'value', 'gapanapa_id').filter(
+                    indicator_id=id_indicator,
+                    gapanapa_id__district_id=dist['id']).aggregate(
+                    Sum('value'))
+                value = dist_health_num['value__sum']
 
             data.append(
                 {
-                    'id': ind['id'],
-                    'indicator_id': ind['indicator_id'],
+                    'id': dist['id'],
+                    'indicator_id': id_indicator,
                     'code': dist['n_code'],
                     'value': value
 
@@ -85,41 +95,53 @@ class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
 
 class ProvinceIndicator(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
+    queryset = True
 
     def list(self, request, **kwargs):
         data = []
         province = Province.objects.values('name', 'id', 'code').order_by('id')
         id_indicator = self.kwargs['indicator_id']
         # print(self.kwargs['indicator_id'])
-
+        health_id = Indicator.objects.get(indicator='number_hospitals')
         for dist in province:
-            value_sum = 0
-            dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
-                province_id=dist['id']).aggregate(
-                Sum('population'))
-            indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value', 'gapanapa_id__population').filter(
-                indicator_id=id_indicator,
-                gapanapa_id__province_id=dist['id'])
-            for ind in indicator:
-                # print(ind['value'])
-                # print(dist_pop_sum['population__sum'])
-                # print(math.isnan(ind['value']))
+            if id_indicator != health_id.id:
+                value_sum = 0
+                dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
+                    province_id=dist['id']).aggregate(
+                    Sum('population'))
+                indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
+                                                          'gapanapa_id__population').filter(
+                    indicator_id=id_indicator,
+                    gapanapa_id__province_id=dist['id'])
+                for ind in indicator:
+                    # print(ind['value'])
+                    # print(dist_pop_sum['population__sum'])
+                    # print(math.isnan(ind['value']))
 
-                if math.isnan(ind['value']) == False:
-                    indicator_value = (ind['value'] * ind['gapanapa_id__population'])
-                    # print(indicator_value)
-                    value_sum = (value_sum + indicator_value)
-                else:
-                    value_sum = (value_sum + 0)
+                    if math.isnan(ind['value']) == False:
+                        indicator_value = (ind['value'] * ind['gapanapa_id__population'])
+                        # print(indicator_value)
+                        value_sum = (value_sum + indicator_value)
+                    else:
+                        value_sum = (value_sum + 0)
 
-            # print(value_sum)
-            # print(dist_pop_sum)
-            value = (value_sum / dist_pop_sum['population__sum'])
+                # print(value_sum)
+                # print(dist_pop_sum)
+                value = (value_sum / dist_pop_sum['population__sum'])
+
+            else:
+                prov_health_num = IndicatorValue.objects.values('id', 'indicator_id', 'value',
+                                                                'gapanapa_id__population').filter(
+                    indicator_id=id_indicator,
+                    gapanapa_id__province_id=dist['id']).aggregate(
+                    Sum('value'))
+
+                value = prov_health_num['value__sum']
 
             data.append(
                 {
-                    'id': ind['id'],
-                    'indicator_id': ind['indicator_id'],
+                    'id': dist['id'],
+                    'indicator_id': id_indicator,
                     'code': int(dist['code']),
                     # 'value_sum': value_sum,
                     # 'population': dist_pop_sum['population__sum'],
