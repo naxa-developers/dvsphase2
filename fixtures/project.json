@@ -1,0 +1,38 @@
+[
+{
+  "model": "core.project",
+  "pk": 1,
+  "fields": {
+    "program_id": 2,
+    "name": "Test project",
+    "code": "2223"
+  }
+},
+{
+  "model": "core.project",
+  "pk": 2,
+  "fields": {
+    "program_id": 4,
+    "name": "test project 23",
+    "code": "343122222"
+  }
+},
+{
+  "model": "core.project",
+  "pk": 3,
+  "fields": {
+    "program_id": 2,
+    "name": "test project 3",
+    "code": "13223"
+  }
+},
+{
+  "model": "core.project",
+  "pk": 7,
+  "fields": {
+    "program_id": 8,
+    "name": "Access to Finance for the Poor Programme",
+    "code": "203426-102"
+  }
+}
+]
