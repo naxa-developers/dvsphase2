@@ -27,19 +27,19 @@ class Command(BaseCommand):
                 #     population=float(df['adm2_pop'][row]),
                 #     geography=(df['geog'][row]).strip())
 
-                palika_update = GapaNapa.objects.filter(hlcit_code=df['HLCIT_CODE'][row]).update(
-                    code=int(df['munid'][row]))
+                # palika_update = GapaNapa.objects.filter(hlcit_code=df['HLCIT_CODE'][row]).update(
+                #     code=int(df['munid'][row]))
+                #
+                # if palika_update:
+                #     self.stdout.write('Successfully  updated data ..')
+
+                # if (df['hlcit_code'][row] == '524 1 14 4 003'):
+
+                palika_update = GapaNapa.objects.filter(hlcit_code=df['hlcit_code'][row]).update(
+                    boundary=GEOSGeometry(df['geom'][row]))
 
                 if palika_update:
                     self.stdout.write('Successfully  updated data ..')
-
-                # if (df['hlcit_code'][row] == '524 1 14 4 003'):
-                #
-                #     palika_update = GapaNapa.objects.filter(hlcit_code=df['hlcit_code'][row]).update(
-                #         boundary=GEOSGeometry(df['geom'][row]))
-                #
-                #     if palika_update:
-                #         self.stdout.write('Successfully  updated data ..')
                 # else:
                 #     print('else')
 
