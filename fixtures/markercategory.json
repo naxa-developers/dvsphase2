@@ -3,56 +3,63 @@
   "model": "core.markercategory",
   "pk": 1,
   "fields": {
-    "marker_category": "Team Marker"
+    "name": "Team Marker"
   }
 },
 {
   "model": "core.markercategory",
   "pk": 2,
   "fields": {
-    "marker_category": "Disability Marker"
+    "name": "Disability Marker"
   }
 },
 {
   "model": "core.markercategory",
   "pk": 3,
   "fields": {
-    "marker_category": "Rio_CCA"
+    "name": "Rio_CCA"
   }
 },
 {
   "model": "core.markercategory",
   "pk": 4,
   "fields": {
-    "marker_category": "Rio_CCM"
+    "name": "Rio_CCM"
   }
 },
 {
   "model": "core.markercategory",
   "pk": 5,
   "fields": {
-    "marker_category": "Rio_Biodiversity"
+    "name": "Rio_Biodiversity"
   }
 },
 {
   "model": "core.markercategory",
   "pk": 6,
   "fields": {
-    "marker_category": "HIV AIDS"
+    "name": "HIV AIDS"
   }
 },
 {
   "model": "core.markercategory",
   "pk": 7,
   "fields": {
-    "marker_category": "Gender Marker"
+    "name": "Gender Marker"
   }
 },
 {
   "model": "core.markercategory",
   "pk": 8,
   "fields": {
-    "marker_category": "Rio_Dissertification"
+    "name": "Rio_Dissertification"
+  }
+},
+{
+  "model": "core.markercategory",
+  "pk": 9,
+  "fields": {
+    "name": "aaa"
   }
 }
 ]

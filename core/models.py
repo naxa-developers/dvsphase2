@@ -293,6 +293,16 @@ class Indicator(models.Model):
         return self.indicator
 
 
+class Filter(models.Model):
+    indicator_id = models.ForeignKey(Indicator, on_delete=models.CASCADE, related_name='filter', null=True,
+                                     blank=True)
+    name = models.CharField(max_length=100, null=True, blank=True)
+    options = models.CharField(max_length=500, null=True, blank=True)
+
+    def __str__(self):
+        return self.filter_name
+
+
 class IndicatorValue(models.Model):
     indicator_id = models.ForeignKey(Indicator, on_delete=models.CASCADE, related_name='Indicator', null=True,
                                      blank=True)

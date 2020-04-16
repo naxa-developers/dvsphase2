@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Partner, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
-    IndicatorValue, Sector, SubSector, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier
+    IndicatorValue, Sector, SubSector, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, Filter
 
 
 class PartnerSerializer(serializers.ModelSerializer):
@@ -79,10 +79,18 @@ class ProvinceSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class FilterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Filter
+        fields = ('filter', 'options',)
+
+
 class IndicatorSerializer(serializers.ModelSerializer):
+    filter = FilterSerializer(many=True, read_only=True)
+
     class Meta:
         model = Indicator
-        fields = '__all__'
+        fields = ('id', 'full_title', 'abstract', 'category', 'source', 'federal_level', 'is_covid', 'filter',)
 
 
 class SectorSerializer(serializers.ModelSerializer):
@@ -178,6 +186,7 @@ class FivewSerializer(serializers.ModelSerializer):
 
 class IndicatorValueSerializer(serializers.ModelSerializer):
     code = serializers.SerializerMethodField()
+
     # indicator_name = serializers.SerializerMethodField()
 
     class Meta:

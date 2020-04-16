@@ -3,477 +3,477 @@
   "model": "core.subsector",
   "pk": 1,
   "fields": {
-    "sector": 1,
-    "sub_sector_name": "Vocational Training, Education",
-    "sub_sector_code": "11330"
+    "sector_id": 1,
+    "name": "Vocational Training, Education",
+    "code": "11330"
   }
 },
 {
   "model": "core.subsector",
   "pk": 2,
   "fields": {
-    "sector": 2,
-    "sub_sector_name": "Business Support Services and Institutions",
-    "sub_sector_code": "25010"
+    "sector_id": 2,
+    "name": "Business Support Services and Institutions",
+    "code": "25010"
   }
 },
 {
   "model": "core.subsector",
   "pk": 3,
   "fields": {
-    "sector": 2,
-    "sub_sector_name": "Education/Training in Banking and Financial Services",
-    "sub_sector_code": "24081"
+    "sector_id": 2,
+    "name": "Education/Training in Banking and Financial Services",
+    "code": "24081"
   }
 },
 {
   "model": "core.subsector",
   "pk": 4,
   "fields": {
-    "sector": 2,
-    "sub_sector_name": "Financial Policy and Administrative Management",
-    "sub_sector_code": "24010"
+    "sector_id": 2,
+    "name": "Financial Policy and Administrative Management",
+    "code": "24010"
   }
 },
 {
   "model": "core.subsector",
   "pk": 5,
   "fields": {
-    "sector": 2,
-    "sub_sector_name": "Formal Sector Financial Intermediaries",
-    "sub_sector_code": "24030"
+    "sector_id": 2,
+    "name": "Formal Sector Financial Intermediaries",
+    "code": "24030"
   }
 },
 {
   "model": "core.subsector",
   "pk": 6,
   "fields": {
-    "sector": 2,
-    "sub_sector_name": "Informal/Semi-Formal Financial Intermediaries",
-    "sub_sector_code": "24040"
+    "sector_id": 2,
+    "name": "Informal/Semi-Formal Financial Intermediaries",
+    "code": "24040"
   }
 },
 {
   "model": "core.subsector",
   "pk": 7,
   "fields": {
-    "sector": 2,
-    "sub_sector_name": "Monetary Institutions",
-    "sub_sector_code": "24020"
+    "sector_id": 2,
+    "name": "Monetary Institutions",
+    "code": "24020"
   }
 },
 {
   "model": "core.subsector",
   "pk": 8,
   "fields": {
-    "sector": 2,
-    "sub_sector_name": "Power Generation/Renewable Sources",
-    "sub_sector_code": "23030"
+    "sector_id": 2,
+    "name": "Power Generation/Renewable Sources",
+    "code": "23030"
   }
 },
 {
   "model": "core.subsector",
   "pk": 9,
   "fields": {
-    "sector": 2,
-    "sub_sector_name": "Road Transport: Excluding Rural Feeder Roads",
-    "sub_sector_code": "21021"
+    "sector_id": 2,
+    "name": "Road Transport: Excluding Rural Feeder Roads",
+    "code": "21021"
   }
 },
 {
   "model": "core.subsector",
   "pk": 10,
   "fields": {
-    "sector": 2,
-    "sub_sector_name": "Road Transport: Rural Feeder Roads",
-    "sub_sector_code": "21022"
+    "sector_id": 2,
+    "name": "Road Transport: Rural Feeder Roads",
+    "code": "21022"
   }
 },
 {
   "model": "core.subsector",
   "pk": 11,
   "fields": {
-    "sector": 3,
-    "sub_sector_name": "Climate Change, Environment - Adaptation",
-    "sub_sector_code": "41093"
+    "sector_id": 3,
+    "name": "Climate Change, Environment - Adaptation",
+    "code": "41093"
   }
 },
 {
   "model": "core.subsector",
   "pk": 12,
   "fields": {
-    "sector": 3,
-    "sub_sector_name": "Climate Change, Environment - Cross Cutting",
-    "sub_sector_code": "41092"
+    "sector_id": 3,
+    "name": "Climate Change, Environment - Cross Cutting",
+    "code": "41092"
   }
 },
 {
   "model": "core.subsector",
   "pk": 13,
   "fields": {
-    "sector": 3,
-    "sub_sector_name": "Climate Change, Environment - Low Carbon",
-    "sub_sector_code": "41090"
+    "sector_id": 3,
+    "name": "Climate Change, Environment - Low Carbon",
+    "code": "41090"
   }
 },
 {
   "model": "core.subsector",
   "pk": 14,
   "fields": {
-    "sector": 3,
-    "sub_sector_name": "Climate Change, Environment",
-    "sub_sector_code": "41032"
+    "sector_id": 3,
+    "name": "Climate Change, Environment",
+    "code": "41032"
   }
 },
 {
   "model": "core.subsector",
   "pk": 15,
   "fields": {
-    "sector": 4,
-    "sub_sector_name": "Civilian Peace-Building, Conflict Prevention and Resolution",
-    "sub_sector_code": "15220"
+    "sector_id": 4,
+    "name": "Civilian Peace-Building, Conflict Prevention and Resolution",
+    "code": "15220"
   }
 },
 {
   "model": "core.subsector",
   "pk": 16,
   "fields": {
-    "sector": 4,
-    "sub_sector_name": "Corruption - Public Sector Financial Management",
-    "sub_sector_code": "15122"
+    "sector_id": 4,
+    "name": "Corruption - Public Sector Financial Management",
+    "code": "15122"
   }
 },
 {
   "model": "core.subsector",
   "pk": 17,
   "fields": {
-    "sector": 4,
-    "sub_sector_name": "Economic and Development Policy/Planning",
-    "sub_sector_code": "15110"
+    "sector_id": 4,
+    "name": "Economic and Development Policy/Planning",
+    "code": "15110"
   }
 },
 {
   "model": "core.subsector",
   "pk": 18,
   "fields": {
-    "sector": 4,
-    "sub_sector_name": "Ending violence against women and girls",
-    "sub_sector_code": "15180"
+    "sector_id": 4,
+    "name": "Ending violence against women and girls",
+    "code": "15180"
   }
 },
 {
   "model": "core.subsector",
   "pk": 19,
   "fields": {
-    "sector": 4,
-    "sub_sector_name": "Free Flow of Information",
-    "sub_sector_code": "15163"
+    "sector_id": 4,
+    "name": "Free Flow of Information",
+    "code": "15163"
   }
 },
 {
   "model": "core.subsector",
   "pk": 20,
   "fields": {
-    "sector": 4,
-    "sub_sector_name": "Government Unallocated/Unspecified",
-    "sub_sector_code": "15020"
+    "sector_id": 4,
+    "name": "Government Unallocated/Unspecified",
+    "code": "15020"
   }
 },
 {
   "model": "core.subsector",
   "pk": 21,
   "fields": {
-    "sector": 4,
-    "sub_sector_name": "Human Rights",
-    "sub_sector_code": "15162"
+    "sector_id": 4,
+    "name": "Human Rights",
+    "code": "15162"
   }
 },
 {
   "model": "core.subsector",
   "pk": 22,
   "fields": {
-    "sector": 4,
-    "sub_sector_name": "Legal and Judicial Development",
-    "sub_sector_code": "15130"
+    "sector_id": 4,
+    "name": "Legal and Judicial Development",
+    "code": "15130"
   }
 },
 {
   "model": "core.subsector",
   "pk": 23,
   "fields": {
-    "sector": 4,
-    "sub_sector_name": "Local Government Administration",
-    "sub_sector_code": "15142"
+    "sector_id": 4,
+    "name": "Local Government Administration",
+    "code": "15142"
   }
 },
 {
   "model": "core.subsector",
   "pk": 24,
   "fields": {
-    "sector": 4,
-    "sub_sector_name": "Public Sector Financial Management",
-    "sub_sector_code": "15121"
+    "sector_id": 4,
+    "name": "Public Sector Financial Management",
+    "code": "15121"
   }
 },
 {
   "model": "core.subsector",
   "pk": 25,
   "fields": {
-    "sector": 4,
-    "sub_sector_name": "Security System Management and Reform",
-    "sub_sector_code": "15210"
+    "sector_id": 4,
+    "name": "Security System Management and Reform",
+    "code": "15210"
   }
 },
 {
   "model": "core.subsector",
   "pk": 26,
   "fields": {
-    "sector": 4,
-    "sub_sector_name": "Statistical Capacity Building",
-    "sub_sector_code": "15172"
+    "sector_id": 4,
+    "name": "Statistical Capacity Building",
+    "code": "15172"
   }
 },
 {
   "model": "core.subsector",
   "pk": 27,
   "fields": {
-    "sector": 4,
-    "sub_sector_name": "Strengthening Civil Society",
-    "sub_sector_code": "15150"
+    "sector_id": 4,
+    "name": "Strengthening Civil Society",
+    "code": "15150"
   }
 },
 {
   "model": "core.subsector",
   "pk": 28,
   "fields": {
-    "sector": 4,
-    "sub_sector_name": "Tax policy and tax administration support",
-    "sub_sector_code": "15114"
+    "sector_id": 4,
+    "name": "Tax policy and tax administration support",
+    "code": "15114"
   }
 },
 {
   "model": "core.subsector",
   "pk": 29,
   "fields": {
-    "sector": 4,
-    "sub_sector_name": "Women's Equality Organisations and Institutions",
-    "sub_sector_code": "15164"
+    "sector_id": 4,
+    "name": "Women's Equality Organisations and Institutions",
+    "code": "15164"
   }
 },
 {
   "model": "core.subsector",
   "pk": 30,
   "fields": {
-    "sector": 5,
-    "sub_sector_name": "Disaster Prevention and Preparedness",
-    "sub_sector_code": "74010"
+    "sector_id": 5,
+    "name": "Disaster Prevention and Preparedness",
+    "code": "74010"
   }
 },
 {
   "model": "core.subsector",
   "pk": 31,
   "fields": {
-    "sector": 5,
-    "sub_sector_name": "Material Relief Assistance and Services",
-    "sub_sector_code": "72010"
+    "sector_id": 5,
+    "name": "Material Relief Assistance and Services",
+    "code": "72010"
   }
 },
 {
   "model": "core.subsector",
   "pk": 32,
   "fields": {
-    "sector": 5,
-    "sub_sector_name": "Reconstruction Relief and Rehabilitation",
-    "sub_sector_code": "73010"
+    "sector_id": 5,
+    "name": "Reconstruction Relief and Rehabilitation",
+    "code": "73010"
   }
 },
 {
   "model": "core.subsector",
   "pk": 33,
   "fields": {
-    "sector": 6,
-    "sub_sector_name": "Basic Health Care",
-    "sub_sector_code": "12220"
+    "sector_id": 6,
+    "name": "Basic Health Care",
+    "code": "12220"
   }
 },
 {
   "model": "core.subsector",
   "pk": 34,
   "fields": {
-    "sector": 6,
-    "sub_sector_name": "Family Planning",
-    "sub_sector_code": "13030"
+    "sector_id": 6,
+    "name": "Family Planning",
+    "code": "13030"
   }
 },
 {
   "model": "core.subsector",
   "pk": 35,
   "fields": {
-    "sector": 6,
-    "sub_sector_name": "Health Policy and Administrative Management",
-    "sub_sector_code": "12110"
+    "sector_id": 6,
+    "name": "Health Policy and Administrative Management",
+    "code": "12110"
   }
 },
 {
   "model": "core.subsector",
   "pk": 36,
   "fields": {
-    "sector": 6,
-    "sub_sector_name": "Population Policy and Administrative Management",
-    "sub_sector_code": "13010"
+    "sector_id": 6,
+    "name": "Population Policy and Administrative Management",
+    "code": "13010"
   }
 },
 {
   "model": "core.subsector",
   "pk": 37,
   "fields": {
-    "sector": 6,
-    "sub_sector_name": "Reproductive Health Care",
-    "sub_sector_code": "13021"
+    "sector_id": 6,
+    "name": "Reproductive Health Care",
+    "code": "13021"
   }
 },
 {
   "model": "core.subsector",
   "pk": 38,
   "fields": {
-    "sector": 7,
-    "sub_sector_name": "Agricultural Development",
-    "sub_sector_code": "31120"
+    "sector_id": 7,
+    "name": "Agricultural Development",
+    "code": "31120"
   }
 },
 {
   "model": "core.subsector",
   "pk": 39,
   "fields": {
-    "sector": 7,
-    "sub_sector_name": "Agricultural Services",
-    "sub_sector_code": "31191"
+    "sector_id": 7,
+    "name": "Agricultural Services",
+    "code": "31191"
   }
 },
 {
   "model": "core.subsector",
   "pk": 40,
   "fields": {
-    "sector": 7,
-    "sub_sector_name": "Agriculture Policy and Administrative Management",
-    "sub_sector_code": "31110"
+    "sector_id": 7,
+    "name": "Agriculture Policy and Administrative Management",
+    "code": "31110"
   }
 },
 {
   "model": "core.subsector",
   "pk": 41,
   "fields": {
-    "sector": 7,
-    "sub_sector_name": "Construction Policy and Administrative Management",
-    "sub_sector_code": "32310"
+    "sector_id": 7,
+    "name": "Construction Policy and Administrative Management",
+    "code": "32310"
   }
 },
 {
   "model": "core.subsector",
   "pk": 42,
   "fields": {
-    "sector": 7,
-    "sub_sector_name": "Livestock: Agriculture",
-    "sub_sector_code": "31163"
+    "sector_id": 7,
+    "name": "Livestock: Agriculture",
+    "code": "31163"
   }
 },
 {
   "model": "core.subsector",
   "pk": 43,
   "fields": {
-    "sector": 7,
-    "sub_sector_name": "Small and Medium-Sized Enterprises",
-    "sub_sector_code": "32130"
+    "sector_id": 7,
+    "name": "Small and Medium-Sized Enterprises",
+    "code": "32130"
   }
 },
 {
   "model": "core.subsector",
   "pk": 44,
   "fields": {
-    "sector": 7,
-    "sub_sector_name": "Tourism Policy and Administrative Management",
-    "sub_sector_code": "33210"
+    "sector_id": 7,
+    "name": "Tourism Policy and Administrative Management",
+    "code": "33210"
   }
 },
 {
   "model": "core.subsector",
   "pk": 45,
   "fields": {
-    "sector": 8,
-    "sub_sector_name": "Economic Research",
-    "sub_sector_code": "80010"
+    "sector_id": 8,
+    "name": "Economic Research",
+    "code": "80010"
   }
 },
 {
   "model": "core.subsector",
   "pk": 46,
   "fields": {
-    "sector": 8,
-    "sub_sector_name": "Governance Research",
-    "sub_sector_code": "80014"
+    "sector_id": 8,
+    "name": "Governance Research",
+    "code": "80014"
   }
 },
 {
   "model": "core.subsector",
   "pk": 47,
   "fields": {
-    "sector": 8,
-    "sub_sector_name": "Health Research",
-    "sub_sector_code": "80012"
+    "sector_id": 8,
+    "name": "Health Research",
+    "code": "80012"
   }
 },
 {
   "model": "core.subsector",
   "pk": 48,
   "fields": {
-    "sector": 8,
-    "sub_sector_name": "Unspecified/Unallocated Research",
-    "sub_sector_code": "80024"
+    "sector_id": 8,
+    "name": "Unspecified/Unallocated Research",
+    "code": "80024"
   }
 },
 {
   "model": "core.subsector",
   "pk": 49,
   "fields": {
-    "sector": 9,
-    "sub_sector_name": "Employment Policy and Administrative Management",
-    "sub_sector_code": "16020"
+    "sector_id": 9,
+    "name": "Employment Policy and Administrative Management",
+    "code": "16020"
   }
 },
 {
   "model": "core.subsector",
   "pk": 50,
   "fields": {
-    "sector": 9,
-    "sub_sector_name": "Social Other, Social infrastructure and Services",
-    "sub_sector_code": "16012"
+    "sector_id": 9,
+    "name": "Social Other, Social infrastructure and Services",
+    "code": "16012"
   }
 },
 {
   "model": "core.subsector",
   "pk": 51,
   "fields": {
-    "sector": 9,
-    "sub_sector_name": "Social Protection, Social Infrastructure and Services",
-    "sub_sector_code": "16011"
+    "sector_id": 9,
+    "name": "Social Protection, Social Infrastructure and Services",
+    "code": "16011"
   }
 },
 {
   "model": "core.subsector",
   "pk": 52,
   "fields": {
-    "sector": 10,
-    "sub_sector_name": "Basic Drinking Water",
-    "sub_sector_code": "14030"
+    "sector_id": 10,
+    "name": "Basic Drinking Water",
+    "code": "14030"
   }
 },
 {
   "model": "core.subsector",
   "pk": 53,
   "fields": {
-    "sector": 10,
-    "sub_sector_name": "Basic sanitation",
-    "sub_sector_code": "14032"
+    "sector_id": 10,
+    "name": "Basic sanitation",
+    "code": "14032"
   }
 }
 ]
