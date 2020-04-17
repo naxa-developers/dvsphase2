@@ -16,9 +16,26 @@ class MarkerCategorySerializer(serializers.ModelSerializer):
 
 
 class GisLayerSerializer(serializers.ModelSerializer):
+    style = serializers.SerializerMethodField()
     class Meta:
         model = GisLayer
-        fields = '__all__'
+        fields = ('id', 'name', 'layer_name', 'workspace', 'geoserver_url', 'store_name', 'type',
+                  'category', 'filename', 'description', 'style')
+
+
+    def get_style(self,instance):
+        styl = []
+        styles = instance.GisStyle.all()
+        for style in styles:
+            styl.append({
+                'id': style.id,
+                'color': style.style,
+                'fillColor': style.field_color,
+                'opacity': style.opacity,
+                'fill_opacity': style.field_opacity,
+                'layer': style.layer.id
+            })
+        return styl
 
 
 class OutputSerializer(serializers.ModelSerializer):

@@ -16,6 +16,8 @@ from django.http import Http404, HttpResponse
 import json
 from django.db.models import Sum
 import math
+from rest_framework.views import APIView
+
 
 
 # Create your views here.
@@ -179,6 +181,20 @@ class GisApi(viewsets.ReadOnlyModelViewSet):
     def get_serializer_class(self):
         serializer_class = GisLayerSerializer
         return serializer_class
+
+
+# class GisApii(APIView):
+#     permission_classes = [AllowAny]
+#
+#     def get(self, request):
+#         data = []
+#         layers = GisLayer.objects.all()
+#
+#         for layer in layers:
+#             style = layer.GisStyle.all()
+#             data.append({
+#
+#             })
 
 
 class MarkerValueApi(viewsets.ReadOnlyModelViewSet):
