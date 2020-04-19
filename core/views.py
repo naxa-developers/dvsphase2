@@ -256,11 +256,20 @@ class Fivew(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         queryset = FiveW.objects.order_by('id')
+
+        if self.request.query_params.get('district_id'):
+            queryset = FiveW.objects.filter(district_id=self.request.query_params.get('district_id'))
+
         return queryset
 
     def get_serializer_class(self):
         serializer_class = FivewSerializer
         return serializer_class
+
+    def get_serializer_context(self):
+        context = super(Fivew, self).get_serializer_context()
+        context.update({"request": self.request})
+        return context
 
 
 class ContractSum(viewsets.ReadOnlyModelViewSet):
