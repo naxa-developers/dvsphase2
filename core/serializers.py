@@ -16,9 +16,26 @@ class MarkerCategorySerializer(serializers.ModelSerializer):
 
 
 class GisLayerSerializer(serializers.ModelSerializer):
+    style = serializers.SerializerMethodField()
+
     class Meta:
         model = GisLayer
-        fields = '__all__'
+        fields = ('id', 'name', 'layer_name', 'workspace', 'geoserver_url', 'store_name', 'type',
+                  'category', 'filename', 'description', 'style')
+
+    def get_style(self, instance):
+        styl = []
+        styles = instance.GisStyle.all()
+        for style in styles:
+            styl.append({
+                'id': style.id,
+                'color': style.style,
+                'fillColor': style.field_color,
+                'opacity': style.opacity,
+                'fill_opacity': style.field_opacity,
+                'layer': style.layer.id
+            })
+        return styl
 
 
 class OutputSerializer(serializers.ModelSerializer):
@@ -150,6 +167,11 @@ class FivewSerializer(serializers.ModelSerializer):
     # implenting_partner_second = serializers.SerializerMethodField()
     # implenting_partner_third = serializers.SerializerMethodField()
 
+    allocated_budget = serializers.SerializerMethodField()
+    male_beneficiary = serializers.SerializerMethodField()
+    female_beneficiary = serializers.SerializerMethodField()
+    total_beneficiary = serializers.SerializerMethodField()
+
     class Meta:
         model = FiveW
         fields = '__all__'
@@ -158,6 +180,123 @@ class FivewSerializer(serializers.ModelSerializer):
     #         'end_date',
     #         'reporting_ministry_line', 'implenting_partner_first', 'implenting_partner_second',
     #         'implenting_partner_third')
+
+    def get_allocated_budget(self, obj):
+        request = self.context.get("request")
+        if request.query_params.get('district_id'):
+            query = FiveW.objects.filter(district_id=request.query_params.get('district_id'))
+            summ = 0
+            for i in query:
+                summ = summ + i.allocated_budget
+
+            return summ
+
+        elif request.query_params.get('province_id'):
+            query = FiveW.objects.filter(province_id=request.query_params.get('province_id'))
+            summ = 0
+            for i in query:
+                summ = summ + i.allocated_budget
+
+            return summ
+
+        elif request.query_params.get('municipality_id'):
+            query = FiveW.objects.filter(municipality_id=request.query_params.get('municipality_id'))
+            summ = 0
+            for i in query:
+                summ = summ + i.allocated_budget
+
+            return summ
+
+        else:
+            return obj.allocated_budget
+
+    def get_male_beneficiary(self, obj):
+        request = self.context.get("request")
+        if request.query_params.get('district_id'):
+            query = FiveW.objects.filter(district_id=request.query_params.get('district_id'))
+            summ = 0
+            for i in query:
+                summ = summ + i.male_beneficiary
+
+            return summ
+
+        elif request.query_params.get('province_id'):
+            query = FiveW.objects.filter(province_id=request.query_params.get('province_id'))
+            summ = 0
+            for i in query:
+                summ = summ + i.male_beneficiary
+
+            return summ
+
+        elif request.query_params.get('municipality_id'):
+            query = FiveW.objects.filter(municipality_id=request.query_params.get('municipality_id'))
+            summ = 0
+            for i in query:
+                summ = summ + i.male_beneficiary
+
+            return summ
+
+        else:
+            return obj.male_beneficiary
+
+    def get_female_beneficiary(self, obj):
+        request = self.context.get("request")
+        if request.query_params.get('district_id'):
+            query = FiveW.objects.filter(district_id=request.query_params.get('district_id'))
+            summ = 0
+            for i in query:
+                summ = summ + i.female_beneficiary
+
+            return summ
+
+        elif request.query_params.get('province_id'):
+            query = FiveW.objects.filter(province_id=request.query_params.get('province_id'))
+            summ = 0
+            for i in query:
+                summ = summ + i.female_beneficiary
+
+            return summ
+
+        elif request.query_params.get('municipality_id'):
+            query = FiveW.objects.filter(municipality_id=request.query_params.get('municipality_id'))
+            summ = 0
+            for i in query:
+                summ = summ + i.female_beneficiary
+
+            return summ
+
+        else:
+            return obj.female_beneficiary
+
+    def get_total_beneficiary(self, obj):
+        request = self.context.get("request")
+        if request.query_params.get('district_id'):
+            query = FiveW.objects.filter(district_id=request.query_params.get('district_id'))
+            summ = 0
+            for i in query:
+                summ = summ + i.total_beneficiary
+
+            return summ
+
+        elif request.query_params.get('province_id'):
+            query = FiveW.objects.filter(province_id=request.query_params.get('province_id'))
+            summ = 0
+            for i in query:
+                summ = summ + i.total_beneficiary
+
+            return summ
+
+        elif request.query_params.get('municipality_id'):
+            query = FiveW.objects.filter(municipality_id=request.query_params.get('municipality_id'))
+            summ = 0
+            for i in query:
+                summ = summ + i.total_beneficiary
+
+            return summ
+
+        else:
+            return obj.total_beneficiary
+
     #
     # def get_partner_name(self, obj):
     #     return str(obj.partner_name)

@@ -6,10 +6,10 @@
     <div class="dfid-breadcrumb pdt-100">
         <ul class="flex-start">
             <li>
-                <a href="#"><i class="material-icons">assignment</i> Gis Layer</a>
+                <a href="#"><i class="material-icons">assignment</i> Gis Layer Style</a>
             </li>
             {% if perms.core.add_gislayer %}
-            <li><a href="/dashboard/layer-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
+            <li><a href="/dashboard/gis_style_layer_add/{{id}}" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
             </li>
             {% endif %}
         </ul>
@@ -28,36 +28,26 @@
             <thead>
             <tr>
                 <th>Sn</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>type</th>
-                <th>category</th>
-                <th>filename</th>
+                <th>Layer</th>
                 <th>Style</th>
+                <th>Field Color</th>
+                <th>Opacity</th>
+                <th>Field Opacity</th>
 
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            {% for gis in list %}
+            {% for style in list %}
             <tr>
-                <td>{{ gis.id }}</td>
+                <td>{{ forloop.counter }}</td>
                 <td>
-                    <strong><a href="#">{{gis.name}}</a></strong>
+                    <strong><a href="#">{{style.layer.name}}</a></strong>
                 </td>
-                <td>{{ gis.description }}</td>
-                <td>{{ gis.type }}</td>
-                <td>{{ gis.category }}</td>
-                <td>{{ gis.filename }}</td>
-                <td>
-                    {% if  gis.GisStyle.all.count < 1 %}
-                    <a href="/dashboard/gis_style_layer_add/{{ gis.id }}"><button type="button" class="btn btn-outline-danger">Add</button></a>
-                    {% else %}
-                    <a href="/dashboard/gis_style_layer_list/{{ gis.id }}"><button type="button" class="btn btn-outline-success">Manage</button></a>
-                    {% endif %}
-
-
-                </td>
+                <td>{{ style.style }}</td>
+                <td>{{ style.field_color }}</td>
+                <td>{{ style.opacity }}</td>
+                <td>{{ style.field_opacity }}</td>
 
                 <td>
                     <div class="table-action">
@@ -67,7 +57,7 @@
                         <ul class="dropdown-animation">
                             {% if perms.core.change_gislayer %}
                             <li>
-                                <a href="/dashboard/gis-edit/{{ gis.id }}" class="flex-start">
+                                <a href="/dashboard/gis_style_layer_edit/{{ style.id }}" class="flex-start">
                                     <i class="material-icons">edit</i>
                                 </a>
                             </li>

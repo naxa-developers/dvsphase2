@@ -343,6 +343,17 @@ class GisLayer(models.Model):
         return self.name
 
 
+class GisStyle(models.Model):
+    style = models.CharField(max_length=100, null=True, blank=True)
+    field_color = models.CharField(max_length=100, null=True, blank=True)
+    opacity = models.FloatField(blank=True, null=True)
+    field_opacity = models.FloatField(blank=True, null=True)
+    layer = models.ForeignKey(GisLayer, on_delete=models.CASCADE, related_name='GisStyle', blank=True, null=True)
+
+    def __str__(self):
+        return self.layer.name
+
+
 class Output(models.Model):
     indicator = models.CharField(max_length=100, null=True, blank=True)
     male_forecast_2011 = models.IntegerField(null=True, blank=True, default=0)
