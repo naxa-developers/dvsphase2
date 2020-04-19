@@ -257,9 +257,6 @@ class Fivew(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         queryset = FiveW.objects.order_by('id')
 
-        if self.request.query_params.get('district_id'):
-            queryset = FiveW.objects.filter(district_id=self.request.query_params.get('district_id'))
-
         return queryset
 
     def get_serializer_class(self):
