@@ -5,12 +5,10 @@ from core.models import Partner, Program, Province, District, GapaNapa
 
 
 class Ttmp(models.Model):
-    partner_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='TtmpPartner',
-                                   null=True, blank=True)
-    supplier_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='TtmpSupplier',
-                                    null=True, blank=True)
-    program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='TtmpProgram',
-                                   null=True, blank=True)
+    partner = models.CharField(max_length=500, blank=True, null=True)
+    supplier_code = models.CharField(max_length=100, blank=True, null=True)
+    program = models.CharField(max_length=500, blank=True, null=True)
+    program_code = models.CharField(max_length=50, blank=True, null=True)
     project_name = models.CharField(max_length=500, blank=True, null=True)
     project_code = models.CharField(max_length=50, blank=True, null=True)
     province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='TtmpProvince',
