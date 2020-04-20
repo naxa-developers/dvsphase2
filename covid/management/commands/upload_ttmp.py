@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 import pandas as pd
-from core.models import GapaNapa, Partner, Program, Province, District
+from core.models import GapaNapa, Province, District
 from covid.models import Ttmp
 
 
@@ -20,12 +20,6 @@ class Command(BaseCommand):
 
         try:
             for row in range(0, upper_range):
-                # print(row,df['1st Tier Partners'][row])
-                # print(row,df['Programme Code'][row])
-                # print(row, df['Province_ID'][row])
-                # partner = Partner.objects.get(name__icontains=df['1st Tier Partners'][row])
-                # supplier = Partner.objects.get(name__icontains=df['1st Tier Partners'][row])
-                # program = Program.objects.get(code=int(df['Programme Code'][row]))
                 province = Province.objects.get(code=int(df['Province_ID'][row]))
                 district = District.objects.get(code=int(df['District_ID'][row]))
                 municipality = GapaNapa.objects.get(code=int(df['Palika_ID'][row]))
@@ -35,6 +29,7 @@ class Command(BaseCommand):
                     supplier_code=df['Supplier Code'][row],
                     program=df['Programme'][row],
                     program_code=df['Programme Code'][row],
+
                     project_code=df['Project/Component Code'][row],
                     project_name=df['Project Name'][row],
                     province_id=province,
@@ -43,6 +38,6 @@ class Command(BaseCommand):
                 )
 
                 print(row, 'ttmp object successfully created')
-                
+
         except Exception as e:
             print(e)
