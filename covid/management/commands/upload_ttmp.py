@@ -35,7 +35,6 @@ class Command(BaseCommand):
                     district_id=district,
                     municipality_id=municipality
                 )
-
                 print(row, 'CovidFivew object successfully created')
 
         except Exception as e:
