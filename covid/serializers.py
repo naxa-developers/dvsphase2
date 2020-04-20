@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import Ttmp
+from .models import CovidFivew
 
 
-class TtmpSerializer(serializers.ModelSerializer):
+class CovidFivewSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Ttmp
+        model = CovidFivew
         fields = '__all__'

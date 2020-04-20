@@ -1,10 +1,10 @@
 from django.db import models
-from core.models import Partner, Program, Province, District, GapaNapa
+from core.models import Province, District, GapaNapa
 
 # Create your models here.
 
 
-class Ttmp(models.Model):
+class CovidFivew(models.Model):
     partner = models.CharField(max_length=500, blank=True, null=True)
     supplier_code = models.CharField(max_length=100, blank=True, null=True)
     program = models.CharField(max_length=500, blank=True, null=True)
