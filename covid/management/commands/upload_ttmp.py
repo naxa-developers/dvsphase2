@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 import pandas as pd
 from core.models import GapaNapa, Province, District
-from covid.models import Ttmp
+from covid.models import CovidFivew
 
 
 class Command(BaseCommand):
@@ -24,7 +24,7 @@ class Command(BaseCommand):
                 district = District.objects.get(code=int(df['District_ID'][row]))
                 municipality = GapaNapa.objects.get(code=int(df['Palika_ID'][row]))
 
-                Ttmp.objects.create(
+                CovidFivew.objects.create(
                     partner=df['1st Tier Partners'][row],
                     supplier_code=df['Supplier Code'][row],
                     program=df['Programme'][row],
@@ -35,8 +35,7 @@ class Command(BaseCommand):
                     district_id=district,
                     municipality_id=municipality
                 )
-
-                print(row, 'ttmp object successfully created')
+                print(row, 'CovidFivew object successfully created')
 
         except Exception as e:
             print(e)
