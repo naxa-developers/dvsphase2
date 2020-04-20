@@ -18,7 +18,6 @@ from django.db.models import Sum
 import math
 
 
-
 # Create your views here.
 
 
@@ -260,7 +259,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         data = []
-        districts = District.objects.values('name', 'id', 'code')
+        districts = District.objects.values('name', 'id', 'code', 'n_code').order_by('id')
         for dist in districts:
             print(dist['name'])
             allocated_sum = FiveW.objects.filter(district_id=dist['id']).aggregate(Sum('allocated_budget'))
@@ -271,6 +270,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
             data.append({
                 'id': dist['id'],
                 'name': dist['name'],
+                'code': dist['n_code'],
                 'allocated_budget': allocated_sum['allocated_budget__sum'],
                 'male_beneficiary': male_beneficiary_sum['male_beneficiary__sum'],
                 'female_beneficiary': female_beneficiary_sum['female_beneficiary__sum'],
@@ -285,16 +285,18 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         data = []
-        provinces = Province.objects.values('name', 'id', 'code')
+        provinces = Province.objects.values('name', 'id', 'code').order_by(id)
         for province in provinces:
             allocated_sum = FiveW.objects.filter(province_id=province['id']).aggregate(Sum('allocated_budget'))
             male_beneficiary_sum = FiveW.objects.filter(province_id=province['id']).aggregate(Sum('male_beneficiary'))
-            female_beneficiary_sum = FiveW.objects.filter(province_id=province['id']).aggregate(Sum('female_beneficiary'))
+            female_beneficiary_sum = FiveW.objects.filter(province_id=province['id']).aggregate(
+                Sum('female_beneficiary'))
             total_beneficiary_sum = FiveW.objects.filter(province_id=province['id']).aggregate(Sum('total_beneficiary'))
 
             data.append({
                 'id': province['id'],
                 'name': province['name'],
+                'code': province['code'],
                 'allocated_budget': allocated_sum['allocated_budget__sum'],
                 'male_beneficiary': male_beneficiary_sum['male_beneficiary__sum'],
                 'female_beneficiary': female_beneficiary_sum['female_beneficiary__sum'],
@@ -309,12 +311,15 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         data = []
-        municipalities = GapaNapa.objects.values('name', 'id', 'code')
+        municipalities = GapaNapa.objects.values('name', 'id', 'code').order_by('id')
         for municipality in municipalities:
             allocated_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(Sum('allocated_budget'))
-            male_beneficiary_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(Sum('male_beneficiary'))
-            female_beneficiary_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(Sum('female_beneficiary'))
-            total_beneficiary_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(Sum('total_beneficiary'))
+            male_beneficiary_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(
+                Sum('male_beneficiary'))
+            female_beneficiary_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(
+                Sum('female_beneficiary'))
+            total_beneficiary_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(
+                Sum('total_beneficiary'))
 
             data.append({
                 'id': municipality['id'],

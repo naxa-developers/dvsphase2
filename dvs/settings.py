@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'testing',
     'rest_framework_swagger',
     'core',
+    'covid',
     'django_filters',
     'dashboard',
 
