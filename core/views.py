@@ -254,6 +254,80 @@ class Fivew(viewsets.ReadOnlyModelViewSet):
         return context
 
 
+class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = True
+
+    def list(self, request, *args, **kwargs):
+        data = []
+        districts = District.objects.values('name', 'id', 'code')
+        for dist in districts:
+            print(dist['name'])
+            allocated_sum = FiveW.objects.filter(district_id=dist['id']).aggregate(Sum('allocated_budget'))
+            male_beneficiary_sum = FiveW.objects.filter(district_id=dist['id']).aggregate(Sum('male_beneficiary'))
+            female_beneficiary_sum = FiveW.objects.filter(district_id=dist['id']).aggregate(Sum('female_beneficiary'))
+            total_beneficiary_sum = FiveW.objects.filter(district_id=dist['id']).aggregate(Sum('total_beneficiary'))
+
+            data.append({
+                'id': dist['id'],
+                'name': dist['name'],
+                'allocated_budget': allocated_sum['allocated_budget__sum'],
+                'male_beneficiary': male_beneficiary_sum['male_beneficiary__sum'],
+                'female_beneficiary': female_beneficiary_sum['female_beneficiary__sum'],
+                'total_beneficiary': total_beneficiary_sum['total_beneficiary__sum'],
+            })
+        return Response({"results": data})
+
+
+class FiveWProvince(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = True
+
+    def list(self, request, *args, **kwargs):
+        data = []
+        provinces = Province.objects.values('name', 'id', 'code')
+        for province in provinces:
+            allocated_sum = FiveW.objects.filter(province_id=province['id']).aggregate(Sum('allocated_budget'))
+            male_beneficiary_sum = FiveW.objects.filter(province_id=province['id']).aggregate(Sum('male_beneficiary'))
+            female_beneficiary_sum = FiveW.objects.filter(province_id=province['id']).aggregate(Sum('female_beneficiary'))
+            total_beneficiary_sum = FiveW.objects.filter(province_id=province['id']).aggregate(Sum('total_beneficiary'))
+
+            data.append({
+                'id': province['id'],
+                'name': province['name'],
+                'allocated_budget': allocated_sum['allocated_budget__sum'],
+                'male_beneficiary': male_beneficiary_sum['male_beneficiary__sum'],
+                'female_beneficiary': female_beneficiary_sum['female_beneficiary__sum'],
+                'total_beneficiary': total_beneficiary_sum['total_beneficiary__sum'],
+            })
+        return Response({"results": data})
+
+
+class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = True
+
+    def list(self, request, *args, **kwargs):
+        data = []
+        municipalities = GapaNapa.objects.values('name', 'id', 'code')
+        for municipality in municipalities:
+            allocated_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(Sum('allocated_budget'))
+            male_beneficiary_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(Sum('male_beneficiary'))
+            female_beneficiary_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(Sum('female_beneficiary'))
+            total_beneficiary_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(Sum('total_beneficiary'))
+
+            data.append({
+                'id': municipality['id'],
+                'name': municipality['name'],
+                'code': municipality['code'],
+                'allocated_budget': allocated_sum['allocated_budget__sum'],
+                'male_beneficiary': male_beneficiary_sum['male_beneficiary__sum'],
+                'female_beneficiary': female_beneficiary_sum['female_beneficiary__sum'],
+                'total_beneficiary': total_beneficiary_sum['total_beneficiary__sum'],
+            })
+        return Response({"results": data})
+
+
 class ContractSum(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
 
