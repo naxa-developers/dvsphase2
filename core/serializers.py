@@ -167,7 +167,6 @@ class FivewSerializer(serializers.ModelSerializer):
     # implenting_partner_second = serializers.SerializerMethodField()
     # implenting_partner_third = serializers.SerializerMethodField()
 
-
     class Meta:
         model = FiveW
         fields = '__all__'
