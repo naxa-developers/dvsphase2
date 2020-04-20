@@ -261,7 +261,6 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
         data = []
         districts = District.objects.values('name', 'id', 'code', 'n_code').order_by('id')
         for dist in districts:
-            print(dist['name'])
             allocated_sum = FiveW.objects.filter(district_id=dist['id']).aggregate(Sum('allocated_budget'))
             male_beneficiary_sum = FiveW.objects.filter(district_id=dist['id']).aggregate(Sum('male_beneficiary'))
             female_beneficiary_sum = FiveW.objects.filter(district_id=dist['id']).aggregate(Sum('female_beneficiary'))
@@ -285,7 +284,7 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         data = []
-        provinces = Province.objects.values('name', 'id', 'code').order_by(id)
+        provinces = Province.objects.values('name', 'id', 'code').order_by('id')
         for province in provinces:
             allocated_sum = FiveW.objects.filter(province_id=province['id']).aggregate(Sum('allocated_budget'))
             male_beneficiary_sum = FiveW.objects.filter(province_id=province['id']).aggregate(Sum('male_beneficiary'))

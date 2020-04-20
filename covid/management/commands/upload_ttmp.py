@@ -27,9 +27,7 @@ class Command(BaseCommand):
                 CovidFivew.objects.create(
                     partner=df['1st Tier Partners'][row],
                     supplier_code=df['Supplier Code'][row],
-                    program=df['Programme'][row],
-                    program_code=df['Programme Code'][row],
-                    project_code=df['Project/Component Code'][row],
+                    sector=df['Sectors'][row],
                     project_name=df['Project Name'][row],
                     province_id=province,
                     district_id=district,
