@@ -1,6 +1,4 @@
-from rest_framework import viewsets, views
-from rest_framework.response import Response
-
+from rest_framework import viewsets
 from .models import Ttmp
 from .serializers import TtmpSerializer
 from django_filters.rest_framework import DjangoFilterBackend
