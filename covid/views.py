@@ -10,8 +10,7 @@ class TtmpViewSet(viewsets.ReadOnlyModelViewSet):
     filterset_fields = ['id', 'district_id', 'municipality_id', 'municipality_id']
 
     def get_queryset(self):
-        queryset = Ttmp.objects.select_related('municipality_id', 'district_id', 'province_id',
-                                               'program_id', 'supplier_id', 'partner_id').order_by('id')
+        queryset = Ttmp.objects.select_related('district_id', 'province_id', 'municipality_id').order_by('id')
         return queryset
 
     def get_serializer_class(self):
