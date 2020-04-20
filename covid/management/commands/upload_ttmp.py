@@ -29,7 +29,6 @@ class Command(BaseCommand):
                     supplier_code=df['Supplier Code'][row],
                     program=df['Programme'][row],
                     program_code=df['Programme Code'][row],
-
                     project_code=df['Project/Component Code'][row],
                     project_name=df['Project Name'][row],
                     province_id=province,
