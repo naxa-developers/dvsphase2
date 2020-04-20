@@ -253,7 +253,6 @@ class Fivew(viewsets.ReadOnlyModelViewSet):
         context.update({"request": self.request})
         return context
 
-
 class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = True
@@ -326,7 +325,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 'total_beneficiary': total_beneficiary_sum['total_beneficiary__sum'],
             })
         return Response({"results": data})
-
+      
 
 class ContractSum(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
