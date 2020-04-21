@@ -4,6 +4,7 @@ import os.path
 from PIL import Image
 from django.core.files.base import ContentFile
 from io import BytesIO
+from colorfield.fields import ColorField
 
 
 # Create your models here.
@@ -344,8 +345,8 @@ class GisLayer(models.Model):
 
 
 class GisStyle(models.Model):
-    style = models.CharField(max_length=100, null=True, blank=True)
-    field_color = models.CharField(max_length=100, null=True, blank=True)
+    style = ColorField(default='#FF0000', blank=True, null=True)
+    field_color = ColorField(default='#FF0000', blank=True, null=True)
     opacity = models.FloatField(blank=True, null=True)
     field_opacity = models.FloatField(blank=True, null=True)
     layer = models.ForeignKey(GisLayer, on_delete=models.CASCADE, related_name='GisStyle', blank=True, null=True)
