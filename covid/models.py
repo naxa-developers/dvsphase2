@@ -98,6 +98,8 @@ class DryDeshospSum(CommonField):
 class DryDeshospUncoveredAdm1Sums(CommonField):
     object_code = models.CharField(max_length=20, blank=True, null=True)
     fid_adm1 = models.CharField(max_length=20, blank=True, null=True)
+    palika = models.CharField(max_length=500, blank=True, null=True)
+    gn_type = models.CharField(max_length=500, blank=True, null=True)
     province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='DryDeshosp4hrUncoveredAdm1Sums',
                                     null=True, blank=True)
     district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='DryDeshosp4hrUncoveredAdm1Sums',
@@ -112,6 +114,7 @@ class DryDeshospUncoveredAdm1Sums(CommonField):
     palika_1 = models.CharField(max_length=500, blank=True, null=True)
     district_1 = models.CharField(max_length=500, blank=True, null=True)
     gapa_napa_1 = models.CharField(max_length=500, blank=True, null=True)
+    gn_type_1 = models.CharField(max_length=500, blank=True, null=True)
     province_1 = models.CharField(max_length=500, blank=True, null=True)
     shape_length = models.CharField(max_length=50, blank=True, null=True)
     shape_area = models.CharField(max_length=50, blank=True, null=True)
@@ -164,7 +167,3 @@ class DryAllCovidsDhfs12hrSums(DryDeshospSum):
 
 class DryAllCovidsDhfs12hrUncoveredAdm1Sums(DryDeshospUncoveredAdm1Sums):
     data = models.CharField(max_length=100, blank=True, null=True)
-
-
-
-
