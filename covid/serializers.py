@@ -6,9 +6,23 @@ from .models import CovidFivew, DryDshosp4hrSums, DryDshosp4hrUncoveredAdm1Sums,
 
 
 class CovidFivewSerializer(serializers.ModelSerializer):
+    province_code = serializers.SerializerMethodField()
+    district_code = serializers.SerializerMethodField()
+    municipality_code = serializers.SerializerMethodField()
+
     class Meta:
         model = CovidFivew
-        fields = '__all__'
+        fields = (
+        'id', 'province_code', 'district_code', 'municipality_code', 'partner', 'program', 'project_name', 'sector')
+
+    def get_province_code(self, obj):
+        return str(obj.province_id.code)
+
+    def get_district_code(self, obj):
+        return str(obj.district_id.code)
+
+    def get_municipality_code(self, obj):
+        return str(obj.municipality_id.code)
 
 
 class DryDshosp4hrSumsSerializer(serializers.ModelSerializer):
