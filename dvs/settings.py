@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'colorfield',
     'testing',
     'rest_framework_swagger',
     'core',
