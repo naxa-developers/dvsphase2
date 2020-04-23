@@ -5,6 +5,7 @@ from .models import CovidFivew, DryDshosp4hrSums, DryDshosp4hrUncoveredAdm1Sums,
     DryAllCovidsDhfs12hrSums, DryAllCovidsDhfs12hrUncoveredAdm1Sums, DryDeshospSum, DryDeshospUncoveredAdm1Sums, \
     CommonField
 
+
 # Register your models here.
 
 admin.site.register(CovidFivew)

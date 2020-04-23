@@ -94,7 +94,7 @@ class ProgramSerializer(serializers.ModelSerializer):
 class ProvinceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Province
-        fields = '__all__'
+        fields = ('id', 'name', 'code')
 
 
 class FilterSerializer(serializers.ModelSerializer):
@@ -141,14 +141,14 @@ class ContractSumSerializer(serializers.ModelSerializer):
 
 
 class DistrictSerializer(serializers.ModelSerializer):
-    province_name = serializers.SerializerMethodField()
+    # province_name = serializers.SerializerMethodField()
 
     class Meta:
         model = District
-        fields = ('id', 'province_id', 'province_name', 'name', 'code', 'n_code')
+        fields = ('id', 'province_id',  'name', 'code', 'n_code')
 
-    def get_province_name(self, obj):
-        return str(obj.province_id.name)
+    # def get_province_name(self, obj):
+    #     return str(obj.province_id.name)
 
 
 class GaanapaSerializer(serializers.ModelSerializer):
