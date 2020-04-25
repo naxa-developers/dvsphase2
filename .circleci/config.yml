@@ -44,7 +44,7 @@ jobs:
             sudo apt-get update &&\
                 sudo apt-get install -y binutils libproj-dev  libgdal1-dev libgdal-dev gdal-bin gettext g++ gcc
             gdal-config --version
-            pip install --global-option=build_ext --global-option="-I/usr/include/gdal" GDAL==`1.10.0`
+            pip install pygdal==`gdal-config --version`
             pip install -r require.txt
 
       - save_cache:
