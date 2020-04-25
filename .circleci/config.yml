@@ -37,7 +37,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            python3 -m venv evenv
+            python3 -m venv venv
             . venv/bin/activate
             pip install codeclimate-test-reporter
             pip install coverage==4.3
@@ -49,7 +49,7 @@ jobs:
 
       - save_cache:
           paths:
-            - ./evenv
+            - ./venv
           key: v1-dependencies-{{ checksum "require.txt" }}
 
       # run tests!
@@ -68,7 +68,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            . evenv/bin/activate
+            . venv/bin/activate
             python manage.py migrate
             mkdir test-reports
             ./cc-test-reporter before-build
