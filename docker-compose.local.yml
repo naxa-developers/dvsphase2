@@ -4,6 +4,7 @@ version: '3'
 services:
   server:
     env_file: .env
+    restart: unless-stopped
     build:
       context: .
       dockerfile: Dockerfile
