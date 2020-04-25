@@ -42,7 +42,7 @@ jobs:
             pip install codeclimate-test-reporter
             pip install coverage==4.3
             apt-get update &&\
-             apt-get install -y binutils libproj-dev  gdal-bin libgdal-dev
+             apt-get install -y binutils libproj-dev libgdal-dev gdal-bin gettext g++ gcc
             gdal-config --version
             pip install --global-option=build_ext --global-option="-I/usr/include/gdal" GDAL==`gdal-config --version`
             pip install -r require.txt
