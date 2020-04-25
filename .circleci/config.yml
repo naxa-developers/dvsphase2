@@ -41,8 +41,8 @@ jobs:
             . venv/bin/activate
             pip install codeclimate-test-reporter
             pip install coverage==4.3
-            apt-get update &&\
-             apt-get install -y binutils libproj-dev libgdal-dev gdal-bin gettext g++ gcc
+            sudo apt-get update &&\
+             sudo apt-get install -y binutils libproj-dev libgdal-dev gdal-bin gettext g++ gcc
             gdal-config --version
             pip install --global-option=build_ext --global-option="-I/usr/include/gdal" GDAL==`gdal-config --version`
             pip install -r requirements.txt
