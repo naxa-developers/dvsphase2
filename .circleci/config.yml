@@ -30,26 +30,25 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "requirements.txt" }}
+            - v1-dependencies-{{ checksum "require.txt" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
       - run:
           name: install dependencies
           command: |
-            python3 -m venv venv
+            python3 -m venv evenv
             . venv/bin/activate
             pip install codeclimate-test-reporter
             pip install coverage==4.3
             sudo apt-get update &&\
-                sudo apt-get install -y binutils libproj-dev libgdal-dev python3-dev libevent-dev gdal-bin gettext g++ gcc
-            sudo apt-get install -y  gcc build-base /gdal/gdal-dev-2.4.0-r1.apk /gdal/gdal-2.4.0-r1.apk /gdal/geos-3.7.1-r0.apk /gdal/libcrypto1.1-1.1.1b-r1.apk
-            pip install -r requirements.txt
+                sudo apt-get install -y binutils libproj-dev libgdal-dev gdal-bin gettext g++ gcc
+            pip install -r require.txt
 
       - save_cache:
           paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
+            - ./evenv
+          key: v1-dependencies-{{ checksum "require.txt" }}
 
       # run tests!
       # this example uses Django's built-in test-runner
@@ -67,7 +66,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            . venv/bin/activate
+            . evenv/bin/activate
             python manage.py migrate
             mkdir test-reports
             ./cc-test-reporter before-build
