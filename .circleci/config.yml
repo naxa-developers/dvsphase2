@@ -43,6 +43,7 @@ jobs:
             pip install coverage==4.3
             sudo apt-get update &&\
                 sudo apt-get install -y binutils libproj-dev libgdal-dev python3-dev libevent-dev gdal-bin gettext g++ gcc
+            apk add --no-cache gcc build-base /gdal/gdal-dev-2.4.0-r1.apk /gdal/gdal-2.4.0-r1.apk /gdal/geos-3.7.1-r0.apk /gdal/libcrypto1.1-1.1.1b-r1.apk
             pip install -r requirements.txt
 
       - save_cache:
