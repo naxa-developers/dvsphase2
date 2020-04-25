@@ -43,7 +43,7 @@ jobs:
             pip install codeclimate-test-reporter
             pip install coverage==4.3
             sudo apt-get update &&\
-                sudo apt-get install -y binutils libproj-dev gdal-bin gettext
+                sudo apt-get install -y binutils libproj-dev libgdal-dev gdal-bin gettext g++ gcc
 
       - save_cache:
           paths:
