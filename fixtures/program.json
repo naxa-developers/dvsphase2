@@ -4,10 +4,10 @@
   "pk": 1,
   "fields": {
     "name": "Nepal Peace Support Programme",
-    "description": "",
-    "program_code": "108538",
-    "status": "ongoing",
-    "budget": null,
+    "description": "descriptions",
+    "code": "108538",
+    "status": "completed",
+    "budget": "100",
     "sector": [
       3,
       4
@@ -26,15 +26,11 @@
     ],
     "marker_value": [
       1,
-      6,
-      9,
-      12,
-      15,
-      18,
-      23,
-      24
+      6
     ],
-    "partner": []
+    "partner": [
+      1
+    ]
   }
 },
 {
@@ -43,29 +39,29 @@
   "fields": {
     "name": "Samarth-  Nepal Market Development Programme",
     "description": "",
-    "program_code": "201367",
+    "code": "201367",
     "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
-  }
-},
-{
-  "model": "core.program",
-  "pk": 3,
-  "fields": {
-    "name": "Family Planning Project",
-    "description": "",
-    "program_code": "203100",
-    "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
+    "budget": "None",
+    "sector": [
+      1,
+      5
+    ],
+    "sub_sector": [
+      1,
+      30
+    ],
+    "marker_category": [
+      1,
+      3
+    ],
+    "marker_value": [
+      1,
+      2,
+      12,
+      13,
+      14,
+      17
+    ],
     "partner": []
   }
 },
@@ -75,7 +71,7 @@
   "fields": {
     "name": "Rural Access Programme 12",
     "description": "",
-    "program_code": "203186",
+    "code": "203186",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -91,7 +87,7 @@
   "fields": {
     "name": "Rural Water and Sanitation Programme Phase V",
     "description": "",
-    "program_code": "203187",
+    "code": "203187",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -107,7 +103,7 @@
   "fields": {
     "name": "Integrated Programme for Strengthening Security ...",
     "description": "",
-    "program_code": "203274",
+    "code": "203274",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -123,7 +119,7 @@
   "fields": {
     "name": "Evidence for Development",
     "description": "",
-    "program_code": "203385",
+    "code": "203385",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -139,7 +135,7 @@
   "fields": {
     "name": "Access to Finance Programme",
     "description": "",
-    "program_code": "203426",
+    "code": "203426",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -155,7 +151,7 @@
   "fields": {
     "name": "Accelerating Investment and Infrastructure in Ne...",
     "description": "",
-    "program_code": "203427",
+    "code": "203427",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -171,7 +167,7 @@
   "fields": {
     "name": "Nepal Local Governance Support Programme",
     "description": "",
-    "program_code": "203764",
+    "code": "203764",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -187,7 +183,7 @@
   "fields": {
     "name": "Skills for Employment Programme",
     "description": "",
-    "program_code": "204857",
+    "code": "204857",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -203,7 +199,7 @@
   "fields": {
     "name": "Climate Smart Development for Nepal",
     "description": "",
-    "program_code": "204984",
+    "code": "204984",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -219,7 +215,7 @@
   "fields": {
     "name": "Post-Earthquake Reconstruction in Nepal -  Building",
     "description": "",
-    "program_code": "205138",
+    "code": "205138",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -235,7 +231,7 @@
   "fields": {
     "name": "Nepal Health Sector  Programme III",
     "description": "",
-    "program_code": "205145",
+    "code": "205145",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -251,7 +247,7 @@
   "fields": {
     "name": "Strengthening disaster resilience in Nepal",
     "description": "",
-    "program_code": "300003",
+    "code": "300003",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -267,7 +263,7 @@
   "fields": {
     "name": "Support for the Economic Empowerment of Women an...",
     "description": "",
-    "program_code": "300004",
+    "code": "300004",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -283,7 +279,7 @@
   "fields": {
     "name": "Improving Public Financial Management and Accoun...",
     "description": "",
-    "program_code": "300006",
+    "code": "300006",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -299,7 +295,7 @@
   "fields": {
     "name": "Public Financial Management Multi Donor Trust Fu...",
     "description": "",
-    "program_code": "300007",
+    "code": "300007",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -315,7 +311,7 @@
   "fields": {
     "name": "Risk Management Office (RMO) -  Phase III",
     "description": "",
-    "program_code": "300355",
+    "code": "300355",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -331,7 +327,7 @@
   "fields": {
     "name": "Seismic Retrofitting of unsafe housing in Nepal",
     "description": "",
-    "program_code": "300458",
+    "code": "300458",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -345,11 +341,11 @@
   "model": "core.program",
   "pk": 21,
   "fields": {
-    "name": "Support to vulnerable households (durable soluti...",
-    "description": "",
-    "program_code": "300462",
+    "name": "Support to vulnerable households (durable solutions",
+    "description": "program",
+    "code": "300462",
     "status": "ongoing",
-    "budget": null,
+    "budget": "None",
     "sector": [],
     "sub_sector": [],
     "marker_category": [],
@@ -363,7 +359,7 @@
   "fields": {
     "name": "Hamro Samman Programme -  Countering trafficking",
     "description": "",
-    "program_code": "300607",
+    "code": "300607",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -379,7 +375,7 @@
   "fields": {
     "name": "Project Coordination Units (PCUs)",
     "description": "",
-    "program_code": "300715",
+    "code": "300715",
     "status": "ongoing",
     "budget": null,
     "sector": [],
@@ -395,6 +391,39 @@
       26
     ],
     "partner": []
+  }
+},
+{
+  "model": "core.program",
+  "pk": 31,
+  "fields": {
+    "name": "aaaaaaaaa",
+    "description": "aaaaa",
+    "code": "108538",
+    "status": "ongoing",
+    "budget": "34324",
+    "sector": [
+      1
+    ],
+    "sub_sector": [
+      1
+    ],
+    "marker_category": [
+      1
+    ],
+    "marker_value": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "partner": [
+      1,
+      2,
+      31,
+      59
+    ]
   }
 }
 ]

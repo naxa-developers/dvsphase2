@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Partner, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
-    IndicatorValue, Sector, SubSector, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier
+    IndicatorValue, Sector, SubSector, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
+    Filter
 
 
 class PartnerSerializer(serializers.ModelSerializer):
@@ -16,9 +17,26 @@ class MarkerCategorySerializer(serializers.ModelSerializer):
 
 
 class GisLayerSerializer(serializers.ModelSerializer):
+    style = serializers.SerializerMethodField()
+
     class Meta:
         model = GisLayer
-        fields = '__all__'
+        fields = ('id', 'name', 'layer_name', 'workspace', 'geoserver_url', 'store_name', 'type',
+                  'category', 'filename', 'description', 'style')
+
+    def get_style(self, instance):
+        styl = []
+        styles = instance.GisStyle.all()
+        for style in styles:
+            styl.append({
+                'id': style.id,
+                'color': style.style,
+                'fillColor': style.field_color,
+                'opacity': style.opacity,
+                'fill_opacity': style.field_opacity,
+                'layer': style.layer.id
+            })
+        return styl
 
 
 class OutputSerializer(serializers.ModelSerializer):
@@ -53,7 +71,7 @@ class ProgramSerializer(serializers.ModelSerializer):
     class Meta:
         model = Program
         fields = ('id', 'name', 'description', 'sector', 'sub_sector', 'marker_category', 'marker_value', 'partner',
-                  'program_code', 'budget')
+                  'code', 'budget')
 
     def get_marker_category(self, obj):
         qs = obj.marker_category.order_by('id').values_list('id', flat=True)
@@ -76,13 +94,21 @@ class ProgramSerializer(serializers.ModelSerializer):
 class ProvinceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Province
-        fields = '__all__'
+        fields = ('id', 'name', 'code')
+
+
+class FilterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Filter
+        fields = ('filter', 'options',)
 
 
 class IndicatorSerializer(serializers.ModelSerializer):
+    filter = FilterSerializer(many=True, read_only=True)
+
     class Meta:
         model = Indicator
-        fields = '__all__'
+        fields = ('id', 'full_title', 'abstract', 'category', 'source', 'federal_level', 'is_covid', 'filter',)
 
 
 class SectorSerializer(serializers.ModelSerializer):
@@ -115,30 +141,21 @@ class ContractSumSerializer(serializers.ModelSerializer):
 
 
 class DistrictSerializer(serializers.ModelSerializer):
-    province_name = serializers.SerializerMethodField()
+    # province_name = serializers.SerializerMethodField()
 
     class Meta:
         model = District
-        fields = ('id', 'province_id', 'province_name', 'name', 'code')
-
-    def get_province_name(self, obj):
-        return str(obj.province_id.name)
-
-
-class GaanapaSerializer(serializers.ModelSerializer):
-    # province_name = serializers.SerializerMethodField()
-    # district_name = serializers.SerializerMethodField()
-
-    class Meta:
-        model = GapaNapa
-        fields = (
-            'id', 'province_id', 'district_id', 'name', 'gn_type_np', 'hlcit_code')
+        fields = ('id', 'province_id',  'name', 'code', 'n_code')
 
     # def get_province_name(self, obj):
     #     return str(obj.province_id.name)
-    #
-    # def get_district_name(self, obj):
-    #     return str(obj.district_id.name)
+
+
+class GaanapaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = GapaNapa
+        fields = ('id', 'province_id', 'district_id', 'hlcit_code', 'name', 'gn_type_np',
+                  'code', 'population')
 
 
 class FivewSerializer(serializers.ModelSerializer):
@@ -159,7 +176,7 @@ class FivewSerializer(serializers.ModelSerializer):
     #         'end_date',
     #         'reporting_ministry_line', 'implenting_partner_first', 'implenting_partner_second',
     #         'implenting_partner_third')
-    #
+
     # def get_partner_name(self, obj):
     #     return str(obj.partner_name)
     #
@@ -186,18 +203,19 @@ class FivewSerializer(serializers.ModelSerializer):
 
 
 class IndicatorValueSerializer(serializers.ModelSerializer):
-    gapanapa_hlcit_code = serializers.SerializerMethodField()
-    indicator_name = serializers.SerializerMethodField()
+    code = serializers.SerializerMethodField()
+
+    # indicator_name = serializers.SerializerMethodField()
 
     class Meta:
         model = IndicatorValue
-        fields = ('id', 'indicator_id', 'indicator_name', 'gapanapa_id', 'gapanapa_hlcit_code', 'value')
+        fields = ('id', 'indicator_id', 'code', 'value')
 
-    def get_gapanapa_hlcit_code(self, obj):
-        return str(obj.gapanapa_id.hlcit_code)
+    def get_code(self, obj):
+        return int(obj.gapanapa_id.code)
 
-    def get_indicator_name(self, obj):
-        return str(obj.indicator_id.indicator)
+    # def get_indicator_name(self, obj):
+    #     return str(obj.indicator_id.indicator)
 
 
 class TravelTimeSerializer(serializers.ModelSerializer):

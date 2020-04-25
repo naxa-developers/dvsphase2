@@ -3,208 +3,216 @@
   "model": "core.markervalues",
   "pk": 1,
   "fields": {
-    "marker_category": 1,
-    "marker_values": "IGRT"
+    "marker_category_id": 1,
+    "value": "IGRT"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 2,
   "fields": {
-    "marker_category": 1,
-    "marker_values": "GSDT"
+    "marker_category_id": 1,
+    "value": "GSDT"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 3,
   "fields": {
-    "marker_category": 1,
-    "marker_values": "EDT"
+    "marker_category_id": 1,
+    "value": "EDT"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 4,
   "fields": {
-    "marker_category": 1,
-    "marker_values": "PET"
+    "marker_category_id": 1,
+    "value": "PET"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 5,
   "fields": {
-    "marker_category": 1,
-    "marker_values": "RCT"
+    "marker_category_id": 1,
+    "value": "RCT"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 6,
   "fields": {
-    "marker_category": 7,
-    "marker_values": "Significant"
+    "marker_category_id": 7,
+    "value": "Significant"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 7,
   "fields": {
-    "marker_category": 7,
-    "marker_values": "Principal"
+    "marker_category_id": 7,
+    "value": "Principal"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 8,
   "fields": {
-    "marker_category": 7,
-    "marker_values": "Gender considered but not targeted"
+    "marker_category_id": 7,
+    "value": "Gender considered but not targeted"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 9,
   "fields": {
-    "marker_category": 2,
-    "marker_values": "Significant"
+    "marker_category_id": 2,
+    "value": "Significant"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 10,
   "fields": {
-    "marker_category": 2,
-    "marker_values": "Principal"
+    "marker_category_id": 2,
+    "value": "Principal"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 11,
   "fields": {
-    "marker_category": 2,
-    "marker_values": "Will not address disability inclusion"
+    "marker_category_id": 2,
+    "value": "Will not address disability inclusion"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 12,
   "fields": {
-    "marker_category": 3,
-    "marker_values": "Principal"
+    "marker_category_id": 3,
+    "value": "Principal"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 13,
   "fields": {
-    "marker_category": 3,
-    "marker_values": "Significant"
+    "marker_category_id": 3,
+    "value": "Significant"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 14,
   "fields": {
-    "marker_category": 3,
-    "marker_values": "Not Targeted"
+    "marker_category_id": 3,
+    "value": "Not Targeted"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 15,
   "fields": {
-    "marker_category": 4,
-    "marker_values": "Not Targeted"
+    "marker_category_id": 4,
+    "value": "Not Targeted"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 16,
   "fields": {
-    "marker_category": 4,
-    "marker_values": "Principal"
+    "marker_category_id": 4,
+    "value": "Principal"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 17,
   "fields": {
-    "marker_category": 3,
-    "marker_values": "Significant"
+    "marker_category_id": 3,
+    "value": "Significant"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 18,
   "fields": {
-    "marker_category": 5,
-    "marker_values": "Principal"
+    "marker_category_id": 5,
+    "value": "Principal"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 19,
   "fields": {
-    "marker_category": 5,
-    "marker_values": "Significant"
+    "marker_category_id": 5,
+    "value": "Significant"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 20,
   "fields": {
-    "marker_category": 5,
-    "marker_values": "Not Targeted"
+    "marker_category_id": 5,
+    "value": "Not Targeted"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 21,
   "fields": {
-    "marker_category": 6,
-    "marker_values": "Significant"
+    "marker_category_id": 6,
+    "value": "Significant"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 22,
   "fields": {
-    "marker_category": 6,
-    "marker_values": "Principal"
+    "marker_category_id": 6,
+    "value": "Principal"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 23,
   "fields": {
-    "marker_category": 6,
-    "marker_values": "Not Targeted"
+    "marker_category_id": 6,
+    "value": "Not Targeted"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 24,
   "fields": {
-    "marker_category": 8,
-    "marker_values": "Principal"
+    "marker_category_id": 8,
+    "value": "Principal"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 25,
   "fields": {
-    "marker_category": 8,
-    "marker_values": "Significant"
+    "marker_category_id": 8,
+    "value": "Significant"
   }
 },
 {
   "model": "core.markervalues",
   "pk": 26,
   "fields": {
-    "marker_category": 8,
-    "marker_values": "Not Targeted"
+    "marker_category_id": 8,
+    "value": "Not Targeted"
+  }
+},
+{
+  "model": "core.markervalues",
+  "pk": 60,
+  "fields": {
+    "marker_category_id": 1,
+    "value": "aaaaaaaaaaaa"
   }
 }
 ]

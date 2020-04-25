@@ -30,6 +30,7 @@
 
             <tr>
                 <th>Name</th>
+                <th>Code</th>
                 <th>Type of institution</th>
                 <th>Address</th>
                 <th>Email</th>
@@ -51,8 +52,8 @@
 
 
                     <a href="#" class="partner-info flex-start">
-                        {% if partner.image %}
-                        <img src="{{ partner.image.url }}" alt="org"/>
+                        {% if partner.thumbnail %}
+                        <img src="{{ partner.thumbnail.url }}" alt="org"/>
                         {% else %}
                         <img src="{% static 'dashboard/images/organization.svg' %}" alt="org"/>
                         {% endif %}
@@ -62,7 +63,7 @@
 
                 </td>
 
-
+                <td>{{partner.code}}</td>
                 <td>{{partner.type_of_institution}}</td>
                 <td>{{partner.address}}</td>
                 <td>{{partner.email}}</td>

@@ -115,6 +115,17 @@ urlpatterns = [
     path('budget-edit/<int:pk>', views.BudgetUpdate.as_view(), name='budget-edit'),
     path('budget-delete/<int:pk>', views.BudgetDelete.as_view(), name='budget-delete'),
 
+    path('cmp-list/', views.CmpList.as_view(), name='cmp-list'),
+    path('cmp-add/', views.CmpCreate.as_view(), name='cmp-add'),
+    path('cmp-edit/<int:pk>', views.CmpUpdate.as_view(), name='cmp-edit'),
+    path('cmp-delete/<int:pk>', views.CmpDelete.as_view(), name='cmp-delete'),
+
+
+
     path('vector-map/', views.VectorMap.as_view(), name='vector-map'),
+
+    path('gis_style_layer_list/<int:pk>', views.StyleList.as_view(), name='style-list'),
+    path('gis_style_layer_add/<int:pk>', views.StyleCreate.as_view(), name='style-create'),
+    path('gis_style_layer_edit/<int:pk>', views.StyleUpdate.as_view(), name='style-update'),
 
 ]

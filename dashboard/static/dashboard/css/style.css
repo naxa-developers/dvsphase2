@@ -1887,7 +1887,30 @@ ul.pagination {
       margin-left: 10px;
       width: 100%; }
   .sidebar .menu {
-    position: relative; }
+    position: relative;
+    height: calc(100vh - 131px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar; }
+    .sidebar .menu::-webkit-scrollbar {
+      width: 6px;
+      background: #B6B6B6;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      border-radius: 4px; }
+    .sidebar .menu::-webkit-scrollbar-track {
+      background-color: #B6B6B6;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      border-radius: 4px; }
+    .sidebar .menu::-webkit-scrollbar-thumb {
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      -ms-border-radius: 4px;
+      border-radius: 4px;
+      background: #96A5CD; }
     .sidebar .menu .list {
       list-style: none;
       margin: 0; }
@@ -2600,6 +2623,80 @@ ul.pagination {
     margin: 0;
     width: 100%; }
 
+.pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: .775rem;
+  padding: .5rem 0;
+  color: #B6B6B6;
+  font-size: .775rem;
+  margin-top: 1rem; }
+  .pagination .paging-left {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center; }
+    .pagination .paging-left p {
+      font-family: "Montserrat", sans-serif; }
+      .pagination .paging-left p span {
+        margin: 0 .25rem; }
+
+.paging-right {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center; }
+  .paging-right .pre-page, .paging-right .next-page {
+    display: inline-flex;
+    align-items: center; }
+    .paging-right .pre-page a, .paging-right .next-page a {
+      display: inline-flex;
+      align-items: center;
+      color: #3b3b3b;
+      border: 1px solid #dee2e6;
+      padding: .35rem .75rem;
+      text-transform: capitalize; }
+      .paging-right .pre-page a:hover, .paging-right .next-page a:hover {
+        color: #D9002A; }
+  .paging-right ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center; }
+    .paging-right ul li a {
+      font-family: "Montserrat", sans-serif;
+      padding: .25rem .6125rem;
+      color: #3b3b3b; }
+    .paging-right ul li:hover a {
+      color: #D9002A; }
+    .paging-right ul li.active a {
+      background-color: #D9002A;
+      display: block;
+      color: #ffffff;
+      border-color: #D9002A; }
+
 .dfid-highlight .highlight-wrapper {
   padding: 0 5px; }
   .dfid-highlight .highlight-wrapper .highlight-row {
@@ -2682,10 +2779,9 @@ ul.pagination {
 .overview .dfid-program {
   background-color: #f5f5f5;
   margin-bottom: 2rem;
-  -webkit-box-shadow: 0 17px 16px rgba(0, 0, 0, 0.16);
-  -ms-box-shadow: 0 17px 16px rgba(0, 0, 0, 0.16);
-  -o-box-shadow: 0 17px 16px rgba(0, 0, 0, 0.16);
-  box-shadow: 0 17px 16px rgba(0, 0, 0, 0.16);
+  -webkit-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   position: relative; }
   .overview .dfid-program .status {
     position: absolute;
@@ -2767,6 +2863,11 @@ ul.pagination {
       align-items: center; }
   .overview .dfid-program .hide-details {
     display: none; }
+  .overview .dfid-program:hover {
+    -webkit-box-shadow: 0 17px 16px rgba(0, 0, 0, 0.16);
+    -ms-box-shadow: 0 17px 16px rgba(0, 0, 0, 0.16);
+    -o-box-shadow: 0 17px 16px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 17px 16px rgba(0, 0, 0, 0.16); }
 .overview .activities-category .dfid-program {
   padding: 1rem;
   margin-bottom: 1rem; }

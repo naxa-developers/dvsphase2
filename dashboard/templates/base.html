@@ -59,7 +59,7 @@
                 <li class="menu-item">
                     {% endif %}
                     <a href="/dashboard/project-list/" class="active-red"><i
-                            class="material-icons">assignment</i><span>projects</span></a>
+                            class="material-icons">assignment</i><span>Components</span></a>
 
                 </li>
                 {% endif %}
@@ -177,6 +177,12 @@
                 </li>
                 {% endif %}
 
+<!--                <li class="menu-item">-->
+<!--                    <a href="/dashboard/gis-layer-list/" class=""><i-->
+<!--                            class="material-icons">map</i><span>Map Layers Style</span></a>-->
+
+<!--                </li>-->
+
                 {% if perms.core.view_output %}
                 {% if active == 'output' %}
                 <li class="menu-item active">
@@ -210,14 +216,14 @@
                 </li>
                 {% endif %}
 
-                {% if perms.core.view_budgettofirsttier %}
-                {% if active == 'budget' %}
+                {% if perms.core.view_cmp %}
+                {% if active == 'cmp' %}
                 <li class="menu-item active">
                     {% else %}
                 <li class="menu-item">
                     {% endif %}
-                    <a href="/dashboard/budget-list/" class=""><i
-                            class="material-icons">person</i><span>Budget</span></a>
+                    <a href="/dashboard/cmp-list/" class=""><i
+                            class="material-icons">assignment</i><span>Centrally Managed Programs</span></a>
                 </li>
                 {% endif %}
 
@@ -249,8 +255,8 @@
                         <li class="dropdown user-menu">
                             <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"
                                     aria-expanded="false">
-                                {% if user.image %}
-                                <img src="{{ user.image.url }}" class="user-image"
+                                {% if user.thumbnail %}
+                                <img src="{{ user.thumbnail.url }}" class="user-image"
                                      alt="User Image">
                                 {% else %}
                                 <img src="{% static 'dashboard/images/admin.png' %}" class="user-image"

@@ -13,6 +13,9 @@ from rest_framework.authentication import TokenAuthentication, BasicAuthenticati
 from django.db.models import Q
 from django.db import connection
 from django.http import Http404, HttpResponse
+import json
+from django.db.models import Sum
+import math
 
 
 # Create your views here.
@@ -30,6 +33,124 @@ class PartnerView(viewsets.ReadOnlyModelViewSet):
     def get_serializer_class(self):
         serializer_class = PartnerSerializer
         return serializer_class
+
+
+class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = True
+
+    # filter_backends = [DjangoFilterBackend]
+    # filterset_fields = ['id']
+
+    def list(self, request, **kwargs):
+        data = []
+        district = District.objects.values('name', 'id', 'n_code').order_by('id')
+        id_indicator = self.kwargs['indicator_id']
+        health_id = Indicator.objects.get(indicator='number_hospitals')
+        # print(health_id.id)
+        for dist in district:
+            indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
+                                                      'gapanapa_id__population').filter(
+                indicator_id=id_indicator,
+                gapanapa_id__district_id=dist['id'])
+            if id_indicator != health_id.id:
+                value_sum = 0
+                dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
+                    district_id=dist['id']).aggregate(
+                    Sum('population'))
+
+                for ind in indicator:
+                    # print(ind['value'])
+                    # print(math.isnan(ind['value']))
+
+                    if math.isnan(ind['value']) == False:
+                        indicator_value = (ind['value'] * ind['gapanapa_id__population'])
+                        # print(indicator_value)
+                        value_sum = (value_sum + indicator_value)
+                    else:
+                        value_sum = (value_sum + 0)
+
+                # print(value_sum)
+                # print(dist_pop_sum['population__sum'])
+                value = (value_sum / dist_pop_sum['population__sum'])
+            else:
+                dist_health_num = IndicatorValue.objects.values('id', 'value', 'gapanapa_id').filter(
+                    indicator_id=id_indicator,
+                    gapanapa_id__district_id=dist['id']).aggregate(
+                    Sum('value'))
+                value = dist_health_num['value__sum']
+
+            data.append(
+                {
+                    'id': dist['id'],
+                    'indicator_id': id_indicator,
+                    'code': dist['n_code'],
+                    'value': value
+
+                }
+            )
+
+        return Response({"results": data})
+
+
+class ProvinceIndicator(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = True
+
+    def list(self, request, **kwargs):
+        data = []
+        province = Province.objects.values('name', 'id', 'code').order_by('id')
+        id_indicator = self.kwargs['indicator_id']
+        # print(self.kwargs['indicator_id'])
+        health_id = Indicator.objects.get(indicator='number_hospitals')
+        for dist in province:
+            if id_indicator != health_id.id:
+                value_sum = 0
+                dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
+                    province_id=dist['id']).aggregate(
+                    Sum('population'))
+                indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
+                                                          'gapanapa_id__population').filter(
+                    indicator_id=id_indicator,
+                    gapanapa_id__province_id=dist['id'])
+                for ind in indicator:
+                    # print(ind['value'])
+                    # print(dist_pop_sum['population__sum'])
+                    # print(math.isnan(ind['value']))
+
+                    if math.isnan(ind['value']) == False:
+                        indicator_value = (ind['value'] * ind['gapanapa_id__population'])
+                        # print(indicator_value)
+                        value_sum = (value_sum + indicator_value)
+                    else:
+                        value_sum = (value_sum + 0)
+
+                # print(value_sum)
+                # print(dist_pop_sum)
+                value = (value_sum / dist_pop_sum['population__sum'])
+
+            else:
+                prov_health_num = IndicatorValue.objects.values('id', 'indicator_id', 'value',
+                                                                'gapanapa_id__population').filter(
+                    indicator_id=id_indicator,
+                    gapanapa_id__province_id=dist['id']).aggregate(
+                    Sum('value'))
+
+                value = prov_health_num['value__sum']
+
+            data.append(
+                {
+                    'id': dist['id'],
+                    'indicator_id': id_indicator,
+                    'code': int(dist['code']),
+                    # 'value_sum': value_sum,
+                    # 'population': dist_pop_sum['population__sum'],
+                    'value': value
+
+                }
+            )
+
+        return Response({"results": data})
 
 
 class MarkerCategoryApi(viewsets.ReadOnlyModelViewSet):
@@ -106,18 +227,9 @@ class GapaNapaApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['id', 'province_id', 'district_id', 'hlcit_code', 'gn_type_en', 'gn_type_np']
-
-    # renderer_classes = [JSONRenderer]
-
-    def get_queryset(self):
-        queryset = GapaNapa.objects.only('id', 'province_id', 'district_id', 'name', 'gn_type_np',
-                                         'hlcit_code').order_by('id')
-
-        return queryset
-
-    def get_serializer_class(self):
-        serializer_class = GaanapaSerializer
-        return serializer_class
+    queryset = GapaNapa.objects.only('id', 'province_id', 'district_id', 'hlcit_code', 'name', 'gn_type_np',
+                                     'code', 'population').order_by('id')
+    serializer_class = GaanapaSerializer
 
 
 class Fivew(viewsets.ReadOnlyModelViewSet):
@@ -127,13 +239,97 @@ class Fivew(viewsets.ReadOnlyModelViewSet):
                         'district_id', 'municipality_id']
 
     def get_queryset(self):
-        queryset = FiveW.objects.select_related('supplier_id', 'second_tier_partner', 'program_id', 'component_id',
-                                                'province_id', 'district_id', 'municipality_id').order_by('id')
+        queryset = FiveW.objects.order_by('id')
+
         return queryset
 
     def get_serializer_class(self):
         serializer_class = FivewSerializer
         return serializer_class
+
+    def get_serializer_context(self):
+        context = super(Fivew, self).get_serializer_context()
+        context.update({"request": self.request})
+        return context
+
+
+class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = True
+
+    def list(self, request, *args, **kwargs):
+        data = []
+        districts = District.objects.values('name', 'id', 'code', 'n_code').order_by('id')
+        for dist in districts:
+            allocated_sum = FiveW.objects.filter(district_id=dist['id']).aggregate(Sum('allocated_budget'))
+            male_beneficiary_sum = FiveW.objects.filter(district_id=dist['id']).aggregate(Sum('male_beneficiary'))
+            female_beneficiary_sum = FiveW.objects.filter(district_id=dist['id']).aggregate(Sum('female_beneficiary'))
+            total_beneficiary_sum = FiveW.objects.filter(district_id=dist['id']).aggregate(Sum('total_beneficiary'))
+
+            data.append({
+                'id': dist['id'],
+                'name': dist['name'],
+                'code': dist['n_code'],
+                'allocated_budget': allocated_sum['allocated_budget__sum'],
+                'male_beneficiary': male_beneficiary_sum['male_beneficiary__sum'],
+                'female_beneficiary': female_beneficiary_sum['female_beneficiary__sum'],
+                'total_beneficiary': total_beneficiary_sum['total_beneficiary__sum'],
+            })
+        return Response({"results": data})
+
+
+class FiveWProvince(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = True
+
+    def list(self, request, *args, **kwargs):
+        data = []
+        provinces = Province.objects.values('name', 'id', 'code').order_by('id')
+        for province in provinces:
+            allocated_sum = FiveW.objects.filter(province_id=province['id']).aggregate(Sum('allocated_budget'))
+            male_beneficiary_sum = FiveW.objects.filter(province_id=province['id']).aggregate(Sum('male_beneficiary'))
+            female_beneficiary_sum = FiveW.objects.filter(province_id=province['id']).aggregate(
+                Sum('female_beneficiary'))
+            total_beneficiary_sum = FiveW.objects.filter(province_id=province['id']).aggregate(Sum('total_beneficiary'))
+
+            data.append({
+                'id': province['id'],
+                'name': province['name'],
+                'code': province['code'],
+                'allocated_budget': allocated_sum['allocated_budget__sum'],
+                'male_beneficiary': male_beneficiary_sum['male_beneficiary__sum'],
+                'female_beneficiary': female_beneficiary_sum['female_beneficiary__sum'],
+                'total_beneficiary': total_beneficiary_sum['total_beneficiary__sum'],
+            })
+        return Response({"results": data})
+
+
+class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = True
+
+    def list(self, request, *args, **kwargs):
+        data = []
+        municipalities = GapaNapa.objects.values('name', 'id', 'code').order_by('id')
+        for municipality in municipalities:
+            allocated_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(Sum('allocated_budget'))
+            male_beneficiary_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(
+                Sum('male_beneficiary'))
+            female_beneficiary_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(
+                Sum('female_beneficiary'))
+            total_beneficiary_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(
+                Sum('total_beneficiary'))
+
+            data.append({
+                'id': municipality['id'],
+                'name': municipality['name'],
+                'code': municipality['code'],
+                'allocated_budget': allocated_sum['allocated_budget__sum'],
+                'male_beneficiary': male_beneficiary_sum['male_beneficiary__sum'],
+                'female_beneficiary': female_beneficiary_sum['female_beneficiary__sum'],
+                'total_beneficiary': total_beneficiary_sum['total_beneficiary__sum'],
+            })
+        return Response({"results": data})
 
 
 class ContractSum(viewsets.ReadOnlyModelViewSet):
@@ -155,7 +351,7 @@ class ContractSum(viewsets.ReadOnlyModelViewSet):
 class IndicatorApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'category', 'indicator']
+    filterset_fields = ['id', 'category', 'indicator', 'is_covid']
 
     def get_queryset(self):
         queryset = Indicator.objects.order_by('id')
@@ -307,6 +503,7 @@ def municipality_tile(request, zoom, x, y):
         tile = bytes(cursor.fetchone()[0])
         # return HttpResponse(len(tile))
 
+        print(cursor.execute(sql_data, [zoom, x, y]))
         if not len(tile):
             raise Http404()
     return HttpResponse(tile, content_type="application/x-protobuf")

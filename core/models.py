@@ -1,5 +1,10 @@
 from django.contrib.gis.db import models
 from django.contrib.auth.models import User
+import os.path
+from PIL import Image
+from django.core.files.base import ContentFile
+from io import BytesIO
+from colorfield.fields import ColorField
 
 
 # Create your models here.
@@ -14,6 +19,42 @@ class Partner(models.Model):
     # contact_person_email = models.CharField(max_length=100, null=True, blank=True)
     # contact_person_ph = models.CharField(max_length=100, null=True, blank=True)
     image = models.ImageField(upload_to='upload/partner/', null=True, blank=True)
+    thumbnail = models.ImageField(upload_to='upload/partner/', editable=False, null=True, blank=True)
+    code = models.CharField(max_length=100, null=True, blank=True)
+
+    def make_thumbnail(self):
+        try:
+            image = Image.open(self.image)
+            print(image)
+            image.thumbnail((200, 150), Image.ANTIALIAS)
+            thumb_name, thumb_extension = os.path.splitext(self.image.name)
+            thumb_extension = thumb_extension.lower()
+            thumb_filename = thumb_name + '_thumb' + thumb_extension
+            if thumb_extension in ['.jpg', '.jpeg']:
+                FTYPE = 'JPEG'
+            elif thumb_extension == '.gif':
+                FTYPE = 'GIF'
+            elif thumb_extension == '.png':
+                FTYPE = 'PNG'
+            else:
+                return False  # Unrecognized file type
+            # Save thumbnail to in-memory file as StringIO
+            temp_thumb = BytesIO()
+            image.save(temp_thumb, FTYPE)
+            temp_thumb.seek(0)
+            # set save=False, otherwise it will run in an infinite loop
+            self.thumbnail.save(thumb_filename, ContentFile(temp_thumb.read()), save=False)
+            temp_thumb.close()
+            return True
+        except:
+            return False
+
+    def save(self, *args, **kwargs):
+        if not self.make_thumbnail():
+            print('ok')
+            # set to a default thumbnail
+            # raise Exception('Could not create thumbnail - is the file type valid?')
+        super(Partner, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -75,7 +116,7 @@ class Program(models.Model):
     marker_category = models.ManyToManyField(MarkerCategory, related_name='Pmarkercategory', blank=True)
     marker_value = models.ManyToManyField(MarkerValues, related_name='MarkerValues', blank=True)
     partner = models.ManyToManyField(Partner, related_name='Ppartner', blank=True)
-    program_code = models.CharField(max_length=100, blank=True, null=True)
+    code = models.CharField(max_length=100, blank=True, null=True)
     status = models.CharField(max_length=50, choices=status, default='ongoing')
     budget = models.CharField(max_length=100, null=True, blank=True)
 
@@ -96,6 +137,7 @@ class District(models.Model):
     province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='DProvince', null=True, blank=True)
     name = models.CharField(max_length=100, null=True, blank=True)
     code = models.CharField(max_length=100, null=True, blank=True)
+    n_code = models.IntegerField(null=True, blank=True)
     boundary = models.MultiPolygonField(srid=4326, null=True)
 
     def __str__(self):
@@ -140,6 +182,7 @@ class GapaNapa(models.Model):
     cbs_code = models.CharField(max_length=100, null=True, blank=True)
     hlcit_code = models.CharField(max_length=100, null=True, blank=True)
     p_code = models.CharField(max_length=100, null=True, blank=True)
+    code = models.IntegerField(null=True, blank=True)
     boundary = models.MultiPolygonField(srid=4326, null=True)
 
     def __str__(self):
@@ -245,9 +288,20 @@ class Indicator(models.Model):
     category = models.CharField(max_length=500, null=True, blank=True)
     source = models.CharField(max_length=1500, null=True, blank=True)
     federal_level = models.CharField(max_length=50, choices=fed, default='palika level')
+    is_covid = models.BooleanField(default=False)
 
     def __str__(self):
         return self.indicator
+
+
+class Filter(models.Model):
+    indicator_id = models.ForeignKey(Indicator, on_delete=models.CASCADE, related_name='filter', null=True,
+                                     blank=True)
+    name = models.CharField(max_length=100, null=True, blank=True)
+    options = models.CharField(max_length=500, null=True, blank=True)
+
+    def __str__(self):
+        return self.filter_name
 
 
 class IndicatorValue(models.Model):
@@ -288,6 +342,17 @@ class GisLayer(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class GisStyle(models.Model):
+    style = ColorField(default='#FF0000', blank=True, null=True)
+    field_color = ColorField(default='#FF0000', blank=True, null=True)
+    opacity = models.FloatField(blank=True, null=True)
+    field_opacity = models.FloatField(blank=True, null=True)
+    layer = models.ForeignKey(GisLayer, on_delete=models.CASCADE, related_name='GisStyle', blank=True, null=True)
+
+    def __str__(self):
+        return self.layer.name
 
 
 class Output(models.Model):
@@ -402,3 +467,32 @@ class BudgetToFirstTier(models.Model):
 
     def __str__(self):
         return self.supplier_id.name
+
+
+class Cmp(models.Model):
+    cat = (
+        ('collaborate', 'Collaborate'),
+        ('contribute', 'Contribute'),
+        ('aware', 'Aware'),
+
+    )
+
+    project_code = models.CharField(max_length=100, null=True, blank=True)
+    project_name = models.CharField(max_length=100, null=True, blank=True)
+    total_project_budget = models.FloatField(null=True, blank=True, default=0)
+    percentage_in_country = models.FloatField(null=True, blank=True, default=0)
+    budget_country_fy = models.FloatField(null=True, blank=True, default=0)
+    sro_name = models.CharField(max_length=100, null=True, blank=True)
+    category = models.CharField(max_length=50, choices=cat, null=True, blank=True)
+    poc = models.CharField(max_length=100, null=True, blank=True)
+    poc_email = models.CharField(max_length=100, null=True, blank=True)
+    remarks = models.TextField(blank=True, null=True)
+    province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='CmProvince', null=True,
+                                    blank=True)
+    district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='CmDistrict', null=True,
+                                    blank=True)
+    municipality_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='CmGapaNapa', null=True)
+
+    def __str__(self):
+        return self.project_name
+

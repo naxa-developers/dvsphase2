@@ -33,6 +33,7 @@
                 <th>type</th>
                 <th>category</th>
                 <th>filename</th>
+                <th>Style</th>
 
                 <th></th>
             </tr>
@@ -48,6 +49,15 @@
                 <td>{{ gis.type }}</td>
                 <td>{{ gis.category }}</td>
                 <td>{{ gis.filename }}</td>
+                <td>
+                    {% if  gis.GisStyle.all.count < 1 %}
+                    <a href="/dashboard/gis_style_layer_add/{{ gis.id }}"><button type="button" class="btn btn-outline-danger">Add</button></a>
+                    {% else %}
+                    <a href="/dashboard/gis_style_layer_list/{{ gis.id }}"><button type="button" class="btn btn-outline-success">Manage</button></a>
+                    {% endif %}
+
+
+                </td>
 
                 <td>
                     <div class="table-action">

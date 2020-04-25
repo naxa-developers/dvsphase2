@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('swagger/', schema_view),
     path('api/v1/core/', include('core.urls')),
+    path('covid/', include('covid.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('', auth_views.login, name='login'),
 
