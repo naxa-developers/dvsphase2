@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'colorfield',
     'testing',
-    'rest_framework_swagger',
+    'drf_yasg',
     'core',
     'covid',
     'django_filters',
@@ -173,8 +173,6 @@ SWAGGER_SETTINGS = {
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
-
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
