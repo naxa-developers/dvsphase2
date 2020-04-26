@@ -100,6 +100,7 @@ class ProvinceSerializer(serializers.ModelSerializer):
 class FilterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Filter
+
         fields = ('name', 'options',)
 
 

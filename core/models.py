@@ -301,7 +301,9 @@ class Filter(models.Model):
     options = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
+
         return self.name
+
 
 
 class IndicatorValue(models.Model):
