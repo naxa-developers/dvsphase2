@@ -38,6 +38,7 @@ from random import randint
 from django.contrib.admin.models import LogEntry
 from datetime import datetime, timedelta
 from django.core.paginator import Paginator
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 
 # Create your views here.
@@ -446,6 +447,7 @@ def activate_user(request, **kwargs):
 
 @authentication_classes([SessionAuthentication, ])
 @api_view()
+@permission_classes([IsAuthenticated, ])
 def auth(request):
     user = request.user
     # return HttpResponse(user)
@@ -2410,5 +2412,3 @@ class StyleUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return "/dashboard/gis_style_layer_list/" + str(self.kwargs['pk'])
-
-
