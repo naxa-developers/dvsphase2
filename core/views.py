@@ -45,7 +45,7 @@ class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, **kwargs):
         data = []
-        district = District.objects.values('name', 'id', 'n_code').order_by('id')
+        district = District.objects.values('name', 'id', 'n_code').exclude(code=-1).order_by('id')
         id_indicator = self.kwargs['indicator_id']
         health_id = Indicator.objects.get(indicator='number_hospitals')
         # print(health_id.id)
@@ -101,7 +101,7 @@ class ProvinceIndicator(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, **kwargs):
         data = []
-        province = Province.objects.values('name', 'id', 'code').order_by('id')
+        province = Province.objects.values('name', 'id', 'code').exclude(code=-1).order_by('id')
         id_indicator = self.kwargs['indicator_id']
         # print(self.kwargs['indicator_id'])
         health_id = Indicator.objects.get(indicator='number_hospitals')
@@ -128,7 +128,7 @@ class ProvinceIndicator(viewsets.ReadOnlyModelViewSet):
                         value_sum = (value_sum + 0)
 
                 # print(value_sum)
-                # print(dist_pop_sum)
+                print(dist_pop_sum)
                 value = (value_sum / dist_pop_sum['population__sum'])
 
             else:
