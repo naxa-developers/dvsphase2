@@ -11,7 +11,7 @@ jobs:
     docker:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
-      - image: circleci/python:3.6.1
+      - image: circleci/python:3.6
       - image: mdillon/postgis:11-alpine
 
 
@@ -27,23 +27,20 @@ jobs:
     steps:
       - checkout
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "requirements.txt" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+
 
       - run:
           name: install dependencies
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            pip install -r requirements.txt
             pip install codeclimate-test-reporter
             pip install coverage==4.3
             sudo apt-get update &&\
-                sudo apt-get install -y binutils libproj-dev gdal-bin gettext
+             sudo apt-get install -y binutils libproj-dev libgdal-dev gdal-bin gettext g++ gcc
+            gdal-config --version
+            pip install --global-option=build_ext --global-option="-I/usr/include/gdal" GDAL==`gdal-config --version`
+            pip install -r requirements.txt
 
       - save_cache:
           paths:

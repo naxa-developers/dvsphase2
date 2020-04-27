@@ -38,6 +38,7 @@ class PartnerView(viewsets.ReadOnlyModelViewSet):
 class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = True
+    serializer_class = DistrictSerializer
 
     # filter_backends = [DjangoFilterBackend]
     # filterset_fields = ['id']
@@ -96,6 +97,7 @@ class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
 class ProvinceIndicator(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = True
+    serializer_class = ProvinceSerializer
 
     def list(self, request, **kwargs):
         data = []
@@ -256,6 +258,7 @@ class Fivew(viewsets.ReadOnlyModelViewSet):
 class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = True
+    serializer_class = FivewSerializer
 
     def list(self, request, *args, **kwargs):
         data = []
@@ -281,6 +284,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
 class FiveWProvince(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = True
+    serializer_class = FivewSerializer
 
     def list(self, request, *args, **kwargs):
         data = []
@@ -307,6 +311,7 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
 class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = True
+    serializer_class = FivewSerializer
 
     def list(self, request, *args, **kwargs):
         data = []
