@@ -128,7 +128,7 @@ class ProvinceIndicator(viewsets.ReadOnlyModelViewSet):
                         value_sum = (value_sum + 0)
 
                 # print(value_sum)
-                print(dist_pop_sum)
+                # print(dist_pop_sum)
                 value = (value_sum / dist_pop_sum['population__sum'])
 
             else:
