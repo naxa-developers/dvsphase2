@@ -36,7 +36,7 @@ class TestViews(APITestCase, APIRequestFactory):
         assert response.status_code == 200
 
     def test_gapanapaapi(self):
-        url = reverse('gapanapa')
+        url = reverse('municipality')
         response = self.client.get(url, format='json')
         assert response.status_code == 200
 

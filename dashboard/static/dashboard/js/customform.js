@@ -146,7 +146,7 @@ $.ajax({
 $('#id_district_id').on('change',function(){
 dist_id = $(this).val()
 $.ajax({
-    url: baseUrl+'api/v1/core/gapanapa/?district_id='+dist_id,
+    url: baseUrl+'api/v1/core/municipality/?district_id='+dist_id,
 //    headers: {
 //        'Authorization': "Token 8933c5dd02de389ab5ee69c17a9af49f3d83b938",
 //    },

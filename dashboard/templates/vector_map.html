@@ -55,10 +55,10 @@
                  }
 
 
-     var dist_dvsurl = baseUrl+"api/v1/core/palika-tile/{z}/{x}/{y}";
+     var dist_dvsurl = baseUrl+"federal/province.mvt?tile={z}/{x}/{y}&code=1";
 
 
-province = L.vectorGrid.protobuf(dist_dvsurl, vectorTileOptions).addTo(map);
+<!--province = L.vectorGrid.protobuf(dist_dvsurl, vectorTileOptions).addTo(map);-->
 
 <!--      district = L.vectorGrid.protobuf(dist_dvsurl).addTo(map, vectorTileOptions);-->
 <!--      district.on('click', function(e) {-->
@@ -66,7 +66,7 @@ province = L.vectorGrid.protobuf(dist_dvsurl, vectorTileOptions).addTo(map);
 
 <!--      })-->
 <!--      console.log(district)-->
-<!--      mun = L.vectorGrid.protobuf(dvsurl).addTo(map, vectorTileOptions);-->
+      mun = L.vectorGrid.protobuf(dist_dvsurl).addTo(map, vectorTileOptions);
 
 
      </script>
