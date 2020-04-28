@@ -28,8 +28,8 @@ class TestUrls:
         assert resolve(path).view_name == "province"
 
     def test_core_gapanapa_url(self):
-        path = reverse('gapanapa')
-        assert resolve(path).view_name == "gapanapa"
+        path = reverse('municipality')
+        assert resolve(path).view_name == "municipality"
 
     def test_core_fivew_url(self):
         path = reverse('fivew')
