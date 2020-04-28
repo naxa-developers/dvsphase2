@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'covid',
     'django_filters',
     'dashboard',
+    'federal',
 
 ]
 
