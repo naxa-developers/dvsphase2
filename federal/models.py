@@ -6,7 +6,7 @@ class ProvinceBoundary(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
     code = models.CharField(max_length=100, null=True, blank=True)
     geom = models.MultiPolygonField(srid=4326, null=True)
-    # objects = models.Manager()
+    objects = models.Manager()
     vector_tiles = MVTManager()
 
     def __str__(self):
