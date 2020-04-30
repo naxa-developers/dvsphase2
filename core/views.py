@@ -359,7 +359,7 @@ class IndicatorApi(viewsets.ReadOnlyModelViewSet):
     filterset_fields = ['id', 'category', 'indicator', 'is_covid']
 
     def get_queryset(self):
-        queryset = Indicator.objects.order_by('id')
+        queryset = Indicator.objects.exclude(show_flag=False).order_by('id')
         return queryset
 
     def get_serializer_class(self):

@@ -3,6 +3,13 @@ from core.models import Province, District, GapaNapa
 
 
 # Create your models here.
+class CovidSpecificProgram(models.Model):
+    province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='CvsProvince',
+                                    null=True, blank=True)
+    district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='CvsDistrict',
+                                    null=True, blank=True)
+    municipality_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='CvsGapaNapa',
+                                        null=True, blank=True)
 
 
 class CovidFivew(models.Model):
