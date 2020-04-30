@@ -2,13 +2,13 @@ from rest_framework import viewsets
 from covid.models import CovidFivew, DryDshosp4hrSums, DryDshosp4hrUncoveredAdm1Sums, DryDshosp8hrSums, \
     DryDshosp8hrUncoveredAdm1Sums, DryDshosp12hrSums, DryDshosp12hrUncoveredAdm1Sums, DryAllCovidsDhfs4hrSums, \
     DryAllCovidsDhfs4hrUncoveredAdm1Sums, DryAllCovidsDhfs8hrSums, DryAllCovidsDhfs8hrUncoveredAdm1Sums, \
-    DryAllCovidsDhfs12hrSums, DryAllCovidsDhfs12hrUncoveredAdm1Sums
+    DryAllCovidsDhfs12hrSums, DryAllCovidsDhfs12hrUncoveredAdm1Sums, CovidSpecificProgram
 from covid.serializers import CovidFivewSerializer, DryDshosp4hrSumsSerializer, \
     DryDshosp4hrUncoveredAdm1SumsSerializer, DryDshosp8hrSumsSerializer, DryDshosp8hrUncoveredAdm1SumsSerializer, \
     DryDshosp12hrSumsSerializer, DryDshosp12hrUncoveredAdm1SumsSerializer, DryAllCovidsDhfs4hrSumsSerializer, \
     DryAllCovidsDhfs4hrUncoveredAdm1SumsSerializer, DryAllCovidsDhfs8hrSumsSerializer, \
     DryAllCovidsDhfs8hrUncoveredAdm1SumsSerializer, DryAllCovidsDhfs12hrSumsSerializer, \
-    DryAllCovidsDhfs12hrUncoveredAdm1SumsSerializer
+    DryAllCovidsDhfs12hrUncoveredAdm1SumsSerializer, CovidSpecificSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 
 
@@ -23,6 +23,21 @@ class TtmpViewSet(viewsets.ReadOnlyModelViewSet):
 
     def get_serializer_class(self):
         serializer_class = CovidFivewSerializer
+        return serializer_class
+
+
+class CovidSpecific(viewsets.ReadOnlyModelViewSet):
+    permission_classes = []
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id', 'district_id', 'municipality_id', 'municipality_id']
+
+    def get_queryset(self):
+        queryset = CovidSpecificProgram.objects.select_related('district_id', 'province_id',
+                                                               'municipality_id').order_by('id')
+        return queryset
+
+    def get_serializer_class(self):
+        serializer_class = CovidSpecificSerializer
         return serializer_class
 
 
