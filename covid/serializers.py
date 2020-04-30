@@ -43,13 +43,22 @@ class CovidSpecificSerializer(serializers.ModelSerializer):
                   'covid_priority_3_12_Months', 'covid_recovery_priority', 'providing_ta_to_local_government')
 
     def get_province_code(self, obj):
-        return str(obj.province_id.code)
+        if obj.province_id:
+            return obj.province_id.code
+        else:
+            return None
 
     def get_district_code(self, obj):
-        return str(obj.district_id.code)
+        if obj.district_id:
+            return obj.district_id.code
+        else:
+            return None
 
     def get_municipality_code(self, obj):
-        return str(obj.municipality_id.code)
+        if obj.municipality_id:
+            return obj.municipality_id.code
+        else:
+            return None
 
 
 class DryDshosp4hrUncoveredAdm1SumsSerializer(serializers.ModelSerializer):
