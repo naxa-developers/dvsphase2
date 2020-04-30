@@ -10,6 +10,19 @@ class CovidSpecificProgram(models.Model):
                                     null=True, blank=True)
     municipality_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='CvsGapaNapa',
                                         null=True, blank=True)
+    partner = models.CharField(max_length=500, blank=True, null=True)
+    program = models.CharField(max_length=500, blank=True, null=True)
+    component = models.CharField(max_length=500, blank=True, null=True)
+    second_tier_partner = models.CharField(max_length=500, blank=True, null=True)
+    project_status = models.CharField(max_length=500, blank=True, null=True)
+    sector = models.CharField(max_length=500, blank=True, null=True)
+    budget = models.CharField(max_length=500, blank=True, null=True)
+    kathmandu_activity = models.CharField(max_length=500, blank=True, null=True)
+    delivery_in_lockdown = models.CharField(max_length=500, blank=True, null=True)
+    covid_priority_3_12_Months = models.CharField(max_length=500, blank=True, null=True)
+    covid_recovery_priority = models.CharField(max_length=500, blank=True, null=True)
+    providing_ta_to_local_government = models.CharField(max_length=500, blank=True, null=True)
+
 
 
 class CovidFivew(models.Model):
