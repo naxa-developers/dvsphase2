@@ -7,7 +7,7 @@
 
 | Stages | Status |
 | ------ | ------ |
-|  Production | [![CircleCI](https://circleci.com/gh/dfid-dvs/server/tree/master.svg?style=svg)](https://circleci.com/gh/dfid-dvs/server/tree/master) |
+|  Production | [![CircleCI](https://circleci.com/gh/dfid-dvs/server/tree/development.svg?style=svg)](https://circleci.com/gh/dfid-dvs/server/tree/development)
 | Staging  | [![CircleCI](https://circleci.com/gh/naxadeve/dvsphase2/tree/master.svg?style=svg)](https://circleci.com/gh/naxadeve/dvsphase2/tree/master) |
 | Development | [![CircleCI](https://circleci.com/gh/naxadeve/dvsphase2/tree/test-server-setup.svg?style=svg)](https://circleci.com/gh/naxadeve/dvsphase2/tree/test-server-setup)
 
