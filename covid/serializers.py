@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import CovidFivew, DryDshosp4hrSums, DryDshosp4hrUncoveredAdm1Sums, DryDshosp8hrSums, \
     DryDshosp8hrUncoveredAdm1Sums, DryDshosp12hrSums, DryDshosp12hrUncoveredAdm1Sums, DryAllCovidsDhfs4hrSums, \
     DryAllCovidsDhfs4hrUncoveredAdm1Sums, DryAllCovidsDhfs8hrSums, DryAllCovidsDhfs8hrUncoveredAdm1Sums, \
-    DryAllCovidsDhfs12hrSums, DryAllCovidsDhfs12hrUncoveredAdm1Sums
+    DryAllCovidsDhfs12hrSums, DryAllCovidsDhfs12hrUncoveredAdm1Sums, CovidSpecificProgram
 
 
 class CovidFivewSerializer(serializers.ModelSerializer):
@@ -13,7 +13,7 @@ class CovidFivewSerializer(serializers.ModelSerializer):
     class Meta:
         model = CovidFivew
         fields = (
-        'id', 'province_code', 'district_code', 'municipality_code', 'partner', 'program', 'project_name', 'sector')
+            'id', 'province_code', 'district_code', 'municipality_code', 'partner', 'program', 'project_name', 'sector')
 
     def get_province_code(self, obj):
         return str(obj.province_id.code)
@@ -29,6 +29,27 @@ class DryDshosp4hrSumsSerializer(serializers.ModelSerializer):
     class Meta:
         model = DryDshosp4hrSums
         fields = '__all__'
+
+
+class CovidSpecificSerializer(serializers.ModelSerializer):
+    province_code = serializers.SerializerMethodField()
+    district_code = serializers.SerializerMethodField()
+    municipality_code = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CovidSpecificProgram
+        fields = ('id', 'province_code', 'district_code', 'municipality_code', 'component', 'second_tier_partner',
+                  'project_status', 'sector', 'budget', 'kathmandu_activity', 'delivery_in_lockdown',
+                  'covid_priority_3_12_Months', 'covid_recovery_priority', 'providing_ta_to_local_government')
+
+    def get_province_code(self, obj):
+        return str(obj.province_id.code)
+
+    def get_district_code(self, obj):
+        return str(obj.district_id.code)
+
+    def get_municipality_code(self, obj):
+        return str(obj.municipality_id.code)
 
 
 class DryDshosp4hrUncoveredAdm1SumsSerializer(serializers.ModelSerializer):
