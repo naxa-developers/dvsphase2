@@ -36,6 +36,9 @@ class CovidSpecificSerializer(serializers.ModelSerializer):
     district_code = serializers.SerializerMethodField()
     municipality_code = serializers.SerializerMethodField()
 
+    budget = serializers.SerializerMethodField()
+
+
     class Meta:
         model = CovidSpecificProgram
         fields = ('id', 'province_code', 'district_code', 'municipality_code', 'component', 'second_tier_partner',
@@ -44,19 +47,31 @@ class CovidSpecificSerializer(serializers.ModelSerializer):
 
     def get_province_code(self, obj):
         if obj.province_id:
-            return obj.province_id.code
+
+            return str(obj.province_id.code)
+
         else:
             return None
 
     def get_district_code(self, obj):
         if obj.district_id:
-            return obj.district_id.code
+
+            return str(obj.district_id.code)
+
         else:
             return None
 
     def get_municipality_code(self, obj):
         if obj.municipality_id:
-            return obj.municipality_id.code
+
+            return str(obj.municipality_id.code)
+        else:
+            return None
+
+    def get_budget(self, obj):
+        if obj.budget:
+            return int(obj.budget)
+
         else:
             return None
 
