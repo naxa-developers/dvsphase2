@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import CovidFivew, DryDshosp4hrSums, DryDshosp4hrUncoveredAdm1Sums, DryDshosp8hrSums, \
     DryDshosp8hrUncoveredAdm1Sums, DryDshosp12hrSums, DryDshosp12hrUncoveredAdm1Sums, DryAllCovidsDhfs4hrSums, \
     DryAllCovidsDhfs4hrUncoveredAdm1Sums, DryAllCovidsDhfs8hrSums, DryAllCovidsDhfs8hrUncoveredAdm1Sums, \
-    DryAllCovidsDhfs12hrSums, DryAllCovidsDhfs12hrUncoveredAdm1Sums, CovidSpecificProgram
+    DryAllCovidsDhfs12hrSums, DryAllCovidsDhfs12hrUncoveredAdm1Sums, CovidSpecificProgram, CovidSpecificProgramBudget
 
 
 class CovidFivewSerializer(serializers.ModelSerializer):
@@ -66,6 +66,17 @@ class CovidSpecificSerializer(serializers.ModelSerializer):
             return int(obj.budget)
         else:
             return None
+
+
+class CovidSpecificBudgetSerializer(serializers.ModelSerializer):
+    program = CovidSpecificSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = CovidSpecificProgramBudget
+        fields = (
+            'id', 'total_budget', 'unallocated', 'reported', 'difference', 'percentage_reported',
+            'percentage_unreported',
+            'program')
 
 
 class DryDshosp4hrUncoveredAdm1SumsSerializer(serializers.ModelSerializer):
