@@ -3,6 +3,15 @@ from core.models import Province, District, GapaNapa
 
 
 # Create your models here.
+class CovidSpecificProgramBudget(models.Model):
+    total_budget = models.CharField(max_length=500, blank=True, null=True)
+    unallocated = models.CharField(max_length=500, blank=True, null=True)
+    reported = models.CharField(max_length=500, blank=True, null=True)
+    difference = models.CharField(max_length=500, blank=True, null=True)
+    percentage_reported = models.CharField(max_length=500, blank=True, null=True)
+    percentage_unreported = models.CharField(max_length=500, blank=True, null=True)
+
+
 class CovidSpecificProgram(models.Model):
     province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='CvsProvince',
                                     null=True, blank=True)
@@ -22,7 +31,8 @@ class CovidSpecificProgram(models.Model):
     covid_priority_3_12_Months = models.CharField(max_length=500, blank=True, null=True)
     covid_recovery_priority = models.CharField(max_length=500, blank=True, null=True)
     providing_ta_to_local_government = models.CharField(max_length=500, blank=True, null=True)
-
+    summary = models.ForeignKey(CovidSpecificProgramBudget, on_delete=models.CASCADE, related_name='program',
+                                null=True, blank=True)
 
 
 class CovidFivew(models.Model):

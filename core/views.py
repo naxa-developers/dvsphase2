@@ -45,7 +45,7 @@ class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, **kwargs):
         data = []
-        district = District.objects.values('name', 'id', 'n_code').exclude(code=-1).order_by('id')
+        district = District.objects.values('name', 'id', 'n_code', 'code').exclude(code=-1).order_by('id')
         id_indicator = self.kwargs['indicator_id']
         health_id = Indicator.objects.get(indicator='number_hospitals')
         health_id_b = Indicator.objects.get(indicator='household_affected_covid')
@@ -86,7 +86,7 @@ class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
                 {
                     'id': dist['id'],
                     'indicator_id': id_indicator,
-                    'code': dist['n_code'],
+                    'code': dist['code'],
                     'value': value
 
                 }
