@@ -19,8 +19,8 @@ class Command(BaseCommand):
         try:
             indicator_value = [
                 IndicatorValue(
-                    indicator=Indicator.objects.get(indicator=str((df['indicators'][row]).strip())),
-                    gapanapa=GapaNapa.objects.get(hlcit_code=df['hlcit_id'][row]),
+                    indicator_id=Indicator.objects.get(indicator='household_affected_covid'),
+                    gapanapa_id=GapaNapa.objects.get(hlcit_code=df['HLCIT_CODE'][row]),
                     value=float(df['value'][row]),
 
                 ) for row in range(0, upper_range)
@@ -29,12 +29,9 @@ class Command(BaseCommand):
 
             if indicator_data:
                 self.stdout.write('Successfully loaded Indicator Value  ..')
-                # print((df['paulika_name'][row]).capitalize())
-                # a = GapaNapa.objects.get(name=str((df['paulika_name'][row]).capitalize().strip()))
-                # print(a)
-                # print((df['indicators'][row]).strip())
-                # a = Indicator.objects.get(indicator=str((df['indicators'][row]).strip()))
-                # print(a)
+            # for row in range(0, upper_range):
+            #     print(df['HLCIT_CODE'][row])
+            #     GapaNapa.objects.get(hlcit_code=df['HLCIT_CODE'][row])
 
 
         except Exception as e:

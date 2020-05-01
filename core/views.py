@@ -48,13 +48,14 @@ class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
         district = District.objects.values('name', 'id', 'n_code').exclude(code=-1).order_by('id')
         id_indicator = self.kwargs['indicator_id']
         health_id = Indicator.objects.get(indicator='number_hospitals')
+        health_id_b = Indicator.objects.get(indicator='household_affected_covid')
         # print(health_id.id)
         for dist in district:
             indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
                                                       'gapanapa_id__population').filter(
                 indicator_id=id_indicator,
                 gapanapa_id__district_id=dist['id'])
-            if id_indicator != health_id.id:
+            if id_indicator != health_id.id and id_indicator != health_id_b.id:
                 value_sum = 0
                 dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
                     district_id=dist['id']).aggregate(
@@ -105,8 +106,9 @@ class ProvinceIndicator(viewsets.ReadOnlyModelViewSet):
         id_indicator = self.kwargs['indicator_id']
         # print(self.kwargs['indicator_id'])
         health_id = Indicator.objects.get(indicator='number_hospitals')
+        health_id_b = Indicator.objects.get(indicator='household_affected_covid')
         for dist in province:
-            if id_indicator != health_id.id:
+            if id_indicator != health_id.id and id_indicator != health_id_b.id:
                 value_sum = 0
                 dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
                     province_id=dist['id']).aggregate(
