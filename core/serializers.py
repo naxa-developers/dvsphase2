@@ -108,7 +108,8 @@ class IndicatorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Indicator
-        fields = ('id', 'full_title', 'abstract', 'category', 'source', 'federal_level', 'is_covid', 'filter',)
+        fields = ('id', 'full_title', 'abstract', 'category', 'source', 'federal_level', 'is_covid', 'filter', 'unit',
+                  'data_type')
 
 
 class SectorSerializer(serializers.ModelSerializer):
@@ -145,7 +146,7 @@ class DistrictSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = District
-        fields = ('id', 'province_id',  'name', 'code', 'n_code')
+        fields = ('id', 'province_id', 'name', 'code', 'n_code')
 
     # def get_province_name(self, obj):
     #     return str(obj.province_id.name)
