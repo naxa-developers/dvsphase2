@@ -3,9 +3,9 @@ from covid import views
 
 urlpatterns = [
     path('covid-fivew/', views.TtmpViewSet.as_view({'get': 'list'}), name='covid-fivew'),
-    # path('covid-specific-program/', views.CovidSpecific.as_view({'get': 'list'}), name='covid-specific-program'),
-    path('covid-specific-program/', views.CovidSpecificBudget.as_view({'get': 'list'}),
-         name='covid-specific-program'),
+    path('covid-specific-program/', views.CovidSpecific.as_view({'get': 'list'}), name='covid-specific-program'),
+    # path('covid-specific-program/', views.CovidSpecificBudget.as_view({'get': 'list'}),
+    #      name='covid-specific-program'),
 
     path('dry-deshosp-4hr-sums/', views.DryDshosp4hrSumsViewSet.as_view({'get': 'list'}), name='dry-deshosp-4hr-sums'),
     path('dry-deshosp-4hr-uncovered-adm1/', views.DryDshosp4hrUncoveredAdm1SumsViewSet.as_view({'get': 'list'}),
