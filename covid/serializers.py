@@ -45,19 +45,19 @@ class CovidSpecificSerializer(serializers.ModelSerializer):
 
     def get_province_code(self, obj):
         if obj.province_id:
-            return int(obj.province_id.code)
+            return str(obj.province_id.code)
         else:
             return None
 
     def get_district_code(self, obj):
         if obj.district_id:
-            return int(obj.district_id.code)
+            return str(obj.district_id.code)
         else:
             return None
 
     def get_municipality_code(self, obj):
         if obj.municipality_id:
-            return int(obj.municipality_id.code)
+            return str(obj.municipality_id.code)
         else:
             return None
 
