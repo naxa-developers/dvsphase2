@@ -146,7 +146,7 @@ class ProvinceIndicator(viewsets.ReadOnlyModelViewSet):
                 {
                     'id': dist['id'],
                     'indicator_id': id_indicator,
-                    'code': int(dist['code']),
+                    'code': dist['code'],
                     # 'value_sum': value_sum,
                     # 'population': dist_pop_sum['population__sum'],
                     'value': value
@@ -274,7 +274,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
             data.append({
                 'id': dist['id'],
                 'name': dist['name'],
-                'code': dist['n_code'],
+                'code': dist['code'],
                 'allocated_budget': allocated_sum['allocated_budget__sum'],
                 'male_beneficiary': male_beneficiary_sum['male_beneficiary__sum'],
                 'female_beneficiary': female_beneficiary_sum['female_beneficiary__sum'],
@@ -301,7 +301,7 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
             data.append({
                 'id': province['id'],
                 'name': province['name'],
-                'code': province['code'],
+                'code': str(province['code']),
                 'allocated_budget': allocated_sum['allocated_budget__sum'],
                 'male_beneficiary': male_beneficiary_sum['male_beneficiary__sum'],
                 'female_beneficiary': female_beneficiary_sum['female_beneficiary__sum'],
@@ -330,7 +330,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
             data.append({
                 'id': municipality['id'],
                 'name': municipality['name'],
-                'code': municipality['code'],
+                'code': str(municipality['code']),
                 'allocated_budget': allocated_sum['allocated_budget__sum'],
                 'male_beneficiary': male_beneficiary_sum['male_beneficiary__sum'],
                 'female_beneficiary': female_beneficiary_sum['female_beneficiary__sum'],

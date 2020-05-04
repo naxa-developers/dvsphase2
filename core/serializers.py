@@ -154,10 +154,15 @@ class DistrictSerializer(serializers.ModelSerializer):
 
 
 class GaanapaSerializer(serializers.ModelSerializer):
+    code = serializers.SerializerMethodField()
+
     class Meta:
         model = GapaNapa
         fields = ('id', 'province_id', 'district_id', 'hlcit_code', 'name', 'gn_type_np',
                   'code', 'population')
+
+    def get_code(self, obj):
+        return str(obj.code)
 
 
 class FivewSerializer(serializers.ModelSerializer):
@@ -214,7 +219,7 @@ class IndicatorValueSerializer(serializers.ModelSerializer):
         fields = ('id', 'indicator_id', 'code', 'value')
 
     def get_code(self, obj):
-        return int(obj.gapanapa_id.code)
+        return str(obj.gapanapa_id.code)
 
     # def get_indicator_name(self, obj):
     #     return str(obj.indicator_id.indicator)
