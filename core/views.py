@@ -49,48 +49,66 @@ class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
         id_indicator = self.kwargs['indicator_id']
         health_id = Indicator.objects.get(indicator='number_hospitals')
         health_id_b = Indicator.objects.get(indicator='household_affected_covid')
-        # print(health_id.id)
-        for dist in district:
-            indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
-                                                      'gapanapa_id__population').filter(
-                indicator_id=id_indicator,
-                gapanapa_id__district_id=dist['id'])
-            if id_indicator != health_id.id and id_indicator != health_id_b.id:
-                value_sum = 0
-                dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
-                    district_id=dist['id']).aggregate(
-                    Sum('population'))
+        cat_in = Indicator.objects.get(id=id_indicator)
+        if cat_in.category == 'market_situation':
+            indicator_dist = IndicatorValue.objects.values('id', 'indicator_id', 'value',
+                                                           'district_id__code').filter(
+                indicator_id=id_indicator, )
 
-                for ind in indicator:
-                    # print(ind['value'])
-                    # print(math.isnan(ind['value']))
+            for dist_ind in indicator_dist:
+                data.append(
+                    {
+                        'id': dist_ind['id'],
+                        'indicator_id': id_indicator,
+                        'code': dist_ind['district_id__code'],
+                        'value': dist_ind['value']
 
-                    if math.isnan(ind['value']) == False:
-                        indicator_value = (ind['value'] * ind['gapanapa_id__population'])
-                        # print(indicator_value)
-                        value_sum = (value_sum + indicator_value)
-                    else:
-                        value_sum = (value_sum + 0)
-
-                # print(value_sum)
-                # print(dist_pop_sum['population__sum'])
-                value = (value_sum / dist_pop_sum['population__sum'])
-            else:
-                dist_health_num = IndicatorValue.objects.values('id', 'value', 'gapanapa_id').filter(
+                    }
+                )
+            print('market')
+        else:
+            # print(health_id.id)
+            for dist in district:
+                indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
+                                                          'gapanapa_id__population').filter(
                     indicator_id=id_indicator,
-                    gapanapa_id__district_id=dist['id']).aggregate(
-                    Sum('value'))
-                value = dist_health_num['value__sum']
+                    gapanapa_id__district_id=dist['id'])
+                if id_indicator != health_id.id and id_indicator != health_id_b.id:
+                    value_sum = 0
+                    dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
+                        district_id=dist['id']).aggregate(
+                        Sum('population'))
 
-            data.append(
-                {
-                    'id': dist['id'],
-                    'indicator_id': id_indicator,
-                    'code': dist['code'],
-                    'value': value
+                    for ind in indicator:
+                        # print(ind['value'])
+                        # print(math.isnan(ind['value']))
 
-                }
-            )
+                        if math.isnan(ind['value']) == False:
+                            indicator_value = (ind['value'] * ind['gapanapa_id__population'])
+                            # print(indicator_value)
+                            value_sum = (value_sum + indicator_value)
+                        else:
+                            value_sum = (value_sum + 0)
+
+                    # print(value_sum)
+                    # print(dist_pop_sum['population__sum'])
+                    value = (value_sum / dist_pop_sum['population__sum'])
+                else:
+                    dist_health_num = IndicatorValue.objects.values('id', 'value', 'gapanapa_id').filter(
+                        indicator_id=id_indicator,
+                        gapanapa_id__district_id=dist['id']).aggregate(
+                        Sum('value'))
+                    value = dist_health_num['value__sum']
+
+                data.append(
+                    {
+                        'id': dist['id'],
+                        'indicator_id': id_indicator,
+                        'code': dist['code'],
+                        'value': value
+
+                    }
+                )
 
         return Response({"results": data})
 
@@ -476,6 +494,3 @@ class TravelTimeApi(viewsets.ReadOnlyModelViewSet):
     def get_serializer_class(self):
         serializer_class = TravelTimeSerializer
         return serializer_class
-
-
-

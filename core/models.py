@@ -309,6 +309,7 @@ class IndicatorValue(models.Model):
                                      blank=True)
     gapanapa_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='IgapaNapa', null=True, blank=True)
     value = models.FloatField(null=True, blank=True, default=None)
+    district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='Idistrict', null=True, blank=True)
 
     def __str__(self):
         return self.indicator_id
