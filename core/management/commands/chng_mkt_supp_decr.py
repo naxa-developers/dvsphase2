@@ -19,7 +19,7 @@ class Command(BaseCommand):
         try:
             indicator_value = [
                 IndicatorValue(
-                    indicator_id=Indicator.objects.get(indicator='a_insuff_nf'),
+                        indicator_id=Indicator.objects.get(indicator='chng_mkt_supp_decr'),
                     district_id=District.objects.get(code=df['District_ID'][row]),
                     value=float(df['value'][row]),
 

@@ -50,7 +50,7 @@ class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
         health_id = Indicator.objects.get(indicator='number_hospitals')
         health_id_b = Indicator.objects.get(indicator='household_affected_covid')
         cat_in = Indicator.objects.get(id=id_indicator)
-        if cat_in.category == 'market_situation':
+        if cat_in.federal_level == 'district level':
             indicator_dist = IndicatorValue.objects.values('id', 'indicator_id', 'value',
                                                            'district_id__code').filter(
                 indicator_id=id_indicator, )
