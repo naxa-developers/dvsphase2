@@ -23,9 +23,9 @@ urlpatterns = [
     path('travel-time/', views.TravelTimeApi.as_view({'get': 'list'}), name='travel-time'),
     path('notification/', views.NotifyApi.as_view({'get': 'list'}), name='notification'),
     path('map-layer/', views.GisApi.as_view({'get': 'list'}), name='map-layer'),
-    path('district-indicator/<int:indicator_id>/', views.DistrictIndicator.as_view({'get': 'list'}),
+    path('district-indicator/', views.DistrictIndicator.as_view({'get': 'list'}),
          name="district-indicator"),
-    path('province-indicator/<int:indicator_id>/', views.ProvinceIndicator.as_view({'get': 'list'}),
+    path('province-indicator/', views.ProvinceIndicator.as_view({'get': 'list'}),
          name="province-indicator"),
 
 ]
