@@ -223,7 +223,7 @@ class DistrictApi(viewsets.ReadOnlyModelViewSet):
     filterset_fields = ['id', 'province_id']
 
     def get_queryset(self):
-        queryset = District.objects.order_by('id')
+        queryset = District.objects.exclude(code=-1).order_by('id')
         return queryset
 
     def get_serializer_class(self):
@@ -237,7 +237,7 @@ class ProvinceApi(viewsets.ReadOnlyModelViewSet):
     filterset_fields = ['id']
 
     def get_queryset(self):
-        queryset = Province.objects.order_by('id')
+        queryset = Province.objects.exclude(code=-1).order_by('id')
         return queryset
 
     def get_serializer_class(self):
@@ -250,7 +250,7 @@ class GapaNapaApi(viewsets.ReadOnlyModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['id', 'province_id', 'district_id', 'hlcit_code', 'gn_type_en', 'gn_type_np']
     queryset = GapaNapa.objects.only('id', 'province_id', 'district_id', 'hlcit_code', 'name', 'gn_type_np',
-                                     'code', 'population').order_by('id')
+                                     'code', 'population').exclude(code=-1).order_by('id')
     serializer_class = GaanapaSerializer
 
 
