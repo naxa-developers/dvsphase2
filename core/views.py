@@ -44,9 +44,12 @@ class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
     # filterset_fields = ['id']
 
     def list(self, request, **kwargs):
+        """
+            *required= id of indicator as param{indicator_id} send as get request - /district-indicator/?indicator_id={indicator_id}
+            """
         data = []
         district = District.objects.values('name', 'id', 'n_code', 'code').exclude(code=-1).order_by('id')
-        id_indicator = self.kwargs['indicator_id']
+        id_indicator = request.query_params.get('indicator_id')
         health_id = Indicator.objects.get(indicator='number_hospitals')
         health_id_b = Indicator.objects.get(indicator='household_affected_covid')
         cat_in = Indicator.objects.get(id=id_indicator)
@@ -119,9 +122,12 @@ class ProvinceIndicator(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProvinceSerializer
 
     def list(self, request, **kwargs):
+        """
+                    *required= id of indicator as param{indicator_id} send as get request - /province-indicator/?indicator_id={indicator_id}
+                    """
         data = []
         province = Province.objects.values('name', 'id', 'code').exclude(code=-1).order_by('id')
-        id_indicator = self.kwargs['indicator_id']
+        id_indicator = request.query_params.get('indicator_id')
         # print(self.kwargs['indicator_id'])
         health_id = Indicator.objects.get(indicator='number_hospitals')
         health_id_b = Indicator.objects.get(indicator='household_affected_covid')
