@@ -35,7 +35,7 @@ class PartnerView(viewsets.ReadOnlyModelViewSet):
         return serializer_class
 
 
-class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
+class DistrictIndicator(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     queryset = True
     serializer_class = DistrictSerializer
@@ -49,41 +49,105 @@ class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
             """
         data = []
         district = District.objects.values('name', 'id', 'n_code', 'code').exclude(code=-1).order_by('id')
-        id_indicator = request.query_params.get('indicator_id')
+        id_indicator = request.POST.getlist('indicator_id')
         health_id = Indicator.objects.get(indicator='number_hospitals')
         health_id_b = Indicator.objects.get(indicator='household_affected_covid')
-        cat_in = Indicator.objects.get(id=id_indicator)
-        if cat_in.federal_level == 'district level':
-            indicator_dist = IndicatorValue.objects.values('id', 'indicator_id', 'value',
-                                                           'district_id__code').filter(
-                indicator_id=id_indicator, )
+        for i in range(0, len(id_indicator)):
+            cat_in = Indicator.objects.get(id=int(id_indicator[i]))
+            if cat_in.federal_level == 'district level':
+                indicator_dist = IndicatorValue.objects.values('id', 'indicator_id', 'value',
+                                                               'district_id__code').filter(
+                    indicator_id=id_indicator, )
 
-            for dist_ind in indicator_dist:
-                data.append(
-                    {
-                        'id': dist_ind['id'],
-                        'indicator_id': id_indicator,
-                        'code': dist_ind['district_id__code'],
-                        'value': dist_ind['value']
+                for dist_ind in indicator_dist:
+                    data.append(
+                        {
+                            'id': dist_ind['id'],
+                            'indicator_id': int(id_indicator[i]),
+                            'code': dist_ind['district_id__code'],
+                            'value': dist_ind['value']
 
-                    }
-                )
-            print('market')
-        else:
-            # print(health_id.id)
-            for dist in district:
-                indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
-                                                          'gapanapa_id__population').filter(
-                    indicator_id=id_indicator,
-                    gapanapa_id__district_id=dist['id'])
-                if id_indicator != health_id.id and id_indicator != health_id_b.id:
+                        }
+                    )
+                print('market')
+            else:
+                # print(health_id.id)
+                for dist in district:
+                    indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
+                                                              'gapanapa_id__population').filter(
+                        indicator_id=int(id_indicator[i]),
+                        gapanapa_id__district_id=dist['id'])
+                    if int(id_indicator[i]) != health_id.id and int(id_indicator[i]) != health_id_b.id:
+                        value_sum = 0
+                        dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
+                            district_id=dist['id']).aggregate(
+                            Sum('population'))
+
+                        for ind in indicator:
+                            # print(ind['value'])
+                            # print(math.isnan(ind['value']))
+
+                            if math.isnan(ind['value']) == False:
+                                indicator_value = (ind['value'] * ind['gapanapa_id__population'])
+                                # print(indicator_value)
+                                value_sum = (value_sum + indicator_value)
+                            else:
+                                value_sum = (value_sum + 0)
+
+                        # print(value_sum)
+                        # print(dist_pop_sum['population__sum'])
+                        value = (value_sum / dist_pop_sum['population__sum'])
+                    else:
+                        dist_health_num = IndicatorValue.objects.values('id', 'value', 'gapanapa_id').filter(
+                            indicator_id=int(id_indicator[i]),
+                            gapanapa_id__district_id=dist['id']).aggregate(
+                            Sum('value'))
+                        value = dist_health_num['value__sum']
+
+                    data.append(
+                        {
+                            'id': dist['id'],
+                            'indicator_id': int(id_indicator[i]),
+                            'code': dist['code'],
+                            'value': value
+
+                        }
+                    )
+
+        return Response({"results": data})
+
+
+class ProvinceIndicator(viewsets.ModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = True
+    serializer_class = ProvinceSerializer
+
+    def list(self, request, **kwargs):
+        """
+        *required= id of indicator as param{indicator_id} send as get request - /province-indicator/?indicator_id={indicator_id}
+        """
+        data = []
+        total = []
+        province = Province.objects.values('name', 'id', 'code').exclude(code=-1).order_by('id')
+        # id_indicator = request.query_params.get('indicator_id')
+        id_indicator = request.POST.getlist('indicator_id')
+        # print(self.kwargs['indicator_id'])
+        health_id = Indicator.objects.get(indicator='number_hospitals')
+        health_id_b = Indicator.objects.get(indicator='household_affected_covid')
+        for i in range(0, len(id_indicator)):
+            for dist in province:
+                if int(id_indicator[i]) != health_id.id and int(id_indicator[i]) != health_id_b.id:
                     value_sum = 0
                     dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
-                        district_id=dist['id']).aggregate(
+                        province_id=dist['id']).aggregate(
                         Sum('population'))
-
+                    indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
+                                                              'gapanapa_id__population').filter(
+                        indicator_id=int(id_indicator[i]),
+                        gapanapa_id__province_id=dist['id'])
                     for ind in indicator:
                         # print(ind['value'])
+                        # print(dist_pop_sum['population__sum'])
                         # print(math.isnan(ind['value']))
 
                         if math.isnan(ind['value']) == False:
@@ -94,89 +158,29 @@ class DistrictIndicator(viewsets.ReadOnlyModelViewSet):
                             value_sum = (value_sum + 0)
 
                     # print(value_sum)
-                    # print(dist_pop_sum['population__sum'])
+                    # print(dist_pop_sum)
                     value = (value_sum / dist_pop_sum['population__sum'])
+
                 else:
-                    dist_health_num = IndicatorValue.objects.values('id', 'value', 'gapanapa_id').filter(
-                        indicator_id=id_indicator,
-                        gapanapa_id__district_id=dist['id']).aggregate(
+                    prov_health_num = IndicatorValue.objects.values('id', 'indicator_id', 'value',
+                                                                    'gapanapa_id__population').filter(
+                        indicator_id=int(id_indicator[i]),
+                        gapanapa_id__province_id=dist['id']).aggregate(
                         Sum('value'))
-                    value = dist_health_num['value__sum']
+
+                    value = prov_health_num['value__sum']
 
                 data.append(
                     {
                         'id': dist['id'],
-                        'indicator_id': id_indicator,
+                        'indicator_id': int(id_indicator[i]),
                         'code': dist['code'],
+                        # 'value_sum': value_sum,
+                        # 'population': dist_pop_sum['population__sum'],
                         'value': value
 
                     }
                 )
-
-        return Response({"results": data})
-
-
-class ProvinceIndicator(viewsets.ReadOnlyModelViewSet):
-    permission_classes = [AllowAny]
-    queryset = True
-    serializer_class = ProvinceSerializer
-
-    def list(self, request, **kwargs):
-        """
-                    *required= id of indicator as param{indicator_id} send as get request - /province-indicator/?indicator_id={indicator_id}
-                    """
-        data = []
-        province = Province.objects.values('name', 'id', 'code').exclude(code=-1).order_by('id')
-        id_indicator = request.query_params.get('indicator_id')
-        # print(self.kwargs['indicator_id'])
-        health_id = Indicator.objects.get(indicator='number_hospitals')
-        health_id_b = Indicator.objects.get(indicator='household_affected_covid')
-        for dist in province:
-            if id_indicator != health_id.id and id_indicator != health_id_b.id:
-                value_sum = 0
-                dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
-                    province_id=dist['id']).aggregate(
-                    Sum('population'))
-                indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
-                                                          'gapanapa_id__population').filter(
-                    indicator_id=id_indicator,
-                    gapanapa_id__province_id=dist['id'])
-                for ind in indicator:
-                    # print(ind['value'])
-                    # print(dist_pop_sum['population__sum'])
-                    # print(math.isnan(ind['value']))
-
-                    if math.isnan(ind['value']) == False:
-                        indicator_value = (ind['value'] * ind['gapanapa_id__population'])
-                        # print(indicator_value)
-                        value_sum = (value_sum + indicator_value)
-                    else:
-                        value_sum = (value_sum + 0)
-
-                # print(value_sum)
-                # print(dist_pop_sum)
-                value = (value_sum / dist_pop_sum['population__sum'])
-
-            else:
-                prov_health_num = IndicatorValue.objects.values('id', 'indicator_id', 'value',
-                                                                'gapanapa_id__population').filter(
-                    indicator_id=id_indicator,
-                    gapanapa_id__province_id=dist['id']).aggregate(
-                    Sum('value'))
-
-                value = prov_health_num['value__sum']
-
-            data.append(
-                {
-                    'id': dist['id'],
-                    'indicator_id': id_indicator,
-                    'code': dist['code'],
-                    # 'value_sum': value_sum,
-                    # 'population': dist_pop_sum['population__sum'],
-                    'value': value
-
-                }
-            )
 
         return Response({"results": data})
 
@@ -399,7 +403,13 @@ class IndicatorData(viewsets.ReadOnlyModelViewSet):
     filterset_fields = ['id', 'indicator_id', 'gapanapa_id']
 
     def get_queryset(self):
-        queryset = IndicatorValue.objects.select_related('gapanapa_id', 'indicator_id').order_by('id')
+        id_indicator = self.request.POST.getlist('indicator_id')
+        for i in range(0, len(id_indicator)):
+            id_indicator[i] = int(id_indicator[i])
+        queryset = IndicatorValue.objects.filter(indicator_id__in=id_indicator).select_related('gapanapa_id',
+                                                                                               'indicator_id').order_by(
+            'id')
+
         return queryset
 
     def get_serializer_class(self):

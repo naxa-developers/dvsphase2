@@ -14,7 +14,7 @@ urlpatterns = [
     path('fivew-municipality/', views.FiveWMunicipality.as_view({'get': 'list'}), name='fivew-municipality'),
     path('contract-sum/', views.ContractSum.as_view({'get': 'list'}), name='contract-sum'),
     path('indicator-list/', views.IndicatorApi.as_view({'get': 'list'}), name='indicator-list'),
-    path('municipality-indicator/', views.IndicatorData.as_view({'get': 'list'}), name='municipality-indicator'),
+    path('municipality-indicator/', views.IndicatorData.as_view({'post': 'list'}), name='municipality-indicator'),
     path('sector/', views.SectorApi.as_view({'get': 'list'}), name='sector'),
     path('output/', views.OutputApi.as_view({'get': 'list'}), name='output'),
     path('sub-sector/', views.SubsectorApi.as_view({'get': 'list'}), name='sub-sector'),
@@ -23,9 +23,9 @@ urlpatterns = [
     path('travel-time/', views.TravelTimeApi.as_view({'get': 'list'}), name='travel-time'),
     path('notification/', views.NotifyApi.as_view({'get': 'list'}), name='notification'),
     path('map-layer/', views.GisApi.as_view({'get': 'list'}), name='map-layer'),
-    path('district-indicator/', views.DistrictIndicator.as_view({'get': 'list'}),
+    path('district-indicator/', views.DistrictIndicator.as_view({'post': 'list'}),
          name="district-indicator"),
-    path('province-indicator/', views.ProvinceIndicator.as_view({'get': 'list'}),
+    path('province-indicator/', views.ProvinceIndicator.as_view({'post': 'list'}),
          name="province-indicator"),
 
 ]
