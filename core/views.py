@@ -403,7 +403,9 @@ class IndicatorData(viewsets.ReadOnlyModelViewSet):
     filterset_fields = ['id', 'indicator_id', 'gapanapa_id']
 
     def get_queryset(self):
-        id_indicator = self.request.POST.getlist('indicator_id')
+        id_indicators = self.request.data
+        id_indicator = id_indicators['indicator_id']
+
         for i in range(0, len(id_indicator)):
             id_indicator[i] = int(id_indicator[i])
         queryset = IndicatorValue.objects.filter(indicator_id__in=id_indicator).select_related('gapanapa_id',
