@@ -49,7 +49,8 @@ class DistrictIndicator(viewsets.ModelViewSet):
             """
         data = []
         district = District.objects.values('name', 'id', 'n_code', 'code').exclude(code=-1).order_by('id')
-        id_indicator = request.POST.getlist('indicator_id')
+        id_indicators = request.data
+        id_indicator = id_indicators['indicatorId']
         health_id = Indicator.objects.get(indicator='number_hospitals')
         health_id_b = Indicator.objects.get(indicator='household_affected_covid')
         for i in range(0, len(id_indicator)):
@@ -129,9 +130,8 @@ class ProvinceIndicator(viewsets.ModelViewSet):
         data = []
         total = []
         province = Province.objects.values('name', 'id', 'code').exclude(code=-1).order_by('id')
-        # id_indicator = request.query_params.get('indicator_id')
-        id_indicator = request.POST.getlist('indicator_id')
-        # print(self.kwargs['indicator_id'])
+        id_indicators = request.data
+        id_indicator = id_indicators['indicatorId']
         health_id = Indicator.objects.get(indicator='number_hospitals')
         health_id_b = Indicator.objects.get(indicator='household_affected_covid')
         for i in range(0, len(id_indicator)):
@@ -404,7 +404,7 @@ class IndicatorData(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         id_indicators = self.request.data
-        id_indicator = id_indicators['indicator_id']
+        id_indicator = id_indicators['indicatorId']
 
         for i in range(0, len(id_indicator)):
             id_indicator[i] = int(id_indicator[i])
