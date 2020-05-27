@@ -58,7 +58,7 @@ class DistrictIndicator(viewsets.ModelViewSet):
             if cat_in.federal_level == 'district level':
                 indicator_dist = IndicatorValue.objects.values('id', 'indicator_id', 'value',
                                                                'district_id__code').filter(
-                    indicator_id=id_indicator, )
+                    indicator_id=id_indicator[i], )
 
                 for dist_ind in indicator_dist:
                     data.append(
