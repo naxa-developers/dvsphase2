@@ -274,9 +274,10 @@ class FiveW(models.Model):
 
 class Indicator(models.Model):
     fed = (
-        ('palika level', 'Palika Level'),
-        ('district level', 'District Level'),
-        ('province level', 'Province Level'),
+        ('all', 'All'),
+        ('palika', 'Palika Level'),
+        ('district', 'District Level'),
+        ('province', 'Province Level'),
     )
 
     indicator = models.CharField(max_length=100, null=True, blank=True)
@@ -284,7 +285,7 @@ class Indicator(models.Model):
     abstract = models.CharField(max_length=1500, null=True, blank=True)
     category = models.CharField(max_length=500, null=True, blank=True)
     source = models.CharField(max_length=1500, null=True, blank=True)
-    federal_level = models.CharField(max_length=50, choices=fed, default='palika level')
+    federal_level = models.CharField(max_length=50, choices=fed, default='all')
     is_covid = models.BooleanField(default=False)
     show_flag = models.BooleanField(default=False)
     unit = models.CharField(max_length=1500, null=True, blank=True)
