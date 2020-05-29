@@ -55,7 +55,7 @@ class DistrictIndicator(viewsets.ModelViewSet):
         health_id_b = Indicator.objects.get(indicator='household_affected_covid')
         for i in range(0, len(id_indicator)):
             cat_in = Indicator.objects.get(id=int(id_indicator[i]))
-            if cat_in.federal_level == 'district level':
+            if cat_in.federal_level == 'district':
                 indicator_dist = IndicatorValue.objects.values('id', 'indicator_id', 'value',
                                                                'district_id__code').filter(
                     indicator_id=id_indicator[i], )
@@ -474,7 +474,7 @@ class SubsectorApi(viewsets.ReadOnlyModelViewSet):
 class ProjectApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'name', 'program_id']
+    filterset_fields = ['id', 'name', 'program_id', 'marker_value', 'marker_category', 'sector', 'sub_sector']
 
     def get_queryset(self):
         queryset = Project.objects.order_by('id')
@@ -488,7 +488,7 @@ class ProjectApi(viewsets.ReadOnlyModelViewSet):
 class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'marker_value', 'marker_category', 'sector', 'sub_sector']
+    filterset_fields = ['id', 'name', ]
 
     def get_queryset(self):
         queryset = Program.objects.order_by('id')

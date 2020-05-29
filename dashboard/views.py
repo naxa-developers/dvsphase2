@@ -911,15 +911,9 @@ class ProgramCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         data = super(ProgramCreate, self).get_context_data(**kwargs)
-        sectors = Sector.objects.all().prefetch_related('Sector').order_by('id')
-        markers = MarkerCategory.objects.all().prefetch_related('MarkerCategory').order_by('id')
-        partners = Partner.objects.all().order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
-        data['sectors'] = sectors
-        data['markers'] = markers
-        data['partners'] = partners
         data['active'] = 'program'
         return data
 
@@ -1135,6 +1129,10 @@ class ProjectCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['programs'] = Program.objects.order_by('id')
+        sectors = Sector.objects.all().prefetch_related('Sector').order_by('id')
+        markers = MarkerCategory.objects.all().prefetch_related('MarkerCategory').order_by('id')
+        data['sectors'] = sectors
+        data['markers'] = markers
         data['user'] = user_data
         data['active'] = 'project'
         return data
@@ -1419,33 +1417,9 @@ class ProgramUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         data = super(ProgramUpdate, self).get_context_data(**kwargs)
-        sector_list = Program.objects.filter(id=self.kwargs['pk']).values_list('sector', flat=True)
-        marker_list = Program.objects.filter(id=self.kwargs['pk']).values_list('marker_category', flat=True)
-        partner_list = Program.objects.filter(id=self.kwargs['pk']).values_list('partner', flat=True)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
-
-        if (sector_list[0] == None):
-            filter_sector = Sector.objects.order_by('id')
-
-        else:
-            filter_sector = Sector.objects.exclude(id__in=sector_list)
-
-        if (marker_list[0] == None):
-            filter_marker = MarkerCategory.objects.order_by('id')
-        else:
-            filter_marker = MarkerCategory.objects.exclude(id__in=marker_list)
-
-        if (partner_list[0] == None):
-            filter_partners = Partner.objects.order_by('id')
-        else:
-            filter_partners = Partner.objects.exclude(id__in=partner_list)
-
         data['user'] = user_data
-        data['sectors'] = filter_sector
-        data['test'] = sector_list
-        data['markers'] = filter_marker
-        data['partners'] = filter_partners
         data['active'] = 'program'
         return data
 
@@ -1705,6 +1679,25 @@ class ProjectUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['programs'] = Program.objects.order_by('id')
+        sector_list = Project.objects.filter(id=self.kwargs['pk']).values_list('sector', flat=True)
+        marker_list = Project.objects.filter(id=self.kwargs['pk']).values_list('marker_category', flat=True)
+
+        if (sector_list[0] == None):
+            filter_sector = Sector.objects.order_by('id')
+
+        else:
+            filter_sector = Sector.objects.exclude(id__in=sector_list)
+
+        if (marker_list[0] == None):
+            filter_marker = MarkerCategory.objects.order_by('id')
+        else:
+            filter_marker = MarkerCategory.objects.exclude(id__in=marker_list)
+
+
+
+        data['sectors'] = filter_sector
+        data['test'] = sector_list
+        data['markers'] = filter_marker
         data['user'] = user_data
         data['active'] = 'project'
         return data
@@ -1714,8 +1707,9 @@ class ProjectUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         self.object = form.save()
+        user_data = UserProfile.objects.get(user=self.request.user)
         message = "Project " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="update")
+        log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
