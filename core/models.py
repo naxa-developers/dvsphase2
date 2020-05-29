@@ -15,9 +15,6 @@ class Partner(models.Model):
     address = models.CharField(max_length=100, null=True, blank=True)
     email = models.CharField(max_length=100, null=True, blank=True)
     phone_number = models.CharField(max_length=100, null=True, blank=True)
-    # contact_person_name = models.CharField(max_length=100, null=True, blank=True)
-    # contact_person_email = models.CharField(max_length=100, null=True, blank=True)
-    # contact_person_ph = models.CharField(max_length=100, null=True, blank=True)
     image = models.ImageField(upload_to='upload/partner/', null=True, blank=True)
     thumbnail = models.ImageField(upload_to='upload/partner/', editable=False, null=True, blank=True)
     code = models.CharField(max_length=100, null=True, blank=True)
@@ -111,14 +108,14 @@ class Program(models.Model):
 
     name = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(blank=True)
-    sector = models.ManyToManyField(Sector, related_name='Psector', blank=True)
-    sub_sector = models.ManyToManyField(SubSector, related_name='SubSector', blank=True)
-    marker_category = models.ManyToManyField(MarkerCategory, related_name='Pmarkercategory', blank=True)
-    marker_value = models.ManyToManyField(MarkerValues, related_name='MarkerValues', blank=True)
-    partner = models.ManyToManyField(Partner, related_name='Ppartner', blank=True)
     code = models.CharField(max_length=100, blank=True, null=True)
     status = models.CharField(max_length=50, choices=status, default='ongoing')
-    budget = models.CharField(max_length=100, null=True, blank=True)
+    total_budget = models.FloatField(null=True, blank=True)
+    unallocated = models.FloatField(null=True, blank=True)
+    reported = models.FloatField(null=True, blank=True)
+    difference = models.FloatField(null=True, blank=True)
+    reported_percentage = models.FloatField(null=True, blank=True)
+    unreported_percentage = models.FloatField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -191,6 +188,10 @@ class Project(models.Model):
                                    blank=True)
     name = models.CharField(max_length=100, null=True, blank=True)
     code = models.CharField(max_length=100, null=True, blank=True)
+    sector = models.ManyToManyField(Sector, related_name='Psector', blank=True)
+    sub_sector = models.ManyToManyField(SubSector, related_name='SubSector', blank=True)
+    marker_category = models.ManyToManyField(MarkerCategory, related_name='Pmarkercategory', blank=True)
+    marker_value = models.ManyToManyField(MarkerValues, related_name='MarkerValues', blank=True)
 
     def __str__(self):
         return self.name
@@ -200,6 +201,22 @@ class FiveW(models.Model):
     status = (
         ('ongoing', 'Ongoing'),
         ('completed', 'Completed'),
+
+    )
+
+    ktm = (
+        ('Intervention', 'Intervention'),
+        ('Influence', 'Influence'),
+        ('N/A', 'N/A'),
+
+    )
+
+    c_other = (
+        ('NA - Complete', 'NA - Complete'),
+        ('Yes', 'Yes'),
+        ('Partial High', 'Partial High'),
+        ('Partial Low', 'Partial Low'),
+        ('No', 'No'),
 
     )
 
@@ -223,32 +240,6 @@ class FiveW(models.Model):
     ward = models.CharField(max_length=200, null=True, blank=True)
     local_partner = models.CharField(max_length=500, null=True, blank=True)
     project_title = models.CharField(max_length=500, null=True, blank=True)
-    # consortium_partner_first_id = models.ForeignKey(Partner, on_delete=models.CASCADE,
-    #                                                 related_name='ConsortiumPartnerF',
-    #                                                 null=True, blank=True)
-    # consortium_partner_second_id = models.ForeignKey(Partner, on_delete=models.CASCADE,
-    #                                                  related_name='ConsortiumPartnerS',
-    #                                                  null=True, blank=True)
-    # consortium_partner_third_id = models.ForeignKey(Partner, on_delete=models.CASCADE,
-    #                                                 related_name='ConsortiumPartnerT',
-    #                                                 null=True, blank=True)
-    # implementing_partner_first_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='FPartner',
-    #                                                   null=True,
-    #                                                   blank=True)
-    # implementing_partner_second_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='SPartner',
-    #                                                    null=True,
-    #                                                    blank=True)
-    # implementing_partner_third_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='TPartner',
-    #                                                   null=True,
-    #                                                   blank=True)
-    # implementing_partner_fourth_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='FOPartner',
-    #                                                    null=True, blank=True)
-    # local_partner_first_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='LocalPartnerF',
-    #                                            null=True, blank=True)
-    # local_partner_second_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='LocalPartnerS',
-    #                                             null=True, blank=True)
-    # local_partner_third_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='LocalPartnerT',
-    #                                            null=True, blank=True)
     status = models.CharField(max_length=100, choices=status, default='ongoing')
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
@@ -256,17 +247,12 @@ class FiveW(models.Model):
     male_beneficiary = models.IntegerField(null=True, blank=True, default=0)
     female_beneficiary = models.IntegerField(null=True, blank=True, default=0)
     total_beneficiary = models.IntegerField(null=True, blank=True, default=0)
-
-    # reporting_ministry_line = models.CharField(max_length=100, null=True, blank=True)
-
-    # approved_budget = models.FloatField(null=True, blank=True, default=None)
-    # spend_budget = models.FloatField(null=True, blank=True, default=None)
-    # budget_of = models.CharField(max_length=100, choices=admin_level, default='national')
-    # representative_person = models.ForeignKey(PartnerContact, on_delete=models.CASCADE, related_name='PartnerContact',
-    # representative_person = models.ForeignKey(PartnerContact, on_delete=models.CASCADE, related_name='PartnerContact',
-    #                                           null=True,
-    #                                           blank=True)
-    # remarks = models.TextField(blank=True)
+    kathmandu_activity = models.CharField(max_length=500, choices=ktm, blank=True, null=True, default='N/A')
+    delivery_in_lockdown = models.CharField(max_length=500, choices=c_other, blank=True, null=True, default='No')
+    covid_priority_3_12_Months = models.CharField(max_length=500, choices=c_other, blank=True, null=True, default='No')
+    covid_recovery_priority = models.CharField(max_length=500, choices=c_other, blank=True, null=True, default='No')
+    providing_ta_to_local_government = models.CharField(max_length=500, choices=c_other, blank=True, null=True,
+                                                        default='No')
 
     def __str__(self):
         return self.supplier_id.name
@@ -317,7 +303,7 @@ class IndicatorValue(models.Model):
     district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='Idistrict', null=True, blank=True)
 
     def __str__(self):
-        return self.indicator_id
+        return self.indicator_id.indicator
 
 
 class TravelTime(models.Model):
