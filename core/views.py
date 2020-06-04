@@ -294,10 +294,11 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
         data = []
         districts = District.objects.values('name', 'id', 'code', 'n_code').order_by('id')
         for dist in districts:
-            allocated_sum = FiveW.objects.filter(district_id=dist['id']).aggregate(Sum('allocated_budget'))
-            male_beneficiary_sum = FiveW.objects.filter(district_id=dist['id']).aggregate(Sum('male_beneficiary'))
-            female_beneficiary_sum = FiveW.objects.filter(district_id=dist['id']).aggregate(Sum('female_beneficiary'))
-            total_beneficiary_sum = FiveW.objects.filter(district_id=dist['id']).aggregate(Sum('total_beneficiary'))
+            query = FiveW.objects.filter(district_id=dist['id'])
+            allocated_sum = query.aggregate(Sum('allocated_budget'))
+            male_beneficiary_sum = query.aggregate(Sum('male_beneficiary'))
+            female_beneficiary_sum = query.aggregate(Sum('female_beneficiary'))
+            total_beneficiary_sum = query.aggregate(Sum('total_beneficiary'))
 
             data.append({
                 'id': dist['id'],
@@ -320,11 +321,12 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
         data = []
         provinces = Province.objects.values('name', 'id', 'code').order_by('id')
         for province in provinces:
-            allocated_sum = FiveW.objects.filter(province_id=province['id']).aggregate(Sum('allocated_budget'))
-            male_beneficiary_sum = FiveW.objects.filter(province_id=province['id']).aggregate(Sum('male_beneficiary'))
-            female_beneficiary_sum = FiveW.objects.filter(province_id=province['id']).aggregate(
+            query = FiveW.objects.filter(province_id=province['id'])
+            allocated_sum = query.aggregate(Sum('allocated_budget'))
+            male_beneficiary_sum = query.aggregate(Sum('male_beneficiary'))
+            female_beneficiary_sum = query.aggregate(
                 Sum('female_beneficiary'))
-            total_beneficiary_sum = FiveW.objects.filter(province_id=province['id']).aggregate(Sum('total_beneficiary'))
+            total_beneficiary_sum = query.aggregate(Sum('total_beneficiary'))
 
             data.append({
                 'id': province['id'],
@@ -347,13 +349,13 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
         data = []
         municipalities = GapaNapa.objects.values('name', 'id', 'code').order_by('id')
         for municipality in municipalities:
-            allocated_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(Sum('allocated_budget'))
-            male_beneficiary_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(
-                Sum('male_beneficiary'))
-            female_beneficiary_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(
-                Sum('female_beneficiary'))
-            total_beneficiary_sum = FiveW.objects.filter(municipality_id=municipality['id']).aggregate(
-                Sum('total_beneficiary'))
+            query = FiveW.objects.filter(municipality_id=municipality['id'])
+            allocated_sum = query.aggregate(Sum('allocated_budget'))
+            male_beneficiary_sum = query.aggregate(Sum('male_beneficiary'))
+
+            female_beneficiary_sum = query.aggregate(Sum('female_beneficiary'))
+
+            total_beneficiary_sum = query.aggregate(Sum('total_beneficiary'))
 
             data.append({
                 'id': municipality['id'],
@@ -386,7 +388,7 @@ class ContractSum(viewsets.ReadOnlyModelViewSet):
 class IndicatorApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'category', 'indicator', 'is_covid']
+    filterset_fields = ['id', 'category', 'indicator', 'is_covid', 'is_dashboard']
 
     def get_queryset(self):
         queryset = Indicator.objects.exclude(show_flag=False).order_by('id')
