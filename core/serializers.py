@@ -18,11 +18,12 @@ class MarkerCategorySerializer(serializers.ModelSerializer):
 
 class GisLayerSerializer(serializers.ModelSerializer):
     style = serializers.SerializerMethodField()
+    popup_info = serializers.SerializerMethodField()
 
     class Meta:
         model = GisLayer
         fields = ('id', 'name', 'layer_name', 'workspace', 'geoserver_url', 'store_name', 'type',
-                  'category', 'filename', 'description', 'style')
+                  'geo_type', 'identifier_key', 'filename', 'description', 'style', 'popup_info')
 
     def get_style(self, instance):
         styl = []
@@ -30,13 +31,25 @@ class GisLayerSerializer(serializers.ModelSerializer):
         for style in styles:
             styl.append({
                 'id': style.id,
-                'color': style.style,
-                'fillColor': style.field_color,
-                'opacity': style.opacity,
-                'fill_opacity': style.field_opacity,
+                'circle_color': style.circle_color,
+                'fill_color': style.fill_color,
+                'circle_radius': style.circle_radius,
                 'layer': style.layer.id
             })
         return styl
+
+    def get_popup_info(self, instance):
+        pop = []
+        pops = instance.GisPop.all()
+        for p in pops:
+            pop.append({
+                'id': p.id,
+                'key': p.key,
+                'title': p.title,
+                'type': p.type,
+                'layer': p.layer.id
+            })
+        return pop
 
 
 class OutputSerializer(serializers.ModelSerializer):
@@ -85,8 +98,10 @@ class IndicatorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Indicator
-        fields = ('id', 'full_title', 'abstract', 'category', 'source', 'federal_level', 'is_covid', 'filter', 'unit',
-                  'data_type')
+        fields = (
+            'id', 'full_title', 'abstract', 'category', 'source', 'federal_level', 'is_covid', 'is_dashboard', 'filter',
+            'unit',
+            'data_type')
 
 
 class SectorSerializer(serializers.ModelSerializer):
