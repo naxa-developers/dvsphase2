@@ -375,7 +375,6 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
     serializer_class = FivewSerializer
 
     def list(self, request, *args, **kwargs):
-        data = []
         programs = self.request.data
         program_d = programs['programId']
         if len(program_d) == 0:
@@ -388,7 +387,7 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
         component = query.distinct('component_id').count()
         partner = query.distinct('supplier_id').count()
 
-        data.append({
+        return Response({
             'allocated_budget': allocated_sum['allocated_budget__sum'],
             'program': program,
             'partner': partner,
@@ -396,8 +395,6 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
             'sector': 0,
 
         })
-
-        return Response({"results": data})
 
 
 class ContractSum(viewsets.ReadOnlyModelViewSet):
