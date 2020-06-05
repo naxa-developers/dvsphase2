@@ -369,6 +369,37 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
         return Response({"results": data})
 
 
+class SummaryData(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = True
+    serializer_class = FivewSerializer
+
+    def list(self, request, *args, **kwargs):
+        data = []
+        programs = self.request.data
+        program_d = programs['programId']
+        if len(program_d) == 0:
+            program = Program.objects.values_list('id', flat=True).order_by('id')
+        else:
+            program = programs['programId']
+        query = FiveW.objects.filter(program_id__in=program)
+        allocated_sum = query.aggregate(Sum('allocated_budget'))
+        program = query.distinct('program_id').count()
+        component = query.distinct('component_id').count()
+        partner = query.distinct('supplier_id').count()
+
+        data.append({
+            'allocated_budget': allocated_sum['allocated_budget__sum'],
+            'program': program,
+            'partner': partner,
+            'component': component,
+            'sector': 0,
+
+        })
+
+        return Response({"results": data})
+
+
 class ContractSum(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
 
