@@ -293,7 +293,11 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
     def list(self, request, *args, **kwargs):
         data = []
         programs = self.request.data
-        program = programs['programId']
+        program_d = programs['programId']
+        if len(program_d) == 0:
+            program = Program.objects.values_list('id', flat=True).order_by('id')
+        else:
+            program = programs['programId']
         districts = District.objects.values('name', 'id', 'code', 'n_code').exclude(code='-1').order_by('id')
         for dist in districts:
             query = FiveW.objects.filter(district_id=dist['id']).filter(program_id__in=program)
@@ -317,7 +321,11 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
     def list(self, request, *args, **kwargs):
         data = []
         programs = self.request.data
-        program = programs['programId']
+        program_d = programs['programId']
+        if len(program_d) == 0:
+            program = Program.objects.values_list('id', flat=True).order_by('id')
+        else:
+            program = programs['programId']
         provinces = Province.objects.values('name', 'id', 'code').exclude(code='-1').order_by('id')
         for province in provinces:
             query = FiveW.objects.filter(province_id=province['id']).filter(program_id__in=program)
@@ -341,7 +349,11 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
     def list(self, request, *args, **kwargs):
         data = []
         programs = self.request.data
-        program = programs['programId']
+        program_d = programs['programId']
+        if len(program_d) == 0:
+            program = Program.objects.values_list('id', flat=True).order_by('id')
+        else:
+            program = programs['programId']
         municipalities = GapaNapa.objects.values('name', 'id', 'code').exclude(code='-1').order_by('id')
         for municipality in municipalities:
             query = FiveW.objects.filter(municipality_id=municipality['id']).filter(program_id__in=program)
