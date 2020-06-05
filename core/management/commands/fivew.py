@@ -42,8 +42,8 @@ class Command(BaseCommand):
             if five_data:
                 self.stdout.write('Successfully loaded Partner data ..')
             # for row in range(0, upper_range):
-            #     print(df['District ID'][row])
-            #     print(District.objects.get(code=str(int(df['District ID'][row]))))
+            #     print(df['Component Code'][row])
+            #     print(Project.objects.get(code=str(df['Component Code'][row])))
 
 
         except Exception as e:
