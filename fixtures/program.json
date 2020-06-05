@@ -3,427 +3,176 @@
   "model": "core.program",
   "pk": 1,
   "fields": {
-    "name": "Nepal Peace Support Programme",
-    "description": "descriptions",
-    "code": "108538",
-    "status": "completed",
-    "budget": "100",
-    "sector": [
-      3,
-      4
-    ],
-    "sub_sector": [
-      12,
-      13,
-      14,
-      21,
-      22,
-      23
-    ],
-    "marker_category": [
-      1,
-      7
-    ],
-    "marker_value": [
-      1,
-      6
-    ],
-    "partner": [
-      1
-    ]
+    "name": "Evidence for Development",
+    "description": "",
+    "code": "203385",
+    "status": "ongoing",
+    "total_budget": 0.0
   }
 },
 {
   "model": "core.program",
   "pk": 2,
   "fields": {
-    "name": "Samarth-  Nepal Market Development Programme",
+    "name": "Provincial and Local Governance Support Programme",
     "description": "",
-    "code": "201367",
+    "code": "300009",
     "status": "ongoing",
-    "budget": "None",
-    "sector": [
-      1,
-      5
-    ],
-    "sub_sector": [
-      1,
-      30
-    ],
-    "marker_category": [
-      1,
-      3
-    ],
-    "marker_value": [
-      1,
-      2,
-      12,
-      13,
-      14,
-      17
-    ],
-    "partner": []
+    "total_budget": 0.0
+  }
+},
+{
+  "model": "core.program",
+  "pk": 3,
+  "fields": {
+    "name": "Climate Smart Development for Nepal",
+    "description": "",
+    "code": "204984",
+    "status": "ongoing",
+    "total_budget": 0.0
   }
 },
 {
   "model": "core.program",
   "pk": 4,
   "fields": {
-    "name": "Rural Access Programme 12",
+    "name": "Improving Public Financial Management and Accountability in Nepal",
     "description": "",
-    "code": "203186",
+    "code": "300006",
     "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
+    "total_budget": 0.0
   }
 },
 {
   "model": "core.program",
   "pk": 5,
   "fields": {
-    "name": "Rural Water and Sanitation Programme Phase V",
+    "name": "Public Financial Management Multi Donor Trust Fund \u2013 Phase II",
     "description": "",
-    "code": "203187",
+    "code": "300007",
     "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
+    "total_budget": 0.0
   }
 },
 {
   "model": "core.program",
   "pk": 6,
   "fields": {
-    "name": "Integrated Programme for Strengthening Security ...",
+    "name": "Hamro Samman Programme",
     "description": "",
-    "code": "203274",
+    "code": "300607",
     "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
+    "total_budget": 0.0
   }
 },
 {
   "model": "core.program",
   "pk": 7,
   "fields": {
-    "name": "Evidence for Development",
+    "name": "National Health Sector Programme III",
     "description": "",
-    "code": "203385",
+    "code": "205145",
     "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
+    "total_budget": 0.0
   }
 },
 {
   "model": "core.program",
   "pk": 8,
   "fields": {
-    "name": "Access to Finance Programme",
+    "name": "Nepal Family Planning Program (NFPP)",
     "description": "",
-    "code": "203426",
+    "code": "203100",
     "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
+    "total_budget": 0.0
   }
 },
 {
   "model": "core.program",
   "pk": 9,
   "fields": {
-    "name": "Accelerating Investment and Infrastructure in Ne...",
+    "name": "Rural Water and Sanitation Programme Phase V - D...",
     "description": "",
-    "code": "203427",
+    "code": "203187",
     "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
+    "total_budget": 0.0
   }
 },
 {
   "model": "core.program",
   "pk": 10,
   "fields": {
-    "name": "Nepal Local Governance Support Programme",
+    "name": "Social Protection Programme",
     "description": "",
-    "code": "203764",
+    "code": "300743",
     "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
+    "total_budget": 0.0
   }
 },
 {
   "model": "core.program",
   "pk": 11,
   "fields": {
-    "name": "Skills for Employment Programme",
+    "name": "Integrated Programme for Strengthening Security and Justice",
     "description": "",
-    "code": "204857",
+    "code": "203274",
     "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
+    "total_budget": 0.0
   }
 },
 {
   "model": "core.program",
   "pk": 12,
   "fields": {
-    "name": "Climate Smart Development for Nepal",
+    "name": "Nepal Post-Earthquake Reconstruction PRogramme",
     "description": "",
-    "code": "204984",
+    "code": "205138",
     "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
+    "total_budget": 0.0
   }
 },
 {
   "model": "core.program",
   "pk": 13,
   "fields": {
-    "name": "Post-Earthquake Reconstruction in Nepal -  Building",
+    "name": "Seismic Retrofitting of Unsafe Housing",
     "description": "",
-    "code": "205138",
+    "code": "300458",
     "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
+    "total_budget": 0.0
   }
 },
 {
   "model": "core.program",
   "pk": 14,
   "fields": {
-    "name": "Nepal Health Sector  Programme III",
+    "name": "Support to vulnerable households (durable solutions and housing)",
     "description": "",
-    "code": "205145",
+    "code": "300462",
     "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
+    "total_budget": 0.0
   }
 },
 {
   "model": "core.program",
   "pk": 15,
   "fields": {
-    "name": "Strengthening disaster resilience in Nepal",
+    "name": "Sustainable Development Research Network",
     "description": "",
     "code": "300003",
     "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
+    "total_budget": 0.0
   }
 },
 {
   "model": "core.program",
   "pk": 16,
   "fields": {
-    "name": "Support for the Economic Empowerment of Women an...",
+    "name": "Access to Finance",
     "description": "",
-    "code": "300004",
+    "code": "203426",
     "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
-  }
-},
-{
-  "model": "core.program",
-  "pk": 17,
-  "fields": {
-    "name": "Improving Public Financial Management and Accoun...",
-    "description": "",
-    "code": "300006",
-    "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
-  }
-},
-{
-  "model": "core.program",
-  "pk": 18,
-  "fields": {
-    "name": "Public Financial Management Multi Donor Trust Fu...",
-    "description": "",
-    "code": "300007",
-    "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
-  }
-},
-{
-  "model": "core.program",
-  "pk": 19,
-  "fields": {
-    "name": "Risk Management Office (RMO) -  Phase III",
-    "description": "",
-    "code": "300355",
-    "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
-  }
-},
-{
-  "model": "core.program",
-  "pk": 20,
-  "fields": {
-    "name": "Seismic Retrofitting of unsafe housing in Nepal",
-    "description": "",
-    "code": "300458",
-    "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
-  }
-},
-{
-  "model": "core.program",
-  "pk": 21,
-  "fields": {
-    "name": "Support to vulnerable households (durable solutions",
-    "description": "program",
-    "code": "300462",
-    "status": "ongoing",
-    "budget": "None",
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
-  }
-},
-{
-  "model": "core.program",
-  "pk": 22,
-  "fields": {
-    "name": "Hamro Samman Programme -  Countering trafficking",
-    "description": "",
-    "code": "300607",
-    "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [],
-    "partner": []
-  }
-},
-{
-  "model": "core.program",
-  "pk": 23,
-  "fields": {
-    "name": "Project Coordination Units (PCUs)",
-    "description": "",
-    "code": "300715",
-    "status": "ongoing",
-    "budget": null,
-    "sector": [],
-    "sub_sector": [],
-    "marker_category": [],
-    "marker_value": [
-      4,
-      8,
-      11,
-      14,
-      15,
-      20,
-      26
-    ],
-    "partner": []
-  }
-},
-{
-  "model": "core.program",
-  "pk": 31,
-  "fields": {
-    "name": "aaaaaaaaa",
-    "description": "aaaaa",
-    "code": "108538",
-    "status": "ongoing",
-    "budget": "34324",
-    "sector": [
-      1
-    ],
-    "sub_sector": [
-      1
-    ],
-    "marker_category": [
-      1
-    ],
-    "marker_value": [
-      1,
-      2,
-      3,
-      4,
-      5
-    ],
-    "partner": [
-      1,
-      2,
-      31,
-      59
-    ]
+    "total_budget": 0.0
   }
 }
 ]

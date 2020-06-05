@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 import pandas as pd
-from core.models import Partner
+from core.models import Project, Program
 
 
 class Command(BaseCommand):
@@ -17,19 +17,22 @@ class Command(BaseCommand):
         print("Wait Data is being Loaded")
 
         try:
-            part = [
-                Partner(
-                    name=(df['Partner Name'][row]).strip(),
-                    code=df['Partner Code'][row],
+            proj = [
+                Project(
+                    program_id=Program.objects.get(code=df['Program Code'][row]),
+                    name=(df['Component Name'][row]).strip(),
+                    code=df['Component Code'][row],
 
                 ) for row in range(0, upper_range)
             ]
-            partner_data = Partner.objects.bulk_create(part)
+            proj_data = Project.objects.bulk_create(proj)
 
-            if partner_data:
+            if proj_data:
                 self.stdout.write('Successfully loaded Partner data ..')
             # for row in range(0, upper_range):
-            #     print(df['Partner Name'][row])
+            #     print(df['Program Code'][row])
+            #     print(Program.objects.get(code=df['Program Code'][row]))
+
 
         except Exception as e:
             print(e)

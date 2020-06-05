@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 import pandas as pd
-from core.models import Partner
+from core.models import Program
 
 
 class Command(BaseCommand):
@@ -17,16 +17,17 @@ class Command(BaseCommand):
         print("Wait Data is being Loaded")
 
         try:
-            part = [
-                Partner(
-                    name=(df['Partner Name'][row]).strip(),
-                    code=df['Partner Code'][row],
+            prog = [
+                Program(
+                    name=(df['Programme'][row]).strip(),
+                    code=df['Programme Code'][row],
+                    total_budget=df['Total Budget'][row],
 
                 ) for row in range(0, upper_range)
             ]
-            partner_data = Partner.objects.bulk_create(part)
+            prog_data = Program.objects.bulk_create(prog)
 
-            if partner_data:
+            if prog_data:
                 self.stdout.write('Successfully loaded Partner data ..')
             # for row in range(0, upper_range):
             #     print(df['Partner Name'][row])

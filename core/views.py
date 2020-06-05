@@ -292,22 +292,19 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         data = []
-        districts = District.objects.values('name', 'id', 'code', 'n_code').order_by('id')
+        programs = self.request.data
+        program = programs['programId']
+        districts = District.objects.values('name', 'id', 'code', 'n_code').exclude(code='-1').order_by('id')
         for dist in districts:
-            query = FiveW.objects.filter(district_id=dist['id'])
+            query = FiveW.objects.filter(district_id=dist['id']).filter(program_id__in=program)
             allocated_sum = query.aggregate(Sum('allocated_budget'))
-            male_beneficiary_sum = query.aggregate(Sum('male_beneficiary'))
-            female_beneficiary_sum = query.aggregate(Sum('female_beneficiary'))
-            total_beneficiary_sum = query.aggregate(Sum('total_beneficiary'))
 
             data.append({
                 'id': dist['id'],
                 'name': dist['name'],
                 'code': dist['code'],
                 'allocated_budget': allocated_sum['allocated_budget__sum'],
-                'male_beneficiary': male_beneficiary_sum['male_beneficiary__sum'],
-                'female_beneficiary': female_beneficiary_sum['female_beneficiary__sum'],
-                'total_beneficiary': total_beneficiary_sum['total_beneficiary__sum'],
+
             })
         return Response({"results": data})
 
@@ -319,23 +316,19 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         data = []
-        provinces = Province.objects.values('name', 'id', 'code').order_by('id')
+        programs = self.request.data
+        program = programs['programId']
+        provinces = Province.objects.values('name', 'id', 'code').exclude(code='-1').order_by('id')
         for province in provinces:
-            query = FiveW.objects.filter(province_id=province['id'])
+            query = FiveW.objects.filter(province_id=province['id']).filter(program_id__in=program)
             allocated_sum = query.aggregate(Sum('allocated_budget'))
-            male_beneficiary_sum = query.aggregate(Sum('male_beneficiary'))
-            female_beneficiary_sum = query.aggregate(
-                Sum('female_beneficiary'))
-            total_beneficiary_sum = query.aggregate(Sum('total_beneficiary'))
 
             data.append({
                 'id': province['id'],
                 'name': province['name'],
                 'code': str(province['code']),
                 'allocated_budget': allocated_sum['allocated_budget__sum'],
-                'male_beneficiary': male_beneficiary_sum['male_beneficiary__sum'],
-                'female_beneficiary': female_beneficiary_sum['female_beneficiary__sum'],
-                'total_beneficiary': total_beneficiary_sum['total_beneficiary__sum'],
+
             })
         return Response({"results": data})
 
@@ -347,24 +340,19 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         data = []
-        municipalities = GapaNapa.objects.values('name', 'id', 'code').order_by('id')
+        programs = self.request.data
+        program = programs['programId']
+        municipalities = GapaNapa.objects.values('name', 'id', 'code').exclude(code='-1').order_by('id')
         for municipality in municipalities:
-            query = FiveW.objects.filter(municipality_id=municipality['id'])
+            query = FiveW.objects.filter(municipality_id=municipality['id']).filter(program_id__in=program)
             allocated_sum = query.aggregate(Sum('allocated_budget'))
-            male_beneficiary_sum = query.aggregate(Sum('male_beneficiary'))
-
-            female_beneficiary_sum = query.aggregate(Sum('female_beneficiary'))
-
-            total_beneficiary_sum = query.aggregate(Sum('total_beneficiary'))
 
             data.append({
                 'id': municipality['id'],
                 'name': municipality['name'],
                 'code': str(municipality['code']),
                 'allocated_budget': allocated_sum['allocated_budget__sum'],
-                'male_beneficiary': male_beneficiary_sum['male_beneficiary__sum'],
-                'female_beneficiary': female_beneficiary_sum['female_beneficiary__sum'],
-                'total_beneficiary': total_beneficiary_sum['total_beneficiary__sum'],
+
             })
         return Response({"results": data})
 

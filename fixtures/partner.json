@@ -3,52 +3,52 @@
   "model": "core.partner",
   "pk": 1,
   "fields": {
-    "name": "British Red Cross",
-    "description": "",
+    "name": "Adam Smith International Ltd",
+    "description": null,
     "type_of_institution": null,
     "address": null,
     "email": null,
     "phone_number": null,
-    "image": "upload/partner/britishredcross.jpg",
+    "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "10078"
   }
 },
 {
   "model": "core.partner",
   "pk": 2,
   "fields": {
-    "name": "CARE Nepal",
-    "description": "None",
+    "name": "ACTION AGAINST HUNGER UK",
+    "description": null,
     "type_of_institution": null,
-    "address": "None",
-    "email": "None",
-    "phone_number": "None",
-    "image": "upload/partner/minions-wallpaper-hd-1920x1080.jpg",
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "10094"
   }
 },
 {
   "model": "core.partner",
   "pk": 3,
   "fields": {
-    "name": "Catholic Relief Services",
-    "description": "",
+    "name": "BRITISH RED CROSS",
+    "description": null,
     "type_of_institution": null,
     "address": null,
     "email": null,
     "phone_number": null,
-    "image": "upload/partner/catholicreliefservices.jpg",
+    "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "10578"
   }
 },
 {
   "model": "core.partner",
   "pk": 4,
   "fields": {
-    "name": "Crown Agents Limited",
+    "name": "ADAM BURKE",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -56,14 +56,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "10739"
   }
 },
 {
   "model": "core.partner",
   "pk": 5,
   "fields": {
-    "name": "DAI Europe",
+    "name": "Crown Agents Ltd",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -71,44 +71,59 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "11085"
   }
 },
 {
   "model": "core.partner",
   "pk": 6,
   "fields": {
-    "name": "Dolma Foundation",
-    "description": "",
+    "name": "CARE INTERNATIONAL UK",
+    "description": null,
     "type_of_institution": null,
     "address": null,
     "email": null,
     "phone_number": null,
-    "image": "upload/partner/dolmafoundation.png",
+    "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "11144"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 7,
+  "fields": {
+    "name": "CROWN RELOCATIONS UK",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "11508"
   }
 },
 {
   "model": "core.partner",
   "pk": 8,
   "fields": {
-    "name": "ICIMOD",
-    "description": "",
+    "name": "DERMOT SHIELDS & ASSOCIATES",
+    "description": null,
     "type_of_institution": null,
     "address": null,
     "email": null,
     "phone_number": null,
-    "image": "upload/partner/icimod.png",
+    "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "11959"
   }
 },
 {
   "model": "core.partner",
   "pk": 9,
   "fields": {
-    "name": "IMC worldwide",
+    "name": "COFFEY INTERNATIONAL DEVELOPMENT LTD",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -116,14 +131,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "12199"
   }
 },
 {
   "model": "core.partner",
   "pk": 10,
   "fields": {
-    "name": "International Alert",
+    "name": "COFFEY INTERNATIONAL DEVELOPMENT LTD notactive",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -131,14 +146,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "12215"
   }
 },
 {
   "model": "core.partner",
   "pk": 11,
   "fields": {
-    "name": "International Finance Coorporation",
+    "name": "PALLADIUM",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -146,14 +161,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "12847"
   }
 },
 {
   "model": "core.partner",
   "pk": 12,
   "fields": {
-    "name": "International IDEA",
+    "name": "ICF Consulting Services Ltd",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -161,44 +176,44 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "12958"
   }
 },
 {
   "model": "core.partner",
   "pk": 13,
   "fields": {
-    "name": "International Labour Organization (ILO)",
-    "description": "None",
-    "type_of_institution": "None",
-    "address": "None",
-    "email": "None",
-    "phone_number": "None",
+    "name": "GOAL",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": "3344545"
+    "code": "12967"
   }
 },
 {
   "model": "core.partner",
   "pk": 14,
   "fields": {
-    "name": "Louis Berger",
-    "description": "None",
-    "type_of_institution": "None",
-    "address": "None",
-    "email": "None",
-    "phone_number": "None",
-    "image": "upload/partner/bloom-blooming-blossom-462118_weLQNFI.jpg",
-    "thumbnail": "upload/partner/bloom-blooming-blossom-462118_thumb.jpg",
-    "code": "50228"
+    "name": "MARY HOBLEY & ASSOCIATES LTD.",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "12999"
   }
 },
 {
   "model": "core.partner",
   "pk": 15,
   "fields": {
-    "name": "Marie Stopes International",
+    "name": "HTSPE LTD",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -206,14 +221,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "13061"
   }
 },
 {
   "model": "core.partner",
   "pk": 16,
   "fields": {
-    "name": "Mercy Corps Europe",
+    "name": "HOME OFFICE",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -221,14 +236,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "13340"
   }
 },
 {
   "model": "core.partner",
   "pk": 17,
   "fields": {
-    "name": "Mott MacDonald Limited",
+    "name": "HAREWELLE INTERNATIONAL LIMITED",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -236,14 +251,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "13386"
   }
 },
 {
   "model": "core.partner",
   "pk": 18,
   "fields": {
-    "name": "One to Watch",
+    "name": "HLSP LTD",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -251,14 +266,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "13407"
   }
 },
 {
   "model": "core.partner",
   "pk": 19,
   "fields": {
-    "name": "Options Consultancy Services",
+    "name": "IBRD HSBC T",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -266,14 +281,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "13522"
   }
 },
 {
   "model": "core.partner",
   "pk": 20,
   "fields": {
-    "name": "Oxfam GB",
+    "name": "IOD PARC",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -281,14 +296,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "13528"
   }
 },
 {
   "model": "core.partner",
   "pk": 21,
   "fields": {
-    "name": "Oxford Policy Management (OPM)",
+    "name": "IBRD HSBC C/O THE WORLD BANK",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -296,14 +311,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "13536"
   }
 },
 {
   "model": "core.partner",
   "pk": 22,
   "fields": {
-    "name": "Pact",
+    "name": "MOTT MACDONALD LTD",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -311,14 +326,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "14405"
   }
 },
 {
   "model": "core.partner",
   "pk": 23,
   "fields": {
-    "name": "People In Need",
+    "name": "MERCY CORPS EUROPE",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -326,14 +341,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "14809"
   }
 },
 {
   "model": "core.partner",
   "pk": 24,
   "fields": {
-    "name": "Population Service International (PSI",
+    "name": "OXFAM INSTITUTIONAL INCOME ACCOUNT",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -341,14 +356,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "15167"
   }
 },
 {
   "model": "core.partner",
   "pk": 25,
   "fields": {
-    "name": "Practical Action",
+    "name": "FOREIGN AND COMMONWEALTH OFFICE FCO",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -356,14 +371,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "15171"
   }
 },
 {
   "model": "core.partner",
   "pk": 26,
   "fields": {
-    "name": "PwC",
+    "name": "OXFORD POLICY MANAGEMENT",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -371,14 +386,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "15181"
   }
 },
 {
   "model": "core.partner",
   "pk": 27,
   "fields": {
-    "name": "PwC India",
+    "name": "OPTIONS CONSULTANCY SERVICES LIMITED",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -386,14 +401,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "15211"
   }
 },
 {
   "model": "core.partner",
   "pk": 28,
   "fields": {
-    "name": "Save the Children",
+    "name": "PRICEWATERHOUSECOOPERS",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -401,14 +416,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "15396"
   }
 },
 {
   "model": "core.partner",
   "pk": 29,
   "fields": {
-    "name": "South Asian Women Development Forumx",
+    "name": "PICKFORDS LTD",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -416,14 +431,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "15397"
   }
 },
 {
   "model": "core.partner",
   "pk": 30,
   "fields": {
-    "name": "The Asia Foundation",
+    "name": "Population Services International",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -431,14 +446,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "15564"
   }
 },
 {
   "model": "core.partner",
   "pk": 31,
   "fields": {
-    "name": "The Gurkha Welfare Scheme",
+    "name": "PRACTICAL ACTION UK",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -446,14 +461,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "15726"
   }
 },
 {
   "model": "core.partner",
   "pk": 32,
   "fields": {
-    "name": "The Palladium Group",
+    "name": "THE SAVE THE CHILDREN FUND",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -461,14 +476,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "16148"
   }
 },
 {
   "model": "core.partner",
   "pk": 33,
   "fields": {
-    "name": "UNDP",
+    "name": "Social Development Direct Ltd",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -476,14 +491,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "16244"
   }
 },
 {
   "model": "core.partner",
   "pk": 34,
   "fields": {
-    "name": "UNFPA",
+    "name": "GOVERNMENT LEGAL DEPARTMENT",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -491,7 +506,7 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "16756"
   }
 },
 {
@@ -506,12 +521,1752 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "16764"
   }
 },
 {
   "model": "core.partner",
   "pk": 36,
+  "fields": {
+    "name": "THRESHOLDS",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "17014"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 37,
+  "fields": {
+    "name": "UNDP GBP Contributions",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "17225"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 38,
+  "fields": {
+    "name": "VOLUNTARY SERVICE OVERSEAS",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "17268"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 39,
+  "fields": {
+    "name": "Nabil Bank",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "20996"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 40,
+  "fields": {
+    "name": "Jaya Travels & Tours Ltd",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "21003"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 41,
+  "fields": {
+    "name": "Summit Hotel Pvt Ltd",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "21008"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 42,
+  "fields": {
+    "name": "Radisson Hotel",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "21009"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 43,
+  "fields": {
+    "name": "Inland Revenue Office",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "21011"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 44,
+  "fields": {
+    "name": "John Sanday Associates Pvt. Ltd",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "21029"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 45,
+  "fields": {
+    "name": "UKG LEC Staff Provident Fund",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "21055"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 46,
+  "fields": {
+    "name": "Nepal Doorsanchar Co. Ltd.",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "21069"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 47,
+  "fields": {
+    "name": "Colographic Screen Print",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "21073"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 48,
+  "fields": {
+    "name": "Novel International Pvt. Ltd.",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "21074"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 49,
+  "fields": {
+    "name": "Cross Cultural Learning Point",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "21101"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 50,
+  "fields": {
+    "name": "Thompson Nepal Pvt Ltd",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "21156"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 51,
+  "fields": {
+    "name": "R M B Engineers and Builders Pvt Ltd",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "21326"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 52,
+  "fields": {
+    "name": "Secure and Significant Services Pvt",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "21358"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 53,
+  "fields": {
+    "name": "Hotel Himalaya Pvt Ltd",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "21359"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 54,
+  "fields": {
+    "name": "Helvetas Nepal",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "21451"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 55,
+  "fields": {
+    "name": "Overseas Development Institute.",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "29497"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 56,
+  "fields": {
+    "name": "ASIAN DEVELOPMENT.BANK",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "29922"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 57,
+  "fields": {
+    "name": "WFP CONTRIBUTIONS UNIT",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "30544"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 58,
+  "fields": {
+    "name": "Shuva Kantha Sharma",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "30674"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 59,
+  "fields": {
+    "name": "COLIN RISNER",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "30788"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 60,
+  "fields": {
+    "name": "UNFPA",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "31818"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 61,
+  "fields": {
+    "name": "THE INDIAN HOTELS COM. LTD",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "32212"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 62,
+  "fields": {
+    "name": "IOM",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "32355"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 63,
+  "fields": {
+    "name": "SEARCH FOR COMMON GROUND",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "32358"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 64,
+  "fields": {
+    "name": "ERNST & YOUNG PRIVATE LTD",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "32423"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 65,
+  "fields": {
+    "name": "Raju Shahi",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "32470"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 66,
+  "fields": {
+    "name": "Crown Agents Bank",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "33151"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 67,
+  "fields": {
+    "name": "ECORYS UK Ltd.",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "33320"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 68,
+  "fields": {
+    "name": "Rajendra Niraula",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "33731"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 69,
+  "fields": {
+    "name": "Juliet Wattebot O'Brien",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "34049"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 70,
+  "fields": {
+    "name": "Jaya Travels & Tours Pvt Ltd. US$",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "34102"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 71,
+  "fields": {
+    "name": "DHL Express Nepal Pvt Ltd",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "34296"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 72,
+  "fields": {
+    "name": "UNOPS - support for Access Cell unit",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "34766"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 73,
+  "fields": {
+    "name": "RURAL RECONSTRUCTION NEPAL",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "34804"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 74,
+  "fields": {
+    "name": "CARE NEPAL",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "34805"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 75,
+  "fields": {
+    "name": "THE GURKHA WELFARE SCHEME",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "34806"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 76,
+  "fields": {
+    "name": "The World Bank EFO",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "35949"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 77,
+  "fields": {
+    "name": "INTERNATIONAL IDEA",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "36028"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 78,
+  "fields": {
+    "name": "UNDP USD ACCOUNT",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "36382"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 79,
+  "fields": {
+    "name": "Institute for Financial Management and Research",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "37487"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 80,
+  "fields": {
+    "name": "Pradeep Kumar Shrestha",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "37611"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 81,
+  "fields": {
+    "name": "Andy McKay",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "37917"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 82,
+  "fields": {
+    "name": "Basu Dev Neupane",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "38092"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 83,
+  "fields": {
+    "name": "The Asia Foundation GBP",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "38159"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 84,
+  "fields": {
+    "name": "PROF. PAUL JACKSON",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "38165"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 85,
+  "fields": {
+    "name": "INTERNATIONAL ALERT",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "38485"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 86,
+  "fields": {
+    "name": "IMC Worldwide Ltd.",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "39453"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 87,
+  "fields": {
+    "name": "DAI Europe",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "39473"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 88,
+  "fields": {
+    "name": "Catholic Relief Services",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "39474"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 89,
+  "fields": {
+    "name": "Abt Associates",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "39600"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 90,
+  "fields": {
+    "name": "Marie Stopes International MSI",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "39609"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 91,
+  "fields": {
+    "name": "Pact Gloabal UK CIO",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "39805"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 92,
+  "fields": {
+    "name": "PricewaterhouseCoopers Pvt.Ltd",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "40247"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 93,
+  "fields": {
+    "name": "UNOPSHQ",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "40432"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 94,
+  "fields": {
+    "name": "KBR",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "41173"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 95,
+  "fields": {
+    "name": "Bakery Higher Ground",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "41543"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 96,
+  "fields": {
+    "name": "International Labour Organization",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "42394"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 97,
+  "fields": {
+    "name": "Ricardo-AEA Ltd",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "42704"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 98,
+  "fields": {
+    "name": "US Agency for Int'l Dev",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "42896"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 99,
+  "fields": {
+    "name": "IFC",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "43130"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 100,
+  "fields": {
+    "name": "Dr Toran Sharma",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "43158"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 101,
+  "fields": {
+    "name": "Swisscontact",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "43205"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 102,
+  "fields": {
+    "name": "ActionAid International Nepal",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "43270"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 103,
+  "fields": {
+    "name": "People in Need",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "43497"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 104,
+  "fields": {
+    "name": "Government of Nepal Health Sector Programme 2",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "44076"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 105,
+  "fields": {
+    "name": "Government of Nepal LGCDP",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "44081"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 106,
+  "fields": {
+    "name": "Government of Nepal NPTF",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "44082"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 107,
+  "fields": {
+    "name": "Louis Berger Group, Inc",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "44853"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 108,
+  "fields": {
+    "name": "Dev Bir Basnyet",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "45035"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 109,
+  "fields": {
+    "name": "Dolma Foundation",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "45185"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 110,
+  "fields": {
+    "name": "Parshuram Kunwar Chhetri",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "45694"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 111,
+  "fields": {
+    "name": "Van Belle Jean L.R.D.",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "46061"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 112,
+  "fields": {
+    "name": "James Sharrock",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "46128"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 113,
+  "fields": {
+    "name": "Asian Development Bank DFID Grant",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "46345"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 114,
+  "fields": {
+    "name": "ICIMOD1",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "46348"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 115,
+  "fields": {
+    "name": "Deego Pvt Ltd",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "47602"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 116,
+  "fields": {
+    "name": "Ivan Scott",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "47974"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 117,
+  "fields": {
+    "name": "Maili Maya Tamang",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "48190"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 118,
+  "fields": {
+    "name": "Laxman Acharya",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "48354"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 119,
+  "fields": {
+    "name": "Susan Lee",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "48409"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 120,
+  "fields": {
+    "name": "dnata International Private Ltd.",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "48655"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 121,
+  "fields": {
+    "name": "Nepal Consulting Lawyers, Inc",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "48838"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 122,
+  "fields": {
+    "name": "Arjun Bahadur Kumal",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "48930"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 123,
+  "fields": {
+    "name": "N K Sharma & Co",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "49265"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 124,
+  "fields": {
+    "name": "Strategy Dynamics Ltd",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "49565"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 125,
+  "fields": {
+    "name": "Hilton Root",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "50152"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 126,
+  "fields": {
+    "name": "Local Interventions Group",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "50228"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 127,
+  "fields": {
+    "name": "The Outliers Development Services Pvt. Ltd.",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "50546"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 128,
+  "fields": {
+    "name": "Sameer Deep Lepcha",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "50592"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 129,
+  "fields": {
+    "name": "Phanindra Adhikary",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "51328"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 130,
+  "fields": {
+    "name": "Kumar Koirala",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "51345"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 131,
+  "fields": {
+    "name": "EY LLP",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "51448"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 132,
+  "fields": {
+    "name": "Development Gateway, Inc.",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "51460"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 133,
+  "fields": {
+    "name": "hydrophil GmbH",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "51792"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 134,
+  "fields": {
+    "name": "Hiramani Ghimire",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "52378"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 135,
+  "fields": {
+    "name": "UNOPS-HQ",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "52675"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 136,
+  "fields": {
+    "name": "Governance Facility Nepal",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "52862"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 137,
+  "fields": {
+    "name": "Ministry of Federal Affairs and Local Development",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "52875"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 138,
+  "fields": {
+    "name": "Krishna Devkota",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "53798"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 139,
+  "fields": {
+    "name": "The British School, Kathmandu",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "53834"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 140,
+  "fields": {
+    "name": "Saathi",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "54534"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 141,
+  "fields": {
+    "name": "KB Chitracar & Co - USD",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "54701"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 142,
+  "fields": {
+    "name": "Ministry of Women Children and Social Welfare",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "54831"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 143,
+  "fields": {
+    "name": "Duane Clifford-Jones",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "56179"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 144,
+  "fields": {
+    "name": "Mr Kajiman Shrestha/ Mankumari Shrestha",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "56597"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 145,
+  "fields": {
+    "name": "Jacob Rinck Independent Consultant",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "56657"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 146,
+  "fields": {
+    "name": "ANIKA FLETCHER",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "57037"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 147,
+  "fields": {
+    "name": "RADHA VERMA NEPAL",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "57171"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 148,
+  "fields": {
+    "name": "John Cox",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "57456"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 149,
+  "fields": {
+    "name": "DOLMA ADVISORS",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "57734"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 150,
+  "fields": {
+    "name": "PRITI PRAJAPATI",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "58027"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 151,
+  "fields": {
+    "name": "RACHEL MOLES",
+    "description": null,
+    "type_of_institution": null,
+    "address": null,
+    "email": null,
+    "phone_number": null,
+    "image": "",
+    "thumbnail": "",
+    "code": "58384"
+  }
+},
+{
+  "model": "core.partner",
+  "pk": 152,
   "fields": {
     "name": "United Nations Volunteers",
     "description": null,
@@ -521,14 +2276,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "58497"
   }
 },
 {
   "model": "core.partner",
-  "pk": 37,
+  "pk": 153,
   "fields": {
-    "name": "UNOPS",
+    "name": "MAF -Nepal",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -536,14 +2291,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "58515"
   }
 },
 {
   "model": "core.partner",
-  "pk": 38,
+  "pk": 154,
   "fields": {
-    "name": "USAID",
+    "name": "Association of District Development Committees of Nepal ADDCN",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -551,14 +2306,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "60748"
   }
 },
 {
   "model": "core.partner",
-  "pk": 39,
+  "pk": 155,
   "fields": {
-    "name": "VSO",
+    "name": "DAAYITWA",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -566,14 +2321,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "61879"
   }
 },
 {
   "model": "core.partner",
-  "pk": 40,
+  "pk": 156,
   "fields": {
-    "name": "World Bank",
+    "name": "ELIZABETH ANN WALKER - NEPAL",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -581,14 +2336,14 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "63029"
   }
 },
 {
   "model": "core.partner",
-  "pk": 41,
+  "pk": 157,
   "fields": {
-    "name": "World Food Programme",
+    "name": "Geja Wagle",
     "description": null,
     "type_of_institution": null,
     "address": null,
@@ -596,622 +2351,217 @@
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": null
+    "code": "64163"
   }
 },
 {
   "model": "core.partner",
-  "pk": 58,
+  "pk": 158,
   "fields": {
-    "name": "aaaaaaaaa",
-    "description": "sadasd",
-    "type_of_institution": "government",
-    "address": "dasda",
-    "email": "rounnn8@gmail.com",
-    "phone_number": "3243242",
-    "image": "upload/partner/photo-1542836780-7f74748c7562_copy_CPRK9FF.jpeg",
-    "thumbnail": "upload/partner/upload/partner/photo-1542836780-7f74748c7562_copy_CPRK9FF_thumb_xWdNXMl.jpeg",
-    "code": "1111"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 59,
-  "fields": {
-    "name": "test",
-    "description": "sdsad",
-    "type_of_institution": null,
-    "address": "dasda",
-    "email": "rounnn8@gmail.com",
-    "phone_number": "3243242",
-    "image": "upload/partner/image.jpeg",
-    "thumbnail": "upload/partner/image_thumb.jpeg",
-    "code": null
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 60,
-  "fields": {
-    "name": "Global IME Bank",
-    "description": "",
+    "name": "KARMACHARI SANCHAYA KOSH",
+    "description": null,
     "type_of_institution": null,
     "address": null,
     "email": null,
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": "200209"
+    "code": "64429"
   }
 },
 {
   "model": "core.partner",
-  "pk": 61,
+  "pk": 159,
   "fields": {
-    "name": "NMB Bank Ltd",
-    "description": "",
+    "name": "ANJANI PUTRA TRAVELS & TOURS PVT. LTD",
+    "description": null,
     "type_of_institution": null,
     "address": null,
     "email": null,
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": "200235"
+    "code": "65573"
   }
 },
 {
   "model": "core.partner",
-  "pk": 62,
+  "pk": 160,
   "fields": {
-    "name": "Siddhartha Bank Ltd",
-    "description": "",
+    "name": "BIJAY KUMAR SHAHI",
+    "description": null,
     "type_of_institution": null,
     "address": null,
     "email": null,
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": "200244"
+    "code": "65707"
   }
 },
 {
   "model": "core.partner",
-  "pk": 63,
+  "pk": 161,
   "fields": {
-    "name": "Rastriya Banijya Bank",
-    "description": "",
+    "name": "South Asian Women Development Forum",
+    "description": null,
     "type_of_institution": null,
     "address": null,
     "email": null,
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": "200238"
+    "code": "66473"
   }
 },
 {
   "model": "core.partner",
-  "pk": 64,
+  "pk": 162,
   "fields": {
-    "name": "Nepal Investment Bank Limited",
-    "description": "",
+    "name": "United Nation\u2019s Children Fund",
+    "description": null,
     "type_of_institution": null,
     "address": null,
     "email": null,
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": "200230"
+    "code": "66797"
   }
 },
 {
   "model": "core.partner",
-  "pk": 65,
+  "pk": 163,
   "fields": {
-    "name": "Bank of Kathmandu",
-    "description": "",
+    "name": "Adventist Dev & Relief Agency",
+    "description": null,
     "type_of_institution": null,
     "address": null,
     "email": null,
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": "200202"
+    "code": "67093"
   }
 },
 {
   "model": "core.partner",
-  "pk": 66,
+  "pk": 164,
   "fields": {
-    "name": "Mega Bank Ltd",
-    "description": "",
+    "name": "Accelerator Nepal",
+    "description": null,
     "type_of_institution": null,
     "address": null,
     "email": null,
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": "200223"
+    "code": "67283"
   }
 },
 {
   "model": "core.partner",
-  "pk": 67,
+  "pk": 165,
   "fields": {
-    "name": "Nirdhan Utthan Bank Limited",
-    "description": "",
+    "name": "Nepal PFM MDTF",
+    "description": null,
     "type_of_institution": null,
     "address": null,
     "email": null,
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": "200234"
+    "code": "67392"
   }
 },
 {
   "model": "core.partner",
-  "pk": 68,
+  "pk": 166,
   "fields": {
-    "name": "Vijaya Laghubitta Bittiya Sanstha Ltd",
-    "description": "",
+    "name": "NIBHA Consultancy",
+    "description": null,
     "type_of_institution": null,
     "address": null,
     "email": null,
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": "200247"
+    "code": "68297"
   }
 },
 {
   "model": "core.partner",
-  "pk": 69,
+  "pk": 167,
   "fields": {
-    "name": "Kisan Bahuudeshiya Sahakari Sanstha Limited",
-    "description": "",
+    "name": "Naxa Pvt. Ltd.",
+    "description": null,
     "type_of_institution": null,
     "address": null,
     "email": null,
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": "200216"
+    "code": "68491"
   }
 },
 {
   "model": "core.partner",
-  "pk": 70,
+  "pk": 168,
   "fields": {
-    "name": "Laxmi Bank Limited",
-    "description": "",
+    "name": "Tilak Biswakama",
+    "description": null,
     "type_of_institution": null,
     "address": null,
     "email": null,
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": "200218"
+    "code": "69120"
   }
 },
 {
   "model": "core.partner",
-  "pk": 71,
+  "pk": 169,
   "fields": {
-    "name": "Kisan Microfinance Bittiya Sanstha",
-    "description": "",
+    "name": "Young Innovations Pvt Ltd",
+    "description": null,
     "type_of_institution": null,
     "address": null,
     "email": null,
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": "200217"
+    "code": "71262"
   }
 },
 {
   "model": "core.partner",
-  "pk": 72,
+  "pk": 170,
   "fields": {
-    "name": "RMDC",
-    "description": "",
+    "name": "Togglecorp Solutions Pvt Ltd",
+    "description": null,
     "type_of_institution": null,
     "address": null,
     "email": null,
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": "200239"
+    "code": "71296"
   }
 },
 {
   "model": "core.partner",
-  "pk": 73,
+  "pk": 171,
   "fields": {
-    "name": "Sanima Bank Limited",
-    "description": "",
+    "name": "Youth Innovation Lab",
+    "description": null,
     "type_of_institution": null,
     "address": null,
     "email": null,
     "phone_number": null,
     "image": "",
     "thumbnail": "",
-    "code": "200242"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 74,
-  "fields": {
-    "name": "Kanchan Development Bank Limited",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200215"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 75,
-  "fields": {
-    "name": "Machhapuchhre Bank Ltd",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200220"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 76,
-  "fields": {
-    "name": "NMB Microfinance Bittiya Sanstha",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200236"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 77,
-  "fields": {
-    "name": "IME Digital Solution Limited",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200211"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 78,
-  "fields": {
-    "name": "NIC Asia Bank Limited",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200233"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 79,
-  "fields": {
-    "name": "Nepal Insurer's Association",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200229"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 80,
-  "fields": {
-    "name": "Citizens Bank International Limited",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200204"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 81,
-  "fields": {
-    "name": "Sahara Nepal Saving and Credit Cooperative Society Limited",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200240"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 82,
-  "fields": {
-    "name": "Janata Bank Limited",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200213"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 83,
-  "fields": {
-    "name": "Mahila Sahayatra Microfinance Bittiya Sanstha Limited",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200221"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 84,
-  "fields": {
-    "name": "Chhimek Laghubitta Bittiya Sanstha",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200203"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 85,
-  "fields": {
-    "name": "Everest Bank Limited",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200207"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 86,
-  "fields": {
-    "name": "Prabhu Bank Limited",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200237"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 87,
-  "fields": {
-    "name": "D' Rose Technologies Pvt. Ltd.",
-    "description": "",
-    "type_of_institution": "None",
-    "address": "None",
-    "email": "None",
-    "phone_number": "None",
-    "image": "",
-    "thumbnail": "",
-    "code": "200205"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 88,
-  "fields": {
-    "name": "Shikhar Insurance Company Limited",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200243"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 89,
-  "fields": {
-    "name": "Nepal Microfinance Bankers' Association",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200231"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 90,
-  "fields": {
-    "name": "Janautthan Laghubitta Bittiya Sanstha",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200214"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 91,
-  "fields": {
-    "name": "Nerude Laghubitta Bikas Bank Limited",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200232"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 92,
-  "fields": {
-    "name": "Nabil Bank Ltd.",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200225"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 93,
-  "fields": {
-    "name": "Himalayan Bank Limited",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200210"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 94,
-  "fields": {
-    "name": "Nepal Bank Limited",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200226"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 95,
-  "fields": {
-    "name": "Agricultural Development Bank Limited",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200201"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 96,
-  "fields": {
-    "name": "F1Soft International Pvt. Ltd.",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200208"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 97,
-  "fields": {
-    "name": "Stonestep TFD Private Limited",
-    "description": "",
-    "type_of_institution": "None",
-    "address": "None",
-    "email": "None",
-    "phone_number": "None",
-    "image": "",
-    "thumbnail": "",
-    "code": "200245"
-  }
-},
-{
-  "model": "core.partner",
-  "pk": 98,
-  "fields": {
-    "name": "Sana Kisan Bikas Laghubitta Bittiyasanstha Ltd",
-    "description": "",
-    "type_of_institution": null,
-    "address": null,
-    "email": null,
-    "phone_number": null,
-    "image": "",
-    "thumbnail": "",
-    "code": "200241"
+    "code": "71789"
   }
 }
 ]
