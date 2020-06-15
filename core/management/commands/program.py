@@ -19,7 +19,7 @@ class Command(BaseCommand):
         try:
             prog = [
                 Program(
-                    name=(df['Programme'][row]).strip(),
+                    name=(df['Programme'][row]),
                     code=df['Programme Code'][row],
                     total_budget=df['Total Budget'][row],
 

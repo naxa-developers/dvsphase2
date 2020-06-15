@@ -504,7 +504,7 @@ class SubsectorApi(viewsets.ReadOnlyModelViewSet):
 class ProjectApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'name', 'program_id', 'marker_value', 'marker_category', 'sector', 'sub_sector']
+    filterset_fields = ['id', 'name', 'program_id', 'sector', 'sub_sector']
 
     def get_queryset(self):
         queryset = Project.objects.order_by('id')
@@ -518,7 +518,7 @@ class ProjectApi(viewsets.ReadOnlyModelViewSet):
 class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'name', ]
+    filterset_fields = ['id', 'name', 'marker_value', 'marker_category', ]
 
     def get_queryset(self):
         queryset = Program.objects.order_by('id')

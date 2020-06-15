@@ -1,0 +1,2134 @@
+[
+{
+  "model": "core.project",
+  "pk": 1,
+  "fields": {
+    "program_id": 1,
+    "name": "Family Planning Project - Design cost",
+    "code": "203100-101",
+    "sector": [
+      1
+    ],
+    "sub_sector": [
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 2,
+  "fields": {
+    "program_id": 1,
+    "name": "Family Planning Project - Implementation Cost",
+    "code": "203100-102",
+    "sector": [
+      1
+    ],
+    "sub_sector": [
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 3,
+  "fields": {
+    "program_id": 1,
+    "name": "Family Planning Project - Monitoring and Evaluation",
+    "code": "203100-103",
+    "sector": [
+      1
+    ],
+    "sub_sector": [
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 4,
+  "fields": {
+    "program_id": 1,
+    "name": "Family Planning Project - Financial Assistance",
+    "code": "203100-104",
+    "sector": [
+      1
+    ],
+    "sub_sector": [
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 5,
+  "fields": {
+    "program_id": 1,
+    "name": "Family Planning Project - UNFPA Implementation",
+    "code": "203100-105",
+    "sector": [
+      1
+    ],
+    "sub_sector": [
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 6,
+  "fields": {
+    "program_id": 1,
+    "name": "Family Planning Project - MSI Implementation",
+    "code": "203100-106",
+    "sector": [
+      1
+    ],
+    "sub_sector": [
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 7,
+  "fields": {
+    "program_id": 2,
+    "name": "Rural Access Programme 3 - Design",
+    "code": "203186-101",
+    "sector": [
+      2,
+      3,
+      4
+    ],
+    "sub_sector": [
+      3,
+      4,
+      5
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 8,
+  "fields": {
+    "program_id": 2,
+    "name": "Rural Access Programme 3 - Road Construction, Management",
+    "code": "203186-102",
+    "sector": [
+      2,
+      3,
+      4
+    ],
+    "sub_sector": [
+      3,
+      4,
+      6
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 9,
+  "fields": {
+    "program_id": 2,
+    "name": "Rural Access Programme 3 - Technical Assistance",
+    "code": "203186-103",
+    "sector": [
+      2,
+      3,
+      4
+    ],
+    "sub_sector": [
+      3,
+      4,
+      5
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 10,
+  "fields": {
+    "program_id": 2,
+    "name": "Monitoring Evaluation and Learning",
+    "code": "203186-104",
+    "sector": [
+      2,
+      3,
+      4
+    ],
+    "sub_sector": [
+      3,
+      4,
+      5
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 11,
+  "fields": {
+    "program_id": 2,
+    "name": "Technical Support to Karnali Employment Programme",
+    "code": "203186-105",
+    "sector": [
+      4
+    ],
+    "sub_sector": [
+      5,
+      7
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 12,
+  "fields": {
+    "program_id": 2,
+    "name": "Technical Assistance support",
+    "code": "203186-106",
+    "sector": [
+      2,
+      4
+    ],
+    "sub_sector": [
+      3,
+      6
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 13,
+  "fields": {
+    "program_id": 2,
+    "name": "Rural Access Programme - Climate Change and Envi...",
+    "code": "203186-107",
+    "sector": [
+      5
+    ],
+    "sub_sector": [
+      8
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 14,
+  "fields": {
+    "program_id": 2,
+    "name": "RAP3 Mugu Humla Link Road - ICF Capital",
+    "code": "203186-108",
+    "sector": [
+      2,
+      5
+    ],
+    "sub_sector": [
+      3,
+      9
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 15,
+  "fields": {
+    "program_id": 2,
+    "name": "RAP3 Mugu Humla Link Road - Non ICF Capital",
+    "code": "203186-109",
+    "sector": [
+      2,
+      5
+    ],
+    "sub_sector": [
+      3,
+      9
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 16,
+  "fields": {
+    "program_id": 2,
+    "name": "Rural Access Programme 3 - Road Consturction, Management",
+    "code": "203186-110",
+    "sector": [
+      2,
+      3,
+      4
+    ],
+    "sub_sector": [
+      3,
+      4,
+      6
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 17,
+  "fields": {
+    "program_id": 2,
+    "name": "RAP3 Mugu Humla Link Road - Technical Assistance",
+    "code": "203186-111",
+    "sector": [
+      2,
+      5
+    ],
+    "sub_sector": [
+      3,
+      9
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 18,
+  "fields": {
+    "program_id": 3,
+    "name": "Rural Water and Sanitation Programme Phase V - D...",
+    "code": "203187-102",
+    "sector": [
+      6
+    ],
+    "sub_sector": [
+      10,
+      11
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 19,
+  "fields": {
+    "program_id": 3,
+    "name": "Rural Water and Sanitation Programme Phase V - I...",
+    "code": "203187-103",
+    "sector": [
+      6
+    ],
+    "sub_sector": [
+      10,
+      11
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 20,
+  "fields": {
+    "program_id": 3,
+    "name": "Rural Water and Sanitation Programme - Evaluatio...",
+    "code": "203187-104",
+    "sector": [
+      6
+    ],
+    "sub_sector": [
+      10,
+      11
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 21,
+  "fields": {
+    "program_id": 4,
+    "name": "Security and Justice Programme Design",
+    "code": "203274-101",
+    "sector": [
+      7,
+      4
+    ],
+    "sub_sector": [
+      5,
+      12,
+      13,
+      14
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 22,
+  "fields": {
+    "program_id": 4,
+    "name": "Support through Search for Common Ground to help tackle social barriers to access to justice",
+    "code": "203274-102",
+    "sector": [
+      7,
+      4
+    ],
+    "sub_sector": [
+      6,
+      12,
+      13,
+      14,
+      15
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 23,
+  "fields": {
+    "program_id": 4,
+    "name": "Monitoring, Evaluation and Learning",
+    "code": "203274-104",
+    "sector": [
+      7,
+      4
+    ],
+    "sub_sector": [
+      6,
+      13,
+      14,
+      15
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 24,
+  "fields": {
+    "program_id": 4,
+    "name": "Financial Aid to Ministry of Women, Children and Social Welfare",
+    "code": "203274-105",
+    "sector": [
+      7,
+      4
+    ],
+    "sub_sector": [
+      6,
+      14,
+      15
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 25,
+  "fields": {
+    "program_id": 4,
+    "name": "Support through UNOPS for Nepal Police and related Justice Services",
+    "code": "203274-106",
+    "sector": [
+      7,
+      4
+    ],
+    "sub_sector": [
+      6,
+      13,
+      14,
+      15
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 26,
+  "fields": {
+    "program_id": 4,
+    "name": "Support through Asian Development Bank to Police Services for Women and Children",
+    "code": "203274-107",
+    "sector": [
+      7,
+      4
+    ],
+    "sub_sector": [
+      6,
+      13,
+      14,
+      15
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 27,
+  "fields": {
+    "program_id": 4,
+    "name": "Support through Governance Facility to Civil Societies for Access to Justice",
+    "code": "203274-108",
+    "sector": [
+      7,
+      4
+    ],
+    "sub_sector": [
+      6,
+      13,
+      14,
+      15
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 28,
+  "fields": {
+    "program_id": 4,
+    "name": "Modernization and Improvement of Policing Project",
+    "code": "203274-109",
+    "sector": [
+      7,
+      4
+    ],
+    "sub_sector": [
+      6,
+      13,
+      14,
+      15
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 29,
+  "fields": {
+    "program_id": 4,
+    "name": "Support through UNICEF for Technical Assistance to Ministry of Women, Children and Social Welfare",
+    "code": "203274-110",
+    "sector": [
+      7,
+      4
+    ],
+    "sub_sector": [
+      6,
+      13,
+      14,
+      15
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 30,
+  "fields": {
+    "program_id": 4,
+    "name": "Emergency Assistance to Nepal Police",
+    "code": "203274-111",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      16
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 31,
+  "fields": {
+    "program_id": 4,
+    "name": "Technical Assistance (Programme Co-ordinator's ...",
+    "code": "203274-112",
+    "sector": [
+      7,
+      4
+    ],
+    "sub_sector": [
+      5,
+      12,
+      13,
+      14
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 32,
+  "fields": {
+    "program_id": 4,
+    "name": "Strengthening Access to Fair and Equitable Justice project",
+    "code": "203274-113",
+    "sector": [
+      7
+    ],
+    "sub_sector": [
+      13,
+      14,
+      17
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 33,
+  "fields": {
+    "program_id": 4,
+    "name": "Ending Violence against women and Girls",
+    "code": "203274-114",
+    "sector": [
+      7,
+      4
+    ],
+    "sub_sector": [
+      6,
+      12,
+      13,
+      14,
+      15
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 34,
+  "fields": {
+    "program_id": 5,
+    "name": "Evidence for Development",
+    "code": "203385-101",
+    "sector": [
+      7,
+      9
+    ],
+    "sub_sector": [
+      18,
+      19,
+      20,
+      21
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 35,
+  "fields": {
+    "program_id": 5,
+    "name": "Evidence for Development - Improving systems and...",
+    "code": "203385-102",
+    "sector": [
+      7,
+      9
+    ],
+    "sub_sector": [
+      18,
+      19,
+      20,
+      21
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 36,
+  "fields": {
+    "program_id": 5,
+    "name": "Evidence for Development - Assessing Government ...",
+    "code": "203385-103",
+    "sector": [
+      7,
+      9
+    ],
+    "sub_sector": [
+      18,
+      19,
+      20,
+      21
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 37,
+  "fields": {
+    "program_id": 5,
+    "name": "Portfolio MEL",
+    "code": "203385-104",
+    "sector": [
+      7,
+      9
+    ],
+    "sub_sector": [
+      18,
+      22
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 38,
+  "fields": {
+    "program_id": 5,
+    "name": "Census Support",
+    "code": "203385-105",
+    "sector": [
+      7,
+      1
+    ],
+    "sub_sector": [
+      20,
+      23
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 39,
+  "fields": {
+    "program_id": 6,
+    "name": "Access to Finance Programme - Design",
+    "code": "203426-101",
+    "sector": [
+      2,
+      3
+    ],
+    "sub_sector": [
+      24,
+      25,
+      26,
+      27
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 40,
+  "fields": {
+    "program_id": 6,
+    "name": "Access to Finance for the Poor Programme",
+    "code": "203426-102",
+    "sector": [
+      2,
+      3
+    ],
+    "sub_sector": [
+      24,
+      25,
+      26,
+      27,
+      28,
+      29
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 41,
+  "fields": {
+    "program_id": 6,
+    "name": "Access to Finance- Procurement of Services",
+    "code": "203426-103",
+    "sector": [
+      2,
+      3
+    ],
+    "sub_sector": [
+      24,
+      25,
+      26,
+      27,
+      28
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 42,
+  "fields": {
+    "program_id": 6,
+    "name": "Sustainable Access to Finance and Livelihoods in...",
+    "code": "203426-104",
+    "sector": [
+      2
+    ],
+    "sub_sector": [
+      25,
+      26,
+      28
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 43,
+  "fields": {
+    "program_id": 6,
+    "name": "Support a comprehensive Financial Survey in Nepa...",
+    "code": "203426-105",
+    "sector": [
+      2
+    ],
+    "sub_sector": [
+      25,
+      26
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 44,
+  "fields": {
+    "program_id": 6,
+    "name": "Promoting Investment in the Renewal Energy Secto...",
+    "code": "203426-107",
+    "sector": [
+      2
+    ],
+    "sub_sector": [
+      26,
+      28,
+      30
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 45,
+  "fields": {
+    "program_id": 6,
+    "name": "Strategic Review on the Women's Development Prog...",
+    "code": "203426-108",
+    "sector": [
+      2
+    ],
+    "sub_sector": [
+      26,
+      28,
+      30
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 46,
+  "fields": {
+    "program_id": 6,
+    "name": "Procurement of IT System for Nepal Central Bank",
+    "code": "203426-109",
+    "sector": [
+      2,
+      3
+    ],
+    "sub_sector": [
+      24,
+      25,
+      26,
+      27,
+      28,
+      29
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 47,
+  "fields": {
+    "program_id": 6,
+    "name": "Support to Small and Medium Enterprises (SMEs) D...",
+    "code": "203426-110",
+    "sector": [
+      3
+    ],
+    "sub_sector": [
+      27
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 48,
+  "fields": {
+    "program_id": 6,
+    "name": "Supporting Small and Medium Enterprises to Acces...",
+    "code": "203426-111",
+    "sector": [
+      2,
+      3
+    ],
+    "sub_sector": [
+      26,
+      27
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 49,
+  "fields": {
+    "program_id": 7,
+    "name": "Accelerating Investment and Infrastructure in Ne...",
+    "code": "203427-101",
+    "sector": [
+      2,
+      7
+    ],
+    "sub_sector": [
+      18,
+      24,
+      29,
+      31,
+      32
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 50,
+  "fields": {
+    "program_id": 7,
+    "name": "Accelerating Private and Public Investment in In...",
+    "code": "203427-102",
+    "sector": [
+      2
+    ],
+    "sub_sector": [
+      31,
+      32
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 51,
+  "fields": {
+    "program_id": 7,
+    "name": "Financial Sector Stability Project",
+    "code": "203427-103",
+    "sector": [
+      2
+    ],
+    "sub_sector": [
+      24,
+      29
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 52,
+  "fields": {
+    "program_id": 7,
+    "name": "Independent Evaluation",
+    "code": "203427-104",
+    "sector": [
+      9
+    ],
+    "sub_sector": [
+      33,
+      34
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 53,
+  "fields": {
+    "program_id": 7,
+    "name": "Economic Policy Reform Initiative",
+    "code": "203427-105",
+    "sector": [
+      7
+    ],
+    "sub_sector": [
+      18
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 54,
+  "fields": {
+    "program_id": 7,
+    "name": "Support to Nepal Inclusive Growth Programme Exte...",
+    "code": "203427-106",
+    "sector": [
+      7
+    ],
+    "sub_sector": [
+      18
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 55,
+  "fields": {
+    "program_id": 7,
+    "name": "Macro Economic Reform Programme II",
+    "code": "203427-107",
+    "sector": [
+      2
+    ],
+    "sub_sector": [
+      24,
+      31
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 56,
+  "fields": {
+    "program_id": 7,
+    "name": "Financial Sector Stability Project - Capital Exp...",
+    "code": "203427-108",
+    "sector": [
+      2
+    ],
+    "sub_sector": [
+      24,
+      29
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 57,
+  "fields": {
+    "program_id": 7,
+    "name": "Accelerating Private and Public Investment in In...",
+    "code": "203427-109",
+    "sector": [
+      2
+    ],
+    "sub_sector": [
+      31,
+      32
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 58,
+  "fields": {
+    "program_id": 7,
+    "name": "Accelerating Private and Public Investment in In...",
+    "code": "203427-110",
+    "sector": [
+      2
+    ],
+    "sub_sector": [
+      31,
+      32
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 59,
+  "fields": {
+    "program_id": 7,
+    "name": "Technical Assistance on Urban Development",
+    "code": "203427-112",
+    "sector": [
+      2
+    ],
+    "sub_sector": [
+      31,
+      32
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 60,
+  "fields": {
+    "program_id": 8,
+    "name": "Provide Technical Assistance for Govenrment of N...",
+    "code": "204857-102",
+    "sector": [
+      10
+    ],
+    "sub_sector": [
+      35
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 61,
+  "fields": {
+    "program_id": 8,
+    "name": "Support Skills for Reconstruction",
+    "code": "204857-103",
+    "sector": [
+      10,
+      3
+    ],
+    "sub_sector": [
+      27,
+      35
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 62,
+  "fields": {
+    "program_id": 8,
+    "name": "Supply Chain Strengthening of construction Mater...",
+    "code": "204857-104",
+    "sector": [
+      3
+    ],
+    "sub_sector": [
+      27
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 63,
+  "fields": {
+    "program_id": 8,
+    "name": "Study on Nepal Migration and Remittance",
+    "code": "204857-105",
+    "sector": [
+      9
+    ],
+    "sub_sector": [
+      33
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 64,
+  "fields": {
+    "program_id": 8,
+    "name": "Skills for Employment Programme Implementation",
+    "code": "204857-106",
+    "sector": [
+      10,
+      2,
+      3
+    ],
+    "sub_sector": [
+      25,
+      27,
+      35,
+      36
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 65,
+  "fields": {
+    "program_id": 8,
+    "name": "Technical Assistance to Skills for Employment Pr...",
+    "code": "204857-107",
+    "sector": [
+      11,
+      4
+    ],
+    "sub_sector": [
+      7,
+      37
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 66,
+  "fields": {
+    "program_id": 9,
+    "name": "Design and piloting of Local Adaptation Plan of ...",
+    "code": "204984-101",
+    "sector": [
+      5
+    ],
+    "sub_sector": [
+      38,
+      39
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 67,
+  "fields": {
+    "program_id": 9,
+    "name": "Clean Bricks Initiative. This component will pr...",
+    "code": "204984-104",
+    "sector": [
+      5
+    ],
+    "sub_sector": [
+      39
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 68,
+  "fields": {
+    "program_id": 9,
+    "name": "Local Adaptation Plans of Action technical assis...",
+    "code": "204984-105",
+    "sector": [
+      5
+    ],
+    "sub_sector": [
+      38
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 69,
+  "fields": {
+    "program_id": 9,
+    "name": "Monitoring, Evaluation and Learning Unit (MEL). ...",
+    "code": "204984-106",
+    "sector": [
+      5
+    ],
+    "sub_sector": [
+      38,
+      39
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 70,
+  "fields": {
+    "program_id": 9,
+    "name": "NCCSP transition through UNDP.It enables to smoo...",
+    "code": "204984-107",
+    "sector": [
+      5
+    ],
+    "sub_sector": [
+      38
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 71,
+  "fields": {
+    "program_id": 9,
+    "name": "Nepal renewable energy programme. This componen...",
+    "code": "204984-108",
+    "sector": [
+      5
+    ],
+    "sub_sector": [
+      39
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 72,
+  "fields": {
+    "program_id": 9,
+    "name": "Policy and Institutions Facility (PIF). This com...",
+    "code": "204984-109",
+    "sector": [
+      5
+    ],
+    "sub_sector": [
+      38,
+      39
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 73,
+  "fields": {
+    "program_id": 9,
+    "name": "Climate change adaptation policy work, audits an...",
+    "code": "204984-110",
+    "sector": [
+      5
+    ],
+    "sub_sector": [
+      38,
+      39
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 74,
+  "fields": {
+    "program_id": 9,
+    "name": "Renewable energy policy work and donor coordinat...",
+    "code": "204984-111",
+    "sector": [
+      5
+    ],
+    "sub_sector": [
+      38
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 75,
+  "fields": {
+    "program_id": 9,
+    "name": "NCCSP transition through UNDP.It enables to smoo...",
+    "code": "204984-112",
+    "sector": [
+      5
+    ],
+    "sub_sector": [
+      38
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 76,
+  "fields": {
+    "program_id": 10,
+    "name": "Post Earthquake Reconstruction Program - design ...",
+    "code": "205138-101",
+    "sector": [
+      4
+    ],
+    "sub_sector": [
+      6
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 77,
+  "fields": {
+    "program_id": 10,
+    "name": "Reconstruction - Infrasturcture Investment (clim...",
+    "code": "205138-102",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      40
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 78,
+  "fields": {
+    "program_id": 10,
+    "name": "Reconstruction - Infrasturcture Investment (climate resilient), via Mott Macdonald Ltd",
+    "code": "205138-102/8/10",
+    "sector": [],
+    "sub_sector": []
+  }
+},
+{
+  "model": "core.project",
+  "pk": 79,
+  "fields": {
+    "program_id": 10,
+    "name": "Programme Operations and Technical Assistance to...",
+    "code": "205138-103",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      40
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 80,
+  "fields": {
+    "program_id": 10,
+    "name": "Water and Sanitation reconstruction",
+    "code": "205138-104",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      40
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 81,
+  "fields": {
+    "program_id": 10,
+    "name": "Reconstruction Common Feedback Project",
+    "code": "205138-105",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      40
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 82,
+  "fields": {
+    "program_id": 10,
+    "name": "Reconstruction Field Office and monitoring",
+    "code": "205138-106",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      40
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 83,
+  "fields": {
+    "program_id": 10,
+    "name": "Quick-Win Rural Trails and Trail Bridges upgradi...",
+    "code": "205138-107",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      40
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 84,
+  "fields": {
+    "program_id": 10,
+    "name": "Reconstruction Technical Assistance, via Mott Ma...",
+    "code": "205138-108",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      40
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 85,
+  "fields": {
+    "program_id": 10,
+    "name": "Housing coordination (HRRP) and other reconstruction support",
+    "code": "205138-109",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      40
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 86,
+  "fields": {
+    "program_id": 10,
+    "name": "Reconstruction Infrasturcture Investment (Capita...",
+    "code": "205138-110",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      40
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 87,
+  "fields": {
+    "program_id": 11,
+    "name": "Nepal Health Sector Programme III - Implementati...",
+    "code": "205145-101",
+    "sector": [
+      1
+    ],
+    "sub_sector": [
+      41,
+      42
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 88,
+  "fields": {
+    "program_id": 11,
+    "name": "Financial Aid Support for Hospital Retrofitting",
+    "code": "205145-102",
+    "sector": [
+      1
+    ],
+    "sub_sector": [
+      41
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 89,
+  "fields": {
+    "program_id": 11,
+    "name": "Technical Assistance for Support Hospital Retrofitting",
+    "code": "205145-103",
+    "sector": [
+      3
+    ],
+    "sub_sector": [
+      43
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 90,
+  "fields": {
+    "program_id": 11,
+    "name": "Financial Aid for General Health",
+    "code": "205145-104",
+    "sector": [
+      1
+    ],
+    "sub_sector": [
+      42
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 91,
+  "fields": {
+    "program_id": 11,
+    "name": "Nepal Health Sector Programme III - Coordination...",
+    "code": "205145-105",
+    "sector": [
+      1
+    ],
+    "sub_sector": [
+      41,
+      42
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 92,
+  "fields": {
+    "program_id": 11,
+    "name": "Technical assistant to MoHP",
+    "code": "205145-106",
+    "sector": [
+      3
+    ],
+    "sub_sector": [
+      43
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 93,
+  "fields": {
+    "program_id": 11,
+    "name": "Nepal Health Sector Programme III - Technical As...",
+    "code": "205145-107",
+    "sector": [
+      1,
+      9
+    ],
+    "sub_sector": [
+      23,
+      44
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 94,
+  "fields": {
+    "program_id": 11,
+    "name": "Nepal Health Sector Programme III - Procurement and Public Financial Management (PPFM)",
+    "code": "205145-108",
+    "sector": [
+      7,
+      1
+    ],
+    "sub_sector": [
+      42,
+      45
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 95,
+  "fields": {
+    "program_id": 11,
+    "name": "TA - SAHS",
+    "code": "205145-109",
+    "sector": [
+      7,
+      1
+    ],
+    "sub_sector": [
+      17,
+      42,
+      45
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 96,
+  "fields": {
+    "program_id": 11,
+    "name": "Review of Nepal Health sector strategy, Implemen...",
+    "code": "205145-110",
+    "sector": [
+      1
+    ],
+    "sub_sector": [
+      41,
+      42
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 97,
+  "fields": {
+    "program_id": 12,
+    "name": "Promoting safer schools in Nepal (resource, non-...",
+    "code": "300003-101",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      46
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 98,
+  "fields": {
+    "program_id": 12,
+    "name": "Monitoring and Evaluations Learning Unit (MEL) -...",
+    "code": "300003-102",
+    "sector": [
+      5
+    ],
+    "sub_sector": [
+      8,
+      39
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 99,
+  "fields": {
+    "program_id": 12,
+    "name": "Strengthening urban resilience in disaster prone...",
+    "code": "300003-103",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      46
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 100,
+  "fields": {
+    "program_id": 12,
+    "name": "Promoting safer schools in Nepal (resource, non-...",
+    "code": "300003-104",
+    "sector": [
+      5
+    ],
+    "sub_sector": [
+      38,
+      39
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 101,
+  "fields": {
+    "program_id": 12,
+    "name": "Policy and Institutions Facility (PIF) - (resour...",
+    "code": "300003-105",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      46
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 102,
+  "fields": {
+    "program_id": 12,
+    "name": "Strengthening multi-stakeholder coordination in ...",
+    "code": "300003-106",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      46
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 103,
+  "fields": {
+    "program_id": 12,
+    "name": "Disaster resilience institution strengthening an...",
+    "code": "300003-107",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      46
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 104,
+  "fields": {
+    "program_id": 12,
+    "name": "Disaster resilience institution strengthening an...",
+    "code": "300003-108",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      46
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 105,
+  "fields": {
+    "program_id": 12,
+    "name": "Strengthening urban resilience in disaster prone...",
+    "code": "300003-109",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      46
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 106,
+  "fields": {
+    "program_id": 12,
+    "name": "Responding to Humanitarian emergencies and suppo...",
+    "code": "300003-110",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      46
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 107,
+  "fields": {
+    "program_id": 12,
+    "name": "WFP's Emergency logistics preparedness (resource...",
+    "code": "300003-111",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      46
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 108,
+  "fields": {
+    "program_id": 12,
+    "name": "Support to national level disaster resilience po...",
+    "code": "300003-112",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      46
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 109,
+  "fields": {
+    "program_id": 12,
+    "name": "UNICEF's Supporting the use of cash in emergency...",
+    "code": "300003-113",
+    "sector": [
+      8,
+      4
+    ],
+    "sub_sector": [
+      5,
+      46
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 110,
+  "fields": {
+    "program_id": 13,
+    "name": "Technical Assistance on supporting Public Financial Management and Accountability",
+    "code": "300006-101",
+    "sector": [
+      7
+    ],
+    "sub_sector": [
+      45,
+      47,
+      48
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 111,
+  "fields": {
+    "program_id": 13,
+    "name": "Institutional support on public financial managm...",
+    "code": "300006-102",
+    "sector": [
+      7
+    ],
+    "sub_sector": [
+      45,
+      47,
+      49
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 112,
+  "fields": {
+    "program_id": 13,
+    "name": "Support to Manage Fiscal Federlism in Nepal",
+    "code": "300006-103",
+    "sector": [
+      7
+    ],
+    "sub_sector": [
+      45,
+      50
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 113,
+  "fields": {
+    "program_id": 14,
+    "name": "Technical Assistance for Public Financial Manage...",
+    "code": "300007-101",
+    "sector": [
+      7
+    ],
+    "sub_sector": [
+      45,
+      47,
+      48
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 114,
+  "fields": {
+    "program_id": 14,
+    "name": "Evaluation for Public Financial Management Multi...",
+    "code": "300007-102",
+    "sector": [
+      7
+    ],
+    "sub_sector": [
+      45,
+      47,
+      48
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 115,
+  "fields": {
+    "program_id": 15,
+    "name": "Technical Assitance to support transition to federalism and elected local bodies",
+    "code": "300009-101",
+    "sector": [
+      12,
+      7
+    ],
+    "sub_sector": [
+      49,
+      51,
+      52,
+      53
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 116,
+  "fields": {
+    "program_id": 15,
+    "name": "Support to Democratic Governance and PLGSP Effectiveness",
+    "code": "300009-102",
+    "sector": [
+      12,
+      7
+    ],
+    "sub_sector": [
+      49,
+      51,
+      52,
+      53
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 117,
+  "fields": {
+    "program_id": 15,
+    "name": "Support to Democratic Governance and PLGSP Effec...",
+    "code": "300009-103",
+    "sector": [
+      12,
+      7
+    ],
+    "sub_sector": [
+      49,
+      51,
+      52,
+      53
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 118,
+  "fields": {
+    "program_id": 16,
+    "name": "Capacity Building and Implementation of Retroffitng of Housing in Nepal",
+    "code": "300458-102",
+    "sector": [
+      8
+    ],
+    "sub_sector": [
+      40
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 119,
+  "fields": {
+    "program_id": 17,
+    "name": "Technical Advice and Social Mobilization to enab...",
+    "code": "300462-101",
+    "sector": [
+      4
+    ],
+    "sub_sector": [
+      6
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 120,
+  "fields": {
+    "program_id": 18,
+    "name": "Countering Tracffiking in Persons in Nepal, support to the USAID Hamro Samman programme",
+    "code": "300607-101",
+    "sector": [
+      7,
+      11
+    ],
+    "sub_sector": [
+      17,
+      37,
+      54
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 121,
+  "fields": {
+    "program_id": 19,
+    "name": "Project Coordination Unit",
+    "code": "300715-101",
+    "sector": [
+      7
+    ],
+    "sub_sector": [
+      49,
+      55
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 122,
+  "fields": {
+    "program_id": 20,
+    "name": "Design and implementation phase of Social Protec...",
+    "code": "300743-101",
+    "sector": [
+      4
+    ],
+    "sub_sector": [
+      5
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 123,
+  "fields": {
+    "program_id": 20,
+    "name": "Design of Nepal SP Public Expenditure Review and...",
+    "code": "300743-102",
+    "sector": [
+      4
+    ],
+    "sub_sector": [
+      5
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 124,
+  "fields": {
+    "program_id": 20,
+    "name": "Implementation through UNICEF (multilateral org....",
+    "code": "300743-103",
+    "sector": [
+      4
+    ],
+    "sub_sector": [
+      5
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 125,
+  "fields": {
+    "program_id": 4,
+    "name": "Performance Incentive Fund",
+    "code": "203274-103",
+    "sector": [
+      7,
+      4
+    ],
+    "sub_sector": [
+      6,
+      13,
+      14,
+      15
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 126,
+  "fields": {
+    "program_id": 6,
+    "name": "Support to Ministry of Finance",
+    "code": "203426-106",
+    "sector": [
+      2
+    ],
+    "sub_sector": [
+      24,
+      25
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 127,
+  "fields": {
+    "program_id": 8,
+    "name": "To improve the employability skills of 100,000 d...",
+    "code": "204857-101",
+    "sector": [
+      10
+    ],
+    "sub_sector": [
+      35
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 128,
+  "fields": {
+    "program_id": 9,
+    "name": "Local Adaptation Plans of Action captial expendi...",
+    "code": "204984-102",
+    "sector": [
+      5
+    ],
+    "sub_sector": [
+      38
+    ]
+  }
+},
+{
+  "model": "core.project",
+  "pk": 129,
+  "fields": {
+    "program_id": 9,
+    "name": "Local Adaptation Plans of Action planning and tr...",
+    "code": "204984-103",
+    "sector": [
+      5
+    ],
+    "sub_sector": [
+      38
+    ]
+  }
+}
+]

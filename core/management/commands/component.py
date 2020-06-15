@@ -19,7 +19,7 @@ class Command(BaseCommand):
         try:
             proj = [
                 Project(
-                    program_id=Program.objects.get(code=df['Program Code'][row]),
+                    program_id=Program.objects.get(code=int(df['Program Code'][row])),
                     name=(df['Component Name'][row]).strip(),
                     code=df['Component Code'][row],
 
@@ -31,7 +31,7 @@ class Command(BaseCommand):
                 self.stdout.write('Successfully loaded Partner data ..')
             # for row in range(0, upper_range):
             #     print(df['Program Code'][row])
-            #     print(Program.objects.get(code=df['Program Code'][row]))
+            #     print(Program.objects.get(code=int(df['Program Code'][row])))
 
 
         except Exception as e:

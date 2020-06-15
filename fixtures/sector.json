@@ -3,7 +3,7 @@
   "model": "core.sector",
   "pk": 1,
   "fields": {
-    "name": "ED - Education"
+    "name": "HE - Health"
   }
 },
 {
@@ -17,77 +17,70 @@
   "model": "core.sector",
   "pk": 3,
   "fields": {
-    "name": "EP - Environment Protection"
+    "name": "PS - Production Sector"
   }
 },
 {
   "model": "core.sector",
   "pk": 4,
   "fields": {
-    "name": "GSB - Government and State Building"
+    "name": "SSI - Social Services and Infrastructure"
   }
 },
 {
   "model": "core.sector",
   "pk": 5,
   "fields": {
-    "name": "HA - Humanitarian Assistance"
+    "name": "EP - Environment Protection"
   }
 },
 {
   "model": "core.sector",
   "pk": 6,
   "fields": {
-    "name": "HE - Health"
+    "name": "WSS - Water Supply and Sanitation"
   }
 },
 {
   "model": "core.sector",
   "pk": 7,
   "fields": {
-    "name": "PS - Production Sector"
+    "name": "GSB - Government and State Building"
   }
 },
 {
   "model": "core.sector",
   "pk": 8,
   "fields": {
-    "name": "RE - Research"
+    "name": "HA - Humanitarian Assistance"
   }
 },
 {
   "model": "core.sector",
   "pk": 9,
   "fields": {
-    "name": "SSI - Social Services and Infrastructure"
+    "name": "RE - Research"
   }
 },
 {
   "model": "core.sector",
   "pk": 10,
   "fields": {
-    "name": "WSS - Water Supply and Sanitation"
+    "name": "ED - Education"
   }
 },
 {
   "model": "core.sector",
-  "pk": 39,
+  "pk": 11,
   "fields": {
-    "name": "aaaaaaaaaaavvvvv"
+    "name": "NSA - Non-Sector Allocable"
   }
 },
 {
   "model": "core.sector",
-  "pk": 40,
+  "pk": 12,
   "fields": {
-    "name": "aaa"
-  }
-},
-{
-  "model": "core.sector",
-  "pk": 41,
-  "fields": {
-    "name": "aaaaaabbbb"
+    "name": "DP - Developing Planning"
   }
 }
 ]
