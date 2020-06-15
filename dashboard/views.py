@@ -913,6 +913,8 @@ class ProgramCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         data = super(ProgramCreate, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
+        markers = MarkerCategory.objects.all().prefetch_related('MarkerCategory').order_by('id')
+        data['markers'] = markers
         data['user'] = user_data
         data['active'] = 'program'
         return data
@@ -1130,9 +1132,7 @@ class ProjectCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         user_data = UserProfile.objects.get(user=user)
         data['programs'] = Program.objects.order_by('id')
         sectors = Sector.objects.all().prefetch_related('Sector').order_by('id')
-        markers = MarkerCategory.objects.all().prefetch_related('MarkerCategory').order_by('id')
         data['sectors'] = sectors
-        data['markers'] = markers
         data['user'] = user_data
         data['active'] = 'project'
         return data
@@ -1419,6 +1419,14 @@ class ProgramUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         data = super(ProgramUpdate, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
+        marker_list = Program.objects.filter(id=self.kwargs['pk']).values_list('marker_category', flat=True)
+
+        if (marker_list[0] == None):
+            filter_marker = MarkerCategory.objects.order_by('id')
+        else:
+            filter_marker = MarkerCategory.objects.exclude(id__in=marker_list)
+
+        data['markers'] = filter_marker
         data['user'] = user_data
         data['active'] = 'program'
         return data
@@ -1680,7 +1688,6 @@ class ProjectUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         user_data = UserProfile.objects.get(user=user)
         data['programs'] = Program.objects.order_by('id')
         sector_list = Project.objects.filter(id=self.kwargs['pk']).values_list('sector', flat=True)
-        marker_list = Project.objects.filter(id=self.kwargs['pk']).values_list('marker_category', flat=True)
 
         if (sector_list[0] == None):
             filter_sector = Sector.objects.order_by('id')
@@ -1688,16 +1695,8 @@ class ProjectUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         else:
             filter_sector = Sector.objects.exclude(id__in=sector_list)
 
-        if (marker_list[0] == None):
-            filter_marker = MarkerCategory.objects.order_by('id')
-        else:
-            filter_marker = MarkerCategory.objects.exclude(id__in=marker_list)
-
-
-
         data['sectors'] = filter_sector
         data['test'] = sector_list
-        data['markers'] = filter_marker
         data['user'] = user_data
         data['active'] = 'project'
         return data

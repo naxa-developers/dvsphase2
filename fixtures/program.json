@@ -3,176 +3,620 @@
   "model": "core.program",
   "pk": 1,
   "fields": {
-    "name": "Evidence for Development",
+    "name": "Family Planning Project",
     "description": "",
-    "code": "203385",
+    "code": "203100",
     "status": "ongoing",
-    "total_budget": 0.0
+    "total_budget": 15290000.25,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
   }
 },
 {
   "model": "core.program",
   "pk": 2,
   "fields": {
-    "name": "Provincial and Local Governance Support Programme",
+    "name": "Rural Access Programme 3",
     "description": "",
-    "code": "300009",
+    "code": "203186",
     "status": "ongoing",
-    "total_budget": 0.0
+    "total_budget": 72549999.761,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      9,
+      10,
+      3,
+      11,
+      5,
+      6,
+      7,
+      12
+    ]
   }
 },
 {
   "model": "core.program",
   "pk": 3,
   "fields": {
-    "name": "Climate Smart Development for Nepal",
+    "name": "Rural Water and Sanitation Programme Phase V",
     "description": "",
-    "code": "204984",
+    "code": "203187",
     "status": "ongoing",
-    "total_budget": 0.0
+    "total_budget": 19984000.51,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      9,
+      10,
+      3,
+      4,
+      5,
+      6,
+      7,
+      12
+    ]
   }
 },
 {
   "model": "core.program",
   "pk": 4,
   "fields": {
-    "name": "Improving Public Financial Management and Accountability in Nepal",
+    "name": "Integrated Programme for Strengthening Security and Justice",
     "description": "",
-    "code": "300006",
+    "code": "203274",
     "status": "ongoing",
-    "total_budget": 0.0
+    "total_budget": 45500000.612,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      1,
+      10,
+      13,
+      4,
+      5,
+      6,
+      7,
+      12
+    ]
   }
 },
 {
   "model": "core.program",
   "pk": 5,
   "fields": {
-    "name": "Public Financial Management Multi Donor Trust Fund \u2013 Phase II",
+    "name": "Evidence for Development",
     "description": "",
-    "code": "300007",
+    "code": "203385",
     "status": "ongoing",
-    "total_budget": 0.0
+    "total_budget": 26000000.0,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      14,
+      15,
+      13,
+      4,
+      5,
+      6,
+      7,
+      12
+    ]
   }
 },
 {
   "model": "core.program",
   "pk": 6,
   "fields": {
-    "name": "Hamro Samman Programme",
+    "name": "Access to Finance Programme",
     "description": "",
-    "code": "300607",
+    "code": "203426",
     "status": "ongoing",
-    "total_budget": 0.0
+    "total_budget": 36650000.001,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      14,
+      10,
+      3,
+      4,
+      5,
+      6,
+      7,
+      12
+    ]
   }
 },
 {
   "model": "core.program",
   "pk": 7,
   "fields": {
-    "name": "National Health Sector Programme III",
+    "name": "Accelerating Investment and Infrastructure in Nepal",
     "description": "",
-    "code": "205145",
+    "code": "203427",
     "status": "ongoing",
-    "total_budget": 0.0
+    "total_budget": 46300000.001,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      14,
+      10,
+      3,
+      4,
+      16,
+      6,
+      7,
+      12
+    ]
   }
 },
 {
   "model": "core.program",
   "pk": 8,
   "fields": {
-    "name": "Nepal Family Planning Program (NFPP)",
+    "name": "Skills for Employment Programme",
     "description": "",
-    "code": "203100",
+    "code": "204857",
     "status": "ongoing",
-    "total_budget": 0.0
+    "total_budget": 29499999.8,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      14,
+      10,
+      3,
+      4,
+      5,
+      6,
+      7,
+      12
+    ]
   }
 },
 {
   "model": "core.program",
   "pk": 9,
   "fields": {
-    "name": "Rural Water and Sanitation Programme Phase V - D...",
+    "name": "Climate Smart Development for Nepal",
     "description": "",
-    "code": "203187",
+    "code": "204984",
     "status": "ongoing",
-    "total_budget": 0.0
+    "total_budget": 50000000.002,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      9,
+      10,
+      3,
+      11,
+      16,
+      6,
+      7,
+      12
+    ]
   }
 },
 {
   "model": "core.program",
   "pk": 10,
   "fields": {
-    "name": "Social Protection Programme",
+    "name": "Nepal Post-Earthquake Reconstruction Programme",
     "description": "",
-    "code": "300743",
+    "code": "205138",
     "status": "ongoing",
-    "total_budget": 0.0
+    "total_budget": 63050000.48,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      9,
+      10,
+      3,
+      11,
+      5,
+      6,
+      7,
+      12
+    ]
   }
 },
 {
   "model": "core.program",
   "pk": 11,
   "fields": {
-    "name": "Integrated Programme for Strengthening Security and Justice",
+    "name": "Nepal Health Sector Programme III",
     "description": "",
-    "code": "203274",
+    "code": "205145",
     "status": "ongoing",
-    "total_budget": 0.0
+    "total_budget": 107500000.262,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      1,
+      2,
+      13,
+      4,
+      5,
+      6,
+      7,
+      17
+    ]
   }
 },
 {
   "model": "core.program",
   "pk": 12,
   "fields": {
-    "name": "Nepal Post-Earthquake Reconstruction PRogramme",
+    "name": "Strengthening Disaster Resilience in Nepal",
     "description": "",
-    "code": "205138",
+    "code": "300003",
     "status": "ongoing",
-    "total_budget": 0.0
+    "total_budget": 45999999.09,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      9,
+      15,
+      13,
+      11,
+      5,
+      6,
+      7,
+      12
+    ]
   }
 },
 {
   "model": "core.program",
   "pk": 13,
   "fields": {
-    "name": "Seismic Retrofitting of Unsafe Housing",
+    "name": "Improving Public Financial Management and Accountability in Nepal",
     "description": "",
-    "code": "300458",
+    "code": "300006",
     "status": "ongoing",
-    "total_budget": 0.0
+    "total_budget": 5000000.0,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      1,
+      15,
+      3,
+      4,
+      5,
+      6,
+      7,
+      12
+    ]
   }
 },
 {
   "model": "core.program",
   "pk": 14,
   "fields": {
-    "name": "Support to vulnerable households (durable solutions and housing)",
+    "name": "Public Financial Management Multi Donor Trust Fund - Phase II",
     "description": "",
-    "code": "300462",
+    "code": "300007",
     "status": "ongoing",
-    "total_budget": 0.0
+    "total_budget": 3220000.0,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      1,
+      15,
+      3,
+      4,
+      5,
+      6,
+      7,
+      12
+    ]
   }
 },
 {
   "model": "core.program",
   "pk": 15,
   "fields": {
-    "name": "Sustainable Development Research Network",
+    "name": "Provincial and Local Governance Support Programme",
     "description": "",
-    "code": "300003",
+    "code": "300009",
     "status": "ongoing",
-    "total_budget": 0.0
+    "total_budget": 25500000.0,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      1,
+      15,
+      3,
+      4,
+      5,
+      6,
+      7,
+      12
+    ]
   }
 },
 {
   "model": "core.program",
   "pk": 16,
   "fields": {
-    "name": "Access to Finance",
+    "name": "Seismic Retrofitting of Unsafe Housing in Nepal",
     "description": "",
-    "code": "203426",
+    "code": "300458",
     "status": "ongoing",
-    "total_budget": 0.0
+    "total_budget": 5000000.04,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      9,
+      15,
+      13,
+      4,
+      5,
+      6,
+      7,
+      12
+    ]
+  }
+},
+{
+  "model": "core.program",
+  "pk": 17,
+  "fields": {
+    "name": "Support to Vulnerable Households (Durable Solutions and Housing)",
+    "description": "",
+    "code": "300462",
+    "status": "ongoing",
+    "total_budget": 5000000.48,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      9,
+      10,
+      13,
+      4,
+      5,
+      6,
+      7,
+      12
+    ]
+  }
+},
+{
+  "model": "core.program",
+  "pk": 18,
+  "fields": {
+    "name": "Hamro Samman Programme",
+    "description": "",
+    "code": "300607",
+    "status": "ongoing",
+    "total_budget": 4500000.0,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      9,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      12
+    ]
+  }
+},
+{
+  "model": "core.program",
+  "pk": 19,
+  "fields": {
+    "name": "Project Coordination Units",
+    "description": "",
+    "code": "300715",
+    "status": "ongoing",
+    "total_budget": 2234538.0,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      18,
+      15,
+      3,
+      4,
+      5,
+      6,
+      7,
+      12
+    ]
+  }
+},
+{
+  "model": "core.program",
+  "pk": 20,
+  "fields": {
+    "name": "Social Protection Programme",
+    "description": "",
+    "code": "300743",
+    "status": "ongoing",
+    "total_budget": 4850000.0,
+    "marker_category": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "marker_value": [
+      9,
+      10,
+      13,
+      11,
+      5,
+      6,
+      7,
+      12
+    ]
   }
 }
 ]

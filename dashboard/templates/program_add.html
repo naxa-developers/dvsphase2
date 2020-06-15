@@ -134,119 +134,120 @@
         </div>
 
 
-        <!--        &lt;!&ndash; category form &ndash;&gt;-->
-        <!--        <div class="category-form form-card">-->
-        <!--            <div class="form-title">-->
-        <!--                <h3>Category</h3>-->
-        <!--            </div>-->
-        <!--            <div class="row">-->
-        <!--                <div class="col-md-6">-->
-        <!--                    <div class="category-sector select-list">-->
-        <!--                        <h4>Sector</h4>-->
-        <!--                        <div class="checklist-wrapper">-->
-        <!--                            <div class="checklist-body category-body">-->
-        <!--                                {% for sector in sectors %}-->
-        <!--                                <div class="checklist-card">-->
-        <!--                                    <div class="checklist-header">-->
-        <!--                                        <div class="custom-control custom-checkbox">-->
-        <!--                                            <input type="checkbox" class="custom-control-input" name="sector"-->
-        <!--                                                   id="list{{sector.id}}"-->
-        <!--                                                   value="{{sector.id}}">-->
-        <!--                                            <label class="custom-control-label"-->
-        <!--                                                   for="list{{sector.id}}">{{sector.name}}</label>-->
+                <!-- category form -->
+                <div class="category-form form-card">
+                    <div class="form-title">
+                        <h3>Category</h3>
+                    </div>
+                    <div class="row">
+<!--                        <div class="col-md-6">-->
+<!--                            <div class="category-sector select-list">-->
+<!--                                <h4>Sector</h4>-->
+<!--                                <div class="checklist-wrapper">-->
+<!--                                    <div class="checklist-body category-body">-->
+<!--                                        {% for sector in sectors %}-->
+<!--                                        <div class="checklist-card">-->
+<!--                                            <div class="checklist-header">-->
+<!--                                                <div class="custom-control custom-checkbox">-->
+<!--                                                    <input type="checkbox" class="custom-control-input" name="sector"-->
+<!--                                                           id="list{{sector.id}}"-->
+<!--                                                           value="{{sector.id}}">-->
+<!--                                                    <label class="custom-control-label"-->
+<!--                                                           for="list{{sector.id}}">{{sector.name}}</label>-->
 
-        <!--                                        </div>-->
-        <!--                                    </div>-->
-        <!--                                    <ul>-->
-        <!--                                        {% for sub_sector in sector.Sector.all %}-->
-        <!--                                        <li>-->
-        <!--                                            <div class="custom-control custom-checkbox">-->
-        <!--                                                <input type="checkbox" class="custom-control-input"-->
-        <!--                                                       id="sublist{{sub_sector.id}}" name="sub_sector"-->
-        <!--                                                       value="{{sub_sector.id}}">-->
-        <!--                                                <label class="custom-control-label"-->
-        <!--                                                       for="sublist{{sub_sector.id}}">{{sub_sector.name}}</label>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <ul>-->
+<!--                                                {% for sub_sector in sector.Sector.all %}-->
+<!--                                                <li>-->
+<!--                                                    <div class="custom-control custom-checkbox">-->
+<!--                                                        <input type="checkbox" class="custom-control-input"-->
+<!--                                                               id="sublist{{sub_sector.id}}" name="sub_sector"-->
+<!--                                                               value="{{sub_sector.id}}">-->
+<!--                                                        <label class="custom-control-label"-->
+<!--                                                               for="sublist{{sub_sector.id}}">{{sub_sector.name}}</label>-->
 
-        <!--                                            </div>-->
-        <!--                                        </li>-->
-        <!--                                        {% endfor %}-->
+<!--                                                    </div>-->
+<!--                                                </li>-->
+<!--                                                {% endfor %}-->
 
-        <!--                                    </ul>-->
-        <!--                                </div>-->
-        <!--                                {% endfor %}-->
+<!--                                            </ul>-->
+<!--                                        </div>-->
+<!--                                        {% endfor %}-->
 
-        <!--                            </div>-->
-        <!--                        </div>-->
-        <!--                    </div>-->
-        <!--                </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
 
-        <!--                <div class="col-md-6">-->
-        <!--                    <div class="category-sector select-list">-->
-        <!--                        <h4>Marker</h4>-->
+                        <div class="col-md-6">
+                            <div class="category-sector select-list">
+                                <h4>Marker</h4>
 
-        <!--                        <div class="checklist-wrapper">-->
-        <!--                            <div class="checklist-body category-body">-->
-        <!--                                {% for marker in markers %}-->
-        <!--                                <div class="checklist-card">-->
-        <!--                                    <div class="checklist-header">-->
-        <!--                                        <div class="custom-control custom-checkbox">-->
-        <!--                                            <input type="checkbox" class="custom-control-input" name="marker_category"-->
-        <!--                                                   id="list_marker{{marker.id}}"-->
-        <!--                                                   value="{{marker.id}}">-->
-        <!--                                            <label class="custom-control-label"-->
-        <!--                                                   for="list_marker{{marker.id}}">{{marker.name}}</label>-->
+                                <div class="checklist-wrapper">
+                                    <div class="checklist-body category-body">
+                                        {% for marker in markers %}
+                                        <div class="checklist-card">
+                                            <div class="checklist-header">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" name="marker_category"
+                                                           id="list_marker{{marker.id}}"
+                                                           value="{{marker.id}}">
+                                                    <label class="custom-control-label"
+                                                           for="list_marker{{marker.id}}">{{marker.name}}</label>
 
-        <!--                                        </div>-->
-        <!--                                    </div>-->
-        <!--                                    <ul>-->
-        <!--                                        {% for marker_value in marker.MarkerCategory.all %}-->
-        <!--                                        <li>-->
-        <!--                                            <div class="custom-control custom-checkbox">-->
-        <!--                                                <input type="checkbox" class="custom-control-input"-->
-        <!--                                                       id="sublist_marker{{marker_value.id}}" name="marker_value"-->
-        <!--                                                       value="{{marker_value.id}}">-->
-        <!--                                                <label class="custom-control-label"-->
-        <!--                                                       for="sublist_marker{{marker_value.id}}">{{marker_value.value}}</label>-->
+                                                </div>
+                                            </div>
+                                            <ul>
+                                                {% for marker_value in marker.MarkerCategory.all %}
+                                                <li>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                               id="sublist_marker{{marker_value.id}}" name="marker_value"
+                                                               value="{{marker_value.id}}">
+                                                        <label class="custom-control-label"
+                                                               for="sublist_marker{{marker_value.id}}">{{marker_value.value}}</label>
 
-        <!--                                            </div>-->
-        <!--                                        </li>-->
-        <!--                                        {% endfor %}-->
+                                                    </div>
+                                                </li>
+                                                {% endfor %}
 
-        <!--                                    </ul>-->
-        <!--                                </div>-->
-        <!--                                {% endfor %}-->
+                                            </ul>
+                                        </div>
+                                        {% endfor %}
 
-        <!--                            </div>-->
-        <!--                        </div>-->
+                                    </div>
+                                </div>
 
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--                <div class="col-md-6">-->
-        <!--                    <div class="marker-sector select-list my-5">-->
-        <!--                        <h4>Partner</h4>-->
-        <!--                        <div class="checklist-wrapper">-->
-        <!--                            <div class="checklist-body marker-body">-->
-        <!--                                <div class="checklist-card">-->
-        <!--                                    <ul>-->
-        <!--                                       {% for partner in partners %}-->
-        <!--                                        <li>-->
-        <!--                                            <div class="custom-control custom-checkbox">-->
-        <!--                                                <input type="checkbox" class="custom-control-input"-->
-        <!--                                                       id="partner{{partner.id}}" value="{{partner.id}}" name="partner">-->
-        <!--                                                <label class="custom-control-label"  for="partner{{partner.id}}">{{partner.name}}</label>-->
+                            </div>
+                        </div>
+<!--                        <div class="col-md-6">-->
+<!--                            <div class="marker-sector select-list my-5">-->
+<!--                                <h4>Partner</h4>-->
+<!--                                <div class="checklist-wrapper">-->
+<!--                                    <div class="checklist-body marker-body">-->
+<!--                                        <div class="checklist-card">-->
+<!--                                            <ul>-->
+<!--                                               {% for partner in partners %}-->
+<!--                                                <li>-->
+<!--                                                    <div class="custom-control custom-checkbox">-->
+<!--                                                        <input type="checkbox" class="custom-control-input"-->
+<!--                                                               id="partner{{partner.id}}" value="{{partner.id}}" name="partner">-->
+<!--                                                        <label class="custom-control-label"  for="partner{{partner.id}}">{{partner.name}}</label>-->
 
-        <!--                                            </div>-->
-        <!--                                        </li>-->
-        <!--                                        {% endfor %}-->
+<!--                                                    </div>-->
+<!--                                                </li>-->
+<!--                                                {% endfor %}-->
 
-        <!--                                    </ul>-->
-        <!--                                </div>-->
-        <!--                            </div>-->
-        <!--                        </div>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
+<!--                                            </ul>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+                    </div>
+                </div>
 
 
         <div class="form-group mrt-100">

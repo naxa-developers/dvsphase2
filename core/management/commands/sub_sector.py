@@ -23,13 +23,11 @@ class Command(BaseCommand):
             #     a = Sector.objects.get(sector_name=str((df['sector'][row]).strip()))
             #     print(a)
 
-
-
             sub_sector = [
                 SubSector(
-                    sector=Sector.objects.get(sector_name=str((df['sector'][row]).strip())),
-                    sub_sector_name=(df['sub-sector'][row]).strip(),
-                    sub_sector_code=df['data'][row],
+                    sector_id=Sector.objects.get(name=str((df['Broad Sectors'][row]).strip())),
+                    name=(df['Input Sector'][row]).strip(),
+                    code=df['Input Sector Code'][row],
 
                 ) for row in range(0, upper_range)
             ]
