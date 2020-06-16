@@ -19,6 +19,75 @@ import math
 
 
 # Create your views here.
+class ProgramSankey(viewsets.ModelViewSet):
+    queryset = True
+    serializer_class = FivewSerializer
+
+    def list(self, request, *args, **kwargs):
+        node = []
+        links = []
+        indexes = []
+        program_id = []
+        component_id = []
+        partner_id = []
+        program = FiveW.objects.values('program_id__name', 'program_id', "program_id__code").distinct('program_id')
+        for p in program:
+            node.append({
+                'name': p['program_id__name'],
+            })
+            indexes.append(p['program_id__name'] + str(p['program_id__code']))
+            program_id.append(p['program_id'])
+
+        component = FiveW.objects.values('component_id__name', 'component_id', 'component_id__code').distinct(
+            'component_id')
+        for c in component:
+            node.append({
+                'name': c['component_id__name'],
+            })
+            indexes.append(c['component_id__name'] + str(c['component_id__code']))
+            component_id.append(c['component_id'])
+
+        partner = FiveW.objects.values('supplier_id__name', 'supplier_id', "supplier_id__code").distinct('supplier_id')
+        for part in partner:
+            node.append({
+                'name': part['supplier_id__name'],
+            })
+            indexes.append(part['supplier_id__name'] + str(part['supplier_id__code']))
+            partner_id.append(part['supplier_id'])
+
+        # allocated_sum = query.aggregate(Sum('allocated_budget'))
+        # nodes = list(query) + list(comp) + list(part)
+        for i in range(0, len(component_id)):
+            q = FiveW.objects.values('component_id__name', 'component_id', 'component_id__code',
+                                     'program_id__name',
+                                     'program_id__code',
+                                     'allocated_budget').filter(component_id=component_id[i])
+
+            budget = q.aggregate(Sum('allocated_budget'))
+            source = indexes.index(q[0]['program_id__name'] + str(q[0]['program_id__code']))
+            target = indexes.index(q[0]['component_id__name'] + str(q[0]['component_id__code']))
+            links.append({
+                'source': source,
+                'target': target,
+                'value': budget['allocated_budget__sum'],
+            })
+
+        for i in range(0, len(partner_id)):
+            q = FiveW.objects.values('component_id__name', 'supplier_id', 'component_id__code',
+                                     'supplier_id__name',
+                                     'supplier_id__code',
+                                     'allocated_budget').filter(supplier_id=partner_id[i])
+
+            budget = q.aggregate(Sum('allocated_budget'))
+            source = indexes.index(q[0]['component_id__name'] + str(q[0]['component_id__code']))
+            target = indexes.index(q[0]['supplier_id__name'] + str(q[0]['supplier_id__code']))
+            links.append({
+                'source': source,
+                'target': target,
+                'value': budget['allocated_budget__sum'],
+            })
+
+        return Response({"nodes": node, "links": links})
 
 
 class PartnerView(viewsets.ReadOnlyModelViewSet):

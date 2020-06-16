@@ -28,4 +28,5 @@ urlpatterns = [
     path('province-indicator/', views.ProvinceIndicator.as_view({'post': 'list'}),
          name="province-indicator"),
     path('summary/', views.SummaryData.as_view({'post': 'list'}), name='summary'),
+    path('sankey-program/', views.ProgramSankey.as_view({'get': 'list'}), name='sankey-program'),
 ]
