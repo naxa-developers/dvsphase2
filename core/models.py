@@ -488,3 +488,11 @@ class Cmp(models.Model):
 
     def __str__(self):
         return self.project_name
+
+
+class NepalSummary(models.Model):
+    name = models.CharField(max_length=100, null=True, blank=True)
+    value = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.name

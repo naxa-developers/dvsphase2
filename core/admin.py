@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Partner, Program, Sector, SubSector, MarkerCategory, MarkerValues, Province, District, GapaNapa, \
     FiveW, Indicator, IndicatorValue, TravelTime, GisLayer, Project, PartnerContact, Output, ProvinceDummy, \
-    Notification, BudgetToSecondTier, BudgetToFirstTier, Cmp, Filter, GisStyle, GisPop
+    Notification, BudgetToSecondTier, BudgetToFirstTier, Cmp, Filter, GisStyle, GisPop, NepalSummary
 
 # Register your models here.
 
@@ -30,3 +30,4 @@ admin.site.register(Cmp)
 admin.site.register(Filter)
 admin.site.register(GisStyle)
 admin.site.register(GisPop)
+admin.site.register(NepalSummary)

@@ -1,7 +1,13 @@
 from rest_framework import serializers
 from .models import Partner, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
     IndicatorValue, Sector, SubSector, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
-    Filter
+    Filter, NepalSummary
+
+
+class NepalSummarySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NepalSummary
+        fields = '__all__'
 
 
 class PartnerSerializer(serializers.ModelSerializer):
@@ -76,26 +82,75 @@ class MarkerValuesSerializer(serializers.ModelSerializer):
 
 
 class ProgramSerializer(serializers.ModelSerializer):
-    # marker_value = serializers.SerializerMethodField()
+    marker_value = serializers.SerializerMethodField()
     marker_category = serializers.SerializerMethodField()
     sector = serializers.SerializerMethodField()
+    sub_sector = serializers.SerializerMethodField()
+    component = serializers.SerializerMethodField()
 
     class Meta:
         model = Program
-        fields = ('id', 'name', 'marker_category', 'sector')
+        fields = ('id', 'name', 'component', 'marker_category', 'marker_value', 'sector', 'sub_sector')
+
+    def get_component(self, obj):
+        data = []
+        qs = obj.ProjectProgram.values('id', 'name').distinct('id')
+        for q in qs:
+            data.append({
+                'id': q['id'],
+                'name': q['name']
+
+            })
+        return data
 
     def get_marker_category(self, obj):
-        qs = obj.marker_category.order_by('id').values_list('id', flat=True)
-        return qs
+        data = []
+        qs = obj.marker_value.all().values('marker_category_id', 'marker_category_id__name')
+        for q in qs:
+            data.append({
+                'id': q['marker_category_id'],
+                'name': q['marker_category_id__name']
 
-    # def get_marker_value(self, obj):
-    #     qs = obj.marker_value.all().order_by('id').values_list('id', flat=True)
-    #     return qs
+            })
+        return data
+
+    def get_marker_value(self, obj):
+        data = []
+        qs = obj.marker_value.all().values('id', 'value', 'marker_category_id__name')
+        for q in qs:
+            data.append({
+                'id': q['id'],
+                'name': q['value'],
+                # 'cat': q['marker_category_id__name']
+
+            })
+        return data
 
     def get_sector(self, obj):
-        qs = obj.ProjectProgram.all().order_by('id')
-        q = Project.objects.filter(id__in=qs).values_list('sector', flat=True).distinct()
-        return q
+        data = []
+        qs = obj.ProjectProgram.all().values('sector', 'sector__name').distinct('sector')
+
+        for q in qs:
+            data.append({
+                'id': q['sector'],
+                'name': q['sector__name']
+
+            })
+
+        return data
+
+    def get_sub_sector(self, obj):
+        data = []
+        qs = obj.ProjectProgram.all().values('sub_sector', 'sub_sector__name').distinct('sector')
+
+        for q in qs:
+            data.append({
+                'id': q['sub_sector'],
+                'name': q['sub_sector__name']
+
+            })
+
+        return data
 
 
 class ProvinceSerializer(serializers.ModelSerializer):
