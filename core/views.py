@@ -105,6 +105,92 @@ class ProgramSankey(viewsets.ModelViewSet):
         return Response({"nodes": node, "links": links})
 
 
+class RegionSankey(viewsets.ModelViewSet):
+    queryset = True
+    serializer_class = FivewSerializer
+
+    def list(self, request, *args, **kwargs):
+        node = []
+        links = []
+        indexes = []
+        program_id = []
+        component_id = []
+        partner_id = []
+        p_ids = request.data
+        program_filter_ids = p_ids['programId']
+        program_filter_id = [16, 12]
+        # if program_filter_ids:
+        #     program_filter_id = program_filter_ids
+        # else:
+        #     program_filter_id = Program.objects.values_list('id', flat=True)
+
+        program = FiveW.objects.values('program_id__name', 'program_id', "program_id__code").filter(
+            program_id__in=program_filter_id).distinct('program_id')
+        for p in program:
+            node.append({
+                'name': p['program_id__name'],
+                'type': 'program',
+            })
+            indexes.append(p['program_id__name'] + str(p['program_id__code']))
+            program_id.append(p['program_id'])
+
+        component = FiveW.objects.values('component_id__name', 'component_id', 'component_id__code').filter(
+            program_id__in=program_filter_id).distinct(
+            'component_id')
+        for c in component:
+            node.append({
+                'name': c['component_id__name'],
+                'type': 'component',
+            })
+            indexes.append(c['component_id__name'] + str(c['component_id__code']))
+            component_id.append(c['component_id'])
+
+        partner = FiveW.objects.values('supplier_id__name', 'supplier_id', "supplier_id__code").filter(
+            program_id__in=program_filter_id).distinct('supplier_id')
+        for part in partner:
+            node.append({
+                'name': part['supplier_id__name'],
+                'type': 'partner',
+            })
+            indexes.append(part['supplier_id__name'] + str(part['supplier_id__code']))
+            partner_id.append(part['supplier_id'])
+
+        # allocated_sum = query.aggregate(Sum('allocated_budget'))
+        # nodes = list(query) + list(comp) + list(part)
+        for i in range(0, len(component_id)):
+            q = FiveW.objects.values('component_id__name', 'component_id', 'component_id__code',
+                                     'program_id__name',
+                                     'program_id__code',
+                                     'allocated_budget').filter(component_id=component_id[i])
+
+            budget = q.aggregate(Sum('allocated_budget'))
+            source = indexes.index(q[0]['program_id__name'] + str(q[0]['program_id__code']))
+            target = indexes.index(q[0]['component_id__name'] + str(q[0]['component_id__code']))
+            links.append({
+                'source': source,
+                'target': target,
+                'value': budget['allocated_budget__sum'],
+            })
+
+        for i in range(0, len(partner_id)):
+            q = FiveW.objects.values('component_id__name', 'supplier_id', 'component_id__code',
+                                     'supplier_id__name',
+                                     'supplier_id__code',
+                                     'allocated_budget').filter(supplier_id=partner_id[i],
+                                                                program_id__in=program_filter_id)
+
+            budget = q.aggregate(Sum('allocated_budget'))
+            source = indexes.index(q[0]['component_id__name'] + str(q[0]['component_id__code']))
+            target = indexes.index(q[0]['supplier_id__name'] + str(q[0]['supplier_id__code']))
+            links.append({
+                'source': source,
+                'target': target,
+                'value': budget['allocated_budget__sum'],
+            })
+
+        return Response({"nodes": node, "links": links})
+
+
 class PartnerView(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     filter_backends = [DjangoFilterBackend]
@@ -405,18 +491,18 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 budget = allocated_sum['allocated_budget__sum']
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
-                sect = query.values_list('component_id__sector__name', flat=True).distinct()
-                sub_sect = query.values_list('component_id__sub_sector__name', flat=True).distinct()
-                mark_cat = query.values_list('program_id__marker_category__name', flat=True)
-                mark_val = query.values_list('program_id__marker_value__value', flat=True)
+                sect = query.exclude(component_id__sector__name=None).values_list('component_id__sector__name',
+                                                                                  flat=True).distinct()
+                sub_sect = query.exclude(component_id__sub_sector__name=None).values_list(
+                    'component_id__sub_sector__name',
+                    flat=True).distinct()
+
             else:
                 budget = 0
                 comp = []
                 part = []
                 sect = []
                 sub_sect = []
-                mark_cat = []
-                mark_val = []
 
             data.append({
                 'id': dist['id'],
@@ -427,8 +513,6 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 'partner': part,
                 'sector': sect,
                 'sub_sector': sub_sect,
-                'marker_category': mark_cat[:8],
-                'marker_value': mark_val[:8],
 
             })
         return Response({"results": data})
@@ -456,18 +540,21 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 budget = allocated_sum['allocated_budget__sum']
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
-                sect = query.values_list('component_id__sector__name', flat=True).distinct()
-                sub_sect = query.values_list('component_id__sub_sector__name', flat=True).distinct()
-                mark_cat = query.values_list('program_id__marker_category__name', flat=True)
-                mark_val = query.values_list('program_id__marker_value__value', flat=True)
+                sect = query.exclude(component_id__sector__name=None).values_list('component_id__sector__name',
+                                                                                  flat=True).distinct()
+
+                sub_sect = query.exclude(component_id__sub_sector__name=None).values_list(
+                    'component_id__sub_sector__name',
+                    flat=True).distinct()
+                # mark_cat = query.exclude(component_id__sector__name=None).values_list(
+                #     'program_id__marker_category__name', flat=True)
+
             else:
                 budget = 0
                 comp = []
                 part = []
                 sect = []
                 sub_sect = []
-                mark_cat = []
-                mark_val = []
 
             data.append({
                 'id': province['id'],
@@ -478,8 +565,6 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 'partner': part,
                 'sector': sect,
                 'sub_sector': sub_sect,
-                'marker_category': mark_cat[:8],
-                'marker_value': mark_val[:8],
 
             })
         return Response({"results": data})
@@ -508,18 +593,17 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 budget = allocated_sum['allocated_budget__sum']
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
-                sect = query.values_list('component_id__sector__name', flat=True).distinct()
-                sub_sect = query.values_list('component_id__sub_sector__name', flat=True).distinct()
-                mark_cat = query.values_list('program_id__marker_category__name', flat=True)
-                mark_val = query.values_list('program_id__marker_value__value', flat=True)
+                sect = query.exclude(component_id__sector__name=None).values_list('component_id__sector__name',
+                                                                                  flat=True).distinct()
+                sub_sect = query.exclude(component_id__sub_sector__name=None).values_list(
+                    'component_id__sub_sector__name', flat=True).distinct()
+
             else:
                 budget = 0
                 comp = []
                 part = []
                 sect = []
                 sub_sect = []
-                mark_cat = []
-                mark_val = []
 
             data.append({
                 'id': municipality['id'],
@@ -530,8 +614,6 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 'partner': part,
                 'sector': sect,
                 'sub_sector': sub_sect,
-                'marker_category': mark_cat[:8],
-                'marker_value': mark_val[:8],
 
             })
         return Response({"results": data})

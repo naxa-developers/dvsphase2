@@ -128,7 +128,7 @@ class ProgramSerializer(serializers.ModelSerializer):
 
     def get_sector(self, obj):
         data = []
-        qs = obj.ProjectProgram.all().values('sector', 'sector__name').distinct('sector')
+        qs = obj.ProjectProgram.exclude(sector=None).values('sector', 'sector__name').distinct('sector')
 
         for q in qs:
             data.append({
@@ -141,7 +141,7 @@ class ProgramSerializer(serializers.ModelSerializer):
 
     def get_sub_sector(self, obj):
         data = []
-        qs = obj.ProjectProgram.all().values('sub_sector', 'sub_sector__name').distinct('sector')
+        qs = obj.ProjectProgram.exclude(sub_sector=None).values('sub_sector', 'sub_sector__name').distinct('sector')
 
         for q in qs:
             data.append({
