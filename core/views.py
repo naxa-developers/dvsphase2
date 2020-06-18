@@ -455,13 +455,14 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
         program = query.distinct('program_id').count()
         component = query.distinct('component_id').count()
         partner = query.distinct('supplier_id').count()
+        sector = query.distinct('component_id__sector').count()
 
         return Response({
             'allocated_budget': allocated_sum['allocated_budget__sum'],
             'program': program,
             'partner': partner,
             'component': component,
-            'sector': 0,
+            'sector': sector,
 
         })
 
