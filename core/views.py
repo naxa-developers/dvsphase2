@@ -1,11 +1,12 @@
 from .models import Partner, Program, MarkerValues, District, Province, GapaNapa, FiveW, Indicator, IndicatorValue, \
-    Sector, SubSector, MarkerCategory, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier
+    Sector, SubSector, MarkerCategory, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
+    NepalSummary
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import PartnerSerializer, ProgramSerializer, MarkerValuesSerializer, DistrictSerializer, \
     ProvinceSerializer, GaanapaSerializer, FivewSerializer, \
     IndicatorSerializer, IndicatorValueSerializer, SectorSerializer, SubsectorSerializer, MarkerCategorySerializer, \
     TravelTimeSerializer, GisLayerSerializer, ProjectSerializer, OutputSerializer, NotificationSerializer, \
-    ContractSumSerializer
+    ContractSumSerializer, NepalSummarySerializer
 from rest_framework import viewsets, views
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
@@ -115,6 +116,20 @@ class PartnerView(viewsets.ReadOnlyModelViewSet):
 
     def get_serializer_class(self):
         serializer_class = PartnerSerializer
+        return serializer_class
+
+
+class NepalSummaryApi(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id']
+
+    def get_queryset(self):
+        queryset = NepalSummary.objects.order_by('id')
+        return queryset
+
+    def get_serializer_class(self):
+        serializer_class = NepalSummarySerializer
         return serializer_class
 
 
