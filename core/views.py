@@ -31,12 +31,13 @@ class ProgramSankey(viewsets.ModelViewSet):
         program_id = []
         component_id = []
         partner_id = []
-        p_ids = request.data
-        program_filter_ids = p_ids['programId']
-        if program_filter_ids:
-            program_filter_id = program_filter_ids
+        if request.GET.getlist('program'):
+            prov = request.GET['program']
+            program_filter_id = prov.split(",")
+            for i in range(0, len(program_filter_id)):
+                program_filter_id[i] = int(program_filter_id[i])
         else:
-            program_filter_id = Program.objects.values_list('id', flat=True)
+            program_filter_id = list(Program.objects.values_list('id', flat=True))
 
         program = FiveW.objects.values('program_id__name', 'program_id', "program_id__code").filter(
             program_id__in=program_filter_id).distinct('program_id')
@@ -113,75 +114,77 @@ class RegionSankey(viewsets.ModelViewSet):
         node = []
         links = []
         indexes = []
-        program_id = []
-        component_id = []
-        partner_id = []
-        p_ids = request.data
-        program_filter_ids = p_ids['programId']
-        program_filter_id = [16, 12]
-        # if program_filter_ids:
-        #     program_filter_id = program_filter_ids
-        # else:
-        #     program_filter_id = Program.objects.values_list('id', flat=True)
+        province_id = []
+        district_id = []
+        municipality_id = []
 
-        program = FiveW.objects.values('program_id__name', 'program_id', "program_id__code").filter(
-            program_id__in=program_filter_id).distinct('program_id')
-        for p in program:
-            node.append({
-                'name': p['program_id__name'],
-                'type': 'program',
-            })
-            indexes.append(p['program_id__name'] + str(p['program_id__code']))
-            program_id.append(p['program_id'])
+        if request.GET.getlist('province'):
+            prov = request.GET['province']
+            province_filter_id = prov.split(",")
+            for i in range(0, len(province_filter_id)):
+                province_filter_id[i] = int(province_filter_id[i])
+        else:
+            province_filter_id = list(Province.objects.exclude(code=-1).values_list('id', flat=True).distinct())
 
-        component = FiveW.objects.values('component_id__name', 'component_id', 'component_id__code').filter(
-            program_id__in=program_filter_id).distinct(
-            'component_id')
-        for c in component:
+        province = FiveW.objects.values('province_id__name', 'province_id', "province_id__code").filter(
+            province_id__in=province_filter_id).distinct('province_id')
+        for p in province:
             node.append({
-                'name': c['component_id__name'],
-                'type': 'component',
+                'name': p['province_id__name'],
+                'type': 'province',
             })
-            indexes.append(c['component_id__name'] + str(c['component_id__code']))
-            component_id.append(c['component_id'])
+            indexes.append(p['province_id__name'] + str(p['province_id__code']))
+            province_id.append(p['province_id'])
 
-        partner = FiveW.objects.values('supplier_id__name', 'supplier_id', "supplier_id__code").filter(
-            program_id__in=program_filter_id).distinct('supplier_id')
-        for part in partner:
+        district = FiveW.objects.values('district_id__name', 'district_id', 'district_id__code').filter(
+            province_id__in=province_filter_id).distinct(
+            'district_id').exclude(district_id__code=-1)
+        for c in district:
             node.append({
-                'name': part['supplier_id__name'],
-                'type': 'partner',
+                'name': c['district_id__name'],
+                'type': 'district',
             })
-            indexes.append(part['supplier_id__name'] + str(part['supplier_id__code']))
-            partner_id.append(part['supplier_id'])
+            indexes.append(c['district_id__name'] + str(c['district_id__code']))
+            district_id.append(c['district_id'])
+        print(indexes)
+        municipality = FiveW.objects.values('municipality_id__name', 'municipality_id', "municipality_id__code").filter(
+            province_id__in=province_filter_id).distinct('municipality_id').exclude(municipality_id__code=-1)
+        for part in municipality:
+            node.append({
+                'name': part['municipality_id__name'],
+                'type': 'municipality',
+            })
+            indexes.append(part['municipality_id__name'] + str(part['municipality_id__code']))
+            municipality_id.append(part['municipality_id'])
 
         # allocated_sum = query.aggregate(Sum('allocated_budget'))
         # nodes = list(query) + list(comp) + list(part)
-        for i in range(0, len(component_id)):
-            q = FiveW.objects.values('component_id__name', 'component_id', 'component_id__code',
-                                     'program_id__name',
-                                     'program_id__code',
-                                     'allocated_budget').filter(component_id=component_id[i])
+        for i in range(0, len(district_id)):
+            q = FiveW.objects.values('district_id__name', 'district_id', 'district_id__code',
+                                     'province_id__name',
+                                     'province_id__code',
+                                     'allocated_budget').filter(district_id=district_id[i],
+                                                                province_id__in=province_filter_id)
 
             budget = q.aggregate(Sum('allocated_budget'))
-            source = indexes.index(q[0]['program_id__name'] + str(q[0]['program_id__code']))
-            target = indexes.index(q[0]['component_id__name'] + str(q[0]['component_id__code']))
+            source = indexes.index(q[0]['province_id__name'] + str(q[0]['province_id__code']))
+            target = indexes.index(q[0]['district_id__name'] + str(q[0]['district_id__code']))
             links.append({
                 'source': source,
                 'target': target,
                 'value': budget['allocated_budget__sum'],
             })
 
-        for i in range(0, len(partner_id)):
-            q = FiveW.objects.values('component_id__name', 'supplier_id', 'component_id__code',
-                                     'supplier_id__name',
-                                     'supplier_id__code',
-                                     'allocated_budget').filter(supplier_id=partner_id[i],
-                                                                program_id__in=program_filter_id)
+        for i in range(0, len(municipality_id)):
+            q = FiveW.objects.values('district_id__name', 'municipality_id', 'district_id__code',
+                                     'municipality_id__name',
+                                     'municipality_id__code',
+                                     'allocated_budget').filter(municipality_id=municipality_id[i],
+                                                                province_id__in=province_filter_id)
 
             budget = q.aggregate(Sum('allocated_budget'))
-            source = indexes.index(q[0]['component_id__name'] + str(q[0]['component_id__code']))
-            target = indexes.index(q[0]['supplier_id__name'] + str(q[0]['supplier_id__code']))
+            source = indexes.index(q[0]['district_id__name'] + str(q[0]['district_id__code']))
+            target = indexes.index(q[0]['municipality_id__name'] + str(q[0]['municipality_id__code']))
             links.append({
                 'source': source,
                 'target': target,
