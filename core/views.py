@@ -30,27 +30,40 @@ class ProgramSankey(viewsets.ModelViewSet):
         program_id = []
         component_id = []
         partner_id = []
-        program = FiveW.objects.values('program_id__name', 'program_id', "program_id__code").distinct('program_id')
+        p_ids = request.data
+        program_filter_ids = p_ids['programId']
+        if program_filter_ids:
+            program_filter_id = program_filter_ids
+        else:
+            program_filter_id = Program.objects.values_list('id', flat=True)
+
+        program = FiveW.objects.values('program_id__name', 'program_id', "program_id__code").filter(
+            program_id__in=program_filter_id).distinct('program_id')
         for p in program:
             node.append({
                 'name': p['program_id__name'],
+                'type': 'program',
             })
             indexes.append(p['program_id__name'] + str(p['program_id__code']))
             program_id.append(p['program_id'])
 
-        component = FiveW.objects.values('component_id__name', 'component_id', 'component_id__code').distinct(
+        component = FiveW.objects.values('component_id__name', 'component_id', 'component_id__code').filter(
+            program_id__in=program_filter_id).distinct(
             'component_id')
         for c in component:
             node.append({
                 'name': c['component_id__name'],
+                'type': 'component',
             })
             indexes.append(c['component_id__name'] + str(c['component_id__code']))
             component_id.append(c['component_id'])
 
-        partner = FiveW.objects.values('supplier_id__name', 'supplier_id', "supplier_id__code").distinct('supplier_id')
+        partner = FiveW.objects.values('supplier_id__name', 'supplier_id', "supplier_id__code").filter(
+            program_id__in=program_filter_id).distinct('supplier_id')
         for part in partner:
             node.append({
                 'name': part['supplier_id__name'],
+                'type': 'partner',
             })
             indexes.append(part['supplier_id__name'] + str(part['supplier_id__code']))
             partner_id.append(part['supplier_id'])
@@ -76,7 +89,8 @@ class ProgramSankey(viewsets.ModelViewSet):
             q = FiveW.objects.values('component_id__name', 'supplier_id', 'component_id__code',
                                      'supplier_id__name',
                                      'supplier_id__code',
-                                     'allocated_budget').filter(supplier_id=partner_id[i])
+                                     'allocated_budget').filter(supplier_id=partner_id[i],
+                                                                program_id__in=program_filter_id)
 
             budget = q.aggregate(Sum('allocated_budget'))
             source = indexes.index(q[0]['component_id__name'] + str(q[0]['component_id__code']))
