@@ -133,7 +133,7 @@ class RegionSankey(viewsets.ModelViewSet):
 
         print(province_filter_id)
         province = FiveW.objects.values('province_id__name', 'province_id', "province_id__code").filter(
-            province_id__in=province_filter_id).distinct('province_id').exclude(district_id__code=-1,
+            province_id__in=province_filter_id).distinct('province_id').exclude(province_id__code=-1,
                                                                                 allocated_budget=0)
         for p in province:
             node.append({
@@ -143,7 +143,7 @@ class RegionSankey(viewsets.ModelViewSet):
             indexes.append(p['province_id__name'] + str(p['province_id__code']))
             province_id.append(p['province_id'])
         print(province)
-        district = FiveW.objects.values('district_id__name', 'district_id', 'district_id__code').filter(
+        district = FiveW.objects.values('province_id', 'district_id__name', 'district_id', 'district_id__code').filter(
             district_id__province_id__in=province_filter_id).distinct(
             'district_id').exclude(district_id__code=-1, allocated_budget=0)
         print(district)
@@ -154,8 +154,9 @@ class RegionSankey(viewsets.ModelViewSet):
             })
             indexes.append(c['district_id__name'] + str(c['district_id__code']))
             district_id.append(c['district_id'])
-        municipality = FiveW.objects.values('municipality_id__name', 'municipality_id', "municipality_id__code").filter(
-            municipality_id__province_id__in=province_filter_id).distinct('municipality_id').exclude(
+        municipality = FiveW.objects.values('province_id', 'municipality_id__name', 'municipality_id',
+                                            "municipality_id__code").filter(
+            municipality_id__district_id__in=district_id).distinct('municipality_id').exclude(
             municipality_id__code=-1, allocated_budget=0)
         for part in municipality:
             node.append({
@@ -164,7 +165,7 @@ class RegionSankey(viewsets.ModelViewSet):
             })
             indexes.append(part['municipality_id__name'] + str(part['municipality_id__code']))
             municipality_id.append(part['municipality_id'])
-
+        print(municipality)
         # allocated_sum = query.aggregate(Sum('allocated_budget'))
         # nodes = list(query) + list(comp) + list(part)
         for i in range(0, len(district_id)):
@@ -182,15 +183,17 @@ class RegionSankey(viewsets.ModelViewSet):
                 'source': source,
                 'target': target,
                 'value': budget['allocated_budget__sum'],
+                "t": 1
             })
 
-        for i in range(0, len(district_id)):
-            q = FiveW.objects.values('district_id__name', 'municipality_id', 'district_id__code',
+        for i in range(0, len(municipality_id)):
+            q = FiveW.objects.values('province_id', 'district_id__name', 'municipality_id', 'district_id__code',
                                      'municipality_id__name',
                                      'municipality_id__code',
-                                     'allocated_budget').filter(municipality_id__in=municipality_id,
-                                                                district_id=district_id[i]).exclude(
+                                     'allocated_budget').filter(municipality_id=municipality_id[i],
+                                                                district_id__in=district_id).exclude(
                 municipality_id__code=-1, allocated_budget=0)
+            print(q)
             budget = q.aggregate(Sum('allocated_budget'))
             source = indexes.index(q[0]['district_id__name'] + str(q[0]['district_id__code']))
             target = indexes.index(q[0]['municipality_id__name'] + str(q[0]['municipality_id__code']))
@@ -198,6 +201,7 @@ class RegionSankey(viewsets.ModelViewSet):
                 'source': source,
                 'target': target,
                 'value': budget['allocated_budget__sum'],
+                "t": 2
             })
 
         return Response({"nodes": node, "links": links})
