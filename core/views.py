@@ -131,8 +131,10 @@ class RegionSankey(viewsets.ModelViewSet):
         else:
             province_filter_id = list(Province.objects.exclude(code=-1).values_list('id', flat=True).distinct())
 
+        print(province_filter_id)
         province = FiveW.objects.values('province_id__name', 'province_id', "province_id__code").filter(
-            province_id__in=province_filter_id).distinct('province_id')
+            province_id__in=province_filter_id).distinct('province_id').exclude(district_id__code=-1,
+                                                                                allocated_budget=0)
         for p in province:
             node.append({
                 'name': p['province_id__name'],
@@ -140,10 +142,11 @@ class RegionSankey(viewsets.ModelViewSet):
             })
             indexes.append(p['province_id__name'] + str(p['province_id__code']))
             province_id.append(p['province_id'])
-
+        print(province)
         district = FiveW.objects.values('district_id__name', 'district_id', 'district_id__code').filter(
-            province_id__in=province_filter_id).distinct(
-            'district_id').exclude(district_id__code=-1)
+            district_id__province_id__in=province_filter_id).distinct(
+            'district_id').exclude(district_id__code=-1, allocated_budget=0)
+        print(district)
         for c in district:
             node.append({
                 'name': c['district_id__name'],
@@ -151,9 +154,9 @@ class RegionSankey(viewsets.ModelViewSet):
             })
             indexes.append(c['district_id__name'] + str(c['district_id__code']))
             district_id.append(c['district_id'])
-        print(indexes)
         municipality = FiveW.objects.values('municipality_id__name', 'municipality_id', "municipality_id__code").filter(
-            province_id__in=province_filter_id).distinct('municipality_id').exclude(municipality_id__code=-1)
+            municipality_id__province_id__in=province_filter_id).distinct('municipality_id').exclude(
+            municipality_id__code=-1, allocated_budget=0)
         for part in municipality:
             node.append({
                 'name': part['municipality_id__name'],
@@ -169,7 +172,8 @@ class RegionSankey(viewsets.ModelViewSet):
                                      'province_id__name',
                                      'province_id__code',
                                      'allocated_budget').filter(district_id=district_id[i],
-                                                                province_id__in=province_filter_id)
+                                                                province_id__in=province_filter_id).exclude(
+                district_id__code=-1, allocated_budget=0)
 
             budget = q.aggregate(Sum('allocated_budget'))
             source = indexes.index(q[0]['province_id__name'] + str(q[0]['province_id__code']))
@@ -185,16 +189,16 @@ class RegionSankey(viewsets.ModelViewSet):
                                      'municipality_id__name',
                                      'municipality_id__code',
                                      'allocated_budget').filter(municipality_id__in=municipality_id,
-                                                                district_id=district_id[i])
-            if q:
-                budget = q.aggregate(Sum('allocated_budget'))
-                source = indexes.index(q[0]['district_id__name'] + str(q[0]['district_id__code']))
-                target = indexes.index(q[0]['municipality_id__name'] + str(q[0]['municipality_id__code']))
-                links.append({
-                    'source': source,
-                    'target': target,
-                    'value': budget['allocated_budget__sum'],
-                })
+                                                                district_id=district_id[i]).exclude(
+                municipality_id__code=-1, allocated_budget=0)
+            budget = q.aggregate(Sum('allocated_budget'))
+            source = indexes.index(q[0]['district_id__name'] + str(q[0]['district_id__code']))
+            target = indexes.index(q[0]['municipality_id__name'] + str(q[0]['municipality_id__code']))
+            links.append({
+                'source': source,
+                'target': target,
+                'value': budget['allocated_budget__sum'],
+            })
 
         return Response({"nodes": node, "links": links})
 
