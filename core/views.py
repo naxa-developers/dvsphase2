@@ -39,7 +39,8 @@ class ProgramSankey(viewsets.ModelViewSet):
         else:
             program_filter_id = list(Program.objects.values_list('id', flat=True))
 
-        program = FiveW.objects.values('program_id__name', 'program_id', "program_id__code").filter(
+        program = FiveW.objects.values('program_id__name', 'program_id', "program_id__code").exclude(
+            allocated_budget=0).filter(
             program_id__in=program_filter_id).distinct('program_id')
         for p in program:
             node.append({
@@ -49,7 +50,8 @@ class ProgramSankey(viewsets.ModelViewSet):
             indexes.append(p['program_id__name'] + str(p['program_id__code']))
             program_id.append(p['program_id'])
 
-        component = FiveW.objects.values('component_id__name', 'component_id', 'component_id__code').filter(
+        component = FiveW.objects.values('component_id__name', 'component_id', 'component_id__code').exclude(
+            allocated_budget=0).filter(
             program_id__in=program_filter_id).distinct(
             'component_id')
         for c in component:
@@ -60,7 +62,8 @@ class ProgramSankey(viewsets.ModelViewSet):
             indexes.append(c['component_id__name'] + str(c['component_id__code']))
             component_id.append(c['component_id'])
 
-        partner = FiveW.objects.values('supplier_id__name', 'supplier_id', "supplier_id__code").filter(
+        partner = FiveW.objects.values('supplier_id__name', 'supplier_id', "supplier_id__code").exclude(
+            allocated_budget=0).filter(
             program_id__in=program_filter_id).distinct('supplier_id')
         for part in partner:
             node.append({
@@ -76,7 +79,8 @@ class ProgramSankey(viewsets.ModelViewSet):
             q = FiveW.objects.values('component_id__name', 'component_id', 'component_id__code',
                                      'program_id__name',
                                      'program_id__code',
-                                     'allocated_budget').filter(component_id=component_id[i])
+                                     'allocated_budget').exclude(allocated_budget=0).filter(
+                component_id=component_id[i])
 
             budget = q.aggregate(Sum('allocated_budget'))
             source = indexes.index(q[0]['program_id__name'] + str(q[0]['program_id__code']))
@@ -87,12 +91,13 @@ class ProgramSankey(viewsets.ModelViewSet):
                 'value': budget['allocated_budget__sum'],
             })
 
-        for i in range(0, len(partner_id)):
+        for i in range(0, len(component_id)):
             q = FiveW.objects.values('component_id__name', 'supplier_id', 'component_id__code',
                                      'supplier_id__name',
                                      'supplier_id__code',
-                                     'allocated_budget').filter(supplier_id=partner_id[i],
-                                                                program_id__in=program_filter_id)
+                                     'allocated_budget').exclude(allocated_budget=0).filter(supplier_id__in=partner_id,
+                                                                                            component_id=component_id[
+                                                                                                i])
 
             budget = q.aggregate(Sum('allocated_budget'))
             source = indexes.index(q[0]['component_id__name'] + str(q[0]['component_id__code']))
@@ -458,7 +463,8 @@ class Fivew(viewsets.ReadOnlyModelViewSet):
                         'district_id', 'municipality_id']
 
     def get_queryset(self):
-        queryset = FiveW.objects.order_by('id')
+        queryset = FiveW.objects.only('id', 'supplier_id', 'program_id', 'component_id', 'second_tier_partner',
+                                        'province_id', 'district_id', 'municipality_id').order_by('id')
 
         return queryset
 
@@ -466,10 +472,10 @@ class Fivew(viewsets.ReadOnlyModelViewSet):
         serializer_class = FivewSerializer
         return serializer_class
 
-    def get_serializer_context(self):
-        context = super(Fivew, self).get_serializer_context()
-        context.update({"request": self.request})
-        return context
+    # def get_serializer_context(self):
+    #     context = super(Fivew, self).get_serializer_context()
+    #     context.update({"request": self.request})
+    #     return context
 
 
 class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
