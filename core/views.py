@@ -463,7 +463,8 @@ class Fivew(viewsets.ReadOnlyModelViewSet):
                         'district_id', 'municipality_id']
 
     def get_queryset(self):
-        queryset = FiveW.objects.order_by('id')
+        queryset = FiveW.objects.only('id', 'supplier_id', 'program_id', 'component_id', 'second_tier_partner',
+                                        'province_id', 'district_id', 'municipality_id').order_by('id')
 
         return queryset
 
@@ -471,10 +472,10 @@ class Fivew(viewsets.ReadOnlyModelViewSet):
         serializer_class = FivewSerializer
         return serializer_class
 
-    def get_serializer_context(self):
-        context = super(Fivew, self).get_serializer_context()
-        context.update({"request": self.request})
-        return context
+    # def get_serializer_context(self):
+    #     context = super(Fivew, self).get_serializer_context()
+    #     context.update({"request": self.request})
+    #     return context
 
 
 class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
