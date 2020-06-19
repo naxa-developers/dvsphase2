@@ -180,21 +180,21 @@ class RegionSankey(viewsets.ModelViewSet):
                 'value': budget['allocated_budget__sum'],
             })
 
-        for i in range(0, len(municipality_id)):
+        for i in range(0, len(district_id)):
             q = FiveW.objects.values('district_id__name', 'municipality_id', 'district_id__code',
                                      'municipality_id__name',
                                      'municipality_id__code',
-                                     'allocated_budget').filter(municipality_id=municipality_id[i],
-                                                                province_id__in=province_filter_id)
-
-            budget = q.aggregate(Sum('allocated_budget'))
-            source = indexes.index(q[0]['district_id__name'] + str(q[0]['district_id__code']))
-            target = indexes.index(q[0]['municipality_id__name'] + str(q[0]['municipality_id__code']))
-            links.append({
-                'source': source,
-                'target': target,
-                'value': budget['allocated_budget__sum'],
-            })
+                                     'allocated_budget').filter(municipality_id__in=municipality_id,
+                                                                district_id=district_id[i])
+            if q:
+                budget = q.aggregate(Sum('allocated_budget'))
+                source = indexes.index(q[0]['district_id__name'] + str(q[0]['district_id__code']))
+                target = indexes.index(q[0]['municipality_id__name'] + str(q[0]['municipality_id__code']))
+                links.append({
+                    'source': source,
+                    'target': target,
+                    'value': budget['allocated_budget__sum'],
+                })
 
         return Response({"nodes": node, "links": links})
 
@@ -464,7 +464,7 @@ class Fivew(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         queryset = FiveW.objects.only('id', 'supplier_id', 'program_id', 'component_id', 'second_tier_partner',
-                                        'province_id', 'district_id', 'municipality_id').order_by('id')
+                                      'province_id', 'district_id', 'municipality_id').order_by('id')
 
         return queryset
 
