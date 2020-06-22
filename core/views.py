@@ -125,6 +125,12 @@ class RegionSankey(viewsets.ModelViewSet):
         municipality_id = []
 
         # threshold = float(request.GET['threshold'])
+        if request.GET.getlist('threshold'):
+            threshold = float(request.GET['threshold'])
+
+        else:
+            threshold = 0.3
+
         if request.GET.getlist('province'):
             prov = request.GET['province']
             province_filter_id = prov.split(",")
@@ -144,7 +150,7 @@ class RegionSankey(viewsets.ModelViewSet):
 
         total_budget_sum = five_query.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
 
-        percentage_one = int((total_budget_sum * 0.3) / 100)
+        percentage_one = int((total_budget_sum * threshold) / 100)
         province = five_query.values('province_id__name', 'province_id', "province_id__code").distinct(
             'province_id').exclude(allocated_budget__lt=percentage_one)
         for p in province:
