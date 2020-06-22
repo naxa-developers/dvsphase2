@@ -17,6 +17,7 @@ from django.http import Http404, HttpResponse
 import json
 from django.db.models import Sum
 import math
+from django.db.models import Q
 
 
 # Create your views here.
@@ -123,6 +124,7 @@ class RegionSankey(viewsets.ModelViewSet):
         district_id = []
         municipality_id = []
 
+        # threshold = float(request.GET['threshold'])
         if request.GET.getlist('province'):
             prov = request.GET['province']
             province_filter_id = prov.split(",")
@@ -130,11 +132,21 @@ class RegionSankey(viewsets.ModelViewSet):
                 province_filter_id[i] = int(province_filter_id[i])
         else:
             province_filter_id = list(Province.objects.exclude(code=-1).values_list('id', flat=True).distinct())
+        if request.GET.getlist('program'):
+            prov = request.GET['program']
+            program_filter_id = prov.split(",")
+            for i in range(0, len(program_filter_id)):
+                program_filter_id[i] = int(program_filter_id[i])
+        else:
+            program_filter_id = list(Program.objects.values_list('id', flat=True))
 
-        print(province_filter_id)
-        province = FiveW.objects.values('province_id__name', 'province_id', "province_id__code").filter(
-            province_id__in=province_filter_id).distinct('province_id').exclude(province_id__code=-1,
-                                                                                allocated_budget=0)
+        five_query = FiveW.objects.filter(province_id__in=province_filter_id, program_id__in=program_filter_id)
+
+        total_budget_sum = five_query.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
+
+        percentage_one = int((total_budget_sum * 0.3) / 100)
+        province = five_query.values('province_id__name', 'province_id', "province_id__code").distinct(
+            'province_id').exclude(allocated_budget__lt=percentage_one)
         for p in province:
             node.append({
                 'name': p['province_id__name'],
@@ -142,11 +154,9 @@ class RegionSankey(viewsets.ModelViewSet):
             })
             indexes.append(p['province_id__name'] + str(p['province_id__code']))
             province_id.append(p['province_id'])
-        print(province)
-        district = FiveW.objects.values('province_id', 'district_id__name', 'district_id', 'district_id__code').filter(
-            district_id__province_id__in=province_filter_id).distinct(
-            'district_id').exclude(district_id__code=-1, allocated_budget=0)
-        print(district)
+        district = five_query.values('province_id', 'district_id__name', 'district_id',
+                                     'district_id__code').distinct(
+            'district_id').exclude(allocated_budget__lt=percentage_one).filter(~Q(district_id__code=-1))
         for c in district:
             node.append({
                 'name': c['district_id__name'],
@@ -154,10 +164,9 @@ class RegionSankey(viewsets.ModelViewSet):
             })
             indexes.append(c['district_id__name'] + str(c['district_id__code']))
             district_id.append(c['district_id'])
-        municipality = FiveW.objects.values('province_id', 'municipality_id__name', 'municipality_id',
-                                            "municipality_id__code").filter(
-            municipality_id__district_id__in=district_id).distinct('municipality_id').exclude(
-            municipality_id__code=-1, allocated_budget=0)
+        municipality = five_query.values('province_id', 'municipality_id__name', 'municipality_id',
+                                         "municipality_id__code").distinct('municipality_id').exclude(
+            allocated_budget__lt=percentage_one).filter(~Q(municipality_id__code=-1))
         for part in municipality:
             node.append({
                 'name': part['municipality_id__name'],
@@ -165,16 +174,12 @@ class RegionSankey(viewsets.ModelViewSet):
             })
             indexes.append(part['municipality_id__name'] + str(part['municipality_id__code']))
             municipality_id.append(part['municipality_id'])
-        print(municipality)
-        # allocated_sum = query.aggregate(Sum('allocated_budget'))
-        # nodes = list(query) + list(comp) + list(part)
         for i in range(0, len(district_id)):
-            q = FiveW.objects.values('district_id__name', 'district_id', 'district_id__code',
-                                     'province_id__name',
-                                     'province_id__code',
-                                     'allocated_budget').filter(district_id=district_id[i],
-                                                                province_id__in=province_filter_id).exclude(
-                district_id__code=-1, allocated_budget=0)
+            q = five_query.values('district_id__name', 'district_id', 'district_id__code',
+                                  'province_id__name',
+                                  'province_id__code',
+                                  'allocated_budget').filter(district_id=district_id[i]).exclude(
+                allocated_budget__lt=percentage_one)
 
             budget = q.aggregate(Sum('allocated_budget'))
             source = indexes.index(q[0]['province_id__name'] + str(q[0]['province_id__code']))
@@ -183,17 +188,15 @@ class RegionSankey(viewsets.ModelViewSet):
                 'source': source,
                 'target': target,
                 'value': budget['allocated_budget__sum'],
-                "t": 1
             })
 
         for i in range(0, len(municipality_id)):
-            q = FiveW.objects.values('province_id', 'district_id__name', 'municipality_id', 'district_id__code',
-                                     'municipality_id__name',
-                                     'municipality_id__code',
-                                     'allocated_budget').filter(municipality_id=municipality_id[i],
-                                                                district_id__in=district_id).exclude(
-                municipality_id__code=-1, allocated_budget=0)
-            print(q)
+            q = five_query.values('province_id', 'district_id__name', 'municipality_id', 'district_id__code',
+                                  'municipality_id__name',
+                                  'municipality_id__code',
+                                  'allocated_budget').filter(municipality_id=municipality_id[i]).exclude(
+                allocated_budget__lt=percentage_one)
+
             budget = q.aggregate(Sum('allocated_budget'))
             source = indexes.index(q[0]['district_id__name'] + str(q[0]['district_id__code']))
             target = indexes.index(q[0]['municipality_id__name'] + str(q[0]['municipality_id__code']))
@@ -201,10 +204,9 @@ class RegionSankey(viewsets.ModelViewSet):
                 'source': source,
                 'target': target,
                 'value': budget['allocated_budget__sum'],
-                "t": 2
             })
 
-        return Response({"nodes": node, "links": links})
+        return Response({"MaxThreshold": percentage_one, "nodes": node, "links": links})
 
 
 class PartnerView(viewsets.ReadOnlyModelViewSet):
