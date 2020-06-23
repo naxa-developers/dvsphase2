@@ -808,7 +808,14 @@ class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
     filterset_fields = ['id', 'name', 'marker_value', 'marker_category', ]
 
     def get_queryset(self):
-        queryset = Program.objects.order_by('id')
+        if self.request.GET.getlist('program'):
+            prov = self.request.GET['program']
+            program_filter_id = prov.split(",")
+            for i in range(0, len(program_filter_id)):
+                program_filter_id[i] = int(program_filter_id[i])
+            queryset = Program.objects.filter(id__in=program_filter_id).order_by('id')
+        else:
+            queryset = Program.objects.order_by('id')
         return queryset
 
     def get_serializer_class(self):
