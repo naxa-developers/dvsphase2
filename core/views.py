@@ -43,26 +43,29 @@ class ProgramSankey(viewsets.ModelViewSet):
         program = FiveW.objects.values('program_id__name', 'program_id', "program_id__code").exclude(
             allocated_budget=0).filter(
             program_id__in=program_filter_id).distinct('program_id')
+
         for p in program:
+            print('program_name', p['program_id__name'])
             node.append({
                 'name': p['program_id__name'],
                 'type': 'program',
             })
             indexes.append(p['program_id__name'] + str(p['program_id__code']))
             program_id.append(p['program_id'])
-
+        print('prog_list', indexes)
         component = FiveW.objects.values('component_id__name', 'component_id', 'component_id__code').exclude(
             allocated_budget=0).filter(
             program_id__in=program_filter_id).distinct(
             'component_id')
         for c in component:
+            print(c['component_id__name'])
             node.append({
                 'name': c['component_id__name'],
                 'type': 'component',
             })
             indexes.append(c['component_id__name'] + str(c['component_id__code']))
             component_id.append(c['component_id'])
-
+        print('com_list', indexes)
         partner = FiveW.objects.values('supplier_id__name', 'supplier_id', "supplier_id__code").exclude(
             allocated_budget=0).filter(
             program_id__in=program_filter_id).distinct('supplier_id')
@@ -82,7 +85,8 @@ class ProgramSankey(viewsets.ModelViewSet):
                                      'program_id__code',
                                      'allocated_budget').exclude(allocated_budget=0).filter(
                 component_id=component_id[i])
-
+            print('com_1', q[0]['component_id__name'])
+            print('prog_1', q[0]['program_id__name'])
             budget = q.aggregate(Sum('allocated_budget'))
             source = indexes.index(q[0]['program_id__name'] + str(q[0]['program_id__code']))
             target = indexes.index(q[0]['component_id__name'] + str(q[0]['component_id__code']))
