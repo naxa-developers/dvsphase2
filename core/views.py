@@ -80,11 +80,12 @@ class ProgramSankey(viewsets.ModelViewSet):
         # allocated_sum = query.aggregate(Sum('allocated_budget'))
         # nodes = list(query) + list(comp) + list(part)
         for i in range(0, len(component_id)):
-            q = FiveW.objects.values('component_id__name', 'component_id', 'component_id__code',
+            q = FiveW.objects.values('id', 'component_id__name', 'component_id', 'component_id__code',
                                      'program_id__name',
                                      'program_id__code',
                                      'allocated_budget').exclude(allocated_budget=0).filter(
                 component_id=component_id[i])
+            print('id', q[0]['id'])
             print('com_1', q[0]['component_id__name'])
             print('prog_1', q[0]['program_id__name'])
             budget = q.aggregate(Sum('allocated_budget'))
