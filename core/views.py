@@ -36,7 +36,7 @@ class ProgramSankey(viewsets.ModelViewSet):
             threshold = float(request.GET['threshold'])
 
         else:
-            threshold = 0.01
+            threshold = 0.0001
 
         if request.GET.getlist('program'):
             prov = request.GET['program']
