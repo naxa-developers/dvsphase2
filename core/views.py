@@ -512,19 +512,30 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         data = []
-        programs = self.request.data
-        program_d = programs['programId']
-        if len(program_d) == 0:
-            program = Program.objects.values_list('id', flat=True).order_by('id')
+        if request.GET.getlist('program_id'):
+            prov = request.GET['program_id']
+            program = prov.split(",")
+            for i in range(0, len(program)):
+                program[i] = int(program[i])
         else:
-            program = programs['programId']
+            program = list(Program.objects.values_list('id', flat=True))
         districts = District.objects.values('name', 'id', 'code', 'n_code').exclude(code='-1').order_by('id')
         for dist in districts:
             query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id').filter(
                 district_id=dist['id'], program_id__in=program)
+
+            if request.GET.getlist('field'):
+                field = request.GET['field']
+                value = request.GET['value']
+                kwargs = {
+                    '{0}__iexact'.format(field): value
+                }
+                query = query.filter(Q(**kwargs))
+
             if query:
                 allocated_sum = query.aggregate(Sum('allocated_budget'))
                 budget = allocated_sum['allocated_budget__sum']
+                prog = query.values_list('program_id__name', flat=True).distinct()
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
                 sect = query.exclude(component_id__sector__name=None).values_list('component_id__sector__name',
@@ -535,6 +546,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
 
             else:
                 budget = 0
+                prog = []
                 comp = []
                 part = []
                 sect = []
@@ -545,6 +557,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 'name': dist['name'],
                 'code': dist['code'],
                 'allocated_budget': budget,
+                'program': prog,
                 'component': comp,
                 'partner': part,
                 'sector': sect,
@@ -561,19 +574,30 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         data = []
-        programs = self.request.data
-        program_d = programs['programId']
-        if len(program_d) == 0:
-            program = Program.objects.values_list('id', flat=True).order_by('id')
+        if request.GET.getlist('program_id'):
+            prov = request.GET['program_id']
+            program = prov.split(",")
+            for i in range(0, len(program)):
+                program[i] = int(program[i])
         else:
-            program = programs['programId']
+            program = list(Program.objects.values_list('id', flat=True))
         provinces = Province.objects.values('name', 'id', 'code').exclude(code='-1').order_by('id')
         for province in provinces:
             query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id').filter(
                 province_id=province['id'], program_id__in=program)
+
+            if request.GET.getlist('field'):
+                field = request.GET['field']
+                value = request.GET['value']
+                kwargs = {
+                    '{0}__iexact'.format(field): value
+                }
+                query = query.filter(Q(**kwargs))
+
             if query:
                 allocated_sum = query.aggregate(Sum('allocated_budget'))
                 budget = allocated_sum['allocated_budget__sum']
+                prog = query.values_list('program_id__name', flat=True).distinct()
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
                 sect = query.exclude(component_id__sector__name=None).values_list('component_id__sector__name',
@@ -587,6 +611,7 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
 
             else:
                 budget = 0
+                prog = []
                 comp = []
                 part = []
                 sect = []
@@ -597,6 +622,7 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 'name': province['name'],
                 'code': str(province['code']),
                 'allocated_budget': budget,
+                'program': prog,
                 'component': comp,
                 'partner': part,
                 'sector': sect,
@@ -629,10 +655,13 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 municipality_id=municipality['id'],
                 program_id__in=program)
 
-            # kwargs = {
-            #     '{0}__iexact'.format('kathmandu_activity'): 'Intervention'
-            # }
-            # query = query.filter(Q(**kwargs))
+            if request.GET.getlist('field'):
+                field = request.GET['field']
+                value = request.GET['value']
+                kwargs = {
+                    '{0}__iexact'.format(field): value
+                }
+                query = query.filter(Q(**kwargs))
 
             if query.exists():
                 allocated_sum = query.aggregate(Sum('allocated_budget'))
