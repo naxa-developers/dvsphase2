@@ -90,7 +90,7 @@ class ProgramSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Program
-        fields = ('id', 'name', 'total_budget', 'component', 'marker_category', 'marker_value', 'sector', 'sub_sector')
+        fields = ('id', 'name', 'code', 'total_budget', 'component', 'marker_category', 'marker_value', 'sector', 'sub_sector')
 
     def get_component(self, obj):
         data = []
