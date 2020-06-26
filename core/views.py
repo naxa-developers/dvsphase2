@@ -608,25 +608,36 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
 
 class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
-    queryset = True
+    queryset = FiveW.objects.all()
     serializer_class = FivewSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id', 'program_id']
 
     def list(self, request, *args, **kwargs):
         data = []
-        programs = self.request.data
-        program_d = programs['programId']
-        if len(program_d) == 0:
-            program = Program.objects.values_list('id', flat=True).order_by('id')
+        if request.GET.getlist('program_id'):
+            prov = request.GET['program_id']
+            program = prov.split(",")
+            for i in range(0, len(program)):
+                program[i] = int(program[i])
         else:
-            program = programs['programId']
+            program = list(Program.objects.values_list('id', flat=True))
+
         municipalities = GapaNapa.objects.values('name', 'id', 'code').exclude(code='-1').order_by('id')
         for municipality in municipalities:
             query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id').filter(
                 municipality_id=municipality['id'],
                 program_id__in=program)
-            if query:
+
+            # kwargs = {
+            #     '{0}__iexact'.format('kathmandu_activity'): 'Intervention'
+            # }
+            # query = query.filter(Q(**kwargs))
+
+            if query.exists():
                 allocated_sum = query.aggregate(Sum('allocated_budget'))
                 budget = allocated_sum['allocated_budget__sum']
+                prog = query.values_list('program_id__name', flat=True).distinct()
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
                 sect = query.exclude(component_id__sector__name=None).values_list('component_id__sector__name',
@@ -636,6 +647,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
 
             else:
                 budget = 0
+                prog = []
                 comp = []
                 part = []
                 sect = []
@@ -646,6 +658,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 'name': municipality['name'],
                 'code': str(municipality['code']),
                 'allocated_budget': budget,
+                'program': prog,
                 'component': comp,
                 'partner': part,
                 'sector': sect,
