@@ -31,4 +31,5 @@ urlpatterns = [
     path('summar-nepal/', views.NepalSummaryApi.as_view({'get': 'list'}), name='summary-nepal'),
     path('sankey-program/', views.ProgramSankey.as_view({'get': 'list'}), name='sankey-program'),
     path('sankey-region/', views.RegionSankey.as_view({'get': 'list'}), name='region-region'),
+    path('covid-fields/', views.CovidChoice.as_view({'get': 'list'}), name='covid-fields'),
 ]
