@@ -878,3 +878,16 @@ class TravelTimeApi(viewsets.ReadOnlyModelViewSet):
     def get_serializer_class(self):
         serializer_class = TravelTimeSerializer
         return serializer_class
+
+
+class CovidChoice(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+
+    def list(self, request, *args, **kwargs):
+        return Response({
+            'field': ['kathmandu_activity', 'delivery_in_lockdown', 'covid_priority_3_12_Months',
+                      'covid_recovery_priority', 'providing_ta_to_local_government',
+                      'providing_ta_to_provincial_government'],
+            'kathmandu_activity': ['Intervention', 'Influence', 'N/A'],
+            'other': ['NA - Complete', 'Yes', 'Partial High', 'Partial Low', 'No']
+        })
