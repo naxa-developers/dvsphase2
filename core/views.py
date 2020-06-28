@@ -272,6 +272,7 @@ class DistrictIndicator(viewsets.ModelViewSet):
         id_indicator = id_indicators['indicatorId']
         health_id = Indicator.objects.get(indicator='number_hospitals')
         health_id_b = Indicator.objects.get(indicator='household_affected_covid')
+        financial = Indicator.objects.get(indicator='number_financial_institutions')
         for i in range(0, len(id_indicator)):
             cat_in = Indicator.objects.get(id=int(id_indicator[i]))
             if cat_in.federal_level == 'district':
@@ -297,7 +298,8 @@ class DistrictIndicator(viewsets.ModelViewSet):
                                                               'gapanapa_id__population').filter(
                         indicator_id=int(id_indicator[i]),
                         gapanapa_id__district_id=dist['id'])
-                    if int(id_indicator[i]) != health_id.id and int(id_indicator[i]) != health_id_b.id:
+                    if int(id_indicator[i]) != health_id.id and int(id_indicator[i]) != health_id_b.id and int(
+                            id_indicator[i]) != financial.id:
                         value_sum = 0
                         dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
                             district_id=dist['id']).aggregate(
@@ -353,9 +355,11 @@ class ProvinceIndicator(viewsets.ModelViewSet):
         id_indicator = id_indicators['indicatorId']
         health_id = Indicator.objects.get(indicator='number_hospitals')
         health_id_b = Indicator.objects.get(indicator='household_affected_covid')
+        financial = Indicator.objects.get(indicator='number_financial_institutions')
         for i in range(0, len(id_indicator)):
             for dist in province:
-                if int(id_indicator[i]) != health_id.id and int(id_indicator[i]) != health_id_b.id:
+                if int(id_indicator[i]) != health_id.id and int(id_indicator[i]) != health_id_b.id and int(
+                        id_indicator[i]) != financial.id:
                     value_sum = 0
                     dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
                         province_id=dist['id']).aggregate(
