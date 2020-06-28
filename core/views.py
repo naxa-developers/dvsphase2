@@ -268,10 +268,13 @@ class DistrictIndicator(viewsets.ModelViewSet):
             """
         data = []
         district = District.objects.values('name', 'id', 'n_code', 'code').exclude(code=-1).order_by('id')
-        id_indicators = request.data
-        id_indicator = id_indicators['indicatorId']
+        id_indicators = request.GET['indicator_id']
+        id_indicator = id_indicators.split(",")
+        for i in range(0, len(id_indicator)):
+            id_indicator[i] = int(id_indicator[i])
         health_id = Indicator.objects.get(indicator='number_hospitals')
         health_id_b = Indicator.objects.get(indicator='household_affected_covid')
+        financial = Indicator.objects.get(indicator='number_financial_institutions')
         for i in range(0, len(id_indicator)):
             cat_in = Indicator.objects.get(id=int(id_indicator[i]))
             if cat_in.federal_level == 'district':
@@ -297,7 +300,8 @@ class DistrictIndicator(viewsets.ModelViewSet):
                                                               'gapanapa_id__population').filter(
                         indicator_id=int(id_indicator[i]),
                         gapanapa_id__district_id=dist['id'])
-                    if int(id_indicator[i]) != health_id.id and int(id_indicator[i]) != health_id_b.id:
+                    if int(id_indicator[i]) != health_id.id and int(id_indicator[i]) != health_id_b.id and int(
+                            id_indicator[i]) != financial.id:
                         value_sum = 0
                         dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
                             district_id=dist['id']).aggregate(
@@ -349,13 +353,19 @@ class ProvinceIndicator(viewsets.ModelViewSet):
         data = []
         total = []
         province = Province.objects.values('name', 'id', 'code').exclude(code=-1).order_by('id')
-        id_indicators = request.data
-        id_indicator = id_indicators['indicatorId']
+        id_indicators = request.GET['indicator_id']
+        id_indicator = id_indicators.split(",")
+        for i in range(0, len(id_indicator)):
+            id_indicator[i] = int(id_indicator[i])
+        # id_indicators = request.data
+        # id_indicator = id_indicators['indicatorId']
         health_id = Indicator.objects.get(indicator='number_hospitals')
         health_id_b = Indicator.objects.get(indicator='household_affected_covid')
+        financial = Indicator.objects.get(indicator='number_financial_institutions')
         for i in range(0, len(id_indicator)):
             for dist in province:
-                if int(id_indicator[i]) != health_id.id and int(id_indicator[i]) != health_id_b.id:
+                if int(id_indicator[i]) != health_id.id and int(id_indicator[i]) != health_id_b.id and int(
+                        id_indicator[i]) != financial.id:
                     value_sum = 0
                     dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
                         province_id=dist['id']).aggregate(
@@ -703,12 +713,13 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
     serializer_class = FivewSerializer
 
     def list(self, request, *args, **kwargs):
-        programs = self.request.data
-        program_d = programs['programId']
-        if len(program_d) == 0:
-            program = Program.objects.values_list('id', flat=True).order_by('id')
+        if request.GET.getlist('program_id'):
+            prov = request.GET['program_id']
+            program = prov.split(",")
+            for i in range(0, len(program)):
+                program[i] = int(program[i])
         else:
-            program = programs['programId']
+            program = list(Program.objects.values_list('id', flat=True))
         query = FiveW.objects.filter(program_id__in=program)
         allocated_sum = query.aggregate(Sum('allocated_budget'))
         program = query.distinct('program_id').count()
@@ -757,13 +768,16 @@ class IndicatorApi(viewsets.ReadOnlyModelViewSet):
 
 
 class IndicatorData(viewsets.ReadOnlyModelViewSet):
-    permission_classes = []
+    permission_classes = [AllowAny]
+
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'indicator_id', 'gapanapa_id']
+    filterset_fields = ['id', ]
 
     def get_queryset(self):
-        id_indicators = self.request.data
-        id_indicator = id_indicators['indicatorId']
+        id_indicators = self.request.GET['indicator_id']
+        id_indicator = id_indicators.split(",")
+        for i in range(0, len(id_indicator)):
+            id_indicator[i] = int(id_indicator[i])
 
         for i in range(0, len(id_indicator)):
             id_indicator[i] = int(id_indicator[i])
@@ -882,6 +896,8 @@ class TravelTimeApi(viewsets.ReadOnlyModelViewSet):
 
 class CovidChoice(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
+    queryset = True
+    serializer_class = FivewSerializer
 
     def list(self, request, *args, **kwargs):
         return Response({
