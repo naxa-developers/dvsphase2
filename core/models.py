@@ -113,6 +113,7 @@ class Program(models.Model):
     total_budget = models.FloatField(null=True, blank=True, default=0)
     marker_category = models.ManyToManyField(MarkerCategory, related_name='Pmarkercategory', blank=True)
     marker_value = models.ManyToManyField(MarkerValues, related_name='MarkerValues', blank=True)
+    iati = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
         return self.name
