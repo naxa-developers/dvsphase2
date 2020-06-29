@@ -493,7 +493,7 @@ class Cmp(models.Model):
 
 class NepalSummary(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
-    value = models.CharField(max_length=100, null=True, blank=True)
+    value = models.FloatField(null=True, blank=True, default=0)
 
     def __str__(self):
         return self.name
