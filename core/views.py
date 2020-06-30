@@ -906,11 +906,11 @@ class CovidChoice(viewsets.ReadOnlyModelViewSet):
     def list(self, request, *args, **kwargs):
         return Response({
             'field': [{'name': 'Kathmandu Activity', 'value': 'kathmandu_activity'},
-                      {'name': 'Delivery In lockdown', 'value': 'delivery_in_lockdown'},
-                      {'name': 'Covid Priority 3_12 Months', 'value': 'covid_priority_3_12_Months'},
+                      {'name': 'Delivery In Lockdown', 'value': 'delivery_in_lockdown'},
+                      {'name': 'Covid Priority 3-12 Months', 'value': 'covid_priority_3_12_Months'},
                       {'name': 'Covid Recovery Priority', 'value': 'covid_recovery_priority'},
-                      {'name': 'Providing Ta To Local_government', 'value': 'providing_ta_to_local_government'},
-                      {'name': 'Providing Ta To Provincial Government',
+                      {'name': 'Providing TA to Local government', 'value': 'providing_ta_to_local_government'},
+                      {'name': 'Providing TA To Provincial Government',
                        'value': 'providing_ta_to_provincial_government'}],
             'kathmandu_activity': ['Intervention', 'Influence', 'N/A'],
             'other': ['NA - Complete', 'Yes', 'Partial High', 'Partial Low', 'No']
