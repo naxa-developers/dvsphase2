@@ -47,9 +47,11 @@ class ProgramSankey(viewsets.ModelViewSet):
             program_filter_id = list(Program.objects.values_list('id', flat=True))
 
         five_query = FiveW.objects.filter(program_id__in=program_filter_id)
-        total_budget_sum = five_query.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
-
-        percentage_one = int((total_budget_sum * threshold) / 100)
+        if five_query.exists():
+            total_budget_sum = five_query.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
+            percentage_one = int((total_budget_sum * threshold) / 100)
+        else:
+            percentage_one = 0
         program = five_query.values('program_id__name', 'program_id', "program_id__code").exclude(
             allocated_budget__lt=percentage_one).filter(
             program_id__in=program_filter_id).distinct('program_id')
@@ -158,10 +160,12 @@ class RegionSankey(viewsets.ModelViewSet):
             program_filter_id = list(Program.objects.values_list('id', flat=True))
 
         five_query = FiveW.objects.filter(province_id__in=province_filter_id, program_id__in=program_filter_id)
+        if five_query.exists():
+            total_budget_sum = five_query.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
 
-        total_budget_sum = five_query.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
-
-        percentage_one = int((total_budget_sum * threshold) / 100)
+            percentage_one = int((total_budget_sum * threshold) / 100)
+        else:
+            percentage_one = 0
         province = five_query.values('province_id__name', 'province_id', "province_id__code").distinct(
             'province_id').exclude(allocated_budget__lt=percentage_one)
         for p in province:

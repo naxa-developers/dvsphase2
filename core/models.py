@@ -122,6 +122,7 @@ class Program(models.Model):
 class Province(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
     code = models.CharField(max_length=100, null=True, blank=True)
+    bbox = models.CharField(max_length=600, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -132,6 +133,7 @@ class District(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
     code = models.CharField(max_length=100, null=True, blank=True)
     n_code = models.IntegerField(null=True, blank=True)
+    bbox = models.CharField(max_length=600, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -176,6 +178,7 @@ class GapaNapa(models.Model):
     hlcit_code = models.CharField(max_length=100, null=True, blank=True)
     p_code = models.CharField(max_length=100, null=True, blank=True)
     code = models.IntegerField(null=True, blank=True)
+    bbox = models.CharField(max_length=600, null=True, blank=True)
 
     def __str__(self):
         return self.name

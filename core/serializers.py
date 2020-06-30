@@ -158,7 +158,7 @@ class ProgramSerializer(serializers.ModelSerializer):
 class ProvinceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Province
-        fields = ('id', 'name', 'code')
+        fields = ('id', 'name', 'code', 'bbox')
 
 
 class FilterSerializer(serializers.ModelSerializer):
@@ -224,7 +224,7 @@ class DistrictSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = District
-        fields = ('id', 'province_id', 'name', 'code', 'n_code')
+        fields = ('id', 'province_id', 'name', 'code', 'n_code', 'bbox')
 
     # def get_province_name(self, obj):
     #     return str(obj.province_id.name)
@@ -236,7 +236,7 @@ class GaanapaSerializer(serializers.ModelSerializer):
     class Meta:
         model = GapaNapa
         fields = ('id', 'province_id', 'district_id', 'hlcit_code', 'name', 'gn_type_np',
-                  'code', 'population')
+                  'code', 'population', 'bbox')
 
     def get_code(self, obj):
         return str(obj.code)
