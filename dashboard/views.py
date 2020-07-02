@@ -782,7 +782,7 @@ class IndicatorList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         data = super(IndicatorList, self).get_context_data(**kwargs)
-        indicator_list = Indicator.objects.order_by('id')
+        indicator_list = Indicator.objects.filter(show_flag=1).order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['list'] = indicator_list
