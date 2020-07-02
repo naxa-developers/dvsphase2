@@ -31,10 +31,10 @@
             <tr>
                 <th>Program</th>
                 <th>Code</th>
-                <th>Assigned org.</th>
-                <th>start date</th>
+<!--                <th>Assigned org.</th>-->
+<!--                <th>start date</th>-->
                 <th>budget</th>
-                <th>status</th>
+<!--                <th>status</th>-->
                 <th></th>
             </tr>
             </thead>
@@ -45,42 +45,42 @@
                     <strong><a href="#">{{program.name}}</a></strong>
                 </td>
                 <td>{{program.code}}</td>
-                <td>
+<!--                <td>-->
 
-                    <div class="org-list">
+<!--                    <div class="org-list">-->
 
-                        {% for partner in program.partner.all %}
+<!--                        {% for partner in program.partner.all %}-->
 
-                        {% if partner.thumbnail %}
+<!--                        {% if partner.thumbnail %}-->
 
-                        <a href="#">
-                            <img src="{{ partner.thumbnail.url }}" alt="org"/>
-                        </a>
+<!--                        <a href="#">-->
+<!--                            <img src="{{ partner.thumbnail.url }}" alt="org"/>-->
+<!--                        </a>-->
 
-                        {% else %}
-
-
-                        {% endif %}
-
-                        {% endfor %}
+<!--                        {% else %}-->
 
 
-                    </div>
-                </td>
-                <td>
-                    <time>june 03,2012</time>
-                </td>
-                {% if program.budget %}
-                <td><span class="budget">{{program.budget}}</span></td>
+<!--                        {% endif %}-->
+
+<!--                        {% endfor %}-->
+
+
+<!--                    </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <time>june 03,2012</time>-->
+<!--                </td>-->
+                {% if program.total_budget %}
+                <td><span class="budget">{{program.total_budget}}</span></td>
                 {% else %}
                 <td><span class="budget">No data</span></td>
                 {% endif %}
 
-                {% if program.status == 'ongoing' %}
-                <td><span class="status yellow">{{program.status}}</span></td>
-                {% else %}
-                <td><span class="status green">{{program.status}}</span></td>
-                {% endif %}
+<!--                {% if program.status == 'ongoing' %}-->
+<!--                <td><span class="status yellow">{{program.status}}</span></td>-->
+<!--                {% else %}-->
+<!--                <td><span class="status green">{{program.status}}</span></td>-->
+<!--                {% endif %}-->
 
                 <td>
                     <div class="table-action">
