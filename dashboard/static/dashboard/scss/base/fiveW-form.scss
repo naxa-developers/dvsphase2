@@ -1,0 +1,110 @@
+form{
+    &.fiveW-form{
+        .collapse-section{
+            padding: 0 40px;
+            .accordion{
+                .card{
+                    margin-bottom: 20px;
+                    .card-header{
+                        padding: 0 1.25rem;
+                        background: lighten($blue-light, 20%);
+
+                        button{
+                            text-align: left;
+                            color: $color-blue;
+                            @include animate_all(all 0.5s linear);
+                            position: relative;
+                            &:hover{
+                                text-decoration: none;
+                            }
+                            &:after{
+                                font-family: 'Material Icons';
+                                content: 'arrow_drop_down';
+                                color: $color-blue;
+                                font-size: 28px;
+                                position: absolute;
+                                right: 0;
+                                top: -12px;
+
+                            }
+                        }
+
+                    }
+                    .collapse{
+                        .row-wrapper{
+                            padding: 1rem;
+                            .col-wrapper{
+                                .title{
+                                    margin: .938rem 0 1.125rem;
+                                    .switch{
+                                        margin-top: 10px;
+                                        position: relative;
+                                        display: inline-block;
+                                        width: 50px;
+                                        height: 25px;
+                                        .slider{
+                                            position: absolute;
+                                            cursor: pointer;
+                                            top: 0;
+                                            left: 0;
+                                            right: 0;
+                                            bottom: 0;
+                                            background: $color-grey;
+                                            @include animate_all(all .2s linear);
+                                            &:before{
+                                                position: absolute;
+                                                content: "";
+                                                height: 18px;
+                                                width: 18px;
+                                                @include animate_all(all .4s linear);
+                                                background-color: $color-white;
+                                                left: 4px;
+                                                bottom: 4px;
+                                            }
+                                            &.round{
+                                                @include radius(50px);
+                                                &:before{
+                                                    border-radius: 50%;
+                                                }
+                                            }
+
+
+                                        }
+                                        input{
+                                            opacity: 0;
+                                            width: 0;
+                                            height: 0;
+                                            &:checked~{
+                                                .slider{
+                                                    background: $blue-light;
+                                                    &:before{
+                                                        transform: translateX(26px);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    span{
+                                        display: block;
+                                        color: darken($color-blue, 20%);
+                                    }
+                                }
+                                .form-group{
+                                    &.form-flex{
+                                        @include flex;
+                                        flex-direction: column;
+                                    }
+                                    .custom-select{
+                                        &.select-choice{
+                                            height: calc(3.25rem + 2px);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

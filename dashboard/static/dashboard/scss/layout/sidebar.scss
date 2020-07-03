@@ -8,6 +8,29 @@
     box-shadow: none;
     z-index: 10;
     background-color: $color-blue;
+    overflow-y:auto;
+            -webkit-overflow-scrolling:touch;
+            -ms-overflow-style:-ms-autohiding-scrollbar;
+            // max-height: calc(100vh - 250px);
+            // height: 100vh;
+            height: 100%;
+        
+
+            &::-webkit-scrollbar {
+                width: 4px;
+                background: $color-border;
+                @include radius(4px);
+            }
+
+            &::-webkit-scrollbar-track {
+                background-color:$color-border;
+                @include radius(4px);
+            }
+
+            &::-webkit-scrollbar-thumb {
+                @include radius(4px);
+                background: $color-bg-text;
+            }
     .navbar-brand {
         display: flex;
         align-items: center;
@@ -39,6 +62,7 @@
             margin:0;
             li{
                 border-bottom: 1px solid  rgba($color-blue, 0.2);
+                @include animate_all(all .5s ease-in-out);
                 .menu-toggle{
                     &::before,
                     &::after{
@@ -52,12 +76,7 @@
                     &::before{
                         content: 'chevron_right';
                     }
-                    &.toggled{
-                        color: $blue-light;
-                        &::before{
-                            content:'expand_less';
-                        }
-                    }
+                    
                 }
                 a{
                     color: $blue-light;
@@ -68,8 +87,9 @@
                     font-size:1rem;
                     font-family: $montserrat;
                     font-weight: 600;
+                    @include animate_all(all .5s ease-in-out);
                     i{
-                        @include animate_all(all .5s);
+                        @include animate_all(all .5s ease-in-out);
                         width: 20px;
                         font-size:1.3rem;
                     }
@@ -87,9 +107,11 @@
                     }
                 }
                 &.active{
+                    
                     a{
                         background-color: $color-secondary;
                         color:$color-white;
+                       
                     }
                 }
                 .ml-menu {
@@ -112,6 +134,14 @@
                             &:hover{
                                 background-color: $color-secondary;
                             }
+                        }
+                    }
+                }
+                &.open{
+                    .menu-toggle{
+                        color: $blue-light;
+                        &::before{
+                            content:'expand_less';
                         }
                     }
                 }

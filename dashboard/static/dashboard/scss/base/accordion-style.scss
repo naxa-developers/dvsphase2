@@ -1,0 +1,166 @@
+.dfid-wrapper{
+    .page-wrapper{
+        main{
+            .program-form{
+                .collapse-section{
+                    &:last-child{
+                        margin-bottom: 0;
+                    }
+                    .accordion{
+                        .card{
+                            .card-header{
+                                background: $color-focus;
+                                transition: all 0.6s ease-in-out;
+                                box-shadow: 0px 1px 3px $blue-light;
+                                &:hover{
+                                    background: darken($color-focus, 10%);
+                                }
+                                .btn-heading{
+                                    button{
+                                        font-size: 1.325rem;
+                                        font-weight: 600;
+                                        color: darken($blue-light, 10%);
+                                        text-decoration: none;
+                                        &:hover{
+                                            text-decoration: none;
+                                        }
+                                    }
+                                }
+
+                            }
+                            .row-wrapper{
+                                background: #f2f2f2;
+                                padding: 4rem 2.5rem 2rem;
+                                .col-wrapper{
+                                    padding: 0 2rem;
+                                    .title{
+                                        padding-bottom: 2.25rem;
+                                        span{
+                                            display: block;
+                                            font-weight: 500;
+                                            font-size: 1.25rem;
+                                        }
+                                    }
+                                    .form-group{
+                                        label{
+                                            margin-bottom: 0.25rem;
+                                            font-weight: 400;
+                                        }
+                                        input{
+                                            cursor: pointer;
+                                            transition: all 0.4s ease-in;
+                                            background: $color-white;
+                                            height: 45px;
+                                            color: darken($blue-light, 10%);
+                                            &:hover{
+                                                background: #d6d6d6;
+                                            }
+                                            &:focus{
+                                                background: #e7e7e7;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+/* less than 991px; */
+@media only screen and (max-width: $lg-tab){
+    .dfid-wrapper{
+        .page-wrapper{
+            main{
+                .program-form{
+                    .collapse-section{
+                        .accordion{
+                            .card{
+                                .row-wrapper{
+                                    padding: 4rem 2rem 2rem;
+                                    .col-wrapper{
+                                        padding: 0 1rem;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* less than 767px; */
+@media only screen and (max-width: $mb-xl){
+    .dfid-wrapper{
+        .page-wrapper{
+            main{
+                .program-form{
+                    .collapse-section{
+                        .accordion{
+                            .card{
+                                .card-header{
+                                    .btn-heading{
+                                        button{
+                                            font-size: 1.25rem;
+                                        }
+                                    }
+                                }
+                                .row-wrapper{
+                                    .col-wrapper{
+                                        margin-bottom: 4rem;
+                                        &:last-child{
+                                            margin-bottom: 0rem;
+                                    }
+                                        .title{
+                                            padding-bottom: 1rem;;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* less than 576px; */
+@media only screen and (max-width: $mb-lg){
+    .dfid-wrapper{
+        .page-wrapper{
+            main{
+                .program-form{
+                    .collapse-section{
+                        .accordion{
+                            .card{
+                                .card-header{
+                                    .btn-heading{
+                                        button{
+                                            font-size: 1.25rem;
+                                        }
+                                    }
+                                }
+                                .row-wrapper{
+                                    .col-wrapper{
+                                        .title{
+                                            span{
+                                                font-size: 1.125rem;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+                                        
+

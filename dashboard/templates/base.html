@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Custom Css -->
     <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'dashboard/css/custom-my.css' %}">
+<!--    <link rel="stylesheet" href="{% static 'dashboard/css/custom-my.css' %}">-->
     <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap-datepicker.min.css' %}">
 </head>
 
@@ -88,9 +88,9 @@
 
                 {% if perms.core.view_sector or perms.core.view_subsector %}
                 {% if active == 'sector' %}
-                <li class="menu-item active">
+                <li class="menu-item active submenu">
                     {% else %}
-                <li class="menu-item">
+                <li class="menu-item submenu">
                     {% endif %}
                     <a href="javascript:void(0);" class="menu-toggle active-red"><i
                             class="material-icons">category</i><span>Sectors</span></a>
@@ -108,9 +108,9 @@
 
                 {% if perms.core.view_markercategory or perms.core.view_markervalues %}
                 {% if active == 'marker' %}
-                <li class="menu-item active">
+                <li class="menu-item active submenu">
                     {% else %}
-                <li class="menu-item">
+                <li class="menu-item submenu">
                     {% endif %}
                     <a href="javascript:void(0);" class="menu-toggle active-red"><i
                             class="material-icons">pie_chart</i><span>markers</span></a>
@@ -128,9 +128,9 @@
 
                 {% if perms.core.view_indicator %}
                 {% if active == 'indicator' %}
-                <li class="menu-item active">
+                <li class="menu-item active submenu">
                     {% else %}
-                <li class="menu-item">
+                <li class="menu-item submenu">
                     {% endif %}
                     <a href="javascript:void(0);" class="menu-toggle active-red"><i
                             class="material-icons">drag_indicator</i><span>Indicators</span></a>
@@ -145,9 +145,9 @@
 
                 {% if perms.core.view_province or perms.core.view_district or perms.core.view_gapanapa %}
                 {% if active == 'location' %}
-                <li class="menu-item active">
+                <li class="menu-item active submenu">
                     {% else %}
-                <li class="menu-item">
+                <li class="menu-item submenu">
                     {% endif %}
                     <a href="javascript:void(0);" class="menu-toggle active-red"><i
                             class="material-icons">room</i><span>Locations</span></a>

@@ -183,4 +183,90 @@
             display: none;
         }
     }
+    .activities-category {
+        .dfid-program {
+            padding: 1rem;
+            margin-bottom: 1rem;
+
+            .status {
+                position: initial;
+                top: inherit;
+                right: inherit;
+                min-width:auto;
+                padding:0;
+                font-size: .775rem;
+                background-color:transparent;
+            }
+
+            .organization {
+                flex-wrap: nowrap;
+                align-items: center;
+
+                figure {
+                    margin: 0 1rem 0 0;
+                    max-width: 40px;
+
+                    img {
+                        width: 40px;
+                        height: 40px;
+                        @include radius(50%);
+                    }
+                }
+
+                h4 {
+                    font-size: .875rem;
+                    font-weight: 600;
+                }
+            }
+
+            .programm-content {
+                .flex-start {
+                    flex-wrap: nowrap;
+
+                    i {
+                        max-width: 24px;
+                        margin-right: 1rem;
+                        color: $color-secondary;
+                    }
+
+                    .content {
+                        h6 {
+                            color: $color-blue;
+                            font-family: $montserrat;
+                            font-size: .875rem;
+                            font-weight: 600;
+                            text-transform: capitalize;
+                            margin: 0;
+                            line-height: 1.5;
+                            // display: -webkit-box;
+                            // -webkit-line-clamp: 1;
+                            // -webkit-box-orient: vertical;
+                            // overflow: hidden;
+                            
+                            // overflow: hidden;
+                            // text-overflow: ellipsis;
+                            // white-space: nowrap;
+                        }
+
+                        p {
+                            margin: 0 0 .25rem 0;
+                            font-weight: 500;
+                            color: $color-primary;
+                            text-transform: initial;
+                            font-family: $montserrat;
+
+                            a {
+                                color: $color-blue;
+                            }
+                        }
+                    }
+                }
+            }
+
+            time {
+                text-transform: capitalize;
+                color: $color-bg-text;
+            }
+        }
+    }
 }
