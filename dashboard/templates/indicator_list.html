@@ -33,6 +33,8 @@
                 <th>Category</th>
                 <th>Source</th>
                 <th>Federal Level</th>
+                <th>unit</th>
+                <th>Data Type</th>
                 <th></th>
             </tr>
             </thead>
@@ -53,6 +55,8 @@
                 </td>
                 <td>{% if indicator.source == 'nan' %} {% else %} {{ indicator.source }} {% endif %}</td>
                 <td>{{ indicator.federal_level }}</td>
+                <td>{{ indicator.unit }}</td>
+                <td>{{ indicator.data_type }}</td>
 
                 <td>
                     <div class="table-action">

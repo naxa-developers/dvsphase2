@@ -6,6 +6,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('upload/', views.uploadData, name='upload'),
     path('upload-shapefile/', views.ShapefileUpload, name='upload-shapefile'),
+    path('bulk-upload/', views.bulkCreate, name='bulk-upload'),
 
     path('invitation/', views.Invitation, name='invitation'),
     path('login-test/', views.login_test, name='login-test'),

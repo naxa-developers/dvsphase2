@@ -53,21 +53,21 @@
 
                             {% if form.instance.federal_level == "palika level" %}
 
-                            <option value="palika level" selected>Palika Level</option>
-                            <option value="district level">District Level</option>
-                            <option value="province level">Province Level</option>
+                            <option value="palika" selected>Palika Level</option>
+                            <option value="district">District Level</option>
+                            <option value="province">Province Level</option>
 
                             {% elif form.instance.federal_level == "district level" %}
 
-                            <option value="palika level">Palika Level</option>
-                            <option value="district level" selected>District Level</option>
+                            <option value="palika">Palika Level</option>
+                            <option value="district" selected>District Level</option>
                             <option value="province level">Province Level</option>
 
                             {% else %}
 
-                            <option value="palika level" selected>Palika Level</option>
-                            <option value="district level">District Level</option>
-                            <option value="province level" selected>Province Level</option>
+                            <option value="palika" selected>Palika Level</option>
+                            <option value="district">District Level</option>
+                            <option value="province " selected>Province Level</option>
 
                             {% endif %}
 
@@ -110,11 +110,29 @@
                     <div class="form-group ">
                         <label for="id_category" class="">Category</label>
                         <input type="text" class="form-control" name="category" maxlength="500" id="id_category"
-                               placeholder="category" required/>
+                               placeholder="category" value="{{ form.instance.category }}" required/>
                     </div>
                 </div>
 
             </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_unit" class="">unit</label>
+                        <input type="text" class="form-control" name="unit" maxlength="1500" id="id_unit"
+                               placeholder="unit" value="{{ form.instance.unit }}" required/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_data_type" class="">Data type</label>
+                        <input type="text" class="form-control" name="data_type" maxlength="500" id="id_data_type"
+                               placeholder="Data Type" value="{{ form.instance.data_type }}" required/>
+                    </div>
+                </div>
+
+                </div>
 
 
             <div class="form-group mrt-100">

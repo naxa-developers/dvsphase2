@@ -39,6 +39,7 @@ from django.contrib.admin.models import LogEntry
 from datetime import datetime, timedelta
 from django.core.paginator import Paginator
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.core.exceptions import ObjectDoesNotExist
 
 
 # Create your views here.
@@ -52,6 +53,61 @@ def login_test(request, **kwargs):
     # return HttpResponse(kwargs['group'] + kwargs['partner'])
     # return render(request, 'dashboard.html')
     # return HttpResponse(request.user.has_perm('core.add_program'))
+
+
+@login_required()
+def bulkCreate(request):
+    if "GET" == request.method:
+        return render(request, 'bulk_upload.html')
+    else:
+        csv = request.FILES["shapefile"]
+        uploaded_file = request.FILES['shapefile']
+
+        if uploaded_file.name.endswith('.csv'):
+            df = pd.read_csv(uploaded_file).fillna('')
+        elif uploaded_file.name.endswith(('.xls', 'xlsx')):
+            df = pd.read_excel(uploaded_file).fillna('')
+        else:
+            messages.error(request, "Please upload a .csv or .xls file")
+
+        upper_range = len(df)
+
+        success_count = 0
+        for row in range(0, upper_range):
+            try:
+                # municipality = GapaNapa.objects.get(hlcit_code=df['Palika ID'][row]),
+                # province_id = Province.objects.get(code=str(int(df['Province ID'][row]))),
+                # district_id = District.objects.get(code=str(int(df['District ID'][row]))),
+                # branch = None if df['Branch'][row] == '' else df['Branch'][row]
+                # numTablets = 0 if df['No. of Tablets'][row] == '' else df['No. of Tablets'][row]
+                five = FiveW.objects.update_or_create(
+                    supplier_id=Partner.objects.get(code=str(int(df['1st Tier Partner Code'][row]))),
+                    # second_tier_partner=Partner.objects.get(code=str(int(df['2nd Tier Partner Code'][row]))),
+                    second_tier_partner_name=df['2nd Tier Partner'][row],
+                    component_id=Project.objects.get(code=str(df['Component Code'][row])),
+                    program_id=Program.objects.get(code=str(int(df['Prog. Code'][row]))),
+                    province_id=Province.objects.get(code=str(int(df['Province ID'][row]))),
+                    district_id=District.objects.get(code=str(int(df['District ID'][row]))),
+                    municipality_id=GapaNapa.objects.get(hlcit_code=df['Palika ID'][row]),
+                    status=df['Project Status'][row],
+                    allocated_budget=float(df['Budget'][row]),
+                    kathmandu_activity=df['Kathmandu Activity'][row],
+                    delivery_in_lockdown=df['Delivery in Lockdown'][row],
+                    covid_priority_3_12_Months=df['COVID Priority 3-12 Months'][row],
+                    covid_recovery_priority=df['COVID Recovery Priority'][row],
+                    providing_ta_to_local_government=df['Providing TA to Local Government'][row],
+                    providing_ta_to_provincial_government=df['Providing TA to Provincial Government'][row],
+                )
+                success_count += 1
+            except ObjectDoesNotExist as e:
+                print('error')
+                messages.add_message(request, messages.WARNING, str(
+                    e) + " for row " + str(
+                    row + 2) + ' Please check the column of following row and only re-upload following row number to minimize the risk of duplication')
+                continue
+        messages.add_message(request, messages.SUCCESS, str(
+            success_count) + "Row Of Five-w Data Added ")
+        return redirect('/dashboard/five-list/', messages)
 
 
 @login_required()
@@ -592,27 +648,22 @@ class FiveList(LoginRequiredMixin, ListView):
         user_data = UserProfile.objects.get(user=user)
         group = Group.objects.get(user=user)
         if group.name == 'admin':
-            five = FiveW.objects.values('id', 'supplier_id__name', 'second_tier_partner__name', 'program_id__name',
-                                        'component_id__name',
-                                        'ward', 'local_partner', 'project_title', 'status', 'start_date', 'end_date',
-                                        'province_id__name', 'district_id__name', 'municipality_id__name',
-                                        'allocated_budget', 'male_beneficiary', 'female_beneficiary',
-                                        'total_beneficiary').order_by(
-                'id')
+            five = FiveW.objects.values('id', 'supplier_id__name', 'second_tier_partner_name', 'program_id__name',
+                                        'component_id__name', 'status', 'province_id__name', 'district_id__name',
+                                        'municipality_id__name', 'allocated_budget').order_by('id')
+
+
+
+
         else:
             five = FiveW.objects.filter(supplier_id=user_data.partner.id).values('id', 'supplier_id__name',
-                                                                                 'second_tier_partner__name',
+                                                                                 'second_tier_partner_name',
                                                                                  'program_id__name',
-                                                                                 'component_id__name',
-                                                                                 'ward', 'local_partner',
-                                                                                 'project_title', 'status',
-                                                                                 'start_date', 'end_date',
+                                                                                 'component_id__name', 'status',
                                                                                  'province_id__name',
                                                                                  'district_id__name',
                                                                                  'municipality_id__name',
-                                                                                 'allocated_budget', 'male_beneficiary',
-                                                                                 'female_beneficiary',
-                                                                                 'total_beneficiary').order_by('id')
+                                                                                 'allocated_budget').order_by('id')
 
         paginator = Paginator(five, 500)
         page_numbers_range = 500
@@ -787,7 +838,7 @@ class IndicatorList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         data = super(IndicatorList, self).get_context_data(**kwargs)
-        indicator_list = Indicator.objects.order_by('id')
+        indicator_list = Indicator.objects.filter(show_flag=1).order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['list'] = indicator_list
@@ -1067,8 +1118,13 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         data = super(FiveCreate, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
-        partner = Partner.objects.filter(id=user_data.partner.id).order_by('id')
-        all_partner = Partner.objects.values('id', 'name').order_by('id')
+        group = Group.objects.get(user=user)
+        if group.name == 'admin':
+            partner = Partner.objects.order_by('id')
+        else:
+            partner = Partner.objects.filter(id=user_data.partner.id).order_by('id')
+
+        all_partner = Partner.objects.order_by('id')
         program = Program.objects.values('id', 'name').order_by('id')
         project = Project.objects.values('id', 'name').order_by('id')
         province = Province.objects.values('id', 'name').order_by('id')
@@ -1077,9 +1133,9 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         contact = PartnerContact.objects.values('id', 'name').order_by('id')
         data['user'] = user_data
         data['partners'] = partner
-        data['all_partner'] = all_partner
         data['programs'] = program
         data['projects'] = project
+        data['all_partner'] = all_partner
         data['provinces'] = province
         data['districts'] = district
         data['municipalities'] = municipality
@@ -1090,30 +1146,30 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         return reverse_lazy('five-list')
 
     def form_valid(self, form):
-        contract_id = self.request.POST['contract_value_id']
+        # contract_id = self.request.POST['contract_value_id']
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        if contract_id == '0':
-            data_filter = budget_to_second_tier = BudgetToSecondTier.objects.filter(
-                supplier_id_id=self.request.POST['supplier_id'],
-                second_tier_partner_id=self.request.POST['second_tier_partner'],
-                program_id_id=self.request.POST['program_id'],
-                component_id_id=self.request.POST['component_id'], )
-
-            print(data_filter.count())
-            if data_filter.count() == 0:
-                budget_to_second_tier = BudgetToSecondTier.objects.create(
-                    supplier_id_id=self.request.POST['supplier_id'],
-                    second_tier_partner_id=self.request.POST['second_tier_partner'],
-                    program_id_id=self.request.POST['program_id'],
-                    component_id_id=self.request.POST['component_id'],
-                    contract_value=self.request.POST['contract_value'])
-
-
-
-        else:
-            budget_to_second_tier = BudgetToSecondTier.objects.filter(id=contract_id).update(
-                contract_value=self.request.POST['contract_value'])
+        # if contract_id == '0':
+        #     data_filter = budget_to_second_tier = BudgetToSecondTier.objects.filter(
+        #         supplier_id_id=self.request.POST['supplier_id'],
+        #         second_tier_partner_id=self.request.POST['second_tier_partner'],
+        #         program_id_id=self.request.POST['program_id'],
+        #         component_id_id=self.request.POST['component_id'], )
+        #
+        #     print(data_filter.count())
+        #     if data_filter.count() == 0:
+        #         budget_to_second_tier = BudgetToSecondTier.objects.create(
+        #             supplier_id_id=self.request.POST['supplier_id'],
+        #             second_tier_partner_id=self.request.POST['second_tier_partner'],
+        #             program_id_id=self.request.POST['program_id'],
+        #             component_id_id=self.request.POST['component_id'],
+        #             contract_value=self.request.POST['contract_value'])
+        #
+        #
+        #
+        # else:
+        #     budget_to_second_tier = BudgetToSecondTier.objects.filter(id=contract_id).update(
+        #         contract_value=self.request.POST['contract_value'])
 
         message = "New Five W " + str(self.object.supplier_id) + "  has been added by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="create")
@@ -1604,30 +1660,30 @@ class FiveUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return reverse_lazy('five-list')
 
     def form_valid(self, form):
-        contract_id = self.request.POST['contract_value_id']
+        # contract_id = self.request.POST['contract_value_id']
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        if contract_id == '0':
-            data_filter = budget_to_second_tier = BudgetToSecondTier.objects.filter(
-                supplier_id_id=self.request.POST['supplier_id'],
-                second_tier_partner_id=self.request.POST['second_tier_partner'],
-                program_id_id=self.request.POST['program_id'],
-                component_id_id=self.request.POST['component_id'], )
-
-            print(data_filter.count())
-            if data_filter.count() == 0:
-                budget_to_second_tier = BudgetToSecondTier.objects.create(
-                    supplier_id_id=self.request.POST['supplier_id'],
-                    second_tier_partner_id=self.request.POST['second_tier_partner'],
-                    program_id_id=self.request.POST['program_id'],
-                    component_id_id=self.request.POST['component_id'],
-                    contract_value=self.request.POST['contract_value'])
-
-
-
-        else:
-            budget_to_second_tier = BudgetToSecondTier.objects.filter(id=contract_id).update(
-                contract_value=self.request.POST['contract_value'])
+        # if contract_id == '0':
+        #     data_filter = budget_to_second_tier = BudgetToSecondTier.objects.filter(
+        #         supplier_id_id=self.request.POST['supplier_id'],
+        #         second_tier_partner_id=self.request.POST['second_tier_partner'],
+        #         program_id_id=self.request.POST['program_id'],
+        #         component_id_id=self.request.POST['component_id'], )
+        #
+        #     print(data_filter.count())
+        #     if data_filter.count() == 0:
+        #         budget_to_second_tier = BudgetToSecondTier.objects.create(
+        #             supplier_id_id=self.request.POST['supplier_id'],
+        #             second_tier_partner_id=self.request.POST['second_tier_partner'],
+        #             program_id_id=self.request.POST['program_id'],
+        #             component_id_id=self.request.POST['component_id'],
+        #             contract_value=self.request.POST['contract_value'])
+        #
+        #
+        #
+        # else:
+        #     budget_to_second_tier = BudgetToSecondTier.objects.filter(id=contract_id).update(
+        #         contract_value=self.request.POST['contract_value'])
         message = "New Five W " + str(self.object.supplier_id) + "  has been edited by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())

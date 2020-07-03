@@ -13,7 +13,7 @@
             </li>
             {% endif %}
             {% if perms.core.add_fivew %}
-            <li><a href="/dashboard/five-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Bulk Upload</a>
+            <li><a href="/dashboard/bulk-upload" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Bulk Upload</a>
             </li>
             {% endif %}
         </ul>
@@ -35,18 +35,13 @@
                 <th>Supplier</th>
                 <th>Program</th>
                 <th>Component</th>
-                <th>Project Title</th>
                 <th>second Tier Partner</th>
                 <th>Province</th>
                 <th>District</th>
                 <th>Municipality</th>
-                <th>allocated budget</th>
-                <th>Ward</th>
-                <th>local partner </th>
-                <th>Contract Value </th>
+                <th>Allocated Budget </th>
                 <th>status</th>
-                <th>Start date</th>
-                <th>end data</th>
+
 
 
                 <th></th>
@@ -59,20 +54,15 @@
                 <td>{{ five.supplier_id__name }}</td>
                 <td>{{ five.program_id__name }}</td>
                 <td>{{ five.component_id__name }}</td>
-                <td>{{ five.project_title }}</td>
-                <td>{{ five.second_tier_partner__name }}</td>
+                <td>{{ five.second_tier_partner_name }}</td>
                 <td>{{ five.province_id__name }}</td>
                 <td>
                     {{ five.district_id__name }}
                 </td>
                 <td>{{ five.municipality_id__name }}</td>
                 <td>{{ five.allocated_budget }}</td>
-                <td>{{ five.ward }}</td>
-                <td>{{ five.local_partner }}</td>
-                <td>{{ five.contract_value }}</td>
                 <td>{{ five.status }}</td>
-                <td>{{ five.start_date }}</td>
-                <td>{{ five.end_date }}</td>
+
 
 
                 <td>
@@ -105,29 +95,7 @@
             </tbody>
         </table>
 
-<!--        <div class="pagination">-->
-<!--    <span class="step-links">-->
-<!--        {% if page_obj.has_previous %}-->
-<!--            <a href="?page=1">&laquo; first</a>-->
-<!--            <a href="?page={{ page_obj.previous_page_number }}">previous</a>-->
-<!--        {% endif %}-->
 
-<!--        {% for page in page_range %}-->
-<!--                    <li {% if page == page_obj.number %} class="active page-item" {% endif %}>-->
-<!--                    <a class="page-link" href="?page={{ page }}">{{ page }}</a>-->
-<!--                    </li>-->
-<!--        {% endfor %}-->
-
-<!--        <span class="current">-->
-<!--            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.-->
-<!--        </span>-->
-
-<!--        {% if page_obj.has_next %}-->
-<!--            <a href="?page={{ page_obj.next_page_number }}">next</a>-->
-<!--            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>-->
-<!--        {% endif %}-->
-<!--    </span>-->
-<!--</div>-->
 
 
         <div class="pagination">
