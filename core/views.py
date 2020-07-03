@@ -342,6 +342,7 @@ class DistrictIndicator(viewsets.ModelViewSet):
                         }
                     )
 
+
         return Response({"results": data})
 
 
@@ -414,6 +415,7 @@ class ProvinceIndicator(viewsets.ModelViewSet):
 
                     }
                 )
+
 
         return Response({"results": data})
 

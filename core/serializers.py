@@ -179,6 +179,7 @@ class IndicatorSerializer(serializers.ModelSerializer):
             'data_type')
 
 
+
 class SectorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sector
@@ -227,6 +228,7 @@ class DistrictSerializer(serializers.ModelSerializer):
         model = District
         fields = ('id', 'province_id', 'name', 'code', 'n_code', 'bbox')
 
+
     # def get_province_name(self, obj):
     #     return str(obj.province_id.name)
 
@@ -238,6 +240,9 @@ class GaanapaSerializer(serializers.ModelSerializer):
         model = GapaNapa
         fields = ('id', 'province_id', 'district_id', 'hlcit_code', 'name', 'gn_type_np',
                   'code', 'population', 'bbox')
+
+    def get_code(self, obj):
+        return str(obj.code)
 
     def get_code(self, obj):
         return str(obj.code)

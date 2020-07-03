@@ -21,6 +21,7 @@ class Command(BaseCommand):
                 IndicatorValue(
                     indicator_id=Indicator.objects.get(indicator='a_insuff_f'),
                     district_id=District.objects.get(code=df['District_ID'][row]),
+
                     value=float(df['value'][row]),
 
                 ) for row in range(0, upper_range)
@@ -33,6 +34,7 @@ class Command(BaseCommand):
             #     print(df['District_ID'][row])
             #     d = District.objects.get(code=df['District_ID'][row])
             #     print(d.name)
+
 
 
         except Exception as e:
