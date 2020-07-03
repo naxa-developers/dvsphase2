@@ -39,6 +39,7 @@ from django.contrib.admin.models import LogEntry
 from datetime import datetime, timedelta
 from django.core.paginator import Paginator
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.core.exceptions import ObjectDoesNotExist
 
 
 # Create your views here.
@@ -52,6 +53,61 @@ def login_test(request, **kwargs):
     # return HttpResponse(kwargs['group'] + kwargs['partner'])
     # return render(request, 'dashboard.html')
     # return HttpResponse(request.user.has_perm('core.add_program'))
+
+
+@login_required()
+def bulkCreate(request):
+    if "GET" == request.method:
+        return render(request, 'bulk_upload.html')
+    else:
+        csv = request.FILES["shapefile"]
+        uploaded_file = request.FILES['shapefile']
+
+        if uploaded_file.name.endswith('.csv'):
+            df = pd.read_csv(uploaded_file).fillna('')
+        elif uploaded_file.name.endswith(('.xls', 'xlsx')):
+            df = pd.read_excel(uploaded_file).fillna('')
+        else:
+            messages.error(request, "Please upload a .csv or .xls file")
+
+        upper_range = len(df)
+
+        success_count = 0
+        for row in range(0, upper_range):
+            try:
+                # municipality = GapaNapa.objects.get(hlcit_code=df['Palika ID'][row]),
+                # province_id = Province.objects.get(code=str(int(df['Province ID'][row]))),
+                # district_id = District.objects.get(code=str(int(df['District ID'][row]))),
+                # branch = None if df['Branch'][row] == '' else df['Branch'][row]
+                # numTablets = 0 if df['No. of Tablets'][row] == '' else df['No. of Tablets'][row]
+                five = FiveW.objects.update_or_create(
+                    supplier_id=Partner.objects.get(code=str(int(df['1st Tier Partner Code'][row]))),
+                    # second_tier_partner=Partner.objects.get(code=str(int(df['2nd Tier Partner Code'][row]))),
+                    second_tier_partner_name=df['2nd Tier Partner'][row],
+                    component_id=Project.objects.get(code=str(df['Component Code'][row])),
+                    program_id=Program.objects.get(code=str(int(df['Prog. Code'][row]))),
+                    province_id=Province.objects.get(code=str(int(df['Province ID'][row]))),
+                    district_id=District.objects.get(code=str(int(df['District ID'][row]))),
+                    municipality_id=GapaNapa.objects.get(hlcit_code=df['Palika ID'][row]),
+                    status=df['Project Status'][row],
+                    allocated_budget=float(df['Budget'][row]),
+                    kathmandu_activity=df['Kathmandu Activity'][row],
+                    delivery_in_lockdown=df['Delivery in Lockdown'][row],
+                    covid_priority_3_12_Months=df['COVID Priority 3-12 Months'][row],
+                    covid_recovery_priority=df['COVID Recovery Priority'][row],
+                    providing_ta_to_local_government=df['Providing TA to Local Government'][row],
+                    providing_ta_to_provincial_government=df['Providing TA to Provincial Government'][row],
+                )
+                success_count += 1
+            except ObjectDoesNotExist as e:
+                print('error')
+                messages.add_message(request, messages.WARNING, str(
+                    e) + " for row " + str(
+                    row + 2) + ' Please check the column of following row and only re-upload following row number to minimize the risk of duplication')
+                continue
+        messages.add_message(request, messages.SUCCESS, str(
+            success_count) + "Row Of Five-w Data Added ")
+        return redirect('/dashboard/five-list/', messages)
 
 
 @login_required()
