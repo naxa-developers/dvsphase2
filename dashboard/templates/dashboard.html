@@ -179,7 +179,7 @@
     <section class="section overview">
         <div class="section-title">
             <h4>Overview</h4>
-            <a href="program-form.html" class="border-button dfid-button sm-button">View all</a>
+            <a href="/dashboard/five-list" class="border-button dfid-button sm-button">View all</a>
         </div>
         <!-- program -->
         {% for five in fives %}
@@ -220,13 +220,13 @@
                             <li>
                                 <div class="content">
                                     <h6>Code</h6>
-                                    <p>{{five.partner_id.code}}</p>
+                                    <p>{{five.program_id.code}}</p>
                                 </div>
                             </li>
                             <li>
                                 <div class="content">
                                     <h6>IATI Identifier</h6>
-                                    <p>{{five.partner_id.code}}</p>
+                                    <p>{{five.program_id.iati}}</p>
                                 </div>
                             </li>
                         </ul>
@@ -241,7 +241,7 @@
                                         <i class="material-icons">category</i>
                                         <div class="content">
                                             <h6>Broad Sectors</h6>
-                                            {% for sector in five.program_id.sector.all %}
+                                            {% for sector in five.component_id.sector.all %}
                                             <p>{{ sector }}</p>
                                             {% endfor %}
                                         </div>
@@ -276,19 +276,16 @@
                                 <ul class="program-content">
                                     <li class="equalHeight">
                                         <div class="content">
-                                            <h6>Implementing Partners</h6>
-                                            <p>{{five.implementing_partner_first_id}}</p>
-                                            <p>{{five.implementing_partner_second_id}}</p>
-                                            <p>{{five.implementing_partner_third_id}}</p>
-                                            <p>{{five.implementing_partner_fourth_id}}</p>
+                                            <h6>kathmandu Activity</h6>
+                                            <p>{{five.kathmandu_activity}}</p>
+
                                         </div>
                                     </li>
                                     <li class="equalHeight">
                                         <div class="content">
-                                            <h6>Local Partners</h6>
-                                            <p>{{five.local_partner_first_id}}</p>
-                                            <p>{{five.local_partner_second_id}}</p>
-                                            <p>{{five.local_partner_third_id}}</p>
+                                            <h6>Delivery In Lockdown</h6>
+                                            <p>{{five.delivery_in_lockdown}}</p>
+
                                         </div>
                                     </li>
                                 </ul>
@@ -306,8 +303,8 @@
                                         </li>
                                         <li class="equalHeight">
                                             <div class="content">
-                                                <h6>Reporting Ministry Line</h6>
-                                                <p>{{five.reporting_ministry_line}}</p>
+                                                <h6>Providing TA to Local Government</h6>
+                                                <p>{{five.providing_ta_to_local_government}}</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -319,14 +316,14 @@
                                         <i class="material-icons">monetization_on</i>
                                         <div class="content">
                                             <h6>Budget</h6>
-                                            <h5>{{five.budget}}</h5>
+                                            <h5>{{five.allocated_budget}}</h5>
                                         </div>
                                     </li>
                                     <li class="equalHeight">
                                         <i class="material-icons">calendar_today</i>
                                         <div class="content">
-                                            <h6>Start date</h6>
-                                            <p>{{five.start_date}}</p>
+                                            <h6>Covid Priority 3-12 Months</h6>
+                                            <p>{{five.covid_priority_3_12_Months}}</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -336,8 +333,8 @@
                                         <li class="equalHeight">
                                             <i class="material-icons">calendar_today</i>
                                             <div class="content">
-                                                <h6>End Date</h6>
-                                                <p>{{five.end_date}}</p>
+                                                <h6>Covid Recovery Priority</h6>
+                                                <p>{{five.covid_recovery_priority}}</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -359,8 +356,8 @@
                                 </li>
                             </ul>
                             <div class="action-btn flex-end">
-                                <a href="#" class="border-button dfid-button sm-button">Delete</a>
-                                <a href="#" class="dfid-button sm-button">Edit</a>
+                                <a href="/dashboard/program-delete/{{five.program_id.id}}" class="border-button dfid-button sm-button">Delete</a>
+                                <a href="/dashboard/program-edit/{{five.program_id.id}}" class="dfid-button sm-button">Edit</a>
                             </div>
                         </div>
                     </div>
