@@ -21,7 +21,6 @@
 
 
         {% csrf_token %}
-
         {% if form.errors %}
         {% for field in form %}
         {% for error in field.errors %}
@@ -42,43 +41,43 @@
 
         <div class="default-form">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="form-group ">
-                        <label for="id_style">color</label>
-                        <input type="color" class="form-control" id="id_style" name="style" value="#ff0000">
+                        <label for="id_circle_color">Circle Color</label>
+                        <input type="color" class="form-control" id="id_circle_color" name="circle_color" value="#ff0000">
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="form-group ">
-                        <label for="id_field_color">fill color</label>
-                        <input type="color" class="form-control" id="id_field_color" name="field_color" value="#ff0000">
+                        <label for="id_fill_color">Fill color</label>
+                        <input type="color" class="form-control" id="id_fill_color" name="fill_color" value="#ff0000">
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="form-group ">
-                        <label for="id_opacity">Opacity</label>
-                        <input type="number" class="form-control" id="id_opacity" name="opacity">
+                        <label for="id_circle_radius">Circle Radius</label>
+                        <input type="number" class="form-control" id="id_circle_radius" name="circle_radius">
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group ">
-                        <label for="id_field_opacity">Fill Opacity</label>
-                        <input type="number" class="form-control" id="id_field_opacity" name="field_opacity">
-                    </div>
-                </div>
-            </div>
+<!--            <div class="row">-->
+<!--                <div class="col-md-6">-->
+<!--                    <div class="form-group ">-->
+<!--                        <label for="id_field_opacity">Fill Opacity</label>-->
+<!--                        <input type="number" class="form-control" id="id_field_opacity" name="field_opacity">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="col-wrapper">
                         <div class="form-group">
                             <label for="id_layer">Select Component</label>

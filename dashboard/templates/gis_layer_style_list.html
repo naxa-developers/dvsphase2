@@ -29,10 +29,9 @@
             <tr>
                 <th>Sn</th>
                 <th>Layer</th>
-                <th>Style</th>
-                <th>Field Color</th>
-                <th>Opacity</th>
-                <th>Field Opacity</th>
+                <th> Color</th>
+                <th>Fill Color</th>
+                <th>Circle Radius</th>
 
                 <th></th>
             </tr>
@@ -44,10 +43,9 @@
                 <td>
                     <strong><a href="#">{{style.layer.name}}</a></strong>
                 </td>
-                <td>{{ style.style }}</td>
-                <td>{{ style.field_color }}</td>
-                <td>{{ style.opacity }}</td>
-                <td>{{ style.field_opacity }}</td>
+                <td>{{ style.circle_color }}</td>
+                <td>{{ style.fill_color }}</td>
+                <td>{{ style.circle_radius }}</td>
 
                 <td>
                     <div class="table-action">
@@ -58,22 +56,22 @@
                             {% if perms.core.change_gislayer %}
                             <li>
                                 <a href="/dashboard/gis_style_layer_edit/{{ style.id }}" class="flex-start">
-                                    <i class="material-icons">edit</i>
+                                    <i class="material-icons">edit</i>Edit
                                 </a>
                             </li>
                             {% endif %}
-                            {% if perms.core.change_gislayer %}
-                            <li>
-                                <a href="/dashboard/gis-replace/{{ gis.id }}" class="flex-start">
-                                    <i class="material-icons">refresh</i>
-                                </a>
+<!--                            {% if perms.core.change_gislayer %}-->
+<!--                            <li>-->
+<!--                                <a href="/dashboard/gis-replace/{{ gis.id }}" class="flex-start">-->
+<!--                                    <i class="material-icons">refresh</i>-->
+<!--                                </a>-->
 
-                            </li>
-                            {% endif %}
+<!--                            </li>-->
+<!--                            {% endif %}-->
                             {% if perms.core.delete_gislayer %}
                             <li>
                                 <a href="/dashboard/gis-delete/{{ gis.id }}" class="flex-start">
-                                    <i class="material-icons">delete</i>
+                                    <i class="material-icons">delete</i>Delete
                                 </a>
                             </li>
                             {% endif %}

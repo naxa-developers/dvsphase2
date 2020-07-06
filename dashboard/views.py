@@ -2453,6 +2453,8 @@ class StyleUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         data = super(StyleUpdate, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
+        id_gis = GisStyle.objects.get(id=self.kwargs['pk'])
+        print(id_gis.layer.id)
         layers = GisLayer.objects.all()
         data['layers'] = layers
         data['user'] = user_data
@@ -2460,4 +2462,5 @@ class StyleUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return data
 
     def get_success_url(self):
-        return "/dashboard/gis_style_layer_list/" + str(self.kwargs['pk'])
+        id_gis = GisStyle.objects.get(id=self.kwargs['pk'])
+        return "/dashboard/gis_style_layer_list/" + str(id_gis.layer.id)
