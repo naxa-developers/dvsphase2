@@ -1,0 +1,46 @@
+.template{
+    @include flexCenter;
+    height: 100vh;
+    .table-center{
+        @include flexCenter;
+        table{
+            border-collapse: collapse;
+            tr{
+                &:nth-child(1){
+                    td{
+                        @include boxshadow(0 0 10px $form-border);
+                        padding-bottom: 1.25rem;
+                        border-bottom: 1px solid $blue-light;
+                        background: linear-gradient(180deg, lighten($color-blue,30%),$form-border);
+                    }
+                }
+                &:nth-child(2){
+                    background: $color-bg;
+                    td{
+                        @include flexCenter;
+                    }
+                }
+                &:nth-child(3){
+                    background: $form-border;
+                    padding: 10px 0px;
+                }
+                td{
+                    text-align: center;
+                    .para{
+                        padding: 5.125rem 0 1rem;
+                        max-width: 500px;
+                        font-size: 0.875rem;
+                        color: $color-blue;
+                        a{
+                            color: $form-border;
+                            cursor: pointer;
+                            &:hover{
+                                color: blue;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

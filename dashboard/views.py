@@ -567,7 +567,7 @@ class ProgramList(LoginRequiredMixin, ListView):
         if group.name == 'admin':
             program_list = Program.objects.order_by('id')
         else:
-            program_list = Program.objects.filter(id=user_data.program.id)
+            program_list = Program.objects.order_by('id')
         data['list'] = program_list
         data['user'] = user_data
         data['active'] = 'program'
@@ -764,7 +764,7 @@ class ProjectList(LoginRequiredMixin, ListView):
         if group.name == 'admin':
             project_list = Project.objects.order_by('id')
         else:
-            project_list = Project.objects.filter(id=user_data.project.id)
+            project_list = Project.objects.order_by('id')
 
         data['list'] = project_list
         data['user'] = user_data
