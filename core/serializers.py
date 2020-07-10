@@ -87,12 +87,17 @@ class ProgramSerializer(serializers.ModelSerializer):
     sector = serializers.SerializerMethodField()
     sub_sector = serializers.SerializerMethodField()
     component = serializers.SerializerMethodField()
+    partner = serializers.SerializerMethodField()
 
     class Meta:
         model = Program
         fields = (
-            'id', 'name', 'code', 'iati', 'total_budget', 'component', 'marker_category', 'marker_value', 'sector',
+            'id', 'name', 'code', 'iati', 'total_budget', 'partner', 'component', 'marker_category', 'marker_value', 'sector',
             'sub_sector')
+
+    def get_partner(self, obj):
+        data = FiveW.objects.filter(program_id=obj.id).values_list('supplier_id__id', flat=True).distinct()
+        return data
 
     def get_component(self, obj):
         data = []
@@ -221,26 +226,35 @@ class ContractSumSerializer(serializers.ModelSerializer):
 
 
 class DistrictSerializer(serializers.ModelSerializer):
-    # province_name = serializers.SerializerMethodField()
+    province_name = serializers.SerializerMethodField()
 
     class Meta:
         model = District
-        fields = ('id', 'province_id', 'name', 'code', 'n_code', 'bbox')
+        fields = ('id', 'province_id', 'province_name', 'name', 'code', 'n_code', 'bbox')
 
-    # def get_province_name(self, obj):
-    #     return str(obj.province_id.name)
+    def get_province_name(self, obj):
+        return str(obj.province_id.name)
 
 
 class GaanapaSerializer(serializers.ModelSerializer):
     code = serializers.SerializerMethodField()
+    province_name = serializers.SerializerMethodField()
+    district_name = serializers.SerializerMethodField()
 
     class Meta:
         model = GapaNapa
-        fields = ('id', 'province_id', 'district_id', 'hlcit_code', 'name', 'gn_type_np',
-                  'code', 'population', 'bbox')
+        fields = (
+            'id', 'province_id', 'district_id', 'province_name', 'district_name', 'hlcit_code', 'name', 'gn_type_np',
+            'code', 'population', 'bbox')
 
     def get_code(self, obj):
         return str(obj.code)
+
+    def get_district_name(self, obj):
+        return obj.district_id.name
+
+    def get_province_name(self, obj):
+        return str(obj.province_id.name)
 
 
 class FivewSerializer(serializers.ModelSerializer):

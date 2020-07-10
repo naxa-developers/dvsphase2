@@ -32,4 +32,5 @@ urlpatterns = [
     path('sankey-program/', views.ProgramSankey.as_view({'get': 'list'}), name='sankey-program'),
     path('sankey-region/', views.RegionSankey.as_view({'get': 'list'}), name='region-region'),
     path('covid-fields/', views.CovidChoice.as_view({'get': 'list'}), name='covid-fields'),
+    path('popup/', views.Popup.as_view({'get': 'list'}), name='popup'),
 ]
