@@ -264,7 +264,7 @@ class DistrictIndicator(viewsets.ModelViewSet):
     serializer_class = DistrictSerializer
 
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'indicator_id',]
+    filterset_fields = ['id', 'indicator_id', ]
 
     def list(self, request, **kwargs):
         """
@@ -280,7 +280,7 @@ class DistrictIndicator(viewsets.ModelViewSet):
             province_ids = Province.objects.values_list('id', flat=True)
 
         district = District.objects.filter(province_id__id__in=province_ids).values('name', 'id', 'n_code',
-                                                                                 'code').exclude(
+                                                                                    'code').exclude(
             code=-1).order_by('id')
         id_indicators = request.GET['indicator_id']
         id_indicator = id_indicators.split(",")
@@ -551,11 +551,12 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
             province_ids = province.split(",")
             for i in range(0, len(province_ids)):
                 province_ids[i] = int(province_ids[i])
-            districts = District.objects.values('name', 'id', 'code', 'n_code').filter(
+            districts = District.objects.values('name', 'id', 'code', 'n_code', 'province_id__name').filter(
                 province_id__id__in=province_ids).exclude(code='-1').order_by('id')
 
         else:
-            districts = District.objects.values('name', 'id', 'code', 'n_code').exclude(code='-1').order_by('id')
+            districts = District.objects.values('name', 'id', 'code', 'n_code', 'province_id__name').exclude(
+                code='-1').order_by('id')
 
         for dist in districts:
             query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id').filter(
@@ -593,6 +594,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 'id': dist['id'],
                 'name': dist['name'],
                 'code': dist['code'],
+                'province_name': dist['province_id__name'],
                 'allocated_budget': budget,
                 'program': prog,
                 'component': comp,
@@ -691,23 +693,27 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
             province_ids = province.split(",")
             for i in range(0, len(province_ids)):
                 province_ids[i] = int(province_ids[i])
-            municipalities = GapaNapa.objects.values('name', 'id', 'code').filter(
+            municipalities = GapaNapa.objects.values('name', 'id', 'code', 'province_id__name',
+                                                     'district_id__name').filter(
                 province_id__id__in=province_ids).exclude(code='-1').order_by('id')
 
         else:
-            municipalities = GapaNapa.objects.values('name', 'id', 'code').exclude(code='-1').order_by('id')
+            municipalities = GapaNapa.objects.values('name', 'id', 'code', 'province_id__name',
+                                                     'district_id__name').exclude(code='-1').order_by('id')
 
         if request.GET.getlist('district_id'):
             dist = request.GET['district_id']
             district_ids = dist.split(",")
             for i in range(0, len(district_ids)):
                 district_ids[i] = int(district_ids[i])
-            municipalities = GapaNapa.objects.values('name', 'id', 'code').filter(
+            municipalities = GapaNapa.objects.values('name', 'id', 'code', 'province_id__name',
+                                                     'district_id__name').filter(
                 district_id__id__in=district_ids).exclude(code='-1').order_by('id')
 
         else:
             if request.GET.getlist('province_id') == []:
-                municipalities = GapaNapa.objects.values('name', 'id', 'code').exclude(code='-1').order_by('id')
+                municipalities = GapaNapa.objects.values('name', 'id', 'code', 'province_id__name',
+                                                         'district_id__name').exclude(code='-1').order_by('id')
 
         for municipality in municipalities:
             query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id').filter(
@@ -745,6 +751,8 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 'id': municipality['id'],
                 'name': municipality['name'],
                 'code': str(municipality['code']),
+                'province_name': str(municipality['province_id__name']),
+                'district_name': str(municipality['district_id__name']),
                 'allocated_budget': budget,
                 'program': prog,
                 'component': comp,
@@ -971,9 +979,6 @@ class CovidChoice(viewsets.ReadOnlyModelViewSet):
     def list(self, request, *args, **kwargs):
         return Response({
             'field': [{'name': 'Kathmandu Activity', 'value': 'kathmandu_activity'},
-                      {'name': 'Delivery In Lockdown', 'value': 'delivery_in_lockdown'},
-                      {'name': 'Covid Priority 3-12 Months', 'value': 'covid_priority_3_12_Months'},
-                      {'name': 'Covid Recovery Priority', 'value': 'covid_recovery_priority'},
                       {'name': 'Providing TA to Local government', 'value': 'providing_ta_to_local_government'},
                       {'name': 'Providing TA To Provincial Government',
                        'value': 'providing_ta_to_provincial_government'}],
