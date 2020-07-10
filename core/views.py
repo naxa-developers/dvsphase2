@@ -985,3 +985,94 @@ class CovidChoice(viewsets.ReadOnlyModelViewSet):
             'kathmandu_activity': ['Intervention', 'Influence', 'N/A'],
             'other': ['NA - Complete', 'Yes', 'Partial High', 'Partial Low', 'No']
         })
+
+
+class Popup(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = FiveW.objects.all()
+    serializer_class = FivewSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id', 'program_id', 'province_id', 'district_id']
+
+    def list(self, request, *args, **kwargs):
+        program_data = []
+        query = FiveW.objects.values('allocated_budget', 'component_id', 'component_id__name', 'program_id',
+                                     'program_id__name', 'province_id')
+
+        if request.GET.getlist('program_id'):
+            prov = request.GET['program_id']
+            program = prov.split(",")
+            for i in range(0, len(program)):
+                program[i] = int(program[i])
+            query = FiveW.objects.values('allocated_budget', 'component_id', 'component_id__name', 'program_id',
+                                         'program_id__name', 'province_id').filter(program_id__in=program)
+        else:
+            query = query
+
+        if request.GET.getlist('field'):
+            field = request.GET['field']
+            value = request.GET['value']
+            kwargs = {
+                '{0}__iexact'.format(field): value
+            }
+            query = query.filter(Q(**kwargs))
+            total_budget = query.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
+
+        if query.exists():
+            p = query.values_list('program_id', flat=True).distinct()
+            program = query.values('program_id', 'program_id__name').annotate(
+                Sum('allocated_budget'))
+            for p in program:
+                marker_data = []
+                component_data = []
+                p_data = Program.objects.get(id=p['program_id'])
+                for marker in p_data.marker_value.all():
+                    marker_data.append({
+                        'marker_category': marker.marker_category_id.name,
+                        'marker_value': marker.value
+
+                    })
+                c_data = query.values('component_id', 'component_id__name').filter(program_id=p['program_id']).annotate(
+                    Sum('allocated_budget'))
+
+                for c in c_data:
+                    sector_data = []
+                    partner_data = []
+                    s_data = Project.objects.get(id=c['component_id'])
+                    part_data = query.values('supplier_id', 'supplier_id__name').filter(
+                        program_id=p['program_id'], component_id=c['component_id']).annotate(
+                        Sum('allocated_budget'))
+                    for part in part_data:
+                        partner_data.append({
+                            'id': part['supplier_id'],
+                            'name': part['supplier_id__name'],
+                            'partner_budget': part['allocated_budget__sum'],
+                        })
+                    for sectors in s_data.sub_sector.all():
+                        sector_data.append({
+                            'id': sectors.id,
+                            'sector': sectors.sector_id.name,
+                            'sub_sector': sectors.name,
+                        })
+                    component_data.append({
+                        'id': c['component_id'],
+                        'name': c['component_id__name'],
+                        'component_budget': c['allocated_budget__sum'],
+                        'sectors': sector_data,
+                        'partners': partner_data,
+                    })
+
+                program_data.append({
+                    'id': p['program_id'],
+                    'program': p['program_id__name'],
+                    'program_budget': p['allocated_budget__sum'],
+                    'markers': marker_data,
+                    'components': component_data,
+
+                })
+
+        data = [{
+            "total_budget": total_budget,
+            "programs": program_data
+        }]
+        return Response({"results": data})
