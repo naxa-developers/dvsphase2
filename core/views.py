@@ -1016,7 +1016,7 @@ class Popup(viewsets.ReadOnlyModelViewSet):
                 '{0}__iexact'.format(field): value
             }
             query = query.filter(Q(**kwargs))
-            total_budget = query.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
+        total_budget = query.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
 
         if query.exists():
             p = query.values_list('program_id', flat=True).distinct()
@@ -1075,4 +1075,5 @@ class Popup(viewsets.ReadOnlyModelViewSet):
             "total_budget": total_budget,
             "programs": program_data
         }]
-        return Response({"results": data})
+        return Response({"total_budget": total_budget,"programs": program_data})
+
