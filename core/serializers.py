@@ -92,11 +92,20 @@ class ProgramSerializer(serializers.ModelSerializer):
     class Meta:
         model = Program
         fields = (
-            'id', 'name', 'code', 'iati', 'total_budget', 'partner', 'component', 'marker_category', 'marker_value', 'sector',
+            'id', 'name', 'code', 'iati', 'total_budget', 'partner', 'component', 'marker_category', 'marker_value',
+            'sector',
             'sub_sector')
 
     def get_partner(self, obj):
-        data = FiveW.objects.filter(program_id=obj.id).values_list('supplier_id__id', flat=True).distinct()
+        data = []
+        qs = FiveW.objects.filter(program_id=obj.id).values('supplier_id__id', 'supplier_id__name').distinct(
+            'supplier_id__id')
+        for q in qs:
+            data.append({
+                'id': q['supplier_id__id'],
+                'name': q['supplier_id__name']
+
+            })
         return data
 
     def get_component(self, obj):
