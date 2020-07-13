@@ -567,7 +567,7 @@ class ProgramList(LoginRequiredMixin, ListView):
         if group.name == 'admin':
             program_list = Program.objects.order_by('id')
         else:
-            program_list = Program.objects.filter(id=user_data.program.id)
+            program_list = Program.objects.order_by('id')
         data['list'] = program_list
         data['user'] = user_data
         data['active'] = 'program'
@@ -764,7 +764,7 @@ class ProjectList(LoginRequiredMixin, ListView):
         if group.name == 'admin':
             project_list = Project.objects.order_by('id')
         else:
-            project_list = Project.objects.filter(id=user_data.project.id)
+            project_list = Project.objects.order_by('id')
 
         data['list'] = project_list
         data['user'] = user_data
@@ -2453,6 +2453,8 @@ class StyleUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         data = super(StyleUpdate, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
+        id_gis = GisStyle.objects.get(id=self.kwargs['pk'])
+        print(id_gis.layer.id)
         layers = GisLayer.objects.all()
         data['layers'] = layers
         data['user'] = user_data
@@ -2460,4 +2462,5 @@ class StyleUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return data
 
     def get_success_url(self):
-        return "/dashboard/gis_style_layer_list/" + str(self.kwargs['pk'])
+        id_gis = GisStyle.objects.get(id=self.kwargs['pk'])
+        return "/dashboard/gis_style_layer_list/" + str(id_gis.layer.id)
