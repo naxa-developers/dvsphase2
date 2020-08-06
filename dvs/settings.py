@@ -14,6 +14,8 @@ import os
 
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
+from .settings import *
+#import socket
 
 sentry_sdk.init(
     dsn="https://08fc1960dbf14408a4fbff958a86494e@sentry.io/1524106",
@@ -92,16 +94,19 @@ WSGI_APPLICATION = 'dvs.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'postgres',
         'USER': 'postgres',
         "PASSWORD": '',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432'
     }
 }
+
+DEBUG = True
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -164,6 +169,36 @@ SWAGGER_SETTINGS = {
 }
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'noreply.dfid@gmail.com'
+EMAIL_HOST_PASSWORD = 'UW9boQYFZiiM3NsKIuKD'
+EMAIL_PORT = 587
+
+LOGIN_URL = '/dashboard/login/'
+LOGIN_REDIRECT_URL = '/dashboard/main/'
+LOGOUT_REDIRECT_URL = '/dashboard/login/'
+SITE_URL = 'http://localhost:8000/'
+
+# MIDDLEWARE += [
+#     'debug_toolbar.middleware.DebugToolbarMiddleware',
+# ]
+#
+# INSTALLED_APPS += [
+#     'debug_toolbar',
+#
+# ]
+
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_WHITELIST = [
+#     "http://localhost:8001",
+# ]
+
+# hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+# INTERNAL_IPS = [ip[:-1] + '1' for ip in ips] + ['127.0.0.1', '10.0.2.2']
 
 STATIC_URL = '/static/'
 

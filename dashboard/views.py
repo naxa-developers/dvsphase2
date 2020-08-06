@@ -1357,6 +1357,32 @@ class PalilkaCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
+class PalikaUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = GapaNapa
+    template_name = 'palika_edit.html'
+    form_class = PalikaCreateForm
+    success_message = 'Palika successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(PalikaUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['province'] = Province.objects.values('id', 'name').order_by('id')
+        data['district'] = District.objects.values('id', 'name').order_by('id')
+        data['active'] = 'location'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('palika-list')
+
+    def form_valid(self, form):
+        user_data = UserProfile.objects.get(user=self.request.user)
+        self.object = form.save()
+        message = "Municipality " + self.object.name + "  has been updated by " + self.request.user.username
+        log = Log.objects.create(user=user_data, message=message, type="create")
+        return HttpResponseRedirect(self.get_success_url())
+
 
 class MarkerValueCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = MarkerValues

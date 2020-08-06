@@ -81,6 +81,7 @@ urlpatterns = [
     path('palika-list/', views.PalikaList.as_view(), name='palika-list'),
     path('palika-add/', views.PalilkaCreate.as_view(), name='palika-add'),
     path('palika-delete/<int:pk>', views.PalikaDelete.as_view(), name='palika-delete'),
+    path('palika-edit/<int:pk>', views.PalikaUpdate.as_view(), name='palika-update'),
 
     path('user-list/', views.UserList.as_view(), name='user-list'),
     path('activate/<int:id>', views.activate_user, name='activate'),
