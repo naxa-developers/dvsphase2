@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 import pandas as pd
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 import requests
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
@@ -2490,3 +2492,21 @@ class StyleUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         id_gis = GisStyle.objects.get(id=self.kwargs['pk'])
         return "/dashboard/gis_style_layer_list/" + str(id_gis.layer.id)
+
+
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('user-list')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'change_password.html', {
+        'form': form
+    })

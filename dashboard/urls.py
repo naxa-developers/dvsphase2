@@ -130,4 +130,8 @@ urlpatterns = [
     path('gis_style_layer_add/<int:pk>', views.StyleCreate.as_view(), name='style-create'),
     path('gis_style_layer_edit/<int:pk>', views.StyleUpdate.as_view(), name='style-update'),
 
+    path('changepassword', views.change_password, name='change_password'),
+
+    
+
 ]
