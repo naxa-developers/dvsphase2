@@ -19,9 +19,9 @@ class Command(BaseCommand):
         try:
             proj = [
                 Project(
-                    program_id=Program.objects.get(code=int(df['Program Code'][row])),
-                    name=(df['Component Name'][row]).strip(),
-                    code=df['Component Code'][row],
+                    program_id=Program.objects.get(code=int(df['Programme Code'][row])),
+                    name=(df['PROJECT/COMPONENT NAME'][row]).strip(),
+                    code=df['Project/Component Code'][row],
 
                 ) for row in range(0, upper_range)
             ]

@@ -13,6 +13,8 @@ urlpatterns = [
     # path('login-test/<int:group>/<int:partner>', views.login_test, name='login-test'),
     path('logout/', auth_views.LogoutView.as_view(), {'next_page': '/dashboard/login/'}, name='logout'),
     path('signup/<int:group>/<int:partner>', views.signup, name='signup'),
+    path('createuser', views.createuser, name='createuser'),
+    path('updateuser/<int:id>', views.updateuser, name='updateuser'),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('check-login/', views.check_login, name='check-login'),
     path('token/', views.auth, name='token'),
@@ -120,8 +122,6 @@ urlpatterns = [
     path('cmp-add/', views.CmpCreate.as_view(), name='cmp-add'),
     path('cmp-edit/<int:pk>', views.CmpUpdate.as_view(), name='cmp-edit'),
     path('cmp-delete/<int:pk>', views.CmpDelete.as_view(), name='cmp-delete'),
-
-
 
     path('vector-map/', views.VectorMap.as_view(), name='vector-map'),
 

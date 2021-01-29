@@ -7,7 +7,7 @@ from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
     PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm, \
-    GroupForm, BudgetCreateForm, PartnerContactForm, CmpForm, GisStyleForm
+    GroupForm, BudgetCreateForm, PartnerContactForm, CmpForm, GisStyleForm, UserProfileForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -40,6 +40,10 @@ from datetime import datetime, timedelta
 from django.core.paginator import Paginator
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import (get_object_or_404,
+                              render,
+                              HttpResponseRedirect)
+import datetime
 
 
 # Create your views here.
@@ -75,28 +79,66 @@ def bulkCreate(request):
         success_count = 0
         for row in range(0, upper_range):
             try:
-                # municipality = GapaNapa.objects.get(hlcit_code=df['Palika ID'][row]),
-                # province_id = Province.objects.get(code=str(int(df['Province ID'][row]))),
-                # district_id = District.objects.get(code=str(int(df['District ID'][row]))),
-                # branch = None if df['Branch'][row] == '' else df['Branch'][row]
-                # numTablets = 0 if df['No. of Tablets'][row] == '' else df['No. of Tablets'][row]
+                supplier_id = Partner.objects.get(
+                    code=int(df['1st TIER PARTNER CODE'][row]))
+                second_tier_partner_name = None if df['2nd TIER PARTNER'][row] == '' else df['2nd TIER PARTNER'][row]
+                component_id = Project.objects.get(
+                    code=df['Project/Component Code'][row])
+                status = None if df['PROJECT STATUS'][row] == '' else df['PROJECT STATUS'][row]
+                fivew = FiveW.objects.update_or_create(
+                    supplier_id=supplier_id,
+                    second_tier_partner_name=second_tier_partner_name,
+                    component_id=component_id,
+                    status=status,
+
+                )
+                success_count += 1
+            except ObjectDoesNotExist as e:
+                print('error')
+                messages.add_message(request, messages.WARNING, str(
+                    e) + " for row " + str(
+                    row + 2) + ' Please check the column of following row and only re-upload following row number to minimize the risk of duplication')
+                continue
+        messages.add_message(request, messages.SUCCESS, str(
+            success_count) + "Row Of Five-w Data Added ")
+        return redirect('/dashboard/five-list/', messages)
+
+
+@login_required()
+def bulkCreate(request):
+    if "GET" == request.method:
+        return render(request, 'bulk_upload.html')
+    else:
+        csv = request.FILES["shapefile"]
+        uploaded_file = request.FILES['shapefile']
+
+        if uploaded_file.name.endswith('.csv'):
+            df = pd.read_csv(uploaded_file).fillna('')
+        elif uploaded_file.name.endswith(('.xls', 'xlsx')):
+            df = pd.read_excel(uploaded_file).fillna('')
+        else:
+            messages.error(request, "Please upload a .csv or .xls file")
+
+        upper_range = len(df)
+
+        success_count = 0
+        for row in range(0, upper_range):
+            try:
                 five = FiveW.objects.update_or_create(
-                    supplier_id=Partner.objects.get(code=str(int(df['1st Tier Partner Code'][row]))),
-                    # second_tier_partner=Partner.objects.get(code=str(int(df['2nd Tier Partner Code'][row]))),
-                    second_tier_partner_name=df['2nd Tier Partner'][row],
-                    component_id=Project.objects.get(code=str(df['Component Code'][row])),
-                    program_id=Program.objects.get(code=str(int(df['Prog. Code'][row]))),
-                    province_id=Province.objects.get(code=str(int(df['Province ID'][row]))),
-                    district_id=District.objects.get(code=str(int(df['District ID'][row]))),
-                    municipality_id=GapaNapa.objects.get(hlcit_code=df['Palika ID'][row]),
-                    status=df['Project Status'][row],
-                    allocated_budget=float(df['Budget'][row]),
-                    kathmandu_activity=df['Kathmandu Activity'][row],
-                    delivery_in_lockdown=df['Delivery in Lockdown'][row],
-                    covid_priority_3_12_Months=df['COVID Priority 3-12 Months'][row],
-                    covid_recovery_priority=df['COVID Recovery Priority'][row],
-                    providing_ta_to_local_government=df['Providing TA to Local Government'][row],
-                    providing_ta_to_provincial_government=df['Providing TA to Provincial Government'][row],
+                    supplier_id=Partner.objects.get(code=df['1st TIER PARTNER CODE'][row]),
+                    second_tier_partner_name=df['2nd TIER PARTNER'][row],
+                    component_id=Project.objects.get(code=df['Project/Component Code'][row]),
+                    program_id=Program.objects.get(code=df['Programme Code'][row]),
+                    province_id=Province.objects.get(code=df['PROVINCE.CODE'][row]),
+                    district_id=District.objects.get(code=df['D.CODE'][row]),
+                    municipality_id=GapaNapa.objects.get(hlcit_code=df['PALIKA.Code'][row]),
+                    status=df['PROJECT STATUS'][row],
+                    reporting_line_ministry=df['REPORTING LINE MINISTRY'][row],
+                    contact_name=df['CONTACT NAME'][row],
+                    designation=df['DESIGNATION'][row],
+                    contact_number=df['CONTACT NUMBER'][row],
+                    email=df['EMAIL'][row],
+                    remarks=df['REMARKS'][row],
                 )
                 success_count += 1
             except ObjectDoesNotExist as e:
@@ -467,6 +509,77 @@ def signup(request, **kwargs):
 
         return render(request, 'signups.html',
                       {'form': form, 'partners': partner, })
+
+
+def createuser(request, **kwargs):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.is_active = False
+            user.save()
+            group = Group.objects.get(pk=request.POST['group'])
+            user.groups.add(group)
+            '''
+            if kwargs['group'] != 0:
+                group = Group.objects.get(pk=kwargs['group'])
+                user.groups.add(group)
+            '''
+
+            UserProfile.objects.create(user=user, name=request.POST['name'], email=request.POST['email'],
+                                       partner_id=int(request.POST['partner']), image=request.FILES['image'],
+                                       program_id=int(request.POST['program']), project_id=int(request.POST['project']))
+
+            notify_message = request.POST['email'] + ' has created account by username ' + request.POST['username']
+
+            notify_messages = 'Activate account for user ' + request.POST['username']
+
+            notify = Notification.objects.create(user=user, message=notify_message, type='signup',
+                                                 link='/dashboard/user-list')
+            notified = Notification.objects.create(user=user, message=notify_messages, type='signup',
+                                                   link='/dashboard/user-list')
+            return render(request, 'registered_message.html', {'user': request.POST['name']})
+        else:
+            partner = Partner.objects.all()
+            group = Group.objects.all()
+            programs = Program.objects.all()
+            projects = Project.objects.all()
+
+            return render(request, 'createuser.html',
+                          {'form': form, 'partners': partner, 'group': group, 'programs': programs,
+                           'projects': projects})
+
+    else:
+        form = UserCreationForm()
+        partner = Partner.objects.all()
+        group = Group.objects.all()
+        programs = Program.objects.all()
+        projects = Project.objects.all()
+        return render(request, 'createuser.html',
+                      {'form': form, 'partners': partner, 'group': group, 'programs': programs,
+                       'projects': projects})
+
+
+def updateuser(request, id):
+    context = {}
+    obj = get_object_or_404(UserProfile, id=id)
+    form = UserProfileForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+        test = User.objects.filter(id=obj.user.id)
+        test.update(username=request.POST['username'])
+        return HttpResponseRedirect("/dashboard/user-list")
+    partner = Partner.objects.all()
+    programs = Program.objects.all()
+    projects = Project.objects.all()
+    user = User.objects.all()
+    context["form"] = form
+    context["partner"] = partner
+    context['user'] = user
+    context['programs'] = programs
+    context['projects'] = projects
+
+    return render(request, "updateuser.html", context)
 
 
 def activate_user(request, **kwargs):
