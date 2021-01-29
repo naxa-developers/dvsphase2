@@ -124,9 +124,9 @@ def bulkCreate(request):
         success_count = 0
         for row in range(0, upper_range):
             try:
-                if type(df['BUDGET (£)']) == float:
-                    budget_data = df['BUDGET (£)'][row]
-                else:
+                try:
+                    budget_data = float(df['BUDGET (£)'][row])
+                except:
                     budget_data = None
                 five = FiveW.objects.update_or_create(
                     supplier_id=Partner.objects.get(code=df['1st TIER PARTNER CODE'][row]),

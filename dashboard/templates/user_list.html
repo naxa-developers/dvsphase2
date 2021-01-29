@@ -43,7 +43,7 @@
             <tr>
                 <td><a href="/dashboard/updateuser/{{user.id}}">{{ user.id }}</a></td>
                 <td>
-                    <a href="test.html" class="partner-info flex-start">
+                    <a href="/dashboard/updateuser/{{user.id}}" class="partner-info flex-start">
                         {% if user.thumbnail %}
                         <img src="{{ user.thumbnail.url }}" alt="org"/>
                         {% else %}
@@ -89,9 +89,9 @@
                     {% endif %}
 
                 </td>
-                <td><a href="test.html">{{ user.partner }}</a></td>
-                <td><a href="test.html">{{ user.program }}</a></td>
-                <td><a href="test.html">{{ user.project }}</a></td>
+                <td><a href="/dashboard/updateuser/{{user.id}}">{{ user.partner }}</a></td>
+                <td><a href="/dashboard/updateuser/{{user.id}}">{{ user.program }}</a></td>
+                <td><a href="/dashboard/updateuser/{{user.id}}">{{ user.project }}</a></td>
 
                 <!--                <td>-->
                 <!--                    <div class="table-action">-->
