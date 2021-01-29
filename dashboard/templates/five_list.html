@@ -20,14 +20,21 @@
     </div>
     <!-- dfid program table -->
     <div class="table-tesponsive program-list">
-        {% if messages %}
-        {% for message in messages %}
+        {% if error_message %}
+
         <div class="alert alert-success alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Success!</strong> {{message}}
+            <strong>Error!</strong> {{error_message}}<a href="https://dvsnaxa.naxa.com.np/media/errordata.csv">View Error</a>
         </div>
-        {% endfor %}
         {% endif %}
+        {% if success_message %}
+
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> {{success_message}}
+        </div>
+        {% endif %}
+
         <table class="five-table dataTable">
             <thead>
             <tr>

@@ -118,17 +118,14 @@ def bulkCreate(request):
             df = pd.read_excel(uploaded_file).fillna('')
         else:
             messages.error(request, "Please upload a .csv or .xls file")
-
         upper_range = len(df)
-
+        fivew_correct = []
+        fivew_incorrect = []
+        error = []
         success_count = 0
         for row in range(0, upper_range):
             try:
-                try:
-                    budget_data = float(df['BUDGET (£)'][row])
-                except:
-                    budget_data = None
-                five = FiveW.objects.update_or_create(
+                fivew_correct.append(FiveW(
                     supplier_id=Partner.objects.get(code=df['1st TIER PARTNER CODE'][row]),
                     second_tier_partner_name=df['2nd TIER PARTNER'][row],
                     component_id=Project.objects.get(code=df['Project/Component Code'][row]),
@@ -143,19 +140,28 @@ def bulkCreate(request):
                     contact_number=df['CONTACT NUMBER'][row],
                     email=df['EMAIL'][row],
                     remarks=df['REMARKS'][row],
-                    allocated_budget=budget_data,
-
-                )
+                ))
                 success_count += 1
-            except ObjectDoesNotExist as e:
-                print('error')
-                messages.add_message(request, messages.WARNING, str(
-                    e) + " for row " + str(
-                    row + 2) + ' Please check the column of following row and only re-upload following row number to minimize the risk of duplication')
-                continue
-        messages.add_message(request, messages.SUCCESS, str(
-            success_count) + "Row Of Five-w Data Added ")
-        return redirect('/dashboard/five-list/', messages)
+            except Exception as e:
+                incorrect = df.iloc[row]
+                fivew_incorrect.append(incorrect)
+                error.append(str(row + 2))
+                # error.append(messages.add_message(request, messages.WARNING, str(
+                #     e) + " for row " + str(
+                #     row + 2)))
+        if fivew_incorrect:
+            merged = pd.concat(fivew_incorrect)
+            merged.to_csv('media/errordata.csv')
+            # messages.add_message('Error in row' + str(' '.join([str(elem) for elem in error])))
+
+        FiveW.objects.bulk_create(fivew_correct)
+        # messages.add_message(request, messages.SUCCESS, str(
+        #     success_count) + "Row Of Five-w Data Added ")
+        context = {
+            'success_message': str(success_count) + "Row Of Five-w Data Added ",
+            'error_message': 'Error in row' + str(' '.join([str(elem) for elem in error]))
+        }
+    return render(request, 'five_list.html', context)
 
 
 @login_required()
