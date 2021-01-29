@@ -21,6 +21,7 @@ class Command(BaseCommand):
                 Program(
                     name=(df['PROGRAMME NAME'][row]),
                     code=df['Programme Code'][row],
+                    total_budget=df['BUDGET (£)'][row],
 
                 ) for row in range(0, upper_range)
             ]
