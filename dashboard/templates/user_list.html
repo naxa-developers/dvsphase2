@@ -9,6 +9,7 @@
                 <a href="#"><i class="material-icons">assignment</i> User</a>
             </li>
             <li><a href="/dashboard/invitation" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Invite user</a>
+                <li style="padding-left:10px"><a href="/dashboard/createuser" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Create user</a>
             </li>
         </ul>
     </div>
@@ -40,9 +41,9 @@
             <tbody>
             {% for user in list %}
             <tr>
-                <td>{{ user.id }}</td>
+                <td><a href="/dashboard/updateuser/{{user.id}}">{{ user.id }}</a></td>
                 <td>
-                    <a href="#" class="partner-info flex-start">
+                    <a href="test.html" class="partner-info flex-start">
                         {% if user.thumbnail %}
                         <img src="{{ user.thumbnail.url }}" alt="org"/>
                         {% else %}
@@ -51,7 +52,7 @@
                         <h6>{{user.name}}</h6>
                     </a>
                 </td>
-                <td>{{ user.email }}</td>
+                <td><a href="/dashboard/updateuser/{{user.id}}">{{ user.email }}</a></td>
                 <td>
 
 
@@ -71,13 +72,13 @@
                 </td>
                 <td>
                     {% if user.user.is_superuser %}
-                        admin
+                    <a href="/dashboard/updateuser/{{user.id}}">admin</a>
                     {% else %}
 
                     {% if user.user.groups.all.exists %}
 
                     {% for grp in user.user.groups.all %}
-                    {{ grp.name }}
+                    <a href="test.html">{{ grp.name }}</a>
                     {% endfor %}
 
                     {% else %}
@@ -88,9 +89,9 @@
                     {% endif %}
 
                 </td>
-                <td>{{ user.partner }}</td>
-                <td>{{ user.program }}</td>
-                <td>{{ user.project }}</td>
+                <td><a href="test.html">{{ user.partner }}</a></td>
+                <td><a href="test.html">{{ user.program }}</a></td>
+                <td><a href="test.html">{{ user.project }}</a></td>
 
                 <!--                <td>-->
                 <!--                    <div class="table-action">-->

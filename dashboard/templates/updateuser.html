@@ -1,0 +1,128 @@
+{% load static %}﻿
+<!doctype html>
+<html class="no-js " lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="Responsive DFID Dashboard.">
+    <title>DFID Dashboard</title>
+    <link rel="icon" href="{% static 'dashboard/images/favicon.icon' %}" type="image/x-icon">
+    <!-- Favicon-->
+    <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap.min.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+</head>
+
+<body class="">
+<!-- login page start -->
+<div class="registration-heading" style="margin-top: -24px;">
+    <div class="header">
+        <a href="/dashboard/main/"><img class="logo" src="{% static 'dashboard/images/dfid-logo.png' %}" alt=""></a>
+        <a href="/dashboard/main/"><img src="{% static 'dashboard/images/map.png' %}" alt="map" class="img-map"/></a>
+    </div>
+</div>
+<div class="authentication registration">
+    <!-- login form start -->
+
+    <div class="col-9 col-sm-8 col-md-8 col-lg-6">
+        <div class="auth-form login-form registration-form">
+            <div class="login-wrap">
+                <div class="login-header">
+                    <h3>User Update</h3>
+                </div>
+                <form class="program-form" action="/dashboard/updateuser/{{form.instance.id}}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% if form.errors %}
+                    {% for field in form %}
+                    {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ field.name|title }} {{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="id_name">Username</label>
+                        <input type="text" class="form-control" name="username" value="{{form.instance.user.username}}" required id="id_name"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_name">Full Name:</label>
+                        <input type="text" class="form-control" name="name" value="{{form.instance.name}}" required id="id_name"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_email">Email:</label>
+                        <input type="email" class="form-control" name="email" value="{{form.instance.email}}" required id="id_email"/>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="id_partner">Select Partner For User</label>
+                        <select name="partner" id="id_partner" class="custom-select" required>
+                            {% for partner in partner %}
+                            {% if partner.id == form.instance.partner_id.id %}
+                                <option value={{ partner.id }} selected>{{ partner.name }}</option>
+                            {% else %}
+                                <option value={{ partner.id }}>{{ partner.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_partner">Select Program For User</label>
+                        <select name="program" id="id_program" class="custom-select" required>
+                            {% for program in programs %}
+                            {% if program.id == form.instance.program.id %}
+                                <option value={{ program.id }} selected>{{ program.name }}</option>
+                            {% else %}
+                                <option value={{ program.id }}>{{ program.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_partner">Select Project For User</label>
+                        <select name="project" id="id_project" class="custom-select" required>
+                            {% for project in projects %}
+                            {% if project.id == form.instance.project.id %}
+                                <option value={{ project.id }} selected>{{ project.name }}</option>
+                            {% else %}
+                                <option value={{ project.id }}>{{ project.name }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+
+                    <div class="form-group ">
+                        <label for="id_image" class="">Image</label>
+                        <input type="file" name="image"  id="id_image">
+                    </div>
+                    <div class="form-group ">
+                        <input type="hidden" name="user" value="{{form.instance.user.id}}"  id="id_user">
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="dfid-button">Signup</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+
+</html>

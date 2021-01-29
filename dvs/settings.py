@@ -12,13 +12,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
-
-sentry_sdk.init(
-    dsn="https://08fc1960dbf14408a4fbff958a86494e@sentry.io/1524106",
-    integrations=[DjangoIntegration()]
-)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -164,6 +157,7 @@ SWAGGER_SETTINGS = {
 }
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 20000
 
 STATIC_URL = '/static/'
 

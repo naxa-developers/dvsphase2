@@ -19,9 +19,8 @@ class Command(BaseCommand):
         try:
             prog = [
                 Program(
-                    name=(df['Programme'][row]),
+                    name=(df['PROGRAMME NAME'][row]),
                     code=df['Programme Code'][row],
-                    total_budget=df['Total Budget'][row],
 
                 ) for row in range(0, upper_range)
             ]

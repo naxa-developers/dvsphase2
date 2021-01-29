@@ -69,6 +69,7 @@
                 .partner-info {
                     align-items: center;
                     flex-wrap: nowrap;
+
                     img {
                         width: 30px;
                         height: 30px;
@@ -94,7 +95,7 @@
                         font-family: $raleway;
                         text-transform: capitalize;
                         font-weight: 600;
-                        
+
                     }
 
                     &.edit {
@@ -118,6 +119,7 @@
     .table-action {
         position: relative;
         display: inline-block;
+
         a {
             i {
                 color: $color-bg-text;
@@ -156,40 +158,45 @@
             }
         }
     }
-    &.table-border{
+
+    &.table-border {
         margin-top: 0rem;
-        thead{
-            tr{
-                th{
+
+        thead {
+            tr {
+                th {
                     color: darken($blue-light, 40%);
                     border: 1px solid $blue-light;
                     font-size: 0.875rem;
                 }
-                &:nth-child(1){
-                    th{
+
+                &:nth-child(1) {
+                    th {
                         text-align: center;
                     }
                 }
-                
-                &:nth-child(2){
-                    th{
+
+                &:nth-child(2) {
+                    th {
                         text-align: center;
                         font-size: 0.75rem;
                     }
                 }
-                &:nth-child(3){
-                    th{
+
+                &:nth-child(3) {
+                    th {
                         font-size: 0.75rem;
                     }
                 }
 
             }
         }
-        tbody{
-            tr{
-                td{
+
+        tbody {
+            tr {
+                td {
                     border: 1px solid $blue-light;
-                    border-top: 0px;    
+                    border-top: 0px;
                     font-size: 0.745rem;
                 }
             }
@@ -291,4 +298,8 @@ ul.pagination {
             }
         }
     }
+}
+
+.scroll-table {
+    overflow-y: auto;
 }

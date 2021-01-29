@@ -1719,6 +1719,9 @@ ul.pagination {
     color: #ffffff;
     border-color: #D9002A; }
 
+.scroll-table {
+  overflow-y: auto; }
+
 .dfid-breadcrumb ul {
   align-items: center; }
   .dfid-breadcrumb ul li {
