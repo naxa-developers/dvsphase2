@@ -17,6 +17,7 @@ class Command(BaseCommand):
         print("Wait Data is being Loaded")
 
         try:
+
             part = [
                 Partner(
                     name=(df['1st TIER PARTNER'][row]).strip(),
@@ -24,6 +25,7 @@ class Command(BaseCommand):
 
                 ) for row in range(0, upper_range)
             ]
+            print(part)
             partner_data = Partner.objects.bulk_create(part)
 
             if partner_data:
