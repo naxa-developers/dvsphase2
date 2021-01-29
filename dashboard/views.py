@@ -124,6 +124,10 @@ def bulkCreate(request):
         success_count = 0
         for row in range(0, upper_range):
             try:
+                if type(df['BUDGET (£)']) == float:
+                    budget_data = df['BUDGET (£)'][row]
+                else:
+                    budget_data = None
                 five = FiveW.objects.update_or_create(
                     supplier_id=Partner.objects.get(code=df['1st TIER PARTNER CODE'][row]),
                     second_tier_partner_name=df['2nd TIER PARTNER'][row],
@@ -139,6 +143,8 @@ def bulkCreate(request):
                     contact_number=df['CONTACT NUMBER'][row],
                     email=df['EMAIL'][row],
                     remarks=df['REMARKS'][row],
+                    allocated_budget=budget_data,
+
                 )
                 success_count += 1
             except ObjectDoesNotExist as e:
