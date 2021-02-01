@@ -140,28 +140,23 @@ def bulkCreate(request):
                     contact_number=df['CONTACT NUMBER'][row],
                     email=df['EMAIL'][row],
                     remarks=df['REMARKS'][row],
+                    allocated_budget=float(df['BUDGET (£)'][row])
                 ))
                 success_count += 1
-            except Exception as e:
-                incorrect = df.iloc[row]
-                fivew_incorrect.append(incorrect)
-                error.append(str(row + 2))
-                # error.append(messages.add_message(request, messages.WARNING, str(
-                #     e) + " for row " + str(
-                #     row + 2)))
-        if fivew_incorrect:
-            merged = pd.concat(fivew_incorrect)
-            merged.to_csv('media/errordata.csv')
-            # messages.add_message('Error in row' + str(' '.join([str(elem) for elem in error])))
 
+            except Exception as e:
+                fivew_incorrect.append(row)
+                error.append(str(row + 2))
+        if fivew_incorrect:
+            test = df.loc[fivew_incorrect, :]
+            print(test)
+            test.to_csv('media/errordata.csv')
+
+        messages.error(request, 'Error in row' + str(' '.join([str(elem) for elem in error])))
+        messages.success(request, 'Success! : ' + str(success_count) + "Row Of Five-w Data Added ")
         FiveW.objects.bulk_create(fivew_correct)
-        # messages.add_message(request, messages.SUCCESS, str(
-        #     success_count) + "Row Of Five-w Data Added ")
-        context = {
-            'success_message': str(success_count) + "Row Of Five-w Data Added ",
-            'error_message': 'Error in row' + str(' '.join([str(elem) for elem in error]))
-        }
-    return render(request, 'five_list.html', context)
+
+    return redirect('/dashboard/five-list', messages)
 
 
 @login_required()
