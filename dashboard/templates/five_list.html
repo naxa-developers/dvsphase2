@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<style>
+    input[type=search] {
+        display:none;
+    }
+</style>
 <main class="dfid-main">
     <!-- dfid breadcrumb -->
     <div class="dfid-breadcrumb pdt-100">
@@ -10,6 +15,10 @@
             </li>
             {% if perms.core.add_fivew %}
             <li><a href="/dashboard/five-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
+            </li>
+            {% endif %}
+            {% if perms.core.delete_fivew %}
+            <li style="padding-left:10px"><a href="/dashboard/clear-data" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Clear All Data</a>
             </li>
             {% endif %}
             {% if perms.core.add_fivew %}
@@ -45,6 +54,17 @@
             {% endfor %}
     </ul>
 {% endif %}
+
+            <form action="/dashboard/five-list" method="GET">
+<!--                {% csrf_token %}-->
+                <div class="row">
+                <input class="form-control" name="search" placeholder="Search..." style="max-width:30%;" required>
+
+                <button type="submit" class="btn btn-primary" style="margin-left: 40px;">Search</button>
+
+                </div>
+            </form>
+
         <table class="five-table dataTable">
             <thead>
             <tr>
@@ -146,4 +166,5 @@
 
     </div>
 </main>
+
 {% endblock %}

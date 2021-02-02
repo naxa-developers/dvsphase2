@@ -7,7 +7,7 @@ urlpatterns = [
     path('upload/', views.uploadData, name='upload'),
     path('upload-shapefile/', views.ShapefileUpload, name='upload-shapefile'),
     path('bulk-upload/', views.bulkCreate, name='bulk-upload'),
-
+    path('clear-data/', views.deleteallfivewdata, name='clear-data'),
     path('invitation/', views.Invitation, name='invitation'),
     path('login-test/', views.login_test, name='login-test'),
     # path('login-test/<int:group>/<int:partner>', views.login_test, name='login-test'),

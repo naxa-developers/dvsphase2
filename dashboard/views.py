@@ -17,6 +17,7 @@ from rest_framework.status import (
     HTTP_404_NOT_FOUND,
     HTTP_200_OK
 )
+from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -104,6 +105,16 @@ def bulkCreate(request):
         return redirect('/dashboard/five-list/', messages)
 
 
+def deleteallfivewdata(request):
+    if "GET" == request.method:
+        messages.error(request,'Alert:You may Loose All Your Data,Please Backup First')
+        return render(request, 'confirm.html')
+    else:
+        FiveW.objects.all().delete()
+        messages.success(request, "All Data Deleated")
+        return redirect('/dashboard/five-list', messages)
+
+
 @login_required()
 def bulkCreate(request):
     if "GET" == request.method:
@@ -121,6 +132,7 @@ def bulkCreate(request):
         upper_range = len(df)
         fivew_correct = []
         fivew_incorrect = []
+        error_log = []
         error = []
         success_count = 0
         for row in range(0, upper_range):
@@ -146,10 +158,11 @@ def bulkCreate(request):
 
             except Exception as e:
                 fivew_incorrect.append(row)
+                error_log.append(e)
                 error.append(str(row + 2))
         if fivew_incorrect:
             test = df.loc[fivew_incorrect, :]
-            print(test)
+            test['Errors'] = error_log
             test.to_csv('media/errordata.csv')
 
         messages.error(request, 'Error in row' + str(' '.join([str(elem) for elem in error])))
@@ -763,46 +776,73 @@ class FiveList(LoginRequiredMixin, ListView):
     model = FiveW
 
     def get_context_data(self, **kwargs):
-        data = super(FiveList, self).get_context_data(**kwargs)
-        user = self.request.user
-        user_data = UserProfile.objects.get(user=user)
-        group = Group.objects.get(user=user)
-        if group.name == 'admin':
-            five = FiveW.objects.values('id', 'supplier_id__name', 'second_tier_partner_name', 'program_id__name',
-                                        'component_id__name', 'status', 'province_id__name', 'district_id__name',
-                                        'municipality_id__name', 'allocated_budget').order_by('id')
+        search = self.request.GET.get('search', None)
+        if search is not None:
+            dat = FiveW.objects.filter(supplier_id__name=search)
+            user = self.request.user
+            user_data = UserProfile.objects.get(user=user)
+            group = Group.objects.get(user=user)
+            if group.name == 'admin':
+                dat_values = dat.values('id', 'supplier_id__name', 'second_tier_partner_name', 'program_id__name',
+                                            'component_id__name', 'status', 'province_id__name', 'district_id__name',
+                                            'municipality_id__name', 'allocated_budget').order_by('id')
+            else:
+                dat_values = dat.values('id', 'supplier_id__name',
+                                         'second_tier_partner_name',
+                                         'program_id__name',
+                                         'component_id__name', 'status',
+                                         'province_id__name',
+                                         'district_id__name',
+                                         'municipality_id__name',
+                                         'allocated_budget').order_by('id')
+            data = {
+                'list': dat_values,
+                'active': 'five',
+                'user': user_data,
 
-
-
-
+            }
+            return data
         else:
-            five = FiveW.objects.filter(supplier_id=user_data.partner.id).values('id', 'supplier_id__name',
-                                                                                 'second_tier_partner_name',
-                                                                                 'program_id__name',
-                                                                                 'component_id__name', 'status',
-                                                                                 'province_id__name',
-                                                                                 'district_id__name',
-                                                                                 'municipality_id__name',
-                                                                                 'allocated_budget').order_by('id')
+            data = super(FiveList, self).get_context_data(**kwargs)
+            user = self.request.user
+            user_data = UserProfile.objects.get(user=user)
+            group = Group.objects.get(user=user)
+            if group.name == 'admin':
+                five = FiveW.objects.values('id', 'supplier_id__name', 'second_tier_partner_name', 'program_id__name',
+                                            'component_id__name', 'status', 'province_id__name', 'district_id__name',
+                                            'municipality_id__name', 'allocated_budget').order_by('id')
 
-        paginator = Paginator(five, 500)
-        page_numbers_range = 500
-        max_index = len(paginator.page_range)
-        print(paginator)
-        page_number = self.request.GET.get('page')
-        current_page = int(page_number) if page_number else 1
-        page_obj = paginator.get_page(page_number)
-        start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
-        end_index = start_index + page_numbers_range
-        if end_index >= max_index:
-            end_index = max_index
 
-        page_range = paginator.page_range[start_index:end_index]
-        data['page_range'] = page_range
-        data['list'] = page_obj
-        data['user'] = user_data
-        data['active'] = 'five'
-        return data
+
+
+            else:
+                five = FiveW.objects.filter(supplier_id=user_data.partner.id).values('id', 'supplier_id__name',
+                                                                                     'second_tier_partner_name',
+                                                                                     'program_id__name',
+                                                                                     'component_id__name', 'status',
+                                                                                     'province_id__name',
+                                                                                     'district_id__name',
+                                                                                     'municipality_id__name',
+                                                                                     'allocated_budget').order_by('id')
+
+            paginator = Paginator(five, 500)
+            page_numbers_range = 500
+            max_index = len(paginator.page_range)
+            print(paginator)
+            page_number = self.request.GET.get('page')
+            current_page = int(page_number) if page_number else 1
+            page_obj = paginator.get_page(page_number)
+            start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+            end_index = start_index + page_numbers_range
+            if end_index >= max_index:
+                end_index = max_index
+
+            page_range = paginator.page_range[start_index:end_index]
+            data['page_range'] = page_range
+            data['list'] = page_obj
+            data['user'] = user_data
+            data['active'] = 'five'
+            return data
 
 
 class UserList(LoginRequiredMixin, ListView):
