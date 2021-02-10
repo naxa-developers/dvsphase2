@@ -7,11 +7,22 @@ from io import BytesIO
 from colorfield.fields import ColorField
 
 
-# Create your models here.
+# Create your models here
+
 class Partner(models.Model):
+    type_of_institution = (
+        ('Government', 'Government'),
+        ('International NGO', 'International NGO'),
+        ('National NGO', 'National NGO'),
+        ('Multilateral', 'Multilateral'),
+        ('Private Sector', 'Private Sector'),
+        ('Intergovernmental Organization', 'Intergovernmental Organization'),
+        ('Academic, Training and Research', 'Academic, Training and Research'),
+
+    )
     name = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    type_of_institution = models.CharField(max_length=100, null=True, blank=True)
+    type_of_institution = models.CharField(max_length=100,choices=type_of_institution, null=True, blank=True)
     address = models.CharField(max_length=100, null=True, blank=True)
     email = models.CharField(max_length=100, null=True, blank=True)
     phone_number = models.CharField(max_length=100, null=True, blank=True)
