@@ -5,6 +5,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('upload/', views.uploadData, name='upload'),
+    path('export/', views.ExportData, name='export'),
     path('upload-shapefile/', views.ShapefileUpload, name='upload-shapefile'),
     path('bulk-upload/', views.bulkCreate, name='bulk-upload'),
     path('clear-data/', views.deleteallfivewdata, name='clear-data'),

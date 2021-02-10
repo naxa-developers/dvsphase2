@@ -14,8 +14,22 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Custom Css -->
     <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
-<!--    <link rel="stylesheet" href="{% static 'dashboard/css/custom-my.css' %}">-->
+   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/css/bootstrap-multiselect.css"> -->
     <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap-datepicker.min.css' %}">
+   <link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet">
+    <style>
+    select {
+      width: 100%;
+
+    }
+<!--    .ms-drop ul>li label.disabled {-->
+<!--        display:none;-->
+<!--        white-space:nowrap;-->
+<!--    }-->
+    .dt-buttons {
+        display: none;
+    }
+</style>
 </head>
 
 <body class="">
@@ -313,6 +327,7 @@
 <!-- Jquery Core Js -->
 
 <script src="{% static 'dashboard/js/jquery-3.4.1.min.js' %}"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
 <!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) -->
 <script src="{% static 'dashboard/js/bootstrap.min.js' %}"></script> <!-- slimscroll, waves Scripts Plugin Js -->
 <script src="{% static 'dashboard/js/jquery.slimscroll.min.js' %}"></script>
@@ -327,5 +342,83 @@
 <script src="{% static 'dashboard/plugins/datatable/buttons.html5.min.js' %}"></script>
 <script src="{% static 'dashboard/plugins/datatable/custom-datatables.js' %}"></script>
 
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"></script> -->
+<script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+<script>
+  $(function() {
+    $('select').multipleSelect({
+        selectAll: false
+    })
+  })
+</script>
+<script>
+    $(document).ready(function() {
+        // var project = [{% for i in project %}'{{i}}', {% endfor %}];
+        // var program = [{% for i in program %}'{{i}}', {% endfor %}];
+        $('#multi_select_program').change(function(e) {
+            e.preventDefault();
+            var programValue = $(this).val();
+            $('#multi_select_project option').each(function() {
+                if(programValue.length > 0) {
+                    $(this).prop('disabled', true)
+                }else {
+                    $(this).prop('disabled', false)
+                };
+            });
+            $('#multi_select_project option').each(function() {
+                for(var j=0;j<=programValue.length;j++) {
+                    if ($(this).attr('valId') == programValue[j]) {
+                        $(this).prop('disabled', false);
+                    };
+                };
+            });
+            $('#multi_select_project').multipleSelect('refresh');
+
+        });
+        $('#multi_select_province').change(function(e) {
+            e.preventDefault();
+            var provinceValue = $(this).val();
+            $('#multi_select_district option').each(function() {
+                if(provinceValue.length > 0) {
+                    $(this).prop('disabled', true)
+                }else {
+                    $(this).prop('disabled', false)
+                };
+            });
+            $('#multi_select_district option').each(function() {
+                for(var i=0;i<=provinceValue.length;i++) {
+                    if($(this).attr('valId1') == provinceValue[i]) {
+                        $(this).prop('disabled', false)
+                    };
+                };
+            });
+            $('#multi_select_district').multipleSelect('refresh');
+        });
+        $('#multi_select_district').change(function(e) {
+            e.preventDefault();
+            var districtValue = $(this).val();
+            $('#multi_select_gapanapa option').each(function() {
+                if(districtValue.length > 0) {
+                    $(this).prop('disabled', true)
+                }else {
+                    $(this).prop('disabled', false)
+                };
+            });
+            $('#multi_select_gapanapa option').each(function() {
+                for(var k=0;k<=districtValue.length;k++) {
+                    if($(this).attr('valId2') == districtValue[k]) {
+                        $(this).prop('disabled', false)
+                    };
+                };
+            });
+            $('#multi_select_gapanapa').multipleSelect('refresh');
+        });
+        $('#reset-btn').click(function(e) {
+            e.preventDefault();
+            $('select').multipleSelect('uncheckAll');
+           
+        });
+    });
+</script>
 
 </html>

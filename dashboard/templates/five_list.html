@@ -5,6 +5,9 @@
     input[type=search] {
         display:none;
     }
+    .dt-buttons {
+        display: none;
+    }
 </style>
 <main class="dfid-main">
     <!-- dfid breadcrumb -->
@@ -23,12 +26,72 @@
             {% endif %}
             {% if perms.core.add_fivew %}
             <li style="padding-left:10px"><a href="/dashboard/bulk-upload" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Bulk Upload</a>
+
             </li>
             {% endif %}
+            <li style="padding-left:10px"><a href="/dashboard/export/?full_data='full_data'{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if partnerdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Export</a>
         </ul>
     </div>
+    <br>
     <!-- dfid program table -->
-    <div class="table-tesponsive program-list">
+                <form action="/dashboard/five-list" method="GET">
+<!--                {% csrf_token %}-->
+                <div class="row">
+<!--                <input class="form-control" name="search" placeholder="Search..." style="max-width:30%;" required>-->
+                    <div class="col" style="padding-left:5px;padding-right:5px;">
+                        <select id="multi_select_partner" placeholder="Partner" name='partner' multiple="multiple">
+                            {% for partner in partner %}
+                                <option value="{{partner.id}}">{{partner.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col" style="padding-left:5px;padding-right:5px;">
+                        <select name="program" id="multi_select_program" multiple="multiple" placeholder="Program">
+                            {% for program in program %}
+                            <option value="{{program.id}}">{{program.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col" style="padding-left:5px;padding-right:5px;">
+                        <select name="project" id='multi_select_project' multiple="multiple" placeholder="Component">
+                                {% for project in project %}
+                                <option value="{{project.id}}" valId='{{project.program_id__id}}'>{{project.name}}</option>
+
+                                {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col" style="padding-left:5px;padding-right:5px;">
+                        <select name="province" id='multi_select_province' multiple="multiple" placeholder="Province">
+                            {% for province in province %}
+                            <option value="{{province.id}}">{{province.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col" style="padding-left:5px;padding-right:5px;">
+                        <select name="district" id='multi_select_district' multiple="multiple" placeholder="District">
+                            {% for district in district %}
+                            <option value="{{district.id}}" valId1='{{district.province_id__id}}'>{{district.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col" style="padding-left:5px;padding-right:5px;">
+                        <select name="gapanapa" id='multi_select_gapanapa' multiple="multiple" placeholder="Municipality">
+                            {% for gapanapa in gapanapa %}
+                            <option value="{{gapanapa.id}}" valId1='{{gapanapa.province_id__id}}' valId2='{{gapanapa.district_id__id}}'>{{gapanapa.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <button type="submit" class="btn btn-primary" style="margin-right:1px;height: 25px;display:flex;justify-content:center;align-items:center;">Search</button>
+                            <button type="submit" class="btn btn-secondary" style="margin-left:1px;height: 25px;display:flex;justify-content:center;align-items:center;">Reset</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
+    <div class="table-tesponsive scroll-table program-list">
         {% if messages %}
         {% for messages in messages %}
         {% if messages.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
@@ -54,16 +117,6 @@
             {% endfor %}
     </ul>
 {% endif %}
-
-            <form action="/dashboard/five-list" method="GET">
-<!--                {% csrf_token %}-->
-                <div class="row">
-                <input class="form-control" name="search" placeholder="Search..." style="max-width:30%;" required>
-
-                <button type="submit" class="btn btn-primary" style="margin-left: 40px;">Search</button>
-
-                </div>
-            </form>
 
         <table class="five-table dataTable">
             <thead>
@@ -143,19 +196,19 @@
 
                     </div>
                     <div class="paging-right">
-                        {% if page_obj.has_previous %}
+                        {% if list.has_previous %}
                         <div class="page-item pre-page">
-                            <a href="?page={{ page_obj.previous_page_number }}" >previous page</a>
+                            <a href="?page={{ list.previous_page_number }}{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if partnerdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}" >previous page</a>
                         </div>
                         {% endif %}
                         <ul>
                             {% for page in page_range %}
-                            <li {% if page == page_obj.number %} class="active" {% endif %}><a href="?page={{ page }}">{{ page }}</a></li>
+                            <li {% if page == list.number %} class="active" {% endif %}><a href="?page={{ page }}{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if partnerdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}">{{ page }}</a></li>
                             {% endfor %}
                         </ul>
-                        {% if page_obj.has_next %}
+                        {% if list.has_next %}
                         <div class="next-page page-item">
-                            <a href="?page={{ page_obj.next_page_number }}">next page</a>
+                            <a href="?page={{ list.next_page_number }}{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if partnerdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}">next page</a>
                         </div>
                         {% endif %}
                     </div>
@@ -165,6 +218,7 @@
 
 
     </div>
+
 </main>
 
 {% endblock %}
