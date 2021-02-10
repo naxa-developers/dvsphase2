@@ -45,6 +45,9 @@ from django.shortcuts import (get_object_or_404,
                               render,
                               HttpResponseRedirect)
 import datetime
+from django.db.models import Q
+from .filters import fivew
+from djqscsv import render_to_csv_response
 
 
 # Create your views here.
@@ -60,54 +63,9 @@ def login_test(request, **kwargs):
     # return HttpResponse(request.user.has_perm('core.add_program'))
 
 
-@login_required()
-def bulkCreate(request):
-    if "GET" == request.method:
-        return render(request, 'bulk_upload.html')
-    else:
-        csv = request.FILES["shapefile"]
-        uploaded_file = request.FILES['shapefile']
-
-        if uploaded_file.name.endswith('.csv'):
-            df = pd.read_csv(uploaded_file).fillna('')
-        elif uploaded_file.name.endswith(('.xls', 'xlsx')):
-            df = pd.read_excel(uploaded_file).fillna('')
-        else:
-            messages.error(request, "Please upload a .csv or .xls file")
-
-        upper_range = len(df)
-
-        success_count = 0
-        for row in range(0, upper_range):
-            try:
-                supplier_id = Partner.objects.get(
-                    code=int(df['1st TIER PARTNER CODE'][row]))
-                second_tier_partner_name = None if df['2nd TIER PARTNER'][row] == '' else df['2nd TIER PARTNER'][row]
-                component_id = Project.objects.get(
-                    code=df['Project/Component Code'][row])
-                status = None if df['PROJECT STATUS'][row] == '' else df['PROJECT STATUS'][row]
-                fivew = FiveW.objects.update_or_create(
-                    supplier_id=supplier_id,
-                    second_tier_partner_name=second_tier_partner_name,
-                    component_id=component_id,
-                    status=status,
-
-                )
-                success_count += 1
-            except ObjectDoesNotExist as e:
-                print('error')
-                messages.add_message(request, messages.WARNING, str(
-                    e) + " for row " + str(
-                    row + 2) + ' Please check the column of following row and only re-upload following row number to minimize the risk of duplication')
-                continue
-        messages.add_message(request, messages.SUCCESS, str(
-            success_count) + "Row Of Five-w Data Added ")
-        return redirect('/dashboard/five-list/', messages)
-
-
 def deleteallfivewdata(request):
     if "GET" == request.method:
-        messages.error(request,'Alert:You may Loose All Your Data,Please Backup First')
+        messages.error(request, 'Alert:You may Loose All Your Data,Please Backup First')
         return render(request, 'confirm.html')
     else:
         FiveW.objects.all().delete()
@@ -135,39 +93,78 @@ def bulkCreate(request):
         error_log = []
         error = []
         success_count = 0
-        for row in range(0, upper_range):
-            try:
-                fivew_correct.append(FiveW(
-                    supplier_id=Partner.objects.get(code=df['1st TIER PARTNER CODE'][row]),
-                    second_tier_partner_name=df['2nd TIER PARTNER'][row],
-                    component_id=Project.objects.get(code=df['Project/Component Code'][row]),
-                    program_id=Program.objects.get(code=df['Programme Code'][row]),
-                    province_id=Province.objects.get(code=df['PROVINCE.CODE'][row]),
-                    district_id=District.objects.get(code=df['D.CODE'][row]),
-                    municipality_id=GapaNapa.objects.get(hlcit_code=df['PALIKA.Code'][row]),
-                    status=df['PROJECT STATUS'][row],
-                    reporting_line_ministry=df['REPORTING LINE MINISTRY'][row],
-                    contact_name=df['CONTACT NAME'][row],
-                    designation=df['DESIGNATION'][row],
-                    contact_number=df['CONTACT NUMBER'][row],
-                    email=df['EMAIL'][row],
-                    remarks=df['REMARKS'][row],
-                    allocated_budget=float(df['BUDGET (£)'][row])
-                ))
-                success_count += 1
+        user = request.user
+        user_data = UserProfile.objects.get(user=user)
+        group = Group.objects.get(user=user)
+        if group.name == 'admin':
+            for row in range(0, upper_range):
+                try:
+                    fivew_correct.append(FiveW(
+                        supplier_id=Partner.objects.get(code=df['1st TIER PARTNER CODE'][row]),
+                        second_tier_partner_name=df['2nd TIER PARTNER'][row],
+                        component_id=Project.objects.get(code=df['Project/Component Code'][row]),
+                        program_id=Program.objects.get(code=df['Programme Code'][row]),
+                        province_id=Province.objects.get(code=df['PROVINCE.CODE'][row]),
+                        district_id=District.objects.get(code=df['D.CODE'][row]),
+                        municipality_id=GapaNapa.objects.get(hlcit_code=df['PALIKA.Code'][row]),
+                        status=df['PROJECT STATUS'][row],
+                        reporting_line_ministry=df['REPORTING LINE MINISTRY'][row],
+                        contact_name=df['CONTACT NAME'][row],
+                        designation=df['DESIGNATION'][row],
+                        contact_number=df['CONTACT NUMBER'][row],
+                        email=df['EMAIL'][row],
+                        remarks=df['REMARKS'][row],
+                        allocated_budget=float(df['BUDGET (£)'][row])
+                    ))
+                    success_count += 1
 
-            except Exception as e:
-                fivew_incorrect.append(row)
-                error_log.append(e)
-                error.append(str(row + 2))
-        if fivew_incorrect:
-            test = df.loc[fivew_incorrect, :]
-            test['Errors'] = error_log
-            test.to_csv('media/errordata.csv')
+                except Exception as e:
+                    fivew_incorrect.append(row)
+                    error_log.append(e)
+                    error.append(str(row + 2))
+            if fivew_incorrect:
+                test = df.loc[fivew_incorrect, :]
+                test['Errors'] = error_log
+                test.to_csv('media/errordata.csv')
 
-        messages.error(request, 'Error in row' + str(' '.join([str(elem) for elem in error])))
-        messages.success(request, 'Success! : ' + str(success_count) + "Row Of Five-w Data Added ")
-        FiveW.objects.bulk_create(fivew_correct)
+            messages.error(request, 'Error in row' + str(' '.join([str(elem) for elem in error])))
+            messages.success(request, 'Success! : ' + str(success_count) + "Row Of Five-w Data Added ")
+            FiveW.objects.bulk_create(fivew_correct)
+
+        else:
+            for row in range(0, upper_range):
+                try:
+                    fivew_correct.append(FiveW(
+                        supplier_id=Partner.objects.get(id=user_data.partner.id, code=df['1st TIER PARTNER CODE'][row]),
+                        second_tier_partner_name=df['2nd TIER PARTNER'][row],
+                        component_id=Project.objects.get(code=df['Project/Component Code'][row]),
+                        program_id=Program.objects.get(code=df['Programme Code'][row]),
+                        province_id=Province.objects.get(code=df['PROVINCE.CODE'][row]),
+                        district_id=District.objects.get(code=df['D.CODE'][row]),
+                        municipality_id=GapaNapa.objects.get(hlcit_code=df['PALIKA.Code'][row]),
+                        status=df['PROJECT STATUS'][row],
+                        reporting_line_ministry=df['REPORTING LINE MINISTRY'][row],
+                        contact_name=df['CONTACT NAME'][row],
+                        designation=df['DESIGNATION'][row],
+                        contact_number=df['CONTACT NUMBER'][row],
+                        email=df['EMAIL'][row],
+                        remarks=df['REMARKS'][row],
+                        allocated_budget=float(df['BUDGET (£)'][row])
+                    ))
+                    success_count += 1
+
+                except Exception as e:
+                    fivew_incorrect.append(row)
+                    error_log.append(e)
+                    error.append(str(row + 2))
+            if fivew_incorrect:
+                test = df.loc[fivew_incorrect, :]
+                test['Errors'] = error_log
+                test.to_csv('media/errordata.csv')
+
+            messages.error(request, 'Error in row' + str(' '.join([str(elem) for elem in error])))
+            messages.success(request, 'Success! : ' + str(success_count) + "Row Of Five-w Data Added ")
+            FiveW.objects.bulk_create(fivew_correct)
 
     return redirect('/dashboard/five-list', messages)
 
@@ -770,35 +767,85 @@ class RoleList(LoginRequiredMixin, ListView):
         return data
 
 
+def ExportData(request):
+    partnerdata = request.GET.getlist('partner', None)
+    programdata = request.GET.getlist('program', None)
+    projectdata = request.GET.getlist('project', None)
+    provincedata = request.GET.getlist('province', None)
+    districtdata = request.GET.getlist('district', None)
+    municipalitydata = request.GET.getlist('gapanapa', None)
+    data = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata)
+    return render_to_csv_response(data)
+
+
 class FiveList(LoginRequiredMixin, ListView):
     template_name = 'five_list.html'
     paginate_by = 2
     model = FiveW
 
     def get_context_data(self, **kwargs):
-        search = self.request.GET.get('search', None)
-        if search is not None:
-            dat = FiveW.objects.filter(supplier_id__name=search)
+        partnerdata = self.request.GET.getlist('partner', None)
+        programdata = self.request.GET.getlist('program', None)
+        projectdata = self.request.GET.getlist('project', None)
+        provincedata = self.request.GET.getlist('province', None)
+        districtdata = self.request.GET.getlist('district', None)
+        municipalitydata = self.request.GET.getlist('gapanapa', None)
+        if partnerdata or projectdata or programdata or provincedata or districtdata or municipalitydata:
             user = self.request.user
             user_data = UserProfile.objects.get(user=user)
             group = Group.objects.get(user=user)
             if group.name == 'admin':
-                dat_values = dat.values('id', 'supplier_id__name', 'second_tier_partner_name', 'program_id__name',
-                                            'component_id__name', 'status', 'province_id__name', 'district_id__name',
-                                            'municipality_id__name', 'allocated_budget').order_by('id')
+                dat_values = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata)
+                # csv = download_csv(self.request,FiveW.objects.all())
+                # print(csv)
+                partner = Partner.objects.values('id', 'name')
+                project = Project.objects.values('id', 'program_id__id', 'name')
+                program = Program.objects.values('id', 'name')
+                province = Province.objects.values('id', 'name')
+                district = District.objects.values('id', 'province_id__id', 'name')
+                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name')
+
+
             else:
-                dat_values = dat.values('id', 'supplier_id__name',
-                                         'second_tier_partner_name',
-                                         'program_id__name',
-                                         'component_id__name', 'status',
-                                         'province_id__name',
-                                         'district_id__name',
-                                         'municipality_id__name',
-                                         'allocated_budget').order_by('id')
+                dat_values = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata)
+                partner = Partner.objects.filter(id=user_data.partner.id).values('id', 'name')
+                program = Program.objects.filter(id=user_data.program.id).values('id', 'name')
+                project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id', 'name')
+                province = Province.objects.values('id', 'name')
+                district = District.objects.values('id', 'province_id__id', 'name')
+                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name')
+
+            paginator = Paginator(dat_values, 500)
+            page_numbers_range = 500
+            max_index = len(paginator.page_range)
+            print(paginator)
+            page_number = self.request.GET.get('page')
+            current_page = int(page_number) if page_number else 1
+            page_obj = paginator.get_page(page_number)
+            start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+            end_index = start_index + page_numbers_range
+            if end_index >= max_index:
+                end_index = max_index
+
+            page_range = paginator.page_range[start_index:end_index]
+
             data = {
-                'list': dat_values,
+                'page_range': page_range,
+                'list': page_obj,
                 'active': 'five',
                 'user': user_data,
+                'partner': partner,
+                'program': program,
+                'project': project,
+                'province': province,
+                'district': district,
+                'gapanapa': gapanapa,
+                'partnerdata': partnerdata,
+                'programdata': programdata,
+                'projectdata': projectdata,
+                'provincedata': provincedata,
+                'municipalitydata': municipalitydata,
+                'districtdata': districtdata
 
             }
             return data
@@ -811,9 +858,12 @@ class FiveList(LoginRequiredMixin, ListView):
                 five = FiveW.objects.values('id', 'supplier_id__name', 'second_tier_partner_name', 'program_id__name',
                                             'component_id__name', 'status', 'province_id__name', 'district_id__name',
                                             'municipality_id__name', 'allocated_budget').order_by('id')
-
-
-
+                partner = Partner.objects.values('id', 'name')
+                project = Project.objects.values('id', 'program_id__id', 'name')
+                program = Program.objects.values('id', 'name')
+                province = Province.objects.values('id', 'name')
+                district = District.objects.values('id', 'province_id__id', 'name')
+                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name')
 
             else:
                 five = FiveW.objects.filter(supplier_id=user_data.partner.id).values('id', 'supplier_id__name',
@@ -824,6 +874,12 @@ class FiveList(LoginRequiredMixin, ListView):
                                                                                      'district_id__name',
                                                                                      'municipality_id__name',
                                                                                      'allocated_budget').order_by('id')
+                partner = Partner.objects.filter(id=user_data.partner.id).values('id', 'name')
+                program = Program.objects.filter(id=user_data.program.id).values('id', 'name')
+                project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id', 'name')
+                province = Province.objects.values('id', 'name')
+                district = District.objects.values('id', 'province_id__id', 'name')
+                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name')
 
             paginator = Paginator(five, 500)
             page_numbers_range = 500
@@ -841,7 +897,14 @@ class FiveList(LoginRequiredMixin, ListView):
             data['page_range'] = page_range
             data['list'] = page_obj
             data['user'] = user_data
+            data['partner'] = partner
+            data['program'] = program
+            data['project'] = project
+            data['province'] = province
+            data['district'] = district
+            data['gapanapa'] = gapanapa
             data['active'] = 'five'
+            data['five'] = five
             return data
 
 
