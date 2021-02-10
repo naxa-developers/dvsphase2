@@ -103,10 +103,15 @@
                  <div class="col-md-5">
                         <div class="form-group ">
                             <label for="id_type_of_institution" class="">Type Of Institution</label>
-                            <input type="text" class="form-control" name="type_of_institution" maxlength="100"
-                                   id="id_type_of_institution"
-                                   placeholder="NGO" value="{{ form.instance.type_of_institution }}">
-                        </div>
+                            <select name="type_of_institution">
+                                {% for partner in partner %}
+                                {% if partner.type_of_institution == form.instance.type_of_institution %}
+                                    <option value="{{partner.type_of_institution}}" selected>{{partner.type_of_institution}}</option>
+                                {% else %}
+                                    <option value="{{partner.type_of_institution}}">{{partner.type_of_institution}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
                     </div>
 
             </div>

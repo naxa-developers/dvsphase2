@@ -1731,8 +1731,10 @@ class PartnerUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         data = super(PartnerUpdate, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
+        partner = Partner.objects.order_by('id')
         data['user'] = user_data
         data['active'] = 'partner'
+        data['partner'] = partner
         return data
 
     def get_success_url(self):
