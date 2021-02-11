@@ -373,6 +373,7 @@
                 };
             });
             $('#multi_select_project').multipleSelect('refresh');
+            $('.ms-drop ul>li:has(label.disabled)').hide();
 
         });
         $('#multi_select_province').change(function(e) {
@@ -393,6 +394,7 @@
                 };
             });
             $('#multi_select_district').multipleSelect('refresh');
+            $('.ms-drop ul>li:has(label.disabled)').hide();
         });
         $('#multi_select_district').change(function(e) {
             e.preventDefault();
@@ -412,6 +414,7 @@
                 };
             });
             $('#multi_select_gapanapa').multipleSelect('refresh');
+            $('.ms-drop ul>li:has(label.disabled)').hide();
         });
         $('#reset-btn').click(function(e) {
             e.preventDefault();
