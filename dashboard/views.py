@@ -774,7 +774,10 @@ def ExportData(request):
     provincedata = request.GET.getlist('province', None)
     districtdata = request.GET.getlist('district', None)
     municipalitydata = request.GET.getlist('gapanapa', None)
-    data = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata)
+    user = request.user
+    user_data = UserProfile.objects.get(user=user)
+    group = Group.objects.get(user=user)
+    data = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata, group,user_data)
     return render_to_csv_response(data)
 
 
@@ -795,7 +798,8 @@ class FiveList(LoginRequiredMixin, ListView):
             user_data = UserProfile.objects.get(user=user)
             group = Group.objects.get(user=user)
             if group.name == 'admin':
-                dat_values = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata)
+                dat_values = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata,
+                                   group, user_data)
                 # csv = download_csv(self.request,FiveW.objects.all())
                 # print(csv)
                 partner = Partner.objects.values('id', 'name')
@@ -807,7 +811,8 @@ class FiveList(LoginRequiredMixin, ListView):
 
 
             else:
-                dat_values = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata)
+                dat_values = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata,
+                                   group, user_data)
                 partner = Partner.objects.filter(id=user_data.partner.id).values('id', 'name')
                 program = Program.objects.filter(id=user_data.program.id).values('id', 'name')
                 project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id', 'name')

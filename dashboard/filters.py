@@ -1,7 +1,7 @@
 from core.models import FiveW
 
 
-def fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata):
+def fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata,group,user_data):
     value_list = [partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata]
     key_list = ['supplier_id__in', 'program_id__in', 'component_id__in', 'province_id__in', 'district_id__in',
                 'municipality_id__in']
@@ -24,4 +24,8 @@ def fivew(partnerdata, programdata, projectdata, provincedata, districtdata, mun
                                                             'allocated_budget').order_by(
         'id')
 
-    return dat_values
+    if group.name == 'admin':
+        return dat_values
+    else:
+        dat_values = dat_values.filter(supplier_id=user_data.partner.id)
+        return dat_values
