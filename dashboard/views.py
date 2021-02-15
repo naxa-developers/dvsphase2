@@ -601,34 +601,41 @@ def updateuser(request, id):
 
 def activate_user(request, **kwargs):
     user = User.objects.get(id=kwargs['id'])
-    user_data = UserProfile.objects.get(user=user)
-    emails = user_data.email
-    url = settings.SITE_URL
-    user.is_active = True
-    user.save()
-    subject = 'Login'
-    message = render_to_string('confirmation_mail.html', {'url': url, 'user': user_data})
+    if user.is_active == False:
+        user_data = UserProfile.objects.get(user=user)
+        emails = user_data.email
+        url = settings.SITE_URL
+        user.is_active = True
+        user.save()
+        subject = 'Login'
+        message = render_to_string('confirmation_mail.html', {'url': url, 'user': user_data})
 
-    recipient_list = [emails]
-    email = EmailMessage(
-        subject, message, 'from@example.com', recipient_list
-    )
-    email.content_subtype = "html"
-    mail = email.send()
-    if mail == 1:
-        msg = emails + " was successfully activated"
-        messages.success(request, msg)
+        recipient_list = [emails]
+        email = EmailMessage(
+            subject, message, 'from@example.com', recipient_list
+        )
+        email.content_subtype = "html"
+        mail = email.send()
+        if mail == 1:
+            msg = emails + " was successfully activated"
+            messages.success(request, msg)
 
-        notify_message = 'Account for username ' + user.username + ' was activated by ' + request.user.username
+            notify_message = 'Account for username ' + user.username + ' was activated by ' + request.user.username
 
-        notify = Notification.objects.create(user=request.user, message=notify_message, type='activation',
-                                             link='/dashboard/user-list')
+            notify = Notification.objects.create(user=request.user, message=notify_message, type='activation',
+                                                 link='/dashboard/user-list')
 
+        else:
+            msg = emails + " could not be activated "
+            messages.success(request, msg)
+
+        return redirect('user-list')
     else:
-        msg = emails + " could not be activated "
+        user.is_active = False
+        user.save()
+        msg = "Successfully Deactivated"
         messages.success(request, msg)
-
-    return redirect('user-list')
+        return redirect('user-list')
 
 
 @authentication_classes([SessionAuthentication, ])

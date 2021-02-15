@@ -58,7 +58,9 @@
 
                     {% if user.user.is_active %}
 
-                    <span class="status green">Active</span>
+                    <a href="/dashboard/activate/{{ user.user.id }}">
+                        <button type="button" class="btn btn-outline-info">De-Activate</button>
+                    </a>
 
                     {% else %}
 

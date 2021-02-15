@@ -395,6 +395,7 @@
         $('#multi_select_district').change(function(e) {
             e.preventDefault();
             var districtValue = $(this).val();
+            console.log(districtValue);
             $('#multi_select_gapanapa option').each(function() {
                 if(districtValue.length > 0) {
                     $(this).prop('disabled', true)
@@ -411,6 +412,7 @@
             });
             $('#multi_select_gapanapa').multipleSelect('refresh');
             $('.ms-drop ul>li:has(label.disabled)').hide();
+
         });
         $('#reset-btn').click(function(e) {
             e.preventDefault();
