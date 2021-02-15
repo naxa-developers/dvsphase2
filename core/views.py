@@ -533,8 +533,6 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = FiveW.objects.all()
     serializer_class = FivewSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'program_id', 'province_id', 'component_id', 'supplier_id']
 
     def list(self, request, *args, **kwargs):
         data = []
@@ -1052,8 +1050,6 @@ class Popup(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = FiveW.objects.all()
     serializer_class = FivewSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'program_id', 'province_id', 'district_id']
 
     def list(self, request, *args, **kwargs):
         program_data = []
