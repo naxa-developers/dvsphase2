@@ -25,6 +25,7 @@
     .dt-buttons {
         display: none;
     }
+    
 </style>
 </head>
 
@@ -328,7 +329,9 @@
 <script src="{% static 'dashboard/js/bootstrap.min.js' %}"></script> <!-- slimscroll, waves Scripts Plugin Js -->
 <script src="{% static 'dashboard/js/jquery.slimscroll.min.js' %}"></script>
 <script src="{% static 'dashboard/js/mainscripts.bundle.js' %}"></script>
+{% block five_add %}
 <script src="{% static 'dashboard/js/customform.js' %}"></script>
+{% endblock %}
 <script src="{% static 'dashboard/js/bootstrap-datepicker.min.js' %}"></script>
 <script src="{% static 'dashboard/js/equalHeight.js' %}"></script>
 <script src="{% static 'dashboard/plugins/datatable/dataTables.min.js' %}"></script>
@@ -341,83 +344,19 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"></script> -->
 <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
 <script>
-  $(function() {
-    $('select').multipleSelect({
-        selectAll: false
-    })
-  })
+    function changefunction(change_value, to_be_changed_id) {
+        $(to_be_changed_id).each(function() {
+            $(this).css('display', 'none');
+        });
+        $(to_be_changed_id).each(function() {
+            if ($(this).attr('valId') == change_value) {
+                $(this).css('display', 'block');
+            };
+        });
+    };
 </script>
-<script>
-    $(document).ready(function() {
-        // var project = [{% for i in project %}'{{i}}', {% endfor %}];
-        // var program = [{% for i in program %}'{{i}}', {% endfor %}];
-        $('#multi_select_program').change(function(e) {
-            e.preventDefault();
-            var programValue = $(this).val();
-            $('#multi_select_project option').each(function() {
-                if(programValue.length > 0) {
-                    $(this).prop('disabled', true)
-                }else {
-                    $(this).prop('disabled', false)
-                };
-            });
-            $('#multi_select_project option').each(function() {
-                for(var j=0;j<=programValue.length;j++) {
-                    if ($(this).attr('valId') == programValue[j]) {
-                        $(this).prop('disabled', false);
-                    };
-                };
-            });
-            $('#multi_select_project').multipleSelect('refresh');
-            $('.ms-drop ul>li:has(label.disabled)').hide();
-
-        });
-        $('#multi_select_province').change(function(e) {
-            e.preventDefault();
-            var provinceValue = $(this).val();
-            $('#multi_select_district option').each(function() {
-                if(provinceValue.length > 0) {
-                    $(this).prop('disabled', true)
-                }else {
-                    $(this).prop('disabled', false)
-                };
-            });
-            $('#multi_select_district option').each(function() {
-                for(var i=0;i<=provinceValue.length;i++) {
-                    if($(this).attr('valId1') == provinceValue[i]) {
-                        $(this).prop('disabled', false)
-                    };
-                };
-            });
-            $('#multi_select_district').multipleSelect('refresh');
-            $('.ms-drop ul>li:has(label.disabled)').hide();
-        });
-        $('#multi_select_district').change(function(e) {
-            e.preventDefault();
-            var districtValue = $(this).val();
-            $('#multi_select_gapanapa option').each(function() {
-                if(districtValue.length > 0) {
-                    $(this).prop('disabled', true)
-                }else {
-                    $(this).prop('disabled', false)
-                };
-            });
-            $('#multi_select_gapanapa option').each(function() {
-                for(var k=0;k<=districtValue.length;k++) {
-                    if($(this).attr('valId2') == districtValue[k]) {
-                        $(this).prop('disabled', false)
-                    };
-                };
-            });
-            $('#multi_select_gapanapa').multipleSelect('refresh');
-            $('.ms-drop ul>li:has(label.disabled)').hide();
-        });
-        $('#reset-btn').click(function(e) {
-            e.preventDefault();
-            $('select').multipleSelect('uncheckAll');
-           
-        });
-    });
+{% block script %}
+{% endblock %}
 </script>
 
 </html>
