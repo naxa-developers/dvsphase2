@@ -48,6 +48,7 @@ import datetime
 from django.db.models import Q
 from .filters import fivew
 from djqscsv import render_to_csv_response
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -63,14 +64,13 @@ def login_test(request, **kwargs):
     # return HttpResponse(request.user.has_perm('core.add_program'))
 
 
-def deleteallfivewdata(request):
-    if "GET" == request.method:
-        messages.error(request, 'Alert:You may Loose All Your Data,Please Backup First')
-        return render(request, 'confirm.html')
-    else:
-        FiveW.objects.all().delete()
-        messages.success(request, "All Data Deleated")
-        return redirect('/dashboard/five-list', messages)
+# def deleteallfivewdata(request):
+#     if "GET" == request.method:
+#         messages.error(request, 'Alert:You may Loose All Your Data,Please Backup First')
+#         return render(request, 'confirm.html')
+#     else:
+#         FiveW.objects.all().delete()
+#         return JsonResponse({'result': 'success'}, status=HTTP_200_OK)
 
 
 @login_required()
@@ -80,7 +80,9 @@ def bulkCreate(request):
     else:
         csv = request.FILES["shapefile"]
         uploaded_file = request.FILES['shapefile']
-
+        if request.POST.get('clear_data', None) is not None:
+            FiveW.objects.all().delete()
+        
         if uploaded_file.name.endswith('.csv'):
             df = pd.read_csv(uploaded_file).fillna('')
         elif uploaded_file.name.endswith(('.xls', 'xlsx')):
@@ -437,7 +439,7 @@ def assign_role(request, **kwargs):
         return redirect('user-list')
 
 
-@login_required()
+'''@login_required()
 def Invitation(request):
     if "GET" == request.method:
         group = Group.objects.all()
@@ -474,7 +476,7 @@ def Invitation(request):
         else:
             msg = emails + " could not be invited "
             messages.success(request, msg)
-            return redirect('user-list')
+            return redirect('user-list')'''
 
 
 def signup(request, **kwargs):
@@ -601,34 +603,41 @@ def updateuser(request, id):
 
 def activate_user(request, **kwargs):
     user = User.objects.get(id=kwargs['id'])
-    user_data = UserProfile.objects.get(user=user)
-    emails = user_data.email
-    url = settings.SITE_URL
-    user.is_active = True
-    user.save()
-    subject = 'Login'
-    message = render_to_string('confirmation_mail.html', {'url': url, 'user': user_data})
+    if user.is_active == False:
+        user_data = UserProfile.objects.get(user=user)
+        emails = user_data.email
+        url = settings.SITE_URL
+        user.is_active = True
+        user.save()
+        subject = 'Login'
+        message = render_to_string('confirmation_mail.html', {'url': url, 'user': user_data})
 
-    recipient_list = [emails]
-    email = EmailMessage(
-        subject, message, 'from@example.com', recipient_list
-    )
-    email.content_subtype = "html"
-    mail = email.send()
-    if mail == 1:
-        msg = emails + " was successfully activated"
-        messages.success(request, msg)
+        recipient_list = [emails]
+        email = EmailMessage(
+            subject, message, 'from@example.com', recipient_list
+        )
+        email.content_subtype = "html"
+        mail = email.send()
+        if mail == 1:
+            msg = emails + " was successfully activated"
+            messages.success(request, msg)
 
-        notify_message = 'Account for username ' + user.username + ' was activated by ' + request.user.username
+            notify_message = 'Account for username ' + user.username + ' was activated by ' + request.user.username
 
-        notify = Notification.objects.create(user=request.user, message=notify_message, type='activation',
-                                             link='/dashboard/user-list')
+            notify = Notification.objects.create(user=request.user, message=notify_message, type='activation',
+                                                 link='/dashboard/user-list')
 
+        else:
+            msg = emails + " could not be activated "
+            messages.success(request, msg)
+
+        return redirect('user-list')
     else:
-        msg = emails + " could not be activated "
+        user.is_active = False
+        user.save()
+        msg = "Successfully Deactivated"
         messages.success(request, msg)
-
-    return redirect('user-list')
+        return redirect('user-list')
 
 
 @authentication_classes([SessionAuthentication, ])
@@ -1354,10 +1363,10 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 
         all_partner = Partner.objects.order_by('id')
         program = Program.objects.values('id', 'name').order_by('id')
-        project = Project.objects.values('id', 'name').order_by('id')
+        project = Project.objects.values('id', 'name', 'program_id__id').order_by('id')
         province = Province.objects.values('id', 'name').order_by('id')
-        district = District.objects.values('id', 'name').order_by('id')
-        municipality = GapaNapa.objects.values('id', 'name').order_by('id')
+        district = District.objects.values('id', 'name', 'province_id__id').order_by('id')
+        municipality = GapaNapa.objects.values('id', 'name', 'district_id__id').order_by('id')
         contact = PartnerContact.objects.values('id', 'name').order_by('id')
         data['user'] = user_data
         data['partners'] = partner
@@ -1571,7 +1580,7 @@ class PalilkaCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
         data['province'] = Province.objects.values('id', 'name').order_by('id')
-        data['district'] = District.objects.values('id', 'name').order_by('id')
+        data['district'] = District.objects.values('id', 'name', 'province_id__id').order_by('id')
         data['active'] = 'location'
         return data
 

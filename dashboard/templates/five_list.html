@@ -20,10 +20,10 @@
             <li><a href="/dashboard/five-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
             </li>
             {% endif %}
-            {% if perms.core.delete_fivew %}
+            <!-- {% if perms.core.delete_fivew %}
             <li style="padding-left:10px"><a href="/dashboard/clear-data" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Clear All Data</a>
             </li>
-            {% endif %}
+            {% endif %} -->
             {% if perms.core.add_fivew %}
             <li style="padding-left:10px"><a href="/dashboard/bulk-upload" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Bulk Upload</a>
 
@@ -70,14 +70,14 @@
                     <div class="col" style="padding-left:5px;padding-right:5px;">
                         <select name="district" id='multi_select_district' multiple="multiple" placeholder="District">
                             {% for district in district %}
-                            <option value="{{district.id}}" valId1='{{district.province_id__id}}'>{{district.name}}</option>
+                            <option value="{{district.id}}" valId='{{district.province_id__id}}'>{{district.name}}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="col" style="padding-left:5px;padding-right:5px;">
                         <select name="gapanapa" id='multi_select_gapanapa' multiple="multiple" placeholder="Municipality">
                             {% for gapanapa in gapanapa %}
-                            <option value="{{gapanapa.id}}" valId1='{{gapanapa.province_id__id}}' valId2='{{gapanapa.district_id__id}}'>{{gapanapa.name}}</option>
+                            <option value="{{gapanapa.id}}" valId='{{gapanapa.district_id__id}}'>{{gapanapa.name}}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -221,4 +221,81 @@
 
 </main>
 
+{% endblock %}
+{% block script %}
+<script>
+    $(function() {
+      $('select').multipleSelect({
+          selectAll: false
+      })
+    })
+</script>
+<script>
+    function multiChangeFunction(change_value, to_be_changed_id) {
+        $(to_be_changed_id).multipleSelect('uncheckAll');
+        $(to_be_changed_id + ' option').each(function() {
+            if(change_value.length > 0) {
+                $(this).prop('disabled', true)
+            }else {
+                $(this).prop('disabled', false)
+            };
+        });
+        $(to_be_changed_id + ' option').each(function() {
+            for(var j=0;j<=change_value.length;j++) {
+                if ($(this).attr('valId') == change_value[j]) {
+                    $(this).prop('disabled', false);
+                };
+            };
+        });
+        $(to_be_changed_id).multipleSelect('refresh');
+        $('.ms-drop ul>li:has(label.disabled)').hide();
+    }
+</script>
+<script>
+    function multiChangeFunction_one(change_value, to_be_changed_id) {
+        $(to_be_changed_id).multipleSelect('uncheckAll');
+        $(to_be_changed_id).load(location.href + ' ' + to_be_changed_id)
+        if(change_value.length > 0) {
+            $(to_be_changed_id + ' option').each(function() {
+                $(this).prop('disabled', true)
+            });
+            $(to_be_changed_id + ' option').each(function() {
+                for(var j=0;j<=change_value.length;j++) {
+                    if ($(this).attr('valId') == change_value[j]) {
+                        $('#multi_select_gapanapa').append($('<option>').attr('value', $(this).attr('value')).attr('valId', $(this).attr('valId')).text($(this).text()))
+                    };
+                };
+            });
+            $('option[disabled]').remove();
+        }
+        
+        $(to_be_changed_id).multipleSelect('refresh');
+        // $('.ms-drop ul>li:has(label.disabled)').hide();
+    }
+</script>
+<script>
+    $(document).ready(function() {
+        $('#multi_select_program').change(function(e) {
+            e.preventDefault();
+            multiChangeFunction($(this).val(), '#multi_select_project')
+
+        });
+        $('#multi_select_province').change(function(e) {
+            e.preventDefault();
+            multiChangeFunction($(this).val(), '#multi_select_district')
+
+        });
+        $('#multi_select_district').change(function(e) {
+            e.preventDefault();
+            multiChangeFunction_one($(this).val(), '#multi_select_gapanapa')
+
+        });
+        $('#reset-btn').click(function(e) {
+            e.preventDefault();
+            $('select').multipleSelect('uncheckAll');
+           
+        });
+        
+    });
+</script>
 {% endblock %}
