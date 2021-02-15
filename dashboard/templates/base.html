@@ -353,41 +353,9 @@
                 $(this).css('display', 'block');
             };
         });
-<<<<<<< HEAD
-        $('#multi_select_district').change(function(e) {
-            e.preventDefault();
-            var districtValue = $(this).val();
-            console.log(districtValue);
-            $('#multi_select_gapanapa option').each(function() {
-                if(districtValue.length > 0) {
-                    $(this).prop('disabled', true)
-                }else {
-                    $(this).prop('disabled', false)
-                };
-            });
-            $('#multi_select_gapanapa option').each(function() {
-                for(var k=0;k<=districtValue.length;k++) {
-                    if($(this).attr('valId2') == districtValue[k]) {
-                        $(this).prop('disabled', false)
-                    };
-                };
-            });
-            $('#multi_select_gapanapa').multipleSelect('refresh');
-            $('.ms-drop ul>li:has(label.disabled)').hide();
-
-        });
-        $('#reset-btn').click(function(e) {
-            e.preventDefault();
-            $('select').multipleSelect('uncheckAll');
-           
-        });
-    });
-=======
     };
 </script>
 {% block script %}
 {% endblock %}
->>>>>>> 7ceaec367a2d9407765acfae0d877150ff617d73
-</script>
 
 </html>
