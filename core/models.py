@@ -22,7 +22,7 @@ class Partner(models.Model):
     )
     name = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    type_of_institution = models.CharField(max_length=100,choices=type_of_institution, null=True, blank=True)
+    type_of_institution = models.CharField(max_length=100, choices=type_of_institution, null=True, blank=True)
     address = models.CharField(max_length=100, null=True, blank=True)
     email = models.CharField(max_length=100, null=True, blank=True)
     phone_number = models.CharField(max_length=100, null=True, blank=True)
@@ -300,11 +300,12 @@ class IndicatorValue(models.Model):
     indicator_id = models.ForeignKey(Indicator, on_delete=models.CASCADE, related_name='Indicator', null=True,
                                      blank=True)
     gapanapa_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='IgapaNapa', null=True, blank=True)
-    value = models.FloatField(null=True, blank=True, default=None)
+    value = models.CharField(max_length=500, default=None, blank=True, null=True)
     district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='Idistrict', null=True, blank=True)
 
     def __str__(self):
         return self.indicator_id.indicator
+
 
 class Filter(models.Model):
     indicator_id = models.ForeignKey(Indicator, on_delete=models.CASCADE, related_name='filter', null=True,

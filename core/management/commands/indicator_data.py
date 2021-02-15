@@ -12,7 +12,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         path = kwargs['path']
 
-        df = pd.read_excel(path)
+        df = pd.read_csv(path)
         upper_range = len(df)
         print("Wait Data is being Loaded")
 
@@ -20,8 +20,7 @@ class Command(BaseCommand):
             indicator_value = [
                 IndicatorValue(
                     indicator_id=Indicator.objects.get(indicator='Total'),
-                    district_id=District.objects.get(name=df['District'][row]),
-
+                    district_id=District.objects.get(name=df['District '][row]),
                     value=df['Total'][row],
 
                 ) for row in range(0, upper_range)

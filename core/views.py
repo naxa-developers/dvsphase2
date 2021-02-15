@@ -706,8 +706,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = FiveW.objects.all()
     serializer_class = FivewSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'program_id', 'province_id', 'district_id']
+
 
     def list(self, request, *args, **kwargs):
         data = []
@@ -822,7 +821,24 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
                 program[i] = int(program[i])
         else:
             program = list(Program.objects.values_list('id', flat=True))
-        query = FiveW.objects.filter(program_id__in=program)
+
+        if request.GET.getlist('supplier_id'):
+            supp = request.GET['supplier_id']
+            supplier = supp.split(",")
+            for i in range(0, len(supplier)):
+                supplier[i] = int(supplier[i])
+        else:
+            supplier = list(Partner.objects.values_list('id', flat=True))
+
+        if request.GET.getlist('component_id'):
+            comp = request.GET['component_id']
+            component = comp.split(",")
+            for i in range(0, len(component)):
+                component[i] = int(component[i])
+        else:
+            component = list(Project.objects.values_list('id', flat=True))
+
+        query = FiveW.objects.filter(program_id__in=program, supplier_id__in=supplier, component_id__in=component)
         allocated_sum = query.aggregate(Sum('allocated_budget'))
         program = query.distinct('program_id').count()
         component = query.distinct('component_id').count()
@@ -1043,17 +1059,32 @@ class Popup(viewsets.ReadOnlyModelViewSet):
         program_data = []
         query = FiveW.objects.values('allocated_budget', 'component_id', 'component_id__name', 'program_id',
                                      'program_id__name', 'province_id')
+        if request.GET.getlist('supplier_id'):
+            supp = request.GET['supplier_id']
+            supplier = supp.split(",")
+            for i in range(0, len(supplier)):
+                supplier[i] = int(supplier[i])
+        else:
+            supplier = list(Partner.objects.values_list('id', flat=True))
+
+        if request.GET.getlist('component_id'):
+            comp = request.GET['component_id']
+            component = comp.split(",")
+            for i in range(0, len(component)):
+                component[i] = int(component[i])
+        else:
+            component = list(Project.objects.values_list('id', flat=True))
 
         if request.GET.getlist('program_id'):
             prov = request.GET['program_id']
             program = prov.split(",")
             for i in range(0, len(program)):
                 program[i] = int(program[i])
-            query = FiveW.objects.values('allocated_budget', 'component_id', 'component_id__name', 'program_id',
-                                         'program_id__name', 'province_id').filter(program_id__in=program)
-        else:
-            query = query
 
+        else:
+            program = list(Program.objects.values_list('id', flat=True))
+        query = FiveW.objects.values('allocated_budget', 'component_id', 'component_id__name', 'program_id',
+                                     'program_id__name', 'province_id').filter(program_id__in=program, supplier_id__in=supplier, component_id__in=component)
         if request.GET.getlist('field'):
             field = request.GET['field']
             value = request.GET['value']
