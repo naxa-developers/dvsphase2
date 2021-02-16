@@ -38,7 +38,5 @@ class Command(BaseCommand):
             print(indicator_data)
             if indicator_data:
                 self.stdout.write('Successfully loaded Indicator data ..')
-
-
         except Exception as e:
             print(e)
