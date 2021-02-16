@@ -21,18 +21,22 @@ class Command(BaseCommand):
         df = pd.read_csv(path)
         # print(df['Level'][0])
         # print(len(df))
-        upper_range = len(df)
+        upper_range = list(df.columns)
+        category_name = ((path.split('/'))[-1]).replace('.csv', '')
+        not_cols = ['District', 'district', 'Name of municipalities', 'Name of Municipalities', 'CBS_CODE', 'HLCIT_CODE', 'Province', 'province', 'Palika', 
+                        'palika', 'CBS_Code', 'District ', 'code', 'cbs code'] 
+        
         try:
             indicator = [
                 Indicator(
-                    indicator=(df['indicators'][row]).strip(),
-                    full_title=df['Fulltitle'][row],
-                    abstract=df['Abstract'][row],
-                    category=(df['Category'][row]).strip(),
-                    source=df['Source'][row],
-                    federal_level=df['Level'][row],
+                    indicator=col,
+                    full_title=col,
+                    # abstract=df['Abstract'][row],
+                    category=category_name,
+                    # source=df['Source'][row],
+                    federal_level='All',
 
-                ) for row in range(0, upper_range)
+                ) for col in upper_range if not col in not_cols
             ]
             indicator_data = Indicator.objects.bulk_create(indicator)
             print(indicator_data)
