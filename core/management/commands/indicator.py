@@ -1,7 +1,9 @@
 class Command(BaseCommand):
     help = 'load province data from province.xlsx file'
+
     def add_arguments(self, parser):
         parser.add_argument('--path', type=str)
+
     def handle(self, *args, **kwargs):
         path = kwargs['path']
         # print(path)
@@ -12,8 +14,11 @@ class Command(BaseCommand):
         # print(len(df))
         upper_range = list(df.columns)
         category_name = ((path.split('/'))[-1]).replace('.csv', '')
-        not_cols = ['District', 'district', 'Name of municipalities', 'Name of Municipalities', 'CBS_CODE', 'HLCIT_CODE', 'Province', 'province', 'Palika',
-                        'palika', 'CBS_Code', 'District ', 'code', 'cbs code']
+
+        not_cols = ['District', 'district', 'Name of municipalities', 'Name of Municipalities', 'CBS_CODE',
+                    'HLCIT_CODE', 'Province', 'province', 'Palika',
+                    'palika', 'CBS_Code', 'District ', 'code', 'cbs code']
+
         try:
             indicator = [
                 Indicator(
@@ -23,6 +28,7 @@ class Command(BaseCommand):
                     category=category_name,
                     # source=df['Source'][row],
                     federal_level='All',
+
                 ) for col in upper_range if not col in not_cols
             ]
             indicator_data = Indicator.objects.bulk_create(indicator)
