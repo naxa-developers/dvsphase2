@@ -15,18 +15,23 @@ class Command(BaseCommand):
         df = pd.read_csv(path)
         upper_range = len(df)
         print("Wait Data is being Loaded")
-
+        df_col_list = list(df.columns)
+        category_name = ((path.split('/'))[-1]).replace('.csv', '')
+        not_cols = ['District', 'district', 'Name of municipalities', 'Name of Municipalities', 'CBS_CODE', 'HLCIT_CODE', 'Province', 'province', 'Palika', 
+                        'palika', 'CBS_Code', 'District ', 'code', 'cbs code'] 
         try:
-            indicator_value = [
-                IndicatorValue(
-                    indicator_id=Indicator.objects.get(indicator='Total'),
-                    gapanapa_id=GapaNapa.objects.get(hlcit_code=df['HLCIT_CODE'][row]),
+            for col in df_col_list:
+                if not col in not_cols:
+                    indicator_value = [
+                        IndicatorValue(
+                            indicator_id=Indicator.objects.get(indicator=col, category=category_name),
+                            gapanapa_id=GapaNapa.objects.get(hlcit_code=df['HLCIT_CODE'][row]) if 'HLCIT_CODE' in df_col_list else None,
 
-                    value=df['Total'][row],
+                            value=df[col][row],
 
-                ) for row in range(0, upper_range)
-            ]
-            indicator_data = IndicatorValue.objects.bulk_create(indicator_value)
+                        ) for row in range(0, upper_range)
+                    ]
+                    indicator_data = IndicatorValue.objects.bulk_create(indicator_value)
 
             if indicator_data:
                 self.stdout.write('Successfully loaded Indicator Value  ..')
