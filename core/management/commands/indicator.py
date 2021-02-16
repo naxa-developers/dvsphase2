@@ -1,12 +1,3 @@
-
-
-from django.core.management.base import BaseCommand
-import os
-import pandas as pd
-
-from core.models import Indicator
-
-
 class Command(BaseCommand):
     help = 'load province data from province.xlsx file'
 
@@ -23,9 +14,11 @@ class Command(BaseCommand):
         # print(len(df))
         upper_range = list(df.columns)
         category_name = ((path.split('/'))[-1]).replace('.csv', '')
-        not_cols = ['District', 'district', 'Name of municipalities', 'Name of Municipalities', 'CBS_CODE', 'HLCIT_CODE', 'Province', 'province', 'Palika', 
-                        'palika', 'CBS_Code', 'District ', 'code', 'cbs code'] 
-        
+
+        not_cols = ['District', 'district', 'Name of municipalities', 'Name of Municipalities', 'CBS_CODE',
+                    'HLCIT_CODE', 'Province', 'province', 'Palika',
+                    'palika', 'CBS_Code', 'District ', 'code', 'cbs code']
+
         try:
             indicator = [
                 Indicator(
@@ -39,7 +32,6 @@ class Command(BaseCommand):
                 ) for col in upper_range if not col in not_cols
             ]
             indicator_data = Indicator.objects.bulk_create(indicator)
-            print(indicator_data)
             if indicator_data:
                 self.stdout.write('Successfully loaded Indicator data ..')
         except Exception as e:

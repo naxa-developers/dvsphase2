@@ -20,6 +20,7 @@ class Command(BaseCommand):
         not_cols = ['District', 'district', 'Name of municipalities', 'Name of Municipalities', 'CBS_CODE', 'HLCIT_CODE', 'Province', 'province', 'Palika', 
                         'palika', 'CBS_Code', 'District ', 'code', 'cbs code'] 
         try:
+
             for col in df_col_list:
                 if not col in not_cols:
                     indicator_value = [
@@ -32,6 +33,7 @@ class Command(BaseCommand):
                         ) for row in range(0, upper_range)
                     ]
                     indicator_data = IndicatorValue.objects.bulk_create(indicator_value)
+
 
             if indicator_data:
                 self.stdout.write('Successfully loaded Indicator Value  ..')
