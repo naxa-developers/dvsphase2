@@ -16,8 +16,8 @@ class UserProfile(models.Model):
     partner = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='ProfilePartner', null=True, blank=True)
     program = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='ProfileProgram', null=True, blank=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='ProfileProject', null=True, blank=True)
-    image = models.ImageField(upload_to='upload/profile/', null=True, blank=True)
-    thumbnail = models.ImageField(upload_to='upload/profile/', editable=False, null=True, blank=True)
+    image = models.FileField(upload_to='upload/profile/', null=True, blank=True)
+    thumbnail = models.FileField(upload_to='upload/profile/', editable=False, null=True, blank=True)
 
     def make_thumbnail(self):
         image = Image.open(self.image)
