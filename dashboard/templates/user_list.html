@@ -34,6 +34,7 @@
                 <th>Partner</th>
                 <th>Program</th>
                 <th>Project</th>
+                <th></th>
 
                 <!--                <th></th>-->
             </tr>
@@ -58,7 +59,9 @@
 
                     {% if user.user.is_active %}
 
-                    <span class="status green">Active</span>
+                    <a href="/dashboard/activate/{{ user.user.id }}">
+                        <button type="button" class="btn btn-outline-info">De-Activate</button>
+                    </a>
 
                     {% else %}
 
@@ -92,6 +95,20 @@
                 <td><a href="/dashboard/updateuser/{{user.id}}">{{ user.partner }}</a></td>
                 <td><a href="/dashboard/updateuser/{{user.id}}">{{ user.program }}</a></td>
                 <td><a href="/dashboard/updateuser/{{user.id}}">{{ user.project }}</a></td>
+                <td>
+                    <div class="table-action">
+                        <a href="#" class="more-action">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-animation">
+                            <li>
+                                <a href="/dashboard/user-delete/{{ user.user.id }}" class="flex-start">
+                                    <i class="material-icons">delete</i>Delete
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
 
                 <!--                <td>-->
                 <!--                    <div class="table-action">-->

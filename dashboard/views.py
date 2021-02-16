@@ -82,7 +82,7 @@ def bulkCreate(request):
         uploaded_file = request.FILES['shapefile']
         if request.POST.get('clear_data', None) is not None:
             FiveW.objects.all().delete()
-        
+
         if uploaded_file.name.endswith('.csv'):
             df = pd.read_csv(uploaded_file).fillna('')
         elif uploaded_file.name.endswith(('.xls', 'xlsx')):
@@ -586,51 +586,65 @@ def updateuser(request, id):
     if form.is_valid():
         form.save()
         test = User.objects.filter(id=obj.user.id)
+        test2 = User.objects.get(id=obj.user.id)
         test.update(username=request.POST['username'])
+        old_group = Group.objects.get(user=test2)
+        group = Group.objects.get(pk=request.POST['group'])
+        old_group.user_set.remove(test2)
+        test2.groups.add(group)
         return HttpResponseRedirect("/dashboard/user-list")
     partner = Partner.objects.all()
     programs = Program.objects.all()
     projects = Project.objects.all()
+    group = Group.objects.all()
     user = User.objects.all()
     context["form"] = form
     context["partner"] = partner
     context['user'] = user
     context['programs'] = programs
     context['projects'] = projects
+    context['groups'] = group
 
     return render(request, "updateuser.html", context)
 
 
 def activate_user(request, **kwargs):
     user = User.objects.get(id=kwargs['id'])
-    user_data = UserProfile.objects.get(user=user)
-    emails = user_data.email
-    url = settings.SITE_URL
-    user.is_active = True
-    user.save()
-    subject = 'Login'
-    message = render_to_string('confirmation_mail.html', {'url': url, 'user': user_data})
+    if user.is_active == False:
+        user_data = UserProfile.objects.get(user=user)
+        emails = user_data.email
+        url = settings.SITE_URL
+        user.is_active = True
+        user.save()
+        subject = 'Login'
+        message = render_to_string('confirmation_mail.html', {'url': url, 'user': user_data})
 
-    recipient_list = [emails]
-    email = EmailMessage(
-        subject, message, 'from@example.com', recipient_list
-    )
-    email.content_subtype = "html"
-    mail = email.send()
-    if mail == 1:
-        msg = emails + " was successfully activated"
-        messages.success(request, msg)
+        recipient_list = [emails]
+        email = EmailMessage(
+            subject, message, 'from@example.com', recipient_list
+        )
+        email.content_subtype = "html"
+        mail = email.send()
+        if mail == 1:
+            msg = emails + " was successfully activated"
+            messages.success(request, msg)
 
-        notify_message = 'Account for username ' + user.username + ' was activated by ' + request.user.username
+            notify_message = 'Account for username ' + user.username + ' was activated by ' + request.user.username
 
-        notify = Notification.objects.create(user=request.user, message=notify_message, type='activation',
-                                             link='/dashboard/user-list')
+            notify = Notification.objects.create(user=request.user, message=notify_message, type='activation',
+                                                 link='/dashboard/user-list')
 
+        else:
+            msg = emails + " could not be activated "
+            messages.success(request, msg)
+
+        return redirect('user-list')
     else:
-        msg = emails + " could not be activated "
+        user.is_active = False
+        user.save()
+        msg = "Successfully Deactivated"
         messages.success(request, msg)
-
-    return redirect('user-list')
+        return redirect('user-list')
 
 
 @authentication_classes([SessionAuthentication, ])
@@ -779,7 +793,7 @@ def ExportData(request):
     user = request.user
     user_data = UserProfile.objects.get(user=user)
     group = Group.objects.get(user=user)
-    data = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata, group,user_data)
+    data = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata, group, user_data)
     return render_to_csv_response(data)
 
 
@@ -804,23 +818,24 @@ class FiveList(LoginRequiredMixin, ListView):
                                    group, user_data)
                 # csv = download_csv(self.request,FiveW.objects.all())
                 # print(csv)
-                partner = Partner.objects.values('id', 'name')
-                project = Project.objects.values('id', 'program_id__id', 'name')
-                program = Program.objects.values('id', 'name')
-                province = Province.objects.values('id', 'name')
-                district = District.objects.values('id', 'province_id__id', 'name')
-                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name')
+                partner = Partner.objects.values('id', 'name').order_by('name')
+                project = Project.objects.values('id', 'program_id__id', 'name').order_by('name')
+                program = Program.objects.values('id', 'name').order_by('name')
+                province = Province.objects.values('id', 'name').order_by('name')
+                district = District.objects.values('id', 'province_id__id', 'name').order_by('name')
+                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
 
 
             else:
                 dat_values = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata,
                                    group, user_data)
-                partner = Partner.objects.filter(id=user_data.partner.id).values('id', 'name')
-                program = Program.objects.filter(id=user_data.program.id).values('id', 'name')
-                project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id', 'name')
-                province = Province.objects.values('id', 'name')
-                district = District.objects.values('id', 'province_id__id', 'name')
-                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name')
+                partner = Partner.objects.filter(id=user_data.partner.id).values('id', 'name').order_by('name')
+                program = Program.objects.filter(id=user_data.program.id).values('id', 'name').order_by('name')
+                project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id',
+                                                                                 'name').order_by('name')
+                province = Province.objects.values('id', 'name').order_by('name')
+                district = District.objects.values('id', 'province_id__id', 'name').order_by('name')
+                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
 
             paginator = Paginator(dat_values, 500)
             page_numbers_range = 500
@@ -865,12 +880,12 @@ class FiveList(LoginRequiredMixin, ListView):
                 five = FiveW.objects.values('id', 'supplier_id__name', 'second_tier_partner_name', 'program_id__name',
                                             'component_id__name', 'status', 'province_id__name', 'district_id__name',
                                             'municipality_id__name', 'allocated_budget').order_by('id')
-                partner = Partner.objects.values('id', 'name')
-                project = Project.objects.values('id', 'program_id__id', 'name')
-                program = Program.objects.values('id', 'name')
-                province = Province.objects.values('id', 'name')
-                district = District.objects.values('id', 'province_id__id', 'name')
-                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name')
+                partner = Partner.objects.values('id', 'name').order_by('name')
+                project = Project.objects.values('id', 'program_id__id', 'name').order_by('name')
+                program = Program.objects.values('id', 'name').order_by('name')
+                province = Province.objects.values('id', 'name').order_by('name')
+                district = District.objects.values('id', 'province_id__id', 'name').order_by('name')
+                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
 
             else:
                 five = FiveW.objects.filter(supplier_id=user_data.partner.id).values('id', 'supplier_id__name',
@@ -881,12 +896,13 @@ class FiveList(LoginRequiredMixin, ListView):
                                                                                      'district_id__name',
                                                                                      'municipality_id__name',
                                                                                      'allocated_budget').order_by('id')
-                partner = Partner.objects.filter(id=user_data.partner.id).values('id', 'name')
-                program = Program.objects.filter(id=user_data.program.id).values('id', 'name')
-                project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id', 'name')
-                province = Province.objects.values('id', 'name')
-                district = District.objects.values('id', 'province_id__id', 'name')
-                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name')
+                partner = Partner.objects.filter(id=user_data.partner.id).values('id', 'name').order_by('name')
+                program = Program.objects.filter(id=user_data.program.id).values('id', 'name').order_by('name')
+                project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id',
+                                                                                 'name').order_by('name')
+                province = Province.objects.values('id', 'name').order_by('name')
+                district = District.objects.values('id', 'province_id__id', 'name').order_by('name')
+                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
 
             paginator = Paginator(five, 500)
             page_numbers_range = 500
@@ -2252,6 +2268,40 @@ class ProgramDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('program-list')
+
+
+class UserDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = User
+    template_name = 'user_delete.html'
+    success_message = 'User successfully deleted'
+    success_url = reverse_lazy('user-list')
+
+    # success_url = reverse_lazy('program-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(UserDelete, self).get_context_data(**kwargs)
+        user_list = UserProfile.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = user_list
+        data['user'] = user_data
+        data['active'] = 'user'
+        return data
+
+    def delete(self, request, *args, **kwargs):
+        messages.info(self.request, self.success_message)
+        return super(UserDelete, self).delete(request, *args, **kwargs)
+
+
+class FiveDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = FiveW
+    template_name = 'five_delete.html'
+    success_message = 'Fivew successfully deleted'
+    success_url = reverse_lazy('five-list')
+
+    def delete(self, request, *args, **kwargs):
+        messages.info(self.request, self.success_message)
+        return super(FiveDelete, self).delete(request, *args, **kwargs)
 
 
 class PartnerDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):

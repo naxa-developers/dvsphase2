@@ -19,10 +19,10 @@ class Command(BaseCommand):
         try:
             indicator_value = [
                 IndicatorValue(
-                    indicator_id=Indicator.objects.get(indicator='a_insuff_f'),
-                    district_id=District.objects.get(code=df['District_ID'][row]),
+                    indicator_id=Indicator.objects.get(indicator='Total'),
+                    gapanapa_id=GapaNapa.objects.get(hlcit_code=df['HLCIT_CODE'][row]),
 
-                    value=float(df['value'][row]),
+                    value=df['Total'][row],
 
                 ) for row in range(0, upper_range)
             ]
