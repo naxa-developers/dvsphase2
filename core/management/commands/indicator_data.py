@@ -20,8 +20,7 @@ class Command(BaseCommand):
             indicator_value = [
                 IndicatorValue(
                     indicator_id=Indicator.objects.get(indicator='Total'),
-                    gapanapa_id=GapaNapa.objects.get(hlcit_code=df['HLCIT_CODE'][row]),
-
+                    gapanapa_id=GapaNapa.objects.get(hlcit_code=(df['HLCIT_CODE'][row]).strip()),
                     value=df['Total'][row],
 
                 ) for row in range(0, upper_range)
