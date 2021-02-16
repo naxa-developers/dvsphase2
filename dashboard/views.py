@@ -2288,6 +2288,10 @@ class UserDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
         data['active'] = 'user'
         return data
 
+    def delete(self, request, *args, **kwargs):
+        messages.info(self.request, self.success_message)
+        return super(UserDelete, self).delete(request, *args, **kwargs)
+
 
 class FiveDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = FiveW
