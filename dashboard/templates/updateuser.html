@@ -65,7 +65,6 @@
                         <input type="email" class="form-control" name="email" value="{{form.instance.email}}" required id="id_email"/>
                     </div>
 
-
                     <div class="form-group">
                         <label for="id_partner">Select Partner For User</label>
                         <select name="partner" id="id_partner" class="custom-select" required>
@@ -99,6 +98,15 @@
                             {% else %}
                                 <option value={{ project.id }}>{{ project.name }}</option>
                             {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_group">Select Role For User</label>
+                        <select name="group" id="id_group" class="custom-select" required>
+                            {% for d in groups %}
+                            <option value={{ d.id }}>{{ d }}</option>
                             {% endfor %}
                         </select>
                     </div>
