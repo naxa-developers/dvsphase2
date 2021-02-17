@@ -1,0 +1,754 @@
+District ,Name of municipalities,HLCIT_CODE,cbs code,Total,Tap/piped water,Tube well/hand pump,"Covered well,kuwa","Uncovered well, kuwa",spout water,river/streams,others,Not stated
+Taplejung,Aatharai Tribeni Gaunpalika,524 1 01 4 006,10105,"2,888","2,401",0,10,176,262,12,21,6
+Taplejung,Maiwakhola Gaunpalika,524 1 01 4 005,10104,"2,194","2,041",1,2,25,90,8,14,13
+Taplejung,Meringden Gaunpalika,524 1 01 4 004,10103,"2,578","2,325",1,6,38,144,40,6,18
+Taplejung,Mikwakhola Gaunpalika,524 1 01 4 002,10102,"1,869","1,724",1,1,60,44,9,23,7
+Taplejung,Phaktanlung Gaunpalika,524 1 01 4 001,10101,"2,525","2,445",0,1,16,10,16,13,24
+Taplejung,Phungling Municipality,524 1 01 3 001,10106,"5,986","5,245",0,9,52,539,31,91,19
+Taplejung,Sidingba Gaunpalika,524 1 01 4 008,10109,"2,370","2,216",0,18,49,50,5,17,15
+Taplejung,Sirijanga Gaunpalika,524 1 01 4 003,10108,"3,227","2,978",3,5,44,132,29,17,19
+Taplejung,Yangwarak Gaunpalika,524 1 01 4 007,10107,"2,834","2,586",0,2,15,170,33,21,7
+Terhathum,Aatharai Gaunpalika,524 1 08 4 003,10801,"4,578","3,223",2,56,382,785,38,73,19
+Terhathum,Chhathar Gaunpalika,524 1 08 4 004,10806,"3,636","2,592",2,34,353,628,10,4,13
+Terhathum,Laligurans Municipality,524 1 08 3 001,10805,"3,677","2,997",2,32,90,533,3,10,10
+Terhathum,Menchhayayem Gaunpalika,524 1 08 4 001,10803,"1,794","1,429",2,4,70,252,6,26,5
+Terhathum,Myanglung Municipality,524 1 08 3 002,10804,"4,595","3,862",7,11,90,604,12,2,7
+Terhathum,Phedap Gaunpalika,524 1 08 4 002,10802,"3,804","3,037",6,63,158,485,13,30,12
+Udayapur,Belaka Municipality,524 1 14 3 004,11401,"8,930","3,071","3,764",25,"1,663",133,199,56,19
+Udayapur,Chaudandigadhi Municipality,524 1 14 3 003,11402,"10,519","3,157","4,312",363,"2,390",39,66,183,9
+Udayapur,Katari Municipality,524 1 14 3 001,11407,"11,717","5,787","2,826",160,"2,417",133,225,107,62
+Udayapur,Rautamai Gaunpalika,524 1 14 4 004,11404,"4,666","3,613",254,48,521,113,84,8,25
+Udayapur,Sunkoshi Gaunpalika,524 1 14 4 002,10407,"2,316","2,009",0,2,217,71,9,3,5
+Udayapur,Tapli Gaunpalika,524 1 14 4 001,11406,"2,703","2,256",3,82,266,0,77,0,19
+Udayapur,Triyuga Municipality,524 1 14 3 002,11403,"19,484","5,295","11,470",113,"1,790",276,283,198,59
+Udayapur,Udayapurgadhi Gaunpalika,524 1 14 4 003,11408,"6,179","3,705",314,117,"1,384",113,525,12,9
+Achham,Bannigadhi Jayagadh Gaunpalika,524 7 69 4 003,70707,"3,373","1,329",3,376,174,"1,481",4,0,6
+Achham,Chaurpati Gaunpalika,524 7 69 4 001,70705,"5,113","3,114",4,862,136,910,63,4,20
+Achham,Dhakari Gaunpalika,524 7 69 4 005,70709,"3,795","2,186",3,28,163,"1,311",69,3,32
+Achham,Kamal bazar Municipality,524 7 69 3 003,70708,"4,482","1,734",2,67,362,"2,239",32,4,42
+Achham,Mangalsen Municipality,524 7 69 3 002,70706,"6,604","2,844",7,100,373,"3,198",41,22,19
+Achham,Mellekh Gaunpalika,524 7 69 4 002,70703,"4,360","3,537",3,69,177,522,10,0,42
+Achham,Panchdebal Binayak Municipality,524 7 69 3 004,70701,"4,966","2,862",0,133,293,"1,426",217,3,32
+Achham,Ramaroshan Gaunpalika,524 7 69 4 004,70702,"4,357","2,672",1,89,181,"1,312",64,18,20
+Achham,Sanphebagar Municipality,524 7 69 3 001,70704,"6,693","4,074",53,465,333,"1,496",217,9,46
+Achham,Turmakhand Gaunpalika,524 7 69 4 006,70710,"4,575","2,477",2,8,209,"1,708",148,2,21
+Arghakhanchi,Bhumikasthan Municipality,524 5 50 3 001,50503,"7,727","6,608",4,21,232,647,118,81,16
+Arghakhanchi,Chhatradev Gaunpalika,524 5 50 4 002,50501,"6,341","3,856",4,"1,030",701,679,54,3,14
+Arghakhanchi,Malarani Gaunpalika,524 5 50 4 001,50502,"6,824","5,684",6,239,301,516,68,5,5
+Arghakhanchi,Panini Gaunpalika,524 5 50 4 003,50505,"6,152","4,877",6,89,297,819,38,3,23
+Arghakhanchi,Sandhikharka Municipality,524 5 50 3 002,50504,"10,581","8,646",398,303,601,498,68,12,55
+Arghakhanchi,Shitaganga Municipality,524 5 50 3 003,50506,"9,201","5,671",72,125,"1,799",925,560,10,39
+Baglung,Badigad Gaunpalika,524 4 43 4 003,41107,"6,228","5,295",4,39,274,347,156,48,65
+Baglung,Baglung Municipality,524 4 43 3 003,41101,"15,182","14,206",11,98,171,627,29,8,32
+Baglung,Bareng Gaunpalika,524 4 43 4 006,41109,"3,240","3,074",1,9,34,102,9,0,11
+Baglung,Dhorpatan Municipality,524 4 43 3 001,41105,"5,706","4,411",2,16,559,365,298,19,36
+Baglung,Galkot Municipality,524 4 43 3 002,41108,"7,711","7,079",2,8,188,285,12,105,32
+Baglung,Jaimuni Municipality,524 4 43 3 004,41110,"7,477","6,596",3,48,213,527,55,2,33
+Baglung,Kathekhola Gaunpalika,524 4 43 4 005,41102,"6,128","5,933",3,11,21,104,24,6,26
+Baglung,Nisikhola Gaunpalika,524 4 43 4 001,41106,"4,893","3,594",3,23,465,478,294,1,35
+Baglung,Tamankhola Gaunpalika,524 4 43 4 002,41104,"2,422","2,062",1,17,114,166,46,0,16
+Baglung,Tarakhola Gaunpalika,524 4 43 4 004,41103,"2,495","2,366",1,3,18,97,4,0,6
+Baitadi,Dasharathchand Municipality,524 7 74 3 001,70405,"7,257","5,463",17,753,219,662,70,45,28
+Baitadi,Dilasaini Gaunpalika,524 7 74 4 001,70401,"4,110","2,484",5,81,570,382,442,137,9
+Baitadi,Dogada Kedar Gaunpalika,524 7 74 4 002,70402,"4,559","2,852",6,533,498,585,54,13,18
+Baitadi,Melauli Municipality,524 7 74 3 003,70408,"3,947","2,546",12,350,303,492,137,84,23
+Baitadi,Pancheshwor Gaunpalika,524 7 74 4 004,70406,"3,312","2,728",1,45,109,308,110,0,11
+Baitadi,Patam Municipality,524 7 74 3 004,70409,"5,767","4,472",21,142,400,397,235,78,22
+Baitadi,Puchaundi Municipality,524 7 74 3 002,70403,"6,390","4,168",8,263,927,787,153,58,26
+Baitadi,Shivanath Gaunpalika,524 7 74 4 005,70407,"2,771","1,656",1,13,559,182,349,2,9
+Baitadi,Sigas Gaunpalika,524 7 74 4 006,70410,"3,733","2,021",3,37,230,463,593,360,26
+Baitadi,Surnaya Gaunpalika,524 7 74 4 003,70404,"3,321","2,442",4,69,243,411,116,11,25
+Bajhang,Bitthadchir Gaunpalika,524 7 67 4 004,70210,"2,739","1,171",0,84,347,775,339,9,14
+Bajhang,Bungal Municipality,524 7 67 3 001,70202,"5,480","3,180",1,152,337,"1,144",486,97,83
+Bajhang,Chhabis Pathibhara Gaunpalika,524 7 67 4 007,70207,"2,953","2,217",0,8,171,411,117,8,21
+Bajhang,Durgathali Gaunpalika,524 7 67 4 006,70208,"2,447","1,226",0,61,158,793,117,60,32
+Bajhang,Jayaprithbi Municipality,524 7 67 3 002,70206,"4,015","2,984",0,19,310,587,78,2,35
+Bajhang,Kanda Gaunpalika,524 7 67 4 001,70201,363,182,0,0,1,173,1,3,3
+Bajhang,Kedarsyun Gaunpalika,524 7 67 4 005,70209,"3,586","1,927",0,174,431,650,386,6,12
+Bajhang,Khaptad Chhanna Gaunpalika,524 7 67 4 010,70212,"3,105","2,511",0,60,68,342,113,0,11
+Bajhang,Masta Gaunpalika,524 7 67 4 008,70205,"2,456","1,983",0,22,88,256,94,0,13
+Bajhang,Surma Gaunpalika,524 7 67 4 002,70203,"1,418",913,0,27,98,210,165,1,4
+Bajhang,Talkot Gaunpalika,524 7 67 4 003,70204,"2,000","1,725",0,7,18,187,36,2,25
+Bajhang,Thalara Gaunpalika,524 7 67 4 009,70211,"3,211","2,639",0,14,120,314,63,1,60
+Bajura,Badimalika Municipality,524 7 68 3 002,70106,"3,446","2,641",0,20,115,429,211,12,18
+Bajura,Budhiganga Municipality,524 7 68 3 003,11213,"4,277","2,404",0,2,235,"1,568",17,5,46
+Bajura,Budhinanda Municipality,524 7 68 3 001,70103,"3,452","2,430",1,12,43,792,156,1,17
+Bajura,Chhededaha Gaunpalika,524 7 68 4 003,70107,"3,174","2,384",0,3,225,470,46,4,42
+Bajura,Gaumul Gaunpalika,524 7 68 4 002,70102,"1,560","1,102",0,2,88,272,88,2,6
+Bajura,Himali Gaunpalika,524 7 68 4 001,70101,"1,722",752,0,1,19,855,67,0,28
+Bajura,Pandab Gufa Gaunpalika,524 7 68 4 004,70105,"1,684","1,358",0,1,3,179,138,1,4
+Bajura,Swami Kartik Gaunpalika,524 7 68 4 005,70104,"2,223","1,493",1,6,18,572,110,0,23
+Bajura,Tribeni Municipality,524 7 68 3 004,50206,"3,350","2,474",0,17,121,721,5,0,12
+Banke,Baijanath Gaunpalika,524 5 57 4 002,51103,"11,066",715,"9,858",42,9,23,4,391,24
+Banke,Duduwa Gaunpalika,524 5 57 4 004,51107,"6,590","1,109","5,309",47,52,3,2,49,19
+Banke,Janaki Gaunpalika,524 5 57 4 003,70808,"6,724",838,"5,421",64,268,7,1,64,61
+Banke,Khajura Gaunpalika,524 5 57 4 001,51104,"10,288",923,"8,966",79,31,130,4,105,50
+Banke,Kohalpur Municipality,524 5 57 3 001,51102,"15,483","2,171","12,676",56,78,138,5,306,53
+Banke,Narainapur Gaunpalika,524 5 57 4 006,51108,"5,908",414,"5,064",38,166,4,2,182,38
+Banke,Nepalganj Sub-Metropolitian City,524 5 57 2 001,51106,"27,892","6,611","20,203",237,168,12,3,431,227
+Banke,Rapti Sonari Gaunpalika,524 5 57 4 005,51101,"10,742","1,056","8,750",295,498,10,65,35,33
+Bara,Aadarsha Kotwal Gaunpalika,524 2 33 4 009,20711,"3,960",19,"3,704",2,31,2,0,181,21
+Bara,Baragadhi Gaunpalika,524 2 33 4 006,20710,"4,270",405,"3,716",43,76,3,6,0,21
+Bara,Bishrampur Gaunpalika,524 2 33 4 004,20706,"3,395",26,"3,282",2,53,1,1,0,30
+Bara,Devtal Gaunpalika,524 2 33 4 007,20715,"3,185",22,"2,995",5,17,3,1,28,114
+Bara,Jitpur Simara Sub-Metropolitian City,524 2 33 2 001,20703,"21,670","6,243","14,782",19,141,68,91,150,176
+Bara,Kalaiya Sub-Metropolitian City,524 2 33 2 002,20708,"18,689","1,987","16,047",54,81,36,0,209,275
+Bara,Karaiyamai Gaunpalika,524 2 33 4 003,20709,"4,173",334,"3,740",5,14,2,1,41,36
+Bara,Kolhabi Municipality,524 2 33 3 002,20702,"8,111",609,"7,284",15,108,3,1,30,61
+Bara,Mahagadhimai Municipality,524 2 33 3 003,20714,"7,773",889,"6,575",10,58,1,0,146,94
+Bara,Nijagadh Municipality,524 2 33 3 001,20701,"7,162","6,447",26,69,377,119,69,16,39
+Bara,Pacharauta Municipality,524 2 33 3 004,20713,"4,707",307,"4,078",9,115,2,1,146,49
+Bara,Parawanipur Gaunpalika,524 2 33 4 001,20704,"3,166",591,"2,469",5,0,1,1,64,35
+Bara,Pheta Gaunpalika,524 2 33 4 005,20707,"3,585",287,"3,250",11,8,8,0,3,18
+Bara,Prasauni Gaunpalika,524 2 33 4 002,20705,"3,626",201,"3,143",4,5,0,1,214,58
+Bara,Simroungadh Municipality,524 2 33 3 005,20712,"7,093",99,"6,812",12,55,6,1,58,50
+Bara,Subarna Gaunpalika,524 2 33 4 008,20716,"4,035",167,"3,768",19,10,3,0,4,64
+Bardiya,Badhaiyatal Gaunpalika,524 5 58 4 002,51208,"10,333",582,"9,685",15,7,6,1,21,16
+Bardiya,Bansgadhi Municipality,524 5 58 3 006,51201,"11,210",931,"9,609",78,27,249,61,220,35
+Bardiya,Barbardiya Municipality,524 5 58 3 005,51202,"13,268",167,"12,862",17,37,7,1,141,36
+Bardiya,Geruwa Gaunpalika,524 5 58 4 001,51204,"6,135",119,"5,886",10,6,7,18,84,5
+Bardiya,Gulariya Municipality,524 5 58 3 004,51207,"13,064","2,283","10,639",35,3,2,2,85,15
+Bardiya,Madhuwan Municipality,524 5 58 3 002,51206,"9,569","1,476","7,826",6,107,2,15,112,25
+Bardiya,Rajapur Municipality,524 5 58 3 001,51205,"10,916",334,"10,465",10,22,8,1,60,16
+Bardiya,Thakurbaba Municipality,524 5 58 3 003,51203,"8,652",292,"8,215",19,18,3,4,75,26
+Bhaktapur,Bhaktapur Municipality,524 3 26 3 003,30702,"17,639","15,998",107,444,217,350,4,425,94
+Bhaktapur,Changunarayan Municipality,524 3 26 3 002,30701,"12,170","8,598",450,"1,262",728,876,22,143,91
+Bhaktapur,Madhyapur Thimi Municipality,524 3 26 3 001,30703,"20,302","13,431","1,412","2,085",602,"1,389",2,"1,263",118
+Bhaktapur,Suryabinayak Municipality,524 3 26 3 004,30704,"18,446","15,411",638,984,315,727,14,250,107
+Bhojpur,Aamchowk Gaunpalika,524 1 10 4 006,10609,"3,677","2,668",5,74,516,305,95,12,2
+Bhojpur,Arun Gaunpalika,524 1 10 4 003,10605,"3,782","2,324",4,282,571,568,28,3,2
+Bhojpur,Bhojpur Municipality,524 1 10 3 002,10604,"6,438","4,637",9,23,237,"1,479",45,2,6
+Bhojpur,Hatuwagadhi Gaunpalika,524 1 10 4 007,10608,"4,579","2,953",6,173,891,475,46,30,5
+Bhojpur,Pauwa Dunma Gaunpalika,524 1 10 4 005,10606,"3,280","2,122",3,61,552,492,22,25,3
+Bhojpur,Ramprasad Rai Gaunpalika,524 1 10 4 004,10607,"4,016","2,803",5,142,462,567,31,1,5
+Bhojpur,Salpa Silichho Gaunpalika,524 1 10 4 001,10602,"2,728","2,132",20,28,134,387,17,4,6
+Bhojpur,Shadananda Municipality,524 1 10 3 001,10601,"6,832","4,065",12,163,531,"1,989",60,3,9
+Bhojpur,Tyamke Maiyum Gaunpalika,524 1 10 4 002,10603,"4,061","3,233",11,22,138,600,49,0,8
+Chitawan,Bharatpur Metropolitian City,524 3 35 1 001,30702,"69,035","21,089","38,193","6,531","1,904",161,95,780,282
+Chitawan,Ichchha Kamana Gaunpalika,524 3 35 4 001,31303,"4,778","4,433",32,13,205,26,54,1,14
+Chitawan,Kalika Municipality,524 3 35 3 001,30304,"9,116","5,611","1,138",984,"1,081",90,49,137,26
+Chitawan,Khairahani Municipality,524 3 35 3 003,31306,"12,331","4,284","7,312",120,394,6,4,162,49
+Chitawan,Madi Municipality,524 3 35 3 005,10209,"8,960","1,026","4,252",475,"2,770",94,197,128,18
+Chitawan,Rapti Municipality,524 3 35 3 004,31301,"12,055","4,949","5,482",565,781,30,91,136,21
+Chitawan,Ratnanagar Municipality,524 3 35 3 002,31305,"16,070","4,897","8,780","1,840",142,232,1,70,108
+Dadeldhura,Aalital Gaunpalika,524 7 73 4 004,70506,"3,280","2,395",7,151,249,228,229,13,8
+Dadeldhura,Ajayameru Gaunpalika,524 7 73 4 002,70503,"3,311","2,454",1,2,62,255,36,473,28
+Dadeldhura,Amargadhi Municipality,524 7 73 3 002,70502,"4,778","3,757",9,83,229,526,113,38,23
+Dadeldhura,Bhageshwor Gaunpalika,524 7 73 4 001,70504,"2,462","2,082",3,9,23,115,166,39,25
+Dadeldhura,Ganyapdhura Gaunpalika,524 7 73 4 005,70507,"3,070","2,288",6,98,124,301,242,7,4
+Dadeldhura,Nawadurga Gaunpalika,524 7 73 4 003,70501,"4,132","2,315",4,401,500,584,210,102,16
+Dadeldhura,Parashuram Municipality,524 7 73 3 001,70505,"5,990","3,770",37,22,701,913,502,12,33
+Dailekh,Aathbis Municipality,524 6 61 3 001,60801,"5,263","2,881",2,26,404,"1,634",289,1,26
+Dailekh,Bhagawatimai Gaunpalika,524 6 61 4 007,60609,"3,359","2,441",3,20,156,696,28,1,14
+Dailekh,Bhairabi Gaunpalika,524 6 61 4 002,60603,"3,976",683,4,284,"1,092","1,839",55,4,15
+Dailekh,Chamunda Bindrasaini Municipality,524 6 61 3 002,60606,"4,634","1,613",3,308,843,"1,801",43,2,21
+Dailekh,Dullu Municipality,524 6 61 3 003,60607,"8,164","2,810",6,19,840,"4,333",87,9,60
+Dailekh,Dungeshwor Gaunpalika,524 6 61 4 006,60610,"3,044","1,902",8,64,161,869,14,0,26
+Dailekh,Gurans Gaunpalika,524 6 61 4 005,60611,"4,096","3,030",4,4,156,619,103,154,26
+Dailekh,Mahabu Gaunpalika,524 6 61 4 003,60602,"3,553","1,531",1,113,621,"1,174",88,2,23
+Dailekh,Narayan Municipality,524 6 61 3 004,60608,"5,791","3,798",3,97,584,"1,236",27,3,43
+Dailekh,Naumule Gaunpalika,524 6 61 4 004,60601,"3,708","2,723",3,41,205,584,116,2,34
+Dailekh,Thantikandh Gaunpalika,524 6 61 4 001,60604,"3,327","1,925",2,2,74,"1,274",9,0,41
+Dang,Babai Gaunpalika,524 5 56 4 001,51005,"5,945","4,354",33,206,179,654,493,1,25
+Dang,Bangalachuli Gaunpalika,524 5 56 4 005,51001,"4,730","2,902",2,85,"1,096",419,183,22,21
+Dang,Dangisharan Gaunpalika,524 5 56 4 002,51006,"4,455",395,283,440,"2,595",436,190,101,15
+Dang,Gadhawa Gaunpalika,524 5 56 4 006,51009,"7,267","1,871","3,446",184,"1,477",53,169,28,39
+Dang,Ghorahi Sub-Metropolitian City,524 5 56 2 002,51002,"35,419","16,014",814,"6,231","8,190","1,332","1,750",958,130
+Dang,Lamahi Municipality,524 5 56 3 001,51007,"9,432","1,419","4,072","1,335","2,122",217,36,182,49
+Dang,Rajpur Gaunpalika,524 5 56 4 004,20613,"4,473",158,"1,891",45,"1,112",127,"1,038",83,19
+Dang,Rapti Gaunpalika,524 5 56 4 007,31301,"8,055","2,277","4,097",448,932,121,62,41,77
+Dang,Shantinagar Gaunpalika,524 5 56 4 003,51004,"5,328","3,290",118,274,978,355,148,153,12
+Dang,Tulsipur Sub-Metropolitian City,524 5 56 2 001,51003,"31,243","14,890","1,985","5,572","5,734","1,622",799,473,168
+Darchula,Apihimal Gaunpalika,524 7 75 4 003,70305,"1,085",987,0,0,1,84,9,2,2
+Darchula,Byas Gaunpalika,524 7 75 4 001,40702,"1,919","1,487",0,94,32,290,5,0,11
+Darchula,Duhun Gaunpalika,524 7 75 4 002,70302,"1,982","1,681",0,0,6,263,16,10,6
+Darchula,Lekam Gaunpalika,524 7 75 4 006,70309,"2,851","1,911",0,12,77,512,79,255,5
+Darchula,Mahakali Municipality,524 7 75 3 001,70303,"4,526","4,155",0,11,2,161,122,64,11
+Darchula,Malikarjun Gaunpalika,524 7 75 4 004,70308,"3,096","2,585",0,35,136,105,80,150,5
+Darchula,Marma Gaunpalika,524 7 75 4 007,70306,"2,508","2,006",0,0,17,263,164,54,4
+Darchula,Naugad  Gaunpalika,524 7 75 4 005,70304,"2,616","2,389",0,1,1,92,103,17,13
+Darchula,Shailyashikhar Municipality,524 7 75 3 002,70307,"4,021","3,124",0,5,150,305,168,241,28
+Dhading,Benighat Rorang Gaunpalika,524 3 30 4 008,30409,"6,169","5,170",0,17,779,105,69,10,19
+Dhading,Dhunibenshi Municipality,524 3 30 3 002,30413,"6,759","5,858",1,66,288,353,143,36,14
+Dhading,Gajuri Gaunpalika,524 3 30 4 009,30410,"5,600","4,924",1,103,349,130,57,6,30
+Dhading,Galchhi Gaunpalika,524 3 30 4 010,30411,"5,410","4,460",49,66,360,339,24,87,25
+Dhading,Ganga Jamuna Gaunpalika,524 3 30 4 002,30403,"4,864","4,618",0,5,10,221,1,1,8
+Dhading,Jwalamukhi Gaunpalika,524 3 30 4 006,30407,"5,730","3,391",0,317,205,"1,637",99,67,14
+Dhading,Khaniyabas Gaunpalika,524 3 30 4 003,30402,"2,651","2,504",0,1,3,110,8,0,25
+Dhading,Netrawati Gaunpalika,524 3 30 4 005,30405,"3,121","3,034",0,1,27,48,0,2,9
+Dhading,Nilkhantha Municipality,524 3 30 3 001,30406,"13,984","12,314",4,175,350,"1,053",52,1,35
+Dhading,Rubi Valley Gaunpalika,524 3 30 4 001,30401,"2,134","1,646",0,2,18,443,7,5,13
+Dhading,Siddhalek Gaunpalika,524 3 30 4 007,30408,"5,138","4,193",0,64,183,610,55,2,31
+Dhading,Thakre Gaunpalika,524 3 30 4 011,30412,"6,927","6,059",1,102,278,432,37,4,14
+Dhading,Tripurasundari Gaunpalika,524 3 30 4 004,60105,"5,355","4,247",1,75,185,755,71,2,19
+Dhankuta,Chaubise Gaunpalika,524 1 07 4 004,10707,"4,542","3,516",2,128,684,76,87,38,11
+Dhankuta,Chhathar Jorpati Gaunpalika,524 1 07 4 002,10703,"4,232","3,150",3,53,429,549,15,22,11
+Dhankuta,Dhankuta Municipality,524 1 07 3 003,10704,"9,460","7,975",9,157,644,504,77,60,34
+Dhankuta,Khalsa Chhintang Sahidbhumi Gaunpalika,524 1 07 4 001,10705,"3,876","2,980",3,79,681,86,42,2,3
+Dhankuta,Mahalaxmi Municipality,524 1 07 3 001,10701,"5,482","4,801",5,61,279,279,37,9,11
+Dhankuta,Pakhribas Municipality,524 1 07 3 002,10702,"4,977","4,127",2,129,380,317,8,5,9
+Dhankuta,Sangurigadhi Gaunpalika,524 1 07 4 003,10706,"5,047","4,166",3,75,199,487,101,5,11
+Dhanusa,Aurahi Gaunpalika,524 2 17 4 003,20404,"4,003",555,"3,234",8,11,1,0,149,45
+Dhanusa,Bateshwor Gaunpalika,524 2 17 4 001,20304,"3,671",812,"1,350",163,"1,139",59,1,93,54
+Dhanusa,Bideha Municipality,524 2 17 3 010,20313,"5,817",986,"4,536",4,22,10,1,53,205
+Dhanusa,Chhireshwornath Municipality,524 2 17 3 003,20305,"7,775","1,267","5,708",15,647,39,1,4,94
+Dhanusa,Dhanauji Gaunpalika,524 2 17 4 004,20316,"3,717",44,"3,367",7,5,0,1,190,103
+Dhanusa,Dhanushadham Municipality,524 2 17 3 004,20302,"8,715",573,"5,455",206,"2,153",5,2,218,103
+Dhanusa,Ganeshman Charnath Municipality,524 2 17 3 002,20301,"7,037",246,"3,622",451,"2,428",27,99,69,95
+Dhanusa,Hansapur Municipality,524 2 17 3 007,20308,"6,912","1,091","5,643",7,6,3,0,67,95
+Dhanusa,Janak Nandini Gaunpalika,524 2 17 4 006,20312,"4,461",903,"3,301",8,33,3,1,141,71
+Dhanusa,Janakpur Sub-Metropolitian City,524 2 17 2 001,20315,"30,589","3,023","26,413",91,36,46,11,461,508
+Dhanusa,Kamala Municipality,524 2 17 3 011,20311,"6,999","1,329","5,463",15,29,0,1,45,117
+Dhanusa,Laxminiya Gaunpalika,524 2 17 4 002,20306,"4,995","1,024","3,803",10,5,21,0,100,32
+Dhanusa,Mithila Bihari Municipality,524 2 17 3 005,20307,"6,066",504,"5,345",4,11,2,0,64,136
+Dhanusa,Mithila Municipality,524 2 17 3 001,20303,"8,229","3,765",284,231,"3,702",41,94,33,79
+Dhanusa,Mukhiyapatti Musaharmiya Gaunpalika,524 2 17 4 005,20318,"4,130",318,"3,690",2,11,2,0,70,37
+Dhanusa,Nagarain Municipality,524 2 17 3 009,20317,"6,365",755,"5,368",7,27,3,0,152,53
+Dhanusa,Sabaila Municipality,524 2 17 3 006,20309,"10,073",571,"9,201",9,15,0,2,23,252
+Dhanusa,Shahidnagar Municipality,524 2 17 3 008,20310,"8,671",173,"8,088",8,132,2,1,81,186
+Dolakha,Baitedhar Gaunpalika,524 3 22 4 004,20304,"5,079","3,719",0,9,109,"1,155",67,13,7
+Dolakha,Bhimeshwor Municipality,524 3 22 3 001,30109,"8,639","7,549",0,4,67,909,38,50,22
+Dolakha,Bigu Gaunpalika,524 3 22 4 001,30102,"4,418","3,669",0,25,186,441,73,8,16
+Dolakha,Gaurishankar Gaunpalika,524 3 22 4 002,30101,"4,067","3,539",0,20,127,275,79,1,26
+Dolakha,Jiri Municipality,524 3 22 3 002,30105,"3,854","2,740",0,35,119,914,23,16,7
+Dolakha,Kalinchowk Gaunpalika,524 3 22 4 003,30103,"5,457","4,443",0,20,110,752,116,2,14
+Dolakha,Melung Gaunpalika,524 3 22 4 006,30107,"4,841","3,387",0,34,421,917,49,14,19
+Dolakha,Shailung Gaunpalika,524 3 22 4 005,30108,"4,958","3,940",0,8,236,675,81,3,15
+Dolakha,Tamakoshi Gaunpalika,524 3 22 4 007,30106,"4,345","2,561",0,39,120,"1,602",11,2,10
+Dolpa,Chharka Tangsong Gaunpalika,524 6 62 4 006,60108,282,108,0,1,0,16,156,0,1
+Dolpa,Dolpo Buddha Gaunpalika,524 6 62 4 003,60101,468,141,0,0,18,171,134,0,4
+Dolpa,Jagadulla Gaunpalika,524 6 62 4 002,60103,433,429,0,0,0,4,0,0,0
+Dolpa,Kaike Gaunpalika,524 6 62 4 005,60107,780,624,0,1,73,52,29,0,1
+Dolpa,Mudkechula Gaunpalika,524 6 62 4 004,60104,926,506,0,0,0,282,136,1,1
+Dolpa,Shey Phoksundo Gaunpalika,524 6 62 4 001,60102,730,224,0,4,37,61,400,0,4
+Dolpa,Thulibheri Municipality,524 6 62 3 002,60106,"1,903","1,623",0,0,1,234,42,1,2
+Dolpa,Tripurasundari Municipality,524 6 62 3 001,30210,"1,944","1,186",0,0,1,589,161,0,7
+Doti,Aadarsha Gaunpalika,524 7 70 4 001,70603,"4,747","2,918",1,240,342,905,299,14,28
+Doti,Badi Kedar Gaunpalika,524 7 70 4 006,70608,"2,719","1,877",2,44,181,360,251,0,4
+Doti,Bogatan Gaunpalika,524 7 70 4 007,70607,"3,130","1,821",2,283,386,479,144,2,13
+Doti,Dipayal Silgadhi Municipality,524 7 70 3 002,70605,"7,447","4,427",11,84,382,"1,642",800,73,28
+Doti,Jorayal Gaunpalika,524 7 70 4 004,70609,"3,808","2,563",4,51,318,395,367,102,8
+Doti,K.I. Singh Gaunpalika,524 7 70 4 005,70606,"4,259","2,360",0,201,448,960,221,53,16
+Doti,Purbichouki Gaunpalika,524 7 70 4 003,70601,"4,836","2,960",3,75,166,"1,329",263,4,36
+Doti,Sayal Gaunpalika,524 7 70 4 002,70602,"3,772","2,652",2,24,37,936,96,2,23
+Doti,Shikhar Municipality,524 7 70 3 001,70604,"6,665","4,690",6,39,238,"1,239",441,0,12
+Gorkha,Aarughat Gaunpalika,524 4 36 4 006,40105,"5,614","4,216",0,44,326,993,22,0,13
+Gorkha,Ajirkot Gaunpalika,524 4 36 4 002,40102,"3,618","3,312",0,4,19,250,18,0,15
+Gorkha,Bhimsen Gaunpalika,524 4 36 4 007,40106,"5,438","1,835",0,181,303,"3,062",43,0,14
+Gorkha,Chumanubri Gaunpalika,524 4 36 4 001,40101,"1,949","1,525",0,1,82,87,234,2,18
+Gorkha,Dharche Gaunpalika,524 4 36 4 004,40104,"3,128","2,830",0,0,5,163,114,0,16
+Gorkha,Gandaki Gaunpalika,524 4 36 4 009,40111,"5,253","3,999",1,4,81,"1,076",73,0,19
+Gorkha,Gorkha Municipality,524 4 36 3 002,40109,"13,127","5,614",10,128,518,"6,772",22,7,56
+Gorkha,Palungtar Municipality,524 4 36 3 001,40108,"9,924","5,780",9,947,"1,331","1,707",135,4,11
+Gorkha,Shahid Lakhan Gaunpalika,524 4 36 4 008,40110,"6,682","4,197",0,68,199,"2,112",42,14,50
+Gorkha,Siranchowk Gaunpalika,524 4 36 4 005,40107,"5,896","4,794",0,37,129,898,16,1,21
+Gorkha,Sulikot Gaunpalika,524 4 36 4 003,40103,"5,829","3,641",0,133,422,"1,520",88,5,20
+Gulmi,Chandrakot Gaunpalika,524 5 51 4 006,50403,"5,121","4,946",1,20,43,66,33,5,7
+Gulmi,Chhatrakot Gaunpalika,524 5 51 4 007,50411,"5,315","4,344",2,172,246,383,63,95,10
+Gulmi,Dhurkot Gaunpalika,524 5 51 4 003,50408,"5,307","4,409",3,143,504,207,23,12,6
+Gulmi,Gulmi Durbar Gaunpaika,524 5 51 4 005,50410,"5,266","4,923",1,53,122,144,16,1,6
+Gulmi,Isma Gaunpalika,524 5 51 4 004,50405,"4,716","3,835",2,53,644,58,119,1,4
+Gulmi,Kali Gandaki Gaunpalika,524 5 51 4 010,40911,"4,098","3,666",1,4,86,89,130,116,6
+Gulmi,Madane Gaunpalika,524 5 51 4 001,50407,"4,857","4,186",3,98,206,306,39,0,19
+Gulmi,Malika Gaunpalika,524 5 51 4 002,40404,"4,550","4,068",0,7,200,187,64,1,23
+Gulmi,Musikot Municipality,524 5 51 3 001,50404,"7,075","6,171",1,28,265,466,98,24,22
+Gulmi,Resunga Municipality,524 5 51 3 002,50409,"8,353","7,742",2,46,272,224,12,26,29
+Gulmi,Ruru Gaunpalika,524 5 51 4 008,50412,"4,703","3,810",2,325,264,237,48,5,12
+Gulmi,Satyawoti Gaunpalika,524 5 51 4 009,50402,"5,526","5,360",2,8,57,58,17,9,15
+Humla,Adanchuli Gaunpalika,524 6 66 4 007,60306,"1,121",934,0,0,0,181,6,0,0
+Humla,Chankheli Gaunpalika,524 6 66 4 005,60301,963,574,0,0,0,388,1,0,0
+Humla,Kharpunath Gaunpalika,524 6 66 4 003,60302,"1,132",812,0,0,2,310,7,0,1
+Humla,Namkha Gaunpalika,524 6 66 4 001,60304,835,597,0,0,1,151,85,1,0
+Humla,Sarkegad Gaunpalika,524 6 66 4 004,60305,"1,794","1,239",0,5,48,479,21,1,1
+Humla,Simkot Gaunpalika,524 6 66 4 002,60303,"2,566","1,803",0,1,1,697,55,1,8
+Humla,Tanjakot Gaunpalika,524 6 66 4 006,60307,"1,026",642,0,2,12,334,20,16,0
+Ilam,Chulachuli Gaunpalika,524 1 03 4 004,11007,"4,649","1,285","2,393",157,558,103,61,73,19
+Ilam,Deumai Municipality,524 1 03 3 001,11004,"7,123","5,929",5,21,178,834,45,82,29
+Ilam,Fakfokathum Gaunpalika,524 1 03 4 001,11005,"4,634","3,364",6,32,354,837,12,7,22
+Ilam,Illam Municipality,524 1 03 3 002,11003,"11,383","9,132",15,43,239,"1,526",185,153,90
+Ilam,Mai Jogmai Gaunpalika,524 1 03 4 003,11001,"4,677","3,611",7,11,72,909,27,24,16
+Ilam,Mai Municipality,524 1 03 3 004,11008,"7,077","3,227",550,254,"2,201",328,366,119,32
+Ilam,Mangsebung Gaunpalika,524 1 03 4 005,11006,"3,729","2,290",9,38,607,716,17,11,41
+Ilam,Rong Gaunpalika,524 1 03 4 006,11010,"4,351","3,990",5,4,173,26,74,55,24
+Ilam,Sandakpur Gaunpalika,524 1 03 4 002,11002,"3,643","2,883",2,4,33,659,28,25,9
+Ilam,Suryodaya Municipality,524 1 03 3 003,11009,"13,211","11,572",18,102,628,679,43,117,52
+Jajarkot,Barekot Gaunpalika,524 6 60 4 003,60701,"3,093","1,503",0,0,180,"1,357",36,7,10
+Jajarkot,Bheri Malika Municipality,524 6 60 3 002,60706,"6,590","4,139",4,2,679,"1,297",442,9,18
+Jajarkot,Chhedagad Municipality,524 6 60 3 001,60704,"6,144","3,507",5,42,274,"2,087",205,3,21
+Jajarkot,Junichande Gaunpalika,524 6 60 4 001,60703,"3,774","1,717",5,25,245,"1,498",225,36,23
+Jajarkot,Kuse Gaunpalika,524 6 60 4 002,60702,"3,590","1,846",7,34,96,"1,403",182,1,21
+Jajarkot,Shivalaya Gaunpalika,524 6 60 4 004,60705,"2,556","1,348",5,6,79,863,130,119,6
+Jajarkot,Tribeni Nalagad Municipality,524 6 60 3 003,60707,"4,721","2,997",7,5,150,"1,147",382,22,11
+Jhapa,Arjundhara Municipality,524 1 04 3 004,11103,"13,623","3,157","8,751",337,"1,099",76,63,111,29
+Jhapa,Barhadashi Gaunpalika,524 1 04 4 005,11111,"7,398",89,"7,142",18,20,8,6,92,23
+Jhapa,Bhadrapur Municipality,524 1 04 3 008,11114,"15,270","4,684","10,093",99,184,18,10,108,74
+Jhapa,Birtamod Municipality,524 1 04 3 007,11112,"19,118","5,137","13,525",106,183,29,5,56,77
+Jhapa,Buddhashanti Gaunpalika,524 1 04 4 002,11102,"9,498","7,465","1,050",340,308,44,32,112,147
+Jhapa,Damak Municipality,524 1 04 3 001,11107,"18,104","6,380","11,202",100,108,23,8,170,113
+Jhapa,Gauradaha Municipality,524 1 04 3 006,11108,"12,070","1,152","10,748",19,25,7,0,86,33
+Jhapa,Gauriganj Gaunpalika,524 1 04 4 003,11109,"7,140",80,"6,926",9,35,7,1,63,19
+Jhapa,Haldibari Gaunpalika,524 1 04 4 006,11113,"6,415",95,"6,138",45,77,15,0,31,14
+Jhapa,Jhapa Gaunpalika,524 1 04 4 004,11110,"7,098",69,"6,880",14,32,8,4,67,24
+Jhapa,Kachanakawal Gaunpalika,524 1 04 4 007,11115,"8,742",95,"8,126",44,387,9,1,64,16
+Jhapa,Kamal Gaunpalika,524 1 04 4 001,11106,"10,256",799,"9,313",12,7,1,1,97,26
+Jhapa,Kankai Municipality,524 1 04 3 003,11104,"9,426","1,964","7,126",69,95,46,2,106,18
+Jhapa,Mechinagar Municipality,524 1 04 3 005,11101,"25,531","8,524","13,155",823,"2,474",67,52,356,80
+Jhapa,Shivasatakshi Municipality,524 1 04 3 002,11105,"14,695",362,"14,035",32,23,11,3,168,61
+Jumla,Chandannath Municipality,524 6 63 3 001,60404,"3,996","3,447",0,3,5,436,58,9,38
+Jumla,Guthichaur Gaunpalika,524 6 63 4 007,60405,"1,848","1,465",0,6,20,257,92,0,8
+Jumla,Hima Gaunpalika,524 6 63 4 004,60408,"1,713","1,558",0,0,11,89,13,29,13
+Jumla,Kanaka Sundari Gaun Palika,524 6 63 4 001,60402,"2,247","1,891",0,3,24,280,9,27,13
+Jumla,Patarasi Gaunpalika,524 6 63 4 003,60401,"2,537","1,308",0,1,3,"1,028",170,7,20
+Jumla,Sinja Gaunpalika,524 6 63 4 002,60403,"1,996","1,644",0,14,15,295,18,0,10
+Jumla,Tatopani Gaunpalika,524 6 63 4 006,60406,"2,704","2,186",0,0,1,434,72,1,10
+Jumla,Tila Gaunpalika,524 6 63 4 005,60407,"2,250","1,942",0,0,1,37,261,1,8
+Kailali,Bardagoriya Gaunpalika,524 7 71 4 005,70806,"5,703",41,"5,417",11,18,30,46,117,23
+Kailali,Bhajani Municipality,524 7 71 3 004,70811,"8,717",139,"8,354",6,5,3,3,158,49
+Kailali,Chure Gaunpalika,524 7 71 4 001,70802,"3,362","1,801",4,9,418,621,426,66,17
+Kailali,Dhangadhi Sub-Metropolitian City,524 7 71 2 001,70813,"29,143","5,865","22,881",39,11,62,4,135,146
+Kailali,Gauriganga Municipality,524 7 71 3 002,70804,"10,072",291,"9,332",18,53,37,123,169,49
+Kailali,Ghodaghodi Municipality,524 7 71 3 003,70805,"13,174",621,"12,019",27,29,118,31,251,78
+Kailali,Godawari Municipality,524 7 71 3 001,30803,"14,915","3,370","9,756",148,638,106,712,84,101
+Kailali,Janaki Gaunpalika,524 7 71 4 006,51105,"9,051",175,"8,669",20,26,9,0,115,37
+Kailali,Joshipur Gaunpalika,524 7 71 4 004,70809,"6,392",52,"6,278",19,1,7,1,3,31
+Kailali,Kailari Gaunpalika,524 7 71 4 002,70812,"7,802",491,"7,154",8,5,15,0,78,51
+Kailali,Lamki Chuha Municipality,524 7 71 3 006,70807,"14,757","2,670","11,586",10,7,34,37,334,79
+Kailali,Mohanyal Gaunpalika,524 7 71 4 003,70801,"3,969","1,827",39,22,385,"1,235",435,2,24
+Kailali,Tikapur Municipality,524 7 71 3 005,70810,"15,356","1,087","13,802",13,9,216,1,145,83
+Kalikot,Kalika Gaunpalika,524 6 64 4 005,30304,"2,458","1,587",0,7,57,748,49,0,10
+Kalikot,Khandachakra Municipality,524 6 64 3 002,60506,"3,612","2,648",0,7,15,821,80,11,30
+Kalikot,Mahawai Gaunpalika,524 6 64 4 006,60508,"1,447",333,0,44,14,944,90,14,8
+Kalikot,Naraharinath Gaunpalika,524 6 64 4 001,60505,"3,585","1,884",0,20,34,"1,406",221,2,18
+Kalikot,Pachal Jharana Gaunpalika,524 6 64 4 003,60502,"2,002","1,523",0,79,24,191,161,1,23
+Kalikot,Palata Gaunpalika,524 6 64 4 004,60501,"2,421","1,597",0,2,53,542,216,0,11
+Kalikot,Raskot Municipality,524 6 64 3 001,60503,"2,685","1,367",0,4,11,"1,272",0,17,14
+Kalikot,Sanni Tribeni Gaunpalika,524 6 64 4 002,60504,"2,105",811,0,13,26,"1,218",34,0,3
+Kalikot,Tilagupha Municipality,524 6 64 3 003,60507,"2,693","1,597",0,47,100,876,39,17,17
+Kanchanpur,Bedkot Municipality,524 7 72 3 003,70903,"9,219","1,143","7,829",9,29,18,42,117,32
+Kanchanpur,Beldandi Gaunpalika,524 7 72 3 006,70908,"3,760",25,"3,685",2,0,1,0,23,24
+Kanchanpur,Belouri Municipality,524 7 72 4 001,70909,"8,657",586,"7,737",7,2,239,0,5,81
+Kanchanpur,Bhimdatta Municipality,524 7 72 3 002,70904,"20,684","4,531","15,184",59,63,155,77,402,213
+Kanchanpur,Krishnapur Municipality,524 7 72 3 005,70901,"10,016",500,"9,142",17,7,9,193,103,45
+Kanchanpur,Laljhadi Gaunpalika,524 7 72 4 002,70906,"3,640",24,"3,571",6,0,0,0,13,26
+Kanchanpur,Mahakali Municipality,524 7 72 3 001,70303,"7,392",517,"6,644",11,6,1,12,154,47
+Kanchanpur,Punarbas Municipality,524 7 72 3 007,70907,"9,909",355,"9,334",8,6,0,1,120,85
+Kanchanpur,Shuklaphanta Municipality,524 7 72 3 004,70902,"8,857",170,"8,434",38,5,6,21,152,31
+Kapilbastu,Banganga Municipality,524 5 49 3 003,50901,"15,965","3,100","12,161",26,11,142,6,434,85
+Kapilbastu,Bijayanagar Gaunpalika,524 5 49 4 001,50904,"5,670",470,"4,655",73,310,10,59,49,44
+Kapilbastu,Buddhabhumi Municipality,524 5 49 3 002,50902,"11,521",479,"10,599",66,162,111,12,43,49
+Kapilbastu,Kapilbastu Municipality,524 5 49 3 006,50907,"12,094","2,212","9,389",20,65,44,0,261,103
+Kapilbastu,Krishnanagar Municipality,524 5 49 3 004,50905,"8,521","1,124","6,756",36,391,20,0,53,141
+Kapilbastu,Maharajganj Municipality,524 5 49 3 005,50906,"7,977",98,"7,617",80,128,10,2,17,25
+Kapilbastu,Mayadevi Gaunpalika,524 5 49 4 003,50812,"6,507",109,"6,153",12,10,94,0,55,74
+Kapilbastu,Shivaraj Municipality,524 5 49 3 001,50903,"11,250",934,"9,754",28,96,124,64,208,42
+Kapilbastu,Shuddhodhan Gaunpalika,524 5 49 4 004,50806,"6,346",88,"5,951",15,21,12,2,128,129
+Kapilbastu,Yasodhara Gaunpalika,524 5 49 4 002,50908,"5,413",720,"4,500",22,26,4,0,74,67
+Kaski,Annapurna Gaunpalika,524 4 39 4 001,40401,"6,029","5,743",4,9,49,186,13,3,22
+Kaski,Machhapuchchhre Gaunpalika,524 4 39 4 002,40502,"5,512","5,310",4,13,98,43,17,1,26
+Kaski,Madi Gaunpalika,524 4 39 4 003,10209,"4,508","4,245",2,38,85,57,67,2,12
+Kaski,Pokhara Lekhnath Metropolitian City,524 4 39 1 001,40504,"105,630","97,864",159,972,"1,427","2,581",357,"1,909",361
+Kaski,Rupa Gaunpalika,524 4 39 4 004,40505,"3,780","2,660",2,234,172,660,28,20,4
+Kathmandu,Budhanilkhantha Municipality,524 3 27 3 003,30604,"26,485","16,212","1,937","4,904",621,917,18,"1,724",152
+Kathmandu,Chandragiri Municipality,524 3 27 3 008,30610,"20,532","13,804",170,"2,651",224,"2,428",28,"1,069",158
+Kathmandu,Dakshinkali Municipality,524 3 27 3 010,30611,"5,488","4,662",6,35,326,401,14,7,37
+Kathmandu,Gokarneshwor Municipality,524 3 27 3 004,30603,"27,106","15,960","6,076","2,622",367,"1,094",128,576,283
+Kathmandu,Kageshwori Manahara Municipality,524 3 27 3 006,30602,"14,329","2,962","5,014","2,872",541,"2,018",395,434,93
+Kathmandu,Kathmandu Metropolitian City,524 3 27 1 001,30601,"254,292","163,339","18,574","10,890","1,341","4,830",52,"53,275","1,991"
+Kathmandu,Kirtipur Municipality,524 3 27 3 009,30609,"19,441","14,734",47,382,52,754,3,"3,350",119
+Kathmandu,Nagarjun Municipality,524 3 27 3 005,30607,"16,746","6,307",113,"1,043",148,"2,883",22,"6,123",107
+Kathmandu,Shankharapur Municipality,524 3 27 3 007,30601,"5,406","1,537",153,217,"1,010","1,608",774,76,31
+Kathmandu,Tarakeshwor Municipality,524 3 27 3 001,30507,"20,158","15,870",646,"1,154",453,"1,164",21,729,121
+Kathmandu,Tokha Municipality,524 3 27 3 002,30605,"25,561","14,522","2,241","2,315",482,"1,166",16,"4,688",131
+Kavrepalanchok,Banepa Municipality,524 3 24 3 002,30904,"12,106","9,488",141,760,216,"1,113",29,218,141
+Kavrepalanchok,Bethanchowk Gaunpalika,524 3 24 4 003,30910,"3,601","3,382",1,21,72,64,49,2,10
+Kavrepalanchok,Bhumlu Gaunpalika,524 3 24 4 001,30902,"4,513","4,156",2,29,158,106,26,1,35
+Kavrepalanchok,Chauri Deurali Gaunpalika,524 3 24 4 002,30901,"4,664","3,754",2,56,412,394,25,0,21
+Kavrepalanchok,Dhulikhel Municipality,524 3 24 3 003,30905,"7,061","5,721",4,264,363,402,19,47,241
+Kavrepalanchok,Khanikhola Gaunpalika,524 3 24 4 006,30913,"2,372","2,194",1,7,88,10,57,7,8
+Kavrepalanchok,Mahabharat Gaunpalika,524 3 24 4 007,30912,"2,910","2,459",3,28,156,152,92,1,19
+Kavrepalanchok,Mandan Deupur Municipality,524 3 24 3 001,30903,"7,328","5,211",4,309,720,"1,023",9,24,28
+Kavrepalanchok,Namobuddha Municipality,524 3 24 3 006,30908,"6,584","3,940",13,812,"1,332",414,23,13,37
+Kavrepalanchok,Panauti Municipality,524 3 24 3 005,30909,"10,196","8,925",13,719,261,175,26,7,70
+Kavrepalanchok,Panchkhal Municipality,524 3 24 3 004,30906,"8,544","5,559",19,"1,490",924,392,30,90,40
+Kavrepalanchok,Roshi Gaunpalika,524 3 24 4 004,30911,"5,896","5,479",3,50,172,51,110,6,25
+Kavrepalanchok,Temal Gaunpalika,524 3 24 4 005,30907,"4,876","3,564",11,438,331,464,45,1,22
+Khotang,Aiselukharka Gaunpalika,524 1 12 4 001,10502,"3,491","3,168",2,8,124,130,43,8,8
+Khotang,Baraha Pokhari Gaunpalika,524 1 12 4 007,10510,"2,702","2,310",1,28,236,46,55,0,26
+Khotang,Diprung Gaunpalika,524 1 12 4 004,10507,"4,140","3,119",3,23,369,562,32,11,21
+Khotang,Halesi Tuwachung Municipality,524 1 12 3 001,10504,"5,838","3,971",10,339,"1,039",233,222,1,23
+Khotang,Jante Dhunga Gaunpalika,524 1 12 4 008,10509,"3,175","2,413",2,27,327,311,74,4,17
+Khotang,Kepilasgadhi Gaunpalika,524 1 12 4 002,10501,"3,347","2,667",1,34,254,289,87,0,15
+Khotang,Khotehang Gaunpalika,524 1 12 4 006,10508,"4,703","3,237",4,38,569,815,25,3,12
+Khotang,Lamidanda Gaunpalika,524 1 12 4 003,10503,"2,793","2,352",0,9,139,238,44,3,8
+Khotang,Rupakot Majhuwagadhi Municipality,524 1 12 3 002,10505,"10,050","8,154",5,254,433,"1,031",80,32,61
+Khotang,Sakela Gaunpalika,524 1 12 4 005,10506,"2,408","1,919",0,31,77,365,4,0,12
+Lalitpur,Bagmati Gaunpalika,524 3 25 4 001,20503,"2,614","2,504",5,1,55,6,7,24,12
+Lalitpur,Godawari Municipality,524 3 25 3 001,30803,"17,762","16,065",11,445,204,741,50,65,181
+Lalitpur,Konjyosom Gaunpalika,524 3 25 4 002,30804,"2,001","1,939",0,3,19,15,11,1,13
+Lalitpur,Lalitpur Metropolitian City,524 3 25 1 001,30801,"70,256","46,319",830,"6,727","1,159","3,669",155,"10,882",515
+Lalitpur,Mahalaxmi Municipality,524 3 25 3 002,10701,"14,930","6,391",201,"3,515",554,246,15,"3,708",300
+Lalitpur,Mahankal Gaunpalika,524 3 25 4 003,30805,"1,942","1,855",3,0,13,41,5,11,14
+Lamjung,Bensi Shahar Municipality,524 4 37 3 002,40605,"10,422","9,670",10,49,102,496,8,51,36
+Lamjung,Dordi Gaunpalika,524 4 37 4 003,40601,"4,337","3,713",5,20,158,428,7,0,6
+Lamjung,Dudhapokhari Gaunpalika,524 4 37 4 004,40608,"2,590","2,333",2,15,54,179,5,0,2
+Lamjung,Kwhola Sothar Gaunpalika,524 4 37 4 001,40603,"2,452","2,378",2,12,11,25,12,0,12
+Lamjung,Madhya Nepal Municipality,524 4 37 3 001,40604,"5,888","4,578",8,132,356,770,26,0,18
+Lamjung,Marshyangdi Gaunpalika,524 4 37 4 002,40602,"4,409","4,183",0,2,22,176,17,0,9
+Lamjung,Rainas Municipality,524 4 37 3 004,40607,"4,751","3,963",8,40,252,415,49,2,22
+Lamjung,Sundarbazar Municipality,524 4 37 3 003,40606,"7,199","6,214",68,103,94,642,32,8,38
+Mahottari,Aurahi Municipality,524 2 18 3 003,20216,"5,822",625,"5,141",8,20,4,0,1,23
+Mahottari,Balawa Municipality,524 2 18 3 007,20407,"7,661",368,"6,962",8,16,195,18,71,23
+Mahottari,Bardibas Municipality,524 2 18 3 001,20401,"13,113","7,739",896,61,"3,626",346,318,81,46
+Mahottari,Bhangaha Municipality,524 2 18 3 004,20405,"8,560",536,"7,592",4,219,155,1,8,45
+Mahottari,Ekadara Gaunpalika,524 2 18 4 003,20411,"4,809",301,"4,366",6,8,2,0,114,12
+Mahottari,Gaushala Municipality,524 2 18 3 002,20402,"11,893","2,352","6,972",36,"2,411",16,26,22,58
+Mahottari,Jaleshwor Municipality,524 2 18 3 009,20415,"10,034",753,"8,970",15,5,7,0,163,121
+Mahottari,Loharpatti Municipality,524 2 18 3 008,20406,"7,317","1,202","5,547",7,12,427,2,95,25
+Mahottari,Mahottari Gaunpalika,524 2 18 4 004,20412,"4,861",123,"4,522",8,5,0,0,199,4
+Mahottari,Manara Shisawa Municipality,524 2 18 3 006,20410,"8,532",388,"7,601",33,27,4,7,400,72
+Mahottari,Matihani Municipality,524 2 18 3 010,20414,"5,226",66,"5,003",10,28,1,0,93,25
+Mahottari,Pipara Gaunpalika,524 2 18 4 005,20413,"6,490",216,"6,079",7,6,0,0,153,29
+Mahottari,Ram Gopalpur Municipality,524 2 18 3 005,20408,"5,257",37,"5,024",6,10,129,1,18,32
+Mahottari,Samsi Gaunpalika,524 2 18 4 002,20409,"5,382",146,"4,928",6,13,2,0,259,28
+Mahottari,Sonama Gaunpalika,524 2 18 4 001,20403,"6,341",820,"5,366",6,9,4,1,76,59
+Makwanpur,Bagmati Gaunpalika,524 3 31 4 008,20503,"5,731","2,825",72,85,"2,286",299,147,7,10
+Makwanpur,Bakaiya Gaunpalika,524 3 31 4 007,31209,"7,538","3,469",528,180,"2,794",480,60,20,7
+Makwanpur,Bhimphedi Gaunpalika,524 3 31 4 004,31207,"4,810","4,261",4,17,114,303,87,12,12
+Makwanpur,Hetauda Sub-Metropolitian City,524 3 31 2 001,31206,"34,270","25,629","1,963","1,553","3,035","1,587",132,256,115
+Makwanpur,Indrasarowar Gaunpalika,524 3 31 4 005,31201,"3,054","2,405",2,53,307,178,41,61,7
+Makwanpur,Kailash Gaunpalika,524 3 31 4 003,31203,"4,263","3,829",3,12,340,21,40,3,15
+Makwanpur,Makawanpurgadhi Gaunpalika,524 3 31 4 006,31208,"5,003","4,175",14,11,532,112,94,44,21
+Makwanpur,Manahari Gaunpalika,524 3 31 4 001,31205,"7,891","4,855","1,693",152,865,230,73,14,9
+Makwanpur,Raksirang Gaunpalika,524 3 31 4 002,31204,"4,557","3,518",15,16,850,76,76,2,4
+Makwanpur,Thaha Municipality,524 3 31 3 001,31202,"8,928","8,240",6,27,320,253,41,25,16
+Manang,Chame Gaunpalika,524 4 38 4 003,40203,279,277,0,0,0,1,1,0,0
+Manang,Naraphu Gaunpalika,524 4 38 4 002,40201,122,120,0,0,0,1,1,0,0
+Manang,Nashong Gaunpalika,524 4 38 4 004,40204,454,448,0,0,0,2,0,0,4
+Manang,Neshang Gaunpalika,524 4 38 4 001,40202,593,568,0,0,0,22,2,0,1
+Morang,Belbari Municipality,524 1 05 3 003,11205,"15,338",225,"14,751",41,26,31,6,190,68
+Morang,Biratnagar Metropolitian City,524 1 05 1 001,11214,"47,798","16,664","30,296",107,35,202,8,149,337
+Morang,Budhiganga Gaunpalika,524 1 05 4 004,11213,"9,621","1,369","7,930",18,30,21,14,206,33
+Morang,Dhanapalthan Gaunpalika,524 1 05 4 008,11216,"7,957",34,"7,794",6,48,2,1,48,24
+Morang,Gramthan Gaunpalika,524 1 05 4 005,11212,"7,920",286,"7,544",15,40,6,0,1,28
+Morang,Jahada Gaunpalika,524 1 05 4 007,11217,"8,175",59,"8,010",12,64,9,1,8,12
+Morang,Kanepokhari Gaunpalika,524 1 05 4 003,11206,"8,683",63,"8,449",32,81,12,13,6,27
+Morang,Katahari Gaunpalika,524 1 05 4 006,11215,"8,009",22,"7,924",12,17,2,0,16,16
+Morang,Kerabari Gaunpalika,524 1 05 4 001,11203,"6,991","6,186",171,88,207,263,46,12,18
+Morang,Letang Municipality,524 1 05 3 001,11202,"7,339","6,855",12,19,239,140,18,38,18
+Morang,Miklajung Gaunpalika,524 1 05 4 002,10908,"6,417","2,988","2,295",68,342,314,394,4,12
+Morang,Pathari Shanishchare Municipality,524 1 05 3 004,11207,"13,956","1,309","11,807",176,288,22,3,291,60
+Morang,Rangeli Municipality,524 1 05 3 006,11211,"11,249",488,"10,538",19,35,6,2,138,23
+Morang,Ratuwamai Municipality,524 1 05 3 008,11209,"12,482",61,"12,188",11,33,10,4,156,19
+Morang,Sundarharaicha Municipality,524 1 05 3 002,11204,"18,610","1,786","16,334",59,38,33,10,245,105
+Morang,Sunwarshi Municipality,524 1 05 3 007,11210,"10,795",36,"10,508",14,40,7,0,157,33
+Morang,Urlabari Municipality,524 1 05 3 005,11208,"12,530","2,037","10,272",50,39,11,16,97,8
+Mugu,Chhayanath Rara Municipality,524 6 65 3 001,60202,"3,641","2,764",0,1,49,713,84,0,30
+Mugu,Khatyad Gaunpalika,524 6 65 4 001,60204,"2,821","2,292",0,13,60,332,81,0,43
+Mugu,Mugumakarmarog Gaunpalika,524 6 65 4 003,60201,"1,029",681,0,0,2,215,126,1,4
+Mugu,Soru Gaunpalika,524 6 65 4 002,60203,"2,109","1,494",0,1,2,392,191,0,29
+Mustang,Bahragaun Muktikshetra Gaunpalika,524 4 45 4 003,40303,725,712,0,0,0,3,7,2,1
+Mustang,Dalome Gaunpalika,524 4 45 4 002,40301,404,345,0,0,0,26,30,0,3
+Mustang,Gharpajhong Gaunpalika,524 4 45 4 004,40302,874,863,1,0,0,4,2,0,4
+Mustang,Lomanthang Gaunpalika,524 4 45 4 001,40304,532,398,0,1,4,1,126,0,2
+Mustang,Thasang Gaunpalika,524 4 45 4 005,40305,770,711,0,0,3,42,9,0,5
+Myagdi,Annapurna Gaunpalika,524 4 44 4 003,40401,"3,700","3,498",0,6,25,102,41,6,22
+Myagdi,Beni Municipality,524 4 44 3 001,40406,"8,652","7,957",3,29,57,556,11,29,10
+Myagdi,Dhawalagiri Gaunpalika,524 4 44 4 001,40403,"3,229","2,353",2,9,93,531,229,1,11
+Myagdi,Malika Gaunpalika,524 4 44 4 004,40404,"4,223","3,404",1,17,223,519,25,19,15
+Myagdi,Mangala Gaunpalika,524 4 44 4 005,40405,"3,825","3,517",0,58,38,161,29,20,2
+Myagdi,Raghuganga Gaunpalika,524 4 44 4 002,40402,"4,098","3,509",0,17,91,395,75,1,10
+Nawalparasi,Bardaghat Municipality,524 5 76 3 002,50701,"13,415","4,367","8,454",115,131,160,14,112,62
+Nawalparasi,Binayi Tribeni Gaunpalika,524 4 47 4 004,40808,"6,916","2,311","3,274",342,592,263,69,28,37
+Nawalparasi,Bulingtar Gaunpalika,524 4 47 4 002,40802,"3,487","2,943",0,69,226,217,21,2,9
+Nawalparasi,Bungdikali Gaunpalika,524 4 47 4 001,40803,"2,998","2,560",0,23,172,192,46,0,5
+Nawalparasi,Devchuli Municipality,524 4 47 3 003,40805,"9,256","6,796",411,845,704,408,16,22,54
+Nawalparasi,Gaidakot Municipality,524 4 47 3 004,40801,"13,623","8,674","1,953","2,072",680,43,22,116,63
+Nawalparasi,Hupsekot Gaunpalika,524 4 47 4 003,40804,"4,588","4,137",0,22,325,41,18,10,35
+Nawalparasi,Kawasoti Municipality,524 4 47 3 002,40806,"14,104","7,462","3,689","1,106","1,357",316,3,96,75
+Nawalparasi,Madhya Bindu Municipality,524 4 47 3 001,40807,"11,943","4,452","3,124","1,742","2,159",152,56,209,49
+Nawalparasi,Palhinandan Gaunpalika,524 5 76 4 001,50704,"5,881",506,"5,339",6,2,2,1,1,24
+Nawalparasi,Pratapapur Gaunpalika,524 5 76 4 003,50706,"7,386",844,"6,300",36,9,6,0,127,64
+Nawalparasi,Ramgram Municipality,524 5 76 3 003,50703,"10,282","1,772","8,299",55,44,5,4,36,67
+Nawalparasi,Sarawal Gaunpalika,524 5 76 4 002,50705,"6,633",566,"5,886",13,12,3,0,93,60
+Nawalparasi,Sunawal Municipality,524 5 76 3 001,50702,"12,018","3,720","7,898",21,17,164,4,110,84
+Nawalparasi,Susta Gaunpalika,524 5 76 4 004,50707,"6,230",719,"5,422",5,6,0,0,39,39
+Nuwakot,Belkotgadhi Municipality,524 3 28 3 002,30508,"8,099","6,306",6,228,713,721,42,14,69
+Nuwakot,Bidur Municipality,524 3 28 3 001,30504,"12,505","11,494",20,73,187,493,47,101,90
+Nuwakot,Dupcheshwor Gaunpalika,524 3 28 4 008,30501,"4,451","4,243",1,8,19,102,35,1,42
+Nuwakot,Kakani Gaunpalika,524 3 28 4 009,30512,"5,183","4,384",2,37,306,358,21,3,72
+Nuwakot,Kispang Gaunpalika,524 3 28 4 002,30505,"3,340","2,975",1,7,65,243,13,1,35
+Nuwakot,Likhu Gaunpalika,524 3 28 4 006,10405,"3,629","2,851",0,75,264,380,37,1,21
+Nuwakot,Meghang Gaunpalika,524 3 28 4 001,30506,"3,388","3,139",1,8,34,162,13,6,25
+Nuwakot,Panchakanya Gaunpalika,524 3 28 4 007,30510,"3,321","2,839",1,34,170,173,44,36,24
+Nuwakot,Shivapuri Gaunpalika,524 3 28 4 010,30511,"4,676","4,022",2,49,216,260,75,17,35
+Nuwakot,Suryagadhi Gaunpalika,524 3 28 4 004,30503,"3,509","2,985",1,40,91,360,3,0,29
+Nuwakot,Tadi Gaunpalika,524 3 28 4 005,30502,"3,582","3,342",7,6,102,86,17,3,19
+Nuwakot,Tarakeshwor Gaunpalika,524 3 28 4 003,30507,"3,511","3,277",0,23,93,77,7,1,33
+Okhaldhunga,Champadevi Gaunpalika,524 1 13 4 004,10406,"3,796","2,674",2,135,724,137,99,0,25
+Okhaldhunga,Chishankhu Gadhi Gaunpalika,524 1 13 4 006,10401,"3,334","2,709",2,48,198,340,8,0,29
+Okhaldhunga,Khiji Demba Gaunpalika,524 1 13 4 001,10404,"3,111","2,740",3,52,114,109,81,2,10
+Okhaldhunga,Likhu Gaunpalika,524 1 13 4 002,10405,"2,957","2,269",7,168,314,90,100,0,9
+Okhaldhunga,Manebhanjyang Gaunpalika,524 1 13 4 007,10408,"4,618","4,267",2,39,74,128,78,11,19
+Okhaldhunga,Molung Gaunpalika,524 1 13 4 003,10403,"3,669","2,980",8,13,372,228,49,8,11
+Okhaldhunga,Siddhicharan Municipality,524 1 13 3 001,10402,"6,994","5,850",5,62,423,397,142,20,95
+Okhaldhunga,Sunkoshi Gaunpalika,524 1 13 4 005,10407,"3,987","3,329",5,87,336,114,84,8,24
+Palpa,Baganaskali Gaunpalika,524 5 46 4 005,50604,"5,270","4,325",24,74,585,207,47,1,7
+Palpa,Mathagadhi Gaunpalika,524 5 46 4 004,50609,"5,066","4,075",4,136,452,217,174,2,6
+Palpa,Nisdi Gaunpalika,524 5 46 4 008,50610,"3,891","3,208",6,51,250,302,54,1,19
+Palpa,Purbakhola Gaunpalika,524 5 46 4 006,50602,"4,085","2,836",0,115,287,765,75,1,6
+Palpa,Rainadevi Chhahara Gaunpalika,524 5 46 4 001,50607,"6,009","3,650",4,244,823,697,524,42,25
+Palpa,Rambha Gaunpalika,524 5 46 4 007,50603,"4,626","4,172",1,113,151,88,64,33,4
+Palpa,Rampur Municipality,524 5 46 3 002,50601,"8,132","5,503",678,472,466,866,93,21,33
+Palpa,Ribdikot Gaunpalika,524 5 46 4 003,50606,"4,647","4,074",0,40,110,139,228,43,13
+Palpa,Tansen Municipality,524 5 46 3 001,50605,"13,646","11,419",325,73,138,"1,197",70,382,42
+Palpa,Tinau Gaunpalika,524 5 46 4 002,50608,"3,888","2,548",3,31,738,346,201,6,15
+Panchthar,Falelung Gaunpalika,524 1 02 4 003,10903,"4,552","4,244",8,14,161,88,8,0,29
+Panchthar,Falgunanda Gaunpalika,524 1 02 4 005,10905,"5,162","3,988",10,60,568,495,19,9,13
+Panchthar,Hilihan Gaunpalika,524 1 02 4 001,10902,"4,792","3,649",5,36,238,797,27,19,21
+Panchthar,Kummayak Gaunpalika,524 1 02 4 004,10906,"3,500","1,174",9,131,"1,611",544,13,2,16
+Panchthar,Miklajung Gaunpalika,524 1 02 4 007,10908,"5,550","3,019",15,35,651,"1,357",455,9,9
+Panchthar,Phidim Municipality,524 1 02 3 001,10904,"10,994","9,026",8,333,494,969,58,73,33
+Panchthar,Tumbewa Gaunpalika,524 1 02 4 006,10907,"2,815",961,3,20,456,"1,114",256,1,4
+Panchthar,Yangbarak Gaunpalika,524 1 02 4 002,10107,"3,811","3,377",5,7,87,297,11,17,10
+Parbat,Bihadi Gaunpalika,524 4 42 4 003,41006,"2,941","2,605",6,30,142,139,3,2,14
+Parbat,Jaljala Gaunpalika,524 4 42 4 001,41002,"5,561","3,290",1,17,85,"2,130",13,8,17
+Parbat,Kushma Municipality,524 4 42 3 001,41003,"10,311","8,818",7,100,119,"1,206",35,6,20
+Parbat,Mahashila Gaunpalika,524 4 42 4 004,41005,"2,229","2,013",1,9,60,122,18,5,1
+Parbat,Modi Gaunpalika,524 4 42 4 002,41001,"5,479","5,090",2,8,26,285,47,0,21
+Parbat,Paiyu Gaunpalika,524 4 42 4 005,41007,"3,294","2,841",3,29,143,215,40,20,3
+Parbat,Phalebas Municipality,524 4 42 3 002,41004,"5,883","4,777",6,51,182,758,74,24,11
+Parsa,Bahudarmai Municipality,524 2 34 3 002,20808,"5,681",389,"5,206",1,1,0,0,14,70
+Parsa,Bindabasini Gaunpalika,524 2 34 4 010,20814,"3,576",24,"3,452",5,3,0,2,57,33
+Parsa,Birgunj Metropolitian City,524 2 34 1 001,20807,"39,286","6,934","31,141",70,38,345,6,253,499
+Parsa,Chhipaharmai Gaunpalika,524 2 34 4 007,20812,"3,983",719,"3,133",8,6,2,60,1,54
+Parsa,Dhobini Gaunpalika,524 2 34 4 006,20811,"2,975",57,"2,750",9,7,1,0,125,26
+Parsa,Jagarnathpur Gaunpalika,524 2 34 4 005,20803,"4,953",493,"4,371",3,3,6,0,2,75
+Parsa,Jirabhawani Gaunpalika,524 2 34 4 002,20802,"4,117",264,"3,760",28,11,1,19,2,32
+Parsa,Kalikamai Gaunpalika,524 2 34 4 008,20810,"3,042",203,"2,725",6,3,2,0,47,56
+Parsa,Pakaha Mainpur Gaunpalika,524 2 34 4 009,20813,"3,038",37,"2,907",4,11,1,0,0,78
+Parsa,Parsagadhi Municipality,524 2 34 3 003,20806,"6,412",523,"5,377",10,4,35,2,419,42
+Parsa,Paterwa Sugauli Gaunpalika,524 2 34 4 003,20804,"4,002",468,"2,806",2,1,696,0,1,28
+Parsa,Pokhariya Municipality,524 2 34 3 001,20809,"4,875",171,"4,648",12,3,0,5,10,26
+Parsa,Sakhuwa Prasauni Gaunpalika,524 2 34 4 004,20805,"5,329",789,"4,244",4,20,12,0,216,44
+Parsa,Thori Gaunpalika,524 2 34 4 001,20801,"4,247","2,644",872,135,350,140,31,56,19
+Pyuthan,Aairawati Gaunpalika,524 5 55 4 007,50308,"4,650","3,075",7,61,571,754,167,10,5
+Pyuthan,Gaumukhi Gaunpalika,524 5 55 4 002,50301,"4,785","4,185",2,17,333,168,63,0,17
+Pyuthan,Jhimaruk Gaunpalika,524 5 55 4 003,50303,"5,868","5,106",0,10,107,606,31,1,7
+Pyuthan,Mallarani Gaunpalika,524 5 55 4 005,50307,"4,120","3,248",4,103,299,250,141,66,9
+Pyuthan,Mandavi Gaunpalika,524 5 55 4 004,50306,"3,068","2,507",35,31,290,126,59,2,18
+Pyuthan,Naubahini Gaunpalika,524 5 55 4 001,50302,"5,809","4,614",3,9,693,239,226,12,13
+Pyuthan,Pyuthan Municipality,524 5 55 3 002,50304,"8,964","7,292",143,43,300,926,165,55,40
+Pyuthan,Sarumarani Gaunpalika,524 5 55 4 006,50309,"3,484","1,849",158,29,759,312,269,99,9
+Pyuthan,Sworgadwari Municipality,524 5 55 3 001,50305,"6,968","5,476",52,88,552,424,322,41,13
+Ramechhap,Doramba Gaunpalika,524 3 21 4 002,31007,"4,993","4,301",5,34,357,207,30,2,57
+Ramechhap,Gokulganga Gaunpalika,524 3 21 4 003,31002,"4,446","3,742",4,30,111,409,108,4,38
+Ramechhap,Khandadevi Gaunpalika,524 3 21 4 005,31006,"5,372","3,484",3,176,527,733,343,0,106
+Ramechhap,Likhu Gaunpalika,524 3 21 4 006,10405,"4,928","4,230",3,65,364,186,26,1,53
+Ramechhap,Manthali  Municipality,524 3 21 3 001,31005,"10,099","7,169",8,528,"1,275",570,449,5,95
+Ramechhap,Ramechhap Municipality,524 3 21 3 002,31004,"6,126","4,578",5,233,673,395,195,26,21
+Ramechhap,Sunapati Gaunpalika,524 3 21 4 001,31008,"4,050","3,843",3,1,74,90,12,3,24
+Ramechhap,Umakunda Gaunpalika,524 3 21 4 004,31001,"3,869","3,555",2,3,48,156,79,2,24
+Rasuwa,Gosaikunda Gaunpalika,524 3 29 4 002,30301,"2,017","1,853",0,1,6,139,10,2,6
+Rasuwa,Kalika Gaunpalika,524 3 29 4 004,30304,"2,089","2,004",0,5,18,14,34,0,14
+Rasuwa,Naukunda Gaunpalika,524 3 29 4 005,30305,"2,483","2,162",0,3,28,265,12,4,9
+Rasuwa,Parbatikunda Gaunpalika,524 3 29 4 001,30302,"1,306",913,0,0,26,348,17,0,2
+Rasuwa,Uttargaya Gaunpalika,524 3 29 4 003,30303,"1,846","1,627",0,2,17,140,33,22,5
+Rautahat,Boudhimai Municipality,524 2 32 3 010,20611,"4,807",252,"4,349",29,86,4,0,32,55
+Rautahat,Brindaban Municipality,524 2 32 3 005,20605,"6,374",562,"5,437",9,13,5,1,238,109
+Rautahat,Chandrapur Municipality,524 2 32 3 002,20601,"13,445","2,782","9,248",243,771,16,90,154,141
+Rautahat,Dewahi Gonahi Municipality,524 2 32 3 007,20609,"4,691",75,"4,367",19,42,6,0,124,58
+Rautahat,Durga Bhagawati Gaunpalika,524 2 32 4 002,20615,"3,812",84,"3,650",3,29,0,1,14,31
+Rautahat,Gadhimai Municipality,524 2 32 3 009,20606,"6,069",94,"5,708",20,22,1,0,106,118
+Rautahat,Garuda Municipality,524 2 32 3 008,20608,"7,444",71,"7,142",18,21,40,30,29,93
+Rautahat,Gaur Municipality,524 2 32 3 015,20617,"5,635",772,"4,682",10,31,3,0,31,106
+Rautahat,Gujara Municipality,524 2 32 3 001,20602,"7,391",246,"6,800",8,6,2,0,143,186
+Rautahat,Ishanath Municipality,524 2 32 3 013,20618,"5,834",477,"5,149",6,16,0,0,65,121
+Rautahat,Katahariya Municipality,524 2 32 3 004,20604,"5,919",236,"5,550",6,18,0,0,30,79
+Rautahat,Madhav Narayan Municipality,524 2 32 3 011,20607,"5,479",35,"5,188",9,11,1,12,167,56
+Rautahat,Maulapur Municipality,524 2 32 3 006,20610,"3,830",133,"3,521",3,7,2,2,74,88
+Rautahat,Paroha Municipality,524 2 32 3 012,20612,"5,380",274,"4,853",15,40,1,0,54,143
+Rautahat,Phatuwa Bijayapur Municipality,524 2 32 3 003,20603,"5,633",203,"5,212",6,84,54,0,10,64
+Rautahat,Rajdevi Municipality,524 2 32 3 016,20616,"5,365",439,"4,716",7,42,1,1,79,80
+Rautahat,Rajpur Municipality,524 2 32 3 014,20613,"5,768",223,"5,325",4,23,1,0,117,75
+Rautahat,Yamunamai Gaunpalika,524 2 32 4 001,20614,"3,776",470,"3,131",6,7,1,1,132,28
+Rolpa,Duikholi Gaunpalika,524 5 54 4 002,50203,"4,018","3,075",3,34,545,212,132,5,12
+Rolpa,Lungri Gaunpalika,524 5 54 4 008,50210,"4,402","3,161",1,57,149,967,50,1,16
+Rolpa,Madi Gaunpalika,524 5 54 4 004,10209,"3,658","2,882",0,1,560,73,121,4,17
+Rolpa,Rolpa Municipality,524 5 54 3 001,50207,"7,133","6,067",6,58,500,204,247,2,49
+Rolpa,Runtigadhi Gaunpalika,524 5 54 4 009,50208,"5,684","3,658",2,10,787,929,227,58,13
+Rolpa,Subarnabati Gaunpalika,524 5 54 4 001,50204,"5,657","4,554",1,10,92,714,207,60,19
+Rolpa,Sukidaha Gaunpalika,524 5 54 4 005,50201,"3,455","2,304",0,29,640,182,284,3,13
+Rolpa,Sunchhahari Gaunpalika,524 5 54 4 007,50209,"3,016","2,661",5,6,138,143,50,2,11
+Rolpa,Thawang Gaunpalika,524 5 54 4 003,50202,"2,172","1,712",0,11,81,175,179,3,11
+Rolpa,Tribeni Gaunpalika,524 5 54 4 006,50206,"4,540","3,569",4,18,318,437,149,27,18
+Rukum,Aathabisakot Municipality,524 6 52 3 001,60605,"6,421","4,082",7,15,468,"1,408",359,51,31
+Rukum,Banphikot Gaunpalika,524 6 52 4 002,60803,"3,747","2,666",2,2,49,890,99,25,14
+Rukum,Bhoome Gaunpalika,524 5 77 4 003,50103,"3,835","2,860",4,4,101,732,119,0,15
+Rukum,Chaurjahari Municipality,524 6 52 3 002,60806,"5,422","3,164",3,115,453,"1,579",89,0,19
+Rukum,Musikot Municipality,524 6 52 3 003,50404,"7,307","6,300",5,12,203,708,74,1,4
+Rukum,Putha Uttanganga Gaunpalika,524 5 77 4 002,50101,"3,861","2,809",5,12,79,732,216,0,8
+Rukum,Sanibheri Gaunpalika,524 6 52 4 001,60802,"4,129","3,207",2,10,161,694,38,1,16
+Rukum,Sisne Gaunpalika,524 5 77 4 001,50102,"3,506","3,189",1,1,14,209,87,1,4
+Rukum,Tribeni Gaunpalika,524 6 52 4 003,50206,"3,609","2,482",0,31,285,756,40,9,6
+Rupandehi,Butwal Sub-Metropolitian City,524 5 48 2 001,50802,"34,097","29,698","3,234",54,14,349,15,344,389
+Rupandehi,Devdaha Municipality,524 5 48 3 002,50801,"11,410","4,044","7,105",19,26,39,1,91,85
+Rupandehi,Gaidahawa Gaunpalika,524 5 48 4 003,50805,"7,285",563,"6,595",8,13,6,0,35,65
+Rupandehi,Kanchan Gaunpalika,524 5 48 4 001,50804,"7,084",273,"6,704",7,0,2,7,76,15
+Rupandehi,Kotahimai Gaunpalika,524 5 48 4 008,50814,"5,593",682,"4,789",8,5,1,0,63,45
+Rupandehi,Lumbini Sanskritik Municipality,524 5 48 3 004,50813,"9,946","1,986","7,488",11,29,7,0,315,110
+Rupandehi,Marchawari Gaunpalika,524 5 48 4 010,50816,"5,263","1,243","3,901",6,9,1,0,27,76
+Rupandehi,Mayadevi Gaunpalika,524 5 48 4 005,50812,"6,810",972,"5,726",2,6,4,0,55,45
+Rupandehi,Om Satiya Gaunpalika,524 5 48 4 006,50809,"5,787","1,010","4,667",19,12,38,4,16,21
+Rupandehi,Rohini Gaunpalika,524 5 48 4 007,50810,"5,657","1,049","4,471",11,12,0,2,74,38
+Rupandehi,Sainamaina Municipality,524 5 48 3 001,50803,"12,392","5,108","7,033",86,41,4,10,88,22
+Rupandehi,Sammarimai Gaunpalika,524 5 48 4 009,50815,"5,120",115,"4,897",2,13,0,0,25,68
+Rupandehi,Siddharthanagar Municipality,524 5 48 3 005,50811,"12,497","5,428","6,752",30,5,53,1,115,113
+Rupandehi,Siyari Gaunpalika,524 5 48 4 004,50807,"6,792","1,079","5,533",7,4,8,0,133,28
+Rupandehi,Suddhodhan Gaunpalika,524 5 48 4 002,50806,"6,145",795,"5,281",3,3,23,0,18,22
+Rupandehi,Tilottama Municipality,524 5 48 3 003,50808,"21,957","8,859","12,661",34,7,11,1,289,95
+Salyan,Bagachour Municipality,524 6 53 3 002,60905,"5,906","3,513",6,371,905,"1,000",84,2,25
+Salyan,Banagad Kupinde Municipality,524 6 53 3 001,60903,"6,763","3,450",8,378,381,"2,106",409,0,31
+Salyan,Chhatreshwori Gaunpalika,524 6 53 4 005,60906,"4,408","2,897",4,39,305,"1,058",91,1,13
+Salyan,Darma Gaunpalika,524 6 53 4 002,60901,"3,460","1,326",2,60,892,"1,108",43,8,21
+Salyan,Dhorchaur Gaunpalika,524 6 53 4 003,60904,"2,404","1,586",0,33,279,450,17,2,37
+Salyan,Kalimati Gaunpalika,524 6 53 4 004,60908,"4,343","2,104",1,30,567,837,741,6,57
+Salyan,Kapurkot Gaunpalika,524 6 53 4 007,60910,"3,657","2,748",2,16,293,528,56,1,13
+Salyan,Kumakh Malika Gaunpalika,524 6 53 4 001,60902,"4,745","1,854",9,36,720,"1,817",276,2,31
+Salyan,Sharada Municipality,524 6 53 3 003,60907,"7,391","4,821",13,185,"1,223",812,194,24,119
+Salyan,Tribeni Gaunpalika,524 6 53 4 006,50206,"3,447","2,550",2,18,207,544,112,2,12
+Sankhuwasabha,Bhotkhola Gaunpalika,524 1 09 4 002,10201,"1,379",835,0,0,73,415,50,2,4
+Sankhuwasabha,Chainapur Municipality,524 1 09 3 003,10208,"5,938","4,075",0,125,481,"1,172",57,5,23
+Sankhuwasabha,Chichila Gaunpalika,524 1 09 4 004,10204,"1,518","1,238",0,28,71,149,29,1,2
+Sankhuwasabha,Dharmadevi Municipality,524 1 09 3 004,10210,"3,958","3,247",0,19,352,284,48,6,2
+Sankhuwasabha,Khandabari Municipality,524 1 09 3 001,10206,"7,446","3,997",1,73,582,"2,675",56,5,57
+Sankhuwasabha,Madi Municipality,524 1 09 3 005,10209,"3,216","2,442",0,5,48,627,56,34,4
+Sankhuwasabha,Makalu Gaunpalika,524 1 09 4 001,10202,"2,922","2,072",0,18,283,385,143,11,10
+Sankhuwasabha,Panchakhapan Municipality,524 1 09 3 002,10207,"3,634","2,033",0,113,567,782,129,2,8
+Sankhuwasabha,Sabhapokhari Gaunpalika,524 1 09 4 005,10205,"2,192","1,207",0,59,331,517,59,5,14
+Sankhuwasabha,Silichong Gaunpalika,524 1 09 4 003,10203,"2,412","2,249",0,12,87,30,11,11,12
+Saptari,Agmisair Krishna Sabaran Gaunpalika,524 2 15 4 002,20103,"5,422",70,"4,911",11,199,1,2,104,124
+Saptari,Balan-Bihul Gaunpalika,524 2 15 4 004,20108,"3,976",19,"3,838",4,18,2,0,48,47
+Saptari,Belhi Chapena Gaunpalika,524 2 15 4 006,20111,"5,242",16,"5,036",13,25,4,0,72,76
+Saptari,Bishnupur Gaunpalika,524 2 15 4 007,20112,"4,370",21,"4,156",15,39,4,0,101,34
+Saptari,Bode Barsain Municipality,524 2 15 3 006,20109,"8,022",319,"7,111",16,142,8,27,299,100
+Saptari,Chhinnamasta Gaunpalika,524 2 15 4 008,20118,"5,439",63,"5,135",7,8,3,1,16,206
+Saptari,Dakneshwori Municipality,524 2 15 3 007,20110,"8,149",66,"7,702",23,74,5,1,153,125
+Saptari,Hanumannagar Kankalini Municipality,524 2 15 3 009,20116,"8,152",42,"7,909",11,32,5,6,43,104
+Saptari,Kanchanrup Municipality,524 2 15 3 005,20102,"10,192",68,"9,848",11,39,23,0,77,126
+Saptari,Khadak Municipality,524 2 15 3 002,20106,"8,615",54,"8,154",55,153,3,14,90,92
+Saptari,Mahadewa Gaunpalika,524 2 15 4 005,20114,"5,395",36,"5,177",21,61,1,0,9,90
+Saptari,Rajbiraj Municipality,524 2 15 3 008,20113,"13,350",912,"12,034",42,90,14,15,35,208
+Saptari,Rupani Gaunpalika,524 2 15 4 001,20104,"5,012",14,"4,842",6,110,4,0,12,24
+Saptari,Saptakoshi Municipality,524 2 15 3 004,20101,"4,539",109,"4,318",6,53,0,0,1,52
+Saptari,Shambhunath Municipality,524 2 15 3 003,20105,"6,764",72,"6,441",23,76,5,3,87,57
+Saptari,Surunga Municipality,524 2 15 3 001,20107,"8,650",54,"8,217",50,148,3,33,59,86
+Saptari,Tilathi Koiladi Gaunpalika,524 2 15 4 009,20117,"5,697",62,"5,550",6,30,1,2,25,21
+Saptari,Tirahut Gaunpalika,524 2 15 4 003,20115,"4,078",12,"3,868",2,40,4,4,79,69
+Sarlahi,Bagmati Municipality,524 2 19 3 001,20503,"7,984","1,658","3,801",242,"1,923",60,100,134,66
+Sarlahi,Balara Municipality,524 2 19 3 011,20516,"7,693",216,"7,219",18,111,5,0,45,79
+Sarlahi,Barahathawa Municipality,524 2 19 3 004,20504,"11,853","1,359","10,171",6,24,7,1,142,143
+Sarlahi,Basbariya Gaunpalika,524 2 19 4 001,20513,"3,699",19,"3,376",3,35,2,0,236,28
+Sarlahi,Bishnu Gaunpalika,524 2 19 4 008,20518,"4,008",257,"3,490",6,20,0,0,141,94
+Sarlahi,Brahmapuri Gaunpalika,524 2 19 4 007,20509,"4,735",335,"4,135",6,30,3,5,157,64
+Sarlahi,Chakraghatta Gaunpalika,524 2 19 4 004,20512,"4,409",636,"3,604",12,102,5,0,11,39
+Sarlahi,Chandranagar Gaunpalika,524 2 19 4 002,20510,"5,540",87,"4,955",39,95,0,0,319,45
+Sarlahi,Dhanakaul Gaunpalika,524 2 19 4 003,20514,"3,964",20,"3,771",3,0,1,3,111,55
+Sarlahi,Godaita Municipality,524 2 19 3 008,20517,"7,902",706,"6,881",11,13,3,0,147,141
+Sarlahi,Haripur Municipality,524 2 19 3 005,20505,"6,517",832,"5,364",5,42,1,9,200,64
+Sarlahi,Haripurwa Municipality,524 2 19 3 010,20507,"5,904",597,"4,939",17,204,1,0,103,43
+Sarlahi,Hariwan Municipality,524 2 19 3 002,20502,"8,601",606,"5,740",473,"1,590",4,53,45,90
+Sarlahi,Ishworpur Municipality,524 2 19 3 006,20506,"11,073","2,555","6,665",212,"1,115",47,130,216,133
+Sarlahi,Kabilashi Municipality,524 2 19 3 007,20511,"6,871",575,"5,800",28,184,102,3,114,65
+Sarlahi,Kaudena Gaunpalika,524 2 19 4 006,20519,"4,073",120,"3,835",8,8,1,0,67,34
+Sarlahi,Lalbandi Municipality,524 2 19 3 003,20501,"12,238","2,712","5,885",171,"2,828",62,386,113,81
+Sarlahi,Malangawa Municipality,524 2 19 3 009,20520,"7,912","1,000","6,587",26,42,2,0,184,71
+Sarlahi,Parsa Gaunpalika,524 2 19 4 009,20508,"3,342","1,179","2,108",3,14,0,0,6,32
+Sarlahi,Ramnagar Gaunpalika,524 2 19 4 005,20515,"4,485",161,"4,225",3,21,1,1,33,40
+Sindhuli,Dudhouli Municipality,524 3 20 3 002,31101,"13,164","5,623","1,953",236,"4,588",294,391,6,73
+Sindhuli,Ghyanglekha Gaunpalika,524 3 20 4 003,31107,"2,457","2,106",1,5,296,1,36,1,11
+Sindhuli,Golanjor Gaunpalika,524 3 20 4 005,31104,"3,681","3,105",9,13,210,190,134,5,15
+Sindhuli,Hariharpurgaghi Gaunpalika,524 3 20 4 001,31109,"4,586","1,234",85,232,"2,445",278,166,124,22
+Sindhuli,Kamalamai Municipality,524 3 20 3 001,31105,"14,315","9,731","1,037",663,"2,322",246,262,17,37
+Sindhuli,Marin Gaunpalika,524 3 20 4 002,31108,"4,870","1,438",538,110,"2,265",34,462,7,16
+Sindhuli,Phikkal Gaunpalika,524 3 20 4 007,31102,"3,035","2,489",2,19,194,186,124,1,20
+Sindhuli,Sunkoshi Gaunpalika,524 3 20 4 004,10407,"4,557","2,877",3,18,220,763,664,0,12
+Sindhuli,Tinpatan Gaunpalika,524 3 20 4 006,31103,"6,879","4,821",53,239,"1,406",152,179,7,22
+Sindhupalchok,Bahrabise Municipality,524 3 23 3 003,30209,"6,225","5,444",0,30,82,552,85,4,28
+Sindhupalchok,Balephi Gaunpalika,524 3 23 4 006,30208,"4,429","4,045",1,9,41,292,12,7,22
+Sindhupalchok,Bhotekoshi Gaunpalika,524 3 23 4 004,30201,"4,183","3,707",0,10,18,361,65,5,17
+Sindhupalchok,Choutara Sangachowkgadhi Municipality,524 3 23 3 002,30207,"10,906","9,699",1,235,145,708,7,6,105
+Sindhupalchok,Helambu Gaunpalika,524 3 23 4 001,30204,"4,203","2,734",0,5,82,"1,313",50,1,18
+Sindhupalchok,Indrawoti Gaunpalika,524 3 23 4 005,30206,"6,211","4,967",0,77,335,746,48,5,33
+Sindhupalchok,Jugal Gaunpalika,524 3 23 4 003,30202,"3,941","3,273",0,2,27,595,3,15,26
+Sindhupalchok,Lisankhu Pakhar Gaunpalika,524 3 23 4 009,30211,"3,680","3,364",0,47,66,169,16,8,10
+Sindhupalchok,Melanchi Municipality,524 3 23 3 001,30205,"10,097","7,169",0,246,339,"2,139",43,105,56
+Sindhupalchok,Panchpokhari Thangpal Gaunpalika,524 3 23 4 002,30203,"5,007","2,731",1,31,62,"2,124",1,25,32
+Sindhupalchok,Sunkoshi Gaunpalika,524 3 23 4 007,10407,"4,359","3,598",0,4,46,671,6,16,18
+Sindhupalchok,Tripurasundari Gaunpalika,524 3 23 4 008,30210,"3,394","3,068",0,35,21,234,32,1,3
+Siraha,Arnama Gaunpalika,524 2 16 4 003,20209,"4,047",17,"3,880",8,17,0,0,85,40
+Siraha,Aurahi Gaunpalika,524 2 16 4 004,20216,"4,245",13,"4,063",8,65,0,2,32,62
+Siraha,Bariyarpatti Gaunpalika,524 2 16 4 005,20215,"4,264",89,"4,030",13,35,11,0,62,24
+Siraha,Bhagawanpur Gaunpalika,524 2 16 4 009,20213,"3,661",231,"3,284",5,11,1,0,90,39
+Siraha,Bishnupur Gaunpalika,524 2 16 4 002,20112,"3,469",32,"3,373",5,25,2,2,22,8
+Siraha,Dhangadhimai Municipality,524 2 16 3 004,20202,"8,757",841,"4,552",56,"2,714",21,384,80,109
+Siraha,Golbazar Municipality,524 2 16 3 003,20203,"10,110",346,"6,045",130,"3,065",8,153,301,62
+Siraha,Kalyanpur Municipality,524 2 16 3 006,20206,"9,391",416,"8,717",7,11,2,1,132,105
+Siraha,Karjanha Municipality,524 2 16 3 001,20205,"6,088",307,"5,670",11,26,1,2,28,43
+Siraha,Lahan Municipality,524 2 16 3 005,20201,"17,182","2,040","13,123",93,"1,399",31,118,245,133
+Siraha,Laxmipur Patari Gaunpalika,524 2 16 4 006,20211,"4,830",48,"4,691",4,8,0,0,56,23
+Siraha,Mirchaiya Municipality,524 2 16 3 002,20204,"9,333",349,"8,484",22,233,7,86,84,68
+Siraha,Naraha Gaunpalika,524 2 16 4 001,20207,"3,673",183,"3,047",5,339,51,3,4,41
+Siraha,Nawarajpur Gaunpalika,524 2 16 4 007,20214,"3,280",4,"3,211",2,24,2,0,22,15
+Siraha,Sakhuwa Nankarkatti Gaunpalika,524 2 16 4 008,20212,"3,388",34,"3,203",2,15,2,0,118,14
+Siraha,Siraha Municipality,524 2 16 3 008,20217,"15,477","1,478","13,453",22,29,5,1,373,116
+Siraha,Sukhipur Municipality,524 2 16 3 007,20210,"6,734",18,"6,544",11,82,1,1,52,25
+Solukhumbu,Dhudha Koushika Gaunpalika,524 1 11 4 006,10305,"4,240","3,653",0,22,133,334,76,11,11
+Solukhumbu,Dhudhakoshi Gaunpalika,524 1 11 4 004,10304,"2,803","2,490",1,12,64,178,53,1,4
+Solukhumbu,Khumbu Pasanglhamu Gaunpalika,524 1 11 4 001,10301,"2,433","2,130",0,3,32,170,95,0,3
+Solukhumbu,Likhu Pike Gaunpalika,524 1 11 4 003,10308,"1,168",938,0,4,82,88,47,7,2
+Solukhumbu,Mahakulung Gaunpalika,524 1 11 4 002,10302,"2,450","2,097",0,14,78,244,14,2,1
+Solukhumbu,Necha Salyan Gaunpalika,524 1 11 4 005,10306,"3,636","3,278",0,6,124,175,46,2,5
+Solukhumbu,Solu Dhudhakunda Municipality,524 1 11 3 001,10307,"4,980","4,676",0,12,67,133,74,1,17
+Solukhumbu,Sotang Gaunpalika,524 1 11 4 007,10303,"2,048","1,840",0,18,102,71,10,1,6
+Sunsari,Baraha Municipality,524 1 06 3 001,11302,"17,552","2,756","13,367",303,535,91,152,271,77
+Sunsari,Barju Gaunpalika,524 1 06 4 006,11312,"6,253",65,"6,131",3,25,4,0,6,19
+Sunsari,Bhokraha Gaunpalika,524 1 06 4 002,11304,"6,798",62,"6,588",5,37,6,1,81,18
+Sunsari,Dewangunj Gaunpalika,524 1 06 4 005,11311,"6,361",58,"6,219",12,30,6,1,22,13
+Sunsari,Dharan Sub-Metropolitian City,524 1 06 2 001,11301,"32,693","30,678",58,94,188,375,117,958,225
+Sunsari,Duhabi Municipality,524 1 06 3 004,11307,"11,893","1,329","10,392",17,26,10,4,39,76
+Sunsari,Gadhi Gaunpalika,524 1 06 4 003,11308,"7,039",26,"6,876",6,25,4,0,61,41
+Sunsari,Harinagara Gaunpalika,524 1 06 4 004,11310,"6,842",44,"6,664",13,41,7,1,49,23
+Sunsari,Inaruwa Municipality,524 1 06 3 003,11309,"13,020",939,"11,868",34,25,6,2,109,37
+Sunsari,Itahari Sub-Metropolitian City,524 1 06 2 002,11306,"33,794","10,443","22,379",138,98,278,14,215,229
+Sunsari,Koshi Gaunpalika,524 1 06 4 001,11303,"8,543",30,"8,302",6,19,6,2,149,29
+Sunsari,Ramdhuni Municipality,524 1 06 3 002,11305,"11,491",374,"10,823",29,93,80,2,43,47
+Surkhet,Barahatal Gaunpalika,524 6 59 4 002,61007,"5,448","2,186",67,127,744,"1,531",768,0,25
+Surkhet,Bheriganga Municipality,524 6 59 3 002,61005,"8,825","3,523",26,179,"1,915","2,575",560,8,39
+Surkhet,Birendranagar Municipality,524 6 59 3 003,61006,"23,710","17,086","1,053","1,783","1,939",927,92,686,144
+Surkhet,Chaukune Gaunpalika,524 6 59 4 001,61009,"4,608","1,442",89,94,660,"1,752",480,46,45
+Surkhet,Chingad Gaunpalika,524 6 59 4 003,61002,"2,923","2,235",2,16,114,477,50,10,19
+Surkhet,Gurbhakot Municipality,524 6 59 3 005,61004,"9,572","6,061",41,182,648,"2,037",538,14,51
+Surkhet,Lekabeshi Municipality,524 6 59 3 004,61003,"6,346","5,187",4,12,128,724,216,27,48
+Surkhet,Panchapuri Municipality,524 6 59 3 001,61008,"6,304","3,978",25,92,394,"1,576",178,8,53
+Surkhet,Simta Gaunpalika,524 6 59 4 004,61001,"5,094","2,678",8,70,97,"1,785",420,5,31
+Syangja,Aandhikhola Gaunpalika,524 4 41 4 001,40903,"4,125","3,681",3,38,123,265,10,1,4
+Syangja,Arjun Choupari Gaunpalika,524 4 41 4 003,40904,"3,938","3,585",5,24,119,173,16,5,11
+Syangja,Bhirkot Municipaity,524 4 41 3 002,40905,"6,083","5,337",5,121,207,385,10,4,14
+Syangja,Biruwa Gaunpalika,524 4 41 4 004,40906,"4,305","3,530",2,70,111,495,81,0,16
+Syangja,Chapakot Municipality,524 4 41 3 005,40908,"5,934","4,463",29,169,530,683,36,10,14
+Syangja,Galyang Municipality,524 4 41 3 003,40910,"8,275","6,761",5,236,731,447,54,28,13
+Syangja,Harinas Gaunpalika,524 4 41 4 005,40907,"3,906","2,957",9,181,481,246,12,0,20
+Syangja,Kaligandaki Gaunpalika,524 4 41 4 006,40911,"4,972","3,309",7,608,612,371,58,0,7
+Syangja,Phedikhola Gaunpalika,524 4 41 4 002,40902,"3,254","2,919",1,77,230,10,12,2,3
+Syangja,Putalibazar Municipality,524 4 41 3 001,40901,"11,882","11,019",10,101,327,352,42,14,17
+Syangja,Walling Municipality,524 4 41 3 004,40909,"12,182","9,366",8,"1,070",446,"1,165",74,2,51
+Tanahu,Aanbu Khaireni Gaunpalika,524 4 40 4 005,40710,"4,911","4,576",32,14,94,88,85,8,14
+Tanahu,Bandipur Gaunpalika,524 4 40 4 004,40709,"4,853","4,128",11,55,399,185,44,2,29
+Tanahu,Bhanu Municipality,524 4 40 3 003,40701,"12,095","8,006",86,858,"1,499","1,490",64,5,87
+Tanahu,Bhimad Municipality,524 4 40 3 004,40705,"7,488","5,010",8,299,980,"1,086",11,2,92
+Tanahu,Byas Municipality,524 4 40 3 002,40702,"18,339","14,449",32,"1,145","1,893",642,54,20,104
+Tanahu,Devghat Gaunpalika,524 4 40 4 006,40708,"3,435","3,095",3,46,113,104,49,6,19
+Tanahu,Ghiring Gaunpalika,524 4 40 4 002,40706,"4,137","2,226",7,403,"1,285",196,2,4,14
+Tanahu,Myagde Gaunpalika,524 4 40 4 001,40703,"5,628","3,746",17,330,979,452,79,4,21
+Tanahu,Rhishing Gaunpalika,524 4 40 4 003,40707,"5,215","2,848",5,720,"1,275",331,12,4,20
+Tanahu,Shuklagandaki Municipality,524 4 40 3 001,40704,"12,185","10,604",10,456,667,371,26,23,28
