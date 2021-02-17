@@ -867,7 +867,7 @@ class FiveList(LoginRequiredMixin, ListView):
                 'projectdata': projectdata,
                 'provincedata': provincedata,
                 'municipalitydata': municipalitydata,
-                'districtdata': districtdata
+                'districtdata': districtdata,
 
             }
             return data
@@ -926,6 +926,12 @@ class FiveList(LoginRequiredMixin, ListView):
             data['province'] = province
             data['district'] = district
             data['gapanapa'] = gapanapa
+            # data['partnerdata'] = partnerdata
+            # data['programdata'] = programdata
+            # data['projectdata'] = projectdata
+            # data['provincedata'] = provincedata
+            # data['municipalitydata'] = municipalitydata
+            # data['districtdata'] = districtdata
             data['active'] = 'five'
             data['five'] = five
             return data

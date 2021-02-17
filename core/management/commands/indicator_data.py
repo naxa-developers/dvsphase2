@@ -30,7 +30,6 @@ class Command(BaseCommand):
                     'HLCIT_CODE', 'Province', 'province', 'Palika',
                     'palika', 'CBS_Code', 'District ', 'code', 'cbs code']
         try:
-
             for col in df_col_list:
                 if not col in not_cols:
                     indicator_value = [

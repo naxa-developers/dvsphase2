@@ -41,7 +41,7 @@
                     <div class="col" style="padding-left:5px;padding-right:5px;">
                         <select id="multi_select_partner" placeholder="Partner" name='partner' multiple="multiple">
                             {% for partner in partner %}
-                                <option value="{{partner.id}}">{{partner.name}}</option>
+                                <option value="{{partner.id}}" >{{partner.name}}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -84,7 +84,7 @@
                     <div class="col">
                         <div class="row">
                             <button type="submit" class="btn btn-primary" style="margin-right:1px;height: 25px;display:flex;justify-content:center;align-items:center;">Search</button>
-                            <button type="submit" class="btn btn-secondary" style="margin-left:1px;height: 25px;display:flex;justify-content:center;align-items:center;">Reset</button>
+                            <button type="button" id="reset-btn" class="btn btn-secondary" style="margin-left:1px;height: 25px;display:flex;justify-content:center;align-items:center;">Reset</button>
                         </div>
 
                     </div>
@@ -224,15 +224,52 @@
 {% endblock %}
 {% block script %}
 <script>
+    function selectFunction(id, data) {
+        $(id).multipleSelect({
+            selectAll: false,
+            styler: function(row) {
+                for(var i=0;i<data.length;i++) {
+                    if (data[i] == row.value) {
+                        row.selected = true;
+                    }
+                }
+                console.log(row.type)
+                return row
+            }
+        });
+    }
+</script>
+<script>
     $(function() {
-      $('select').multipleSelect({
-          selectAll: false
-      })
+        var partnerData = [{% for dat in partnerdata %}'{{dat}}', {%endfor%}];
+        var programData = [{% for dat in programdata %}'{{dat}}', {%endfor%}];
+        var projectData = [{% for dat in projectdata %}'{{dat}}', {%endfor%}];
+        var provinceData = [{% for dat in provincedata %}'{{dat}}', {%endfor%}];
+        var districtData = [{% for dat in districtdata %}'{{dat}}', {%endfor%}];
+        var municipalityData = [{% for dat in municipalitydata %}'{{dat}}', {%endfor%}];
+        console.log(municipalityData)
+        selectFunction('#multi_select_partner', partnerData);
+        selectFunction('#multi_select_program', programData);
+        selectFunction('#multi_select_project', projectData);
+        selectFunction('#multi_select_province', provinceData);
+        selectFunction('#multi_select_district', districtData);
+        selectFunction('#multi_select_gapanapa', municipalityData);
+        var flag = true;
+        if(flag) {
+            multiChangeFunction($('#multi_select_program').val(), '#multi_select_project');
+            multiChangeFunction($('#multi_select_province').val(), '#multi_select_district');
+            multiChangeFunction_one($('#multi_select_district').val(), '#multi_select_gapanapa');
+            flag = false;
+        };
+
+
+
     })
 </script>
 <script>
     function multiChangeFunction(change_value, to_be_changed_id) {
         $(to_be_changed_id).multipleSelect('uncheckAll');
+        $(to_be_changed_id).multipleSelect('refresh')
         $(to_be_changed_id + ' option').each(function() {
             if(change_value.length > 0) {
                 $(this).prop('disabled', true)
@@ -262,7 +299,7 @@
             $(to_be_changed_id + ' option').each(function() {
                 for(var j=0;j<=change_value.length;j++) {
                     if ($(this).attr('valId') == change_value[j]) {
-                        $('#multi_select_gapanapa').append($('<option>').attr('value', $(this).attr('value')).attr('valId', $(this).attr('valId')).text($(this).text()))
+                        $('#multi_select_gapanapa').append($('<option>').attr('value', $(this).val()).attr('valId', $(this).attr('valId')).text($(this).text()))
                     };
                 };
             });
@@ -270,21 +307,21 @@
         }
         
         $(to_be_changed_id).multipleSelect('refresh');
-        // $('.ms-drop ul>li:has(label.disabled)').hide();
+        console.log($('#multi_select_gapanapa').val())
+
     }
 </script>
 <script>
     $(document).ready(function() {
+
         $('#multi_select_program').change(function(e) {
             e.preventDefault();
             multiChangeFunction($(this).val(), '#multi_select_project')
-
         });
         $('#multi_select_province').change(function(e) {
             e.preventDefault();
             multiChangeFunction($(this).val(), '#multi_select_district')
-
-        });
+x        });
         $('#multi_select_district').change(function(e) {
             e.preventDefault();
             multiChangeFunction_one($(this).val(), '#multi_select_gapanapa')
@@ -292,10 +329,11 @@
         });
         $('#reset-btn').click(function(e) {
             e.preventDefault();
-            $('select').multipleSelect('uncheckAll');
-           
+            location.href = (window.location.href).split('?')[0]
+
         });
-        
     });
 </script>
+
+
 {% endblock %}
