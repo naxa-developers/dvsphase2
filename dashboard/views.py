@@ -2123,6 +2123,24 @@ class ProvinceUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
+class PalikaUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = GapaNapa
+    template_name = 'palika_edit.html'
+    form_class = PalikaCreateForm
+    success_message = 'Palika successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(PalilkaUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['province'] = Province.objects.order_by('id')
+        data['active'] = 'location'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('palika-list')
+
 
 class DistrictUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = District
