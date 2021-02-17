@@ -104,13 +104,71 @@
                         <div class="form-group ">
                             <label for="id_type_of_institution" class="">Type Of Institution</label>
                             <select name="type_of_institution">
-                                {% for partner in partner %}
-                                {% if partner.type_of_institution == form.instance.type_of_institution %}
-                                    <option value="{{partner.type_of_institution}}" selected>{{partner.type_of_institution}}</option>
-                                {% else %}
-                                    <option value="{{partner.type_of_institution}}">{{partner.type_of_institution}}</option>
-                                {% endif %}
-                                {% endfor %}
+                                    {% if form.instance.type_of_institution == 'Academic, Training and Research' %}
+                                    <option value="Academic, Training and Research" selected>Academic, Training and Research</option>
+                                    <option value="Intergovernmental Organization">Intergovernmental Organization</option>
+                                    <option value="Private Sector">Private Sector</option>
+                                    <option value="Multilateral">Multilateral</option>
+                                    <option value="National NGO">National NGO</option>
+                                    <option value="International NGO">International NGO</option>
+                                    <option value="Government">Government</option>
+                                    {% elif form.instance.type_of_institution == 'Intergovernmental Organization' %}
+                                    <option value="Academic, Training and Research">Academic, Training and Research</option>
+                                    <option value="Intergovernmental Organization" selected>Intergovernmental Organization</option>
+                                    <option value="Private Sector">Private Sector</option>
+                                    <option value="Multilateral">Multilateral</option>
+                                    <option value="National NGO">National NGO</option>
+                                    <option value="International NGO">International NGO</option>
+                                    <option value="Government">Government</option>
+                                    {% elif form.instance.type_of_institution == 'Private Sector' %}
+                                    <option value="Academic, Training and Research">Academic, Training and Research</option>
+                                    <option value="Intergovernmental Organization">Intergovernmental Organization</option>
+                                    <option value="Private Sector" selected>Private Sector</option>
+                                    <option value="Multilateral">Multilateral</option>
+                                    <option value="National NGO">National NGO</option>
+                                    <option value="International NGO">International NGO</option>
+                                    <option value="Government">Government</option>
+                                    {% elif form.instance.type_of_institution == 'Multilateral' %}
+                                    <option value="Academic, Training and Research">Academic, Training and Research</option>
+                                    <option value="Intergovernmental Organization">Intergovernmental Organization</option>
+                                    <option value="Private Sector">Private Sector</option>
+                                    <option value="Multilateral" selected>Multilateral</option>
+                                    <option value="National NGO">National NGO</option>
+                                    <option value="International NGO">International NGO</option>
+                                    <option value="Government">Government</option>
+                                    {% elif form.instance.type_of_institution == 'National NGO' %}
+                                    <option value="Academic, Training and Research">Academic, Training and Research</option>
+                                    <option value="Intergovernmental Organization">Intergovernmental Organization</option>
+                                    <option value="Private Sector">Private Sector</option>
+                                    <option value="Multilateral">Multilateral</option>
+                                    <option value="National NGO" selected>National NGO</option>
+                                    <option value="International NGO">International NGO</option>
+                                    <option value="Government">Government</option>
+                                    {% elif form.instance.type_of_institution == 'Government' %}
+                                    <option value="Academic, Training and Research">Academic, Training and Research</option>
+                                    <option value="Intergovernmental Organization">Intergovernmental Organization</option>
+                                    <option value="Private Sector">Private Sector</option>
+                                    <option value="Multilateral">Multilateral</option>
+                                    <option value="National NGO">National NGO</option>
+                                    <option value="International NGO">International NGO</option>
+                                    <option value="Government" selected>Government</option>
+                                    {% elif form.instance.type_of_institution == 'International NGO' %}
+                                    <option value="Academic, Training and Research">Academic, Training and Research</option>
+                                    <option value="Intergovernmental Organization">Intergovernmental Organization</option>
+                                    <option value="Private Sector">Private Sector</option>
+                                    <option value="Multilateral">Multilateral</option>
+                                    <option value="National NGO">National NGO</option>
+                                    <option value="International NGO" selected>International NGO</option>
+                                    <option value="Government">Government</option>
+                                    {% else %}
+                                    <option value="Academic, Training and Research">Academic, Training and Research</option>
+                                    <option value="Intergovernmental Organization">Intergovernmental Organization</option>
+                                    <option value="Private Sector">Private Sector</option>
+                                    <option value="Multilateral">Multilateral</option>
+                                    <option value="National NGO">National NGO</option>
+                                    <option value="International NGO">International NGO</option>
+                                    <option value="Government">Government</option>
+                                    {% endif %}
                             </select>
                     </div>
 
