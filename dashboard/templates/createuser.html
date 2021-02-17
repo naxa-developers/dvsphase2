@@ -81,6 +81,7 @@
                     <div class="form-group">
                         <label for="id_group">Select Role For User</label>
                         <select name="group" id="id_group" class="custom-select" required>
+                            <option value='' disabled selected>Select One</option>
                             {% for groups in group %}
                             <option value={{ groups.id }}>{{ groups }}</option>
                             {% endfor %}
@@ -90,6 +91,7 @@
                     <div class="form-group">
                         <label for="id_partner">Select Partner For User</label>
                         <select name="partner" id="id_partner" class="custom-select" required>
+                            <option value='' disabled selected>Select One</option>
                             {% for partner in partners %}
                             <option value={{ partner.id }}>{{ partner.name }}</option>
                             {% endfor %}
@@ -98,7 +100,9 @@
                     <div class="form-group">
                         <label for="id_program">Select Program For User</label>
                         <select name="program" id="id_program" class="custom-select" required>
+                            <option value='' disabled selected>Select One</option>
                             {% for program in programs %}
+
                             <option value={{ program.id }}>{{ program.name }}</option>
                             {% endfor %}
                         </select>
@@ -107,8 +111,9 @@
                     <div class="form-group">
                         <label for="id_project">Select Project For User</label>
                         <select name="project" id="id_project" class="custom-select" required>
+                            <option value='' disabled selected>Select One</option>
                             {% for project in projects %}
-                            <option value={{ project.id }}>{{ project.name }}</option>
+                            <option value={{ project.id }} valId="{{project.program_id.id}}">{{ project.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -127,6 +132,27 @@
         </div>
     </div>
 </div>
+<script src="{% static 'dashboard/js/jquery-3.4.1.min.js' %}"></script>
+<script>
+    function changefunction(change_value, to_be_changed_id) {
+        $(to_be_changed_id).each(function() {
+            $(this).css('display', 'none');
+        });
+        $(to_be_changed_id).each(function() {
+            if ($(this).attr('valId') == change_value) {
+                $(this).css('display', 'block');
+            };
+        });
+    };
+</script>
+<script>
+ $(document).ready(function() {
+    $('#id_program').change(function(e) {
+        e.preventDefault();
+        changefunction($(this).val(), '#id_project option')
+    });
+});
+</script>
 
 
 </body>
