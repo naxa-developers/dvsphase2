@@ -1,3 +1,9 @@
+from django.core.management.base import BaseCommand
+import pandas as pd
+from core.models import Indicator, IndicatorValue, GapaNapa, District
+from django.core.exceptions import ObjectDoesNotExist
+
+
 class Command(BaseCommand):
     help = 'load province data from province.xlsx file'
 
