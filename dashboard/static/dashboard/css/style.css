@@ -1962,7 +1962,8 @@ ul.pagination {
 .ls-toggle-menu .slimScrollDiv {
   overflow: visible !important; }
 .ls-toggle-menu .sidebar {
-  width: 50px; }
+  width: 50px;
+  overflow-x: hidden; }
   .ls-toggle-menu .sidebar .user-info .image {
     padding: 8px !important; }
     .ls-toggle-menu .sidebar .user-info .image img {
