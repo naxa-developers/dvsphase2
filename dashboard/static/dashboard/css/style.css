@@ -1670,18 +1670,30 @@ button {
 .dataTables_paginate {
   margin-top: 2rem; }
 
-.dataTables_filter label input.form-control {
-  border: 1px solid #e8e8e8;
-  color: #B6B6B6;
-  font-size: .875rem;
-  font-family: "Montserrat", sans-serif;
-  -webkit-outline: none;
-  outline: none; }
-  .dataTables_filter label input.form-control:focus {
+.dataTables_length {
+  display: inline-block; }
+  .dataTables_length label {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; }
+    .dataTables_length label select {
+      margin: 0 .6125rem; }
+
+.dataTables_filter {
+  float: right;
+  margin-right: 10px; }
+  .dataTables_filter label input.form-control {
+    border: 1px solid #e8e8e8;
+    color: #B6B6B6;
+    font-size: .875rem;
+    font-family: "Montserrat", sans-serif;
     -webkit-outline: none;
-    outline: none;
-    box-shadow: none;
-    background-color: #E6E9F3; }
+    outline: none; }
+    .dataTables_filter label input.form-control:focus {
+      -webkit-outline: none;
+      outline: none;
+      box-shadow: none;
+      background-color: #E6E9F3; }
 
 .project_list {
   padding: 30px;
@@ -1980,7 +1992,7 @@ ul.pagination {
       .ls-toggle-menu .sidebar .menu .list li.submenu {
         background: #010d1d; }
         .ls-toggle-menu .sidebar .menu .list li.submenu .ml-menu {
-          display: block !important; }
+          display: block; }
           .ls-toggle-menu .sidebar .menu .list li.submenu .ml-menu li a {
             text-align: left;
             justify-content: flex-start; }

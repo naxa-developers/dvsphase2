@@ -229,7 +229,24 @@
     margin-top: 2rem;
 }
 
+.dataTables_length {
+    display: inline-block;
+
+    label {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        select {
+            margin: 0 .6125rem;
+        }
+    }
+}
+
 .dataTables_filter {
+    float: right;
+    margin-right: 10px;
+
     label {
         input.form-control {
             border: 1px solid darken($color-bg, 5%);

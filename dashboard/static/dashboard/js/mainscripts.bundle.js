@@ -3,7 +3,7 @@ var $winHt = $(window).height(),
   $breadcrumbHt = $('.dfid-breadcrumb').height(),
   $tableHt = $winHt - ($headHt + $breadcrumbHt);
 function tableScroll() {
-  $('.scroll-table').css({ 'max-height': $tableHt - 180 });
+  $('.scroll-table').css({ 'max-height': $tableHt - 250 });
 }
 tableScroll();
 function CustomScrollbar() {
