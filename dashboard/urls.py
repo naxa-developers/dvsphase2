@@ -81,6 +81,7 @@ urlpatterns = [
     path('district-list/', views.DistrictList.as_view(), name='district-list'),
     path('district-add/', views.DistrictCreate.as_view(), name='district-add'),
     path('district-edit/<int:pk>', views.DistrictUpdate.as_view(), name='district-edit'),
+    path('palika-edit/<int:pk>', views.PalilkaUpdate.as_view(), name='palika-edit'),
     path('district-delete/<int:pk>', views.DistrictDelete.as_view(), name='district-delete'),
 
     path('palika-list/', views.PalikaList.as_view(), name='palika-list'),
