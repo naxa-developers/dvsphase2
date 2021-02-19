@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Partner, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
     IndicatorValue, Sector, SubSector, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
-    Filter, NepalSummary
+    Filter, NepalSummary,FeedbackForm
 
 
 class NepalSummarySerializer(serializers.ModelSerializer):
@@ -343,3 +343,8 @@ class TravelTimeSerializer(serializers.ModelSerializer):
 
     def get_geography(self, obj):
         return str(obj.gapanapa.geography)
+
+class FeedbackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FeedbackForm
+        fields = '__all__'

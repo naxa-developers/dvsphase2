@@ -33,4 +33,5 @@ urlpatterns = [
     path('sankey-region/', views.RegionSankey.as_view({'get': 'list'}), name='region-region'),
     path('covid-fields/', views.CovidChoice.as_view({'get': 'list'}), name='covid-fields'),
     path('popup/', views.Popup.as_view({'get': 'list'}), name='popup'),
+    path('feedbackform', views.Feedback.as_view({'post': 'create'}), name='feedbackfrom')
 ]
