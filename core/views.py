@@ -1,12 +1,12 @@
 from .models import Partner, Program, MarkerValues, District, Province, GapaNapa, FiveW, Indicator, IndicatorValue, \
     Sector, SubSector, MarkerCategory, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
-    NepalSummary
+    NepalSummary, FeedbackForm
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import PartnerSerializer, ProgramSerializer, MarkerValuesSerializer, DistrictSerializer, \
     ProvinceSerializer, GaanapaSerializer, FivewSerializer, \
     IndicatorSerializer, IndicatorValueSerializer, SectorSerializer, SubsectorSerializer, MarkerCategorySerializer, \
     TravelTimeSerializer, GisLayerSerializer, ProjectSerializer, OutputSerializer, NotificationSerializer, \
-    ContractSumSerializer, NepalSummarySerializer
+    ContractSumSerializer, NepalSummarySerializer, FeedbackSerializer
 from rest_framework import viewsets, views
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
@@ -18,6 +18,7 @@ import json
 from django.db.models import Sum
 import math
 from django.db.models import Q
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 # Create your views here.
@@ -652,7 +653,8 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
             component = list(Project.objects.values_list('id', flat=True))
         for province in provinces:
             query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id').filter(
-                province_id=province['id'], program_id__in=program, component_id__in=component, supplier_id__in=supplier)
+                province_id=province['id'], program_id__in=program, component_id__in=component,
+                supplier_id__in=supplier)
 
             if request.GET.getlist('field'):
                 field = request.GET['field']
@@ -704,7 +706,6 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = FiveW.objects.all()
     serializer_class = FivewSerializer
-
 
     def list(self, request, *args, **kwargs):
         data = []
@@ -1080,7 +1081,9 @@ class Popup(viewsets.ReadOnlyModelViewSet):
         else:
             program = list(Program.objects.values_list('id', flat=True))
         query = FiveW.objects.values('allocated_budget', 'component_id', 'component_id__name', 'program_id',
-                                     'program_id__name', 'province_id').filter(program_id__in=program, supplier_id__in=supplier, component_id__in=component)
+                                     'program_id__name', 'province_id').filter(program_id__in=program,
+                                                                               supplier_id__in=supplier,
+                                                                               component_id__in=component)
         if request.GET.getlist('field'):
             field = request.GET['field']
             value = request.GET['value']
@@ -1148,3 +1151,16 @@ class Popup(viewsets.ReadOnlyModelViewSet):
             "programs": program_data
         }]
         return Response({"total_budget": total_budget, "programs": program_data})
+
+
+class Feedback(viewsets.ViewSet):
+    queryset = FeedbackForm.objects.all()
+    serializer_class = FeedbackSerializer
+    parser_classes = (MultiPartParser, FormParser)
+
+    def create(self, request, *args, **kwargs):
+        serializer = FeedbackSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
