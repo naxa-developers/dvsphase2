@@ -30,6 +30,7 @@
             <thead>
             <tr>
                 <th>Program</th>
+                <th>Partners</th>
                 <th>Code</th>
 <!--                <th>Assigned org.</th>-->
 <!--                <th>start date</th>-->
@@ -44,6 +45,11 @@
             <tr>
                 <td>
                     <strong><a href="#">{{program.name}}</a></strong>
+                </td>
+                <td>
+                    {% for data in program.partner_id.all %}
+                    <strong><a href="#">{{data.name}},</a></strong>
+                    {% endfor %}
                 </td>
                 <td>{{program.code}}</td>
 <!--                <td>-->

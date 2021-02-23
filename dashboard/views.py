@@ -561,8 +561,8 @@ def createuser(request, **kwargs):
         else:
             partner = Partner.objects.all()
             group = Group.objects.all()
-            programs = Program.objects.all()
-            projects = Project.objects.all()
+            programs = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
+            projects = Project.objects.values('id', 'name', 'program_id__id').order_by('name')
 
             return render(request, 'createuser.html',
                           {'form': form, 'partners': partner, 'group': group, 'programs': programs,
@@ -572,8 +572,8 @@ def createuser(request, **kwargs):
         form = UserCreationForm()
         partner = Partner.objects.all()
         group = Group.objects.all()
-        programs = Program.objects.all()
-        projects = Project.objects.all()
+        programs = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
+        projects = Project.objects.values('id', 'name', 'program_id__id').order_by('name')
         return render(request, 'createuser.html',
                       {'form': form, 'partners': partner, 'group': group, 'programs': programs,
                        'projects': projects})
@@ -594,8 +594,8 @@ def updateuser(request, id):
         test2.groups.add(group)
         return HttpResponseRedirect("/dashboard/user-list")
     partner = Partner.objects.all()
-    programs = Program.objects.all()
-    projects = Project.objects.all()
+    programs = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
+    projects = Project.objects.values('id', 'name', 'program_id__id').order_by('name')
     group = Group.objects.all()
     user = User.objects.all()
     context["form"] = form
@@ -820,7 +820,7 @@ class FiveList(LoginRequiredMixin, ListView):
                 # print(csv)
                 partner = Partner.objects.values('id', 'name').order_by('name')
                 project = Project.objects.values('id', 'program_id__id', 'name').order_by('name')
-                program = Program.objects.values('id', 'name').order_by('name')
+                program = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
                 province = Province.objects.values('id', 'name').order_by('name')
                 district = District.objects.values('id', 'province_id__id', 'name').order_by('name')
                 gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
@@ -830,7 +830,7 @@ class FiveList(LoginRequiredMixin, ListView):
                 dat_values = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata,
                                    group, user_data)
                 partner = Partner.objects.filter(id=user_data.partner.id).values('id', 'name').order_by('name')
-                program = Program.objects.filter(id=user_data.program.id).values('id', 'name').order_by('name')
+                program = Program.objects.filter(id=user_data.program.id).values('id', 'name', 'partner_id__id').order_by('name')
                 project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id',
                                                                                  'name').order_by('name')
                 province = Province.objects.values('id', 'name').order_by('name')
@@ -882,7 +882,7 @@ class FiveList(LoginRequiredMixin, ListView):
                                             'municipality_id__name', 'allocated_budget').order_by('id')
                 partner = Partner.objects.values('id', 'name').order_by('name')
                 project = Project.objects.values('id', 'program_id__id', 'name').order_by('name')
-                program = Program.objects.values('id', 'name').order_by('name')
+                program = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
                 province = Province.objects.values('id', 'name').order_by('name')
                 district = District.objects.values('id', 'province_id__id', 'name').order_by('name')
                 gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
@@ -897,7 +897,7 @@ class FiveList(LoginRequiredMixin, ListView):
                                                                                      'municipality_id__name',
                                                                                      'allocated_budget').order_by('id')
                 partner = Partner.objects.filter(id=user_data.partner.id).values('id', 'name').order_by('name')
-                program = Program.objects.filter(id=user_data.program.id).values('id', 'name').order_by('name')
+                program = Program.objects.filter(id=user_data.program.id).values('id', 'name', 'partner_id__id').order_by('name')
                 project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id',
                                                                                  'name').order_by('name')
                 province = Province.objects.values('id', 'name').order_by('name')
@@ -1217,6 +1217,10 @@ class ProgramCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         markers = MarkerCategory.objects.all().prefetch_related('MarkerCategory').order_by('id')
+        partners = Partner.objects.filter()
+        sectors = Sector.objects.all().prefetch_related('Sector').order_by('id')
+        data['sectors'] = sectors
+        data['partners'] = partners
         data['markers'] = markers
         data['user'] = user_data
         data['active'] = 'program'
@@ -1377,7 +1381,7 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
             partner = Partner.objects.filter(id=user_data.partner.id).order_by('id')
 
         all_partner = Partner.objects.order_by('id')
-        program = Program.objects.values('id', 'name').order_by('id')
+        program = Program.objects.values('id', 'name', 'partner_id__id').order_by('id')
         project = Project.objects.values('id', 'name', 'program_id__id').order_by('id')
         province = Province.objects.values('id', 'name').order_by('id')
         district = District.objects.values('id', 'name', 'province_id__id').order_by('id')
@@ -1728,15 +1732,45 @@ class ProgramUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         marker_list = Program.objects.filter(id=self.kwargs['pk']).values_list('marker_category', flat=True)
-
         if (marker_list[0] == None):
             filter_marker = MarkerCategory.objects.order_by('id')
         else:
             filter_marker = MarkerCategory.objects.exclude(id__in=marker_list)
+        sector_list = Program.objects.filter(id=self.kwargs['pk']).values_list('sector', flat=True)
 
+        if (sector_list[0] == None):
+            filter_sector = Sector.objects.order_by('id')
+
+        else:
+            filter_sector = Sector.objects.exclude(id__in=sector_list)
+
+        data['sectors'] = filter_sector
         data['markers'] = filter_marker
         data['user'] = user_data
         data['active'] = 'program'
+
+        #program = Program.objects.get(id=self.kwargs['pk'])
+        partners = Partner.objects.order_by('id')
+        # datatoselect = []
+        # datanottoselect = []
+        # for data in partners:
+        #     for data1 in program.partner_id.all():
+        #         if data.id == data1.id:
+        #             datatoselect.append(data1)
+        # # # datatoselect = set(datatoselect)
+        # # for test in partners:
+        # #     if test.name not in datatoselect:
+        # #         datanottoselect.append(test)
+        # # # datanottoselect = set(datanottoselect)
+        # # print("datatoselect")
+        # # print(datatoselect)
+        # # print("datanottoselect")
+        # # print(datanottoselect)
+        # #
+        # # # data['datatoselect'] = datatoselect
+        # # # data['datanottoselect'] = datanottoselect
+        data['partners'] = partners
+        # data['programs'] = program
         return data
 
     def get_success_url(self):
@@ -1893,11 +1927,11 @@ class FiveUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         data = super(FiveUpdate, self).get_context_data(**kwargs)
         user = self.request.user
         partner = Partner.objects.values('id', 'name').order_by('id')
-        program = Program.objects.values('id', 'name').order_by('id')
+        program = Program.objects.values('id', 'name', 'partner_id__id').order_by('id')
         province = Province.objects.values('id', 'name').order_by('id')
-        project = Project.objects.values('id', 'name').order_by('id')
-        district = District.objects.values('id', 'name').order_by('id')
-        municipality = GapaNapa.objects.values('id', 'name').order_by('id')
+        project = Project.objects.values('id', 'name', 'program_id__id').order_by('id')
+        district = District.objects.values('id', 'name', 'province_id__id').order_by('id')
+        municipality = GapaNapa.objects.values('id', 'name', 'district_id__id').order_by('id')
         contact = PartnerContact.objects.all().order_by('id')
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
@@ -2122,6 +2156,7 @@ class ProvinceUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         message = "Province" + self.object.name + "  has been edited by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
+
 
 class PalikaUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = GapaNapa

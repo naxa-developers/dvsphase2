@@ -93,7 +93,7 @@
                         <select name="partner" id="id_partner" class="custom-select" required>
                             <option value='' disabled selected>Select One</option>
                             {% for partner in partners %}
-                            <option value={{ partner.id }}>{{ partner.name }}</option>
+                            <option value='{{ partner.id }}'>{{ partner.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -103,7 +103,7 @@
                             <option value='' disabled selected>Select One</option>
                             {% for program in programs %}
 
-                            <option value={{ program.id }}>{{ program.name }}</option>
+                            <option value='{{ program.id }}' valId="{{ program.partner_id__id }}">{{ program.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -113,7 +113,7 @@
                         <select name="project" id="id_project" class="custom-select" required>
                             <option value='' disabled selected>Select One</option>
                             {% for project in projects %}
-                            <option value={{ project.id }} valId="{{project.program_id.id}}">{{ project.name }}</option>
+                            <option value='{{ project.id }}' valId="{{ project.program_id.id }}">{{ project.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -135,10 +135,14 @@
 <script src="{% static 'dashboard/js/jquery-3.4.1.min.js' %}"></script>
 <script>
     function changefunction(change_value, to_be_changed_id) {
-        $(to_be_changed_id).each(function() {
+
+        $(to_be_changed_id + ' option').each(function() {
             $(this).css('display', 'none');
+            if ($(this).val() == '') {
+                $(this).prop('selected', true)
+            }
         });
-        $(to_be_changed_id).each(function() {
+        $(to_be_changed_id + ' option').each(function() {
             if ($(this).attr('valId') == change_value) {
                 $(this).css('display', 'block');
             };
@@ -147,9 +151,13 @@
 </script>
 <script>
  $(document).ready(function() {
+    $('#id_partner').change(function(e) {
+        e.preventDefault();
+        changefunction($(this).val(), '#id_program')
+    });
     $('#id_program').change(function(e) {
         e.preventDefault();
-        changefunction($(this).val(), '#id_project option')
+        changefunction($(this).val(), '#id_project')
     });
 });
 </script>

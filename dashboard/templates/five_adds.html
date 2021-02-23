@@ -73,7 +73,7 @@
                                                 <option value='' disabled selected>Select One</option>
                                                 {% for program in programs %}
 
-                                                <option value="{{program.id}}">{{program.name}}</option>
+                                                <option value="{{program.id}}" valId="{{program.partner_id__id}}">{{program.name}}</option>
 
 
                                                 {% endfor %}
@@ -459,6 +459,10 @@
 <script>
     
     $(document).ready(function() {
+        $('#id_supplier_id').change(function(e) {
+            e.preventDefault();
+            changefunction($(this).val(), '#id_program_id option')
+        });
         $('#id_program_id').change(function(e) {
             e.preventDefault();
             changefunction($(this).val(), '#id_component_id option')
