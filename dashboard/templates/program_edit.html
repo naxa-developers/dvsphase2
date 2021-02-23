@@ -39,15 +39,9 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_partner_id">Select Partners</label>
-                        <select name="partner_id" id="id_partner_id"  multiple="multiple">
+                        <select name="partner_id" id="id_partner_id" placeholder="Select Partners"  multiple="multiple">
                             {% for data in partners %}
-                            {% for data1 in form.instance.partner_id.all %}
-                            {% if data.id == data1.id %}
-                            <option value="{{data.id}}" selected>{{data.name}}</option>
-                            {% elif data.id != data1.id %}
                             <option value="{{data.id}}">{{data.name}}</option>
-                            {% endif %}
-                            {% endfor %}
                             {% endfor %}
                         </select>
                     </div>
