@@ -19,6 +19,7 @@ class Command(BaseCommand):
         try:
             prog = [
                 Program(
+                    partner_id=(df['PARTNER CODE'][row]),
                     name=(df['PROGRAMME NAME'][row]),
                     code=df['Programme Code'][row],
                     total_budget=df['BUDGET (£)'][row],

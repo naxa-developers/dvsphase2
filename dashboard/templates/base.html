@@ -51,6 +51,16 @@
                     <a href="/dashboard/main/" class="active-red"><i
                             class="material-icons">dashboard</i><span>Dashboard</span></a>
                 </li>
+                {% if perms.core.view_partner %}
+                {% if active == 'partner' %}
+                <li class="menu-item submenu active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="/dashboard/partner-list/" class="active-red">
+                        <i class="material-icons">person</i><span>partners</span></a>
+                </li>
+                {% endif %}
 
                 {% if perms.core.view_program %}
                 {% if active == 'program' %}
@@ -75,16 +85,6 @@
                 </li>
                 {% endif %}
 
-                {% if perms.core.view_partner %}
-                {% if active == 'partner' %}
-                <li class="menu-item submenu active">
-                    {% else %}
-                <li class="menu-item">
-                    {% endif %}
-                    <a href="/dashboard/partner-list/" class="active-red">
-                        <i class="material-icons">person</i><span>partners</span></a>
-                </li>
-                {% endif %}
 
                 {% if perms.core.view_fivew %}
                 {% if active == 'five' %}
@@ -96,13 +96,13 @@
                         <i class="material-icons">table</i><span>Five W</span></a>
                 </li>
                 {% endif %}
-
                 {% if perms.core.view_sector or perms.core.view_subsector %}
                 {% if active == 'sector' %}
                 <li class="menu-item active submenu">
                     {% else %}
                 <li class="menu-item submenu">
                     {% endif %}
+
                     <a href="javascript:void(0);" class="menu-toggle active-red"><i
                             class="material-icons">category</i><span>Sectors</span></a>
                     <ul class="ml-menu">
@@ -135,8 +135,6 @@
                     </ul>
                 </li>
                 {% endif %}
-
-
                 {% if perms.core.view_indicator %}
                 {% if active == 'indicator' %}
                 <li class="menu-item active submenu">
@@ -347,6 +345,9 @@
     function changefunction(change_value, to_be_changed_id) {
         $(to_be_changed_id).each(function() {
             $(this).css('display', 'none');
+            if ($(this).val() == '') {
+                $(this).prop('selected', true)
+            }
         });
         $(to_be_changed_id).each(function() {
             if ($(this).attr('valId') == change_value) {
