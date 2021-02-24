@@ -1236,7 +1236,6 @@ class ProgramCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
-
 class PartnerCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Partner
     template_name = 'partner_add.html'
