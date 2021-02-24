@@ -148,9 +148,29 @@
             };
         });
     };
+
+    function changeonefunction(change_value, to_be_changed_id) {
+        var dataValue = [];
+        $(to_be_changed_id + ' option').each(function() {
+            $(this).css('display', 'none');
+            if ($(this).attr('valId') == change_value) {
+                $(this).css('display', 'block');
+            };
+            if(dataValue.includes($(this).val())) {
+                $(this).css('display', 'none');
+            };
+            dataValue.push($(this).val());
+        });
+    };
 </script>
 <script>
  $(document).ready(function() {
+    var flag = true;
+    if (flag) {
+        changeonefunction($('#id_partner').val(), '#id_program');
+        changeonefunction($('#id_program').val(), '#id_project');
+        flag = false;
+    }
     $('#id_partner').change(function(e) {
         e.preventDefault();
         changefunction($(this).val(), '#id_program')
