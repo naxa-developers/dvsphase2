@@ -13,8 +13,6 @@
     </div>
     <!-- program form -->
     <form class="program-form" method="POST">
-
-
         {% csrf_token %}
 
          {% if form.errors %}
@@ -100,7 +98,7 @@
             <div class="row">
                 <div class="col-md-2">
                     <div class="form-group ">
-                        <label for="id_total_budget" class="">Total Budget</label>
+                        <label for="id_total_budget" class="">Total Approved Budget</label>
                         <input class="form-control" type="number" name="total_budget" step="any" id="id_total_budget"
                                placeholder="e.g. GBP 89413" value="{{ form.instance.total_budget }}"/>
                     </div>
@@ -395,8 +393,26 @@
 {% block script %}
 <script>
     $(document).ready(function() {
-        $('#id_partner_id').multipleSelect()
-        console.log("test")
+        var flag = true;
+        if (flag) {
+            var dat = [{% for x in form.instance.partner_id.all %}'{{x.id}}', {% endfor %}];
+            $('#id_partner_id').multipleSelect({
+                styler: function(row) {
+                    if (dat.length > 0) {
+                        for(var i=0;i<dat.length;i++) {
+                            if (row.value == dat[i]) {
+                                row.selected = true
+                            }
+                        }
+                        return row
+                    }
+                }
+            })
+            flag = false;
+
+        };
+
+
     })
 </script>
 {% endblock %}

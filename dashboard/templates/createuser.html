@@ -151,6 +151,17 @@
 </script>
 <script>
  $(document).ready(function() {
+    var flag = true;
+    if (flag) {
+        var dataValue = [];
+        $('#id_program option').each(function() {
+            if(dataValue.includes($(this).val())) {
+                $(this).css('display', 'none');
+            };
+            dataValue.push($(this).val());
+        });
+        flag = false;
+    }
     $('#id_partner').change(function(e) {
         e.preventDefault();
         changefunction($(this).val(), '#id_program')

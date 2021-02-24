@@ -342,7 +342,7 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"></script> -->
 <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
 <script>
-    function changefunction(change_value, to_be_changed_id) {
+    function changefunc(change_value, to_be_changed_id) {
         $(to_be_changed_id).each(function() {
             $(this).css('display', 'none');
             if ($(this).val() == '') {
@@ -355,6 +355,7 @@
             };
         });
     };
+
 </script>
 {% block script %}
 {% endblock %}

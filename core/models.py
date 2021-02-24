@@ -213,6 +213,7 @@ class Project(models.Model):
     sector = models.ManyToManyField(Sector, related_name='Psector', blank=True)
     sub_sector = models.ManyToManyField(SubSector, related_name='SubSector', blank=True)
     component_acronym = models.CharField(max_length=1500, blank=True, null=True)
+    approved_budget = models.FloatField(blank=True, null=True)
 
     def __str__(self):
         return self.name

@@ -527,22 +527,43 @@
 <script>
 
     $(document).ready(function() {
+        var flag = true;
+        if (flag) {
+            var dataValue = [];
+            changeonefunc($('#id_supplier_id').val(), '#id_program_id')
+            changeonefunc($('#id_program_id').val(), '#id_component_id')
+            flag = false;
+        }
         $('#id_supplier_id').change(function(e) {
             e.preventDefault();
-            changefunction($(this).val(), '#id_program_id option')
+            changefunc($(this).val(), '#id_program_id option')
         });
         $('#id_program_id').change(function(e) {
             e.preventDefault();
-            changefunction($(this).val(), '#id_component_id option')
+            changefunc($(this).val(), '#id_component_id option')
         });
         $('#id_province_id').change(function(e) {
             e.preventDefault();
-            changefunction($(this).val(), '#id_district_id option')
+            changefunc($(this).val(), '#id_district_id option')
         });
         $('#id_district_id').change(function(e) {
             e.preventDefault();
-            changefunction($(this).val(), '#id_municipality_id option')
+            changefunc($(this).val(), '#id_municipality_id option')
         });
+
+        function changeonefunc(change_value, to_be_changed_id) {
+        var dataValue = [];
+        $(to_be_changed_id + ' option').each(function() {
+            $(this).css('display', 'none');
+            if ($(this).attr('valId') == change_value) {
+                $(this).css('display', 'block');
+            };
+            if(dataValue.includes($(this).val())) {
+                $(this).css('display', 'none');
+            };
+            dataValue.push($(this).val());
+        });
+    };
     });
 </script>
 {% endblock %}

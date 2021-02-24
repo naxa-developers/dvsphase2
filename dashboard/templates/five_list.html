@@ -231,12 +231,12 @@
                 for(var i=0;i<data.length;i++) {
                     if (data[i] == row.value) {
                         row.selected = true;
-                    }
+                    };
                 }
-                console.log(row.type)
                 return row
             }
         });
+
     }
 </script>
 <script>
@@ -256,6 +256,7 @@
         selectFunction('#multi_select_gapanapa', municipalityData);
         var flag = true;
         if(flag) {
+            multiChangeFunction_multi($('#multi_select_partner').val(), '#multi_select_program');
             multiChangeFunction($('#multi_select_program').val(), '#multi_select_project');
             multiChangeFunction($('#multi_select_province').val(), '#multi_select_district');
             multiChangeFunction_one($('#multi_select_district').val(), '#multi_select_gapanapa');
@@ -280,9 +281,40 @@
         $(to_be_changed_id + ' option').each(function() {
             for(var j=0;j<=change_value.length;j++) {
                 if ($(this).attr('valId') == change_value[j]) {
-                    $(this).prop('disabled', false);
+                    if ($(this).is(':disabled')) {
+                        $(this).prop('disabled', false);
+                    }
                 };
             };
+        });
+        $(to_be_changed_id).multipleSelect('refresh');
+        $('.ms-drop ul>li:has(label.disabled)').hide();
+    }
+</script>
+<script>
+    function multiChangeFunction_multi(change_value, to_be_changed_id) {
+        $(to_be_changed_id).multipleSelect('uncheckAll');
+        $(to_be_changed_id).multipleSelect('refresh');
+        var dataValue = []
+        $(to_be_changed_id + ' option').each(function() {
+            if(change_value.length > 0) {
+                $(this).prop('disabled', true)
+            }else {
+                $(this).prop('disabled', false)
+            };
+        });
+        $(to_be_changed_id + ' option').each(function() {
+            for(var j=0;j<=change_value.length;j++) {
+                if ($(this).attr('valId') == change_value[j]) {
+                    if ($(this).is(':disabled')) {
+                        $(this).prop('disabled', false);
+                    }
+                };
+            };
+            if (dataValue.includes($(this).val())) {
+                $(this).prop('disabled', true);
+            }
+            dataValue.push($(this).val());
         });
         $(to_be_changed_id).multipleSelect('refresh');
         $('.ms-drop ul>li:has(label.disabled)').hide();
@@ -305,7 +337,7 @@
             });
             $('option[disabled]').remove();
         }
-        
+
         $(to_be_changed_id).multipleSelect('refresh');
         console.log($('#multi_select_gapanapa').val())
 
@@ -315,7 +347,11 @@
     $(document).ready(function() {
         $('#multi_select_partner').change(function(e) {
             e.preventDefault();
-            multiChangeFunction($(this).val(), '#multi_select_program')
+            if (($(this).val()).length > 0) {
+                multiChangeFunction($(this).val(), '#multi_select_program')
+            }else {
+                multiChangeFunction_multi($(this).val(), '#multi_select_program')
+            }
         });
         $('#multi_select_program').change(function(e) {
             e.preventDefault();
@@ -324,7 +360,7 @@
         $('#multi_select_province').change(function(e) {
             e.preventDefault();
             multiChangeFunction($(this).val(), '#multi_select_district')
-x        });
+        });
         $('#multi_select_district').change(function(e) {
             e.preventDefault();
             multiChangeFunction_one($(this).val(), '#multi_select_gapanapa')
