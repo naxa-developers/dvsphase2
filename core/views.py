@@ -537,6 +537,20 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         data = []
+        if request.GET.getlist('sector_id'):
+            sect = request.GET['sector_id']
+            sector = sect.split(",")
+            for i in range(0, len(sector)):
+                sector[i] = int(sector[i])
+        else:
+            sector = list(Sector.objects.values_list('id', flat=True))
+        if request.GET.getlist('sub_sector_id'):
+            subsect = request.GET['sub_sector_id']
+            sub_sector = subsect.split(",")
+            for i in range(0, len(sub_sector)):
+                sub_sector[i] = int(sub_sector[i])
+        else:
+            sub_sector = list(Sector.objects.values_list('id', flat=True))
         if request.GET.getlist('program_id'):
             prov = request.GET['program_id']
             program = prov.split(",")
@@ -575,7 +589,9 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
 
         for dist in districts:
             query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id').filter(
-                district_id=dist['id'], program_id__in=program, supplier_id__in=supplier, component_id__in=component)
+                district_id=dist['id'], program_id__in=program, supplier_id__in=supplier, component_id__in=component,
+                component_id__sector__id__in=sector,
+                component_id__sub_sector__id__in=sub_sector)
 
             if request.GET.getlist('field'):
                 field = request.GET['field']
@@ -623,7 +639,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
 
 class FiveWProvince(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
-    queryset = True
+    queryset = FiveW.objects.all()
     serializer_class = FivewSerializer
 
     def list(self, request, *args, **kwargs):
@@ -635,6 +651,20 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 program[i] = int(program[i])
         else:
             program = list(Program.objects.values_list('id', flat=True))
+        if request.GET.getlist('sector_id'):
+            sect = request.GET['sector_id']
+            sector = sect.split(",")
+            for i in range(0, len(sector)):
+                sector[i] = int(sector[i])
+        else:
+            sector = list(Sector.objects.values_list('id', flat=True))
+        if request.GET.getlist('sub_sector_id'):
+            subsect = request.GET['sub_sector_id']
+            sub_sector = subsect.split(",")
+            for i in range(0, len(sub_sector)):
+                sub_sector[i] = int(sub_sector[i])
+        else:
+            sub_sector = list(Sector.objects.values_list('id', flat=True))
         provinces = Province.objects.values('name', 'id', 'code').exclude(code='-1').order_by('id')
         if request.GET.getlist('supplier_id'):
             supp = request.GET['supplier_id']
@@ -654,7 +684,8 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
         for province in provinces:
             query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id').filter(
                 province_id=province['id'], program_id__in=program, component_id__in=component,
-                supplier_id__in=supplier)
+                supplier_id__in=supplier, component_id__sector__id__in=sector,
+                component_id__sub_sector__id__in=sub_sector)
 
             if request.GET.getlist('field'):
                 field = request.GET['field']
@@ -709,6 +740,20 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         data = []
+        if request.GET.getlist('sector_id'):
+            sect = request.GET['sector_id']
+            sector = sect.split(",")
+            for i in range(0, len(sector)):
+                sector[i] = int(sector[i])
+        else:
+            sector = list(Sector.objects.values_list('id', flat=True))
+        if request.GET.getlist('sub_sector_id'):
+            subsect = request.GET['sub_sector_id']
+            sub_sector = subsect.split(",")
+            for i in range(0, len(sub_sector)):
+                sub_sector[i] = int(sub_sector[i])
+        else:
+            sub_sector = list(Sector.objects.values_list('id', flat=True))
         if request.GET.getlist('program_id'):
             prov = request.GET['program_id']
             program = prov.split(",")
@@ -761,7 +806,9 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
         for municipality in municipalities:
             query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id').filter(
                 municipality_id=municipality['id'],
-                program_id__in=program, component_id__in=component, supplier_id__in=supplier)
+                program_id__in=program, component_id__in=component, supplier_id__in=supplier,
+                component_id__sector__id__in=sector,
+                component_id__sub_sector__id__in=sub_sector)
 
             if request.GET.getlist('field'):
                 field = request.GET['field']
