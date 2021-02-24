@@ -16,8 +16,18 @@ class Partner(models.Model):
         ('National NGO', 'National NGO'),
         ('Multilateral', 'Multilateral'),
         ('Private Sector', 'Private Sector'),
-        ('Intergovernmental Organization', 'Intergovernmental Organization'),
+        ('Local Government','Local Government'),
+        ('Other Public Sector','Other Public Sector'),
+        ('Regional NGO','Regional NGO'),
+        ('Partner Country based NGO','Partner Country based NGO'),
+        ('Public Private Partnership','Public Private Partnership'),
+        ('Foundation','Foundation'),
+        ('Private Sector in Provider Country','Private Sector in Provider Country'),
         ('Academic, Training and Research', 'Academic, Training and Research'),
+        ('Private Sector in Aid Recipient Country','Private Sector in Aid Recipient Country'),
+        ('Private Sector in Third Country','Private Sector in Third Country'),
+        ('Academic, Training and Research','Academic, Training and Research'),
+        ('Other','Other')
 
     )
     name = models.CharField(max_length=100, null=True, blank=True)
