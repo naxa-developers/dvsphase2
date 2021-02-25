@@ -1441,11 +1441,15 @@ class ProjectCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         data = super(ProjectCreate, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
-        data['programs'] = Program.objects.order_by('id')
+        data['programs'] = Program.objects.all()
+        data['partners'] = Partner.objects.order_by('id')
         sectors = Sector.objects.all().prefetch_related('Sector').order_by('id')
         data['sectors'] = sectors
         data['user'] = user_data
         data['active'] = 'project'
+        for test in Program.objects.all():
+            for test2 in test.partner_id.all():
+                print(test2.id)
         return data
 
     def get_success_url(self):
@@ -2039,6 +2043,7 @@ class ProjectUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
             filter_sector = Sector.objects.exclude(id__in=sector_list)
 
         data['sectors'] = filter_sector
+        data['partners'] = Partner.objects.all()
         data['test'] = sector_list
         data['user'] = user_data
         data['active'] = 'project'

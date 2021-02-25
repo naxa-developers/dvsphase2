@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Partner, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
     IndicatorValue, Sector, SubSector, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
-    Filter, NepalSummary,FeedbackForm
+    Filter, NepalSummary, FeedbackForm
 
 
 class NepalSummarySerializer(serializers.ModelSerializer):
@@ -98,12 +98,11 @@ class ProgramSerializer(serializers.ModelSerializer):
 
     def get_partner(self, obj):
         data = []
-        qs = FiveW.objects.filter(program_id=obj.id).values('supplier_id__id', 'supplier_id__name').distinct(
-            'supplier_id__id')
+        qs = obj.partner_id.all().values('name', 'id')
         for q in qs:
             data.append({
-                'id': q['supplier_id__id'],
-                'name': q['supplier_id__name']
+                'id': q['id'],
+                'name': q['name']
 
             })
         return data
@@ -193,7 +192,6 @@ class IndicatorSerializer(serializers.ModelSerializer):
             'data_type')
 
 
-
 class SectorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sector
@@ -242,7 +240,6 @@ class DistrictSerializer(serializers.ModelSerializer):
         model = District
         fields = ('id', 'province_id', 'province_name', 'name', 'code', 'n_code', 'bbox')
 
-
     def get_province_name(self, obj):
         return str(obj.province_id.name)
 
@@ -260,7 +257,6 @@ class GaanapaSerializer(serializers.ModelSerializer):
 
     def get_code(self, obj):
         return str(obj.code)
-
 
     def get_district_name(self, obj):
         return obj.district_id.name
@@ -343,6 +339,7 @@ class TravelTimeSerializer(serializers.ModelSerializer):
 
     def get_geography(self, obj):
         return str(obj.gapanapa.geography)
+
 
 class FeedbackSerializer(serializers.ModelSerializer):
     class Meta:
