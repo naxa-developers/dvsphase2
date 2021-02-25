@@ -920,6 +920,14 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
         component = query.distinct('component_id').count()
         partner = query.distinct('supplier_id').count()
         sector = query.distinct('component_id__sector').count()
+        total_program = Program.objects.all().count()
+        total_partner = Partner.objects.all().count()
+        total_component = Project.objects.all().count()
+        total_sector = Sector.objects.all().count()
+        total_allocated_budget = FiveW.objects.all()
+        total_budget = 0
+        for budget in total_allocated_budget:
+            total_budget += float(budget.allocated_budget)
 
         return Response({
             'allocated_budget': allocated_sum['allocated_budget__sum'],
@@ -927,7 +935,11 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
             'partner': partner,
             'component': component,
             'sector': sector,
-
+            'total_allocated_budget': total_budget,
+            'total_program': total_program,
+            'total_partner': total_partner,
+            'total_component': total_component,
+            'total_sector': total_sector
         })
 
 
