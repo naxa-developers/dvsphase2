@@ -2047,6 +2047,7 @@ class ProjectUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         data['test'] = sector_list
         data['user'] = user_data
         data['active'] = 'project'
+        data['selectpartner'] = Project.objects.filter(id=self.kwargs['pk'])
         return data
 
     def get_success_url(self):

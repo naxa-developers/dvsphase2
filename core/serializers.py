@@ -319,7 +319,10 @@ class IndicatorValueSerializer(serializers.ModelSerializer):
         fields = ('id', 'indicator_id', 'code', 'value')
 
     def get_code(self, obj):
-        return str(obj.gapanapa_id.code)
+        try:
+            return str(obj.gapanapa_id.code)
+        except:
+            return None
 
     # def get_indicator_name(self, obj):
     #     return str(obj.indicator_id.indicator)
