@@ -36,19 +36,25 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="id_program_id">Select Program</label>
-                        <select name="program_id" id="id_program_id" class="custom-select">
-                             <option value="" selected>----Select Program----</option>
+                        <label for="id_programs_id">Select Program</label>
+                        <select name="program_id" id="id_programs_id" class="custom-select">
+                             <option value="" selected disabled>----Select Program----</option>
                             {% for program in programs %}
-
-
-
-                            <option value="{{program.id}}">{{program.name}}</option>
-
-
-
+                                {% for dat in program.partner_id.all %}
+                                <option value="{{program.id}}" valu="{{dat.id}}">{{program.name}}</option>
+                                {% endfor %}
                             {% endfor %}
+                        </select>
+                    </div>
 
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_partners_id">Select Partners</label>
+                        <select name="partner_id" placeholder="Select Partners" id="id_partners_id" multiple="multiple">
+                            {% for partner in partners %}
+                            <option value="{{partner.id}}">{{partner.name}}</option>
+                            {% endfor %}
                         </select>
                     </div>
 
@@ -261,5 +267,49 @@
     </form>
 </main>
 
+{% endblock %}
+{% block five_add %}
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function() {
+
+        $('#id_partners_id').multipleSelect();
+        var dataValue = []
+        $('#id_programs_id option').each(function () {
+            if(dataValue.includes($(this).val())) {
+                $(this).css('display', 'none');
+            };
+            dataValue.push($(this).val());
+        })
+        $('#id_programs_id').change(function() {
+            $('#id_partners_id').multipleSelect('uncheckAll');
+            change_value = $(this).val()
+            $('#id_programs_id option').each(function () {
+                $(this).css('display', 'block');
+            })
+            $('#id_programs_id option').each(function () {
+
+                if ($(this).val() == change_value) {
+                    change_valu = $(this).attr('valu')
+                    console.log(change_valu)
+                    $('#id_partners_id option').each(function () {
+                        if ($(this).val() == change_valu) {
+                            $(this).prop('selected', true);
+                        }
+                    })
+                }
+            })
+            $('#id_partners_id').multipleSelect('refresh');
+            var dataValue = []
+            $('#id_programs_id option').each(function () {
+                if(dataValue.includes($(this).val())) {
+                    $(this).css('display', 'none');
+                };
+                dataValue.push($(this).val());
+            })
+        })
+    })
+</script>
 {% endblock %}
 

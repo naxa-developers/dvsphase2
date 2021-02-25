@@ -575,13 +575,13 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
         else:
             component = list(Project.objects.values_list('id', flat=True))
 
-        if request.GET.getlist('province_id'):
-            province = request.GET['province_id']
-            province_ids = province.split(",")
-            for i in range(0, len(province_ids)):
-                province_ids[i] = int(province_ids[i])
+        if request.GET.getlist('province_code'):
+            province = request.GET['province_code']
+            province_codes = province.split(",")
+            for i in range(0, len(province_codes)):
+                province_codes[i] = int(province_codes[i])
             districts = District.objects.values('name', 'id', 'code', 'n_code', 'province_id__name').filter(
-                province_id__id__in=province_ids).exclude(code='-1').order_by('id')
+                province_id__code__in=province_codes).exclude(code='-1').order_by('id')
 
         else:
             districts = District.objects.values('name', 'id', 'code', 'n_code', 'province_id__name').exclude(
@@ -665,6 +665,17 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 sub_sector[i] = int(sub_sector[i])
         else:
             sub_sector = list(Sector.objects.values_list('id', flat=True))
+
+        # if request.GET.getlist('marker_id'):
+        #     sector = request.GET['marker_id']
+        #     marker_ids = sector.split(",")
+        #     for i in range(0, len(marker_ids)):
+        #         marker_ids[i] = int(marker_ids[i])
+        #     markers = MarkerCategory.objects.values('name', 'id').filter(
+        #         id__in=marker_ids).order_by('id')
+        #
+        # else:
+        #     markers = list(MarkerCategory.objects.values_list('id', flat=True))
         provinces = Province.objects.values('name', 'id', 'code').exclude(code='-1').order_by('id')
         if request.GET.getlist('supplier_id'):
             supp = request.GET['supplier_id']
@@ -685,7 +696,9 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
             query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id').filter(
                 province_id=province['id'], program_id__in=program, component_id__in=component,
                 supplier_id__in=supplier, component_id__sector__id__in=sector,
-                component_id__sub_sector__id__in=sub_sector)
+                component_id__sub_sector__id__in=sub_sector,
+                # program_id__marker_category__id__in=markers
+            )
 
             if request.GET.getlist('field'):
                 field = request.GET['field']
@@ -717,6 +730,7 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 part = []
                 sect = []
                 sub_sect = []
+                # mark_cat = []
 
             data.append({
                 'id': province['id'],
@@ -728,6 +742,7 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 'partner': part,
                 'sector': sect,
                 'sub_sector': sub_sect,
+                # 'marker_category':mark_cat
 
             })
         return Response({"results": data})
@@ -776,30 +791,41 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 component[i] = int(component[i])
         else:
             component = list(Project.objects.values_list('id', flat=True))
-        if request.GET.getlist('province_id'):
-            province = request.GET['province_id']
-            province_ids = province.split(",")
-            for i in range(0, len(province_ids)):
-                province_ids[i] = int(province_ids[i])
+        if request.GET.getlist('province_code'):
+            province = request.GET['province_code']
+            province_codes = province.split(",")
+            for i in range(0, len(province_codes)):
+                province_codes[i] = int(province_codes[i])
             municipalities = GapaNapa.objects.values('name', 'id', 'code', 'province_id__name',
                                                      'district_id__name').filter(
-                province_id__id__in=province_ids).exclude(code='-1').order_by('id')
+                province_id__code__in=province_codes).exclude(code='-1').order_by('id')
 
         else:
             municipalities = GapaNapa.objects.values('name', 'id', 'code', 'province_id__name',
                                                      'district_id__name').exclude(code='-1').order_by('id')
 
-        if request.GET.getlist('district_id'):
-            dist = request.GET['district_id']
-            district_ids = dist.split(",")
-            for i in range(0, len(district_ids)):
-                district_ids[i] = int(district_ids[i])
+        # if request.GET.getlist('marker_id'):
+        #     sector = request.GET['marker_id']
+        #     marker_ids = sector.split(",")
+        #     for i in range(0, len(marker_ids)):
+        #         marker_ids[i] = int(marker_ids[i])
+        #     markers = MarkerCategory.objects.values('name', 'id').filter(
+        #         id__in=marker_ids).order_by('id')
+        #
+        # else:
+        #     markers = list(MarkerCategory.objects.values_list('id', flat=True))
+
+        if request.GET.getlist('district_code'):
+            dist = request.GET['district_code']
+            district_codes = dist.split(",")
+            for i in range(0, len(district_codes)):
+                district_codes[i] = int(district_codes[i])
             municipalities = GapaNapa.objects.values('name', 'id', 'code', 'province_id__name',
                                                      'district_id__name').filter(
-                district_id__id__in=district_ids).exclude(code='-1').order_by('id')
+                district_id__code__in=district_codes).exclude(code='-1').order_by('id')
 
         else:
-            if request.GET.getlist('province_id') == []:
+            if request.GET.getlist('province_code') == []:
                 municipalities = GapaNapa.objects.values('name', 'id', 'code', 'province_id__name',
                                                          'district_id__name').exclude(code='-1').order_by('id')
 
@@ -808,7 +834,9 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 municipality_id=municipality['id'],
                 program_id__in=program, component_id__in=component, supplier_id__in=supplier,
                 component_id__sector__id__in=sector,
-                component_id__sub_sector__id__in=sub_sector)
+                component_id__sub_sector__id__in=sub_sector,
+                # program_id__marker_category__name__in=markers
+            )
 
             if request.GET.getlist('field'):
                 field = request.GET['field']
@@ -828,6 +856,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                                                                                   flat=True).distinct()
                 sub_sect = query.exclude(component_id__sub_sector__name=None).values_list(
                     'component_id__sub_sector__name', flat=True).distinct()
+                # mark = query.values_list('program_id__marker_category__name', flat=True).distinct()
 
             else:
                 budget = 0
@@ -836,6 +865,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 part = []
                 sect = []
                 sub_sect = []
+                # mark = []
 
             data.append({
                 'id': municipality['id'],
@@ -849,7 +879,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 'partner': part,
                 'sector': sect,
                 'sub_sector': sub_sect,
-
+                # 'markers': mark
             })
         return Response({"results": data})
 

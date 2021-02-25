@@ -16,19 +16,18 @@ class Partner(models.Model):
         ('National NGO', 'National NGO'),
         ('Multilateral', 'Multilateral'),
         ('Private Sector', 'Private Sector'),
-        ('Local Government','Local Government'),
-        ('Other Public Sector','Other Public Sector'),
-        ('Regional NGO','Regional NGO'),
-        ('Partner Country based NGO','Partner Country based NGO'),
-        ('Public Private Partnership','Public Private Partnership'),
-        ('Foundation','Foundation'),
-        ('Private Sector in Provider Country','Private Sector in Provider Country'),
+        ('Local Government', 'Local Government'),
+        ('Other Public Sector', 'Other Public Sector'),
+        ('Regional NGO', 'Regional NGO'),
+        ('Partner Country based NGO', 'Partner Country based NGO'),
+        ('Public Private Partnership', 'Public Private Partnership'),
+        ('Foundation', 'Foundation'),
+        ('Private Sector in Provider Country', 'Private Sector in Provider Country'),
         ('Academic, Training and Research', 'Academic, Training and Research'),
-        ('Private Sector in Aid Recipient Country','Private Sector in Aid Recipient Country'),
-        ('Private Sector in Third Country','Private Sector in Third Country'),
-        ('Academic, Training and Research','Academic, Training and Research'),
-        ('Other','Other')
-
+        ('Private Sector in Aid Recipient Country', 'Private Sector in Aid Recipient Country'),
+        ('Private Sector in Third Country', 'Private Sector in Third Country'),
+        ('Academic, Training and Research', 'Academic, Training and Research'),
+        ('Other', 'Other')
     )
     name = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
@@ -214,6 +213,7 @@ class GapaNapa(models.Model):
 class Project(models.Model):
     program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='ProjectProgram', null=True,
                                    blank=True)
+    partner_id = models.ManyToManyField(Partner, related_name='ProjectPartner', blank=True, null=True)
     name = models.CharField(max_length=500, null=True, blank=True)
     code = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(blank=True)
