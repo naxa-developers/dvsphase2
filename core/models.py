@@ -324,6 +324,7 @@ class IndicatorValue(models.Model):
     gapanapa_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='IgapaNapa', null=True, blank=True)
     value = models.CharField(max_length=500, default=None, blank=True, null=True)
     district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='Idistrict', null=True, blank=True)
+    province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='Iprovince', null=True, blank=True)
 
     def __str__(self):
         return self.indicator_id.indicator

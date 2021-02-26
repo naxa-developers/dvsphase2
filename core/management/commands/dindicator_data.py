@@ -13,7 +13,7 @@ def gapanapa(code):
 
 def district(code):
     try:
-        obj = District.objects.get(hlcit_code=str(code))
+        obj = District.objects.get(code=str(code))
     except ObjectDoesNotExist:
         obj = None
     return obj
@@ -34,7 +34,7 @@ class Command(BaseCommand):
         category_name = ((path.split('/'))[-1]).replace('.csv', '')
         not_cols = ['District', 'district', 'Name of municipalities', 'Name of Municipalities', 'CBS_CODE',
                     'HLCIT_CODE', 'Province', 'province', 'Palika',
-                    'palika', 'CBS_Code', 'District ', 'code', 'cbs code']
+                    'palika', 'CBS_Code', 'District ', 'code', 'cbs code','Districts']
         try:
             for col in df_col_list:
                 if not col in not_cols:
@@ -42,10 +42,8 @@ class Command(BaseCommand):
                         IndicatorValue(
                             indicator_id=Indicator.objects.get(indicator=col, category=category_name),
                             #gapanapa_id=gapanapa(df['HLCIT_CODE'][row]) if 'HLCIT_CODE' in df_col_list else None,
-                            district_id=((gapanapa(df['HLCIT_CODE'][row])).district_id if gapanapa(
-                                df['HLCIT_CODE'][row]) is not None else None) if 'HLCIT_CODE' in df_col_list else None,
+                            district_id=district(df['code'][row]) if 'code' in df_col_list else None,
                             value=df[col][row],
-
                         ) for row in range(0, upper_range)
                     ]
                     indicator_data = IndicatorValue.objects.bulk_create(indicator_value)

@@ -295,7 +295,7 @@ class DistrictIndicator(viewsets.ModelViewSet):
             if cat_in.federal_level == 'district':
                 indicator_dist = IndicatorValue.objects.values('id', 'indicator_id', 'value',
                                                                'district_id__code').filter(
-                    indicator_id=id_indicator[i], dsitrict_id__province_id__id__in=province_ids)
+                    indicator_id=id_indicator[i], district_id__province_id__id__in=province_ids)
 
                 for dist_ind in indicator_dist:
                     data.append(
@@ -388,28 +388,20 @@ class ProvinceIndicator(viewsets.ModelViewSet):
                     indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
                                                               'gapanapa_id__population').filter(
                         indicator_id=int(id_indicator[i]),
-                        gapanapa_id__province_id=dist['id'])
-                    for ind in indicator:
-                        # print(ind['value'])
-                        # print(dist_pop_sum['population__sum'])
-                        # print(math.isnan(ind['value']))
+                        province_id=dist['id'])
 
-                        if math.isnan(ind['value']) == False:
-                            indicator_value = (ind['value'] * ind['gapanapa_id__population'])
-                            # print(indicator_value)
+                    for ind in indicator:
+                        if math.isnan(float(ind['value'])) == False:
+                            indicator_value = (float(ind['value']))
                             value_sum = (value_sum + indicator_value)
                         else:
                             value_sum = (value_sum + 0)
-
-                    # print(value_sum)
-                    # print(dist_pop_sum)
-                    value = (value_sum / dist_pop_sum['population__sum'])
-
+                    value = value_sum
                 else:
                     prov_health_num = IndicatorValue.objects.values('id', 'indicator_id', 'value',
                                                                     'gapanapa_id__population').filter(
                         indicator_id=int(id_indicator[i]),
-                        gapanapa_id__province_id=dist['id']).aggregate(
+                        province_id=dist['id']).aggregate(
                         Sum('value'))
 
                     value = prov_health_num['value__sum']
