@@ -23,7 +23,7 @@ class Command(BaseCommand):
 
         not_cols = ['District', 'district', 'Name of municipalities', 'Name of Municipalities', 'CBS_CODE',
                     'HLCIT_CODE', 'Province', 'province', 'Palika',
-                    'palika', 'CBS_Code', 'District ', 'code', 'cbs code']
+                    'palika', 'CBS_Code', 'District ', 'code', 'cbs code', 'Districts']
 
         try:
             indicator = [
@@ -33,7 +33,7 @@ class Command(BaseCommand):
                     # abstract=df['Abstract'][row],
                     category=category_name,
                     # source=df['Source'][row],
-                    federal_level='District Level',
+                    federal_level='district',
 
                 ) for col in upper_range if not col in not_cols
             ]

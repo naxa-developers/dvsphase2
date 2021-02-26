@@ -28,7 +28,7 @@ class Command(BaseCommand):
         category_name = ((path.split('/'))[-1]).replace('.csv', '')
         not_cols = ['District', 'district', 'Name of municipalities', 'Name of Municipalities', 'CBS_CODE',
                     'HLCIT_CODE', 'Province', 'province', 'Palika',
-                    'palika', 'CBS_Code', 'District ', 'code', 'cbs code']
+                    'palika', 'CBS_Code', 'District ', 'code', 'cbs code','Districts']
         try:
             for col in df_col_list:
                 if not col in not_cols:
