@@ -134,6 +134,7 @@ class Program(models.Model):
     code = models.CharField(max_length=100, blank=True, null=True)
     status = models.CharField(max_length=50, choices=status, default='ongoing')
     total_budget = models.FloatField(null=True, blank=True, default=0)
+    budget_spend = models.FloatField(null=True, blank=True, default=0)
     marker_category = models.ManyToManyField(MarkerCategory, related_name='Pmarkercategory', blank=True)
     marker_value = models.ManyToManyField(MarkerValues, related_name='MarkerValues', blank=True)
     sector = models.ManyToManyField(Sector, related_name='Progsector', blank=True)
@@ -224,6 +225,7 @@ class Project(models.Model):
     sub_sector = models.ManyToManyField(SubSector, related_name='SubSector', blank=True)
     component_acronym = models.CharField(max_length=1500, blank=True, null=True)
     approved_budget = models.FloatField(blank=True, null=True)
+    budget_spend = models.FloatField(blank=True, null=True)
 
     def __str__(self):
         return self.name

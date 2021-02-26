@@ -96,51 +96,20 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <div class="form-group ">
                         <label for="id_total_budget" class="">Total Approved Budget</label>
                         <input class="form-control" type="number" name="total_budget" step="any" id="id_total_budget"
                                placeholder="e.g. GBP 89413" value="{{ form.instance.total_budget }}"/>
                     </div>
                 </div>
-<!--                <div class="col-md-2">-->
-<!--                    <div class="form-group ">-->
-<!--                        <label for="id_total_budget" class="">Unallocated</label>-->
-<!--                        <input class="form-control" type="number" name="unallocated" step="any" id="id_unallocated"-->
-<!--                               placeholder="e.g. GBP 89413" value="{{ form.instance.unallocated }}"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="col-md-2">-->
-<!--                    <div class="form-group ">-->
-<!--                        <label for="id_reported" class="">Reported</label>-->
-<!--                        <input class="form-control" type="number" name="reported" step="any" id="id_reported"-->
-<!--                               placeholder="e.g. GBP 89413" value="{{ form.instance.reported }}"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="col-md-2">-->
-<!--                    <div class="form-group ">-->
-<!--                        <label for="id_difference" class="">Difference</label>-->
-<!--                        <input class="form-control" type="number" name="difference" step="any" id="id_difference"-->
-<!--                               placeholder="e.g. GBP 89413" value="{{ form.instance.difference }}"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="col-md-2">-->
-<!--                    <div class="form-group ">-->
-<!--                        <label for="id_reported_percentage" class="">Reported Percentage</label>-->
-<!--                        <input class="form-control" type="number" name="reported_percentage" step="any" id="id_reported_percentage"-->
-<!--                               placeholder="e.g. GBP 89413" value="{{ form.instance.reported_percentage }}"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                 <div class="col-md-2">-->
-<!--                    <div class="form-group ">-->
-<!--                        <label for="id_unreported_percentage" class="">Unreported Budget</label>-->
-<!--                        <input class="form-control" type="number" name="unreported_percentage" step="any" id="id_unreported_percentage"-->
-<!--                               placeholder="e.g. GBP 89413" value="{{ form.instance.unreported_percentage }}"/>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_total_budget_spend" class="">Budget Spend</label>
+                        <input class="form-control" type="number" value="{{form.instance.budget_spend}}" name="budget_spend" step="any" id="id_total_budget_spend"
+                               placeholder="e.g. GBP 89413"/>
+                    </div>
+                </div>
             </div>
                                         <div class="row">
                 <div class="col-md-4">
