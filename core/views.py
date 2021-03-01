@@ -287,11 +287,14 @@ class DistrictIndicator(viewsets.ModelViewSet):
         id_indicator = id_indicators.split(",")
         for i in range(0, len(id_indicator)):
             id_indicator[i] = int(id_indicator[i])
-        health_id = Indicator.objects.get(indicator='number_hospitals')
-        health_id_b = Indicator.objects.get(indicator='household_affected_covid')
-        financial = Indicator.objects.get(indicator='number_financial_institutions')
+        # health_id = Indicator.objects.get(indicator='number_hospitals')
+        # health_id_b = Indicator.objects.get(indicator='household_affected_covid')
+        # financial = Indicator.objects.get(indicator='number_financial_institutions')
         for i in range(0, len(id_indicator)):
-            cat_in = Indicator.objects.get(id=int(id_indicator[i]))
+            try:
+                cat_in = Indicator.objects.get(id=int(id_indicator[i]))
+            except:
+                return Response({"results": "Indicator Id Doesnot Exists"})
             if cat_in.federal_level == 'district':
                 indicator_dist = IndicatorValue.objects.values('id', 'indicator_id', 'value',
                                                                'district_id__code').filter(
@@ -315,33 +318,33 @@ class DistrictIndicator(viewsets.ModelViewSet):
                                                               'gapanapa_id__population').filter(
                         indicator_id=int(id_indicator[i]),
                         gapanapa_id__district_id=dist['id'])
-                    if int(id_indicator[i]) != health_id.id and int(id_indicator[i]) != health_id_b.id and int(
-                            id_indicator[i]) != financial.id:
-                        value_sum = 0
-                        dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
-                            district_id=dist['id']).aggregate(
-                            Sum('population'))
+                    # if int(id_indicator[i]) != health_id.id and int(id_indicator[i]) != health_id_b.id and int(
+                    #         id_indicator[i]) != financial.id:
+                    value_sum = 0
+                    dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
+                        district_id=dist['id']).aggregate(
+                        Sum('population'))
 
-                        for ind in indicator:
-                            # print(ind['value'])
-                            # print(math.isnan(ind['value']))
+                    for ind in indicator:
+                        # print(ind['value'])
+                        # print(math.isnan(ind['value']))
 
-                            if math.isnan(ind['value']) == False:
-                                indicator_value = (ind['value'] * ind['gapanapa_id__population'])
-                                # print(indicator_value)
-                                value_sum = (value_sum + indicator_value)
-                            else:
-                                value_sum = (value_sum + 0)
+                        if math.isnan(ind['value']) == False:
+                            indicator_value = (ind['value'] * ind['gapanapa_id__population'])
+                            # print(indicator_value)
+                            value_sum = (value_sum + indicator_value)
+                        else:
+                            value_sum = (value_sum + 0)
 
-                        # print(value_sum)
-                        # print(dist_pop_sum['population__sum'])
-                        value = (value_sum / dist_pop_sum['population__sum'])
-                    else:
-                        dist_health_num = IndicatorValue.objects.values('id', 'value', 'gapanapa_id').filter(
-                            indicator_id=int(id_indicator[i]),
-                            gapanapa_id__district_id=dist['id']).aggregate(
-                            Sum('value'))
-                        value = dist_health_num['value__sum']
+                    # print(value_sum)
+                    # print(dist_pop_sum['population__sum'])
+                    value = (value_sum / dist_pop_sum['population__sum'])
+                    # else:
+                    #     dist_health_num = IndicatorValue.objects.values('id', 'value', 'gapanapa_id').filter(
+                    #         indicator_id=int(id_indicator[i]),
+                    #         gapanapa_id__district_id=dist['id']).aggregate(
+                    #         Sum('value'))
+                    #     value = dist_health_num['value__sum']
 
                     data.append(
                         {
@@ -379,32 +382,24 @@ class ProvinceIndicator(viewsets.ModelViewSet):
         financial = Indicator.objects.get(indicator='number_financial_institutions')
         for i in range(0, len(id_indicator)):
             for dist in province:
-                if int(id_indicator[i]) != health_id.id and int(id_indicator[i]) != health_id_b.id and int(
-                        id_indicator[i]) != financial.id:
-                    value_sum = 0
-                    dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
-                        province_id=dist['id']).aggregate(
-                        Sum('population'))
-                    indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
-                                                              'gapanapa_id__population').filter(
-                        indicator_id=int(id_indicator[i]),
-                        province_id=dist['id'])
+                value_sum = 0
+                dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
+                    province_id=dist['id']).aggregate(
+                    Sum('population'))
+                try:
+                    indicator_test = Indicator.objects.get(id=id_indicators[0])
+                except:
+                    return Response({"Results": "Indicator Id Doesnot Exists"})
+                indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
+                                                          'gapanapa_id__population').filter(
+                    indicator_id=int(id_indicator[i]),
+                    province_id=dist['id'])
 
-                    for ind in indicator:
-                        if math.isnan(float(ind['value'])) == False:
-                            indicator_value = (float(ind['value']))
-                            value_sum = (value_sum + indicator_value)
-                        else:
-                            value_sum = (value_sum + 0)
-                    value = value_sum
-                else:
-                    prov_health_num = IndicatorValue.objects.values('id', 'indicator_id', 'value',
-                                                                    'gapanapa_id__population').filter(
-                        indicator_id=int(id_indicator[i]),
-                        province_id=dist['id']).aggregate(
-                        Sum('value'))
-
-                    value = prov_health_num['value__sum']
+                for ind in indicator:
+                    if math.isnan(float(ind['value'])) == False:
+                        indicator_value = (float(ind['value']))
+                        value_sum = (value_sum + indicator_value)
+                value = value_sum
 
                 data.append(
                     {
@@ -551,6 +546,28 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
         else:
             program = list(Program.objects.values_list('id', flat=True))
 
+        if request.GET.getlist('marker_category_id'):
+            markercategory = request.GET['marker_category_id']
+            marker_category_ids = markercategory.split(",")
+            for i in range(0, len(marker_category_ids)):
+                marker_category_ids[i] = int(marker_category_ids[i])
+            markers = MarkerCategory.objects.values('name', 'id').filter(
+                id__in=marker_category_ids).order_by('id')
+
+        else:
+            markers = list(MarkerCategory.objects.values_list('id', flat=True))
+
+        if request.GET.getlist('marker_value_id'):
+            markervalue = request.GET['marker_value_id']
+            marker_value_ids = markervalue.split(",")
+            for i in range(0, len(marker_value_ids)):
+                marker_value_ids[i] = int(marker_value_ids[i])
+            markers_value = MarkerCategory.objects.values('value', 'id').filter(
+                id__in=marker_value_ids).order_by('id')
+
+        else:
+            markers_value = list(MarkerCategory.objects.values_list('id', flat=True))
+
         if request.GET.getlist('supplier_id'):
             supp = request.GET['supplier_id']
             supplier = supp.split(",")
@@ -583,7 +600,10 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
             query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id').filter(
                 district_id=dist['id'], program_id__in=program, supplier_id__in=supplier, component_id__in=component,
                 component_id__sector__id__in=sector,
-                component_id__sub_sector__id__in=sub_sector)
+                component_id__sub_sector__id__in=sub_sector,
+                program_id__marker_category__id__in=markers,
+                program_id__marker_value__id__in=markers_value
+            )
 
             if request.GET.getlist('field'):
                 field = request.GET['field']
@@ -604,6 +624,12 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 sub_sect = query.exclude(component_id__sub_sector__name=None).values_list(
                     'component_id__sub_sector__name',
                     flat=True).distinct()
+                mark = query.exclude(program_id__marker_category__name=None).values_list(
+                    'program_id__marker_category__name',
+                    flat=True).distinct()
+                mark_val = query.exclude(program_id__marker_value__value=None).values_list(
+                    'program_id__marker_value__value',
+                    flat=True).distinct()
 
             else:
                 budget = 0
@@ -612,6 +638,8 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 part = []
                 sect = []
                 sub_sect = []
+                mark = []
+                mark_val = []
 
             data.append({
                 'id': dist['id'],
@@ -624,6 +652,8 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 'partner': part,
                 'sector': sect,
                 'sub_sector': sub_sect,
+                'marker_category': mark,
+                'marker_value': mark_val
 
             })
         return Response({"results": data})
@@ -658,16 +688,28 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
         else:
             sub_sector = list(Sector.objects.values_list('id', flat=True))
 
-        # if request.GET.getlist('marker_id'):
-        #     sector = request.GET['marker_id']
-        #     marker_ids = sector.split(",")
-        #     for i in range(0, len(marker_ids)):
-        #         marker_ids[i] = int(marker_ids[i])
-        #     markers = MarkerCategory.objects.values('name', 'id').filter(
-        #         id__in=marker_ids).order_by('id')
-        #
-        # else:
-        #     markers = list(MarkerCategory.objects.values_list('id', flat=True))
+        if request.GET.getlist('marker_category_id'):
+            sector = request.GET['marker_category_id']
+            marker_ids = sector.split(",")
+            for i in range(0, len(marker_ids)):
+                marker_ids[i] = int(marker_ids[i])
+            markers = MarkerCategory.objects.values('name', 'id').filter(
+                id__in=marker_ids).order_by('id')
+
+        else:
+            markers = list(MarkerCategory.objects.values_list('id', flat=True))
+
+        if request.GET.getlist('marker_value_id'):
+            sector = request.GET['marker_value_id']
+            marker_ids = sector.split(",")
+            for i in range(0, len(marker_ids)):
+                marker_ids[i] = int(marker_ids[i])
+            markers_value = MarkerCategory.objects.values('value', 'id').filter(
+                id__in=marker_ids).order_by('id')
+
+        else:
+            markers_value = list(MarkerCategory.objects.values_list('id', flat=True))
+
         provinces = Province.objects.values('name', 'id', 'code').exclude(code='-1').order_by('id')
         if request.GET.getlist('supplier_id'):
             supp = request.GET['supplier_id']
@@ -689,7 +731,8 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 province_id=province['id'], program_id__in=program, component_id__in=component,
                 supplier_id__in=supplier, component_id__sector__id__in=sector,
                 component_id__sub_sector__id__in=sub_sector,
-                # program_id__marker_category__id__in=markers
+                program_id__marker_category__id__in=markers,
+                program_id__marker_value__id__in=markers_value
             )
 
             if request.GET.getlist('field'):
@@ -712,8 +755,10 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 sub_sect = query.exclude(component_id__sub_sector__name=None).values_list(
                     'component_id__sub_sector__name',
                     flat=True).distinct()
-                # mark_cat = query.exclude(component_id__sector__name=None).values_list(
-                #     'program_id__marker_category__name', flat=True)
+                mark_cat = query.exclude(program_id__marker_category__name=None).values_list(
+                    'program_id__marker_category__name', flat=True).distinct()
+                mark_val = query.exclude(program_id__marker_value__value=None).values_list(
+                    'program_id__marker_value__value', flat=True).distinct()
 
             else:
                 budget = 0
@@ -722,7 +767,8 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 part = []
                 sect = []
                 sub_sect = []
-                # mark_cat = []
+                mark_cat = []
+                mark_val = []
 
             data.append({
                 'id': province['id'],
@@ -734,7 +780,8 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 'partner': part,
                 'sector': sect,
                 'sub_sector': sub_sect,
-                # 'marker_category':mark_cat
+                'marker_category': mark_cat,
+                'marker_value': mark_val
 
             })
         return Response({"results": data})
@@ -776,6 +823,28 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
         else:
             supplier = list(Partner.objects.values_list('id', flat=True))
 
+        if request.GET.getlist('marker_category_id'):
+            markercategory = request.GET['marker_category_id']
+            marker_category_ids = markercategory.split(",")
+            for i in range(0, len(marker_category_ids)):
+                marker_category_ids[i] = int(marker_category_ids[i])
+            markers = MarkerCategory.objects.values('name', 'id').filter(
+                id__in=marker_category_ids).order_by('id')
+
+        else:
+            markers = list(MarkerCategory.objects.values_list('id', flat=True))
+
+        if request.GET.getlist('marker_value_id'):
+            markervalue = request.GET['marker_value_id']
+            marker_value_ids = markervalue.split(",")
+            for i in range(0, len(marker_value_ids)):
+                marker_value_ids[i] = int(marker_value_ids[i])
+            markers_value = MarkerCategory.objects.values('value', 'id').filter(
+                id__in=marker_value_ids).order_by('id')
+
+        else:
+            markers_value = list(MarkerCategory.objects.values_list('id', flat=True))
+
         if request.GET.getlist('component_id'):
             comp = request.GET['component_id']
             component = comp.split(",")
@@ -796,17 +865,6 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
             municipalities = GapaNapa.objects.values('name', 'id', 'code', 'province_id__name',
                                                      'district_id__name').exclude(code='-1').order_by('id')
 
-        # if request.GET.getlist('marker_id'):
-        #     sector = request.GET['marker_id']
-        #     marker_ids = sector.split(",")
-        #     for i in range(0, len(marker_ids)):
-        #         marker_ids[i] = int(marker_ids[i])
-        #     markers = MarkerCategory.objects.values('name', 'id').filter(
-        #         id__in=marker_ids).order_by('id')
-        #
-        # else:
-        #     markers = list(MarkerCategory.objects.values_list('id', flat=True))
-
         if request.GET.getlist('district_code'):
             dist = request.GET['district_code']
             district_codes = dist.split(",")
@@ -822,13 +880,16 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                                                          'district_id__name').exclude(code='-1').order_by('id')
 
         for municipality in municipalities:
+            print(markers)
             query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id').filter(
                 municipality_id=municipality['id'],
                 program_id__in=program, component_id__in=component, supplier_id__in=supplier,
                 component_id__sector__id__in=sector,
                 component_id__sub_sector__id__in=sub_sector,
-                # program_id__marker_category__name__in=markers
+                program_id__marker_category__id__in=markers,
+                program_id__marker_value__id__in=markers_value
             )
+            print(query)
 
             if request.GET.getlist('field'):
                 field = request.GET['field']
@@ -848,7 +909,10 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                                                                                   flat=True).distinct()
                 sub_sect = query.exclude(component_id__sub_sector__name=None).values_list(
                     'component_id__sub_sector__name', flat=True).distinct()
-                # mark = query.values_list('program_id__marker_category__name', flat=True).distinct()
+                mark = query.values_list(
+                    'program_id__marker_category__name', flat=True).distinct()
+                mark_value = query.values_list(
+                    'program_id__marker_value__value', flat=True).distinct()
 
             else:
                 budget = 0
@@ -857,7 +921,8 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 part = []
                 sect = []
                 sub_sect = []
-                # mark = []
+                mark = []
+                mark_value = []
 
             data.append({
                 'id': municipality['id'],
@@ -871,7 +936,8 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 'partner': part,
                 'sector': sect,
                 'sub_sector': sub_sect,
-                # 'markers': mark
+                'markers_category': mark,
+                'markers_value': mark_value
             })
         return Response({"results": data})
 
