@@ -377,19 +377,15 @@ class ProvinceIndicator(viewsets.ModelViewSet):
             id_indicator[i] = int(id_indicator[i])
         # id_indicators = request.data
         # id_indicator = id_indicators['indicatorId']
-        health_id = Indicator.objects.get(indicator='number_hospitals')
-        health_id_b = Indicator.objects.get(indicator='household_affected_covid')
-        financial = Indicator.objects.get(indicator='number_financial_institutions')
+        #health_id = Indicator.objects.get(indicator='number_hospitals')
+        #health_id_b = Indicator.objects.get(indicator='household_affected_covid')
+        #financial = Indicator.objects.get(indicator='number_financial_institutions')
         for i in range(0, len(id_indicator)):
             for dist in province:
                 value_sum = 0
                 dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
                     province_id=dist['id']).aggregate(
                     Sum('population'))
-                try:
-                    indicator_test = Indicator.objects.get(id=id_indicators[0])
-                except:
-                    return Response({"Results": "Indicator Id Doesnot Exists"})
                 indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
                                                           'gapanapa_id__population').filter(
                     indicator_id=int(id_indicator[i]),
