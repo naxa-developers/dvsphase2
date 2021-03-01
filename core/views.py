@@ -968,7 +968,50 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
         else:
             component = list(Project.objects.values_list('id', flat=True))
 
-        query = FiveW.objects.filter(program_id__in=program, supplier_id__in=supplier, component_id__in=component)
+        if request.GET.getlist('marker_category_id'):
+            markercategory = request.GET['marker_category_id']
+            marker_category_ids = markercategory.split(",")
+            for i in range(0, len(marker_category_ids)):
+                marker_category_ids[i] = int(marker_category_ids[i])
+            markers = MarkerCategory.objects.values('name', 'id').filter(
+                id__in=marker_category_ids).order_by('id')
+
+        else:
+            markers = list(MarkerCategory.objects.values_list('id', flat=True))
+
+        if request.GET.getlist('marker_value_id'):
+            markervalue = request.GET['marker_value_id']
+            marker_value_ids = markervalue.split(",")
+            for i in range(0, len(marker_value_ids)):
+                marker_value_ids[i] = int(marker_value_ids[i])
+            markers_value = MarkerCategory.objects.values('value', 'id').filter(
+                id__in=marker_value_ids).order_by('id')
+
+        else:
+            markers_value = list(MarkerCategory.objects.values_list('id', flat=True))
+
+        if request.GET.getlist('sector_id'):
+            sect = request.GET['sector_id']
+            sector = sect.split(",")
+            for i in range(0, len(sector)):
+                sector[i] = int(sector[i])
+        else:
+            sector = list(Sector.objects.values_list('id', flat=True))
+        if request.GET.getlist('sub_sector_id'):
+            subsect = request.GET['sub_sector_id']
+            sub_sector = subsect.split(",")
+            for i in range(0, len(sub_sector)):
+                sub_sector[i] = int(sub_sector[i])
+        else:
+            sub_sector = list(Sector.objects.values_list('id', flat=True))
+
+        query = FiveW.objects.filter(
+                program_id__in=program, component_id__in=component, supplier_id__in=supplier,
+                component_id__sector__id__in=sector,
+                component_id__sub_sector__id__in=sub_sector,
+                program_id__marker_category__id__in=markers,
+                program_id__marker_value__id__in=markers_value
+            )
         allocated_sum = query.aggregate(Sum('allocated_budget'))
         program = query.distinct('program_id').count()
         component = query.distinct('component_id').count()
