@@ -1088,7 +1088,9 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
         total_component = Project.objects.all().count()
         total_sector = Sector.objects.all().count()
         total_allocated_budget = FiveW.objects.all()
-        total_budget = total_allocated_budget.aggregate(Sum('allocated_budget'))
+        total_budget = 0
+        for data in total_allocated_budget:
+            total_budget += float(data.allocated_budget)
 
         return Response({
             'allocated_budget': allocated_sum['allocated_budget__sum'],
