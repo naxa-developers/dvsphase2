@@ -605,7 +605,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
         for dist in districts:
             if count:
                 if len(count) == 7:
-                    query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id')
+                    query = FiveW.objects.filter(district_id=dist['id']).values('allocated_budget', 'component_id', 'program_id')
                 else:
                     query = fivew_district([dist['id']], supplier, program, component, sector, sub_sector, markers,
                                            markers_value, count)
@@ -748,7 +748,7 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
         for province in provinces:
             if count:
                 if len(count) == 7:
-                    query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id')
+                    query = FiveW.objects.filter(province_id=province['id']).values('allocated_budget', 'component_id', 'program_id')
                 else:
                     query = fivew_province([province['id']], supplier, program, component, sector, sub_sector, markers,
                                            markers_value, count)
@@ -919,7 +919,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
         for municipality in municipalities:
             if count:
                 if len(count) == 7:
-                    query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id')
+                    query = FiveW.objects.filter(municipality_id=municipality['id']).values('allocated_budget', 'component_id', 'program_id')
                 else:
                     query = fivew_municipality([municipality['id']], supplier, program, component, sector, sub_sector,
                                                markers, markers_value, count)
