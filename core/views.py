@@ -19,6 +19,7 @@ from django.db.models import Sum
 import math
 from django.db.models import Q
 from rest_framework.parsers import MultiPartParser, FormParser
+from .filters import fivew, fivew_province, fivew_district, fivew_municipality
 
 
 # Create your views here.
@@ -377,9 +378,9 @@ class ProvinceIndicator(viewsets.ModelViewSet):
             id_indicator[i] = int(id_indicator[i])
         # id_indicators = request.data
         # id_indicator = id_indicators['indicatorId']
-        #health_id = Indicator.objects.get(indicator='number_hospitals')
-        #health_id_b = Indicator.objects.get(indicator='household_affected_covid')
-        #financial = Indicator.objects.get(indicator='number_financial_institutions')
+        # health_id = Indicator.objects.get(indicator='number_hospitals')
+        # health_id_b = Indicator.objects.get(indicator='household_affected_covid')
+        # financial = Indicator.objects.get(indicator='number_financial_institutions')
         for i in range(0, len(id_indicator)):
             for dist in province:
                 value_sum = 0
@@ -520,6 +521,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         data = []
+        count = []
         if request.GET.getlist('sector_id'):
             sect = request.GET['sector_id']
             sector = sect.split(",")
@@ -527,6 +529,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 sector[i] = int(sector[i])
         else:
             sector = list(Sector.objects.values_list('id', flat=True))
+            count.append('sector')
         if request.GET.getlist('sub_sector_id'):
             subsect = request.GET['sub_sector_id']
             sub_sector = subsect.split(",")
@@ -534,6 +537,8 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 sub_sector[i] = int(sub_sector[i])
         else:
             sub_sector = list(Sector.objects.values_list('id', flat=True))
+            count.append('sub_sector')
+
         if request.GET.getlist('program_id'):
             prov = request.GET['program_id']
             program = prov.split(",")
@@ -541,6 +546,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 program[i] = int(program[i])
         else:
             program = list(Program.objects.values_list('id', flat=True))
+            count.append('program')
 
         if request.GET.getlist('marker_category_id'):
             markercategory = request.GET['marker_category_id']
@@ -552,6 +558,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
 
         else:
             markers = list(MarkerCategory.objects.values_list('id', flat=True))
+            count.append('markers')
 
         if request.GET.getlist('marker_value_id'):
             markervalue = request.GET['marker_value_id']
@@ -563,6 +570,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
 
         else:
             markers_value = list(MarkerCategory.objects.values_list('id', flat=True))
+            count.append('markers_value')
 
         if request.GET.getlist('supplier_id'):
             supp = request.GET['supplier_id']
@@ -571,6 +579,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 supplier[i] = int(supplier[i])
         else:
             supplier = list(Partner.objects.values_list('id', flat=True))
+            count.append('supplier')
 
         if request.GET.getlist('component_id'):
             comp = request.GET['component_id']
@@ -579,6 +588,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 component[i] = int(component[i])
         else:
             component = list(Project.objects.values_list('id', flat=True))
+            count.append('component')
 
         if request.GET.getlist('province_code'):
             province = request.GET['province_code']
@@ -593,13 +603,15 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 code='-1').order_by('id')
 
         for dist in districts:
-            query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id').filter(
-                district_id=dist['id'], program_id__in=program, supplier_id__in=supplier, component_id__in=component,
-                component_id__sector__id__in=sector,
-                component_id__sub_sector__id__in=sub_sector,
-                program_id__marker_category__id__in=markers,
-                program_id__marker_value__id__in=markers_value
-            )
+            if count:
+                if len(count) == 7:
+                    query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id')
+                else:
+                    query = fivew_district([dist['id']], supplier, program, component, sector, sub_sector, markers,
+                                           markers_value, count)
+            else:
+                query = fivew_district([dist['id']], supplier, program, component, sector, sub_sector, markers,
+                                       markers_value, count)
 
             if request.GET.getlist('field'):
                 field = request.GET['field']
@@ -662,6 +674,7 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         data = []
+        count = []
         if request.GET.getlist('program_id'):
             prov = request.GET['program_id']
             program = prov.split(",")
@@ -669,6 +682,8 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 program[i] = int(program[i])
         else:
             program = list(Program.objects.values_list('id', flat=True))
+            count.append('program')
+
         if request.GET.getlist('sector_id'):
             sect = request.GET['sector_id']
             sector = sect.split(",")
@@ -676,6 +691,8 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 sector[i] = int(sector[i])
         else:
             sector = list(Sector.objects.values_list('id', flat=True))
+            count.append('sector')
+
         if request.GET.getlist('sub_sector_id'):
             subsect = request.GET['sub_sector_id']
             sub_sector = subsect.split(",")
@@ -683,6 +700,7 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 sub_sector[i] = int(sub_sector[i])
         else:
             sub_sector = list(Sector.objects.values_list('id', flat=True))
+            count.append('sub_sector')
 
         if request.GET.getlist('marker_category_id'):
             sector = request.GET['marker_category_id']
@@ -694,6 +712,7 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
 
         else:
             markers = list(MarkerCategory.objects.values_list('id', flat=True))
+            count.append('markers')
 
         if request.GET.getlist('marker_value_id'):
             sector = request.GET['marker_value_id']
@@ -705,6 +724,7 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
 
         else:
             markers_value = list(MarkerCategory.objects.values_list('id', flat=True))
+            count.append('markers_value')
 
         provinces = Province.objects.values('name', 'id', 'code').exclude(code='-1').order_by('id')
         if request.GET.getlist('supplier_id'):
@@ -714,6 +734,7 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 supplier[i] = int(supplier[i])
         else:
             supplier = list(Partner.objects.values_list('id', flat=True))
+            count.append('supplier')
 
         if request.GET.getlist('component_id'):
             comp = request.GET['component_id']
@@ -722,14 +743,25 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 component[i] = int(component[i])
         else:
             component = list(Project.objects.values_list('id', flat=True))
+            count.append('component')
+
         for province in provinces:
-            query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id').filter(
-                province_id=province['id'], program_id__in=program, component_id__in=component,
-                supplier_id__in=supplier, component_id__sector__id__in=sector,
-                component_id__sub_sector__id__in=sub_sector,
-                program_id__marker_category__id__in=markers,
-                program_id__marker_value__id__in=markers_value
-            )
+            if count:
+                if len(count) == 7:
+                    query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id')
+                else:
+                    query = fivew_province([province['id']], supplier, program, component, sector, sub_sector, markers,
+                                           markers_value, count)
+            else:
+                query = fivew_province([province['id']], supplier, program, component, sector, sub_sector, markers,
+                                       markers_value, count)
+            # query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id').filter(
+            #     province_id=province['id'], program_id__in=program, component_id__in=component,
+            #     supplier_id__in=supplier, component_id__sector__id__in=sector,
+            #     component_id__sub_sector__id__in=sub_sector,
+            #     program_id__marker_category__id__in=markers,
+            #     program_id__marker_value__id__in=markers_value
+            # )
 
             if request.GET.getlist('field'):
                 field = request.GET['field']
@@ -790,6 +822,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         data = []
+        count = []
         if request.GET.getlist('sector_id'):
             sect = request.GET['sector_id']
             sector = sect.split(",")
@@ -797,6 +830,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 sector[i] = int(sector[i])
         else:
             sector = list(Sector.objects.values_list('id', flat=True))
+            count.append('sector')
         if request.GET.getlist('sub_sector_id'):
             subsect = request.GET['sub_sector_id']
             sub_sector = subsect.split(",")
@@ -804,6 +838,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 sub_sector[i] = int(sub_sector[i])
         else:
             sub_sector = list(Sector.objects.values_list('id', flat=True))
+            count.append('sub_sector')
         if request.GET.getlist('program_id'):
             prov = request.GET['program_id']
             program = prov.split(",")
@@ -811,6 +846,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 program[i] = int(program[i])
         else:
             program = list(Program.objects.values_list('id', flat=True))
+            count.append('program')
         if request.GET.getlist('supplier_id'):
             supp = request.GET['supplier_id']
             supplier = supp.split(",")
@@ -818,6 +854,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 supplier[i] = int(supplier[i])
         else:
             supplier = list(Partner.objects.values_list('id', flat=True))
+            count.append('supplier')
 
         if request.GET.getlist('marker_category_id'):
             markercategory = request.GET['marker_category_id']
@@ -829,6 +866,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
 
         else:
             markers = list(MarkerCategory.objects.values_list('id', flat=True))
+            count.append('markers')
 
         if request.GET.getlist('marker_value_id'):
             markervalue = request.GET['marker_value_id']
@@ -840,6 +878,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
 
         else:
             markers_value = list(MarkerCategory.objects.values_list('id', flat=True))
+            count.append('markers_value')
 
         if request.GET.getlist('component_id'):
             comp = request.GET['component_id']
@@ -848,6 +887,8 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 component[i] = int(component[i])
         else:
             component = list(Project.objects.values_list('id', flat=True))
+            count.append('component')
+
         if request.GET.getlist('province_code'):
             province = request.GET['province_code']
             province_codes = province.split(",")
@@ -876,16 +917,23 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                                                          'district_id__name').exclude(code='-1').order_by('id')
 
         for municipality in municipalities:
-            print(markers)
-            query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id').filter(
-                municipality_id=municipality['id'],
-                program_id__in=program, component_id__in=component, supplier_id__in=supplier,
-                component_id__sector__id__in=sector,
-                component_id__sub_sector__id__in=sub_sector,
-                program_id__marker_category__id__in=markers,
-                program_id__marker_value__id__in=markers_value
-            )
-            print(query)
+            if count:
+                if len(count) == 7:
+                    query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id')
+                else:
+                    query = fivew_municipality([municipality['id']], supplier, program, component, sector, sub_sector,
+                                               markers, markers_value, count)
+            else:
+                query = fivew_municipality([municipality['id']], supplier, program, component, sector, sub_sector,
+                                           markers, markers_value, count)
+            # query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id').filter(
+            #     municipality_id=municipality['id'],
+            #     program_id__in=program, component_id__in=component, supplier_id__in=supplier,
+            #     component_id__sector__id__in=sector,
+            #     component_id__sub_sector__id__in=sub_sector,
+            #     program_id__marker_category__id__in=markers,
+            #     program_id__marker_value__id__in=markers_value
+            # )
 
             if request.GET.getlist('field'):
                 field = request.GET['field']
@@ -944,6 +992,7 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
     serializer_class = FivewSerializer
 
     def list(self, request, *args, **kwargs):
+        count = []
         if request.GET.getlist('program_id'):
             prov = request.GET['program_id']
             program = prov.split(",")
@@ -951,6 +1000,7 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
                 program[i] = int(program[i])
         else:
             program = list(Program.objects.values_list('id', flat=True))
+            count.append('program')
 
         if request.GET.getlist('supplier_id'):
             supp = request.GET['supplier_id']
@@ -959,6 +1009,7 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
                 supplier[i] = int(supplier[i])
         else:
             supplier = list(Partner.objects.values_list('id', flat=True))
+            count.append('supplier')
 
         if request.GET.getlist('component_id'):
             comp = request.GET['component_id']
@@ -967,6 +1018,7 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
                 component[i] = int(component[i])
         else:
             component = list(Project.objects.values_list('id', flat=True))
+            count.append('component')
 
         if request.GET.getlist('marker_category_id'):
             markercategory = request.GET['marker_category_id']
@@ -978,6 +1030,7 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
 
         else:
             markers = list(MarkerCategory.objects.values_list('id', flat=True))
+            count.append('markers')
 
         if request.GET.getlist('marker_value_id'):
             markervalue = request.GET['marker_value_id']
@@ -989,6 +1042,7 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
 
         else:
             markers_value = list(MarkerCategory.objects.values_list('id', flat=True))
+            count.append('markers_value')
 
         if request.GET.getlist('sector_id'):
             sect = request.GET['sector_id']
@@ -997,6 +1051,8 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
                 sector[i] = int(sector[i])
         else:
             sector = list(Sector.objects.values_list('id', flat=True))
+            count.append('sector')
+
         if request.GET.getlist('sub_sector_id'):
             subsect = request.GET['sub_sector_id']
             sub_sector = subsect.split(",")
@@ -1004,14 +1060,24 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
                 sub_sector[i] = int(sub_sector[i])
         else:
             sub_sector = list(Sector.objects.values_list('id', flat=True))
+            count.append('sub_sector')
 
-        query = FiveW.objects.filter(
-                program_id__in=program, component_id__in=component, supplier_id__in=supplier,
-                component_id__sector__id__in=sector,
-                component_id__sub_sector__id__in=sub_sector,
-                program_id__marker_category__id__in=markers,
-                program_id__marker_value__id__in=markers_value
-            )
+        if count:
+            if len(count) == 7:
+                query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id')
+            else:
+                query = fivew(supplier, program, component, sector, sub_sector, markers, markers_value, count)
+        else:
+            query = fivew(supplier, program, component, sector, sub_sector, markers, markers_value, count)
+
+        # query = FiveW.objects.filter(
+        #         program_id__in=program, component_id__in=component, supplier_id__in=supplier,
+        #         component_id__sector__id__in=sector,
+        #         component_id__sub_sector__id__in=sub_sector,
+        #         program_id__marker_category__id__in=markers,
+        #         program_id__marker_value__id__in=markers_value
+        #     )
+
         allocated_sum = query.aggregate(Sum('allocated_budget'))
         program = query.distinct('program_id').count()
         component = query.distinct('component_id').count()
@@ -1022,9 +1088,7 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
         total_component = Project.objects.all().count()
         total_sector = Sector.objects.all().count()
         total_allocated_budget = FiveW.objects.all()
-        total_budget = 0
-        for budget in total_allocated_budget:
-            total_budget += float(budget.allocated_budget)
+        total_budget = total_allocated_budget.aggregate(Sum('allocated_budget'))
 
         return Response({
             'allocated_budget': allocated_sum['allocated_budget__sum'],
