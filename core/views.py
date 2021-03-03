@@ -549,27 +549,21 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
             count.append('program')
 
         if request.GET.getlist('marker_category_id'):
-            markercategory = request.GET['marker_category_id']
-            marker_category_ids = markercategory.split(",")
-            for i in range(0, len(marker_category_ids)):
-                marker_category_ids[i] = int(marker_category_ids[i])
-            markers = MarkerCategory.objects.values('name', 'id').filter(
-                id__in=marker_category_ids).order_by('id')
-
+            mc = request.GET['marker_category_id']
+            markers = mc.split(",")
+            for i in range(0, len(markers)):
+                markers[i] = int(markers[i])
         else:
             markers = list(MarkerCategory.objects.values_list('id', flat=True))
             count.append('markers')
 
         if request.GET.getlist('marker_value_id'):
-            markervalue = request.GET['marker_value_id']
-            marker_value_ids = markervalue.split(",")
-            for i in range(0, len(marker_value_ids)):
-                marker_value_ids[i] = int(marker_value_ids[i])
-            markers_value = MarkerCategory.objects.values('value', 'id').filter(
-                id__in=marker_value_ids).order_by('id')
-
+            mv = request.GET['marker_value_id']
+            markers_value = mv.split(",")
+            for i in range(0, len(markers_value)):
+                markers_value[i] = int(markers_value[i])
         else:
-            markers_value = list(MarkerCategory.objects.values_list('id', flat=True))
+            markers_value = list(MarkerValues.objects.values_list('id', flat=True))
             count.append('markers_value')
 
         if request.GET.getlist('supplier_id'):
@@ -605,7 +599,8 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
         for dist in districts:
             if count:
                 if len(count) == 7:
-                    query = FiveW.objects.filter(district_id=dist['id']).values('allocated_budget', 'component_id', 'program_id')
+                    query = FiveW.objects.filter(district_id=dist['id']).values('allocated_budget', 'component_id',
+                                                                                'program_id')
                 else:
                     query = fivew_district([dist['id']], supplier, program, component, sector, sub_sector, markers,
                                            markers_value, count)
@@ -701,29 +696,22 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
         else:
             sub_sector = list(Sector.objects.values_list('id', flat=True))
             count.append('sub_sector')
-
         if request.GET.getlist('marker_category_id'):
-            sector = request.GET['marker_category_id']
-            marker_ids = sector.split(",")
-            for i in range(0, len(marker_ids)):
-                marker_ids[i] = int(marker_ids[i])
-            markers = MarkerCategory.objects.values('name', 'id').filter(
-                id__in=marker_ids).order_by('id')
-
+            mc = request.GET['marker_category_id']
+            markers = mc.split(",")
+            for i in range(0, len(markers)):
+                markers[i] = int(markers[i])
         else:
             markers = list(MarkerCategory.objects.values_list('id', flat=True))
             count.append('markers')
 
         if request.GET.getlist('marker_value_id'):
-            sector = request.GET['marker_value_id']
-            marker_ids = sector.split(",")
-            for i in range(0, len(marker_ids)):
-                marker_ids[i] = int(marker_ids[i])
-            markers_value = MarkerCategory.objects.values('value', 'id').filter(
-                id__in=marker_ids).order_by('id')
-
+            mv = request.GET['marker_value_id']
+            markers_value = mv.split(",")
+            for i in range(0, len(markers_value)):
+                markers_value[i] = int(markers_value[i])
         else:
-            markers_value = list(MarkerCategory.objects.values_list('id', flat=True))
+            markers_value = list(MarkerValues.objects.values_list('id', flat=True))
             count.append('markers_value')
 
         provinces = Province.objects.values('name', 'id', 'code').exclude(code='-1').order_by('id')
@@ -748,7 +736,8 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
         for province in provinces:
             if count:
                 if len(count) == 7:
-                    query = FiveW.objects.filter(province_id=province['id']).values('allocated_budget', 'component_id', 'program_id')
+                    query = FiveW.objects.filter(province_id=province['id']).values('allocated_budget', 'component_id',
+                                                                                    'program_id')
                 else:
                     query = fivew_province([province['id']], supplier, program, component, sector, sub_sector, markers,
                                            markers_value, count)
@@ -857,27 +846,21 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
             count.append('supplier')
 
         if request.GET.getlist('marker_category_id'):
-            markercategory = request.GET['marker_category_id']
-            marker_category_ids = markercategory.split(",")
-            for i in range(0, len(marker_category_ids)):
-                marker_category_ids[i] = int(marker_category_ids[i])
-            markers = MarkerCategory.objects.values('name', 'id').filter(
-                id__in=marker_category_ids).order_by('id')
-
+            mc = request.GET['marker_category_id']
+            markers = mc.split(",")
+            for i in range(0, len(markers)):
+                markers[i] = int(markers[i])
         else:
             markers = list(MarkerCategory.objects.values_list('id', flat=True))
             count.append('markers')
 
         if request.GET.getlist('marker_value_id'):
-            markervalue = request.GET['marker_value_id']
-            marker_value_ids = markervalue.split(",")
-            for i in range(0, len(marker_value_ids)):
-                marker_value_ids[i] = int(marker_value_ids[i])
-            markers_value = MarkerCategory.objects.values('value', 'id').filter(
-                id__in=marker_value_ids).order_by('id')
-
+            mv = request.GET['marker_value_id']
+            markers_value = mv.split(",")
+            for i in range(0, len(markers_value)):
+                markers_value[i] = int(markers_value[i])
         else:
-            markers_value = list(MarkerCategory.objects.values_list('id', flat=True))
+            markers_value = list(MarkerValues.objects.values_list('id', flat=True))
             count.append('markers_value')
 
         if request.GET.getlist('component_id'):
@@ -919,7 +902,9 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
         for municipality in municipalities:
             if count:
                 if len(count) == 7:
-                    query = FiveW.objects.filter(municipality_id=municipality['id']).values('allocated_budget', 'component_id', 'program_id')
+                    query = FiveW.objects.filter(municipality_id=municipality['id']).values('allocated_budget',
+                                                                                            'component_id',
+                                                                                            'program_id')
                 else:
                     query = fivew_municipality([municipality['id']], supplier, program, component, sector, sub_sector,
                                                markers, markers_value, count)
@@ -1021,27 +1006,21 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
             count.append('component')
 
         if request.GET.getlist('marker_category_id'):
-            markercategory = request.GET['marker_category_id']
-            marker_category_ids = markercategory.split(",")
-            for i in range(0, len(marker_category_ids)):
-                marker_category_ids[i] = int(marker_category_ids[i])
-            markers = MarkerCategory.objects.values('name', 'id').filter(
-                id__in=marker_category_ids).order_by('id')
-
+            mc = request.GET['marker_category_id']
+            markers = mc.split(",")
+            for i in range(0, len(markers)):
+                markers[i] = int(markers[i])
         else:
             markers = list(MarkerCategory.objects.values_list('id', flat=True))
             count.append('markers')
 
         if request.GET.getlist('marker_value_id'):
-            markervalue = request.GET['marker_value_id']
-            marker_value_ids = markervalue.split(",")
-            for i in range(0, len(marker_value_ids)):
-                marker_value_ids[i] = int(marker_value_ids[i])
-            markers_value = MarkerCategory.objects.values('value', 'id').filter(
-                id__in=marker_value_ids).order_by('id')
-
+            mv = request.GET['marker_value_id']
+            markers_value = mv.split(",")
+            for i in range(0, len(markers_value)):
+                markers_value[i] = int(markers_value[i])
         else:
-            markers_value = list(MarkerCategory.objects.values_list('id', flat=True))
+            markers_value = list(MarkerValues.objects.values_list('id', flat=True))
             count.append('markers_value')
 
         if request.GET.getlist('sector_id'):
@@ -1059,16 +1038,18 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
             for i in range(0, len(sub_sector)):
                 sub_sector[i] = int(sub_sector[i])
         else:
-            sub_sector = list(Sector.objects.values_list('id', flat=True))
+            sub_sector = list(SubSector.objects.values_list('id', flat=True))
             count.append('sub_sector')
 
         if count:
             if len(count) == 7:
                 query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id')
             else:
-                query = fivew(supplier, program, component, sector, sub_sector, markers, markers_value, count)
+                query = fivew(supplier, program, component, sector, sub_sector, markers, markers_value,
+                              count)
         else:
-            query = fivew(supplier, program, component, sector, sub_sector, markers, markers_value, count)
+            query = fivew(supplier, program, component, sector, sub_sector, markers, markers_value,
+                          count)
 
         # query = FiveW.objects.filter(
         #         program_id__in=program, component_id__in=component, supplier_id__in=supplier,
@@ -1077,8 +1058,13 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
         #         program_id__marker_category__id__in=markers,
         #         program_id__marker_value__id__in=markers_value
         #     )
-
-        allocated_sum = query.aggregate(Sum('allocated_budget'))
+        if query.aggregate(Sum('allocated_budget')).get('allocated_budget__sum') is None:
+            all_budget = {'allocated_budget__sum': 0}
+        else:
+            all_budget = query.aggregate(Sum('allocated_budget'))
+            print(all_budget)
+        
+        allocated_sum = all_budget
         program = query.distinct('program_id').count()
         component = query.distinct('component_id').count()
         partner = query.distinct('supplier_id').count()
