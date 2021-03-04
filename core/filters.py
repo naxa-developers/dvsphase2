@@ -12,7 +12,8 @@ def fivew(supplier, program, component, sector, sub_sector, markers, markers_val
         if x and name_list[index] not in count:
             filter_dict[key_list[index]] = x
 
-    dat_values = FiveW.objects.filter(**filter_dict).values('allocated_budget', 'component_id', 'program_id')
+    dat_values = FiveW.objects.filter(**filter_dict).values('allocated_budget', 'component_id', 'program_id').distinct()
+    print(dat_values)
     return dat_values
 
 
@@ -27,7 +28,7 @@ def fivew_province(province, supplier, program, component, sector, sub_sector, m
         if x and name_list[index] not in count:
             filter_dict[key_list[index]] = x
 
-    dat_values = FiveW.objects.filter(**filter_dict).values('allocated_budget', 'component_id', 'program_id')
+    dat_values = FiveW.objects.filter(**filter_dict).values('allocated_budget', 'component_id', 'program_id').distinct()
     return dat_values
 
 
@@ -42,7 +43,7 @@ def fivew_municipality(municipality, supplier, program, component, sector, sub_s
         if x and name_list[index] not in count:
             filter_dict[key_list[index]] = x
 
-    dat_values = FiveW.objects.filter(**filter_dict).values('allocated_budget', 'component_id', 'program_id')
+    dat_values = FiveW.objects.filter(**filter_dict).values('allocated_budget', 'component_id', 'program_id').distinct()
     return dat_values
 
 
@@ -57,5 +58,5 @@ def fivew_district(district, supplier, program, component, sector, sub_sector, m
         if x and name_list[index] not in count:
             filter_dict[key_list[index]] = x
     print(filter_dict)
-    dat_values = FiveW.objects.filter(**filter_dict).values('allocated_budget', 'component_id', 'program_id')
+    dat_values = FiveW.objects.filter(**filter_dict).values('allocated_budget', 'component_id', 'program_id').distinct()
     return dat_values
