@@ -612,12 +612,18 @@ def feedback_status(request,**kwargs):
     if feedback.status == 'Old':
         feedback.status = "New"
         feedback.save()
-        msg = str(feedback.name)+" "+"Feedback Successfully changed From Old To New"
+        if feedback.name:
+            msg = str(feedback.name)+" "+"Feedback Successfully changed From Old To New"
+        else:
+            msg = "Feedback Successfully changed From Old To New"
         messages.success(request, msg)
     else:
         feedback.status = 'Old'
         feedback.save()
-        msg = str(feedback.name)+" "+"Feedback Successfully changed From New to Old"
+        if feedback.name:
+            msg = str(feedback.name)+" "+"Feedback Successfully changed From New to Old"
+        else:
+            msg = "Feedback Successfully changed From New to Old"
         messages.success(request, msg)
     return redirect('feedback-list')
 
