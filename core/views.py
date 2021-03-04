@@ -1063,6 +1063,8 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
         else:
             all_budget = query.aggregate(Sum('allocated_budget'))
             # print(query)
+        test = FiveW.objects.filter(program_id__in=[42]).exclude(municipality_id__code='-1', district_id__code='-1', province_id__code='-1').values('allocated_budget', 'component_id', 'program_id').distinct()
+        #print(test.aggregate(Sum('allocated_budget')))
 
         allocated_sum = all_budget
         program = query.distinct('program_id').count()
