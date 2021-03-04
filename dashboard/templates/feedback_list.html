@@ -45,7 +45,11 @@
                 <td>{{ feed.type }}</td>
                 <td>{{ feed.subject }}</td>
                 <td>{{ feed.your_feedback }}</td>
+                {% if feed.attachment %}
                 <td><a href="{{ feed.attachment.url }}"><button class="btn btn-primary">Attachment</button></a></td>
+                {% else %}
+                <td>No attachment</td>
+                {% endif %}
                 <td>
                     {% if feed.status == 'New' %}
                     <a href="/dashboard/status/{{feed.id}}">
@@ -73,7 +77,11 @@
                 <td>{{ feed.type }}</td>
                 <td>{{ feed.subject }}</td>
                 <td>{{ feed.your_feedback }}</td>
+                {% if feed.attachment %}
                 <td><a href="{{ feed.attachment.url }}"><button class="btn btn-primary">Attachment</button></a></td>
+                {% else %}
+                <td>No attachment</td>
+                {% endif %}
                 <td>
                     {% if feed.status == 'New' %}
                     <a href="/dashboard/status/{{ feed.id }}">
