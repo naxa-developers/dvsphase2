@@ -7,7 +7,7 @@ from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
     PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm, \
-    GroupForm, BudgetCreateForm, PartnerContactForm, CmpForm, GisStyleForm, UserProfileForm
+    GroupForm, BudgetCreateForm, PartnerContactForm, CmpForm, GisStyleForm, UserProfileForm,FeedbackDataForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -23,7 +23,7 @@ from rest_framework.authentication import TokenAuthentication, SessionAuthentica
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
     MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output, Notification, \
-    BudgetToSecondTier, BudgetToFirstTier, Cmp, GisStyle
+    BudgetToSecondTier, BudgetToFirstTier, Cmp, GisStyle,FeedbackForm
 from .models import UserProfile, Log
 from django.contrib.auth.models import User, Group, Permission
 from django.views.generic import TemplateView
@@ -607,6 +607,20 @@ def updateuser(request, id):
 
     return render(request, "updateuser.html", context)
 
+def feedback_status(request,**kwargs):
+    feedback = FeedbackForm.objects.get(id=kwargs['id'])
+    if feedback.status == 'Old':
+        feedback.status = "New"
+        feedback.save()
+        msg = str(feedback.name)+" "+"Feedback Successfully changed From Old To New"
+        messages.success(request, msg)
+    else:
+        feedback.status = 'Old'
+        feedback.save()
+        msg = str(feedback.name)+" "+"Feedback Successfully changed From New to Old"
+        messages.success(request, msg)
+    return redirect('feedback-list')
+
 
 def activate_user(request, **kwargs):
     user = User.objects.get(id=kwargs['id'])
@@ -1096,6 +1110,20 @@ class IndicatorList(LoginRequiredMixin, ListView):
         data['list'] = indicator_list
         data['user'] = user_data
         data['active'] = 'indicator'
+        return data
+
+class FeedbackList(LoginRequiredMixin, ListView):
+    template_name = 'feedback_list.html'
+    model = FeedbackForm
+
+    def get_context_data(self, **kwargs):
+        data = super(FeedbackList, self).get_context_data(**kwargs)
+        feedbacklist = FeedbackForm.objects.order_by('-status')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = feedbacklist
+        data['user'] = user_data
+        data['active'] = 'feedback'
         return data
 
 

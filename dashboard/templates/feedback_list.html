@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">feedback</i> Feedback</a>
+            </li>
+        </ul>
+    </div>
+        <div class="table-tesponsive program-list">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> {{message}}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <table class="program-table dataTable">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Type</th>
+                <th>Subject</th>
+                <th>Feedback</th>
+                <th>Attachment</th>
+                <th>Status</th>
+                <th></th>
+
+                <!--                <th></th>-->
+            </tr>
+            </thead>
+            {% for feed in list %}
+            {% if feed.status == 'New' %}
+            <tbody>
+            <tr>
+                <td>{{ feed.id }}</td>
+                <td>{{ feed.name }}</td>
+                <td>{{ feed.email }}</td>
+                <td>{{ feed.type }}</td>
+                <td>{{ feed.subject }}</td>
+                <td>{{ feed.your_feedback }}</td>
+                <td><a href="{{ feed.attachment.url }}"><button class="btn btn-primary">Attachment</button></a></td>
+                <td>
+                    {% if feed.status == 'New' %}
+                    <a href="/dashboard/status/{{feed.id}}">
+                        <button type="button" class="btn btn-outline-info">New</button>
+                    </a>
+                    {% else %}
+                    <a href="/dashboard/status/{{feed.id}}">
+                        <button type="button" class="btn btn-outline-danger">Old</button>
+                    </a>
+                    {% endif %}
+                </td>
+                <td></td>
+
+            </tr>
+            </tbody>
+            {% endif %}
+            {% endfor %}
+            {% for feed in list %}
+            {% if feed.status == 'Old' %}
+            <tbody>
+            <tr>
+                <td>{{ feed.id }}</td>
+                <td>{{ feed.name }}</td>
+                <td>{{ feed.email }}</td>
+                <td>{{ feed.type }}</td>
+                <td>{{ feed.subject }}</td>
+                <td>{{ feed.your_feedback }}</td>
+                <td><a href="{{ feed.attachment.url }}"><button class="btn btn-primary">Attachment</button></a></td>
+                <td>
+                    {% if feed.status == 'New' %}
+                    <a href="/dashboard/status/{{ feed.id }}">
+                        <button type="button" class="btn btn-outline-info">New</button>
+                    </a>
+                    {% else %}
+                    <a href="/dashboard/status/{{ feed.id }}">
+                        <button type="button" class="btn btn-outline-danger">Old</button>
+                    </a>
+                    {% endif %}
+                </td>
+                <td></td>
+
+            </tr>
+            </tbody>
+            {% endif %}
+            {% endfor %}
+</main>
+{% endblock %}
