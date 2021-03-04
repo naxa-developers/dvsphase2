@@ -25,7 +25,7 @@
     .dt-buttons {
         display: none;
     }
-    
+
 </style>
 </head>
 
@@ -150,8 +150,6 @@
                     </ul>
                 </li>
                 {% endif %}
-
-
                 {% if perms.core.view_province or perms.core.view_district or perms.core.view_gapanapa %}
                 {% if active == 'location' %}
                 <li class="menu-item active submenu">
@@ -202,6 +200,14 @@
                             class="material-icons">person</i><span>Output</span></a>
                 </li>
                 {% endif %}
+                {% if active == 'feedback' %}
+                <li class="menu-item active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="/dashboard/feedback-list/" class=""><i
+                            class="material-icons">feedback</i><span>FeedbackForm</span></a>
+                </li>
 
                 {% if perms.auth.view_user %}
                 {% if active == 'user' %}

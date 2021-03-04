@@ -544,9 +544,17 @@ class NepalSummary(models.Model):
 
 
 class FeedbackForm(models.Model):
-    name = models.CharField(max_length=500, blank=True, null=True)
+    status = (
+        ('New', 'New'),
+        ('Old', 'Old'),
+    )
+    name = models.CharField(max_length=500)
     email = models.EmailField(blank=True, null=True)
     type = models.CharField(max_length=500, blank=True, null=True)
     subject = models.CharField(max_length=500, blank=True, null=True)
     your_feedback = models.TextField(blank=True, null=True)
     attachment = models.FileField(upload_to='feedbackfiles', blank=True, null=True)
+    status = models.CharField(max_length=500, choices=status, default='New')
+
+    def __str__(self):
+        return self.name

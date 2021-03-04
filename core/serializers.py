@@ -347,4 +347,4 @@ class TravelTimeSerializer(serializers.ModelSerializer):
 class FeedbackSerializer(serializers.ModelSerializer):
     class Meta:
         model = FeedbackForm
-        fields = '__all__'
+        fields = ['name', 'email', 'attachment', 'subject', 'your_feedback', 'type']

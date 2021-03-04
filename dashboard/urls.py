@@ -60,6 +60,7 @@ urlpatterns = [
     path('markervalue-delete/<int:pk>', views.MarkerValueDelete.as_view(), name='markervalue-delete'),
 
     path('indicator-list/', views.IndicatorList.as_view(), name='indicator-list'),
+    path('feedback-list/', views.FeedbackList.as_view(), name='feedback-list'),
     path('indicator-add/', views.IndicatorCreate.as_view(), name='indicator-add'),
     path('indicator-edit/<int:pk>', views.IndicatorUpdate.as_view(), name='indicator-edit'),
     path('indicator-delete/<int:pk>', views.IndicatorDelete.as_view(), name='indicator-delete'),
@@ -90,6 +91,7 @@ urlpatterns = [
 
     path('user-list/', views.UserList.as_view(), name='user-list'),
     path('activate/<int:id>', views.activate_user, name='activate'),
+    path('status/<int:id>', views.feedback_status, name='feedback-status'),
     path('assign-role/<int:id>', views.assign_role, name='assign-role'),
 
     path('project-list/', views.ProjectList.as_view(), name='project-list'),
