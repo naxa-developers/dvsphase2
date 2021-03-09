@@ -246,6 +246,185 @@ class PartnerView(viewsets.ReadOnlyModelViewSet):
         return serializer_class
 
 
+class RegionalProfile(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = FiveW.objects.all()
+    serializer_class = FivewSerializer
+
+    def list(self, request, *args, **kwargs):
+        if request.GET['region'] == 'Province':
+            data = []
+            fivew = []
+            if 'province_code' in request.GET:
+                ind = Indicator.objects.filter(federal_level__in=['province', 'all']).values('category', 'id',
+                                                                                             'federal_level',
+                                                                                             'full_title')
+                for d in ind:
+                    if d['federal_level'] == 'province':
+                        initial_sum = 0
+                        test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
+                                                             province_id__code=int(
+                                                                 request.GET['province_code'])).exclude(
+                            value="2075/76R").values('value')
+                        for test in test:
+                            initial_sum += float(test['value'])
+                        data.append({
+                            'province_code': int(request.GET['province_code']),
+                            'indicatro_id': d['id'],
+                            'indicator_category': d['full_title'],
+                            'value': initial_sum
+                        })
+                    else:
+                        value_sum = 0
+                        dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
+                            province_id__code=request.GET['province_code']).aggregate(
+                            Sum('population'))
+                        test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
+                                                             province_id__code=int(
+                                                                 request.GET['province_code'])).exclude(
+                            value="2075/76R").values('value', 'gapanapa_id__population')
+                        for ind in test:
+                            if math.isnan(float(ind['value'])) == False:
+                                if ind['gapanapa_id__population'] is not None:
+                                    indicator_value = (float(ind['value']) * ind['gapanapa_id__population'])
+                                    value_sum = (value_sum + indicator_value)
+                                else:
+                                    indicator_value = (float(ind['value']))
+                                    value_sum = (value_sum + indicator_value)
+                        value = (value_sum / dist_pop_sum['population__sum'])
+                        data.append({
+                            'province_code': int(request.GET['province_code']),
+                            'indicatro_id': d['id'],
+                            'indicator_category': d['full_title'],
+                            'value': value
+                        })
+                five = FiveW.objects.filter(province_id__code=int(request.GET['province_code'])).exclude(
+                    municipality_id__code='-1',
+                    district_id__code='-1',
+                    province_id__code='-1').values(
+                    'id',
+                    'allocated_budget',
+                    'component_id',
+                    'program_id').distinct()
+
+                fivew.append({
+                    'total_budget': five.aggregate(Sum('allocated_budget'))['allocated_budget__sum'],
+                    'sector_count': five.distinct('component_id__sector').count(),
+                    'program_count': five.distinct('program_id').count(),
+                    'component_count': five.distinct('component_id').count(),
+                    'supplier_count': five.distinct('supplier_id').count()
+                })
+                return Response({"indicatordata": data, "fivewdata": fivew})
+            else:
+                return Response({"result": "Please Pass Province Code"})
+
+        elif request.GET['region'] == 'District':
+            data = []
+            fivew = []
+            if 'district_code' in request.GET:
+                ind = Indicator.objects.filter(federal_level='district').values('category', 'id', 'federal_level',
+                                                                                'indicator')
+                for d in ind:
+                    if d['federal_level'] == 'district':
+                        initial_sum = 0
+                        test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
+                                                             district_id__code=int(request.GET['district_code'])).values(
+                            'value')
+                        for test in test:
+                            initial_sum += float(test['value'])
+                        data.append({
+                            'district_code': int(request.GET['district_code']),
+                            'indicator_category': d['indicator'],
+                            'value': initial_sum
+                        })
+                    else:
+                        test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
+                                                             district_id__code=int(request.GET['district_code'])).values(
+                            'value')
+                        value_sum = 0
+                        dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
+                            district_id=request.GET['district_code']).aggregate(
+                            Sum('population'))
+
+                        for ind in test:
+                            if math.isnan(ind['value']) == False:
+                                if ind['gapanapa_id__population'] is not None:
+                                    indicator_value = (float(ind['value']) * ind['gapanapa_id__population'])
+                                    value_sum = (value_sum + indicator_value)
+                                else:
+                                    indicator_value = (float(ind['value']))
+                                    value_sum = (value_sum + indicator_value)
+                            else:
+                                value_sum = (value_sum + 0)
+
+                        # print(value_sum)
+                        # print(dist_pop_sum['population__sum'])
+                        value = (value_sum / dist_pop_sum['population__sum'])
+                        data.append({
+                            'district_code': int(request.GET['district_code']),
+                            'indicator_category': d['indicator'],
+                            'value': value_sum
+                        })
+                five = FiveW.objects.filter(district_id__code=int(request.GET['district_code'])).exclude(
+                    municipality_id__code='-1',
+                    district_id__code='-1',
+                    province_id__code='-1').values(
+                    'id',
+                    'allocated_budget',
+                    'component_id',
+                    'program_id').distinct()
+
+                fivew.append({
+                    'total_budget': five.aggregate(Sum('allocated_budget'))['allocated_budget__sum'],
+                    'sector_count': five.distinct('component_id__sector').count(),
+                    'program_count': five.distinct('program_id').count(),
+                    'component_count': five.distinct('component_id').count(),
+                    'supplier_count': five.distinct('supplier_id').count()
+                })
+                return Response({"indicatordata": data, "fivewdata": fivew})
+            else:
+                return Response({"result": "Please Pass District Code"})
+        elif request.GET['region'] == 'Municipality':
+            data = []
+            fivew = []
+            if 'municipality_code' in request.GET:
+                ind = Indicator.objects.filter(federal_level='palika').values('category', 'id', 'federal_level',
+                                                                              'full_title')
+                for d in ind:
+                    initial_sum = 0
+                    test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
+                                                         province_id=int(request.GET['municipality_code'])).exclude(
+                        value="2075/76R").values('value')
+                    for test in test:
+                        initial_sum += float(test['value'])
+                    data.append({
+                        'province_code': int(request.GET['province_code']),
+                        'indicator_category': d['full_title'],
+                        'value': initial_sum
+                    })
+                five = FiveW.objects.filter(district_id__code=int(request.GET['district_code'])).exclude(
+                    municipality_id__code='-1',
+                    district_id__code='-1',
+                    province_id__code='-1').values(
+                    'id',
+                    'allocated_budget',
+                    'component_id',
+                    'program_id').distinct()
+
+                fivew.append({
+                    'total_budget': five.aggregate(Sum('allocated_budget'))['allocated_budget__sum'],
+                    'sector_count': five.distinct('component_id__sector').count(),
+                    'program_count': five.distinct('program_id').count(),
+                    'component_count': five.distinct('component_id').count(),
+                    'supplier_count': five.distinct('supplier_id').count()
+                })
+                return Response({"indicatordata": data, "fivewdata": fivew})
+            else:
+                return Response({"result": "Please Pass District Code"})
+        else:
+            return Response({"results": "Invalid Region"})
+
+
 class NepalSummaryApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     filter_backends = [DjangoFilterBackend]
@@ -331,9 +510,12 @@ class DistrictIndicator(viewsets.ModelViewSet):
                         # print(math.isnan(ind['value']))
 
                         if math.isnan(ind['value']) == False:
-                            indicator_value = (ind['value'] * ind['gapanapa_id__population'])
-                            # print(indicator_value)
-                            value_sum = (value_sum + indicator_value)
+                            if ind['gapanapa_id__population'] is not None:
+                                indicator_value = (float(ind['value']) * ind['gapanapa_id__population'])
+                                value_sum = (value_sum + indicator_value)
+                            else:
+                                indicator_value = (float(ind['value']))
+                                value_sum = (value_sum + indicator_value)
                         else:
                             value_sum = (value_sum + 0)
 
@@ -388,15 +570,21 @@ class ProvinceIndicator(viewsets.ModelViewSet):
                     province_id=dist['id']).aggregate(
                     Sum('population'))
                 indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
-                                                          'gapanapa_id__population').filter(
+                                                          'gapanapa_id__population','indicator_id__federal_level').filter(
                     indicator_id=int(id_indicator[i]),
                     province_id=dist['id'])
-
                 for ind in indicator:
-                    if math.isnan(float(ind['value'])) == False:
-                        indicator_value = (float(ind['value']))
-                        value_sum = (value_sum + indicator_value)
-                value = value_sum
+                    if ind['indicator_id__federal_level']== 'province':
+                        value = ind['value']
+                    elif ind['indicator_id__federal_level']== 'all':
+                        if math.isnan(float(ind['value'])) == False:
+                            if ind['gapanapa_id__population'] is not None:
+                                indicator_value = (float(ind['value']) * ind['gapanapa_id__population'])
+                                value_sum = (value_sum + indicator_value)
+                            else:
+                                indicator_value = (float(ind['value']))
+                                value_sum = (value_sum + indicator_value)
+                        value = (value_sum / dist_pop_sum['population__sum'])
 
                 data.append(
                     {
@@ -1063,8 +1251,11 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
         else:
             all_budget = query.aggregate(Sum('allocated_budget'))
             # print(query)
-        test = FiveW.objects.filter(program_id__in=[42]).exclude(municipality_id__code='-1', district_id__code='-1', province_id__code='-1').values('allocated_budget', 'component_id', 'program_id').distinct()
-        #print(test.aggregate(Sum('allocated_budget')))
+        test = FiveW.objects.filter(program_id__in=[42]).exclude(municipality_id__code='-1', district_id__code='-1',
+                                                                 province_id__code='-1').values('allocated_budget',
+                                                                                                'component_id',
+                                                                                                'program_id').distinct()
+        # print(test.aggregate(Sum('allocated_budget')))
 
         allocated_sum = all_budget
         program = query.distinct('program_id').count()

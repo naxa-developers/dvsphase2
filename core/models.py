@@ -316,8 +316,10 @@ class Indicator(models.Model):
     unit = models.CharField(max_length=1500, null=True, blank=True)
     data_type = models.CharField(max_length=1500, null=True, blank=True)
 
+
     def __str__(self):
         return self.indicator
+
 
 
 class IndicatorValue(models.Model):
