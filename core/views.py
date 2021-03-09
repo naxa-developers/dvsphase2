@@ -256,20 +256,48 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             data = []
             fivew = []
             if 'province_code' in request.GET:
-                ind = Indicator.objects.filter(federal_level='province').values('category', 'id', 'federal_level',
-                                                                                'full_title')
+                ind = Indicator.objects.filter(federal_level__in=['province', 'all']).values('category', 'id',
+                                                                                             'federal_level',
+                                                                                             'full_title')
                 for d in ind:
-                    initial_sum = 0
-                    test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
-                                                         province_id__code=int(request.GET['province_code'])).exclude(
-                        value="2075/76R").values('value')
-                    for test in test:
-                        initial_sum += float(test['value'])
-                    data.append({
-                        'province_code': int(request.GET['province_code']),
-                        'indicator_category': d['full_title'],
-                        'value': initial_sum
-                    })
+                    if d['federal_level'] == 'province':
+                        initial_sum = 0
+                        test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
+                                                             province_id__code=int(
+                                                                 request.GET['province_code'])).exclude(
+                            value="2075/76R").values('value')
+                        for test in test:
+                            initial_sum += float(test['value'])
+                        data.append({
+                            'province_code': int(request.GET['province_code']),
+                            'indicatro_id': d['id'],
+                            'indicator_category': d['full_title'],
+                            'value': initial_sum
+                        })
+                    else:
+                        value_sum = 0
+                        dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
+                            province_id__code=request.GET['province_code']).aggregate(
+                            Sum('population'))
+                        test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
+                                                             province_id__code=int(
+                                                                 request.GET['province_code'])).exclude(
+                            value="2075/76R").values('value', 'gapanapa_id__population')
+                        for ind in test:
+                            if math.isnan(float(ind['value'])) == False:
+                                if ind['gapanapa_id__population'] is not None:
+                                    indicator_value = (float(ind['value']) * ind['gapanapa_id__population'])
+                                    value_sum = (value_sum + indicator_value)
+                                else:
+                                    indicator_value = (float(ind['value']))
+                                    value_sum = (value_sum + indicator_value)
+                        value = (value_sum / dist_pop_sum['population__sum'])
+                        data.append({
+                            'province_code': int(request.GET['province_code']),
+                            'indicatro_id': d['id'],
+                            'indicator_category': d['full_title'],
+                            'value': value
+                        })
                 five = FiveW.objects.filter(province_id__code=int(request.GET['province_code'])).exclude(
                     municipality_id__code='-1',
                     district_id__code='-1',
@@ -295,18 +323,48 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             fivew = []
             if 'district_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level='district').values('category', 'id', 'federal_level',
-                                                                                'full_title')
+                                                                                'indicator')
                 for d in ind:
-                    initial_sum = 0
-                    test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
-                                                         district_id__code=int(request.GET['district_code'])).values('value')
-                    for test in test:
-                        initial_sum += float(test['value'])
-                    data.append({
-                        'district_code': int(request.GET['district_code']),
-                        'indicator_category': d['full_title'],
-                        'value': initial_sum
-                    })
+                    if d['federal_level'] == 'district':
+                        initial_sum = 0
+                        test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
+                                                             district_id__code=int(request.GET['district_code'])).values(
+                            'value')
+                        for test in test:
+                            initial_sum += float(test['value'])
+                        data.append({
+                            'district_code': int(request.GET['district_code']),
+                            'indicator_category': d['indicator'],
+                            'value': initial_sum
+                        })
+                    else:
+                        test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
+                                                             district_id__code=int(request.GET['district_code'])).values(
+                            'value')
+                        value_sum = 0
+                        dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
+                            district_id=request.GET['district_code']).aggregate(
+                            Sum('population'))
+
+                        for ind in test:
+                            if math.isnan(ind['value']) == False:
+                                if ind['gapanapa_id__population'] is not None:
+                                    indicator_value = (float(ind['value']) * ind['gapanapa_id__population'])
+                                    value_sum = (value_sum + indicator_value)
+                                else:
+                                    indicator_value = (float(ind['value']))
+                                    value_sum = (value_sum + indicator_value)
+                            else:
+                                value_sum = (value_sum + 0)
+
+                        # print(value_sum)
+                        # print(dist_pop_sum['population__sum'])
+                        value = (value_sum / dist_pop_sum['population__sum'])
+                        data.append({
+                            'district_code': int(request.GET['district_code']),
+                            'indicator_category': d['indicator'],
+                            'value': value_sum
+                        })
                 five = FiveW.objects.filter(district_id__code=int(request.GET['district_code'])).exclude(
                     municipality_id__code='-1',
                     district_id__code='-1',
@@ -331,7 +389,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             fivew = []
             if 'municipality_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level='palika').values('category', 'id', 'federal_level',
-                                                                                'full_title')
+                                                                              'full_title')
                 for d in ind:
                     initial_sum = 0
                     test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
@@ -512,19 +570,21 @@ class ProvinceIndicator(viewsets.ModelViewSet):
                     province_id=dist['id']).aggregate(
                     Sum('population'))
                 indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
-                                                          'gapanapa_id__population').filter(
+                                                          'gapanapa_id__population','indicator_id__federal_level').filter(
                     indicator_id=int(id_indicator[i]),
                     province_id=dist['id'])
-
                 for ind in indicator:
-                    if math.isnan(float(ind['value'])) == False:
-                        if ind['gapanapa_id__population'] is not None:
-                            indicator_value = (float(ind['value']) * ind['gapanapa_id__population'])
-                            value_sum = (value_sum + indicator_value)
-                        else:
-                            indicator_value = (float(ind['value']))
-                            value_sum = (value_sum + indicator_value)
-                value = value_sum
+                    if ind['indicator_id__federal_level']== 'province':
+                        value = ind['value']
+                    elif ind['indicator_id__federal_level']== 'all':
+                        if math.isnan(float(ind['value'])) == False:
+                            if ind['gapanapa_id__population'] is not None:
+                                indicator_value = (float(ind['value']) * ind['gapanapa_id__population'])
+                                value_sum = (value_sum + indicator_value)
+                            else:
+                                indicator_value = (float(ind['value']))
+                                value_sum = (value_sum + indicator_value)
+                        value = (value_sum / dist_pop_sum['population__sum'])
 
                 data.append(
                     {
