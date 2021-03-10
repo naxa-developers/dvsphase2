@@ -23,7 +23,7 @@ class Command(BaseCommand):
 
         not_cols = ['District', 'district', 'Name of municipalities', 'Name of Municipalities', 'CBS_CODE',
                     'HLCIT_CODE', 'Province', 'province', 'Palika',
-                    'palika', 'CBS_Code', 'District ', 'code', 'cbs code', 'Districts']
+                    'palika', 'CBS_Code', 'District ', 'code', 'cbs code', 'Districts', 'Year', 'name', 'Provinces']
 
         try:
             indicator = [

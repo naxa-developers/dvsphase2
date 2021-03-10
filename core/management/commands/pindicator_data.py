@@ -11,6 +11,14 @@ def province(code):
         obj = None
     return obj
 
+def valuedata(val):
+    try:
+        data = float(val)
+    except:
+        data = 0
+    return data
+
+
 
 class Command(BaseCommand):
     help = 'load province data from province.xlsx file'
@@ -28,7 +36,7 @@ class Command(BaseCommand):
         category_name = ((path.split('/'))[-1]).replace('.csv', '')
         not_cols = ['District', 'district', 'Name of municipalities', 'Name of Municipalities', 'CBS_CODE',
                     'HLCIT_CODE', 'Province', 'province', 'Palika',
-                    'palika', 'CBS_Code', 'District ', 'code', 'cbs code', 'Districts']
+                    'palika', 'CBS_Code', 'District ', 'code', 'cbs code', 'Districts', 'Year', 'name', 'Provinces']
         try:
             for col in df_col_list:
                 if not col in not_cols:
@@ -36,7 +44,7 @@ class Command(BaseCommand):
                         IndicatorValue(
                             indicator_id=Indicator.objects.get(indicator=col, category=category_name),
                             province_id=province(df['code'][row]) if 'code' in df_col_list else None,
-                            value=df[col][row],
+                            value=float(df[col][row]),
 
                         ) for row in range(0, upper_range)
                     ]

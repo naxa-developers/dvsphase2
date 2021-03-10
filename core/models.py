@@ -326,7 +326,7 @@ class IndicatorValue(models.Model):
     indicator_id = models.ForeignKey(Indicator, on_delete=models.CASCADE, related_name='Indicator', null=True,
                                      blank=True)
     gapanapa_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='IgapaNapa', null=True, blank=True)
-    value = models.CharField(max_length=500, default=None, blank=True, null=True)
+    value = models.FloatField(default=0)
     district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='Idistrict', null=True, blank=True)
     province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='Iprovince', null=True, blank=True)
 
