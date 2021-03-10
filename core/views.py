@@ -272,7 +272,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             initial_sum += float(test['value'])
                         data.append({
                             'province_code': int(request.GET['province_code']),
-                            'indicatro_id': d['id'],
+                            'indicator_id': d['id'],
                             'indicator': d['indicator'],
                             'value': initial_sum
                         })
@@ -296,7 +296,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         value = (value_sum / dist_pop_sum['population__sum'])
                         data.append({
                             'province_code': int(request.GET['province_code']),
-                            'indicatro_id': d['id'],
+                            'indicator_id': d['id'],
                             'indicator': d['indicator'],
                             'value': value
                         })
@@ -355,6 +355,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             initial_sum += float(test['value'])
                         data.append({
                             'district_code': int(request.GET['district_code']),
+                            'indicator_id': d['id'],
                             'indicator': d['indicator'],
                             'value': initial_sum
                         })
@@ -384,6 +385,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         value = (value_sum / dist_pop_sum['population__sum'])
                         data.append({
                             'district_code': int(request.GET['district_code']),
+                            'indicator_id': d['id'],
                             'indicator': d['indicator'],
                             'value': value_sum
                         })
@@ -443,6 +445,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         initial_sum += float(test['value'])
                     data.append({
                         'municipality_code': int(request.GET['municipality_code']),
+                        'indicatr_id': d['id'],
                         'indicator': d['indicator'],
                         'value': initial_sum
                     })
