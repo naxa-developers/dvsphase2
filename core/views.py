@@ -256,11 +256,11 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             data = []
             fivew = []
             active_sectors = []
-            ho = {}
             if 'province_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level__in=['province', 'all']).values('category', 'id',
                                                                                              'federal_level',
-                                                                                             'full_title')
+                                                                                             'full_title',
+                                                                                             'indicator').distinct()
                 for d in ind:
                     if d['federal_level'] == 'province':
                         initial_sum = 0
@@ -273,7 +273,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         data.append({
                             'province_code': int(request.GET['province_code']),
                             'indicatro_id': d['id'],
-                            'indicator_category': d['full_title'],
+                            'indicator': d['indicator'],
                             'value': initial_sum
                         })
                     else:
@@ -297,7 +297,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         data.append({
                             'province_code': int(request.GET['province_code']),
                             'indicatro_id': d['id'],
-                            'indicator_category': d['full_title'],
+                            'indicator': d['indicator'],
                             'value': value
                         })
                 five = FiveW.objects.filter(province_id__code=int(request.GET['province_code'])).exclude(
@@ -342,7 +342,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             if 'district_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level__in=['district', 'all']).values('category', 'id',
                                                                                              'federal_level',
-                                                                                             'indicator')
+                                                                                             'indicator').distinct()
                 print(ind)
                 for d in ind:
                     if d['federal_level'] == 'district':
@@ -355,7 +355,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             initial_sum += float(test['value'])
                         data.append({
                             'district_code': int(request.GET['district_code']),
-                            'indicator_category': d['indicator'],
+                            'indicator': d['indicator'],
                             'value': initial_sum
                         })
                     else:
@@ -384,7 +384,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         value = (value_sum / dist_pop_sum['population__sum'])
                         data.append({
                             'district_code': int(request.GET['district_code']),
-                            'indicator_category': d['indicator'],
+                            'indicator': d['indicator'],
                             'value': value_sum
                         })
                 five = FiveW.objects.filter(district_id__code=int(request.GET['district_code'])).exclude(
@@ -429,7 +429,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             if 'municipality_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level__in=['palika', 'all']).values('category', 'id',
                                                                                            'federal_level',
-                                                                                           'full_title')
+                                                                                           'full_title',
+                                                                                           'indicator').distinct()
 
                 for d in ind:
                     initial_sum = 0
@@ -442,7 +443,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         initial_sum += float(test['value'])
                     data.append({
                         'municipality_code': int(request.GET['municipality_code']),
-                        'indicator_category': d['full_title'],
+                        'indicator': d['indicator'],
                         'value': initial_sum
                     })
                 five = FiveW.objects.filter(municipality_id__code=int(request.GET['municipality_code'])).exclude(
