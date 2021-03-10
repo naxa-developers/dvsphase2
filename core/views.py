@@ -326,7 +326,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                 finaldata = unique(active_sectors)
                 fivew.append({
                     'total_budget': five.aggregate(Sum('allocated_budget'))['allocated_budget__sum'],
-                    'sector_count': five.distinct('component_id__sector').count(),
+                    'sector_count': five.distinct('component_id__sector').exclude(component_id__sector=None).count(),
                     'program_count': five.distinct('program_id').count(),
                     'component_count': five.distinct('component_id').count(),
                     'supplier_count': five.distinct('supplier_id').count()
@@ -414,7 +414,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
 
                 fivew.append({
                     'total_budget': five.aggregate(Sum('allocated_budget'))['allocated_budget__sum'],
-                    'sector_count': five.distinct('component_id__sector').count(),
+                    'sector_count': five.distinct('component_id__sector').exclude(component_id__sector=None).count(),
                     'program_count': five.distinct('program_id').count(),
                     'component_count': five.distinct('component_id').count(),
                     'supplier_count': five.distinct('supplier_id').count()
@@ -473,7 +473,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
 
                 fivew.append({
                     'total_budget': five.aggregate(Sum('allocated_budget'))['allocated_budget__sum'],
-                    'sector_count': five.distinct('component_id__sector').count(),
+                    'sector_count': five.distinct('component_id__sector').exclude(component_id__sector=None).count(),
                     'program_count': five.distinct('program_id').count(),
                     'component_count': five.distinct('component_id').count(),
                     'supplier_count': five.distinct('supplier_id').count()
