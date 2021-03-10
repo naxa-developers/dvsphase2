@@ -331,7 +331,7 @@ class IndicatorValue(models.Model):
     province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='Iprovince', null=True, blank=True)
 
     def __str__(self):
-        return self.value
+        return self.indicator_id.indicator
 
 
 class Filter(models.Model):
