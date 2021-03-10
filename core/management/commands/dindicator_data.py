@@ -12,6 +12,12 @@ def gapanapa(code):
     return obj
 
 
+def district(code):
+    try:
+        obj = District.objects.get(code=str(code))
+    except ObjectDoesNotExist:
+        obj = None
+    return obj
 
 def valuedata(val):
     try:
