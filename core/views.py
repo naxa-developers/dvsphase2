@@ -252,7 +252,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
     serializer_class = FivewSerializer
 
     def list(self, request, *args, **kwargs):
-        if request.GET['region'] == 'Province':
+        if request.GET['region'] == 'province':
             data = []
             fivew = []
             active_sectors = []
@@ -271,7 +271,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         for test in test:
                             initial_sum += float(test['value'])
                         data.append({
-                            'province_code': int(request.GET['province_code']),
+                            'code': int(request.GET['province_code']),
                             'indicator_id': d['id'],
                             'indicator': d['indicator'],
                             'value': initial_sum
@@ -295,7 +295,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                     value_sum = (value_sum + indicator_value)
                         value = (value_sum / dist_pop_sum['population__sum'])
                         data.append({
-                            'province_code': int(request.GET['province_code']),
+                            'code': int(request.GET['province_code']),
                             'indicator_id': d['id'],
                             'indicator': d['indicator'],
                             'value': value
@@ -335,7 +335,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             else:
                 return Response({"result": "Please Pass Province Code"})
 
-        elif request.GET['region'] == 'District':
+        elif request.GET['region'] == 'district':
             data = []
             fivew = []
             active_sectors = []
@@ -354,7 +354,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         for test in test:
                             initial_sum += float(test['value'])
                         data.append({
-                            'district_code': int(request.GET['district_code']),
+                            'code': int(request.GET['district_code']),
                             'indicator_id': d['id'],
                             'indicator': d['indicator'],
                             'value': initial_sum
@@ -384,7 +384,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         # print(dist_pop_sum['population__sum'])
                         value = (value_sum / dist_pop_sum['population__sum'])
                         data.append({
-                            'district_code': int(request.GET['district_code']),
+                            'code': int(request.GET['district_code']),
                             'indicator_id': d['id'],
                             'indicator': d['indicator'],
                             'value': value_sum
@@ -424,7 +424,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                 return Response({"indicatordata": data, "fivewdata": fivew, "active_sectors": finaldata})
             else:
                 return Response({"result": "Please Pass District Code"})
-        elif request.GET['region'] == 'Municipality':
+        elif request.GET['region'] == 'municipality':
             data = []
             fivew = []
             active_sectors = []
@@ -444,8 +444,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     for test in test:
                         initial_sum += float(test['value'])
                     data.append({
-                        'municipality_code': int(request.GET['municipality_code']),
-                        'indicatr_id': d['id'],
+                        'code': int(request.GET['municipality_code']),
+                        'indicator_id': d['id'],
                         'indicator': d['indicator'],
                         'value': initial_sum
                     })
