@@ -266,10 +266,9 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         initial_sum = 0
                         test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
                                                              province_id__code=int(
-                                                                 request.GET['province_code'])).exclude(
-                            value="2075/76R").values('value')
+                                                                 request.GET['province_code'])).values('value')
                         for test in test:
-                            initial_sum += float(test['value'])
+                            initial_sum += test['value']
                         data.append({
                             'code': int(request.GET['province_code']),
                             'indicator_id': d['id'],
@@ -283,15 +282,14 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             Sum('population'))
                         test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
                                                              province_id__code=int(
-                                                                 request.GET['province_code'])).exclude(
-                            value="2075/76R").values('value', 'gapanapa_id__population')
+                                                                 request.GET['province_code'])).values('value', 'gapanapa_id__population')
                         for ind in test:
-                            if math.isnan(float(ind['value'])) == False:
+                            if math.isnan(ind['value']) == False:
                                 if ind['gapanapa_id__population'] is not None:
-                                    indicator_value = (float(ind['value']) * ind['gapanapa_id__population'])
+                                    indicator_value = (ind['value'] * ind['gapanapa_id__population'])
                                     value_sum = (value_sum + indicator_value)
                                 else:
-                                    indicator_value = (float(ind['value']))
+                                    indicator_value = (ind['value'])
                                     value_sum = (value_sum + indicator_value)
                         value = (value_sum / dist_pop_sum['population__sum'])
                         data.append({
@@ -352,7 +350,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                                                  request.GET['district_code'])).values(
                             'value')
                         for test in test:
-                            initial_sum += float(test['value'])
+                            initial_sum += test['value']
                         data.append({
                             'code': int(request.GET['district_code']),
                             'indicator_id': d['id'],
@@ -370,12 +368,12 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             Sum('population'))
 
                         for ind in test:
-                            if math.isnan(float(ind['value'])) == False:
+                            if math.isnan(ind['value']) == False:
                                 if ind['gapanapa_id__population'] is not None:
-                                    indicator_value = (float(ind['value']) * ind['gapanapa_id__population'])
+                                    indicator_value = (ind['value'] * ind['gapanapa_id__population'])
                                     value_sum = (value_sum + indicator_value)
                                 else:
-                                    indicator_value = (float(ind['value']))
+                                    indicator_value = (ind['value'])
                                     value_sum = (value_sum + indicator_value)
                             else:
                                 value_sum = (value_sum + 0)
@@ -442,7 +440,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                                                                                        'value')
                     print(test)
                     for test in test:
-                        initial_sum += float(test['value'])
+                        initial_sum += test['value']
                     data.append({
                         'code': int(request.GET['municipality_code']),
                         'indicator_id': d['id'],
@@ -574,10 +572,10 @@ class DistrictIndicator(viewsets.ModelViewSet):
 
                         if math.isnan(ind['value']) == False:
                             if ind['gapanapa_id__population'] is not None:
-                                indicator_value = (float(ind['value']) * ind['gapanapa_id__population'])
+                                indicator_value = (ind['value'] * ind['gapanapa_id__population'])
                                 value_sum = (value_sum + indicator_value)
                             else:
-                                indicator_value = (float(ind['value']))
+                                indicator_value = (ind['value'])
                                 value_sum = (value_sum + indicator_value)
                         else:
                             value_sum = (value_sum + 0)
@@ -641,12 +639,12 @@ class ProvinceIndicator(viewsets.ModelViewSet):
                     if ind['indicator_id__federal_level'] == 'province':
                         value = ind['value']
                     elif ind['indicator_id__federal_level'] == 'all':
-                        if math.isnan(float(ind['value'])) == False:
+                        if math.isnan(ind['value']) == False:
                             if ind['gapanapa_id__population'] is not None:
-                                indicator_value = (float(ind['value']) * ind['gapanapa_id__population'])
+                                indicator_value = (ind['value'] * ind['gapanapa_id__population'])
                                 value_sum = (value_sum + indicator_value)
                             else:
-                                indicator_value = (float(ind['value']))
+                                indicator_value = (ind['value'])
                                 value_sum = (value_sum + indicator_value)
                         value = (value_sum / dist_pop_sum['population__sum'])
 
