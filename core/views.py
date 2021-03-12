@@ -254,13 +254,15 @@ class ProgramProfile(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         data = []
-        activemap  = []
+        activemap = []
         if request.GET.getlist('region') and request.GET.getlist('program_id'):
             if request.GET['region'] == 'province':
                 programid = request.GET['program_id']
-                fivew = FiveW.objects.filter(program_id=programid).values('id', "allocated_budget", 'province_id', 'district_id',
-                                                   'municipality_id', 'component_id__name',
-                                                   'province_id__name','province_id__code').distinct()
+                fivew = FiveW.objects.filter(program_id=programid).values('id', "allocated_budget", 'province_id',
+                                                                          'district_id',
+                                                                          'municipality_id', 'component_id__name',
+                                                                          'province_id__name',
+                                                                          'province_id__code').distinct()
                 fivew = fivew.exclude(
                     municipality_id__code='-1',
                     district_id__code='-1',
@@ -297,18 +299,23 @@ class ProgramProfile(viewsets.ReadOnlyModelViewSet):
                 program = Program.objects.get(id=programid)
                 return Response(
                     {"program_name": program.name, "start_date": program.start_date, "end_date": program.end_date,
-                     "total_budget": total_budget['allocated_budget__sum'], "province_count": province_count,
+                     "total_budget": program.total_budget, "province_count": province_count,
                      "district_count": district_count, "municiaplity_count": municipality_count,
                      'federal_level_components': finaldata, 'activemap': activemap})
             elif request.GET['region'] == 'district':
                 programid = request.GET['program_id']
-                fivew = FiveW.objects.filter(program_id=programid).values('id', "allocated_budget", 'province_id', 'district_id',
-                                                   'municipality_id', 'component_id__name',
-                                                   'district_id__name','district_id__code').distinct()
+                fivew = FiveW.objects.filter(program_id=programid).values('id', "allocated_budget", 'province_id',
+                                                                          'district_id',
+                                                                          'municipality_id', 'component_id__name',
+                                                                          'district_id__name',
+                                                                          'district_id__code').distinct()
                 fivew = fivew.exclude(
                     municipality_id__code='-1',
                     district_id__code='-1',
                     province_id__code='-1')
+                for f in fivew:
+                    if f['district_id'] is not None:
+                        data.append(f['component_id__name'])
 
                 for t in fivew.distinct('district_id'):
                     acti = {
@@ -343,9 +350,11 @@ class ProgramProfile(viewsets.ReadOnlyModelViewSet):
                      'federal_level_components': finaldata, 'activemap': activemap})
             elif request.GET['region'] == 'municipality':
                 programid = request.GET['program_id']
-                fivew = FiveW.objects.filter(program_id=programid).values('id', "allocated_budget", 'province_id', 'district_id',
-                                                   'municipality_id', 'component_id__name',
-                                                   'municipality_id__name','municipality_id__code').distinct()
+                fivew = FiveW.objects.filter(program_id=programid).values('id', "allocated_budget", 'province_id',
+                                                                          'district_id',
+                                                                          'municipality_id', 'component_id__name',
+                                                                          'municipality_id__name',
+                                                                          'municipality_id__code').distinct()
 
                 fivew = fivew.exclude(
                     municipality_id__code='-1',
@@ -354,7 +363,7 @@ class ProgramProfile(viewsets.ReadOnlyModelViewSet):
 
                 for f in fivew:
                     if f['municipality_id'] is not None:
-                        data.append(f['municipality_id__name'])
+                        data.append(f['component_id__name'])
 
                 for t in fivew.distinct('municipality_id'):
                     acti = {
@@ -1589,8 +1598,8 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
         total_partner = Partner.objects.all().count()
         total_component = Project.objects.all().count()
         total_sector = Sector.objects.all().count()
-        total_allocated_budget = FiveW.objects.values('allocated_budget', 'component_id', 'program_id')
-        total_budget = total_allocated_budget.aggregate(Sum('allocated_budget'))
+        total_allocated_budget = Program.objects.values('id', 'total_budget')
+        total_budget = total_allocated_budget.aggregate(Sum('total_budget'))
 
         return Response({
             'allocated_budget': allocated_sum['allocated_budget__sum'],
@@ -1598,7 +1607,7 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
             'partner': partner,
             'component': component,
             'sector': sector,
-            'total_allocated_budget': total_budget['allocated_budget__sum'],
+            'total_allocated_budget': total_budget['total_budget__sum'],
             'total_program': total_program,
             'total_partner': total_partner,
             'total_component': total_component,
