@@ -2289,7 +2289,7 @@ class IndicatorUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "Indicator " + self.object.name + "  has been edited by " + self.request.user.username
+        message = "Indicator " + self.object.indicator + "  has been edited by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
