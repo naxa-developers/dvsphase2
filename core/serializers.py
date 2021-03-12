@@ -92,7 +92,8 @@ class ProgramSerializer(serializers.ModelSerializer):
     class Meta:
         model = Program
         fields = (
-            'id', 'name', 'code', 'iati', 'total_budget', 'partner', 'component', 'marker_category', 'marker_value',
+            'id', 'name', 'start_date', 'end_date', 'code', 'iati', 'total_budget', 'partner', 'component',
+            'marker_category', 'marker_value',
             'sector',
             'sub_sector')
 

@@ -20,6 +20,8 @@ import math
 from django.db.models import Q
 from rest_framework.parsers import MultiPartParser, FormParser
 from .filters import fivew, fivew_province, fivew_district, fivew_municipality
+from datetime import datetime,date
+
 
 
 # Create your views here.
@@ -282,7 +284,8 @@ class ProgramProfile(viewsets.ReadOnlyModelViewSet):
                             Sum('population'))
                         test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
                                                              province_id__code=int(
-                                                                 request.GET['province_code'])).values('value', 'gapanapa_id__population')
+                                                                 request.GET['province_code'])).values('value',
+                                                                                                       'gapanapa_id__population')
                         for ind in test:
                             if math.isnan(ind['value']) == False:
                                 if ind['gapanapa_id__population'] is not None:
@@ -485,6 +488,7 @@ class ProgramProfile(viewsets.ReadOnlyModelViewSet):
         else:
             return Response({"results": "Invalid Region"})
 
+
 class RegionalProfile(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = FiveW.objects.all()
@@ -521,7 +525,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             Sum('population'))
                         test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
                                                              province_id__code=int(
-                                                                 request.GET['province_code'])).values('value', 'gapanapa_id__population')
+                                                                 request.GET['province_code'])).values('value',
+                                                                                                       'gapanapa_id__population')
                         for ind in test:
                             if math.isnan(ind['value']) == False:
                                 if ind['gapanapa_id__population'] is not None:
@@ -719,6 +724,125 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     'supplier_count': five.distinct('supplier_id').count()
                 })
                 return Response({"indicatordata": data, "fivewdata": fivew, "active_sectors": finaldata})
+            else:
+                return Response({"result": "Please Pass Municipality Code"})
+        else:
+            return Response({"results": "Invalid Region"})
+
+
+class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = FiveW.objects.all()
+    serializer_class = FivewSerializer
+
+    def list(self, request, *args, **kwargs):
+        if request.GET['region'] == 'province':
+            data = []
+            fivew = []
+            active_sectors = []
+            if 'province_code' in request.GET:
+                five = FiveW.objects.filter(province_id__code=int(request.GET['province_code'])).exclude(
+                    municipality_id__code='-1',
+                    district_id__code='-1',
+                    province_id__code='-1').distinct()
+                for f in five:
+                    data.append(f.program_id.name)
+
+                def unique(list1):
+                    unique_list = []
+                    finaldata = []
+                    for x in list1:
+                        if x not in unique_list:
+                            unique_list.append(x)
+                    for x in unique_list:
+                        finaldata.append(x)
+                    if None in finaldata:
+                        finaldata.remove(None)
+                    return finaldata
+
+                finaldata = unique(active_sectors)
+                return Response({"result": data})
+            else:
+                return Response({"result": "Please Pass Province Code"})
+
+        elif request.GET['region'] == 'district':
+            data = []
+            fivew = []
+            active_sectors = []
+            if 'district_code' in request.GET:
+                five = FiveW.objects.filter(district_id__code=int(request.GET['district_code'])).exclude(
+                    municipality_id__code='-1',
+                    district_id__code='-1',
+                    province_id__code='-1').values(
+                    'id',
+                    'allocated_budget',
+                    'component_id__sector__name',
+                    'program_id').distinct()
+                for f in five:
+                    active_sectors.append(f['component_id__sector__name'])
+
+                def unique(list1):
+                    unique_list = []
+                    finaldata = []
+                    for x in list1:
+                        if x not in unique_list:
+                            unique_list.append(x)
+                    for x in unique_list:
+                        finaldata.append(x)
+                    if None in finaldata:
+                        finaldata.remove(None)
+                    return finaldata
+
+                finaldata = unique(active_sectors)
+
+                fivew.append({
+                    'total_budget': five.aggregate(Sum('allocated_budget'))['allocated_budget__sum'],
+                    'sector_count': five.distinct('component_id__sector').exclude(component_id__sector=None).count(),
+                    'program_count': five.distinct('program_id').count(),
+                    'component_count': five.distinct('component_id').count(),
+                    'supplier_count': five.distinct('supplier_id').count()
+                })
+                return Response({"result": "district"})
+            else:
+                return Response({"result": "Please Pass District Code"})
+        elif request.GET['region'] == 'municipality':
+            data = []
+            fivew = []
+            active_sectors = []
+            if 'municipality_code' in request.GET:
+                five = FiveW.objects.filter(municipality_id__code=int(request.GET['municipality_code'])).exclude(
+                    municipality_id__code='-1',
+                    district_id__code='-1',
+                    province_id__code='-1').values(
+                    'id',
+                    'allocated_budget',
+                    'component_id__sector__name',
+                    'program_id').distinct()
+                for f in five:
+                    active_sectors.append(f['component_id__sector__name'])
+
+                def unique(list1):
+                    unique_list = []
+                    finaldata = []
+                    for x in list1:
+                        if x not in unique_list:
+                            unique_list.append(x)
+                    for x in unique_list:
+                        finaldata.append(x)
+                    if None in finaldata:
+                        finaldata.remove(None)
+                    return finaldata
+
+                finaldata = unique(active_sectors)
+
+                fivew.append({
+                    'total_budget': five.aggregate(Sum('allocated_budget'))['allocated_budget__sum'],
+                    'sector_count': five.distinct('component_id__sector').exclude(component_id__sector=None).count(),
+                    'program_count': five.distinct('program_id').count(),
+                    'component_count': five.distinct('component_id').count(),
+                    'supplier_count': five.distinct('supplier_id').count()
+                })
+                return Response({"result": "palika"})
             else:
                 return Response({"result": "Please Pass Municipality Code"})
         else:
@@ -1728,7 +1852,7 @@ class ProjectApi(viewsets.ReadOnlyModelViewSet):
 class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'name', 'marker_value', 'marker_category', ]
+    filterset_fields = ['id', 'name', 'marker_value', 'marker_category']
 
     def get_queryset(self):
         if self.request.GET.getlist('program'):
@@ -1737,6 +1861,18 @@ class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
             for i in range(0, len(program_filter_id)):
                 program_filter_id[i] = int(program_filter_id[i])
             queryset = Program.objects.filter(id__in=program_filter_id).order_by('id')
+        elif self.request.GET.getlist('date'):
+            dated = self.request.GET['date']
+            program = Program.objects.values('start_date','end_date','id')
+            ids = []
+            for p in program:
+                if p['start_date'] and p['end_date'] is not None:
+                    a = dated.split('-')
+                    datenew = date(int(a[0]), int(a[1]), int(a[2]))
+                    if p['start_date'] <= datenew <= p['end_date']:
+                        ids.append(p['id'])
+                        print(ids)
+            queryset = Program.objects.filter(id__in=ids).order_by('id')
         else:
             queryset = Program.objects.order_by('id')
         return queryset

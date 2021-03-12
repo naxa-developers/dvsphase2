@@ -35,6 +35,7 @@ urlpatterns = [
     path('popup/', views.Popup.as_view({'get': 'list'}), name='popup'),
     path('feedbackform', views.Feedback.as_view({'post': 'create'}), name='feedbackfrom'),
     path('profile', views.RegionalProfile.as_view({'get': 'list'}), name='profile'),
-    path('programprofile', views.ProgramProfile.as_view({'get': 'list'}), name='programprofile')
+    path('programprofile', views.ProgramProfile.as_view({'get': 'list'}), name='programprofile'),
+    path('regionaldendrogram', views.RegionalDendrogram.as_view({'get': 'list'}), name='dendrogram'),
 
 ]
