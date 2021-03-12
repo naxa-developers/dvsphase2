@@ -41,7 +41,7 @@
 
             {% for indicator in list %}
             {% if request.get_full_path == '/dashboard/indicator-list/?data=palika' %}
-            {% if indicator.federal_level == 'palika' %}
+            {% if indicator.federal_level == 'palika' or indicator.federal_level == 'all'%}
 
             <tr>
                 <td>
@@ -86,7 +86,7 @@
                 {% endif %}
                 {% endif %}
                 {% if request.get_full_path == '/dashboard/indicator-list/?data=district' %}
-                {% if indicator.federal_level == 'district' %}
+                {% if indicator.federal_level == 'district'  or indicator.federal_level == 'all' %}
 
             <tr>
                 <td>
@@ -131,7 +131,7 @@
                 {% endif %}
                 {% endif %}
                 {% if request.get_full_path == '/dashboard/indicator-list/?data=province' %}
-            {% if indicator.federal_level == 'province' %}
+            {% if indicator.federal_level == 'province'  or indicator.federal_level == 'all' %}
 
             <tr>
                 <td>

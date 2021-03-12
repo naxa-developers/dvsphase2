@@ -253,19 +253,140 @@ class ProgramProfile(viewsets.ReadOnlyModelViewSet):
     serializer_class = FivewSerializer
 
     def list(self, request, *args, **kwargs):
+        data = []
+        activemap  = []
         if request.GET.getlist('region') and request.GET.getlist('program_id'):
             if request.GET['region'] == 'province':
                 programid = request.GET['program_id']
-                fivew= FiveW.objects.filter(program_id=programid).exclude(
+                fivew = FiveW.objects.filter(program_id=programid).values('id', "allocated_budget", 'province_id', 'district_id',
+                                                   'municipality_id', 'component_id__name',
+                                                   'province_id__name','province_id__code').distinct()
+                fivew = fivew.exclude(
                     municipality_id__code='-1',
                     district_id__code='-1',
-                    province_id__code='-1').values('id',"allocated_budget").distinct()
-                total_budget = fivew.aggregate(Sum(''))
-                return Response({"result": "Province"})
+                    province_id__code='-1')
+                for f in fivew:
+                    if f['province_id'] is not None:
+                        data.append(f['component_id__name'])
+
+                for t in fivew.distinct('province_id'):
+                    acti = {
+                        'province_code': t['province_id__code'],
+                        'province_name': t['province_id__name']
+                    }
+                    activemap.append(acti)
+
+                def unique(list1):
+                    unique_list = []
+                    finaldata = []
+                    for x in list1:
+                        if x not in unique_list:
+                            unique_list.append(x)
+                    for x in unique_list:
+                        finaldata.append(x)
+                    if None in finaldata:
+                        finaldata.remove(None)
+                    return finaldata
+
+                finaldata = unique(data)
+
+                total_budget = fivew.aggregate(Sum('allocated_budget'))
+                province_count = fivew.distinct('province_id').count()
+                district_count = fivew.distinct('district_id').count()
+                municipality_count = fivew.distinct('municipality_id').count()
+                program = Program.objects.get(id=programid)
+                return Response(
+                    {"program_name": program.name, "start_date": program.start_date, "end_date": program.end_date,
+                     "total_budget": total_budget['allocated_budget__sum'], "province_count": province_count,
+                     "district_count": district_count, "municiaplity_count": municipality_count,
+                     'federal_level_components': finaldata, 'activemap': activemap})
             elif request.GET['region'] == 'district':
-                return Response({"result": "District"})
+                programid = request.GET['program_id']
+                fivew = FiveW.objects.filter(program_id=programid).values('id', "allocated_budget", 'province_id', 'district_id',
+                                                   'municipality_id', 'component_id__name',
+                                                   'district_id__name','district_id__code').distinct()
+                fivew = fivew.exclude(
+                    municipality_id__code='-1',
+                    district_id__code='-1',
+                    province_id__code='-1')
+
+                for t in fivew.distinct('district_id'):
+                    acti = {
+                        'district_code': t['district_id__code'],
+                        'district_name': t['district_id__name']
+                    }
+                    activemap.append(acti)
+
+                def unique(list1):
+                    unique_list = []
+                    finaldata = []
+                    for x in list1:
+                        if x not in unique_list:
+                            unique_list.append(x)
+                    for x in unique_list:
+                        finaldata.append(x)
+                    if None in finaldata:
+                        finaldata.remove(None)
+                    return finaldata
+
+                finaldata = unique(data)
+
+                total_budget = fivew.aggregate(Sum('allocated_budget'))
+                province_count = fivew.distinct('province_id').count()
+                district_count = fivew.distinct('district_id').count()
+                municipality_count = fivew.distinct('municipality_id').count()
+                program = Program.objects.get(id=programid)
+                return Response(
+                    {"program_name": program.name, "start_date": program.start_date, "end_date": program.end_date,
+                     "total_budget": total_budget['allocated_budget__sum'], "province_count": province_count,
+                     "district_count": district_count, "municiaplity_count": municipality_count,
+                     'federal_level_components': finaldata, 'activemap': activemap})
             elif request.GET['region'] == 'municipality':
-                return Response({"result": "Palika"})
+                programid = request.GET['program_id']
+                fivew = FiveW.objects.filter(program_id=programid).values('id', "allocated_budget", 'province_id', 'district_id',
+                                                   'municipality_id', 'component_id__name',
+                                                   'municipality_id__name','municipality_id__code').distinct()
+
+                fivew = fivew.exclude(
+                    municipality_id__code='-1',
+                    district_id__code='-1',
+                    province_id__code='-1')
+
+                for f in fivew:
+                    if f['municipality_id'] is not None:
+                        data.append(f['municipality_id__name'])
+
+                for t in fivew.distinct('municipality_id'):
+                    acti = {
+                        'municipality_code': t['municipality_id__code'],
+                        'municipality_name': t['municipality_id__name']
+                    }
+                    activemap.append(acti)
+
+                def unique(list1):
+                    unique_list = []
+                    finaldata = []
+                    for x in list1:
+                        if x not in unique_list:
+                            unique_list.append(x)
+                    for x in unique_list:
+                        finaldata.append(x)
+                    if None in finaldata:
+                        finaldata.remove(None)
+                    return finaldata
+
+                finaldata = unique(data)
+
+                total_budget = fivew.aggregate(Sum('allocated_budget'))
+                province_count = fivew.distinct('province_id').count()
+                district_count = fivew.distinct('district_id').count()
+                municipality_count = fivew.distinct('municipality_id').count()
+                program = Program.objects.get(id=programid)
+                return Response(
+                    {"program_name": program.name, "start_date": program.start_date, "end_date": program.end_date,
+                     "total_budget": total_budget['allocated_budget__sum'], "province_count": province_count,
+                     "district_count": district_count, "municiaplity_count": municipality_count,
+                     'federal_level_components': finaldata, 'activemap': activemap})
             else:
                 return Response({"result": "please pass region"})
         else:
@@ -1458,12 +1579,6 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
             all_budget = {'allocated_budget__sum': 0}
         else:
             all_budget = query.aggregate(Sum('allocated_budget'))
-            # print(query)
-        test = FiveW.objects.filter(program_id__in=[42]).exclude(municipality_id__code='-1', district_id__code='-1',
-                                                                 province_id__code='-1').values('allocated_budget',
-                                                                                                'component_id',
-                                                                                                'program_id').distinct()
-        # print(test.aggregate(Sum('allocated_budget')))
 
         allocated_sum = all_budget
         program = query.distinct('program_id').count()
