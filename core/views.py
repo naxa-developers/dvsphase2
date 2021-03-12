@@ -20,6 +20,8 @@ import math
 from django.db.models import Q
 from rest_framework.parsers import MultiPartParser, FormParser
 from .filters import fivew, fivew_province, fivew_district, fivew_municipality
+from datetime import datetime,date
+
 
 
 # Create your views here.
@@ -1850,7 +1852,7 @@ class ProjectApi(viewsets.ReadOnlyModelViewSet):
 class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'name', 'marker_value', 'marker_category', 'start_date', 'end_date']
+    filterset_fields = ['id', 'name', 'marker_value', 'marker_category']
 
     def get_queryset(self):
         if self.request.GET.getlist('program'):
@@ -1859,6 +1861,18 @@ class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
             for i in range(0, len(program_filter_id)):
                 program_filter_id[i] = int(program_filter_id[i])
             queryset = Program.objects.filter(id__in=program_filter_id).order_by('id')
+        elif self.request.GET.getlist('date'):
+            dated = self.request.GET['date']
+            program = Program.objects.values('start_date','end_date','id')
+            ids = []
+            for p in program:
+                if p['start_date'] and p['end_date'] is not None:
+                    a = dated.split('-')
+                    datenew = date(int(a[0]), int(a[1]), int(a[2]))
+                    if p['start_date'] <= datenew <= p['end_date']:
+                        ids.append(p['id'])
+                        print(ids)
+            queryset = Program.objects.filter(id__in=ids).order_by('id')
         else:
             queryset = Program.objects.order_by('id')
         return queryset
