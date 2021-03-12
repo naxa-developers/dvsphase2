@@ -1124,7 +1124,7 @@ class FeedbackList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         data = super(FeedbackList, self).get_context_data(**kwargs)
-        feedbacklist = FeedbackForm.objects.order_by('-status')
+        feedbacklist = FeedbackForm.objects.order_by('-id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['list'] = feedbacklist
