@@ -46,14 +46,7 @@
                 <td>{{ feed.subject }}</td>
                 <td>{{ feed.your_feedback }}</td>
                 {% if feed.attachment %}
-                <td><button onclick="myFunction()" class="btn btn-success openBtn">Attachment</button></td>
-                <script>
-                    function myFunction() {
-                      var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
-                        var URL = "{{feed.attachment.url}}";
-                        var win = window.open(URL, "_blank", strWindowFeatures);
-                    }
-                </script>
+                <td><a href="{{feed.attachment.url}}" target="_blank"><button onclick="myFunction()" class="btn btn-success openBtn">Attachment</button></a></td>
                 {% else %}
                 <td>No attachment</td>
                 {% endif %}
@@ -85,14 +78,7 @@
                 <td>{{ feed.subject }}</td>
                 <td>{{ feed.your_feedback }}</td>
                 {% if feed.attachment %}
-                <td><button onclick="myFunction()" class="btn btn-success openBtn">Attachment</button></td>
-                <script>
-                    function myFunction() {
-                      var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
-                        var URL = "{{feed.attachment.url}}";
-                        var win = window.open(URL, "_blank", strWindowFeatures);
-                    }
-                </script>
+                <td><a href="{{feed.attachment.url}}" target="_blank"><button onclick="myFunction()" class="btn btn-success openBtn">Attachment</button></a></td>
                 {% else %}
                 <td>No attachment</td>
                 {% endif %}
