@@ -248,14 +248,15 @@
         var districtData = [{% for dat in districtdata %}'{{dat}}', {%endfor%}];
         var municipalityData = [{% for dat in municipalitydata %}'{{dat}}', {%endfor%}];
         console.log(municipalityData)
-        selectFunction('#multi_select_partner', partnerData);
-        selectFunction('#multi_select_program', programData);
-        selectFunction('#multi_select_project', projectData);
-        selectFunction('#multi_select_province', provinceData);
-        selectFunction('#multi_select_district', districtData);
-        selectFunction('#multi_select_gapanapa', municipalityData);
+
         var flag = true;
-        if(flag) {
+        if(flag == true) {
+            selectFunction('#multi_select_partner', partnerData);
+            selectFunction('#multi_select_program', programData);
+            selectFunction('#multi_select_project', projectData);
+            selectFunction('#multi_select_province', provinceData);
+            selectFunction('#multi_select_district', districtData);
+            selectFunction('#multi_select_gapanapa', municipalityData);
             multiChangeFunction_multi($('#multi_select_partner').val(), '#multi_select_program');
             multiChangeFunction($('#multi_select_program').val(), '#multi_select_project');
             multiChangeFunction($('#multi_select_province').val(), '#multi_select_district');

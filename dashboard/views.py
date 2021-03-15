@@ -829,6 +829,7 @@ class FiveList(LoginRequiredMixin, ListView):
         provincedata = self.request.GET.getlist('province', None)
         districtdata = self.request.GET.getlist('district', None)
         municipalitydata = self.request.GET.getlist('gapanapa', None)
+
         if partnerdata or projectdata or programdata or provincedata or districtdata or municipalitydata:
             user = self.request.user
             user_data = UserProfile.objects.get(user=user)
