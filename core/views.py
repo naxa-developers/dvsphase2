@@ -650,7 +650,6 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         program = []
-        partner = []
         if request.GET['region'] == 'province':
             if request.GET.getlist('province_code'):
                 fiveprogram = FiveW.objects.filter(province_id__code=request.GET['province_code']).exclude(
@@ -680,27 +679,74 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
                                 partner.append({
                                     'name': n['partner_id__name']
                                 })
-                # for ho in program:
-                #     sahi = ho['children']
-                #     for h in sahi:
-                #         print(h['name'])
             else:
                 return Response({"result": "Please Pass Province Code"})
             return Response({"results": program})
         elif request.GET['region'] == 'district':
-            if request.GET.getlist('province_code'):
-                five = FiveW.objects.filter(district_id__code=request.GET['district_code'])
+            if request.GET.getlist('district_code'):
+                fiveprogram = FiveW.objects.filter(district_id__code=request.GET['district_code']).exclude(
+                    municipality_id__code='-1',
+                    district_id__code='-1',
+                    province_id__code='-1').values(
+                    'program_id__name').distinct()
+                for f in fiveprogram:
+                    component = []
+                    dami = Project.objects.filter(program_id__name=f['program_id__name']).values('name').distinct()
+                    program.append({
+                        "name": f['program_id__name'],
+                        "children": component
+                    })
+                    for d in dami:
+                        partner = []
+                        if d['name'] not in component:
+                            component.append({
+                                'name': d['name'],
+                                'children': partner
+                            })
+                        nadami = Project.objects.filter(name=d['name']).values(
+                            'partner_id__name').distinct()
+                        for n in nadami:
+                            if n['partner_id__name'] not in partner:
+                                partner.append({
+                                    'name': n['partner_id__name']
+                                })
             else:
-                return Response({"result": "Please Pass Province Code"})
-            return Response({"result": "Please Pass District Code"})
+                return Response({"result": "Please Pass District Code"})
+            return Response({"result": program})
         elif request.GET['region'] == 'municipality':
             if request.GET.getlist('municipality_code'):
-                five = FiveW.objects.filter(municipality_id__code=request.GET['municipality_code'])
+                fiveprogram = FiveW.objects.filter(municipality_id__code=request.GET['municipality_code']).exclude(
+                    municipality_id__code='-1',
+                    district_id__code='-1',
+                    province_id__code='-1').values(
+                    'program_id__name').distinct()
+                for f in fiveprogram:
+                    component = []
+                    dami = Project.objects.filter(program_id__name=f['program_id__name']).values('name').distinct()
+                    program.append({
+                        "name": f['program_id__name'],
+                        "children": component
+                    })
+                    for d in dami:
+                        partner = []
+                        if d['name'] not in component:
+                            component.append({
+                                'name': d['name'],
+                                'children': partner
+                            })
+                        nadami = Project.objects.filter(name=d['name']).values(
+                            'partner_id__name').distinct()
+                        print(nadami)
+                        for n in nadami:
+                            if n['partner_id__name'] not in partner:
+                                partner.append({
+                                    'name': n['partner_id__name']
+                                })
             else:
                 return Response({"result": "Please Pass Municipality Code"})
-            return Response({"results": "Municipality"})
+            return Response({"results": program})
         else:
-            return Response({"results": "Municipality"})
+            return Response({"results": "Invalid Region"})
 
 
 class NepalSummaryApi(viewsets.ReadOnlyModelViewSet):
