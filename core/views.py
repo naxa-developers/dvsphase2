@@ -273,8 +273,8 @@ class ProgramProfile(viewsets.ReadOnlyModelViewSet):
 
                 for t in fivew.distinct('province_id'):
                     acti = {
-                        'province_code': t['province_id__code'],
-                        'province_name': t['province_id__name']
+                        'code': t['province_id__code'],
+                        'name': t['province_id__name']
                     }
                     activemap.append(acti)
 
@@ -319,8 +319,8 @@ class ProgramProfile(viewsets.ReadOnlyModelViewSet):
 
                 for t in fivew.distinct('district_id'):
                     acti = {
-                        'district_code': t['district_id__code'],
-                        'district_name': t['district_id__name']
+                        'code': t['district_id__code'],
+                        'name': t['district_id__name']
                     }
                     activemap.append(acti)
 
@@ -367,8 +367,8 @@ class ProgramProfile(viewsets.ReadOnlyModelViewSet):
 
                 for t in fivew.distinct('municipality_id'):
                     acti = {
-                        'municipality_code': t['municipality_id__code'],
-                        'municipality_name': t['municipality_id__name']
+                        'code': t['municipality_id__code'],
+                        'name': t['municipality_id__name']
                     }
                     activemap.append(acti)
 
