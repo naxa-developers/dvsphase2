@@ -551,7 +551,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     'id',
                     'allocated_budget',
                     'component_id__sector__name',
-                    'program_id').distinct()
+                    'program_id', 'district_id__code').distinct()
                 for f in five:
                     active_sectors.append(f['component_id__sector__name'])
 
@@ -649,117 +649,58 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
     serializer_class = FivewSerializer
 
     def list(self, request, *args, **kwargs):
+        program = []
+        partner = []
         if request.GET['region'] == 'province':
-            data = []
-            fivew = []
-            active_sectors = []
-            if 'province_code' in request.GET:
-                five = FiveW.objects.filter(province_id__code=int(request.GET['province_code'])).exclude(
+            if request.GET.getlist('province_code'):
+                fiveprogram = FiveW.objects.filter(province_id__code=request.GET['province_code']).exclude(
                     municipality_id__code='-1',
                     district_id__code='-1',
-                    province_id__code='-1').distinct()
-                for f in five:
-                    data.append(f.program_id.name)
-
-                def unique(list1):
-                    unique_list = []
-                    finaldata = []
-                    for x in list1:
-                        if x not in unique_list:
-                            unique_list.append(x)
-                    for x in unique_list:
-                        finaldata.append(x)
-                    if None in finaldata:
-                        finaldata.remove(None)
-                    return finaldata
-
-                finaldata = unique(active_sectors)
-                return Response({"result": data})
+                    province_id__code='-1').values(
+                    'program_id__name').distinct()
+                for f in fiveprogram:
+                    component = []
+                    dami = Project.objects.filter(program_id__name=f['program_id__name']).values('name').distinct()
+                    program.append({
+                        "name": f['program_id__name'],
+                        "children": component
+                    })
+                    for d in dami:
+                        partner = []
+                        if d['name'] not in component:
+                            component.append({
+                                'name': d['name'],
+                                'children': partner
+                            })
+                        nadami = Project.objects.filter(name=d['name']).values(
+                            'partner_id__name').distinct()
+                        print(nadami)
+                        for n in nadami:
+                            if n['partner_id__name'] not in partner:
+                                partner.append({
+                                    'name': n['partner_id__name']
+                                })
+                # for ho in program:
+                #     sahi = ho['children']
+                #     for h in sahi:
+                #         print(h['name'])
             else:
                 return Response({"result": "Please Pass Province Code"})
-
+            return Response({"results": program})
         elif request.GET['region'] == 'district':
-            data = []
-            fivew = []
-            active_sectors = []
-            if 'district_code' in request.GET:
-                five = FiveW.objects.filter(district_id__code=int(request.GET['district_code'])).exclude(
-                    municipality_id__code='-1',
-                    district_id__code='-1',
-                    province_id__code='-1').values(
-                    'id',
-                    'allocated_budget',
-                    'component_id__sector__name',
-                    'program_id').distinct()
-                for f in five:
-                    active_sectors.append(f['component_id__sector__name'])
-
-                def unique(list1):
-                    unique_list = []
-                    finaldata = []
-                    for x in list1:
-                        if x not in unique_list:
-                            unique_list.append(x)
-                    for x in unique_list:
-                        finaldata.append(x)
-                    if None in finaldata:
-                        finaldata.remove(None)
-                    return finaldata
-
-                finaldata = unique(active_sectors)
-
-                fivew.append({
-                    'total_budget': five.aggregate(Sum('allocated_budget'))['allocated_budget__sum'],
-                    'sector_count': five.distinct('component_id__sector').exclude(component_id__sector=None).count(),
-                    'program_count': five.distinct('program_id').count(),
-                    'component_count': five.distinct('component_id').count(),
-                    'supplier_count': five.distinct('supplier_id').count()
-                })
-                return Response({"result": "district"})
+            if request.GET.getlist('province_code'):
+                five = FiveW.objects.filter(district_id__code=request.GET['district_code'])
             else:
-                return Response({"result": "Please Pass District Code"})
+                return Response({"result": "Please Pass Province Code"})
+            return Response({"result": "Please Pass District Code"})
         elif request.GET['region'] == 'municipality':
-            data = []
-            fivew = []
-            active_sectors = []
-            if 'municipality_code' in request.GET:
-                five = FiveW.objects.filter(municipality_id__code=int(request.GET['municipality_code'])).exclude(
-                    municipality_id__code='-1',
-                    district_id__code='-1',
-                    province_id__code='-1').values(
-                    'id',
-                    'allocated_budget',
-                    'component_id__sector__name',
-                    'program_id').distinct()
-                for f in five:
-                    active_sectors.append(f['component_id__sector__name'])
-
-                def unique(list1):
-                    unique_list = []
-                    finaldata = []
-                    for x in list1:
-                        if x not in unique_list:
-                            unique_list.append(x)
-                    for x in unique_list:
-                        finaldata.append(x)
-                    if None in finaldata:
-                        finaldata.remove(None)
-                    return finaldata
-
-                finaldata = unique(active_sectors)
-
-                fivew.append({
-                    'total_budget': five.aggregate(Sum('allocated_budget'))['allocated_budget__sum'],
-                    'sector_count': five.distinct('component_id__sector').exclude(component_id__sector=None).count(),
-                    'program_count': five.distinct('program_id').count(),
-                    'component_count': five.distinct('component_id').count(),
-                    'supplier_count': five.distinct('supplier_id').count()
-                })
-                return Response({"result": "palika"})
+            if request.GET.getlist('municipality_code'):
+                five = FiveW.objects.filter(municipality_id__code=request.GET['municipality_code'])
             else:
                 return Response({"result": "Please Pass Municipality Code"})
+            return Response({"results": "Municipality"})
         else:
-            return Response({"results": "Invalid Region"})
+            return Response({"results": "Municipality"})
 
 
 class NepalSummaryApi(viewsets.ReadOnlyModelViewSet):
