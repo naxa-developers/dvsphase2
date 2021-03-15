@@ -837,8 +837,6 @@ class FiveList(LoginRequiredMixin, ListView):
             if group.name == 'admin':
                 dat_values = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata,
                                    group, user_data)
-                # csv = download_csv(self.request,FiveW.objects.all())
-                # print(csv)
                 partner = Partner.objects.values('id', 'name').order_by('name')
                 project = Project.objects.values('id', 'program_id__id', 'name').order_by('name')
                 program = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
