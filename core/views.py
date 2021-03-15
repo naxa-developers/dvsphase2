@@ -651,77 +651,27 @@ class ProgramUpperDendrogram(viewsets.ReadOnlyModelViewSet):
     serializer_class = FivewSerializer
 
     def list(self, request, *args, **kwargs):
-        if request.GET['region'] == 'province':
-            if request.GET.getlist('program_id'):
-                component = []
-                programid = request.GET['program_id']
-                dami = Project.objects.filter(program_id=programid).values('name').distinct()
-                print(dami)
-                for d in dami:
-                    partner = []
-                    if d['name'] not in component:
-                        component.append({
-                            'name': d['name'],
-                            'children': partner
+        if request.GET.getlist('program_id'):
+            component = []
+            programid = request.GET['program_id']
+            dami = Project.objects.filter(program_id=programid).values('name').distinct()
+            for d in dami:
+                partner = []
+                if d['name'] not in component:
+                    component.append({
+                        'name': d['name'],
+                        'children': partner
+                    })
+                nadami = Project.objects.filter(name=d['name']).values(
+                    'partner_id__name').distinct()
+                for n in nadami:
+                    if n['partner_id__name'] not in partner:
+                        partner.append({
+                            'name': n['partner_id__name']
                         })
-                    nadami = Project.objects.filter(name=d['name']).values(
-                        'partner_id__name').distinct()
-                    for n in nadami:
-                        if n['partner_id__name'] not in partner:
-                            partner.append({
-                                'name': n['partner_id__name']
-                            })
-            else:
-                return Response({"result": "Please Pass Province Code"})
-            return Response({"results": component})
-        elif request.GET['region'] == 'district':
-            if request.GET.getlist('program_id'):
-                component = []
-                programid = request.GET['program_id']
-                dami = Project.objects.filter(program_id=programid).values('name').distinct()
-                print(dami)
-                for d in dami:
-                    partner = []
-                    if d['name'] not in component:
-                        component.append({
-                            'name': d['name'],
-                            'children': partner
-                        })
-                    nadami = Project.objects.filter(name=d['name']).values(
-                        'partner_id__name').distinct()
-                    for n in nadami:
-                        if n['partner_id__name'] not in partner:
-                            partner.append({
-                                'name': n['partner_id__name']
-                            })
-            else:
-                return Response({"result": "Please Pass Province Code"})
-            return Response({"results": component})
-        elif request.GET['region'] == 'municipality':
-            if request.GET.getlist('program_id'):
-                component = []
-                programid = request.GET['program_id']
-                dami = Project.objects.filter(program_id=programid).values('name').distinct()
-                print(dami)
-                for d in dami:
-                    partner = []
-                    if d['name'] not in component:
-                        component.append({
-                            'name': d['name'],
-                            'children': partner
-                        })
-                    nadami = Project.objects.filter(name=d['name']).values(
-                        'partner_id__name').distinct()
-                    for n in nadami:
-                        if n['partner_id__name'] not in partner:
-                            partner.append({
-                                'name': n['partner_id__name']
-                            })
-            else:
-                return Response({"result": "Please Pass Province Code"})
             return Response({"results": component})
         else:
-            return Response({"results": "Invalid Region"})
+            return Response({"results": "Please Pass program_id"})
 
 
 class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
