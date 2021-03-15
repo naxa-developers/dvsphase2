@@ -299,6 +299,7 @@ class ProgramProfile(viewsets.ReadOnlyModelViewSet):
                 program = Program.objects.get(id=programid)
                 return Response(
                     {"program_name": program.name, "start_date": program.start_date, "end_date": program.end_date,
+                     "description": program.description,
                      "total_budget": program.total_budget, "province_count": province_count,
                      "district_count": district_count, "municiaplity_count": municipality_count,
                      'federal_level_components': finaldata, 'activemap': activemap})
@@ -345,6 +346,7 @@ class ProgramProfile(viewsets.ReadOnlyModelViewSet):
                 program = Program.objects.get(id=programid)
                 return Response(
                     {"program_name": program.name, "start_date": program.start_date, "end_date": program.end_date,
+                     "description": program.description,
                      "total_budget": total_budget['allocated_budget__sum'], "province_count": province_count,
                      "district_count": district_count, "municiaplity_count": municipality_count,
                      'federal_level_components': finaldata, 'activemap': activemap})
@@ -393,6 +395,7 @@ class ProgramProfile(viewsets.ReadOnlyModelViewSet):
                 program = Program.objects.get(id=programid)
                 return Response(
                     {"program_name": program.name, "start_date": program.start_date, "end_date": program.end_date,
+                     "description": program.description,
                      "total_budget": total_budget['allocated_budget__sum'], "province_count": province_count,
                      "district_count": district_count, "municiaplity_count": municipality_count,
                      'federal_level_components': finaldata, 'activemap': activemap})
