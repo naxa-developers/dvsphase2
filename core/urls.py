@@ -38,5 +38,7 @@ urlpatterns = [
     path('programprofile', views.ProgramProfile.as_view({'get': 'list'}), name='programprofile'),
     path('regionaldendrogram', views.RegionalDendrogram.as_view({'get': 'list'}), name='dendrogram'),
     path('programupperdendrogram', views.ProgramUpperDendrogram.as_view({'get': 'list'}), name='programupperdendrogram'),
+    path('programlowerdendrogram', views.ProgramLowerDendrogram.as_view({'get': 'list'}),
+         name='programlowerdendrogram'),
 
 ]
