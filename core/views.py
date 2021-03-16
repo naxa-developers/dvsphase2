@@ -645,6 +645,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
         else:
             return Response({"results": "Invalid Region"})
 
+
 class ProgramUpperDendrogram(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = FiveW.objects.all()
@@ -669,6 +670,57 @@ class ProgramUpperDendrogram(viewsets.ReadOnlyModelViewSet):
                         partner.append({
                             'name': n['partner_id__name']
                         })
+            return Response({"results": component})
+        else:
+            return Response({"results": "Please Pass program_id"})
+
+
+class ProgramLowerDendrogram(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = FiveW.objects.all()
+    serializer_class = FivewSerializer
+
+    def list(self, request, *args, **kwargs):
+        if request.GET.getlist('program_id'):
+            component = []
+            programid = request.GET['program_id']
+            dami = Project.objects.filter(program_id=programid).values('name').distinct()
+            print(dami)
+            for d in dami:
+                province = []
+                if d['name'] not in component:
+                    component.append({
+                        'name': d['name'],
+                        'children': province
+                    })
+                nadami = FiveW.objects.filter(component_id__name=d['name']).exclude(
+                    municipality_id__code='-1',
+                    district_id__code='-1',
+                    province_id__code='-1'
+                ).values(
+                    'province_id__name', 'province_id__code').distinct()
+                for n in nadami:
+                    district = []
+                    if n['province_id__name'] not in province:
+                        province.append({
+                            'name': n['province_id__name'],
+                            'code': n['province_id__code'],
+                            'children': district
+                        })
+                    dist = FiveW.objects.filter(province_id__name=n['province_id__name'],
+                                                component_id__name=d['name']).exclude(
+                        municipality_id__code='-1',
+                        district_id__code='-1',
+                        province_id__code='-1'
+                    ).values('district_id__name', 'district_id__code').distinct()
+
+                    for x in dist:
+                        if x['district_id__code'] != '-1':
+                            if x['district_id__name'] not in district:
+                                district.append({
+                                    'name': x['district_id__name'],
+                                    'code': x['district_id__code']
+                                })
             return Response({"results": component})
         else:
             return Response({"results": "Please Pass program_id"})
