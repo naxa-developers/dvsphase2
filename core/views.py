@@ -400,9 +400,9 @@ class ProgramProfile(viewsets.ReadOnlyModelViewSet):
                      "district_count": district_count, "municiaplity_count": municipality_count,
                      'federal_level_components': finaldata, 'activemap': activemap})
             else:
-                return Response({"result": "please pass region"})
+                return Response({"results": "please pass region"})
         else:
-            return Response({"result": "Please Pass Full Params"})
+            return Response({"results": "Please Pass Full Params"})
 
 
 class RegionalProfile(viewsets.ReadOnlyModelViewSet):
@@ -482,16 +482,16 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     return finaldata
 
                 finaldata = unique(active_sectors)
-                fivew.append({
-                    'total_budget': five.aggregate(Sum('allocated_budget'))['allocated_budget__sum'],
-                    'sector_count': five.distinct('component_id__sector').exclude(component_id__sector=None).count(),
-                    'program_count': five.distinct('program_id').count(),
-                    'component_count': five.distinct('component_id').count(),
-                    'supplier_count': five.distinct('supplier_id').count()
-                })
-                return Response({"indicatordata": data, "fivewdata": fivew, 'active_sectors': finaldata})
+                total_budget = five.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
+                sector_count = five.distinct('component_id__sector').exclude(component_id__sector=None).count()
+                program_count = five.distinct('program_id').count()
+                component_count = five.distinct('component_id').count()
+                supplier_count = five.distinct('supplier_id').count()
+                return Response({"indicatordata": data, 'active_sectors': finaldata, 'total_budget': total_budget,
+                                 'sector_count': sector_count, 'supplier_count': supplier_count,
+                                 'component_count': component_count, 'program_count': program_count})
             else:
-                return Response({"result": "Please Pass Province Code"})
+                return Response({"results": "Please Pass Province Code"})
 
         elif request.GET['region'] == 'district':
             data = []
@@ -572,16 +572,17 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
 
                 finaldata = unique(active_sectors)
 
-                fivew.append({
-                    'total_budget': five.aggregate(Sum('allocated_budget'))['allocated_budget__sum'],
-                    'sector_count': five.distinct('component_id__sector').exclude(component_id__sector=None).count(),
-                    'program_count': five.distinct('program_id').count(),
-                    'component_count': five.distinct('component_id').count(),
-                    'supplier_count': five.distinct('supplier_id').count()
-                })
-                return Response({"indicatordata": data, "fivewdata": fivew, "active_sectors": finaldata})
+                total_budget = five.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
+                sector_count = five.distinct('component_id__sector').exclude(component_id__sector=None).count()
+                program_count = five.distinct('program_id').count()
+                component_count = five.distinct('component_id').count()
+                supplier_count = five.distinct('supplier_id').count()
+
+                return Response({"indicatordata": data, "active_sectors": finaldata, 'total_budget': total_budget,
+                                 'sector_count': sector_count, 'supplier_count': supplier_count,
+                                 'component_count': component_count, 'program_count': program_count})
             else:
-                return Response({"result": "Please Pass District Code"})
+                return Response({"results": "Please Pass District Code"})
         elif request.GET['region'] == 'municipality':
             data = []
             fivew = []
@@ -632,16 +633,16 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
 
                 finaldata = unique(active_sectors)
 
-                fivew.append({
-                    'total_budget': five.aggregate(Sum('allocated_budget'))['allocated_budget__sum'],
-                    'sector_count': five.distinct('component_id__sector').exclude(component_id__sector=None).count(),
-                    'program_count': five.distinct('program_id').count(),
-                    'component_count': five.distinct('component_id').count(),
-                    'supplier_count': five.distinct('supplier_id').count()
-                })
-                return Response({"indicatordata": data, "fivewdata": fivew, "active_sectors": finaldata})
+                total_budget = five.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
+                sector_count = five.distinct('component_id__sector').exclude(component_id__sector=None).count()
+                program_count = five.distinct('program_id').count()
+                component_count = five.distinct('component_id').count()
+                supplier_count = five.distinct('supplier_id').count()
+                return Response({"indicatordata": data, "active_sectors": finaldata, 'total_budget': total_budget,
+                                 'sector_count': sector_count, 'supplier_count': supplier_count,
+                                 'component_count': component_count, 'program_count': program_count})
             else:
-                return Response({"result": "Please Pass Municipality Code"})
+                return Response({"results": "Please Pass Municipality Code"})
         else:
             return Response({"results": "Invalid Region"})
 
@@ -733,6 +734,7 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         program = []
+        print(FiveW.objects.filter(program_id__name='Access to Finance', province_id__code='1').values('component_id__name').distinct())
         if request.GET['region'] == 'province':
             if request.GET.getlist('province_code'):
                 fiveprogram = FiveW.objects.filter(province_id__code=request.GET['province_code']).exclude(
@@ -742,28 +744,30 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
                     'program_id__name').distinct()
                 for f in fiveprogram:
                     component = []
-                    dami = Project.objects.filter(program_id__name=f['program_id__name']).values('name').distinct()
+                    print(f['program_id__name'])
+                    dami = FiveW.objects.filter(program_id__name=f['program_id__name'], province_id__code=request.GET['province_code']).values('component_id__name').distinct()
+                    print(dami)
                     program.append({
                         "name": f['program_id__name'],
                         "children": component
                     })
                     for d in dami:
                         partner = []
-                        if d['name'] not in component:
+                        if d['component_id__name'] not in component:
                             component.append({
-                                'name': d['name'],
+                                'name': d['component_id__name'],
                                 'children': partner
                             })
-                        nadami = Project.objects.filter(name=d['name']).values(
-                            'partner_id__name').distinct()
+                        nadami = FiveW.objects.filter(program_id__name=f['program_id__name'], province_id__code=request.GET['province_code']).values(
+                            'supplier_id__name').distinct()
                         print(nadami)
                         for n in nadami:
-                            if n['partner_id__name'] not in partner:
+                            if n['supplier_id__name'] not in partner:
                                 partner.append({
-                                    'name': n['partner_id__name']
+                                    'name': n['supplier_id__name']
                                 })
             else:
-                return Response({"result": "Please Pass Province Code"})
+                return Response({"results": "Please Pass Province Code"})
             return Response({"results": program})
         elif request.GET['region'] == 'district':
             if request.GET.getlist('district_code'):
@@ -794,8 +798,8 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
                                     'name': n['partner_id__name']
                                 })
             else:
-                return Response({"result": "Please Pass District Code"})
-            return Response({"result": program})
+                return Response({"results": "Please Pass District Code"})
+            return Response({"results": program})
         elif request.GET['region'] == 'municipality':
             if request.GET.getlist('municipality_code'):
                 fiveprogram = FiveW.objects.filter(municipality_id__code=request.GET['municipality_code']).exclude(
@@ -826,7 +830,7 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
                                     'name': n['partner_id__name']
                                 })
             else:
-                return Response({"result": "Please Pass Municipality Code"})
+                return Response({"results": "Please Pass Municipality Code"})
             return Response({"results": program})
         else:
             return Response({"results": "Invalid Region"})
