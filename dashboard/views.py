@@ -7,7 +7,7 @@ from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
     PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm, \
-    GroupForm, BudgetCreateForm, PartnerContactForm, CmpForm, GisStyleForm, UserProfileForm,FeedbackDataForm
+    GroupForm, BudgetCreateForm, PartnerContactForm, CmpForm, GisStyleForm, UserProfileForm, FeedbackDataForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -23,7 +23,7 @@ from rest_framework.authentication import TokenAuthentication, SessionAuthentica
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
     MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output, Notification, \
-    BudgetToSecondTier, BudgetToFirstTier, Cmp, GisStyle,FeedbackForm
+    BudgetToSecondTier, BudgetToFirstTier, Cmp, GisStyle, FeedbackForm
 from .models import UserProfile, Log
 from django.contrib.auth.models import User, Group, Permission
 from django.views.generic import TemplateView
@@ -73,6 +73,7 @@ def login_test(request, **kwargs):
 #         return JsonResponse({'result': 'success'}, status=HTTP_200_OK)
 
 
+
 @login_required()
 def bulkCreate(request):
     if "GET" == request.method:
@@ -102,7 +103,7 @@ def bulkCreate(request):
             for row in range(0, upper_range):
                 try:
                     fivew_correct.append(FiveW(
-                        supplier_id=Partner.objects.get(code=df['1st TIER PARTNER CODE'][row]),
+                        supplier_id=Partner.objects.get(code=float(df['1st TIER PARTNER CODE'][row])),
                         second_tier_partner_name=df['2nd TIER PARTNER'][row],
                         component_id=Project.objects.get(code=df['Project/Component Code'][row]),
                         program_id=Program.objects.get(code=df['Programme Code'][row]),
@@ -137,7 +138,7 @@ def bulkCreate(request):
             for row in range(0, upper_range):
                 try:
                     fivew_correct.append(FiveW(
-                        supplier_id=Partner.objects.get(id=user_data.partner.id, code=df['1st TIER PARTNER CODE'][row]),
+                        supplier_id=Partner.objects.get(id=user_data.partner.id, code=float(df['1st TIER PARTNER CODE'][row])),
                         second_tier_partner_name=df['2nd TIER PARTNER'][row],
                         component_id=Project.objects.get(code=df['Project/Component Code'][row]),
                         program_id=Program.objects.get(code=df['Programme Code'][row]),
@@ -607,13 +608,14 @@ def updateuser(request, id):
 
     return render(request, "updateuser.html", context)
 
-def feedback_status(request,**kwargs):
+
+def feedback_status(request, **kwargs):
     feedback = FeedbackForm.objects.get(id=kwargs['id'])
     if feedback.status == 'Old':
         feedback.status = "New"
         feedback.save()
         if feedback.name:
-            msg = str(feedback.name)+" "+"Feedback Successfully changed From Old To New"
+            msg = str(feedback.name) + " " + "Feedback Successfully changed From Old To New"
         else:
             msg = "Feedback Successfully changed From Old To New"
         messages.success(request, msg)
@@ -621,7 +623,7 @@ def feedback_status(request,**kwargs):
         feedback.status = 'Old'
         feedback.save()
         if feedback.name:
-            msg = str(feedback.name)+" "+"Feedback Successfully changed From New to Old"
+            msg = str(feedback.name) + " " + "Feedback Successfully changed From New to Old"
         else:
             msg = "Feedback Successfully changed From New to Old"
         messages.success(request, msg)
@@ -849,7 +851,8 @@ class FiveList(LoginRequiredMixin, ListView):
                 dat_values = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata,
                                    group, user_data)
                 partner = Partner.objects.filter(id=user_data.partner.id).values('id', 'name').order_by('name')
-                program = Program.objects.filter(id=user_data.program.id).values('id', 'name', 'partner_id__id').order_by('name')
+                program = Program.objects.filter(id=user_data.program.id).values('id', 'name',
+                                                                                 'partner_id__id').order_by('name')
                 project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id',
                                                                                  'name').order_by('name')
                 province = Province.objects.values('id', 'name').order_by('name')
@@ -916,7 +919,8 @@ class FiveList(LoginRequiredMixin, ListView):
                                                                                      'municipality_id__name',
                                                                                      'allocated_budget').order_by('id')
                 partner = Partner.objects.filter(id=user_data.partner.id).values('id', 'name').order_by('name')
-                program = Program.objects.filter(id=user_data.program.id).values('id', 'name', 'partner_id__id').order_by('name')
+                program = Program.objects.filter(id=user_data.program.id).values('id', 'name',
+                                                                                 'partner_id__id').order_by('name')
                 project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id',
                                                                                  'name').order_by('name')
                 province = Province.objects.values('id', 'name').order_by('name')
@@ -1117,6 +1121,7 @@ class IndicatorList(LoginRequiredMixin, ListView):
         data['active'] = 'indicator'
         return data
 
+
 class FeedbackList(LoginRequiredMixin, ListView):
     template_name = 'feedback_list.html'
     model = FeedbackForm
@@ -1268,6 +1273,7 @@ class ProgramCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         message = "New program " + self.object.name + "  has been added by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
+
 
 class PartnerCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Partner
@@ -1785,7 +1791,7 @@ class ProgramUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         data['user'] = user_data
         data['active'] = 'program'
 
-        #program = Program.objects.get(id=self.kwargs['pk'])
+        # program = Program.objects.get(id=self.kwargs['pk'])
         partners = Partner.objects.order_by('id')
         # datatoselect = []
         # datanottoselect = []
