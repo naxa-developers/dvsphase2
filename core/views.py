@@ -915,7 +915,7 @@ class DistrictIndicator(viewsets.ModelViewSet):
                         }
                     )
                 print('market')
-            else:
+            elif cat_in.federal_level == 'all':
                 # print(health_id.id)
                 for dist in district:
                     indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
@@ -962,6 +962,7 @@ class DistrictIndicator(viewsets.ModelViewSet):
 
                         }
                     )
+
 
         return Response({"results": data})
 
@@ -1011,17 +1012,18 @@ class ProvinceIndicator(viewsets.ModelViewSet):
                                 value_sum = (value_sum + indicator_value)
                         value = (value_sum / dist_pop_sum['population__sum'])
 
-                data.append(
-                    {
-                        'id': dist['id'],
-                        'indicator_id': int(id_indicator[i]),
-                        'code': dist['code'],
-                        # 'value_sum': value_sum,
-                        # 'population': dist_pop_sum['population__sum'],
-                        'value': value
+                    if ind['indicator_id__federal_level'] == 'province' or ind['indicator_id__federal_level'] == 'all':
+                        data.append(
+                            {
+                                'id': dist['id'],
+                                'indicator_id': int(id_indicator[i]),
+                                'code': dist['code'],
+                                # 'value_sum': value_sum,
+                                # 'population': dist_pop_sum['population__sum'],
+                                'value': value
 
-                    }
-                )
+                            }
+                        )
 
         return Response({"results": data})
 

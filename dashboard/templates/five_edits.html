@@ -147,7 +147,7 @@
                         <h2 class="mb-0 btn-heading">
                             <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsetwo"
                                     aria-expanded="false" aria-controls="collapseOne">
-                                Second Tier partner and Contract Budget Section
+                                Second Tier Partners
                             </button>
                         </h2>
                     </div>
@@ -159,25 +159,9 @@
                                     <div class="col-wrapper">
                                         <div class="form-group ">
                                             <label for="id_second_tier_partner">Second Tier Partner</label>
-                                            <select name="second_tier_partner" id="id_second_tier_partner"
-                                                    class="custom-select">
-                                                <option value='' disabled selected>Select One</option>
-                                                {% for partner in partners %}
-
-                                                {% if form.instance.second_tier_partner.id == partner.id %}
-
-                                                <option value="{{partner.id}}" selected>{{partner.name}}</option>
-
-                                                {% else %}
-
-                                                <option value="{{partner.id}}">{{partner.name}}</option>
-
-                                                {% endif %}
-
-
-                                                {% endfor %}
-
-                                            </select>
+                                            <input type="text" name="second_tier_partner_name"
+                                                   id="id_second_tier_partner" class="form-control" value="{{form.instance.second_tier_partner_name}}"
+                                                   placeholder="If multiple Partner, Seperate Partners with Comma">
                                         </div>
                                     </div>
                                 </div>

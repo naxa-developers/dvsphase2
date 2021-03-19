@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<style>
+    select {
+      width: 100%;
+    }
+</style>
 <main class="dfid-main">
     <!-- dfid breadcrumb -->
     <div class="dfid-breadcrumb pdt-100">
@@ -14,6 +19,21 @@
             {% endif %}
         </ul>
     </div>
+    <br>
+        <form method="GET">
+            <div class="row">
+                <div class="col">
+                    <select placeholder="Select Program" id="elmt" name="program"  class="multiple-select" multiple="multiple">
+                        {% for program in program %}
+                                <option value="{{program.id}}">{{program.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                        <button type="submit" class="btn btn-primary" style="margin-right:1px;height: 25px;display:flex;justify-content:center;align-items:center;">Search</button>
+                    </div>
+            </div>
+        </form>
     <!-- dfid program table -->
     <div class="table-tesponsive program-list">
         {% if messages %}
@@ -77,4 +97,26 @@
         </table>
     </div>
 </main>
+{% endblock %}
+{% block script %}
+
+<script>
+  $(function() {
+    $('.multiple-select').multipleSelect()
+  })
+</script>
+<script>
+     $(".multiple-select option").each(function (idx, val) {
+       $(this).siblings("[value='" + $(this).val() + "']").remove();
+  });
+</script>
+<script>
+    $("#elmt").append($("#elmt option")
+                  .remove().sort(function(a, b) {
+    var at = $(a).text().toUpperCase(),
+        bt = $(b).text().toUpperCase();
+    return (at > bt) ? 1 : ((at < bt) ? -1 : 0);
+}));
+</script>
+
 {% endblock %}
