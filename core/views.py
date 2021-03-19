@@ -734,7 +734,8 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         program = []
-        print(FiveW.objects.filter(program_id__name='Access to Finance', province_id__code='1').values('component_id__name').distinct())
+        print(FiveW.objects.filter(program_id__name='Access to Finance', province_id__code='1').values(
+            'component_id__name').distinct())
         if request.GET['region'] == 'province':
             if request.GET.getlist('province_code'):
                 fiveprogram = FiveW.objects.filter(province_id__code=request.GET['province_code']).exclude(
@@ -745,7 +746,9 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
                 for f in fiveprogram:
                     component = []
                     print(f['program_id__name'])
-                    dami = FiveW.objects.filter(program_id__name=f['program_id__name'], province_id__code=request.GET['province_code']).values('component_id__name').distinct()
+                    dami = FiveW.objects.filter(program_id__name=f['program_id__name'],
+                                                province_id__code=request.GET['province_code']).values(
+                        'component_id__name').distinct()
                     print(dami)
                     program.append({
                         "name": f['program_id__name'],
@@ -758,7 +761,8 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
                                 'name': d['component_id__name'],
                                 'children': partner
                             })
-                        nadami = FiveW.objects.filter(program_id__name=f['program_id__name'], province_id__code=request.GET['province_code']).values(
+                        nadami = FiveW.objects.filter(program_id__name=f['program_id__name'],
+                                                      province_id__code=request.GET['province_code']).values(
                             'supplier_id__name').distinct()
                         print(nadami)
                         for n in nadami:
@@ -778,24 +782,29 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
                     'program_id__name').distinct()
                 for f in fiveprogram:
                     component = []
-                    dami = Project.objects.filter(program_id__name=f['program_id__name']).values('name').distinct()
+                    dami = FiveW.objects.filter(program_id__name=f['program_id__name'],
+                                                district_id__code=request.GET['district_code']).values(
+                        'component_id__name').distinct()
+                    print(dami)
                     program.append({
                         "name": f['program_id__name'],
                         "children": component
                     })
                     for d in dami:
                         partner = []
-                        if d['name'] not in component:
+                        if d['component_id__name'] not in component:
                             component.append({
-                                'name': d['name'],
+                                'name': d['component_id__name'],
                                 'children': partner
                             })
-                        nadami = Project.objects.filter(name=d['name']).values(
-                            'partner_id__name').distinct()
+                        nadami = FiveW.objects.filter(program_id__name=f['program_id__name'],
+                                                      district_id__code=request.GET['district_code']).values(
+                            'supplier_id__name').distinct()
+                        print(nadami)
                         for n in nadami:
-                            if n['partner_id__name'] not in partner:
+                            if n['supplier_id__name'] not in partner:
                                 partner.append({
-                                    'name': n['partner_id__name']
+                                    'name': n['supplier_id__name']
                                 })
             else:
                 return Response({"results": "Please Pass District Code"})
@@ -809,25 +818,29 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
                     'program_id__name').distinct()
                 for f in fiveprogram:
                     component = []
-                    dami = Project.objects.filter(program_id__name=f['program_id__name']).values('name').distinct()
+                    dami = FiveW.objects.filter(program_id__name=f['program_id__name'],
+                                                municipality_id__code=request.GET['municipality_code']).values(
+                        'component_id__name').distinct()
+                    print(dami)
                     program.append({
                         "name": f['program_id__name'],
                         "children": component
                     })
                     for d in dami:
                         partner = []
-                        if d['name'] not in component:
+                        if d['component_id__name'] not in component:
                             component.append({
-                                'name': d['name'],
+                                'name': d['component_id__name'],
                                 'children': partner
                             })
-                        nadami = Project.objects.filter(name=d['name']).values(
-                            'partner_id__name').distinct()
+                        nadami = FiveW.objects.filter(program_id__name=f['program_id__name'],
+                                                      municipality_id__code=request.GET['municipality_code']).values(
+                            'supplier_id__name').distinct()
                         print(nadami)
                         for n in nadami:
-                            if n['partner_id__name'] not in partner:
+                            if n['supplier_id__name'] not in partner:
                                 partner.append({
-                                    'name': n['partner_id__name']
+                                    'name': n['supplier_id__name']
                                 })
             else:
                 return Response({"results": "Please Pass Municipality Code"})
@@ -1222,9 +1235,9 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 prog = query.values_list('program_id__name', flat=True).distinct()
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
-                sect = query.exclude(component_id__sector__name=None).values_list('component_id__sector__name',
+                sect = query.exclude(program_id__sector__name=None).values_list('program_id__sector__name',
                                                                                   flat=True).distinct()
-                sub_sect = query.exclude(component_id__sub_sector__name=None).values_list(
+                sub_sect = query.exclude(program_id__sub_sector__name=None).values_list(
                     'component_id__sub_sector__name',
                     flat=True).distinct()
                 mark = query.exclude(program_id__marker_category__name=None).values_list(
@@ -1366,11 +1379,11 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 prog = query.values_list('program_id__name', flat=True).distinct()
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
-                sect = query.exclude(component_id__sector__name=None).values_list('component_id__sector__name',
+                sect = query.exclude(program_id__sector__name=None).values_list('program_id__sector__name',
                                                                                   flat=True).distinct()
 
-                sub_sect = query.exclude(component_id__sub_sector__name=None).values_list(
-                    'component_id__sub_sector__name',
+                sub_sect = query.exclude(program_id__sub_sector__name=None).values_list(
+                    'program_id__sub_sector__name',
                     flat=True).distinct()
                 mark_cat = query.exclude(program_id__marker_category__name=None).values_list(
                     'program_id__marker_category__name', flat=True).distinct()
@@ -1534,10 +1547,10 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 prog = query.values_list('program_id__name', flat=True).distinct()
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
-                sect = query.exclude(component_id__sector__name=None).values_list('component_id__sector__name',
+                sect = query.exclude(program_id__sector__name=None).values_list('program_id__sector__name',
                                                                                   flat=True).distinct()
-                sub_sect = query.exclude(component_id__sub_sector__name=None).values_list(
-                    'component_id__sub_sector__name', flat=True).distinct()
+                sub_sect = query.exclude(program_id__sub_sector__name=None).values_list(
+                    'program_id__sub_sector__name', flat=True).distinct()
                 mark = query.values_list(
                     'program_id__marker_category__name', flat=True).distinct()
                 mark_value = query.values_list(
@@ -1819,7 +1832,7 @@ class SubsectorApi(viewsets.ReadOnlyModelViewSet):
 class ProjectApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'name', 'program_id', 'sector', 'sub_sector']
+    filterset_fields = ['id', 'name', 'program_id', 'sector', 'sub_sector', 'code']
 
     def get_queryset(self):
         queryset = Project.objects.order_by('id')
