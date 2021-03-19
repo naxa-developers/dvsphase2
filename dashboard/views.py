@@ -1032,17 +1032,24 @@ class ProjectList(LoginRequiredMixin, ListView):
     model = Project
 
     def get_context_data(self, **kwargs):
+        program_ids = self.request.GET.getlist('program', None)
         data = super(ProjectList, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         group = Group.objects.get(user=user)
-        if group.name == 'admin':
-            project_list = Project.objects.order_by('id')
+        program = Program.objects.order_by('name')
+        if program_ids:
+            project_list = Project.objects.filter(program_id__in=program_ids).order_by('id')
         else:
-            project_list = Project.objects.order_by('id')
+            if group.name == 'admin':
+                project_list = Project.objects.order_by('id')
+            else:
+                project_list = Project.objects.order_by('id')
 
         data['list'] = project_list
+        data['program'] = program
         data['user'] = user_data
+        data['selected'] = program_ids
         data['active'] = 'project'
         return data
 

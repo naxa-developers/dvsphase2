@@ -52,7 +52,7 @@
                                     <div class="col-wrapper">
                                         <div class="form-group">
                                             <label for="id_supplier_id">Select Supplier</label>
-                                            <select name="supplier_id" id="id_supplier_id" class="custom-select" >
+                                            <select name="supplier_id" id="id_supplier_id" class="custom-select">
                                                 <option value='' disabled selected>Select One</option>
                                                 {% for partner in partners %}
 
@@ -73,7 +73,9 @@
                                                 <option value='' disabled selected>Select One</option>
                                                 {% for program in programs %}
 
-                                                <option value="{{program.id}}" valId="{{program.partner_id__id}}">{{program.name}}</option>
+                                                <option value="{{program.id}}" valId="{{program.partner_id__id}}">
+                                                    {{program.name}}
+                                                </option>
 
 
                                                 {% endfor %}
@@ -93,7 +95,9 @@
                                                 <option value='' disabled selected>Select One</option>
                                                 {% for project in projects %}
 
-                                                <option value="{{project.id}}" valId='{{project.program_id__id}}'>{{project.name}}</option>
+                                                <option value="{{project.id}}" valId='{{project.program_id__id}}'>
+                                                    {{project.name}}
+                                                </option>
 
 
                                                 {% endfor %}
@@ -102,16 +106,16 @@
                                         </div>
                                     </div>
                                 </div>
-<!--                                <div class="col-md-6">-->
-<!--                                    <div class="col-wrapper">-->
-<!--                                        <div class="form-group form-flex">-->
-<!--                                            <label for="id_project_title">Enter Project Title</label>-->
-<!--                                            <input type="text" name="project_title" maxlength="500"-->
-<!--                                                   id="id_project_title" class="form-control"-->
-<!--                                                   placeholder="Enter Project Title">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
+                                <!--                                <div class="col-md-6">-->
+                                <!--                                    <div class="col-wrapper">-->
+                                <!--                                        <div class="form-group form-flex">-->
+                                <!--                                            <label for="id_project_title">Enter Project Title</label>-->
+                                <!--                                            <input type="text" name="project_title" maxlength="500"-->
+                                <!--                                                   id="id_project_title" class="form-control"-->
+                                <!--                                                   placeholder="Enter Project Title">-->
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -122,7 +126,7 @@
                         <h2 class="mb-0 btn-heading">
                             <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsetwo"
                                     aria-expanded="false" aria-controls="collapseOne">
-                                Second Tier partner and Contract Budget Section
+                                Second Tier Partners
                             </button>
                         </h2>
                     </div>
@@ -134,46 +138,37 @@
                                     <div class="col-wrapper">
                                         <div class="form-group ">
                                             <label for="id_second_tier_partner">Second Tier Partner</label>
-                                            <select name="second_tier_partner" id="id_second_tier_partner"
-                                                    class="custom-select">
-                                                <option value='' disabled selected>Select One</option>
-                                                {% for partner in all_partner %}
-
-                                                <option value="{{partner.id}}">{{partner.name}}</option>
-
-
-                                                {% endfor %}
-
-                                            </select>
+                                            <input type="text" name="second_tier_partner_name"
+                                                   id="id_second_tier_partner" class="form-control"
+                                                   placeholder="If multiple Partner, Seperate Partners with Comma">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-<!--                            <div class="row">-->
-<!--                                <div class="col-md-6">-->
-<!--                                    <div class="col-wrapper">-->
-<!--                                        <div class="title">-->
-<!--                                                        <span>Do you want to enter the overall budget for the partner ? If yes (YES / NO TOGGLE)-->
-<!--                                                        </span>-->
-<!--                                            <label class="switch">-->
-<!--                                                <input type="checkbox" id="checkbox_id">-->
-<!--                                                <span class="slider round"></span>-->
-<!--                                            </label>-->
-<!--                                        </div>-->
-<!--                                        <div class="form-group form-flex" id="second_tier" style="display:none">-->
-<!--                                            <label for="id_contract_value" class="Sum">Enter Contract Value</label>-->
-<!--                                            <input type="number" name="contract_value" step="any"-->
-<!--                                                   id="id_contract_value" value="0" class=" form-control"-->
-<!--                                                   placeholder="Enter Project Title">-->
+                            <!--                            <div class="row">-->
+                            <!--                                <div class="col-md-6">-->
+                            <!--                                    <div class="col-wrapper">-->
+                            <!--                                        <div class="title">-->
+                            <!--                                                        <span>Do you want to enter the overall budget for the partner ? If yes (YES / NO TOGGLE)-->
+                            <!--                                                        </span>-->
+                            <!--                                            <label class="switch">-->
+                            <!--                                                <input type="checkbox" id="checkbox_id">-->
+                            <!--                                                <span class="slider round"></span>-->
+                            <!--                                            </label>-->
+                            <!--                                        </div>-->
+                            <!--                                        <div class="form-group form-flex" id="second_tier" style="display:none">-->
+                            <!--                                            <label for="id_contract_value" class="Sum">Enter Contract Value</label>-->
+                            <!--                                            <input type="number" name="contract_value" step="any"-->
+                            <!--                                                   id="id_contract_value" value="0" class=" form-control"-->
+                            <!--                                                   placeholder="Enter Project Title">-->
 
 
-
-<!--                                        </div>-->
-<!--                                        <input type="number" name="contract_value_id" step="any"-->
-<!--                                                   id="id_contract_value_id" value="0" class=" form-control" hidden>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                            <!--                                        </div>-->
+                            <!--                                        <input type="number" name="contract_value_id" step="any"-->
+                            <!--                                                   id="id_contract_value_id" value="0" class=" form-control" hidden>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -217,7 +212,9 @@
                                                 <option value='' disabled selected>Select One</option>
                                                 {% for district in districts %}
 
-                                                <option value="{{district.id}}" valId='{{district.province_id__id}}'>{{district.name}}</option>
+                                                <option value="{{district.id}}" valId='{{district.province_id__id}}'>
+                                                    {{district.name}}
+                                                </option>
 
 
                                                 {% endfor %}
@@ -238,7 +235,9 @@
                                                 <option value='' disabled selected>Select One</option>
                                                 {% for mun in municipalities %}
 
-                                                <option value="{{mun.id}}" valId='{{mun.district_id__id}}'>{{mun.name}}</option>
+                                                <option value="{{mun.id}}" valId='{{mun.district_id__id}}'>
+                                                    {{mun.name}}
+                                                </option>
 
 
                                                 {% endfor %}
@@ -258,65 +257,65 @@
                                 </div>
                             </div>
 
-<!--                            <div class="row">-->
+                            <!--                            <div class="row">-->
 
-<!--                                <div class="col-md-6">-->
-<!--                                    <div class="form-group ">-->
-<!--                                        <label for="id_male_beneficiary" class="">Male Beneficiary</label>-->
-<!--                                        <input type="number" name="male_beneficiary" value="0" id="id_male_beneficiary"-->
-<!--                                               class="form-control"-->
-<!--                                               placeholder=""/>-->
+                            <!--                                <div class="col-md-6">-->
+                            <!--                                    <div class="form-group ">-->
+                            <!--                                        <label for="id_male_beneficiary" class="">Male Beneficiary</label>-->
+                            <!--                                        <input type="number" name="male_beneficiary" value="0" id="id_male_beneficiary"-->
+                            <!--                                               class="form-control"-->
+                            <!--                                               placeholder=""/>-->
 
-<!--                                    </div>-->
-<!--                                </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
 
-<!--                                <div class="col-md-6">-->
-<!--                                    <div class="form-group ">-->
-<!--                                        <label for="id_female_beneficiary" class="">Female Beneficiary</label>-->
-<!--                                        <input type="number" name="female_beneficiary" value="0" class="form-control"-->
-<!--                                               id="id_female_beneficiary"-->
-<!--                                               placeholder=""/>-->
+                            <!--                                <div class="col-md-6">-->
+                            <!--                                    <div class="form-group ">-->
+                            <!--                                        <label for="id_female_beneficiary" class="">Female Beneficiary</label>-->
+                            <!--                                        <input type="number" name="female_beneficiary" value="0" class="form-control"-->
+                            <!--                                               id="id_female_beneficiary"-->
+                            <!--                                               placeholder=""/>-->
 
-<!--                                    </div>-->
-<!--                                </div>-->
-
-
-<!--                            </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
 
 
-<!--                            <div class="row">-->
-<!--                                <div class="col-md-6">-->
-<!--                                    <div class="col-wrapper">-->
-<!--                                        <div class="form-group form-flex">-->
-<!--                                            <label for="id_total_beneficiary">Total Beneficiary</label>-->
-<!--                                            <input type="number" name="total_beneficiary" value="0"-->
-<!--                                                   id="id_total_beneficiary" class="form-control"-->
-<!--                                                   placeholder="  ">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="col-md-6">-->
-<!--                                    <div class="col-wrapper">-->
-<!--                                        <div class="form-group form-flex">-->
-<!--                                            <label for="id_ward" class="">Ward</label>-->
-<!--                                            <input type="text" class="form-control" name="ward" maxlength="200"-->
-<!--                                                   id="id_ward"-->
-<!--                                                   placeholder="1"/>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                            <!--                            </div>-->
+
+
+                            <!--                            <div class="row">-->
+                            <!--                                <div class="col-md-6">-->
+                            <!--                                    <div class="col-wrapper">-->
+                            <!--                                        <div class="form-group form-flex">-->
+                            <!--                                            <label for="id_total_beneficiary">Total Beneficiary</label>-->
+                            <!--                                            <input type="number" name="total_beneficiary" value="0"-->
+                            <!--                                                   id="id_total_beneficiary" class="form-control"-->
+                            <!--                                                   placeholder="  ">-->
+                            <!--                                        </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="col-md-6">-->
+                            <!--                                    <div class="col-wrapper">-->
+                            <!--                                        <div class="form-group form-flex">-->
+                            <!--                                            <label for="id_ward" class="">Ward</label>-->
+                            <!--                                            <input type="text" class="form-control" name="ward" maxlength="200"-->
+                            <!--                                                   id="id_ward"-->
+                            <!--                                                   placeholder="1"/>-->
+                            <!--                                        </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
 
                             <div class="row">
-<!--                                <div class="col-md-6">-->
-<!--                                    <div class="col-wrapper">-->
-<!--                                        <div class="form-group form-flex">-->
-<!--                                            <label for="id_local_partner">Local Partners</label>-->
-<!--                                            <input type="text" name="local_partner" maxlength="500"-->
-<!--                                                   id="id_local_partner" class="form-control" placeholder="">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
+                                <!--                                <div class="col-md-6">-->
+                                <!--                                    <div class="col-wrapper">-->
+                                <!--                                        <div class="form-group form-flex">-->
+                                <!--                                            <label for="id_local_partner">Local Partners</label>-->
+                                <!--                                            <input type="text" name="local_partner" maxlength="500"-->
+                                <!--                                                   id="id_local_partner" class="form-control" placeholder="">-->
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
 
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -333,35 +332,35 @@
                                 </div>
                             </div>
 
-<!--                            <div class="row">-->
+                            <!--                            <div class="row">-->
 
-<!--                                <div class="col-md-6">-->
-<!--                                    <div class="form-group ">-->
-<!--                                        <label for="id_start_date" class="">Start Date</label>-->
-<!--                                        <div class="input-group date" data-provide="datepicker">-->
-<!--                                            <input type="text" class="form-control" name="start_date" maxlength="100"-->
-<!--                                                   id="id_start_date"-->
-<!--                                                   placeholder="2019-11-20"/>-->
-<!--                                        </div>-->
+                            <!--                                <div class="col-md-6">-->
+                            <!--                                    <div class="form-group ">-->
+                            <!--                                        <label for="id_start_date" class="">Start Date</label>-->
+                            <!--                                        <div class="input-group date" data-provide="datepicker">-->
+                            <!--                                            <input type="text" class="form-control" name="start_date" maxlength="100"-->
+                            <!--                                                   id="id_start_date"-->
+                            <!--                                                   placeholder="2019-11-20"/>-->
+                            <!--                                        </div>-->
 
-<!--                                    </div>-->
-<!--                                </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
 
-<!--                                <div class="col-md-6">-->
-<!--                                    <div class="form-group ">-->
-<!--                                        <label for="id_end_date" class="">End Date</label>-->
-<!--                                        <div class="input-group date" data-provide="datepicker">-->
-<!--                                            <input type="text" class="form-control" name="end_date" maxlength="100"-->
-<!--                                                   id="id_end_date"-->
-<!--                                                   placeholder="2019-11-20"/>-->
+                            <!--                                <div class="col-md-6">-->
+                            <!--                                    <div class="form-group ">-->
+                            <!--                                        <label for="id_end_date" class="">End Date</label>-->
+                            <!--                                        <div class="input-group date" data-provide="datepicker">-->
+                            <!--                                            <input type="text" class="form-control" name="end_date" maxlength="100"-->
+                            <!--                                                   id="id_end_date"-->
+                            <!--                                                   placeholder="2019-11-20"/>-->
 
-<!--                                        </div>-->
+                            <!--                                        </div>-->
 
-<!--                                    </div>-->
-<!--                                </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
 
 
-<!--                            </div>-->
+                            <!--                            </div>-->
 
 
                         </div>
@@ -370,7 +369,8 @@
                 <div class="card">
                     <div class="card-header" id="headingFour">
                         <h2 class="mb-0 btn-heading">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseFour"
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    data-target="#collapseFour"
                                     aria-expanded="false" aria-controls="collapseFour">
                                 Extra Information
                             </button>
@@ -393,7 +393,7 @@
                                     <div class="col-wrapper">
                                         <div class="form-group form-flex">
                                             <label for="id_allocated_budget">Contact Name</label>
-                                            <input type="text" name="contact_name"  step="any"
+                                            <input type="text" name="contact_name" step="any"
                                                    id="" class="form-control" placeholder="">
                                         </div>
                                     </div>
@@ -413,7 +413,7 @@
                                     <div class="col-wrapper">
                                         <div class="form-group form-flex">
                                             <label for="id_allocated_budget">Contact NO.</label>
-                                            <input type="text" name="contact_number"  step="any"
+                                            <input type="text" name="contact_number" step="any"
                                                    id="" class="form-control" placeholder="">
                                         </div>
                                     </div>
@@ -433,7 +433,7 @@
                                     <div class="col-wrapper">
                                         <div class="form-group form-flex">
                                             <label for="id_allocated_budget">Remarks</label>
-                                            <input type="text" name="remarks"  step="any"
+                                            <input type="text" name="remarks" step="any"
                                                    id="" class="form-control" placeholder="">
                                         </div>
                                     </div>
@@ -441,13 +441,13 @@
                             </div>
                         </div>
 
+                    </div>
+
+                    <div class="form-group mrt-100">
+                        <button type="submit" class="dfid-button sm-button">Save</button>
+                    </div>
+
                 </div>
-
-        <div class="form-group mrt-100">
-            <button type="submit" class="dfid-button sm-button">Save</button>
-        </div>
-
-        </div>
 
     </form>
 </main>
@@ -487,5 +487,6 @@
             changefunc($(this).val(), '#id_municipality_id option')
         });
     });
+
 </script>
 {% endblock %}
