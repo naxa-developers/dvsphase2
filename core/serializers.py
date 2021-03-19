@@ -110,13 +110,15 @@ class ProgramSerializer(serializers.ModelSerializer):
 
     def get_component(self, obj):
         data = []
-        qs = obj.ProjectProgram.values('id', 'name').distinct('id')
+        qs = obj.ProjectProgram.values('id', 'name', 'code').distinct('code')
         for q in qs:
             data.append({
                 'id': q['id'],
+                'code':q['code'],
                 'name': q['name']
 
             })
+
         return data
 
     def get_marker_category(self, obj):
