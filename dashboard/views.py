@@ -75,10 +75,11 @@ def login_test(request, **kwargs):
 
 def project(value1, value2):
     try:
-        data = Project.objects.filter(code=value1)
+        data = Project.objects.get(code=value1)
     except:
-        data = Project.objects.filter(code=value1, partner_id__code=value2)
-        return data
+        data = Project.objects.get(code=value1, partner_id__code=value2)
+
+    return data
 
 
 @login_required()
@@ -108,12 +109,13 @@ def bulkCreate(request):
         group = Group.objects.get(user=user)
         if group.name == 'admin':
             for row in range(0, upper_range):
+                print(df['PROVINCE.CODE'][row])
                 try:
                     fivew_correct.append(FiveW(
                         supplier_id=Partner.objects.get(code=float(df['1st TIER PARTNER CODE'][row])),
                         second_tier_partner_name=df['2nd TIER PARTNER'][row],
-                        component_id=Project.objects.get(code=df['Project/Component Code'][row],
-                                                            partner_id__code=float(df['1st TIER PARTNER CODE'][row])),
+                        component_id=project(df['Project/Component Code'][row],
+                                             float(df['1st TIER PARTNER CODE'][row])),
                         program_id=Program.objects.get(code=df['Programme Code'][row]),
                         province_id=Province.objects.get(code=str(int(df['PROVINCE.CODE'][row]))),
                         district_id=District.objects.get(code=str(df['D.CODE'][row])),
