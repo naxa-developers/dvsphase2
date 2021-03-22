@@ -855,8 +855,8 @@ def ExportData(request):
 
         newdata.append(d)
     df = pd.DataFrame(newdata)
-    df.to_csv('data_csv/exportdata.csv')
-    return FileResponse(open('data_csv/exportdata.csv', 'rb'))
+    df.to_csv('media/exportdata.csv')
+    return HttpResponseRedirect('https://dvsnaxa.naxa.com.np/media/exportdata.csv')
 
 
 class FiveList(LoginRequiredMixin, ListView):
