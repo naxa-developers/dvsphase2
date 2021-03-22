@@ -8,6 +8,8 @@
     .dt-buttons {
         display: none;
     }
+
+
 </style>
 <main class="dfid-main">
     <!-- dfid breadcrumb -->
@@ -25,72 +27,83 @@
             </li>
             {% endif %} -->
             {% if perms.core.add_fivew %}
-            <li style="padding-left:10px"><a href="/dashboard/bulk-upload" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Bulk Upload</a>
+            <li style="padding-left:10px"><a href="/dashboard/bulk-upload"
+                                             class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Bulk
+                Upload</a>
 
             </li>
             {% endif %}
-            <li style="padding-left:10px"><a href="/dashboard/export/?full_data='full_data'{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if partnerdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Export</a>
+            <li style="padding-left:10px"><a
+                    href="/dashboard/export/?full_data='full_data'{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if partnerdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}"
+                    class="border-button dfid-button sm-button"><i
+                    class="material-icons">add_circle_outline</i>Export</a>
         </ul>
     </div>
     <br>
     <!-- dfid program table -->
-                <form action="/dashboard/five-list" method="GET">
-<!--                {% csrf_token %}-->
+    <form action="/dashboard/five-list" method="GET">
+        <!--                {% csrf_token %}-->
+        <div class="row">
+            <!--                <input class="form-control" name="search" placeholder="Search..." style="max-width:30%;" required>-->
+            <div class="col" style="padding-left:5px;padding-right:5px;">
+                <select id="multi_select_partner" placeholder="Partner" name='partner' multiple="multiple">
+                    {% for partner in partner %}
+                    <option value="{{partner.id}}">{{partner.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col" style="padding-left:5px;padding-right:5px;">
+                <select name="program" id="multi_select_program" multiple="multiple" placeholder="Program">
+                    {% for program in program %}
+                    <option value="{{program.id}}" valId="{{program.partner_id__id}}">{{program.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col" style="padding-left:5px;padding-right:5px;">
+                <select name="project" id='multi_select_project' multiple="multiple" placeholder="Component">
+                    {% for project in project %}
+                    <option value="{{project.id}}" valId='{{project.program_id__id}}' valId1='{{project.partner_id__id}}'>{{project.name}}</option>
+
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col" style="padding-left:5px;padding-right:5px;">
+                <select name="province" id='multi_select_province' multiple="multiple" placeholder="Province">
+                    {% for province in province %}
+                    <option value="{{province.id}}">{{province.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col" style="padding-left:5px;padding-right:5px;">
+                <select name="district" id='multi_select_district' multiple="multiple" placeholder="District">
+                    {% for district in district %}
+                    <option value="{{district.id}}" valId='{{district.province_id__id}}'>{{district.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col" style="padding-left:5px;padding-right:5px;">
+                <select name="gapanapa" id='multi_select_gapanapa' multiple="multiple" placeholder="Municipality">
+                    {% for gapanapa in gapanapa %}
+                    <option value="{{gapanapa.id}}" valId='{{gapanapa.district_id__id}}'>{{gapanapa.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col">
                 <div class="row">
-<!--                <input class="form-control" name="search" placeholder="Search..." style="max-width:30%;" required>-->
-                    <div class="col" style="padding-left:5px;padding-right:5px;">
-                        <select id="multi_select_partner" placeholder="Partner" name='partner' multiple="multiple">
-                            {% for partner in partner %}
-                                <option value="{{partner.id}}" >{{partner.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="col" style="padding-left:5px;padding-right:5px;">
-                        <select name="program" id="multi_select_program" multiple="multiple" placeholder="Program">
-                            {% for program in program %}
-                            <option value="{{program.id}}" valId="{{program.partner_id__id}}">{{program.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="col" style="padding-left:5px;padding-right:5px;">
-                        <select name="project" id='multi_select_project' multiple="multiple" placeholder="Component">
-                                {% for project in project %}
-                                <option value="{{project.id}}" valId='{{project.program_id__id}}'>{{project.name}}</option>
-
-                                {% endfor %}
-                        </select>
-                    </div>
-                    <div class="col" style="padding-left:5px;padding-right:5px;">
-                        <select name="province" id='multi_select_province' multiple="multiple" placeholder="Province">
-                            {% for province in province %}
-                            <option value="{{province.id}}">{{province.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="col" style="padding-left:5px;padding-right:5px;">
-                        <select name="district" id='multi_select_district' multiple="multiple" placeholder="District">
-                            {% for district in district %}
-                            <option value="{{district.id}}" valId='{{district.province_id__id}}'>{{district.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="col" style="padding-left:5px;padding-right:5px;">
-                        <select name="gapanapa" id='multi_select_gapanapa' multiple="multiple" placeholder="Municipality">
-                            {% for gapanapa in gapanapa %}
-                            <option value="{{gapanapa.id}}" valId='{{gapanapa.district_id__id}}'>{{gapanapa.name}}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="col">
-                        <div class="row">
-                            <button type="submit" class="btn btn-primary" style="margin-right:1px;height: 25px;display:flex;justify-content:center;align-items:center;">Search</button>
-                            <button type="button" id="reset-btn" class="btn btn-secondary" style="margin-left:1px;height: 25px;display:flex;justify-content:center;align-items:center;">Reset</button>
-                        </div>
-
-                    </div>
-
+                    <button type="submit" class="btn btn-primary"
+                            style="margin-right:1px;height: 25px;display:flex;justify-content:center;align-items:center;">
+                        Search
+                    </button>
+                    <button type="button" id="reset-btn" class="btn btn-secondary"
+                            style="margin-left:1px;height: 25px;display:flex;justify-content:center;align-items:center;">
+                        Reset
+                    </button>
                 </div>
-            </form>
+
+            </div>
+
+        </div>
+    </form>
     <div class="table-tesponsive scroll-table program-list">
         {% if messages %}
         {% for messages in messages %}
@@ -115,8 +128,8 @@
             {% for message in messages %}
 
             {% endfor %}
-    </ul>
-{% endif %}
+        </ul>
+        {% endif %}
 
         <table class="five-table dataTable">
             <thead>
@@ -129,9 +142,8 @@
                 <th>Province</th>
                 <th>District</th>
                 <th>Municipality</th>
-                <th>Allocated Budget </th>
+                <th>Allocated Budget</th>
                 <th>status</th>
-
 
 
                 <th></th>
@@ -152,7 +164,6 @@
                 <td>{{ five.municipality_id__name }}</td>
                 <td>{{ five.allocated_budget }}</td>
                 <td>{{ five.status }}</td>
-
 
 
                 <td>
@@ -186,35 +197,36 @@
         </table>
 
 
-
-
         <div class="pagination">
-                    <div class="paging-left">
-                        <div class="page-item">
-                            <p>Showing <span class="show-start">1</span>to<span class="show-end">100</span>of<span class="total-entries"></span>{{ page_obj.paginator.num_pages }}</p>
-                        </div>
-
-                    </div>
-                    <div class="paging-right">
-                        {% if list.has_previous %}
-                        <div class="page-item pre-page">
-                            <a href="?page={{ list.previous_page_number }}{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if partnerdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}" >previous page</a>
-                        </div>
-                        {% endif %}
-                        <ul>
-                            {% for page in page_range %}
-                            <li {% if page == list.number %} class="active" {% endif %}><a href="?page={{ page }}{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if partnerdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}">{{ page }}</a></li>
-                            {% endfor %}
-                        </ul>
-                        {% if list.has_next %}
-                        <div class="next-page page-item">
-                            <a href="?page={{ list.next_page_number }}{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if partnerdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}">next page</a>
-                        </div>
-                        {% endif %}
-                    </div>
+            <div class="paging-left">
+                <div class="page-item">
+                    <p>Showing <span class="show-start">1</span>to<span class="show-end">100</span>of<span
+                            class="total-entries"></span>{{ page_obj.paginator.num_pages }}</p>
                 </div>
 
-
+            </div>
+            <div class="paging-right">
+                {% if list.has_previous %}
+                <div class="page-item pre-page">
+                    <a href="?page={{ list.previous_page_number }}{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if partnerdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}">previous
+                        page</a>
+                </div>
+                {% endif %}
+                <ul>
+                    {% for page in page_range %}
+                    <li {% if page == list.number %} class="active" {% endif %}><a
+                            href="?page={{ page }}{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if partnerdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}">{{
+                        page }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% if list.has_next %}
+                <div class="next-page page-item">
+                    <a href="?page={{ list.next_page_number }}{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if partnerdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}">next
+                        page</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
 
 
     </div>
@@ -238,6 +250,8 @@
         });
 
     }
+
+
 </script>
 <script>
     $(function() {
@@ -258,8 +272,8 @@
             selectFunction('#multi_select_district', districtData);
             selectFunction('#multi_select_gapanapa', municipalityData);
             multiChangeFunction_multi($('#multi_select_partner').val(), '#multi_select_program');
-            multiChangeFunction($('#multi_select_program').val(), '#multi_select_project');
-            multiChangeFunction($('#multi_select_province').val(), '#multi_select_district');
+            multiChangeFunction('#multi_select_program', '#multi_select_project');
+            multiChangeFunction('#multi_select_province', '#multi_select_district');
             multiChangeFunction_one($('#multi_select_district').val(), '#multi_select_gapanapa');
             flag = false;
         };
@@ -267,9 +281,12 @@
 
 
     })
+
+
 </script>
 <script>
-    function multiChangeFunction(change_value, to_be_changed_id) {
+    function multiChangeFunction(change_val, to_be_changed_id) {
+        var change_value = $(change_val).val()
         $(to_be_changed_id).multipleSelect('uncheckAll');
         $(to_be_changed_id).multipleSelect('refresh')
         $(to_be_changed_id + ' option').each(function() {
@@ -280,12 +297,26 @@
             };
         });
         $(to_be_changed_id + ' option').each(function() {
-            for(var j=0;j<=change_value.length;j++) {
-                if ($(this).attr('valId') == change_value[j]) {
-                    if ($(this).is(':disabled')) {
-                        $(this).prop('disabled', false);
+            for(var j=0;j<change_value.length;j++) {
+                var mul = $('#multi_select_partner').val()
+                if ((to_be_changed_id == '#multi_select_project') && (mul.length > 0)) {
+
+                    for (var c=0;c<mul.length;c++) {
+                        if (($(this).attr('valId') == change_value[j]) && ($(this).attr('valId1') == mul[c]) ) {
+                            if ($(this).is(':disabled')) {
+
+                                $(this).prop('disabled', false);
+                            }
+                        }
                     }
-                };
+                } else {
+                    if ($(this).attr('valId') == change_value[j]) {
+                        if ($(this).is(':disabled')) {
+                            $(this).prop('disabled', false);
+                        }
+                    };
+                }
+
             };
         });
         $(to_be_changed_id).multipleSelect('refresh');
@@ -298,20 +329,23 @@
             $(this).prop('disabled', true)
         });
         $(to_be_changed_id + ' option').each(function() {
-            var f_this = $(this)
-            $(change_value + ' option').each(function() {
-                if ($(this).is(':disabled') == false) {
-                    if (f_this.attr('valId') == $(this).val()) {
-                        if (f_this.is(':disabled')) {
-                            f_this.prop('disabled', false);
-                        }
-                    };
-                };
-            });
+            var mul = $(change_value).val()
+            for (var c=0;c<mul.length;c++) {
+
+                if ($(this).attr('valId1') ==  mul[c]) {
+                    if ($(this).is(':disabled')) {
+
+                        $(this).prop('disabled', false);
+                    }
+                }
+            }
+
         });
         $(to_be_changed_id).multipleSelect('refresh');
         $('.ms-drop ul>li:has(label.disabled)').hide();
     }
+
+
 </script>
 <script>
     function multiChangeFunction_multi(change_value, to_be_changed_id) {
@@ -341,6 +375,8 @@
         $(to_be_changed_id).multipleSelect('refresh');
         $('.ms-drop ul>li:has(label.disabled)').hide();
     }
+
+
 </script>
 <script>
     function multiChangeFunction_one(change_value, to_be_changed_id) {
@@ -364,25 +400,27 @@
         console.log($('#multi_select_gapanapa').val())
 
     }
+
+
 </script>
 <script>
     $(document).ready(function() {
         $('#multi_select_partner').change(function(e) {
             e.preventDefault();
             if (($(this).val()).length > 0) {
-                multiChangeFunction($(this).val(), '#multi_select_program')
+                multiChangeFunction('#multi_select_partner', '#multi_select_program')
             }else {
                 multiChangeFunction_multi($(this).val(), '#multi_select_program')
             }
-            mulChangeFunction('#multi_select_program', '#multi_select_project')
+            mulChangeFunction('#multi_select_partner', '#multi_select_project')
         });
         $('#multi_select_program').change(function(e) {
             e.preventDefault();
-            multiChangeFunction($(this).val(), '#multi_select_project')
+            multiChangeFunction('#multi_select_program', '#multi_select_project')
         });
         $('#multi_select_province').change(function(e) {
             e.preventDefault();
-            multiChangeFunction($(this).val(), '#multi_select_district')
+            multiChangeFunction('#multi_select_province', '#multi_select_district')
         });
         $('#multi_select_district').change(function(e) {
             e.preventDefault();
@@ -395,6 +433,8 @@
 
         });
     });
+
+
 </script>
 
 

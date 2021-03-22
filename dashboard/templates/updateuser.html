@@ -98,9 +98,9 @@
                             <option value='' disabled>Select One</option>
                             {% for project in projects %}
                             {% if project.id == form.instance.project.id %}
-                                <option value='{{ project.id }}' valId="{{project.program_id__id}}" selected>{{ project.name }}</option>
+                                <option value='{{ project.id }}' valId="{{project.program_id__id}}" valId1="{{project.partner_id__id}}" selected>{{ project.name }}</option>
                             {% else %}
-                                <option value='{{ project.id }}' valId="{{project.program_id__id}}">{{ project.name }}</option>
+                                <option value='{{ project.id }}' valId="{{project.program_id__id}}" valId1="{{project.partner_id__id}}">{{ project.name }}</option>
                             {% endif %}
                             {% endfor %}
                         </select>
@@ -143,9 +143,16 @@
             }
         });
         $(to_be_changed_id + ' option').each(function() {
-            if ($(this).attr('valId') == change_value) {
-                $(this).css('display', 'block');
-            };
+            var sl = $('#id_partner').val()
+            if ((to_be_changed_id == '#id_project') && (sl != null)) {
+                if (($(this).attr('valId') == change_value) && (change_value != '') && ($(this).attr('valId1') == sl)) {
+                    $(this).css('display', 'block');
+                };
+            }else {
+                if (($(this).attr('valId') == change_value) && (change_value != '')) {
+                    $(this).css('display', 'block');
+                };
+            }
         });
     };
 
@@ -153,15 +160,16 @@
         var dataValue = [];
         $(to_be_changed_id + ' option').each(function() {
             $(this).css('display', 'none');
-            if ($(this).attr('valId') == change_value) {
-                $(this).css('display', 'block');
-            };
-            if(dataValue.includes($(this).val())) {
-                $(this).css('display', 'none');
-            };
-<!--            dataValue.push($(this).val());-->
-<!--            console.log($(this).val())-->
-<!--            console.log(dataValue)-->
+            var sl = $('#id_partner').val()
+            if ((to_be_changed_id == '#id_project') && (sl != null)) {
+                if (($(this).attr('valId') == change_value) && (change_value != '') && ($(this).attr('valId1') == sl)) {
+                    $(this).css('display', 'block');
+                };
+            }else {
+                if (($(this).attr('valId') == change_value) && (change_value != '')) {
+                    $(this).css('display', 'block');
+                };
+            }
         });
     };
     function chfunction(change_value, to_be_changed_id) {
@@ -175,7 +183,7 @@
         $(to_be_changed_id + ' option').each(function() {
             var f_this = $(this)
             $(change_value + ' option').each(function() {
-                if ((f_this.attr('valId') == $(this).val()) && ($(this).val() != '')) {
+                if ((f_this.attr('valId') == $(this).val()) && ($(this).val() != '')  && (f_this.attr('valId1') == $('#id_partner').val())) {
 
                     if($(this).css('display') == 'block') {
                         f_this.css('display', 'block');

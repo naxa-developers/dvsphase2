@@ -113,7 +113,7 @@
                         <select name="project" id="id_project" class="custom-select" required>
                             <option value='' disabled selected>Select One</option>
                             {% for project in projects %}
-                            <option value='{{ project.id }}' valId="{{ project.program_id__id }}">{{ project.name }}</option>
+                            <option value='{{ project.id }}' valId="{{ project.program_id__id }}" valId1="{{ project.partner_id__id }}">{{ project.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -134,8 +134,8 @@
 </div>
 <script src="{% static 'dashboard/js/jquery-3.4.1.min.js' %}"></script>
 <script>
-    function changefunction(change_value, to_be_changed_id) {
-
+    function changefunction(change_val, to_be_changed_id) {
+        var change_value = $(change_val).val()
         $(to_be_changed_id + ' option').each(function() {
             $(this).css('display', 'none');
             if ($(this).val() == '') {
@@ -143,9 +143,17 @@
             }
         });
         $(to_be_changed_id + ' option').each(function() {
-            if (($(this).attr('valId') == change_value) && (change_value != '')) {
-                $(this).css('display', 'block');
-            };
+            var sl = $('#id_partner').val()
+            console.log(sl)
+            if ((to_be_changed_id == '#id_project') && (sl != null)) {
+                if (($(this).attr('valId') == change_value) && (change_value != '') && ($(this).attr('valId1') == sl)) {
+                    $(this).css('display', 'block');
+                };
+            }else {
+                if (($(this).attr('valId') == change_value) && (change_value != '')) {
+                    $(this).css('display', 'block');
+                };
+            }
         });
     };
     function chfunction(change_value, to_be_changed_id) {
@@ -156,12 +164,15 @@
                 $(this).prop('selected', true)
             }
         });
+        var das = []
         $(to_be_changed_id + ' option').each(function() {
             var f_this = $(this)
             $(change_value + ' option').each(function() {
-                if ((f_this.attr('valId') == $(this).val()) && ($(this).val() != '')) {
-                    if($(this).css('display') == 'block') {
+                console.log('count')
+                if($(this).css('display') == 'block') {
+                    if ((f_this.attr('valId') == $(this).val()) && ($(this).val() != '') && (f_this.attr('valId1') == $('#id_partner').val())) {
                         f_this.css('display', 'block');
+
                     }
 
                 };
@@ -188,6 +199,7 @@
             if(dataValue2.includes($(this).val())) {
                 $(this).css('display', 'none');
             };
+            console.log('proj')
             if ($(this).val() != '') {
                 dataValue2.push($(this).val());
             }
@@ -197,12 +209,12 @@
     }
     $('#id_partner').change(function(e) {
         e.preventDefault();
-        changefunction($(this).val(), '#id_program')
+        changefunction('#id_partner', '#id_program')
         chfunction('#id_program', '#id_project')
     });
     $('#id_program').change(function(e) {
         e.preventDefault();
-        changefunction($(this).val(), '#id_project')
+        changefunction('#id_program', '#id_project')
     });
 });
 </script>
