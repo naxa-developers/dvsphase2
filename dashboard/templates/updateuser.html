@@ -93,7 +93,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="id_project">Select Project For User</label>
+                        <label for="id_project">Select Component For User</label>
                         <select name="project" id="id_project" class="custom-select" required>
                             <option value='' disabled>Select One</option>
                             {% for project in projects %}
@@ -159,7 +159,30 @@
             if(dataValue.includes($(this).val())) {
                 $(this).css('display', 'none');
             };
-            dataValue.push($(this).val());
+<!--            dataValue.push($(this).val());-->
+<!--            console.log($(this).val())-->
+<!--            console.log(dataValue)-->
+        });
+    };
+    function chfunction(change_value, to_be_changed_id) {
+
+        $(to_be_changed_id + ' option').each(function() {
+            $(this).css('display', 'none');
+            if ($(this).val() == '') {
+                $(this).prop('selected', true)
+            }
+        });
+        $(to_be_changed_id + ' option').each(function() {
+            var f_this = $(this)
+            $(change_value + ' option').each(function() {
+                if ((f_this.attr('valId') == $(this).val()) && ($(this).val() != '')) {
+
+                    if($(this).css('display') == 'block') {
+                        f_this.css('display', 'block');
+                    }
+
+                };
+            });
         });
     };
 </script>
@@ -174,6 +197,7 @@
     $('#id_partner').change(function(e) {
         e.preventDefault();
         changefunction($(this).val(), '#id_program')
+        chfunction('#id_program', '#id_project')
     });
     $('#id_program').change(function(e) {
         e.preventDefault();

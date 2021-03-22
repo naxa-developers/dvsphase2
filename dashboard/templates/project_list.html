@@ -101,8 +101,28 @@
 {% block script %}
 
 <script>
+    function selectFunction(id, data) {
+        $(id).multipleSelect({
+            selectAll: false,
+            styler: function(row) {
+                for(var i=0;i<data.length;i++) {
+                    if (data[i] == row.value) {
+                        row.selected = true;
+                    };
+                }
+                return row
+            }
+        });
+
+    }
   $(function() {
-    $('.multiple-select').multipleSelect()
+    var data = [{% for x in selected %}'{{x}}',{% endfor %}]
+    var flag = true;
+        if(flag == true) {
+            selectFunction('.multiple-select', data);
+
+            flag = false;
+        };
   })
 </script>
 <script>

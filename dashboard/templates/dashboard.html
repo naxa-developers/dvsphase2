@@ -4,7 +4,7 @@
 <main class="dfid-main">
     <section class="section dfid-highlight mrtb-100">
         <div class="section-title">
-            <h4>Dfid highlight</h4>
+            <h4>Dvs highlight</h4>
         </div>
         <div class="highlight-wrapper">
             <div class="highlight-row">
@@ -223,12 +223,6 @@
                                     <p>{{five.program_id.code}}</p>
                                 </div>
                             </li>
-                            <li>
-                                <div class="content">
-                                    <h6>IATI Identifier</h6>
-                                    <p>{{five.program_id.iati}}</p>
-                                </div>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -274,20 +268,6 @@
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <ul class="program-content">
-                                    <li class="equalHeight">
-                                        <div class="content">
-                                            <h6>kathmandu Activity</h6>
-                                            <p>{{five.kathmandu_activity}}</p>
-
-                                        </div>
-                                    </li>
-                                    <li class="equalHeight">
-                                        <div class="content">
-                                            <h6>Delivery In Lockdown</h6>
-                                            <p>{{five.delivery_in_lockdown}}</p>
-
-                                        </div>
-                                    </li>
                                 </ul>
                                 <!-- hide Content -->
                                 <div class="program-details hide-details">
@@ -299,12 +279,6 @@
                                                 {% for marker in five.program_id.marker_value.all %}
                                                 <p>{{ marker }}</p>
                                                 {% endfor %}
-                                            </div>
-                                        </li>
-                                        <li class="equalHeight">
-                                            <div class="content">
-                                                <h6>Providing TA to Local Government</h6>
-                                                <p>{{five.providing_ta_to_local_government}}</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -319,24 +293,10 @@
                                             <h5>{{five.allocated_budget}}</h5>
                                         </div>
                                     </li>
-                                    <li class="equalHeight">
-                                        <i class="material-icons">calendar_today</i>
-                                        <div class="content">
-                                            <h6>Covid Priority 3-12 Months</h6>
-                                            <p>{{five.covid_priority_3_12_Months}}</p>
-                                        </div>
-                                    </li>
                                 </ul>
                                 <!-- hide Content -->
                                 <div class="program-details hide-details">
                                     <ul class="program-content">
-                                        <li class="equalHeight">
-                                            <i class="material-icons">calendar_today</i>
-                                            <div class="content">
-                                                <h6>Covid Recovery Priority</h6>
-                                                <p>{{five.covid_recovery_priority}}</p>
-                                            </div>
-                                        </li>
                                     </ul>
                                 </div>
                             </div>

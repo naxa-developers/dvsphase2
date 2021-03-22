@@ -291,6 +291,27 @@
         $(to_be_changed_id).multipleSelect('refresh');
         $('.ms-drop ul>li:has(label.disabled)').hide();
     }
+    function mulChangeFunction(change_value, to_be_changed_id) {
+        $(to_be_changed_id).multipleSelect('uncheckAll');
+        $(to_be_changed_id).multipleSelect('refresh')
+        $(to_be_changed_id + ' option').each(function() {
+            $(this).prop('disabled', true)
+        });
+        $(to_be_changed_id + ' option').each(function() {
+            var f_this = $(this)
+            $(change_value + ' option').each(function() {
+                if ($(this).is(':disabled') == false) {
+                    if (f_this.attr('valId') == $(this).val()) {
+                        if (f_this.is(':disabled')) {
+                            f_this.prop('disabled', false);
+                        }
+                    };
+                };
+            });
+        });
+        $(to_be_changed_id).multipleSelect('refresh');
+        $('.ms-drop ul>li:has(label.disabled)').hide();
+    }
 </script>
 <script>
     function multiChangeFunction_multi(change_value, to_be_changed_id) {
@@ -353,6 +374,7 @@
             }else {
                 multiChangeFunction_multi($(this).val(), '#multi_select_program')
             }
+            mulChangeFunction('#multi_select_program', '#multi_select_project')
         });
         $('#multi_select_program').change(function(e) {
             e.preventDefault();

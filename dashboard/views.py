@@ -571,7 +571,7 @@ def createuser(request, **kwargs):
 
     else:
         form = UserCreationForm()
-        partner = Partner.objects.all()
+        partner = Partner.objects.order_by('name')
         group = Group.objects.all()
         programs = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
         projects = Project.objects.values('id', 'name', 'program_id__id').order_by('name')
@@ -594,7 +594,7 @@ def updateuser(request, id):
         old_group.user_set.remove(test2)
         test2.groups.add(group)
         return HttpResponseRedirect("/dashboard/user-list")
-    partner = Partner.objects.all()
+    partner = Partner.objects.order_by('name')
     programs = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
     projects = Project.objects.values('id', 'name', 'program_id__id').order_by('name')
     group = Group.objects.all()
@@ -816,6 +816,7 @@ def ExportData(request):
     user_data = UserProfile.objects.get(user=user)
     group = Group.objects.get(user=user)
     data = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata, group, user_data)
+    print(data)
     return render_to_csv_response(data)
 
 
@@ -1262,7 +1263,7 @@ class ProgramCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         markers = MarkerCategory.objects.all().prefetch_related('MarkerCategory').order_by('id')
-        partners = Partner.objects.filter()
+        partners = Partner.objects.order_by('name')
         sectors = Sector.objects.all().prefetch_related('Sector').order_by('id')
         data['sectors'] = sectors
         data['partners'] = partners
@@ -1487,8 +1488,8 @@ class ProjectCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         data = super(ProjectCreate, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
-        data['programs'] = Program.objects.all()
-        data['partners'] = Partner.objects.order_by('id')
+        data['programs'] = Program.objects.order_by('name')
+        data['partners'] = Partner.objects.order_by('name')
         sectors = Sector.objects.all().prefetch_related('Sector').order_by('id')
         data['sectors'] = sectors
         data['user'] = user_data
@@ -1799,7 +1800,7 @@ class ProgramUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         data['active'] = 'program'
 
         # program = Program.objects.get(id=self.kwargs['pk'])
-        partners = Partner.objects.order_by('id')
+        partners = Partner.objects.order_by('name')
         # datatoselect = []
         # datanottoselect = []
         # for data in partners:
@@ -2079,7 +2080,7 @@ class ProjectUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         data = super(ProjectUpdate, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
-        data['programs'] = Program.objects.order_by('id')
+        data['programs'] = Program.objects.order_by('name')
         sector_list = Project.objects.filter(id=self.kwargs['pk']).values_list('sector', flat=True)
 
         if (sector_list[0] == None):
@@ -2089,7 +2090,7 @@ class ProjectUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
             filter_sector = Sector.objects.exclude(id__in=sector_list)
 
         data['sectors'] = filter_sector
-        data['partners'] = Partner.objects.all()
+        data['partners'] = Partner.objects.order_by('name')
         data['test'] = sector_list
         data['user'] = user_data
         data['active'] = 'project'
