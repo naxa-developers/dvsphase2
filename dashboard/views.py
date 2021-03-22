@@ -109,7 +109,9 @@ def bulkCreate(request):
         group = Group.objects.get(user=user)
         if group.name == 'admin':
             for row in range(0, upper_range):
-                print(df['PROVINCE.CODE'][row])
+                print(str(df['PROVINCE.CODE'][row]).split('.')[0])
+                print(str(df['PALIKA.Code'][row]).split('.')[0])
+                print(str(df['D.CODE'][row]).split('.')[0])
                 try:
                     fivew_correct.append(FiveW(
                         supplier_id=Partner.objects.get(code=float(df['1st TIER PARTNER CODE'][row])),
@@ -853,8 +855,8 @@ def ExportData(request):
 
         newdata.append(d)
     df = pd.DataFrame(newdata)
-    df.to_csv('data_csv/exportdata.csv')
-    return FileResponse(open('data_csv/exportdata.csv', 'rb'))
+    df.to_csv('media/exportdata.csv')
+    return HttpResponseRedirect('https://dvsnaxa.naxa.com.np/media/exportdata.csv')
 
 
 class FiveList(LoginRequiredMixin, ListView):
