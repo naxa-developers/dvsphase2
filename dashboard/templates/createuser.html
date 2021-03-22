@@ -109,11 +109,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="id_project">Select Project For User</label>
+                        <label for="id_project">Select Component For User</label>
                         <select name="project" id="id_project" class="custom-select" required>
                             <option value='' disabled selected>Select One</option>
                             {% for project in projects %}
-                            <option value='{{ project.id }}' valId="{{ project.program_id.id }}">{{ project.name }}</option>
+                            <option value='{{ project.id }}' valId="{{ project.program_id__id }}">{{ project.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -143,9 +143,29 @@
             }
         });
         $(to_be_changed_id + ' option').each(function() {
-            if ($(this).attr('valId') == change_value) {
+            if (($(this).attr('valId') == change_value) && (change_value != '')) {
                 $(this).css('display', 'block');
             };
+        });
+    };
+    function chfunction(change_value, to_be_changed_id) {
+
+        $(to_be_changed_id + ' option').each(function() {
+            $(this).css('display', 'none');
+            if ($(this).val() == '') {
+                $(this).prop('selected', true)
+            }
+        });
+        $(to_be_changed_id + ' option').each(function() {
+            var f_this = $(this)
+            $(change_value + ' option').each(function() {
+                if ((f_this.attr('valId') == $(this).val()) && ($(this).val() != '')) {
+                    if($(this).css('display') == 'block') {
+                        f_this.css('display', 'block');
+                    }
+
+                };
+            });
         });
     };
 </script>
@@ -158,13 +178,27 @@
             if(dataValue.includes($(this).val())) {
                 $(this).css('display', 'none');
             };
-            dataValue.push($(this).val());
+            if ($(this).val() != '') {
+                dataValue.push($(this).val());
+            }
+
+        });
+        var dataValue2 = [];
+        $('#id_project option').each(function() {
+            if(dataValue2.includes($(this).val())) {
+                $(this).css('display', 'none');
+            };
+            if ($(this).val() != '') {
+                dataValue2.push($(this).val());
+            }
+
         });
         flag = false;
     }
     $('#id_partner').change(function(e) {
         e.preventDefault();
         changefunction($(this).val(), '#id_program')
+        chfunction('#id_program', '#id_project')
     });
     $('#id_program').change(function(e) {
         e.preventDefault();
