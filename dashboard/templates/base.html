@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="description" content="Responsive DFID Dashboard.">
-    <title>DFID Dashboard</title>
+    <title>DVS Dashboard</title>
     <link rel="icon" href="#" type="image/x-icon">
     <!-- Favicon-->
     <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap.min.css' %}">
@@ -347,22 +347,7 @@
 
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"></script> -->
 <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
-<script>
-    function changefunc(change_value, to_be_changed_id) {
-        $(to_be_changed_id).each(function() {
-            $(this).css('display', 'none');
-            if ($(this).val() == '') {
-                $(this).prop('selected', true)
-            }
-        });
-        $(to_be_changed_id).each(function() {
-            if ($(this).attr('valId') == change_value) {
-                $(this).css('display', 'block');
-            };
-        });
-    };
 
-</script>
 {% block script %}
 {% endblock %}
 

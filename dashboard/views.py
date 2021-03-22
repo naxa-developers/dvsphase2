@@ -46,8 +46,8 @@ from django.shortcuts import (get_object_or_404,
                               HttpResponseRedirect)
 import datetime
 from django.db.models import Q
-from .filters import fivew
-from djqscsv import render_to_csv_response
+from .filters import fivew, export
+from django.http import FileResponse
 from django.http import JsonResponse
 
 
@@ -72,6 +72,13 @@ def login_test(request, **kwargs):
 #         FiveW.objects.all().delete()
 #         return JsonResponse({'result': 'success'}, status=HTTP_200_OK)
 
+
+def project(value1, value2):
+    try:
+        data = Project.objects.filter(code=value1)
+    except:
+        data = Project.objects.filter(code=value1, partner_id__code=value2)
+        return data
 
 
 @login_required()
@@ -105,7 +112,8 @@ def bulkCreate(request):
                     fivew_correct.append(FiveW(
                         supplier_id=Partner.objects.get(code=float(df['1st TIER PARTNER CODE'][row])),
                         second_tier_partner_name=df['2nd TIER PARTNER'][row],
-                        component_id=Project.objects.get(code=df['Project/Component Code'][row]),
+                        component_id=project(df['Project/Component Code'][row],
+                                             float(df['1st TIER PARTNER CODE'][row])),
                         program_id=Program.objects.get(code=df['Programme Code'][row]),
                         province_id=Province.objects.get(code=df['PROVINCE.CODE'][row]),
                         district_id=District.objects.get(code=df['D.CODE'][row]),
@@ -138,7 +146,8 @@ def bulkCreate(request):
             for row in range(0, upper_range):
                 try:
                     fivew_correct.append(FiveW(
-                        supplier_id=Partner.objects.get(id=user_data.partner.id, code=float(df['1st TIER PARTNER CODE'][row])),
+                        supplier_id=Partner.objects.get(id=user_data.partner.id,
+                                                        code=float(df['1st TIER PARTNER CODE'][row])),
                         second_tier_partner_name=df['2nd TIER PARTNER'][row],
                         component_id=Project.objects.get(code=df['Project/Component Code'][row]),
                         program_id=Program.objects.get(code=df['Programme Code'][row]),
@@ -563,7 +572,7 @@ def createuser(request, **kwargs):
             partner = Partner.objects.all()
             group = Group.objects.all()
             programs = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
-            projects = Project.objects.values('id', 'name', 'program_id__id').order_by('name')
+            projects = Project.objects.values('id', 'name', 'program_id__id', 'code', 'partner_id__id').order_by('name')
 
             return render(request, 'createuser.html',
                           {'form': form, 'partners': partner, 'group': group, 'programs': programs,
@@ -574,7 +583,7 @@ def createuser(request, **kwargs):
         partner = Partner.objects.order_by('name')
         group = Group.objects.all()
         programs = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
-        projects = Project.objects.values('id', 'name', 'program_id__id').order_by('name')
+        projects = Project.objects.values('id', 'name', 'program_id__id', 'code', 'partner_id__id').order_by('name')
         return render(request, 'createuser.html',
                       {'form': form, 'partners': partner, 'group': group, 'programs': programs,
                        'projects': projects})
@@ -596,7 +605,7 @@ def updateuser(request, id):
         return HttpResponseRedirect("/dashboard/user-list")
     partner = Partner.objects.order_by('name')
     programs = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
-    projects = Project.objects.values('id', 'name', 'program_id__id').order_by('name')
+    projects = Project.objects.values('id', 'name', 'program_id__id', 'partner_id__id').order_by('name')
     group = Group.objects.all()
     user = User.objects.all()
     context["form"] = form
@@ -815,9 +824,35 @@ def ExportData(request):
     user = request.user
     user_data = UserProfile.objects.get(user=user)
     group = Group.objects.get(user=user)
-    data = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata, group, user_data)
-    print(data)
-    return render_to_csv_response(data)
+    data = export(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata, group, user_data)
+    newdata = []
+    for d in data:
+        d['1st TIER PARTNER'] = d.pop('supplier_id__name')
+        d['1st TIER PARTNER CODE'] = d.pop('supplier_id__code')
+        d['2nd TIER PARTNER'] = d.pop('second_tier_partner_name')
+        d['PROGRAMME NAME'] = d.pop('program_id__name')
+        d['Programme Code'] = d.pop('program_id__code')
+        d['PROJECT/COMPONENT NAME'] = d.pop('component_id__name')
+        d['Project/Component Code'] = d.pop('component_id__code')
+        d['PROJECT STATUS'] = d.pop('status')
+        d['PROVINCE'] = d.pop('province_id__name')
+        d['PROVINCE.CODE'] = d.pop('province_id__code')
+        d['DISTRICT'] = d.pop('district_id__name')
+        d['D.CODE'] = d.pop('district_id__code')
+        d['PALIKA'] = d.pop('municipality_id__name')
+        d['PALIKA.Code'] = d.pop('municipality_id__hlcit_code')
+        d['BUDGET (£)'] = d.pop('allocated_budget')
+        d['REMARKS'] = d.pop('remarks')
+        d['EMAIL'] = d.pop('email')
+        d['CONTACT NAME'] = d.pop('contact_name')
+        d['CONTACT NUMBER'] = d.pop('contact_number')
+        d['DESIGNATION'] = d.pop('designation')
+        d['REPORTING LINE MINISTRY'] = d.pop('reporting_line_ministry')
+
+        newdata.append(d)
+    df = pd.DataFrame(newdata)
+    df.to_csv('data_csv/exportdata.csv')
+    return FileResponse(open('data_csv/exportdata.csv', 'rb'))
 
 
 class FiveList(LoginRequiredMixin, ListView):
@@ -841,7 +876,7 @@ class FiveList(LoginRequiredMixin, ListView):
                 dat_values = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata,
                                    group, user_data)
                 partner = Partner.objects.values('id', 'name').order_by('name')
-                project = Project.objects.values('id', 'program_id__id', 'name').order_by('name')
+                project = Project.objects.values('id', 'program_id__id', 'name', 'partner_id__id').order_by('name')
                 program = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
                 province = Province.objects.values('id', 'name').order_by('name')
                 district = District.objects.values('id', 'province_id__id', 'name').order_by('name')
@@ -855,7 +890,8 @@ class FiveList(LoginRequiredMixin, ListView):
                 program = Program.objects.filter(id=user_data.program.id).values('id', 'name',
                                                                                  'partner_id__id').order_by('name')
                 project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id',
-                                                                                 'name').order_by('name')
+                                                                                 'name', 'partner_id__id').order_by(
+                    'name')
                 province = Province.objects.values('id', 'name').order_by('name')
                 district = District.objects.values('id', 'province_id__id', 'name').order_by('name')
                 gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
@@ -904,7 +940,7 @@ class FiveList(LoginRequiredMixin, ListView):
                                             'component_id__name', 'status', 'province_id__name', 'district_id__name',
                                             'municipality_id__name', 'allocated_budget').order_by('id')
                 partner = Partner.objects.values('id', 'name').order_by('name')
-                project = Project.objects.values('id', 'program_id__id', 'name').order_by('name')
+                project = Project.objects.values('id', 'program_id__id', 'name', 'partner_id__id').order_by('name')
                 program = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
                 province = Province.objects.values('id', 'name').order_by('name')
                 district = District.objects.values('id', 'province_id__id', 'name').order_by('name')
@@ -923,7 +959,8 @@ class FiveList(LoginRequiredMixin, ListView):
                 program = Program.objects.filter(id=user_data.program.id).values('id', 'name',
                                                                                  'partner_id__id').order_by('name')
                 project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id',
-                                                                                 'name').order_by('name')
+                                                                                 'name', 'partner_id__id').order_by(
+                    'name')
                 province = Province.objects.values('id', 'name').order_by('name')
                 district = District.objects.values('id', 'province_id__id', 'name').order_by('name')
                 gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
@@ -1428,7 +1465,7 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 
         all_partner = Partner.objects.order_by('id')
         program = Program.objects.values('id', 'name', 'partner_id__id').order_by('id')
-        project = Project.objects.values('id', 'name', 'program_id__id').order_by('id')
+        project = Project.objects.values('id', 'name', 'program_id__id', 'partner_id__id').order_by('id')
         province = Province.objects.values('id', 'name').order_by('id')
         district = District.objects.values('id', 'name', 'province_id__id').order_by('id')
         municipality = GapaNapa.objects.values('id', 'name', 'district_id__id').order_by('id')
@@ -1979,7 +2016,7 @@ class FiveUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         partner = Partner.objects.values('id', 'name').order_by('id')
         program = Program.objects.values('id', 'name', 'partner_id__id').order_by('id')
         province = Province.objects.values('id', 'name').order_by('id')
-        project = Project.objects.values('id', 'name', 'program_id__id').order_by('id')
+        project = Project.objects.values('id', 'name', 'program_id__id', 'partner_id__id').order_by('id')
         district = District.objects.values('id', 'name', 'province_id__id').order_by('id')
         municipality = GapaNapa.objects.values('id', 'name', 'district_id__id').order_by('id')
         contact = PartnerContact.objects.all().order_by('id')

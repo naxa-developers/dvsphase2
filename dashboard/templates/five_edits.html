@@ -111,11 +111,11 @@
 
                                                 {% if form.instance.component_id.id == project.id %}
 
-                                                <option value="{{project.id}}" valId="{{project.program_id__id}}" selected>{{project.name}}</option>
+                                                <option value="{{project.id}}" valId="{{project.program_id__id}}" valId1="{{project.partner_id__id}}" selected>{{project.name}}</option>
 
                                                 {% else %}
 
-                                                <option value="{{project.id}}" valId="{{project.program_id__id}}">{{project.name}}</option>
+                                                <option value="{{project.id}}" valId="{{project.program_id__id}}" valId1="{{project.partner_id__id}}">{{project.name}}</option>
 
                                                 {% endif %}
 
@@ -509,6 +509,50 @@
 {% endblock %}
 {% block script %}
 <script>
+    function changefunc(change_value, to_be_changed_id) {
+        $(to_be_changed_id).each(function() {
+            $(this).css('display', 'none');
+            if ($(this).val() == '') {
+                $(this).prop('selected', true)
+            }
+        });
+        $(to_be_changed_id).each(function() {
+            var sl = $('#id_supplier_id').val()
+            if ((to_be_changed_id == '#id_component_id option') && (sl != null)) {
+                if (($(this).attr('valId') == change_value) && (change_value != '') && ($(this).attr('valId1') == sl)) {
+                    $(this).css('display', 'block');
+                };
+            }else {
+                if (($(this).attr('valId') == change_value) && (change_value != '')) {
+                    $(this).css('display', 'block');
+                };
+            }
+        });
+    };
+
+    function changef(change_value, to_be_changed_id) {
+        $(to_be_changed_id).each(function() {
+            $(this).css('display', 'none');
+            if ($(this).val() == '') {
+                $(this).prop('selected', true)
+            }
+        });
+        $(to_be_changed_id).each(function() {
+            var f_this = $(this)
+            $(change_value + ' option').each(function() {
+                if($(this).css('display') == 'block') {
+                    if ((f_this.attr('valId') == $(this).val()) && ($(this).val() != '') && (f_this.attr('valId1') == $('#id_supplier_id').val())) {
+                        f_this.css('display', 'block');
+
+                    }
+
+                };
+            });
+        });
+    };
+
+</script>
+<script>
 
     $(document).ready(function() {
         var flag = true;
@@ -521,6 +565,7 @@
         $('#id_supplier_id').change(function(e) {
             e.preventDefault();
             changefunc($(this).val(), '#id_program_id option')
+            changef('#id_supplier_id', '#id_component_id option')
         });
         $('#id_program_id').change(function(e) {
             e.preventDefault();
