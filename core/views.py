@@ -1190,13 +1190,13 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
             supplier = list(Partner.objects.values_list('id', flat=True))
             count.append('supplier')
 
-        if request.GET.getlist('component_id'):
-            comp = request.GET['component_id']
+        if request.GET.getlist('component_code'):
+            comp = request.GET['component_code']
             component = comp.split(",")
             for i in range(0, len(component)):
-                component[i] = int(component[i])
+                component[i] = str(component[i])
         else:
-            component = list(Project.objects.values_list('id', flat=True))
+            component = list(Project.objects.values_list('code', flat=True))
             count.append('component')
 
         if request.GET.getlist('province_code'):
@@ -1339,13 +1339,13 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
             supplier = list(Partner.objects.values_list('id', flat=True))
             count.append('supplier')
 
-        if request.GET.getlist('component_id'):
-            comp = request.GET['component_id']
+        if request.GET.getlist('component_code'):
+            comp = request.GET['component_code']
             component = comp.split(",")
             for i in range(0, len(component)):
-                component[i] = int(component[i])
+                component[i] = str(component[i])
         else:
-            component = list(Project.objects.values_list('id', flat=True))
+            component = list(Project.objects.values_list('code', flat=True))
             count.append('component')
 
         for province in provinces:
@@ -1478,13 +1478,13 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
             markers_value = list(MarkerValues.objects.values_list('id', flat=True))
             count.append('markers_value')
 
-        if request.GET.getlist('component_id'):
-            comp = request.GET['component_id']
+        if request.GET.getlist('component_code'):
+            comp = request.GET['component_code']
             component = comp.split(",")
             for i in range(0, len(component)):
-                component[i] = int(component[i])
+                component[i] = str(component[i])
         else:
-            component = list(Project.objects.values_list('id', flat=True))
+            component = list(Project.objects.values_list('code', flat=True))
             count.append('component')
 
         if request.GET.getlist('province_code'):
@@ -1611,13 +1611,13 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
             supplier = list(Partner.objects.values_list('id', flat=True))
             count.append('supplier')
 
-        if request.GET.getlist('component_id'):
-            comp = request.GET['component_id']
+        if request.GET.getlist('component_code'):
+            comp = request.GET['component_code']
             component = comp.split(",")
             for i in range(0, len(component)):
-                component[i] = int(component[i])
+                component[i] = str(component[i])
         else:
-            component = list(Project.objects.values_list('id', flat=True))
+            component = list(Project.objects.values_list('code', flat=True))
             count.append('component')
 
         if request.GET.getlist('marker_category_id'):
@@ -1937,13 +1937,13 @@ class Popup(viewsets.ReadOnlyModelViewSet):
             supplier = list(Partner.objects.values_list('id', flat=True))
             count.append('supplier')
 
-        if request.GET.getlist('component_id'):
-            comp = request.GET['component_id']
+        if request.GET.getlist('component_code'):
+            comp = request.GET['component_code']
             component = comp.split(",")
             for i in range(0, len(component)):
-                component[i] = int(component[i])
+                component[i] = str(component[i])
         else:
-            component = list(Project.objects.values_list('id', flat=True))
+            component = list(Project.objects.values_list('code', flat=True))
             count.append('component')
 
         if request.GET.getlist('marker_category_id'):

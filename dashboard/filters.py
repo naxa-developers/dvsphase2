@@ -10,8 +10,6 @@ def fivew(partnerdata, programdata, projectdata, provincedata, districtdata, mun
         if x:
             filter_dict[key_list[index]] = x
 
-        print(filter_dict)
-        print('test')
     dat_values = FiveW.objects.filter(**filter_dict).values('id',
                                                             'supplier_id__name',
                                                             'second_tier_partner_name',
@@ -39,9 +37,6 @@ def export(partnerdata, programdata, projectdata, provincedata, districtdata, mu
     for index, x in enumerate(value_list):
         if x:
             filter_dict[key_list[index]] = x
-
-        print(filter_dict)
-        print('test')
     dat_values = FiveW.objects.filter(**filter_dict).values('id',
                                                             'supplier_id__name',
                                                             'supplier_id__code',
@@ -66,6 +61,7 @@ def export(partnerdata, programdata, projectdata, provincedata, districtdata, mu
                                                             'reporting_line_ministry'
                                                             ).order_by(
         'id')
+
 
     if group.name == 'admin':
         return dat_values
