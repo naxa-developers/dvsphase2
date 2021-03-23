@@ -5,7 +5,7 @@ from django.db.models import Sum
 def fivew(supplier, program, component, sector, sub_sector, markers, markers_value, count):
     name_list = ['supplier', 'program', 'component', 'sector', 'sub_sector', 'markers', 'markers_value']
     value_list = [supplier, program, component, sector, sub_sector, markers, markers_value]
-    key_list = ['supplier_id__in', 'program_id__in', 'component_id__in', 'program_id__sector__id__in',
+    key_list = ['supplier_id__in', 'program_id__in', 'component_id__code__in', 'program_id__sector__id__in',
                 'program_id__sub_sector__id__in',
                 'program_id__marker_category__id__in', 'program_id__marker_value__id__in']
     filter_dict = {}
@@ -28,7 +28,7 @@ def fivew(supplier, program, component, sector, sub_sector, markers, markers_val
 def fivew_province(province, supplier, program, component, sector, sub_sector, markers, markers_value, count):
     name_list = ['province', 'supplier', 'program', 'component', 'sector', 'sub_sector', 'markers', 'markers_value']
     value_list = [province, supplier, program, component, sector, sub_sector, markers, markers_value]
-    key_list = ['province_id__in', 'supplier_id__in', 'program_id__in', 'component_id__in',
+    key_list = ['province_id__in', 'supplier_id__in', 'program_id__in', 'component_id__code__in',
                 'program_id__sector__id__in', 'program_id__sub_sector__id__in',
                 'program_id__marker_category__id__in', 'program_id__marker_value__id__in']
     filter_dict = {}
@@ -50,7 +50,7 @@ def fivew_province(province, supplier, program, component, sector, sub_sector, m
 def fivew_municipality(municipality, supplier, program, component, sector, sub_sector, markers, markers_value, count):
     name_list = ['municipality', 'supplier', 'program', 'component', 'sector', 'sub_sector', 'markers', 'markers_value']
     value_list = [municipality, supplier, program, component, sector, sub_sector, markers, markers_value]
-    key_list = ['municipality_id__in', 'supplier_id__in', 'program_id__in', 'component_id__in',
+    key_list = ['municipality_id__in', 'supplier_id__in', 'program_id__in', 'component_id__code__in',
                 'program_id__sector__id__in', 'program_id__sub_sector__id__in',
                 'program_id__marker_category__id__in', 'program_id__marker_value__id__in']
     filter_dict = {}
@@ -71,7 +71,7 @@ def fivew_municipality(municipality, supplier, program, component, sector, sub_s
 def fivew_district(district, supplier, program, component, sector, sub_sector, markers, markers_value, count):
     name_list = ['district', 'supplier', 'program', 'component', 'sector', 'sub_sector', 'markers', 'markers_value']
     value_list = [district, supplier, program, component, sector, sub_sector, markers, markers_value]
-    key_list = ['district_id__in', 'supplier_id__in', 'program_id__in', 'component_id__in',
+    key_list = ['district_id__in', 'supplier_id__in', 'program_id__in', 'component_id__code__in',
                 'program_id__sector__id__in', 'program_id__sub_sector__id__in',
                 'program_id__marker_category__id__in', 'program_id__marker_value__id__in']
     filter_dict = {}

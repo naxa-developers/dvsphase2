@@ -1464,12 +1464,14 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         group = Group.objects.get(user=user)
         if group.name == 'admin':
             partner = Partner.objects.order_by('id')
+            program = Program.objects.values('id', 'name', 'partner_id__id').order_by('id')
+            project = Project.objects.values('id', 'name', 'program_id__id', 'partner_id__id').order_by('id')
         else:
             partner = Partner.objects.filter(id=user_data.partner.id).order_by('id')
+            program = Program.objects.filter(id=user_data.program.id).values('id', 'name', 'partner_id__id').order_by('id')
+            project = Project.objects.filter(id=user_data.project.id).values('id', 'name', 'program_id__id', 'partner_id__id').order_by('id')
 
         all_partner = Partner.objects.order_by('id')
-        program = Program.objects.values('id', 'name', 'partner_id__id').order_by('id')
-        project = Project.objects.values('id', 'name', 'program_id__id', 'partner_id__id').order_by('id')
         province = Province.objects.values('id', 'name').order_by('id')
         district = District.objects.values('id', 'name', 'province_id__id').order_by('id')
         municipality = GapaNapa.objects.values('id', 'name', 'district_id__id').order_by('id')
@@ -2017,10 +2019,17 @@ class FiveUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         data = super(FiveUpdate, self).get_context_data(**kwargs)
         user = self.request.user
-        partner = Partner.objects.values('id', 'name').order_by('id')
-        program = Program.objects.values('id', 'name', 'partner_id__id').order_by('id')
+        user_data = UserProfile.objects.get(user=user)
+        group = Group.objects.get(user=user)
+        if group.name == 'admin':
+            partner = Partner.objects.order_by('id')
+            program = Program.objects.values('id', 'name', 'partner_id__id').order_by('id')
+            project = Project.objects.values('id', 'name', 'program_id__id', 'partner_id__id').order_by('id')
+        else:
+            partner = Partner.objects.filter(id=user_data.partner.id).order_by('id')
+            program = Program.objects.filter(id=user_data.program.id).values('id', 'name', 'partner_id__id').order_by('id')
+            project = Project.objects.filter(id=user_data.project.id).values('id', 'name', 'program_id__id', 'partner_id__id').order_by('id')
         province = Province.objects.values('id', 'name').order_by('id')
-        project = Project.objects.values('id', 'name', 'program_id__id', 'partner_id__id').order_by('id')
         district = District.objects.values('id', 'name', 'province_id__id').order_by('id')
         municipality = GapaNapa.objects.values('id', 'name', 'district_id__id').order_by('id')
         contact = PartnerContact.objects.all().order_by('id')
