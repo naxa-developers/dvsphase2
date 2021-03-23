@@ -37,7 +37,7 @@ class Partner(models.Model):
     phone_number = models.CharField(max_length=100, null=True, blank=True)
     image = models.ImageField(upload_to='upload/partner/', null=True, blank=True)
     thumbnail = models.ImageField(upload_to='upload/partner/', editable=False, null=True, blank=True)
-    code = models.FloatField(blank=True, null=True)
+    code = models.IntegerField(blank=True, null=True)
 
     def make_thumbnail(self):
         try:
