@@ -1857,6 +1857,14 @@ class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
             for i in range(0, len(program_filter_id)):
                 program_filter_id[i] = int(program_filter_id[i])
             queryset = Program.objects.filter(id__in=program_filter_id).order_by('id')
+        if self.request.GET.getlist('component_code'):
+            comp = self.request.GET['component_code']
+            component_filter_code = comp.split(",")
+            ids = []
+            for i in range(0, len(component_filter_code)):
+                test = Project.objects.get(code=str(component_filter_code[i]))
+                ids.append(test.program_id.id)
+            queryset = Program.objects.filter(id__in=ids).order_by('id')
         elif self.request.GET.getlist('start_date') and self.request.GET.getlist('end_date'):
             start_date = self.request.GET['start_date']
             end_date = self.request.GET['end_date']
