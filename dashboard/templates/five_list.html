@@ -462,7 +462,7 @@
                 type: "GET",
                 url: "/dashboard/export/?full_data='full_data'{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if partnerdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}",
             }).done(function() {
-                location.href = 'http://localhost:8020/media/exportdata.csv';
+                location.href = 'https://dvsnaxa.naxa.com.np/media/exportdata.csv';
 
             });
         });
