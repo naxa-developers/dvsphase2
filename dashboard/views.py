@@ -46,7 +46,7 @@ from django.shortcuts import (get_object_or_404,
                               HttpResponseRedirect)
 import datetime
 from django.db.models import Q
-from .filters import fivew, export
+from .filters import fivew, export, cleardata
 from django.http import FileResponse
 from django.http import JsonResponse
 
@@ -82,6 +82,23 @@ def project(value1, value2):
     return data
 
 
+def clear_data(request):
+    partnerdata = request.GET.getlist('partner', None)
+    programdata = request.GET.getlist('program', None)
+    projectdata = request.GET.getlist('project', None)
+    provincedata = request.GET.getlist('province', None)
+    districtdata = request.GET.getlist('district', None)
+    municipalitydata = request.GET.getlist('gapanapa', None)
+    user = request.user
+    user_data = UserProfile.objects.get(user=user)
+    group = Group.objects.get(user=user)
+    data = cleardata(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata, group,
+                     user_data)
+    data.delete()
+    messages.success(request, 'Success!' + ':' + "Successfully Deleated ")
+    return redirect('/dashboard/five-list')
+
+
 @login_required()
 def bulkCreate(request):
     if "GET" == request.method:
@@ -104,34 +121,54 @@ def bulkCreate(request):
         error_log = []
         error = []
         success_count = 0
+        update_count = 0
         user = request.user
         user_data = UserProfile.objects.get(user=user)
         group = Group.objects.get(user=user)
         if group.name == 'admin':
             for row in range(0, upper_range):
-                print(str(df['PROVINCE.CODE'][row]).split('.')[0])
-                print(str(df['PALIKA.Code'][row]).split('.')[0])
-                print(str(df['D.CODE'][row]).split('.')[0])
                 try:
-                    fivew_correct.append(FiveW(
-                        supplier_id=Partner.objects.get(code=float(df['1st TIER PARTNER CODE'][row])),
-                        second_tier_partner_name=df['2nd TIER PARTNER'][row],
-                        component_id=project(df['Project/Component Code'][row],
-                                             float(df['1st TIER PARTNER CODE'][row])),
-                        program_id=Program.objects.get(code=df['Programme Code'][row]),
-                        province_id=Province.objects.get(code=str(int(df['PROVINCE.CODE'][row]))),
-                        district_id=District.objects.get(code=str(df['D.CODE'][row])),
-                        municipality_id=GapaNapa.objects.get(hlcit_code=str(df['PALIKA.Code'][row])),
-                        status=df['PROJECT STATUS'][row],
-                        reporting_line_ministry=df['REPORTING LINE MINISTRY'][row],
-                        contact_name=df['CONTACT NAME'][row],
-                        designation=df['DESIGNATION'][row],
-                        contact_number=df['CONTACT NUMBER'][row],
-                        email=df['EMAIL'][row],
-                        remarks=df['REMARKS'][row],
-                        allocated_budget=float(df['BUDGET (£)'][row])
-                    ))
-                    success_count += 1
+                    try:
+                        test = FiveW.objects.get(supplier_id__code=int(df['1st TIER PARTNER CODE'][row]),
+                                                 component_id__code=str(df['Project/Component Code'][row]),
+                                                 program_id__code=str(int(df['Programme Code'][row])),
+                                                 province_id__code=str(int(df['PROVINCE.CODE'][row])),
+                                                 district_id__code=str(df['D.CODE'][row]),
+                                                 municipality_id__hlcit_code=str(df['PALIKA.Code'][row]))
+                        test.status = df['PROJECT STATUS'][row]
+                        test.second_tier_partner_name = df['2nd TIER PARTNER'][row]
+                        test.reporting_line_ministry = df['REPORTING LINE MINISTRY'][row]
+                        test.contact_name = df['CONTACT NAME'][row]
+                        test.designation = df['DESIGNATION'][row]
+                        test.contact_number = df['CONTACT NUMBER'][row]
+                        test.email = df['EMAIL'][row]
+                        test.remarks = df['REMARKS'][row]
+                        test.allocated_budget = float(df['BUDGET (£)'][row])
+                        test.save()
+
+                        update_count += 1
+
+                    except ObjectDoesNotExist:
+                        fivew_correct.append(FiveW(
+                            supplier_id=Partner.objects.get(code=int(df['1st TIER PARTNER CODE'][row])),
+                            second_tier_partner_name=df['2nd TIER PARTNER'][row],
+                            component_id=project(df['Project/Component Code'][row],
+                                                 int(df['1st TIER PARTNER CODE'][row])),
+                            program_id=Program.objects.get(code=str(int(df['Programme Code'][row]))),
+                            province_id=Province.objects.get(code=str(int(df['PROVINCE.CODE'][row]))),
+                            district_id=District.objects.get(code=str(df['D.CODE'][row])),
+                            municipality_id=GapaNapa.objects.get(hlcit_code=str(df['PALIKA.Code'][row])),
+                            status=df['PROJECT STATUS'][row],
+                            reporting_line_ministry=df['REPORTING LINE MINISTRY'][row],
+                            contact_name=df['CONTACT NAME'][row],
+                            designation=df['DESIGNATION'][row],
+                            contact_number=df['CONTACT NUMBER'][row],
+                            email=df['EMAIL'][row],
+                            remarks=df['REMARKS'][row],
+                            allocated_budget=float(df['BUDGET (£)'][row])
+                        ))
+                        success_count += 1
+
 
                 except Exception as e:
                     fivew_incorrect.append(row)
@@ -144,30 +181,56 @@ def bulkCreate(request):
 
             messages.error(request, 'Error in row' + str(' '.join([str(elem) for elem in error])))
             messages.success(request, 'Success! : ' + str(success_count) + "Row Of Five-w Data Added ")
+            messages.info(request, 'Updated! : ' + str(update_count) + "Row Of Five-w Data Updated ")
             FiveW.objects.bulk_create(fivew_correct)
 
         else:
             for row in range(0, upper_range):
                 try:
-                    fivew_correct.append(FiveW(
-                        supplier_id=Partner.objects.get(id=user_data.partner.id,
-                                                        code=float(df['1st TIER PARTNER CODE'][row])),
-                        second_tier_partner_name=df['2nd TIER PARTNER'][row],
-                        component_id=Project.objects.get(code=df['Project/Component Code'][row]),
-                        program_id=Program.objects.get(code=df['Programme Code'][row]),
-                        province_id=Province.objects.get(code=df['PROVINCE.CODE'][row]),
-                        district_id=District.objects.get(code=df['D.CODE'][row]),
-                        municipality_id=GapaNapa.objects.get(hlcit_code=df['PALIKA.Code'][row]),
-                        status=df['PROJECT STATUS'][row],
-                        reporting_line_ministry=df['REPORTING LINE MINISTRY'][row],
-                        contact_name=df['CONTACT NAME'][row],
-                        designation=df['DESIGNATION'][row],
-                        contact_number=df['CONTACT NUMBER'][row],
-                        email=df['EMAIL'][row],
-                        remarks=df['REMARKS'][row],
-                        allocated_budget=float(df['BUDGET (£)'][row])
-                    ))
-                    success_count += 1
+                    try:
+                        test = FiveW.objects.get(supplier_id__id=user_data.partner.id,
+                                                 supplier_id__code=int(df['1st TIER PARTNER CODE'][row]),
+                                                 component_id__id=user_data.project.id,
+                                                 component_id__code=str(df['Project/Component Code'][row]),
+                                                 program_id__id=user_data.program.id,
+                                                 program_id__code=str(int(df['Programme Code'][row])),
+                                                 province_id__code=str(int(df['PROVINCE.CODE'][row])),
+                                                 district_id__code=str(df['D.CODE'][row]),
+                                                 municipality_id__hlcit_code=str(df['PALIKA.Code'][row]))
+                        test.status = df['PROJECT STATUS'][row]
+                        test.second_tier_partner_name = df['2nd TIER PARTNER'][row]
+                        test.reporting_line_ministry = df['REPORTING LINE MINISTRY'][row]
+                        test.contact_name = df['CONTACT NAME'][row]
+                        test.designation = df['DESIGNATION'][row]
+                        test.contact_number = df['CONTACT NUMBER'][row]
+                        test.email = df['EMAIL'][row]
+                        test.remarks = df['REMARKS'][row]
+                        test.allocated_budget = float(df['BUDGET (£)'][row])
+                        test.save()
+
+                        update_count += 1
+                    except ObjectDoesNotExist:
+                        fivew_correct.append(FiveW(
+                            supplier_id=Partner.objects.get(id=user_data.partner.id,
+                                                            code=int(df['1st TIER PARTNER CODE'][row])),
+                            second_tier_partner_name=df['2nd TIER PARTNER'][row],
+                            component_id=Project.objects.get(id=user_data.project.id,
+                                                             code=df['Project/Component Code'][row]),
+                            program_id=Program.objects.get(id=user_data.program.id,
+                                                           code=str(int(df['Programme Code'][row]))),
+                            province_id=Province.objects.get(code=df['PROVINCE.CODE'][row]),
+                            district_id=District.objects.get(code=df['D.CODE'][row]),
+                            municipality_id=GapaNapa.objects.get(hlcit_code=df['PALIKA.Code'][row]),
+                            status=df['PROJECT STATUS'][row],
+                            reporting_line_ministry=df['REPORTING LINE MINISTRY'][row],
+                            contact_name=df['CONTACT NAME'][row],
+                            designation=df['DESIGNATION'][row],
+                            contact_number=df['CONTACT NUMBER'][row],
+                            email=df['EMAIL'][row],
+                            remarks=df['REMARKS'][row],
+                            allocated_budget=float(df['BUDGET (£)'][row])
+                        ))
+                        success_count += 1
 
                 except Exception as e:
                     fivew_incorrect.append(row)
@@ -180,6 +243,7 @@ def bulkCreate(request):
 
             messages.error(request, 'Error in row' + str(' '.join([str(elem) for elem in error])))
             messages.success(request, 'Success! : ' + str(success_count) + "Row Of Five-w Data Added ")
+            messages.info(request, 'Updated! : ' + str(update_count) + "Row Of Five-w Data Updated ")
             FiveW.objects.bulk_create(fivew_correct)
 
     return redirect('/dashboard/five-list', messages)
@@ -604,8 +668,11 @@ def updateuser(request, id):
         test.update(username=request.POST['username'])
         old_group = Group.objects.get(user=test2)
         group = Group.objects.get(pk=request.POST['group'])
+        print(request.POST['group'])
+        print(group)
         old_group.user_set.remove(test2)
-        test2.groups.add(group)
+        group.user_set.add(test2)
+        # test2.groups.add(group)
         return HttpResponseRedirect("/dashboard/user-list")
     partner = Partner.objects.order_by('name')
     programs = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
@@ -852,11 +919,10 @@ def ExportData(request):
         d['CONTACT NUMBER'] = d.pop('contact_number')
         d['DESIGNATION'] = d.pop('designation')
         d['REPORTING LINE MINISTRY'] = d.pop('reporting_line_ministry')
-
         newdata.append(d)
     df = pd.DataFrame(newdata)
     df.to_csv('media/exportdata.csv')
-    return HttpResponseRedirect('https://dvsnaxa.naxa.com.np/media/exportdata.csv')
+    return JsonResponse({'resp': 'success'})
 
 
 class FiveList(LoginRequiredMixin, ListView):
@@ -871,6 +937,7 @@ class FiveList(LoginRequiredMixin, ListView):
         provincedata = self.request.GET.getlist('province', None)
         districtdata = self.request.GET.getlist('district', None)
         municipalitydata = self.request.GET.getlist('gapanapa', None)
+
 
         if partnerdata or projectdata or programdata or provincedata or districtdata or municipalitydata:
             user = self.request.user
@@ -1468,8 +1535,10 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
             project = Project.objects.values('id', 'name', 'program_id__id', 'partner_id__id').order_by('id')
         else:
             partner = Partner.objects.filter(id=user_data.partner.id).order_by('id')
-            program = Program.objects.filter(id=user_data.program.id).values('id', 'name', 'partner_id__id').order_by('id')
-            project = Project.objects.filter(id=user_data.project.id).values('id', 'name', 'program_id__id', 'partner_id__id').order_by('id')
+            program = Program.objects.filter(id=user_data.program.id).values('id', 'name', 'partner_id__id').order_by(
+                'id')
+            project = Project.objects.filter(id=user_data.project.id).values('id', 'name', 'program_id__id',
+                                                                             'partner_id__id').order_by('id')
 
         all_partner = Partner.objects.order_by('id')
         province = Province.objects.values('id', 'name').order_by('id')
@@ -2027,8 +2096,10 @@ class FiveUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
             project = Project.objects.values('id', 'name', 'program_id__id', 'partner_id__id').order_by('id')
         else:
             partner = Partner.objects.filter(id=user_data.partner.id).order_by('id')
-            program = Program.objects.filter(id=user_data.program.id).values('id', 'name', 'partner_id__id').order_by('id')
-            project = Project.objects.filter(id=user_data.project.id).values('id', 'name', 'program_id__id', 'partner_id__id').order_by('id')
+            program = Program.objects.filter(id=user_data.program.id).values('id', 'name', 'partner_id__id').order_by(
+                'id')
+            project = Project.objects.filter(id=user_data.project.id).values('id', 'name', 'program_id__id',
+                                                                             'partner_id__id').order_by('id')
         province = Province.objects.values('id', 'name').order_by('id')
         district = District.objects.values('id', 'name', 'province_id__id').order_by('id')
         municipality = GapaNapa.objects.values('id', 'name', 'district_id__id').order_by('id')

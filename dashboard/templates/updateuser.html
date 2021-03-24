@@ -110,7 +110,11 @@
                         <label for="id_group">Select Role For User</label>
                         <select name="group" id="id_group" class="custom-select" required>
                             {% for d in groups %}
-                            <option value={{ d.id }}>{{ d }}</option>
+                            {% if form.instance.user.groups.first.id == d.id %}
+                            <option value={{d.id}} selected>{{d.name}}</option>
+                            {% else %}
+                            <option value={{d.id}}>{{d.name}}</option>
+                            {% endif %}
                             {% endfor %}
                         </select>
                     </div>
