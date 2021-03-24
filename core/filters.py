@@ -85,5 +85,6 @@ def fivew_district(district, supplier, program, component, sector, sub_sector, m
     dat_values = dat_values.exclude(
         municipality_id__code='-1',
         district_id__code='-1',
-        province_id__code='-1')
+        province_id__code='-1'
+    )
     return dat_values

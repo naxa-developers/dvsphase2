@@ -1,7 +1,7 @@
 from core.models import FiveW
 
 
-def fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata,group,user_data):
+def fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata, group, user_data):
     value_list = [partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata]
     key_list = ['supplier_id__in', 'program_id__in', 'component_id__in', 'province_id__in', 'district_id__in',
                 'municipality_id__in']
@@ -62,9 +62,27 @@ def export(partnerdata, programdata, projectdata, provincedata, districtdata, mu
                                                             ).order_by(
         'id')
 
+    if group.name == 'admin':
+        return dat_values
+    else:
+        dat_values = dat_values.filter(supplier_id=user_data.partner.id, component_id=user_data.project.id,
+                                       program_id=user_data.program.id)
+        return dat_values
+
+
+def cleardata(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata, group, user_data):
+    value_list = [partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata]
+    key_list = ['supplier_id__in', 'program_id__in', 'component_id__in', 'province_id__in', 'district_id__in',
+                'municipality_id__in']
+    filter_dict = {}
+    for index, x in enumerate(value_list):
+        if x:
+            filter_dict[key_list[index]] = x
+    dat_values = FiveW.objects.filter(**filter_dict)
 
     if group.name == 'admin':
         return dat_values
     else:
-        dat_values = dat_values.filter(supplier_id=user_data.partner.id)
+        dat_values = dat_values.filter(supplier_id=user_data.partner.id, component_id=user_data.project.id,
+                                       program_id=user_data.program.id)
         return dat_values

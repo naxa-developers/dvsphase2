@@ -28,15 +28,19 @@
             {% endif %} -->
             {% if perms.core.add_fivew %}
             <li style="padding-left:10px"><a href="/dashboard/bulk-upload"
-                                             class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Bulk
-                Upload</a>
+                                             class="border-button dfid-button sm-button"><i class="material-icons">view_agenda</i>Bulk
+                Upload/Update</a>
 
             </li>
             {% endif %}
-            <li style="padding-left:10px"><a
-                    href="/dashboard/export/?full_data='full_data'{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if partnerdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}"
-                    class="border-button dfid-button sm-button"><i
-                    class="material-icons">add_circle_outline</i>Export</a>
+            <li style="padding-left:10px" ><a href="#"
+                    class="border-button dfid-button sm-button" id="export_id"><i
+                    class="material-icons">system_update</i>Export</a>
+            </li>
+            <li style="padding-left:10px" ><a href="#"
+                    class="border-button dfid-button sm-button" data-toggle="modal" data-target="#confirmModal"><i
+                    class="material-icons">delete</i>Delete Filtered Data</a>
+            </li>
         </ul>
     </div>
     <br>
@@ -108,27 +112,23 @@
         {% if messages %}
         {% for messages in messages %}
         {% if messages.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-        <div class="alert alert-success alert-dismissible">
+        <div class="alert alert-danger alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong></strong> {{messages}} <a href="https://dvsnaxa.naxa.com.np/media/errordata.csv">View Error</a>
         </div>
-        {% else %}
+        {% elif messages.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
         <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong></strong> {{messages}}
+        </div>
+        {% else %}
+        <div class="alert alert-info alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong></strong> {{messages}}
         </div>
         {% endif %}
 
         {% endfor %}
-        {% endif %}
-
-
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-
-            {% endfor %}
-        </ul>
         {% endif %}
 
         <table class="five-table dataTable">
@@ -230,6 +230,25 @@
 
 
     </div>
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmModalLabel">Confirm Delete</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h4>Are you sure you would like to Clear Selected data. This may result in permanent data loss.</h4>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id='id_modal_confirm' class="btn btn-primary"><a href="/dashboard/cleardata/?full_data='full_data'{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if partnerdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}"">Confirm</a></button>
+            </div>
+          </div>
+        </div>
+      </div>
 
 </main>
 
@@ -242,7 +261,11 @@
             styler: function(row) {
                 for(var i=0;i<data.length;i++) {
                     if (data[i] == row.value) {
-                        row.selected = true;
+                        console.log(row.selected)
+                        if(row.selected == false ) {
+                            row.selected = true;
+                        }
+
                     };
                 }
                 return row
@@ -274,7 +297,9 @@
             multiChangeFunction_multi($('#multi_select_partner').val(), '#multi_select_program');
             multiChangeFunction('#multi_select_program', '#multi_select_project');
             multiChangeFunction('#multi_select_province', '#multi_select_district');
-            multiChangeFunction_one($('#multi_select_district').val(), '#multi_select_gapanapa');
+            if (($('#multi_select_district').val()).length > 0) {
+                multiChangeFunction_one($('#multi_select_district').val(), '#multi_select_gapanapa');
+            }
             flag = false;
         };
 
@@ -360,7 +385,7 @@
             };
         });
         $(to_be_changed_id + ' option').each(function() {
-            for(var j=0;j<=change_value.length;j++) {
+            for(var j=0;j<change_value.length;j++) {
                 if ($(this).attr('valId') == change_value[j]) {
                     if ($(this).is(':disabled')) {
                         $(this).prop('disabled', false);
@@ -387,7 +412,7 @@
                 $(this).prop('disabled', true)
             });
             $(to_be_changed_id + ' option').each(function() {
-                for(var j=0;j<=change_value.length;j++) {
+                for(var j=0;j<change_value.length;j++) {
                     if ($(this).attr('valId') == change_value[j]) {
                         $('#multi_select_gapanapa').append($('<option>').attr('value', $(this).val()).attr('valId', $(this).attr('valId')).text($(this).text()))
                     };
@@ -395,9 +420,8 @@
             });
             $('option[disabled]').remove();
         }
-
         $(to_be_changed_id).multipleSelect('refresh');
-        console.log($('#multi_select_gapanapa').val())
+
 
     }
 
@@ -432,6 +456,18 @@
             location.href = (window.location.href).split('?')[0]
 
         });
+        $('#export_id').click(function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: "GET",
+                url: "/dashboard/export/?full_data='full_data'{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if partnerdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}",
+            }).done(function() {
+                location.href = 'http://localhost:8020/media/exportdata.csv';
+
+            });
+        });
+
+
     });
 
 

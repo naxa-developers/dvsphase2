@@ -734,8 +734,6 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
 
     def list(self, request, *args, **kwargs):
         program = []
-        print(FiveW.objects.filter(program_id__name='Access to Finance', province_id__code='1').values(
-            'component_id__name').distinct())
         if request.GET['region'] == 'province':
             if request.GET.getlist('province_code'):
                 fiveprogram = FiveW.objects.filter(province_id__code=request.GET['province_code']).exclude(
@@ -1240,8 +1238,10 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 sect = query.exclude(program_id__sector__name=None).values_list('program_id__sector__name',
                                                                                   flat=True).distinct()
                 sub_sect = query.exclude(program_id__sub_sector__name=None).values_list(
-                    'component_id__sub_sector__name',
+                    'program_id__sub_sector__name',
                     flat=True).distinct()
+                for s in sub_sect:
+                    print(s)
                 mark = query.exclude(program_id__marker_category__name=None).values_list(
                     'program_id__marker_category__name',
                     flat=True).distinct()
