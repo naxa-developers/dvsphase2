@@ -40,7 +40,7 @@ from django.contrib.admin.models import LogEntry
 from datetime import datetime, timedelta
 from django.core.paginator import Paginator
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist,MultipleObjectsReturned
 from django.shortcuts import (get_object_or_404,
                               render,
                               HttpResponseRedirect)
@@ -85,6 +85,7 @@ def project(value1, value2):
 def clear_data(request):
     partnerdata = request.GET.getlist('partner', None)
     programdata = request.GET.getlist('program', None)
+    print(programdata)
     projectdata = request.GET.getlist('project', None)
     provincedata = request.GET.getlist('province', None)
     districtdata = request.GET.getlist('district', None)
@@ -98,6 +99,18 @@ def clear_data(request):
     messages.success(request, 'Success!' + ':' + "Successfully Deleated ")
     return redirect('/dashboard/five-list')
 
+
+# def unique(list1):
+#     unique_list = []
+#     finaldata = []
+#     for x in list1:
+#         if x not in unique_list:
+#             unique_list.append(x)
+#     for x in unique_list:
+#         finaldata.append(x)
+#     if None in finaldata:
+#         finaldata.remove(None)
+#     return finaldata
 
 @login_required()
 def bulkCreate(request):
@@ -182,6 +195,7 @@ def bulkCreate(request):
             messages.error(request, 'Error in row' + str(' '.join([str(elem) for elem in error])))
             messages.success(request, 'Success! : ' + str(success_count) + "Row Of Five-w Data Added ")
             messages.info(request, 'Updated! : ' + str(update_count) + "Row Of Five-w Data Updated ")
+
             FiveW.objects.bulk_create(fivew_correct)
 
         else:
