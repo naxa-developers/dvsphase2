@@ -555,3 +555,13 @@ class FeedbackForm(models.Model):
     your_feedback = models.TextField(blank=True, null=True)
     attachment = models.FileField(upload_to='feedbackfiles', blank=True, null=True)
     status = models.CharField(max_length=500, choices=status, default='New')
+
+
+class FAQ(models.Model):
+    question = models.TextField(blank=True, null=True)
+    answer = models.TextField(blank=True, null=True)
+
+
+class TermsAndCondition(models.Model):
+    title = models.TextField(blank=True, null=True)
+    sub_title = models.TextField(blank=True, null=True)
