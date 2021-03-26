@@ -1,12 +1,24 @@
 from rest_framework import serializers
 from .models import Partner, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
     IndicatorValue, Sector, SubSector, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
-    Filter, NepalSummary, FeedbackForm
+    Filter, NepalSummary, FeedbackForm, FAQ, TermsAndCondition
 
 
 class NepalSummarySerializer(serializers.ModelSerializer):
     class Meta:
         model = NepalSummary
+        fields = '__all__'
+
+
+class FAQSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FAQ
+        fields = '__all__'
+
+
+class TermsAndConditionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TermsAndCondition
         fields = '__all__'
 
 
@@ -114,7 +126,7 @@ class ProgramSerializer(serializers.ModelSerializer):
         for q in qs:
             data.append({
                 'id': q['id'],
-                'code':q['code'],
+                'code': q['code'],
                 'name': q['name']
 
             })

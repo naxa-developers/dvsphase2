@@ -37,8 +37,11 @@ urlpatterns = [
     path('profile', views.RegionalProfile.as_view({'get': 'list'}), name='profile'),
     path('programprofile', views.ProgramProfile.as_view({'get': 'list'}), name='programprofile'),
     path('regionaldendrogram', views.RegionalDendrogram.as_view({'get': 'list'}), name='dendrogram'),
-    path('programupperdendrogram', views.ProgramUpperDendrogram.as_view({'get': 'list'}), name='programupperdendrogram'),
+    path('programupperdendrogram', views.ProgramUpperDendrogram.as_view({'get': 'list'}),
+         name='programupperdendrogram'),
     path('programlowerdendrogram', views.ProgramLowerDendrogram.as_view({'get': 'list'}),
          name='programlowerdendrogram'),
+    path('faq/', views.FAQView.as_view({'get': 'list'}), name='faq'),
+    path('terms-condition/', views.TermsAndConditionView.as_view({'get': 'list'}), name='terms-condition'),
 
 ]

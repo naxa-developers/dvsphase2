@@ -1,12 +1,12 @@
 from .models import Partner, Program, MarkerValues, District, Province, GapaNapa, FiveW, Indicator, IndicatorValue, \
     Sector, SubSector, MarkerCategory, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
-    NepalSummary, FeedbackForm
+    NepalSummary, FeedbackForm, FAQ, TermsAndCondition
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import PartnerSerializer, ProgramSerializer, MarkerValuesSerializer, DistrictSerializer, \
     ProvinceSerializer, GaanapaSerializer, FivewSerializer, \
     IndicatorSerializer, IndicatorValueSerializer, SectorSerializer, SubsectorSerializer, MarkerCategorySerializer, \
     TravelTimeSerializer, GisLayerSerializer, ProjectSerializer, OutputSerializer, NotificationSerializer, \
-    ContractSumSerializer, NepalSummarySerializer, FeedbackSerializer
+    ContractSumSerializer, NepalSummarySerializer, FeedbackSerializer, TermsAndConditionSerializer, FAQSerializer
 from rest_framework import viewsets, views
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
@@ -244,6 +244,30 @@ class PartnerView(viewsets.ReadOnlyModelViewSet):
 
     def get_serializer_class(self):
         serializer_class = PartnerSerializer
+        return serializer_class
+
+
+class FAQView(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        queryset = FAQ.objects.order_by('id')
+        return queryset
+
+    def get_serializer_class(self):
+        serializer_class = FAQSerializer
+        return serializer_class
+
+
+class TermsAndConditionView(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        queryset = TermsAndCondition.objects.order_by('id')
+        return queryset
+
+    def get_serializer_class(self):
+        serializer_class = TermsAndConditionSerializer
         return serializer_class
 
 
@@ -961,7 +985,6 @@ class DistrictIndicator(viewsets.ModelViewSet):
                         }
                     )
 
-
         return Response({"results": data})
 
 
@@ -1236,7 +1259,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
                 sect = query.exclude(program_id__sector__name=None).values_list('program_id__sector__name',
-                                                                                  flat=True).distinct()
+                                                                                flat=True).distinct()
                 sub_sect = query.exclude(program_id__sub_sector__name=None).values_list(
                     'program_id__sub_sector__name',
                     flat=True).distinct()
@@ -1382,7 +1405,7 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
                 sect = query.exclude(program_id__sector__name=None).values_list('program_id__sector__name',
-                                                                                  flat=True).distinct()
+                                                                                flat=True).distinct()
 
                 sub_sect = query.exclude(program_id__sub_sector__name=None).values_list(
                     'program_id__sub_sector__name',
@@ -1550,7 +1573,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
                 sect = query.exclude(program_id__sector__name=None).values_list('program_id__sector__name',
-                                                                                  flat=True).distinct()
+                                                                                flat=True).distinct()
                 sub_sect = query.exclude(program_id__sub_sector__name=None).values_list(
                     'program_id__sub_sector__name', flat=True).distinct()
                 mark = query.values_list(
