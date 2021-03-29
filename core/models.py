@@ -565,3 +565,5 @@ class FAQ(models.Model):
 class TermsAndCondition(models.Model):
     title = models.TextField(blank=True, null=True)
     sub_title = models.TextField(blank=True, null=True)
+
+

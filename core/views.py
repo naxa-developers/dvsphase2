@@ -511,25 +511,27 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
 
                 uniqueprogramid = unique(program_ids)
                 sectoruniqueid = unique(sector_ids)
-                for s in sectoruniqueid:
-                    dat = Program.objects.filter(sector=s).exclude(total_budget=None).values('total_budget')
-                    sector = Sector.objects.get(id=s)
-                    total_budgetnew = 0
-                    for d in dat:
-                        total_budgetnew += d['total_budget']
-                    sector_by_buget.append({
-                        'sector_name': sector.name,
-                        'sector_id': sector.id,
-                        'total_budget': total_budgetnew
-                    })
-                for p in uniqueprogramid:
-                    pr = Program.objects.filter(id=p).exclude(total_budget=None).values('total_budget', 'name')
-                    top_prog_by_budget.append({
-                        'name': pr.distinct('name'),
-                        'total_budget': pr.aggregate(Sum('total_budget'))['total_budget__sum']
-                    })
-                test = sorted(sector_by_buget, key=lambda i: i['total_budget'], reverse=True)
-                test1 = sorted(top_prog_by_budget, key=lambda i: i['total_budget'], reverse=True)
+                if len(sectoruniqueid) != 0:
+                    for s in sectoruniqueid:
+                        dat = Program.objects.filter(sector=s).exclude(total_budget=None).values('total_budget')
+                        sector = Sector.objects.get(id=s)
+                        total_budgetnew = 0
+                        for d in dat:
+                            total_budgetnew += d['total_budget']
+                        sector_by_buget.append({
+                            'sector_name': sector.name,
+                            'sector_id': sector.id,
+                            'total_budget': total_budgetnew
+                        })
+                if len(uniqueprogramid) != 0:
+                    for p in uniqueprogramid:
+                        pr = Program.objects.filter(id=p).exclude(total_budget=None).values('total_budget', 'name')
+                        top_prog_by_budget.append({
+                            'name': pr.distinct('name'),
+                            'total_budget': pr.aggregate(Sum('total_budget'))['total_budget__sum']
+                        })
+                test1 = sorted(sector_by_buget, key=lambda i: i['total_budget'], reverse=True)
+                test2 = sorted(top_prog_by_budget, key=lambda i: i['total_budget'], reverse=True)
                 total_budget = five.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
                 sector_count = five.distinct('program_id__sector').exclude(program_id__sector=None).count()
                 program_count = five.distinct('program_id').count()
@@ -538,14 +540,16 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                 return Response({"indicatordata": data, 'total_budget': total_budget,
                                  'sector_count': sector_count, 'supplier_count': supplier_count,
                                  'component_count': component_count, 'program_count': program_count,
-                                 'active_sectors': test, 'top_program_by_budget': test1})
+                                 'active_sectors': test1, 'top_program_by_budget': test2})
             else:
                 return Response({"results": "Please Pass Province Code"})
 
         elif request.GET['region'] == 'district':
             data = []
-            fivew = []
-            active_sectors = []
+            sector_ids = []
+            sector_by_buget = []
+            program_ids = []
+            top_prog_by_budget = []
             if 'district_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level__in=['district', 'all']).values('category', 'id',
                                                                                              'federal_level',
@@ -603,9 +607,11 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     'id',
                     'allocated_budget',
                     'program_id__sector__name',
+                    'program_id__sector__id',
                     'program_id', 'district_id__code').distinct()
                 for f in five:
-                    active_sectors.append(f['program_id__sector__name'])
+                    sector_ids.append(f['program_id__sector__id'])
+                    program_ids.append(f['program_id'])
 
                 def unique(list1):
                     unique_list = []
@@ -619,7 +625,29 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         finaldata.remove(None)
                     return finaldata
 
-                finaldata = unique(active_sectors)
+                uniqueprogramid = unique(program_ids)
+                sectoruniqueid = unique(sector_ids)
+                if len(sectoruniqueid) != 0:
+                    for s in sectoruniqueid:
+                        dat = Program.objects.filter(sector=s).exclude(total_budget=None).values('total_budget')
+                        sector = Sector.objects.get(id=s)
+                        total_budgetnew = 0
+                        for d in dat:
+                            total_budgetnew += d['total_budget']
+                        sector_by_buget.append({
+                            'sector_name': sector.name,
+                            'sector_id': sector.id,
+                            'total_budget': total_budgetnew
+                        })
+                if len(uniqueprogramid) != 0:
+                    for p in uniqueprogramid:
+                        pr = Program.objects.filter(id=p).exclude(total_budget=None).values('total_budget', 'name')
+                        top_prog_by_budget.append({
+                            'name': pr.distinct('name'),
+                            'total_budget': pr.aggregate(Sum('total_budget'))['total_budget__sum']
+                        })
+                test1 = sorted(sector_by_buget, key=lambda i: i['total_budget'], reverse=True)
+                test2 = sorted(top_prog_by_budget, key=lambda i: i['total_budget'], reverse=True)
 
                 total_budget = five.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
                 sector_count = five.distinct('program_id__sector').exclude(program_id__sector=None).count()
@@ -627,15 +655,18 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                 component_count = five.distinct('component_id').count()
                 supplier_count = five.distinct('supplier_id').count()
 
-                return Response({"indicatordata": data, "active_sectors": finaldata, 'total_budget': total_budget,
+                return Response({"indicatordata": data, 'total_budget': total_budget,
                                  'sector_count': sector_count, 'supplier_count': supplier_count,
-                                 'component_count': component_count, 'program_count': program_count})
+                                 'component_count': component_count, 'program_count': program_count,
+                                 'active_sectors': test1, 'top_program_by_budget': test2})
             else:
                 return Response({"results": "Please Pass District Code"})
         elif request.GET['region'] == 'municipality':
             data = []
-            fivew = []
-            active_sectors = []
+            sector_ids = []
+            sector_by_buget = []
+            program_ids = []
+            top_prog_by_budget = []
             if 'municipality_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level__in=['palika', 'all']).values('category', 'id',
                                                                                            'federal_level',
@@ -657,17 +688,19 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         'indicator': d['indicator'],
                         'value': initial_sum
                     })
-                five = FiveW.objects.filter(municipality_id__code=int(request.GET['municipality_code'])).exclude(
+                five = FiveW.objects.filter(district_id__code=int(request.GET['municipality_code'])).exclude(
                     municipality_id__code='-1',
                     district_id__code='-1',
                     province_id__code='-1').values(
                     'id',
                     'allocated_budget',
                     'program_id__sector__name',
-                    'program_id').distinct()
-                for f in five:
-                    active_sectors.append(f['program_id__sector__name'])
+                    'program_id__sector__id',
+                    'program_id', 'municipality_id__code').distinct()
 
+                for f in five:
+                    sector_ids.append(f['program_id__sector__id'])
+                    program_ids.append(f['program_id'])
                 def unique(list1):
                     unique_list = []
                     finaldata = []
@@ -680,16 +713,43 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         finaldata.remove(None)
                     return finaldata
 
-                finaldata = unique(active_sectors)
+                uniqueprogramid = unique(program_ids)
+                sectoruniqueid = unique(sector_ids)
+                print(len(uniqueprogramid))
+                print(len(sectoruniqueid))
+                if len(sectoruniqueid) != 0:
+                    for s in sectoruniqueid:
+                        dat = Program.objects.filter(sector=s).exclude(total_budget=None).values('total_budget')
+                        sector = Sector.objects.get(id=s)
+                        total_budgetnew = 0
+                        for d in dat:
+                            total_budgetnew += d['total_budget']
+                        sector_by_buget.append({
+                            'sector_name': sector.name,
+                            'sector_id': sector.id,
+                            'total_budget': total_budgetnew
+                        })
+                if len(uniqueprogramid) != 0:
+                    for p in uniqueprogramid:
+                        pr = Program.objects.filter(id=p).exclude(total_budget=None).values('total_budget', 'name')
+                        top_prog_by_budget.append({
+                            'name': pr.distinct('name'),
+                            'total_budget': pr.aggregate(Sum('total_budget'))['total_budget__sum']
+                        })
+                print("ho")
+                test1 = sorted(sector_by_buget, key=lambda i: i['total_budget'], reverse=True)
+
+                test2 = sorted(top_prog_by_budget, key=lambda i: i['total_budget'], reverse=True)
 
                 total_budget = five.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
-                sector_count = five.distinct('program_id__sector').exclude(_id__sector=None).count()
+                sector_count = five.distinct('program_id__sector').exclude(program_id__sector=None).count()
                 program_count = five.distinct('program_id').count()
                 component_count = five.distinct('component_id').count()
                 supplier_count = five.distinct('supplier_id').count()
-                return Response({"indicatordata": data, "active_sectors": finaldata, 'total_budget': total_budget,
+                return Response({"indicatordata": data, 'total_budget': total_budget,
                                  'sector_count': sector_count, 'supplier_count': supplier_count,
-                                 'component_count': component_count, 'program_count': program_count})
+                                 'component_count': component_count, 'program_count': program_count,
+                                 'active_sectors': test1, 'top_program_by_budget': test2})
             else:
                 return Response({"results": "Please Pass Municipality Code"})
         else:
