@@ -200,6 +200,7 @@
                             class="material-icons">person</i><span>Output</span></a>
                 </li>
                 {% endif %}
+                {% if perms.core.feedbackform %}
                 {% if active == 'feedback' %}
                 <li class="menu-item active">
                     {% else %}
@@ -208,6 +209,7 @@
                     <a href="/dashboard/feedback-list/" class=""><i
                             class="material-icons">feedback</i><span>FeedbackForm</span></a>
                 </li>
+                {% endif %}
 
                 {% if perms.auth.view_user %}
                 {% if active == 'user' %}
@@ -241,6 +243,25 @@
                             class="material-icons">assignment</i><span>Centrally Managed Programs</span></a>
                 </li>
                 {% endif %}
+<!--                {% if perms.core.view_faq %}-->
+<!--                {% if active == 'sector' %}-->
+<!--                <li class="menu-item active submenu">-->
+<!--                    {% else %}-->
+<!--                <li class="menu-item submenu">-->
+<!--                    {% endif %}-->
+
+<!--                    <a href="javascript:void(0);" class="menu-toggle active-red"><i-->
+<!--                            class="material-icons">category</i><span>About</span></a>-->
+<!--                    <ul class="ml-menu">-->
+<!--                        {% if perms.core.faq %}-->
+<!--                        <li><a href="/dashboard/faq-list/">FAQ</a></li>-->
+<!--                        {% endif %}-->
+<!--                        {% if perms.core.faq %}-->
+<!--                        <li><a href="/dashboard/terms-condition-list/">Terms and Condition</a></li>-->
+<!--                        {% endif %}-->
+<!--                    </ul>-->
+<!--                </li>-->
+<!--                {% endif %}-->
 
             </ul>
         </div>
