@@ -1,69 +1,58 @@
-{% load static %}﻿
-<!doctype html>
-<html class="no-js " lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <meta name="description" content="Responsive DFID Dashboard.">
-    <title>DFID Dashboard</title>
-    <link rel="icon" href="{% static 'dashboard/images/favicon.icon' %}" type="image/x-icon">
-    <!-- Favicon-->
-    <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap.min.css' %}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Custom Css -->
-    <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
-</head>
-
-<body class="">
-<!-- login page start -->
-<div class="registration-heading" style="margin-top: -24px;">
-    <div class="header">
-        <a href="/dashboard/main/"><img  style="width:100px;height:100px" class="logo" src="{% static 'dashboard/images/dvs.jpg' %}" alt=""></a>
-        <a href="/dashboard/main/"><img src="{% static 'dashboard/images/map.png' %}" alt="map" class="img-map"/></a>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i>User</a>
+            </li>
+            <li>Update</li>
+        </ul>
     </div>
-</div>
-<div class="authentication registration">
-    <!-- login form start -->
+    <!-- program form -->
+    <form class="program-form" method="POST">
 
-    <div class="col-9 col-sm-8 col-md-8 col-lg-6">
-        <div class="auth-form login-form registration-form">
-            <div class="login-wrap">
-                <div class="login-header">
-                    <h3>User Update</h3>
-                </div>
-                <form class="program-form" action="/dashboard/updateuser/{{form.instance.id}}" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
+        {% csrf_token %}
 
-                    {% if form.errors %}
-                    {% for field in form %}
-                    {% for error in field.errors %}
-                    <div class="alert alert-danger">
-                        <strong>{{ field.name|title }} {{ error|escape }}</strong>
-                    </div>
-                    {% endfor %}
-                    {% endfor %}
-                    {% for error in form.non_field_errors %}
-                    <div class="alert alert-danger">
-                        <strong>{{ error|escape }}</strong>
-                    </div>
-                    {% endfor %}
-                    {% endif %}
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ field.name|title }} {{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="default-form">
+            <div class="row">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_name">Username</label>
                         <input type="text" class="form-control" name="username" value="{{form.instance.user.username}}" required id="id_name"/>
                     </div>
-
+                </div>
+            </div>
+                <div class="row">
+                    <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_name">Full Name:</label>
                         <input type="text" class="form-control" name="name" value="{{form.instance.name}}" required id="id_name"/>
                     </div>
-
+                        </div>
+                    <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_email">Email:</label>
                         <input type="email" class="form-control" name="email" value="{{form.instance.email}}" required id="id_email"/>
                     </div>
+                    </div>
+                </div>
 
                     <div class="form-group">
                         <label for="id_partner">Select Partner For User</label>
@@ -127,15 +116,16 @@
                     <div class="form-group ">
                         <input type="hidden" name="user" value="{{form.instance.user.id}}"  id="id_user">
                     </div>
-
+                    <div style="text-align:center">
                     <div class="form-group">
                         <button type="submit" class="dfid-button">Update</button>
                     </div>
-                </form>
+                        </div>
             </div>
         </div>
-    </div>
-</div>
+    </form>
+{% endblock %}
+{% block script %}
 <script src="{% static 'dashboard/js/jquery-3.4.1.min.js' %}"></script>
 <script>
     function changefunction(change_value, to_be_changed_id) {
@@ -217,8 +207,4 @@
     });
 });
 </script>
-
-</body>
-
-
-</html>
+{% endblock %}
