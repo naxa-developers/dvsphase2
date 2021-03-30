@@ -581,18 +581,18 @@
         });
 
         function changeonefunc(change_value, to_be_changed_id) {
-        var dataValue = [];
-        $(to_be_changed_id + ' option').each(function() {
-            $(this).css('display', 'none');
-            if ($(this).attr('valId') == change_value) {
-                $(this).css('display', 'block');
-            };
-            if(dataValue.includes($(this).val())) {
+            var dataValue = [];
+            $(to_be_changed_id + ' option').each(function() {
                 $(this).css('display', 'none');
-            };
-            dataValue.push($(this).val());
-        });
-    };
+                if ($(this).attr('valId') == change_value) {
+                    $(this).css('display', 'block');
+                };
+                if(dataValue.includes($(this).val())) {
+                    $(this).css('display', 'none');
+                };
+                dataValue.push($(this).val());
+            });
+        };
     });
 </script>
 {% endblock %}

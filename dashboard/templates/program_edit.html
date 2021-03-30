@@ -172,9 +172,9 @@
                                 <div class="checklist-card ">
                                     <div class="checklist-header active">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="sector"
+                                            <input type="checkbox" class="custom-control-input sector-cls" name="sector"
                                                    id="list{{sector.id}}"
-                                                   value="{{sector.id}}" checked>
+                                                   value="{{sector.id}}" val_name="{{ sector.name }}" checked>
                                             <label class="custom-control-label"
                                                    for="list{{sector.id}}">{{sector.name}}</label>
 <!---->
@@ -203,9 +203,9 @@
                                 <div class="checklist-card ">
                                     <div class="checklist-header ">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="sector"
+                                            <input type="checkbox" class="custom-control-input sector-cls" name="sector"
                                                    id="list{{sector.id}}"
-                                                   value="{{sector.id}}">
+                                                   value="{{sector.id}}" val_name="{{ sector.name }}">
                                             <label class="custom-control-label"
                                                    for="list{{sector.id}}">{{sector.name}}</label>
 <!---->
@@ -350,11 +350,38 @@
 <!--                </div>-->
             </div>
         </div>
+        <input type="hidden" id="sector_budget_id" name="sector_budget" value="{{ form.instance.sector_budget }}">
+        <div class="form-group mrt-100" style="margin-top:50px;margin-bottom: 30px;">
+            <button type="button" id="sector_budget_btn" class="btn btn-primary" data-toggle="modal" data-target="#SectorModal" disabled="disabled">
+          Sector Budget Percentage
+        </button>
+        </div>
 
 
-        <div class="form-group mrt-100">
+        <!-- Modal -->
+        <div class="modal fade" id="SectorModal" tabindex="-1" role="dialog" aria-labelledby="SectorModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sector Budget Percentage</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="modal_body">
+                ...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id='sector_modal_save' type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group mrt-100" style="margin-top:50px;">
             <button type="submit" class="dfid-button sm-button">Save</button>
         </div>
+
     </form>
 </main>
 
@@ -377,10 +404,61 @@
                     }
                 }
             })
+            checkFunction()
             flag = false;
 
         };
+        function checkFunction() {
+            var count = 0
+            $('.sector-cls').each(function () {
+                if ($(this).prop('checked')) {
+                    count += 1
+                } else {
+                    $('#sector_budget_btn').prop('disabled', true);
+                }
+            })
+            if (count > 0) {
+                $('#sector_budget_btn').prop('disabled', false);
+            }
+        }
+        $('.sector-cls').change(function (e) {
+            e.preventDefault()
+            checkFunction()
 
+        })
+        $('#SectorModal').on('shown.bs.modal', function () {
+            var in_html = []
+            var val = {}
+            if ('{{ form.instance.sector_budget }}' != 'O:O') {
+                var val_list1 = ('{{ form.instance.sector_budget }}').split(',')
+                for (var i=0;i<val_list1.length;i++) {
+                    var val_list2 = val_list1[i].split(':')
+                    val[val_list2[0]] = val_list2[1]
+                }
+            }
+            console.log(val_list1)
+            $('.sector-cls').each(function () {
+                if ($(this).prop('checked')) {
+                    if (Boolean(val)) {
+                        var temp_val = val[$(this).val()]
+                    }else {
+                        var temp_val = "0"
+                    }
+                    in_html.push('<div class="row"><label class="col" style="margin-right:30px;margin-left:10px;">'+ String($(this).attr('val_name')) +'</label><input valName="' + String($(this).val()) + '" class="col form-control modal_sector" style="width:80%;" type="number" value='+ temp_val +'></div>')
+                }
+            })
+            $('#modal_body').html(in_html.join(', '))
+        })
+        $('#sector_modal_save').click(function(e) {
+            e.preventDefault()
+            var temp_data = []
+            $('.modal_sector').each(function() {
+                temp_data.push(String($(this).attr('valName')) + ':' + String($(this).val()))
+            })
+            $('#sector_budget_id').val(temp_data.join())
+            $('#SectorModal').modal('toggle')
+
+        })
 
     })
 </script>
