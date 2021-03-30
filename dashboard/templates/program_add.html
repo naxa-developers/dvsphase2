@@ -302,7 +302,7 @@
         <input type="hidden" id="sector_budget_id" name="sector_budget" value="0:0">
         <div class="form-group mrt-100" style="margin-top:50px;margin-bottom: 30px;">
             <button type="button" id="sector_budget_btn" class="btn btn-primary" data-toggle="modal" data-target="#SectorModal" disabled="disabled">
-          Sector Budget
+          Sector Budget Percentage
         </button>
         </div>
 
@@ -312,7 +312,7 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Sector Budget Percentage</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -364,7 +364,7 @@
             var in_html = []
             $('.sector-cls').each(function () {
                 if ($(this).prop('checked')) {
-                    in_html.push('<div class="row"><label class="col" style="margin-right:30px;margin-left:10px;">'+ String($(this).attr('val_name')) +'</label><input valName="' + String($(this).attr('val_name')) + '" class="col form-control modal_sector" style="width:80%;" type="number" value="0"></div>')
+                    in_html.push('<div class="row"><label class="col" style="margin-right:30px;margin-left:10px;">'+ String($(this).attr('val_name')) +'</label><input valName="' + String($(this).val()) + '" class="col form-control modal_sector" style="width:80%;" type="number" value="0"></div>')
                 }
             })
             $('#modal_body').html(in_html.join(', '))
