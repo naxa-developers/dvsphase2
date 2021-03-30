@@ -519,15 +519,15 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         for d in dat:
                             total_budgetnew += d['total_budget']
                         sector_by_buget.append({
-                            'sector_name': sector.name,
-                            'sector_id': sector.id,
+                            'name': sector.name,
+                            'id': sector.id,
                             'total_budget': total_budgetnew
                         })
                 if len(uniqueprogramid) != 0:
                     for p in uniqueprogramid:
                         pr = Program.objects.filter(id=p).exclude(total_budget=None).values('total_budget', 'name')
                         top_prog_by_budget.append({
-                            'name': pr.distinct('name'),
+                            'name': pr[0]['name'],
                             'total_budget': pr.aggregate(Sum('total_budget'))['total_budget__sum']
                         })
                 test1 = sorted(sector_by_buget, key=lambda i: i['total_budget'], reverse=True)
@@ -635,15 +635,15 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         for d in dat:
                             total_budgetnew += d['total_budget']
                         sector_by_buget.append({
-                            'sector_name': sector.name,
-                            'sector_id': sector.id,
+                            'name': sector.name,
+                            'id': sector.id,
                             'total_budget': total_budgetnew
                         })
                 if len(uniqueprogramid) != 0:
                     for p in uniqueprogramid:
                         pr = Program.objects.filter(id=p).exclude(total_budget=None).values('total_budget', 'name')
                         top_prog_by_budget.append({
-                            'name': pr.distinct('name'),
+                            'name': pr[0]['name'],
                             'total_budget': pr.aggregate(Sum('total_budget'))['total_budget__sum']
                         })
                 test1 = sorted(sector_by_buget, key=lambda i: i['total_budget'], reverse=True)
@@ -701,6 +701,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                 for f in five:
                     sector_ids.append(f['program_id__sector__id'])
                     program_ids.append(f['program_id'])
+
                 def unique(list1):
                     unique_list = []
                     finaldata = []
@@ -725,15 +726,15 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         for d in dat:
                             total_budgetnew += d['total_budget']
                         sector_by_buget.append({
-                            'sector_name': sector.name,
-                            'sector_id': sector.id,
+                            'name': sector.name,
+                            'id': sector.id,
                             'total_budget': total_budgetnew
                         })
                 if len(uniqueprogramid) != 0:
                     for p in uniqueprogramid:
                         pr = Program.objects.filter(id=p).exclude(total_budget=None).values('total_budget', 'name')
                         top_prog_by_budget.append({
-                            'name': pr.distinct('name'),
+                            'name': pr[0]['name'],
                             'total_budget': pr.aggregate(Sum('total_budget'))['total_budget__sum']
                         })
                 print("ho")
