@@ -732,8 +732,10 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         })
                 if len(uniqueprogramid) != 0:
                     for p in uniqueprogramid:
-                        pr = Program.objects.filter(id=p).exclude(total_budget=None).values('total_budget', 'name')
+                        pr = Program.objects.filter(id=p).exclude(total_budget=None).values('id', 'total_budget',
+                                                                                            'name')
                         top_prog_by_budget.append({
+                            'id': pr[0]['id'],
                             'name': pr[0]['name'],
                             'total_budget': pr.aggregate(Sum('total_budget'))['total_budget__sum']
                         })
