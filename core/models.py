@@ -139,6 +139,7 @@ class Program(models.Model):
     marker_value = models.ManyToManyField(MarkerValues, related_name='MarkerValues', blank=True)
     sector = models.ManyToManyField(Sector, related_name='Progsector', blank=True)
     sub_sector = models.ManyToManyField(SubSector, related_name='ProgSubSector', blank=True)
+    sector_budget = models.TextField(blank=True, null=True)
     iati = models.CharField(max_length=100, blank=True, null=True)
     program_acronym = models.CharField(max_length=1500, blank=True, null=True)
 
