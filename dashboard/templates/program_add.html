@@ -364,7 +364,7 @@
             var in_html = []
             $('.sector-cls').each(function () {
                 if ($(this).prop('checked')) {
-                    in_html.push('<div class="row"><label class="col" style="margin-right:30px;margin-left:10px;">'+ String($(this).attr('val_name')) +'</label><input valName="' + String($(this).val()) + '" class="col form-control modal_sector" style="width:80%;" type="number" value="0"></div>')
+                    in_html.push('<div class="row"><label class="col" style="margin-right:30px;margin-left:10px;">'+ String($(this).attr('val_name')) +'</label><input valName="' + String($(this).val()) + '" class="col form-control modal_sector" style="width:80%;" type="number" step="0.01" value="0"></div>')
                 }
             })
             $('#modal_body').html(in_html.join(', '))
