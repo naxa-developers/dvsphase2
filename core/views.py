@@ -520,6 +520,9 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                 supplieruniqueid = unique(supplier_ids)
                 if len(supplieruniqueid) != 0:
                     for l in supplieruniqueid:
+                        # pr = Program.objects.filter(partner_id=l)
+                        # for p in pr:
+                        #     print(p)
                         total_partner_budget = 0
                         partner = Partner.objects.filter(id=int(l)).values('name')
                         fivenew = FiveW.objects.filter(supplier_id=l).values('supplier_id__name', 'supplier_id',
@@ -2048,7 +2051,7 @@ class ProjectApi(viewsets.ReadOnlyModelViewSet):
 class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'name', 'marker_value', 'marker_category']
+    filterset_fields = ['name', 'marker_value', 'marker_category']
 
     def get_queryset(self):
         if self.request.GET.getlist('program'):
@@ -2057,7 +2060,7 @@ class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
             for i in range(0, len(program_filter_id)):
                 program_filter_id[i] = int(program_filter_id[i])
             queryset = Program.objects.filter(id__in=program_filter_id).order_by('id')
-        if self.request.GET.getlist('component_code'):
+        elif self.request.GET.getlist('component_code'):
             comp = self.request.GET['component_code']
             component_filter_code = comp.split(",")
             ids = []
