@@ -509,7 +509,7 @@
 {% endblock %}
 {% block script %}
 <script>
-    function changefunc(change_value, to_be_changed_id) {
+    function changefunc(change_value, to_be_changed_id,abc) {
         $(to_be_changed_id).each(function() {
             $(this).css('display', 'none');
             if ($(this).val() == '') {
@@ -527,10 +527,13 @@
                     $(this).css('display', 'block');
                 };
             }
+            if ($(this).val() == abc){
+                $(this).css('display', 'block');
+            }
         });
     };
 
-    function changef(change_value, to_be_changed_id) {
+    function changef(change_value, to_be_changed_id,abc) {
         $(to_be_changed_id).each(function() {
             $(this).css('display', 'none');
             if ($(this).val() == '') {
@@ -548,6 +551,9 @@
 
                 };
             });
+            if ($(this).val() == abc){
+                $(this).css('display', 'block');
+            }
         });
     };
 
@@ -573,11 +579,11 @@
         });
         $('#id_province_id').change(function(e) {
             e.preventDefault();
-            changefunc($(this).val(), '#id_district_id option')
+            changefunc($(this).val(), '#id_district_id option',{{dr}})
         });
         $('#id_district_id').change(function(e) {
             e.preventDefault();
-            changefunc($(this).val(), '#id_municipality_id option')
+            changefunc($(this).val(), '#id_municipality_id option',{{mr}})
         });
 
         function changeonefunc(change_value, to_be_changed_id) {

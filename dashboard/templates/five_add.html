@@ -70,10 +70,7 @@
                         <label for="id_project_id">Select Project</label>
                         <select name="project_id" id="id_project_id" class="custom-select">
                             {% for project in projects %}
-
                             <option value="{{project.id}}">{{project.name}}</option>
-
-
                             {% endfor %}
 
                         </select>
@@ -90,13 +87,10 @@
                     <div class="form-group">
                         <label for="id_province_id">Select Province</label>
                         <select name="province_id" id="id_province_id" class="custom-select">
+                            <option value="-1">All Provinces</option>
                             {% for province in provinces %}
-
                             <option value="{{province.id}}">{{province.name}}</option>
-
-
                             {% endfor %}
-
                         </select>
                     </div>
 
@@ -106,13 +100,10 @@
                     <div class="form-group">
                         <label for="id_district_id">Select District</label>
                         <select name="district_id" id="id_district_id" class="custom-select">
+                            <option value="-1">All Districts</option>
                             {% for district in districts %}
-
                             <option value="{{district.id}}">{{district.name}}</option>
-
-
                             {% endfor %}
-
                         </select>
                     </div>
 
@@ -122,11 +113,9 @@
                     <div class="form-group">
                         <label for="id_municipality_id">Select Municipality</label>
                         <select name="municipality_id" id="id_municipality_id" class="custom-select">
+                            <option value="-1">All Municipalities</option>
                             {% for mun in municipalities %}
-
                             <option value="{{mun.id}}">{{mun.name}}</option>
-
-
                             {% endfor %}
 
                         </select>

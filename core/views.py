@@ -520,9 +520,10 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                 supplieruniqueid = unique(supplier_ids)
                 if len(supplieruniqueid) != 0:
                     for l in supplieruniqueid:
-                        # pr = Program.objects.filter(partner_id=l)
-                        # for p in pr:
-                        #     print(p)
+                        pr = Program.objects.filter(partner_id=l)
+                        for p in pr:
+                            print(p.name)
+                            print(p.sector.all().count())
                         total_partner_budget = 0
                         partner = Partner.objects.filter(id=int(l)).values('name')
                         fivenew = FiveW.objects.filter(supplier_id=l).values('supplier_id__name', 'supplier_id',

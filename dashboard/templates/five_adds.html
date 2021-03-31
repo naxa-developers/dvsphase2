@@ -193,11 +193,9 @@
                                             <label for="id_province_id">Select Province</label>
                                             <select name="province_id" id="id_province_id" class="custom-select">
                                                 <option value='' disabled selected>Select One</option>
+                                                <option value="{{pr}}">All Provinces</option>
                                                 {% for province in provinces %}
-
                                                 <option value="{{province.id}}">{{province.name}}</option>
-
-
                                                 {% endfor %}
 
                                             </select>
@@ -210,6 +208,7 @@
                                             <label for="id_district_id">Select District</label>
                                             <select name="district_id" id="id_district_id" class="custom-select">
                                                 <option value='' disabled selected>Select One</option>
+                                                <option value="{{dr}}">All Districts</option>
                                                 {% for district in districts %}
 
                                                 <option value="{{district.id}}" valId='{{district.province_id__id}}'>
@@ -233,8 +232,8 @@
                                             <select name="municipality_id" id="id_municipality_id"
                                                     class="custom-select">
                                                 <option value='' disabled selected>Select One</option>
+                                                <option value="{{mr}}">All Municipalities</option>
                                                 {% for mun in municipalities %}
-
                                                 <option value="{{mun.id}}" valId='{{mun.district_id__id}}'>
                                                     {{mun.name}}
                                                 </option>
@@ -458,7 +457,7 @@
 {% block script %}
 
 <script>
-    function changefunc(change_value, to_be_changed_id) {
+    function changefunc(change_value, to_be_changed_id,abc) {
         $(to_be_changed_id).each(function() {
             $(this).css('display', 'none');
             if ($(this).val() == '') {
@@ -475,11 +474,15 @@
                 if (($(this).attr('valId') == change_value) && (change_value != '')) {
                     $(this).css('display', 'block');
                 };
+
+            }
+            if ($(this).val() == abc){
+                $(this).css('display', 'block');
             }
         });
     };
 
-    function changef(change_value, to_be_changed_id) {
+    function changef(change_value, to_be_changed_id,abc) {
         $(to_be_changed_id).each(function() {
             $(this).css('display', 'none');
             if ($(this).val() == '') {
@@ -497,6 +500,9 @@
 
                 };
             });
+            if ($(this).val() == abc){
+                $(this).css('display', 'block');
+            }
         });
     };
 
@@ -526,11 +532,11 @@
         });
         $('#id_province_id').change(function(e) {
             e.preventDefault();
-            changefunc($(this).val(), '#id_district_id option')
+            changefunc($(this).val(), '#id_district_id option',{{dr}})
         });
         $('#id_district_id').change(function(e) {
             e.preventDefault();
-            changefunc($(this).val(), '#id_municipality_id option')
+            changefunc($(this).val(), '#id_municipality_id option',{{mr}})
         });
     });
 

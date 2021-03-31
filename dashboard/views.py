@@ -96,7 +96,7 @@ def clear_data(request):
     data = cleardata(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata, group,
                      user_data)
     data.delete()
-    messages.success(request, 'Success!' + ':' + "Successfully Deleated ")
+    messages.success(request, 'Success!' + ':' + "Successfully Deleted ")
     return redirect('/dashboard/five-list')
 
 
@@ -1363,7 +1363,7 @@ class Dashboard(LoginRequiredMixin, TemplateView):
         if group.name == 'admin':
             five = FiveW.objects.order_by('id')
         else:
-            five = FiveW.objects.select_related('supplier_id').filter(supplier_id=user_data.partner.id)[:10]
+            five = FiveW.objects.select_related('supplier_id').filter(supplier_id=user_data.partner.id,program_id=user_data.program.id,component_id=user_data.project.id)[:10]
         return render(request, 'dashboard.html',
                       {'user': user_data, 'active': 'dash', 'fives': five, 'logs': log, 'group': group})
 
@@ -1563,9 +1563,12 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
                                                                              'partner_id__id').order_by('id')
 
         all_partner = Partner.objects.order_by('id')
-        province = Province.objects.values('id', 'name').order_by('id')
-        district = District.objects.values('id', 'name', 'province_id__id').order_by('id')
-        municipality = GapaNapa.objects.values('id', 'name', 'district_id__id').order_by('id')
+        province = Province.objects.values('id', 'name', 'code').exclude(code=-1).order_by('id')
+        district = District.objects.values('id', 'name', 'province_id__id', 'code').exclude(code=-1).order_by('id')
+        municipality = GapaNapa.objects.values('id', 'name', 'district_id__id', 'code').exclude(code=-1).order_by('id')
+        province_minus_id = Province.objects.get(code=-1)
+        district_minus_id = District.objects.get(code=-1)
+        municipality_minus_id = GapaNapa.objects.get(code=-1)
         contact = PartnerContact.objects.values('id', 'name').order_by('id')
         data['user'] = user_data
         data['partners'] = partner
@@ -1574,6 +1577,9 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         data['all_partner'] = all_partner
         data['provinces'] = province
         data['districts'] = district
+        data['pr'] = province_minus_id.id
+        data['dr'] = district_minus_id.id
+        data['mr'] = municipality_minus_id.id
         data['municipalities'] = municipality
         data['contacts'] = contact
         return data
@@ -2122,15 +2128,21 @@ class FiveUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
                 'id')
             project = Project.objects.filter(id=user_data.project.id).values('id', 'name', 'program_id__id',
                                                                              'partner_id__id').order_by('id')
-        province = Province.objects.values('id', 'name').order_by('id')
-        district = District.objects.values('id', 'name', 'province_id__id').order_by('id')
-        municipality = GapaNapa.objects.values('id', 'name', 'district_id__id').order_by('id')
+        province = Province.objects.values('id', 'name', 'code').order_by('id')
+        district = District.objects.values('id', 'name', 'province_id__id', 'code').order_by('id')
+        municipality = GapaNapa.objects.values('id', 'name', 'district_id__id', 'code').order_by('id')
+        province_minus_id = Province.objects.get(code=-1)
+        district_minus_id = District.objects.get(code=-1)
+        municipality_minus_id = GapaNapa.objects.get(code=-1)
         contact = PartnerContact.objects.all().order_by('id')
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
         data['partners'] = partner
         data['programs'] = program
         data['projects'] = project
+        data['pr'] = province_minus_id.id
+        data['dr'] = district_minus_id.id
+        data['mr'] = municipality_minus_id.id
         data['provinces'] = province
         data['districts'] = district
         data['municipalities'] = municipality
