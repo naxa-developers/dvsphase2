@@ -215,8 +215,8 @@
                 <ul>
                     {% for page in page_range %}
                     <li {% if page == list.number %} class="active" {% endif %}><a
-                            href="?page={{ page }}{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if programdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}">{{
-                        page }}</a></li>
+                            href="?page={{ page }}{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if programdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}">
+                        {{ page }}</a></li>
                     {% endfor %}
                 </ul>
                 {% if list.has_next %}
