@@ -200,7 +200,7 @@
                             <h4>{{five.partner_id}}</h4>
                         </div>
                         <!-- hide Content -->
-                        <ul class="program-content hide-details">
+                        <ul class="program-content">
                             {% for contact in five.partner_id.PartnerContact.all %}
                             <li>
 
@@ -238,7 +238,7 @@
                                     </li>
                                 </ul>
                                 <!-- hide Content -->
-                                <div class="program-details hide-details">
+                                <div class="program-details">
                                     <ul class="mr-left">
                                         <li>
                                             <div class="content">
@@ -259,7 +259,8 @@
                                 <ul class="program-content">
                                 </ul>
                                 <!-- hide Content -->
-                                <div class="program-details hide-details">
+<!--                                <div class="program-details hide-details">-->
+                                <div class="program-details">
                                     <ul class="program-content">
                                         <li class="equalHeight">
                                             <div class="content">
@@ -304,17 +305,13 @@
                                     <!--                                    </div>-->
                                 </li>
                             </ul>
-                            <div class="action-btn flex-end">
-                                <a href="/dashboard/program-delete/{{five.program_id.id}}" class="border-button dfid-button sm-button">Delete</a>
-                                <a href="/dashboard/program-edit/{{five.program_id.id}}" class="dfid-button sm-button">Edit</a>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="program-footer flex-center">
-                <a href="#">View details <i class="material-icons">expand_less</i></a>
-            </div>
+<!--            <div class="program-footer flex-center">-->
+<!--                <a href="#">View details <i class="material-icons">expand_less</i></a>-->
+<!--            </div>-->
 
         </div>
         {% endif %}
