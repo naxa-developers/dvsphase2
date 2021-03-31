@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i>User</a>
+            </li>
+            <li>Create</li>
+        </ul>
+    </div>
+    <!-- program form -->
+    <form class="program-form" method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ field.name|title }} {{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="default-form">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_username" class="">Username:</label>
+                        <input type="text" name="username" class="form-control" maxlength="150" autofocus required
+                               id="id_username"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_password1">Password:</label>
+                        <input type="password" class="form-control" name="password1" required id="id_password1"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_password2">Password confirmation:</label>
+                        <input type="password" class="form-control" name="password2" required id="id_password2"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_name">Full Name:</label>
+                        <input type="text" class="form-control" name="name" required id="id_name"/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_email">Email:</label>
+                        <input type="email" class="form-control" name="email" required id="id_email"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_group">Select Role For User</label>
+                    <select name="group" id="id_group" class="custom-select" required>
+                        <option value='' disabled selected>Select One</option>
+                        {% for groups in group %}
+                        <option value={{ groups.id }}>{{ groups }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_partner">Select Partner For User</label>
+                    <select name="partner" id="id_partner" class="custom-select" required>
+                        <option value='' disabled selected>Select One</option>
+                        {% for partner in partners %}
+                        <option value='{{ partner.id }}'>{{ partner.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_program">Select Program For User</label>
+                    <select name="program" id="id_program" class="custom-select" required>
+                        <option value='' disabled selected>Select One</option>
+                        {% for program in programs %}
+
+                        <option value='{{ program.id }}' valId="{{ program.partner_id__id }}">{{ program.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_project">Select Component For User</label>
+                    <select name="project" id="id_project" class="custom-select" required>
+                        <option value='' disabled selected>Select One</option>
+                        {% for project in projects %}
+                        <option value='{{ project.id }}' valId="{{ project.program_id__id }}"
+                                valId1="{{ project.partner_id__id }}">{{ project.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group ">
+                    <label for="id_image" class="">Image</label>
+                    <input type="file" name="image" id="id_image">
+                </div>
+            </div>
+            <div style="text-align:center">
+                <div class="form-group">
+                    <button type="submit" class="dfid-button">Signup</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+{% endblock %}
+{% block script %}
+<script src="{% static 'dashboard/js/jquery-3.4.1.min.js' %}"></script>
+<script>
+    function changefunction(change_val, to_be_changed_id) {
+        var change_value = $(change_val).val()
+        $(to_be_changed_id + ' option').each(function() {
+            $(this).css('display', 'none');
+            if ($(this).val() == '') {
+                $(this).prop('selected', true)
+            }
+        });
+        $(to_be_changed_id + ' option').each(function() {
+            var sl = $('#id_partner').val()
+            console.log(sl)
+            if ((to_be_changed_id == '#id_project') && (sl != null)) {
+                if (($(this).attr('valId') == change_value) && (change_value != '') && ($(this).attr('valId1') == sl)) {
+                    $(this).css('display', 'block');
+                };
+            }else {
+                if (($(this).attr('valId') == change_value) && (change_value != '')) {
+                    $(this).css('display', 'block');
+                };
+            }
+        });
+    };
+    function chfunction(change_value, to_be_changed_id) {
+
+        $(to_be_changed_id + ' option').each(function() {
+            $(this).css('display', 'none');
+            if ($(this).val() == '') {
+                $(this).prop('selected', true)
+            }
+        });
+        var das = []
+        $(to_be_changed_id + ' option').each(function() {
+            var f_this = $(this)
+            $(change_value + ' option').each(function() {
+                console.log('count')
+                if($(this).css('display') == 'block') {
+                    if ((f_this.attr('valId') == $(this).val()) && ($(this).val() != '') && (f_this.attr('valId1') == $('#id_partner').val())) {
+                        f_this.css('display', 'block');
+
+                    }
+
+                };
+            });
+        });
+    };
+
+</script>
+<script>
+ $(document).ready(function() {
+    var flag = true;
+    if (flag) {
+        var dataValue = [];
+        $('#id_program option').each(function() {
+            if(dataValue.includes($(this).val())) {
+                $(this).css('display', 'none');
+            };
+            if ($(this).val() != '') {
+                dataValue.push($(this).val());
+            }
+
+        });
+        var dataValue2 = [];
+        $('#id_project option').each(function() {
+            if(dataValue2.includes($(this).val())) {
+                $(this).css('display', 'none');
+            };
+            console.log('proj')
+            if ($(this).val() != '') {
+                dataValue2.push($(this).val());
+            }
+
+        });
+        flag = false;
+    }
+    $('#id_partner').change(function(e) {
+        e.preventDefault();
+        changefunction('#id_partner', '#id_program')
+        chfunction('#id_program', '#id_project')
+    });
+    $('#id_program').change(function(e) {
+        e.preventDefault();
+        changefunction('#id_program', '#id_project')
+    });
+});
+
+</script>
+
+{% endblock %}

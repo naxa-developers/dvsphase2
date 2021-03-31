@@ -35,12 +35,13 @@
                 <th>Federal Level</th>
                 <th>unit</th>
                 <th>Data Type</th>
-                <th></th>
             </tr>
             </thead>
             <tbody>
 
             {% for indicator in list %}
+            {% if request.get_full_path == '/dashboard/indicator-list/?data=palika' %}
+            {% if indicator.federal_level == 'palika' or indicator.federal_level == 'all'%}
 
             <tr>
                 <td>
@@ -82,6 +83,98 @@
                         </ul>
                     </div>
                 </td>
+                {% endif %}
+                {% endif %}
+                {% if request.get_full_path == '/dashboard/indicator-list/?data=district' %}
+                {% if indicator.federal_level == 'district'  or indicator.federal_level == 'all' %}
+
+            <tr>
+                <td>
+                    <strong><a href="/dashboard/indicator-data/?id={{ indicator.id }}">{{indicator.indicator}}</a></strong>
+                </td>
+                <td>{{indicator.full_title}}</td>
+                <td>
+                    {{ indicator.abstract|truncatewords:10 }}
+                </td>
+                <td>
+                   {{ indicator.category }}
+                </td>
+                <td>{% if indicator.source == 'nan' %} {% else %} {{ indicator.source }} {% endif %}</td>
+                <td>{{ indicator.federal_level }}</td>
+                <td>{{ indicator.unit }}</td>
+                <td>{{ indicator.data_type }}</td>
+
+                <td>
+                    <div class="table-action">
+                        <a href="#" class="more-action">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-animation">
+                            {% if perms.core.change_indicator %}
+                            <li>
+                                <a href="/dashboard/indicator-edit/{{ indicator.id }}" class="flex-start">
+                                    <i class="material-icons">edit</i> Edit
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if perms.core.delete_indicator %}
+                            <li>
+                                <a href="/dashboard/indicator-delete/{{ indicator.id }}" class="flex-start">
+                                    <i class="material-icons">delete</i>Delete
+                                </a>
+
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </td>
+                {% endif %}
+                {% endif %}
+                {% if request.get_full_path == '/dashboard/indicator-list/?data=province' %}
+            {% if indicator.federal_level == 'province'  or indicator.federal_level == 'all' %}
+
+            <tr>
+                <td>
+                    <strong><a href="/dashboard/indicator-data/?id={{ indicator.id }}">{{indicator.indicator}}</a></strong>
+                </td>
+                <td>{{indicator.full_title}}</td>
+                <td>
+                    {{ indicator.abstract|truncatewords:10 }}
+                </td>
+                <td>
+                   {{ indicator.category }}
+                </td>
+                <td>{% if indicator.source == 'nan' %} {% else %} {{ indicator.source }} {% endif %}</td>
+                <td>{{ indicator.federal_level }}</td>
+                <td>{{ indicator.unit }}</td>
+                <td>{{ indicator.data_type }}</td>
+
+                <td>
+                    <div class="table-action">
+                        <a href="#" class="more-action">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-animation">
+                            {% if perms.core.change_indicator %}
+                            <li>
+                                <a href="/dashboard/indicator-edit/{{ indicator.id }}" class="flex-start">
+                                    <i class="material-icons">edit</i> Edit
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% if perms.core.delete_indicator %}
+                            <li>
+                                <a href="/dashboard/indicator-delete/{{ indicator.id }}" class="flex-start">
+                                    <i class="material-icons">delete</i>Delete
+                                </a>
+
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </td>
+                {% endif %}
+                {% endif %}
             </tr>
 
             {% endfor %}

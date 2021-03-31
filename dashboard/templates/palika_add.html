@@ -38,7 +38,7 @@
                     <div class="form-group">
                         <label for="id_province_id">Select Province</label>
                         <select name="province_id" id="id_province_id" class="custom-select" required>
-                            <option value="" selected>----Select Province----</option>
+                            <option value="" selected disabled>----Select Province----</option>
                             {% for i in province %}
 
                             <option value="{{i.id}}">{{i.name}}</option>
@@ -55,10 +55,10 @@
                     <div class="form-group">
                         <label for="id_district_id">Select District</label>
                         <select name="district_id" id="id_district_id" class="custom-select" required>
-                            <option value="" selected>----Select district----</option>
+                            <option value="" selected disabled>----Select District----</option>
                             {% for i in district %}
 
-                            <option value="{{i.id}}">{{i.name}}</option>
+                            <option value="{{i.id}}" valId='{{i.province_id__id}}'>{{i.name}}</option>
 
 
                             {% endfor %}
@@ -218,4 +218,15 @@
 </main>
 
 {% endblock %}
-
+{% block five_add %}
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function() {
+        $('#id_province_id').change(function(e) {
+            e.preventDefault();
+            changefunction($(this).val(), '#id_district_id option')
+        });
+    });
+</script>
+{% endblock %}

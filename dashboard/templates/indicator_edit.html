@@ -51,24 +51,31 @@
                         <label for="id_federal_level">Select Federal Level</label>
                         <select name="federal_level" id="id_federal_level" class="custom-select" required>
 
-                            {% if form.instance.federal_level == "palika level" %}
+                            {% if form.instance.federal_level == "palika" %}
 
                             <option value="palika" selected>Palika Level</option>
                             <option value="district">District Level</option>
                             <option value="province">Province Level</option>
+                            <option value="all">All</option>
 
-                            {% elif form.instance.federal_level == "district level" %}
+                            {% elif form.instance.federal_level == "district" %}
 
                             <option value="palika">Palika Level</option>
                             <option value="district" selected>District Level</option>
                             <option value="province level">Province Level</option>
+                            <option value="all">All</option>
+                            {% elif form.instance.federal_level == "all" %}
 
+                            <option value="palika">Palika Level</option>
+                            <option value="district" >District Level</option>
+                            <option value="province level">Province Level</option>
+                            <option value="all" selected>All</option>
                             {% else %}
 
                             <option value="palika" selected>Palika Level</option>
                             <option value="district">District Level</option>
                             <option value="province " selected>Province Level</option>
-
+                            <option value="all">All</option>
                             {% endif %}
 
 
@@ -96,6 +103,7 @@
                 </div>
 
             </div>
+
 
             <div class="row">
                 <div class="col-md-6">
@@ -131,8 +139,10 @@
                                placeholder="Data Type" value="{{ form.instance.data_type }}" required/>
                     </div>
                 </div>
-
                 </div>
+            <div class="row">
+                <input type="hidden" class="form-control" name="show_flag" maxlength="500" value="True"/>
+            </div>
 
 
             <div class="form-group mrt-100">

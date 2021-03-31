@@ -17,13 +17,15 @@ class Command(BaseCommand):
         print("Wait Data is being Loaded")
 
         try:
+
             part = [
                 Partner(
-                    name=(df['Partner Name'][row]).strip(),
-                    code=df['Partner Code'][row],
+                    name=(df['1st TIER PARTNER'][row]).strip(),
+                    code=df['1st TIER PARTNER CODE'][row],
 
                 ) for row in range(0, upper_range)
             ]
+            print(part)
             partner_data = Partner.objects.bulk_create(part)
 
             if partner_data:

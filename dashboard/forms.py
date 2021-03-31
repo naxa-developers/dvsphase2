@@ -1,13 +1,25 @@
 from django.contrib.auth.models import User, Permission, Group
 from django.forms import ModelForm
 from core.models import Program, Partner, Sector, SubSector, MarkerCategory, MarkerValues, GisLayer, Province, District, \
-    GapaNapa, Indicator, Project, FiveW, Output, BudgetToFirstTier, PartnerContact, Cmp, GisStyle
+    GapaNapa, Indicator, Project, FiveW, Output, BudgetToFirstTier, PartnerContact, Cmp, GisStyle,FeedbackForm
+from .models import UserProfile
 
 
 class UserForm(ModelForm):
     class Meta:
         model = User
         fields = ('username', 'password')
+
+class FeedbackDataForm(ModelForm):
+    class Meta:
+        model = FeedbackForm
+        fields = '__all__'
+
+
+class UserProfileForm(ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ['name', 'email', 'user', 'partner', 'program', 'project']
 
 
 class PermissionForm(ModelForm):

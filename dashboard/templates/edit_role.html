@@ -465,6 +465,62 @@
                     </div>
                 </div>
 
+                <div class="col-md-6">
+                    <div class="marker-sector select-list marker-select-block mt-5">
+                        <h4>Feedback</h4>
+                        <div class="checklist-wrapper">
+                            <div class="checklist-body marker-body">
+                                <div class="checklist-card">
+                                    <ul>
+                                        {% for permission in permissions %}
+                                        {% if permission.content_type.model == 'feedbackform' %}
+                                        <li>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="feedback{{permission.id}}" value="{{permission.id}}"
+                                                       name="permissions"
+                                                       {% for e in form.instance.permissions.all %}{% if e.id == permission.id %} checked
+                                                       {%endif%} {% endfor %}>
+                                                <label class="custom-control-label" for="output{{permission.id}}">{{permission.name}}</label>
+                                            </div>
+                                        </li>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="marker-sector select-list marker-select-block mt-5">
+                        <h4>About</h4>
+                        <div class="checklist-wrapper">
+                            <div class="checklist-body marker-body">
+                                <div class="checklist-card">
+                                    <ul>
+                                        {% for permission in permissions %}
+                                        {% if permission.content_type.model == 'faq' %}
+                                        <li>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input"
+                                                       id="faq{{permission.id}}" value="{{permission.id}}"
+                                                       name="permissions"
+                                                       {% for e in form.instance.permissions.all %}{% if e.id == permission.id %} checked
+                                                       {%endif%} {% endfor %}>
+                                                <label class="custom-control-label" for="faq{{permission.id}}">{{permission.name}}</label>
+                                            </div>
+                                        </li>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
         </div>

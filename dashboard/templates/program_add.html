@@ -35,6 +35,20 @@
         <div class="default-form">
             <div class="row">
                 <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_partner_id">Select Partners</label>
+                        <select name="partner_id" id="id_partner_id" placeholder="Select Partners"  multiple="multiple">
+                            {% for partner in partners %}
+                            <option value="{{partner.id}}">{{partner.name}}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+                <div class="row">
+                <div class="col-md-6">
                     <div class="form-group ">
                         <label for="id_name" class="">program name</label>
                         <input type="text" class="form-control" name="name" maxlength="100" id="id_name"
@@ -42,20 +56,6 @@
                         <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
                         <!--                                        Please ennter name</span>-->
                     </div>
-                </div>
-                <div class="col-md-6">
-                </div>
-            </div>
-            <div class="row">
-<!--                <div class="col-md-6">-->
-<!--                    <div class="form-group">-->
-<!--                        <label for="id_description" class="">Description</label>-->
-<!--                        <textarea type="text" class="form-control" name="description" cols="40" rows="10"-->
-<!--                                  id="id_description" placeholder="Program description"-->
-<!--                                  rows="5"></textarea>-->
-<!--                    </div>-->
-<!--                </div>-->
-                <div class="col-md-6">
                 </div>
             </div>
             <div class="row">
@@ -85,13 +85,38 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <div class="form-group ">
-                        <label for="id_total_budget" class="">Total Budget</label>
+                        <label for="id_total_budget" class="">Total Approved Budget</label>
                         <input class="form-control" type="number" name="total_budget" step="any" id="id_total_budget"
                                placeholder="e.g. GBP 89413"/>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_total_budget_spend" class="">Budget Spend</label>
+                        <input class="form-control" type="number" name="budget_spend" step="any" id="id_total_budget_spend"
+                               placeholder="e.g. GBP 89413"/>
+                    </div>
+                </div>
+            </div>
+                            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_start_date" class="">Start Date</label>
+                        <input class="form-control" type="date" name="start_date" step="any" id="id_start_date"
+                               placeholder=""/>
+                    </div>
+                </div>
+                                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_end_date" class="">End Date</label>
+                        <input class="form-control" type="date" name="end_date" step="any" id="id_end_date"
+                               placeholder=""/>
+                    </div>
+                </div>
+
+
 <!--                <div class="col-md-2">-->
 <!--                    <div class="form-group ">-->
 <!--                        <label for="id_total_budget" class="">Unallocated</label>-->
@@ -131,6 +156,32 @@
 <!--                    </div>-->
 <!--                </div>-->
             </div>
+            <div class="row">
+            <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_end_date" class="">Description</label>
+                        <textarea class="form-control" name="description">Enter text here...</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_program_acronym" class="">Program Acronym</label>
+                        <input class="form-control" type="text" name="program_acronym" step="any" id="id_program_acronym"
+                               placeholder=""/>
+                    </div>
+                </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                <label for="cmp" class="">CMP</label><br>
+                <select name="cmp">
+                    <option value="True">Yes</option>
+                    <option value="False">No</option>
+                </select>
+                </div>
+                </div>
+            </div>
         </div>
 
 
@@ -140,45 +191,45 @@
                         <h3>Category</h3>
                     </div>
                     <div class="row">
-<!--                        <div class="col-md-6">-->
-<!--                            <div class="category-sector select-list">-->
-<!--                                <h4>Sector</h4>-->
-<!--                                <div class="checklist-wrapper">-->
-<!--                                    <div class="checklist-body category-body">-->
-<!--                                        {% for sector in sectors %}-->
-<!--                                        <div class="checklist-card">-->
-<!--                                            <div class="checklist-header">-->
-<!--                                                <div class="custom-control custom-checkbox">-->
-<!--                                                    <input type="checkbox" class="custom-control-input" name="sector"-->
-<!--                                                           id="list{{sector.id}}"-->
-<!--                                                           value="{{sector.id}}">-->
-<!--                                                    <label class="custom-control-label"-->
-<!--                                                           for="list{{sector.id}}">{{sector.name}}</label>-->
-
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <ul>-->
-<!--                                                {% for sub_sector in sector.Sector.all %}-->
-<!--                                                <li>-->
-<!--                                                    <div class="custom-control custom-checkbox">-->
-<!--                                                        <input type="checkbox" class="custom-control-input"-->
-<!--                                                               id="sublist{{sub_sector.id}}" name="sub_sector"-->
-<!--                                                               value="{{sub_sector.id}}">-->
-<!--                                                        <label class="custom-control-label"-->
-<!--                                                               for="sublist{{sub_sector.id}}">{{sub_sector.name}}</label>-->
-
-<!--                                                    </div>-->
-<!--                                                </li>-->
-<!--                                                {% endfor %}-->
-
-<!--                                            </ul>-->
-<!--                                        </div>-->
-<!--                                        {% endfor %}-->
-
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                        <div class="col-md-6">
+                            <div class="category-sector select-list">
+                                <h4>Sector</h4>
+                                <div class="checklist-wrapper">
+                                    <div class="checklist-body category-body">
+                                        {% for sector in sectors %}
+                                        <div class="checklist-card">
+                                            <div class="checklist-header">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input sector-main" name="sector"
+                                                           id="list{{sector.id}}"
+                                                           value="{{sector.id}}" >
+                                                    <label class="custom-control-label"
+                                                           for="list{{sector.id}}">{{sector.name}}</label>
+<!---->
+                                                </div>
+                                            </div>
+                                            <ul>
+                                                {% for sub_sector in sector.Sector.all %}
+                                                <li>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input sector-cls"
+                                                               id="sublist{{sub_sector.id}}" name="sub_sector"
+                                                               value="{{sub_sector.id}}" val_name="{{ sub_sector.name }}">
+                                                        <label class="custom-control-label"
+                                                               for="sublist{{sub_sector.id}}">{{sub_sector.name}}</label>
+<!---->
+                                                    </div>
+                                                </li>
+                                                {% endfor %}
+<!---->
+                                            </ul>
+                                        </div>
+                                        {% endfor %}
+<!---->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="col-md-6">
                             <div class="category-sector select-list">
@@ -248,13 +299,89 @@
 
                     </div>
                 </div>
+        <input type="hidden" id="sector_budget_id" name="sector_budget" value="0:0">
+        <div class="form-group mrt-100" style="margin-top:50px;margin-bottom: 30px;">
+            <button type="button" id="sector_budget_btn" class="btn btn-primary" data-toggle="modal" data-target="#SectorModal" disabled="disabled">
+          Sub-Sector Budget Percentage
+        </button>
+        </div>
 
 
-        <div class="form-group mrt-100">
+        <!-- Modal -->
+        <div class="modal fade" id="SectorModal" tabindex="-1" role="dialog" aria-labelledby="SectorModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sector Budget Percentage</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="modal_body">
+                ...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id='sector_modal_save' type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group mrt-100" style="margin-top:50px;">
             <button type="submit" class="dfid-button sm-button">Save</button>
         </div>
     </form>
 </main>
 
 {% endblock %}
+{% block five_add %}
+{% endblock %}
+{% block script %}
+<script>
 
+    $(document).ready(function() {
+        $('#id_partner_id').multipleSelect()
+
+        function checkFunction() {
+            var count = 0
+            $('.sector-cls').each(function () {
+                if ($(this).prop('checked')) {
+                    count += 1
+                } else {
+                    $('#sector_budget_btn').prop('disabled', true);
+                }
+            })
+            if (count > 0) {
+                $('#sector_budget_btn').prop('disabled', false);
+            }
+        }
+        $('.sector-cls').change(function (e) {
+            e.preventDefault()
+            checkFunction()
+        })
+        $('.sector-main').change(function (e) {
+            e.preventDefault()
+            checkFunction()
+        })
+        $('#SectorModal').on('shown.bs.modal', function () {
+            var in_html = []
+            $('.sector-cls').each(function () {
+                if ($(this).prop('checked')) {
+                    in_html.push('<div class="row"><label class="col" style="margin-right:30px;margin-left:10px;">'+ String($(this).attr('val_name')) +'</label><input valName="' + String($(this).val()) + '" class="col form-control modal_sector" style="width:80%;" type="number" step="0.01" value="0"></div>')
+                }
+            })
+            $('#modal_body').html(in_html.join(', '))
+        })
+        $('#sector_modal_save').click(function(e) {
+            e.preventDefault()
+            var temp_data = []
+            $('.modal_sector').each(function() {
+                temp_data.push(String($(this).attr('valName')) + ':' + String($(this).val()))
+            })
+            $('#sector_budget_id').val(temp_data.join())
+            $('#SectorModal').modal('toggle')
+
+        })
+    })
+</script>
+{% endblock %}

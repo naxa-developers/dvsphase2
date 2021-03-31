@@ -1,45 +1,55 @@
-.ls-toggle-menu{
-    .navbar-brand{
-        a{
+.ls-toggle-menu {
+    .navbar-brand {
+        a {
             display: none
         }
     }
-    .slimScrollDiv{
+
+    .slimScrollDiv {
         overflow: visible !important;
         // .list{
         //     overflow: visible !important
         // }
-        
+
     }
-    .sidebar{
+
+    .sidebar {
         width: 50px;
-        .user-info{
-            .image{
+
+        .user-info {
+            .image {
                 padding: 8px !important;
-                img{
+
+                img {
                     box-shadow: none
                 }
             }
-            .detail{
+
+            .detail {
                 display: none;
             }
         }
-        .menu{
-            .list{
-                margin:0;
+
+        .menu {
+            .list {
+                margin: 0;
                 overflow: visible !important;
-                li{
+
+                li {
                     position: relative;
-                    a{
+
+                    a {
                         padding: 10px 0;
                         text-align: center;
                         justify-content: center;
-                        span{
+
+                        span {
                             display: none;
                         }
                     }
-                    .ml-menu{
-                        background: darken($color-blue,19.5%);
+
+                    .ml-menu {
+                        background: darken($color-blue, 19.5%);
                         min-width: 180px;
                         display: none !important;
                         position: absolute;
@@ -48,27 +58,33 @@
                         text-align: left;
                         box-shadow: 0px 10px 50px 0px rgba(41, 42, 51, 0.2);
                     }
-                    &.submenu{
-                        background: darken($color-blue,19.5%);
-                        .ml-menu{
-                            display: block !important;
-                            li{
-                                a{
+
+                    &.submenu {
+                        background: darken($color-blue, 19.5%);
+
+                        .ml-menu {
+                            display: block;
+
+                            li {
+                                a {
                                     text-align: left;
                                     justify-content: flex-start;
                                 }
                             }
                         }
                     }
-                    &.open_top{
-                        .ml-menu{
+
+                    &.open_top {
+                        .ml-menu {
                             bottom: 0;
                             top: auto;
                         }
                     }
-                    .menu-toggle{
+
+                    .menu-toggle {
+
                         &::before,
-                        &::after{
+                        &::after {
                             display: none;
                         }
                     }
@@ -76,16 +92,17 @@
             }
         }
     }
+
     .page-wrapper {
         margin-left: 60px;
         margin-right: 0;
     }
-    
+
     @media only screen and (max-width: 768px) {
-        .sidebar{
-            .menu{
-                .list{
-                    a{
+        .sidebar {
+            .menu {
+                .list {
+                    a {
                         padding: 8px 0
                     }
                 }
@@ -93,22 +110,27 @@
         }
     }
 }
-.ls-closed{
+
+.ls-closed {
     .sidebar {
         position: fixed;
     }
+
     .page-wrapper {
         margin-left: 60px;
         margin-right: 0
     }
+
     @media only screen and (max-width: 768px) {
         .page-wrapper {
             padding: 0;
             overflow: visible !important;
             height: 100%;
+
             .slimScrollDiv {
                 height: auto !important;
                 overflow: visible !important;
+
                 .body_scroll {
                     height: auto !important;
                     overflow: visible !important
@@ -116,9 +138,10 @@
             }
         }
     }
-    
-    
+
+
 }
+
 .mobile_menu {
     display: none;
     position: fixed !important;
@@ -126,22 +149,25 @@
     right: 1rem;
     z-index: 9999
 }
+
 @media only screen and (max-width: 767px) {
     .mobile_menu {
         display: block
     }
-    .ls-closed{
+
+    .ls-closed {
         .sidebar {
             position: fixed;
-            .navbar-brand{
-                .btn-menu{
+
+            .navbar-brand {
+                .btn-menu {
                     display: none;
-                } 
+                }
             }
         }
+
         .page-wrapper {
             margin-left: 0;
         }
     }
 }
-

@@ -1,12 +1,24 @@
 from rest_framework import serializers
 from .models import Partner, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
     IndicatorValue, Sector, SubSector, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
-    Filter, NepalSummary
+    Filter, NepalSummary, FeedbackForm, FAQ, TermsAndCondition
 
 
 class NepalSummarySerializer(serializers.ModelSerializer):
     class Meta:
         model = NepalSummary
+        fields = '__all__'
+
+
+class FAQSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FAQ
+        fields = '__all__'
+
+
+class TermsAndConditionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TermsAndCondition
         fields = '__all__'
 
 
@@ -92,31 +104,33 @@ class ProgramSerializer(serializers.ModelSerializer):
     class Meta:
         model = Program
         fields = (
-            'id', 'name', 'code', 'iati', 'total_budget', 'partner', 'component', 'marker_category', 'marker_value',
+            'id', 'name', 'start_date', 'end_date', 'code', 'iati', 'total_budget', 'partner', 'component',
+            'marker_category', 'marker_value',
             'sector',
             'sub_sector')
 
     def get_partner(self, obj):
         data = []
-        qs = FiveW.objects.filter(program_id=obj.id).values('supplier_id__id', 'supplier_id__name').distinct(
-            'supplier_id__id')
-        for q in qs:
-            data.append({
-                'id': q['supplier_id__id'],
-                'name': q['supplier_id__name']
-
-            })
-        return data
-
-    def get_component(self, obj):
-        data = []
-        qs = obj.ProjectProgram.values('id', 'name').distinct('id')
+        qs = obj.partner_id.all().values('name', 'id')
         for q in qs:
             data.append({
                 'id': q['id'],
                 'name': q['name']
 
             })
+        return data
+
+    def get_component(self, obj):
+        data = []
+        qs = obj.ProjectProgram.values('id', 'name', 'code').distinct('code')
+        for q in qs:
+            data.append({
+                'id': q['id'],
+                'code': q['code'],
+                'name': q['name']
+
+            })
+
         return data
 
     def get_marker_category(self, obj):
@@ -144,12 +158,12 @@ class ProgramSerializer(serializers.ModelSerializer):
 
     def get_sector(self, obj):
         data = []
-        qs = obj.ProjectProgram.exclude(sector=None).values('sector', 'sector__name').distinct('sector')
+        qs = obj.sector.all().values('id', 'name').distinct('name')
 
         for q in qs:
             data.append({
-                'id': q['sector'],
-                'name': q['sector__name']
+                'id': q['id'],
+                'name': q['name']
 
             })
 
@@ -157,12 +171,12 @@ class ProgramSerializer(serializers.ModelSerializer):
 
     def get_sub_sector(self, obj):
         data = []
-        qs = obj.ProjectProgram.exclude(sub_sector=None).values('sub_sector', 'sub_sector__name').distinct('sector')
+        qs = obj.sub_sector.values('id', 'name').distinct('name')
 
         for q in qs:
             data.append({
-                'id': q['sub_sector'],
-                'name': q['sub_sector__name']
+                'id': q['id'],
+                'name': q['name']
 
             })
 
@@ -191,7 +205,6 @@ class IndicatorSerializer(serializers.ModelSerializer):
             'id', 'full_title', 'abstract', 'category', 'source', 'federal_level', 'is_covid', 'is_dashboard', 'filter',
             'unit',
             'data_type')
-
 
 
 class SectorSerializer(serializers.ModelSerializer):
@@ -242,7 +255,6 @@ class DistrictSerializer(serializers.ModelSerializer):
         model = District
         fields = ('id', 'province_id', 'province_name', 'name', 'code', 'n_code', 'bbox')
 
-
     def get_province_name(self, obj):
         return str(obj.province_id.name)
 
@@ -260,7 +272,6 @@ class GaanapaSerializer(serializers.ModelSerializer):
 
     def get_code(self, obj):
         return str(obj.code)
-
 
     def get_district_name(self, obj):
         return obj.district_id.name
@@ -323,7 +334,10 @@ class IndicatorValueSerializer(serializers.ModelSerializer):
         fields = ('id', 'indicator_id', 'code', 'value')
 
     def get_code(self, obj):
-        return str(obj.gapanapa_id.code)
+        try:
+            return str(obj.gapanapa_id.code)
+        except:
+            return None
 
     # def get_indicator_name(self, obj):
     #     return str(obj.indicator_id.indicator)
@@ -343,3 +357,9 @@ class TravelTimeSerializer(serializers.ModelSerializer):
 
     def get_geography(self, obj):
         return str(obj.gapanapa.geography)
+
+
+class FeedbackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FeedbackForm
+        fields = ['name', 'email', 'attachment', 'subject', 'your_feedback', 'type']

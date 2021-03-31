@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<style>
+    input[type=search] {
+        display:none;
+    }
+    .dt-buttons {
+        display: none;
+    }
+
+
+</style>
 <main class="dfid-main">
     <!-- dfid breadcrumb -->
     <div class="dfid-breadcrumb pdt-100">
@@ -12,22 +22,115 @@
             <li><a href="/dashboard/five-add" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>New</a>
             </li>
             {% endif %}
+            <!-- {% if perms.core.delete_fivew %}
+            <li style="padding-left:10px"><a href="/dashboard/clear-data" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Clear All Data</a>
+            </li>
+            {% endif %} -->
             {% if perms.core.add_fivew %}
-            <li><a href="/dashboard/bulk-upload" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Bulk Upload</a>
+            <li style="padding-left:10px"><a href="/dashboard/bulk-upload"
+                                             class="border-button dfid-button sm-button"><i class="material-icons">view_agenda</i>Bulk
+                Upload/Update</a>
+
             </li>
             {% endif %}
+            <li style="padding-left:10px" ><a href="#"
+                    class="border-button dfid-button sm-button" id="export_id"><i
+                    class="material-icons">system_update</i>Export</a>
+            </li>
+            <li style="padding-left:10px" ><a href="#"
+                    class="border-button dfid-button sm-button" data-toggle="modal" data-target="#confirmModal"><i
+                    class="material-icons">delete</i>Delete Filtered Data</a>
+            </li>
         </ul>
     </div>
+    <br>
     <!-- dfid program table -->
-    <div class="table-tesponsive program-list">
+    <form action="/dashboard/five-list" method="GET">
+        <!--                {% csrf_token %}-->
+        <div class="row">
+            <!--                <input class="form-control" name="search" placeholder="Search..." style="max-width:30%;" required>-->
+            <div class="col" style="padding-left:5px;padding-right:5px;">
+                <select id="multi_select_partner" placeholder="Partner" name='partner' multiple="multiple">
+                    {% for partner in partner %}
+                    <option value="{{partner.id}}">{{partner.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col" style="padding-left:5px;padding-right:5px;">
+                <select name="program" id="multi_select_program" multiple="multiple" placeholder="Program">
+                    {% for program in program %}
+                    <option value="{{program.id}}" valId="{{program.partner_id__id}}">{{program.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col" style="padding-left:5px;padding-right:5px;">
+                <select name="project" id='multi_select_project' multiple="multiple" placeholder="Component">
+                    {% for project in project %}
+                    <option value="{{project.id}}" valId='{{project.program_id__id}}' valId1='{{project.partner_id__id}}'>{{project.name}}</option>
+
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col" style="padding-left:5px;padding-right:5px;">
+                <select name="province" id='multi_select_province' multiple="multiple" placeholder="Province">
+                    {% for province in province %}
+                    <option value="{{province.id}}">{{province.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col" style="padding-left:5px;padding-right:5px;">
+                <select name="district" id='multi_select_district' multiple="multiple" placeholder="District">
+                    {% for district in district %}
+                    <option value="{{district.id}}" valId='{{district.province_id__id}}'>{{district.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col" style="padding-left:5px;padding-right:5px;">
+                <select name="gapanapa" id='multi_select_gapanapa' multiple="multiple" placeholder="Municipality">
+                    {% for gapanapa in gapanapa %}
+                    <option value="{{gapanapa.id}}" valId='{{gapanapa.district_id__id}}'>{{gapanapa.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col">
+                <div class="row">
+                    <button type="submit" class="btn btn-primary"
+                            style="margin-right:1px;height: 25px;display:flex;justify-content:center;align-items:center;">
+                        Search
+                    </button>
+                    <button type="button" id="reset-btn" class="btn btn-secondary"
+                            style="margin-left:1px;height: 25px;display:flex;justify-content:center;align-items:center;">
+                        Reset
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+    <div class="table-tesponsive scroll-table program-list">
         {% if messages %}
-        {% for message in messages %}
+        {% for messages in messages %}
+        {% if messages.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+        <div class="alert alert-danger alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong></strong> {{messages}} <a href="https://dvsnaxa.naxa.com.np/media/errordata.csv">View Error</a>
+        </div>
+        {% elif messages.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
         <div class="alert alert-success alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Success!</strong> {{message}}
+            <strong></strong> {{messages}}
         </div>
+        {% else %}
+        <div class="alert alert-info alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong></strong> {{messages}}
+        </div>
+        {% endif %}
+
         {% endfor %}
         {% endif %}
+
         <table class="five-table dataTable">
             <thead>
             <tr>
@@ -39,9 +142,8 @@
                 <th>Province</th>
                 <th>District</th>
                 <th>Municipality</th>
-                <th>Allocated Budget </th>
+                <th>Allocated Budget</th>
                 <th>status</th>
-
 
 
                 <th></th>
@@ -62,7 +164,6 @@
                 <td>{{ five.municipality_id__name }}</td>
                 <td>{{ five.allocated_budget }}</td>
                 <td>{{ five.status }}</td>
-
 
 
                 <td>
@@ -96,37 +197,283 @@
         </table>
 
 
-
-
         <div class="pagination">
-                    <div class="paging-left">
-                        <div class="page-item">
-                            <p>Showing <span class="show-start">1</span>to<span class="show-end">100</span>of<span class="total-entries"></span>{{ page_obj.paginator.num_pages }}</p>
-                        </div>
-
-                    </div>
-                    <div class="paging-right">
-                        {% if page_obj.has_previous %}
-                        <div class="page-item pre-page">
-                            <a href="?page={{ page_obj.previous_page_number }}" >previous page</a>
-                        </div>
-                        {% endif %}
-                        <ul>
-                            {% for page in page_range %}
-                            <li {% if page == page_obj.number %} class="active" {% endif %}><a href="?page={{ page }}">{{ page }}</a></li>
-                            {% endfor %}
-                        </ul>
-                        {% if page_obj.has_next %}
-                        <div class="next-page page-item">
-                            <a href="?page={{ page_obj.next_page_number }}">next page</a>
-                        </div>
-                        {% endif %}
-                    </div>
+            <div class="paging-left">
+                <div class="page-item">
+                    <p>Showing <span class="show-start">1</span>to<span class="show-end">100</span>of<span
+                            class="total-entries"></span>{{ page_obj.paginator.num_pages }}</p>
                 </div>
 
-
+            </div>
+            <div class="paging-right">
+                {% if list.has_previous %}
+                <div class="page-item pre-page">
+                    <a href="?page={{ list.previous_page_number }}{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if programdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}">previous
+                        page</a>
+                </div>
+                {% endif %}
+                <ul>
+                    {% for page in page_range %}
+                    <li {% if page == list.number %} class="active" {% endif %}><a
+                            href="?page={{ page }}{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if programdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}">
+                        {{ page }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% if list.has_next %}
+                <div class="next-page page-item">
+                    <a href="?page={{ list.next_page_number }}{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if programdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}">next
+                        page</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
 
 
     </div>
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmModalLabel">Confirm Delete</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h4>Are you sure you would like to Clear Selected data. This may result in permanent data loss.</h4>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id='id_modal_confirm' class="btn btn-primary"><a href="/dashboard/cleardata/?full_data='full_data'{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if programdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}"">Confirm</a></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
 </main>
+
+{% endblock %}
+{% block script %}
+<script>
+    function selectFunction(id, data) {
+        var dataVal = []
+        $(id).multipleSelect({
+            selectAll: false,
+            styler: function(row) {
+                for(var i=0;i<data.length;i++) {
+                    if (data[i] == row.value) {
+                        console.log('row', row)
+
+                        row.selected = true;
+
+
+                    };
+                }
+                return row
+            }
+        });
+
+    }
+
+
+</script>
+<script>
+    $(function() {
+        var partnerData = [{% for dat in partnerdata %}'{{dat}}', {%endfor%}];
+        var programData = [{% for dat in programdata %}'{{dat}}', {%endfor%}];
+        var projectData = [{% for dat in projectdata %}'{{dat}}', {%endfor%}];
+        var provinceData = [{% for dat in provincedata %}'{{dat}}', {%endfor%}];
+        var districtData = [{% for dat in districtdata %}'{{dat}}', {%endfor%}];
+        var municipalityData = [{% for dat in municipalitydata %}'{{dat}}', {%endfor%}];
+        console.log(municipalityData)
+
+        var flag = true;
+        if(flag == true) {
+            selectFunction('#multi_select_partner', partnerData);
+            selectFunction('#multi_select_program', programData);
+            selectFunction('#multi_select_project', projectData);
+            selectFunction('#multi_select_province', provinceData);
+            selectFunction('#multi_select_district', districtData);
+            selectFunction('#multi_select_gapanapa', municipalityData);
+            multiChangeFunction_multi($('#multi_select_partner').val(), '#multi_select_program');
+            multiChangeFunction('#multi_select_program', '#multi_select_project');
+            multiChangeFunction('#multi_select_province', '#multi_select_district');
+            if (($('#multi_select_district').val()).length > 0) {
+                multiChangeFunction_one($('#multi_select_district').val(), '#multi_select_gapanapa');
+            }
+
+            flag = false;
+        };
+
+
+
+    })
+
+
+</script>
+<script>
+    function multiChangeFunction(change_val, to_be_changed_id) {
+        var change_value = $(change_val).val()
+        $(to_be_changed_id).multipleSelect('uncheckAll');
+        $(to_be_changed_id).multipleSelect('refresh')
+        $(to_be_changed_id + ' option').each(function() {
+            if(change_value.length > 0) {
+                $(this).prop('disabled', true)
+            }else {
+                $(this).prop('disabled', false)
+            };
+        });
+        $(to_be_changed_id + ' option').each(function() {
+            for(var j=0;j<change_value.length;j++) {
+                var mul = $('#multi_select_partner').val()
+                if ((to_be_changed_id == '#multi_select_project') && (mul.length > 0)) {
+
+                    for (var c=0;c<mul.length;c++) {
+                        if (($(this).attr('valId') == change_value[j]) && ($(this).attr('valId1') == mul[c]) ) {
+                            if ($(this).is(':disabled')) {
+
+                                $(this).prop('disabled', false);
+                            }
+                        }
+                    }
+                } else {
+                    if ($(this).attr('valId') == change_value[j]) {
+                        if ($(this).is(':disabled')) {
+                            $(this).prop('disabled', false);
+                        }
+                    };
+                }
+
+            };
+        });
+        $(to_be_changed_id).multipleSelect('refresh');
+        $('.ms-drop ul>li:has(label.disabled)').hide();
+    }
+    function mulChangeFunction(change_value, to_be_changed_id) {
+        $(to_be_changed_id).multipleSelect('uncheckAll');
+        $(to_be_changed_id).multipleSelect('refresh')
+        $(to_be_changed_id + ' option').each(function() {
+            $(this).prop('disabled', true)
+        });
+        $(to_be_changed_id + ' option').each(function() {
+            var mul = $(change_value).val()
+            for (var c=0;c<mul.length;c++) {
+
+                if ($(this).attr('valId1') ==  mul[c]) {
+                    if ($(this).is(':disabled')) {
+
+                        $(this).prop('disabled', false);
+                    }
+                }
+            }
+
+        });
+        $(to_be_changed_id).multipleSelect('refresh');
+        $('.ms-drop ul>li:has(label.disabled)').hide();
+    }
+
+
+</script>
+<script>
+    function multiChangeFunction_multi(change_value, to_be_changed_id) {
+        $(to_be_changed_id).multipleSelect('uncheckAll');
+        $(to_be_changed_id).multipleSelect('refresh');
+        var dataValue = []
+        $(to_be_changed_id + ' option').each(function() {
+            if(change_value.length > 0) {
+                $(this).prop('disabled', true)
+            }else {
+                $(this).prop('disabled', false)
+            };
+        });
+        $(to_be_changed_id + ' option').each(function() {
+            for(var j=0;j<change_value.length;j++) {
+                if ($(this).attr('valId') == change_value[j]) {
+                    if ($(this).is(':disabled')) {
+                        $(this).prop('disabled', false);
+                    }
+                };
+            };
+            if (dataValue.includes($(this).val())) {
+                $(this).prop('disabled', true);
+            }
+            dataValue.push($(this).val());
+        });
+        $(to_be_changed_id).multipleSelect('refresh');
+        $('.ms-drop ul>li:has(label.disabled)').hide();
+    }
+
+
+</script>
+<script>
+    function multiChangeFunction_one(change_value, to_be_changed_id) {
+        $(to_be_changed_id).multipleSelect('uncheckAll');
+        $(to_be_changed_id).load(location.href + ' ' + to_be_changed_id)
+        if(change_value.length > 0) {
+            $(to_be_changed_id + ' option').each(function() {
+                $(this).prop('disabled', true)
+            });
+            $(to_be_changed_id + ' option').each(function() {
+                for(var j=0;j<change_value.length;j++) {
+                    if ($(this).attr('valId') == change_value[j]) {
+                        $('#multi_select_gapanapa').append($('<option>').attr('value', $(this).val()).attr('valId', $(this).attr('valId')).text($(this).text()))
+                    };
+                };
+            });
+            $('option[disabled]').remove();
+        }
+        $(to_be_changed_id).multipleSelect('refresh');
+
+
+    }
+
+
+</script>
+<script>
+    $(document).ready(function() {
+        $('#multi_select_partner').change(function(e) {
+            e.preventDefault();
+            if (($(this).val()).length > 0) {
+                multiChangeFunction('#multi_select_partner', '#multi_select_program')
+            }else {
+                multiChangeFunction_multi($(this).val(), '#multi_select_program')
+            }
+            mulChangeFunction('#multi_select_partner', '#multi_select_project')
+        });
+        $('#multi_select_program').change(function(e) {
+            e.preventDefault();
+            multiChangeFunction('#multi_select_program', '#multi_select_project')
+        });
+        $('#multi_select_province').change(function(e) {
+            e.preventDefault();
+            multiChangeFunction('#multi_select_province', '#multi_select_district')
+        });
+        $('#multi_select_district').change(function(e) {
+            e.preventDefault();
+            multiChangeFunction_one($(this).val(), '#multi_select_gapanapa')
+
+        });
+        $('#reset-btn').click(function(e) {
+            e.preventDefault();
+            location.href = (window.location.href).split('?')[0]
+
+        });
+        $('#export_id').click(function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: "GET",
+                url: "/dashboard/export/?full_data='full_data'{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if programdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}",
+            }).done(function() {
+                location.href = 'https://dvsnaxa.naxa.com.np/media/exportdata.csv';
+
+            });
+        });
+
+
+    });
+
+
+</script>
+
+
 {% endblock %}

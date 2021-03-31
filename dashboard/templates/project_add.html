@@ -36,19 +36,25 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="id_program_id">Select Program</label>
-                        <select name="program_id" id="id_program_id" class="custom-select">
-                             <option value="" selected>----Select Program----</option>
+                        <label for="id_programs_id">Select Program</label>
+                        <select name="program_id" id="id_programs_id" class="custom-select">
+                             <option value="" selected disabled>----Select Program----</option>
                             {% for program in programs %}
-
-
-
-                            <option value="{{program.id}}">{{program.name}}</option>
-
-
-
+                                {% for dat in program.partner_id.all %}
+                                <option value="{{program.id}}" valu="{{dat.id}}">{{program.name}}</option>
+                                {% endfor %}
                             {% endfor %}
+                        </select>
+                    </div>
 
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_partners_id">Select Partners</label>
+                        <select name="partner_id" placeholder="Select Partners" id="id_partners_id" multiple="multiple">
+                            {% for partner in partners %}
+                            <option value="{{partner.id}}">{{partner.name}}</option>
+                            {% endfor %}
                         </select>
                     </div>
 
@@ -79,6 +85,64 @@
                     </div>
                 </div>
 
+            </div>
+                                        <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_start_date" class="">Start Date</label>
+                        <input class="form-control" type="date" name="start_date" step="any" id="id_start_date"
+                               placeholder=""/>
+                    </div>
+                </div>
+                                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_end_date" class="">End Date</label>
+                        <input class="form-control" type="date" name="end_date" step="any" id="id_end_date"
+                               placeholder=""/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_total_budget" class="">Total Approved Budget</label>
+                        <input class="form-control" type="number" name="approved_budget" step="any" id="id_total_budget"
+                               placeholder="e.g. GBP 89413"/>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_total_budget_spend" class="">Budget Spend</label>
+                        <input class="form-control" type="number" name="budget_spend" step="any" id="id_total_budget_spend"
+                               placeholder="e.g. GBP 89413"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_end_date" class="">Description</label>
+                        <textarea class="form-control" name="description">Enter text here...</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_component_acronym" class="">Component Acronym</label>
+                        <input class="form-control" type="text" name="component_acronym" step="any" id="id_component_acronym"
+                               placeholder=""/>
+                    </div>
+                </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                <label for="cmp" class="">Federal Intervention</label><br>
+                <select name="federal_intervention">
+                    <option value="True">Yes</option>
+                    <option value="False">No</option>
+                </select>
+                </div>
+                </div>
             </div>
 
 
@@ -210,5 +274,49 @@
     </form>
 </main>
 
+{% endblock %}
+{% block five_add %}
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function() {
+
+        $('#id_partners_id').multipleSelect();
+        var dataValue = []
+        $('#id_programs_id option').each(function () {
+            if(dataValue.includes($(this).val())) {
+                $(this).css('display', 'none');
+            };
+            dataValue.push($(this).val());
+        })
+        $('#id_programs_id').change(function() {
+            $('#id_partners_id').multipleSelect('uncheckAll');
+            change_value = $(this).val()
+            $('#id_programs_id option').each(function () {
+                $(this).css('display', 'block');
+            })
+            $('#id_programs_id option').each(function () {
+
+                if ($(this).val() == change_value) {
+                    change_valu = $(this).attr('valu')
+                    console.log(change_valu)
+                    $('#id_partners_id option').each(function () {
+                        if ($(this).val() == change_valu) {
+                            $(this).prop('selected', true);
+                        }
+                    })
+                }
+            })
+            $('#id_partners_id').multipleSelect('refresh');
+            var dataValue = []
+            $('#id_programs_id option').each(function () {
+                if(dataValue.includes($(this).val())) {
+                    $(this).css('display', 'none');
+                };
+                dataValue.push($(this).val());
+            })
+        })
+    })
+</script>
 {% endblock %}
 

@@ -7,17 +7,37 @@ from io import BytesIO
 from colorfield.fields import ColorField
 
 
-# Create your models here.
+# Create your models here
+
 class Partner(models.Model):
+    type_of_institution = (
+        ('Government', 'Government'),
+        ('International NGO', 'International NGO'),
+        ('National NGO', 'National NGO'),
+        ('Multilateral', 'Multilateral'),
+        ('Private Sector', 'Private Sector'),
+        ('Local Government', 'Local Government'),
+        ('Other Public Sector', 'Other Public Sector'),
+        ('Regional NGO', 'Regional NGO'),
+        ('Partner Country based NGO', 'Partner Country based NGO'),
+        ('Public Private Partnership', 'Public Private Partnership'),
+        ('Foundation', 'Foundation'),
+        ('Private Sector in Provider Country', 'Private Sector in Provider Country'),
+        ('Academic, Training and Research', 'Academic, Training and Research'),
+        ('Private Sector in Aid Recipient Country', 'Private Sector in Aid Recipient Country'),
+        ('Private Sector in Third Country', 'Private Sector in Third Country'),
+        ('Academic, Training and Research', 'Academic, Training and Research'),
+        ('Other', 'Other')
+    )
     name = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    type_of_institution = models.CharField(max_length=100, null=True, blank=True)
+    type_of_institution = models.CharField(max_length=100, choices=type_of_institution, null=True, blank=True)
     address = models.CharField(max_length=100, null=True, blank=True)
     email = models.CharField(max_length=100, null=True, blank=True)
     phone_number = models.CharField(max_length=100, null=True, blank=True)
     image = models.ImageField(upload_to='upload/partner/', null=True, blank=True)
     thumbnail = models.ImageField(upload_to='upload/partner/', editable=False, null=True, blank=True)
-    code = models.CharField(max_length=100, null=True, blank=True)
+    code = models.IntegerField(blank=True, null=True)
 
     def make_thumbnail(self):
         try:
@@ -105,15 +125,23 @@ class Program(models.Model):
         ('completed', 'Completed'),
 
     )
-
+    partner_id = models.ManyToManyField(Partner, related_name='Progpartner')
     name = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(blank=True)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+    cmp = models.BooleanField(blank=True, null=True)
     code = models.CharField(max_length=100, blank=True, null=True)
     status = models.CharField(max_length=50, choices=status, default='ongoing')
     total_budget = models.FloatField(null=True, blank=True, default=0)
+    budget_spend = models.FloatField(null=True, blank=True, default=0)
     marker_category = models.ManyToManyField(MarkerCategory, related_name='Pmarkercategory', blank=True)
     marker_value = models.ManyToManyField(MarkerValues, related_name='MarkerValues', blank=True)
+    sector = models.ManyToManyField(Sector, related_name='Progsector', blank=True)
+    sub_sector = models.ManyToManyField(SubSector, related_name='ProgSubSector', blank=True)
+    sector_budget = models.TextField(blank=True, null=True)
     iati = models.CharField(max_length=100, blank=True, null=True)
+    program_acronym = models.CharField(max_length=1500, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -175,7 +203,7 @@ class GapaNapa(models.Model):
     population = models.FloatField(null=True, blank=True)
     geography = models.CharField(max_length=50, choices=geog, default='Terai')
     cbs_code = models.CharField(max_length=100, null=True, blank=True)
-    hlcit_code = models.CharField(max_length=100, null=True, blank=True)
+    hlcit_code = models.CharField(max_length=500, null=True, blank=True)
     p_code = models.CharField(max_length=100, null=True, blank=True)
     code = models.IntegerField(null=True, blank=True)
     bbox = models.CharField(max_length=600, null=True, blank=True)
@@ -187,10 +215,18 @@ class GapaNapa(models.Model):
 class Project(models.Model):
     program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='ProjectProgram', null=True,
                                    blank=True)
+    partner_id = models.ManyToManyField(Partner, related_name='ProjectPartner', blank=True, null=True)
     name = models.CharField(max_length=500, null=True, blank=True)
     code = models.CharField(max_length=100, null=True, blank=True)
+    description = models.TextField(blank=True)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+    federal_intervention = models.BooleanField(blank=True, null=True)
     sector = models.ManyToManyField(Sector, related_name='Psector', blank=True)
     sub_sector = models.ManyToManyField(SubSector, related_name='SubSector', blank=True)
+    component_acronym = models.CharField(max_length=1500, blank=True, null=True)
+    approved_budget = models.FloatField(blank=True, null=True)
+    budget_spend = models.FloatField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -230,14 +266,14 @@ class FiveW(models.Model):
     supplier_id = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='Partner', null=True, blank=True)
     second_tier_partner = models.ForeignKey(Partner, on_delete=models.CASCADE, related_name='SPartner', null=True,
                                             blank=True)
-    second_tier_partner_name = models.CharField(max_length=100, null=True, blank=True)
+    second_tier_partner_name = models.CharField(max_length=3500, null=True, blank=True)
     program_id = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='Program', null=True, blank=True)
     component_id = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='FProject', null=True, blank=True)
     province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='FProvince', null=True, blank=True)
     district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='FDistrict', null=True, blank=True)
     municipality_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='GapaNapa', null=True,
                                         blank=True)
-    status = models.CharField(max_length=100, choices=status, default='ongoing')
+    status = models.CharField(max_length=1500, choices=status, default='ongoing')
     allocated_budget = models.FloatField(null=True, blank=True, default=0)
     kathmandu_activity = models.CharField(max_length=500, choices=ktm, blank=True, null=True, default='N/A')
     delivery_in_lockdown = models.CharField(max_length=500, choices=c_other, blank=True, null=True, default='No')
@@ -247,6 +283,12 @@ class FiveW(models.Model):
                                                         default='No')
     providing_ta_to_provincial_government = models.CharField(max_length=500, choices=c_other, blank=True, null=True,
                                                              default='No')
+    reporting_line_ministry = models.CharField(max_length=1500, blank=True, null=True)
+    contact_name = models.CharField(max_length=500, blank=True, null=True)
+    designation = models.CharField(max_length=1500, blank=True, null=True)
+    contact_number = models.CharField(max_length=500, blank=True, null=True)
+    email = models.CharField(max_length=500, blank=True, null=True)
+    remarks = models.CharField(max_length=1500, blank=True, null=True)
 
     def __str__(self):
         return self.supplier_id.name
@@ -272,13 +314,23 @@ class Indicator(models.Model):
     data_type = models.CharField(max_length=1500, null=True, blank=True)
     is_dashboard = models.BooleanField(default=True)
 
-
     unit = models.CharField(max_length=1500, null=True, blank=True)
     data_type = models.CharField(max_length=1500, null=True, blank=True)
 
-
     def __str__(self):
         return self.indicator
+
+
+class IndicatorValue(models.Model):
+    indicator_id = models.ForeignKey(Indicator, on_delete=models.CASCADE, related_name='Indicator', null=True,
+                                     blank=True)
+    gapanapa_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='IgapaNapa', null=True, blank=True)
+    value = models.FloatField(default=0)
+    district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='Idistrict', null=True, blank=True)
+    province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='Iprovince', null=True, blank=True)
+
+    def __str__(self):
+        return self.indicator_id.indicator
 
 
 class Filter(models.Model):
@@ -288,20 +340,7 @@ class Filter(models.Model):
     options = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
-
         return self.name
-
-
-
-class IndicatorValue(models.Model):
-    indicator_id = models.ForeignKey(Indicator, on_delete=models.CASCADE, related_name='Indicator', null=True,
-                                     blank=True)
-    gapanapa_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='IgapaNapa', null=True, blank=True)
-    value = models.FloatField(null=True, blank=True, default=None)
-    district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='Idistrict', null=True, blank=True)
-
-    def __str__(self):
-        return self.indicator_id.indicator
 
 
 class TravelTime(models.Model):
@@ -503,3 +542,29 @@ class NepalSummary(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class FeedbackForm(models.Model):
+    status = (
+        ('New', 'New'),
+        ('Old', 'Old'),
+    )
+    name = models.CharField(max_length=500, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    type = models.CharField(max_length=500, blank=True, null=True)
+    subject = models.CharField(max_length=500, blank=True, null=True)
+    your_feedback = models.TextField(blank=True, null=True)
+    attachment = models.FileField(upload_to='feedbackfiles', blank=True, null=True)
+    status = models.CharField(max_length=500, choices=status, default='New')
+
+
+class FAQ(models.Model):
+    question = models.TextField(blank=True, null=True)
+    answer = models.TextField(blank=True, null=True)
+
+
+class TermsAndCondition(models.Model):
+    title = models.TextField(blank=True, null=True)
+    sub_title = models.TextField(blank=True, null=True)
+
+

@@ -7,7 +7,7 @@ from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
     PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm, \
-    GroupForm, BudgetCreateForm, PartnerContactForm, CmpForm, GisStyleForm
+    GroupForm, BudgetCreateForm, PartnerContactForm, CmpForm, GisStyleForm, UserProfileForm, FeedbackDataForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -17,12 +17,13 @@ from rest_framework.status import (
     HTTP_404_NOT_FOUND,
     HTTP_200_OK
 )
+from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
     MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output, Notification, \
-    BudgetToSecondTier, BudgetToFirstTier, Cmp, GisStyle
+    BudgetToSecondTier, BudgetToFirstTier, Cmp, GisStyle, FeedbackForm
 from .models import UserProfile, Log
 from django.contrib.auth.models import User, Group, Permission
 from django.views.generic import TemplateView
@@ -39,7 +40,15 @@ from django.contrib.admin.models import LogEntry
 from datetime import datetime, timedelta
 from django.core.paginator import Paginator
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+from django.shortcuts import (get_object_or_404,
+                              render,
+                              HttpResponseRedirect)
+import datetime
+from django.db.models import Q
+from .filters import fivew, export, cleardata
+from django.http import FileResponse
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -55,6 +64,54 @@ def login_test(request, **kwargs):
     # return HttpResponse(request.user.has_perm('core.add_program'))
 
 
+# def deleteallfivewdata(request):
+#     if "GET" == request.method:
+#         messages.error(request, 'Alert:You may Loose All Your Data,Please Backup First')
+#         return render(request, 'confirm.html')
+#     else:
+#         FiveW.objects.all().delete()
+#         return JsonResponse({'result': 'success'}, status=HTTP_200_OK)
+
+
+def project(value1, value2):
+    try:
+        data = Project.objects.get(code=value1)
+    except:
+        data = Project.objects.get(code=value1, partner_id__code=value2)
+
+    return data
+
+
+def clear_data(request):
+    partnerdata = request.GET.getlist('partner', None)
+    programdata = request.GET.getlist('program', None)
+    print(programdata)
+    projectdata = request.GET.getlist('project', None)
+    provincedata = request.GET.getlist('province', None)
+    districtdata = request.GET.getlist('district', None)
+    municipalitydata = request.GET.getlist('gapanapa', None)
+    user = request.user
+    user_data = UserProfile.objects.get(user=user)
+    group = Group.objects.get(user=user)
+    data = cleardata(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata, group,
+                     user_data)
+    data.delete()
+    messages.success(request, 'Success!' + ':' + "Successfully Deleated ")
+    return redirect('/dashboard/five-list')
+
+
+# def unique(list1):
+#     unique_list = []
+#     finaldata = []
+#     for x in list1:
+#         if x not in unique_list:
+#             unique_list.append(x)
+#     for x in unique_list:
+#         finaldata.append(x)
+#     if None in finaldata:
+#         finaldata.remove(None)
+#     return finaldata
+
 @login_required()
 def bulkCreate(request):
     if "GET" == request.method:
@@ -62,6 +119,8 @@ def bulkCreate(request):
     else:
         csv = request.FILES["shapefile"]
         uploaded_file = request.FILES['shapefile']
+        if request.POST.get('clear_data', None) is not None:
+            FiveW.objects.all().delete()
 
         if uploaded_file.name.endswith('.csv'):
             df = pd.read_csv(uploaded_file).fillna('')
@@ -69,45 +128,139 @@ def bulkCreate(request):
             df = pd.read_excel(uploaded_file).fillna('')
         else:
             messages.error(request, "Please upload a .csv or .xls file")
-
         upper_range = len(df)
-
+        fivew_correct = []
+        fivew_incorrect = []
+        error_log = []
+        error = []
         success_count = 0
-        for row in range(0, upper_range):
-            try:
-                # municipality = GapaNapa.objects.get(hlcit_code=df['Palika ID'][row]),
-                # province_id = Province.objects.get(code=str(int(df['Province ID'][row]))),
-                # district_id = District.objects.get(code=str(int(df['District ID'][row]))),
-                # branch = None if df['Branch'][row] == '' else df['Branch'][row]
-                # numTablets = 0 if df['No. of Tablets'][row] == '' else df['No. of Tablets'][row]
-                five = FiveW.objects.update_or_create(
-                    supplier_id=Partner.objects.get(code=str(int(df['1st Tier Partner Code'][row]))),
-                    # second_tier_partner=Partner.objects.get(code=str(int(df['2nd Tier Partner Code'][row]))),
-                    second_tier_partner_name=df['2nd Tier Partner'][row],
-                    component_id=Project.objects.get(code=str(df['Component Code'][row])),
-                    program_id=Program.objects.get(code=str(int(df['Prog. Code'][row]))),
-                    province_id=Province.objects.get(code=str(int(df['Province ID'][row]))),
-                    district_id=District.objects.get(code=str(int(df['District ID'][row]))),
-                    municipality_id=GapaNapa.objects.get(hlcit_code=df['Palika ID'][row]),
-                    status=df['Project Status'][row],
-                    allocated_budget=float(df['Budget'][row]),
-                    kathmandu_activity=df['Kathmandu Activity'][row],
-                    delivery_in_lockdown=df['Delivery in Lockdown'][row],
-                    covid_priority_3_12_Months=df['COVID Priority 3-12 Months'][row],
-                    covid_recovery_priority=df['COVID Recovery Priority'][row],
-                    providing_ta_to_local_government=df['Providing TA to Local Government'][row],
-                    providing_ta_to_provincial_government=df['Providing TA to Provincial Government'][row],
-                )
-                success_count += 1
-            except ObjectDoesNotExist as e:
-                print('error')
-                messages.add_message(request, messages.WARNING, str(
-                    e) + " for row " + str(
-                    row + 2) + ' Please check the column of following row and only re-upload following row number to minimize the risk of duplication')
-                continue
-        messages.add_message(request, messages.SUCCESS, str(
-            success_count) + "Row Of Five-w Data Added ")
-        return redirect('/dashboard/five-list/', messages)
+        update_count = 0
+        user = request.user
+        user_data = UserProfile.objects.get(user=user)
+        group = Group.objects.get(user=user)
+        if group.name == 'admin':
+            for row in range(0, upper_range):
+                try:
+                    try:
+                        test = FiveW.objects.get(supplier_id__code=int(df['1st TIER PARTNER CODE'][row]),
+                                                 component_id__code=str(df['Project/Component Code'][row]),
+                                                 program_id__code=str(int(df['Programme Code'][row])),
+                                                 province_id__code=str(int(df['PROVINCE.CODE'][row])),
+                                                 district_id__code=str(df['D.CODE'][row]),
+                                                 municipality_id__hlcit_code=str(df['PALIKA.Code'][row]))
+                        test.status = df['PROJECT STATUS'][row]
+                        test.second_tier_partner_name = df['2nd TIER PARTNER'][row]
+                        test.reporting_line_ministry = df['REPORTING LINE MINISTRY'][row]
+                        test.contact_name = df['CONTACT NAME'][row]
+                        test.designation = df['DESIGNATION'][row]
+                        test.contact_number = df['CONTACT NUMBER'][row]
+                        test.email = df['EMAIL'][row]
+                        test.remarks = df['REMARKS'][row]
+                        test.allocated_budget = float(df['BUDGET (£)'][row])
+                        test.save()
+
+                        update_count += 1
+
+                    except ObjectDoesNotExist:
+                        fivew_correct.append(FiveW(
+                            supplier_id=Partner.objects.get(code=int(df['1st TIER PARTNER CODE'][row])),
+                            second_tier_partner_name=df['2nd TIER PARTNER'][row],
+                            component_id=project(df['Project/Component Code'][row],
+                                                 int(df['1st TIER PARTNER CODE'][row])),
+                            program_id=Program.objects.get(code=str(int(df['Programme Code'][row]))),
+                            province_id=Province.objects.get(code=str(int(df['PROVINCE.CODE'][row]))),
+                            district_id=District.objects.get(code=str(df['D.CODE'][row])),
+                            municipality_id=GapaNapa.objects.get(hlcit_code=str(df['PALIKA.Code'][row])),
+                            status=df['PROJECT STATUS'][row],
+                            reporting_line_ministry=df['REPORTING LINE MINISTRY'][row],
+                            contact_name=df['CONTACT NAME'][row],
+                            designation=df['DESIGNATION'][row],
+                            contact_number=df['CONTACT NUMBER'][row],
+                            email=df['EMAIL'][row],
+                            remarks=df['REMARKS'][row],
+                            allocated_budget=float(df['BUDGET (£)'][row])
+                        ))
+                        success_count += 1
+
+
+                except Exception as e:
+                    fivew_incorrect.append(row)
+                    error_log.append(e)
+                    error.append(str(row + 2))
+            if fivew_incorrect:
+                test = df.loc[fivew_incorrect, :]
+                test['Errors'] = error_log
+                test.to_csv('media/errordata.csv')
+
+            messages.error(request, 'Error in row' + str(' '.join([str(elem) for elem in error])))
+            messages.success(request, 'Success! : ' + str(success_count) + "Row Of Five-w Data Added ")
+            messages.info(request, 'Updated! : ' + str(update_count) + "Row Of Five-w Data Updated ")
+
+            FiveW.objects.bulk_create(fivew_correct)
+
+        else:
+            for row in range(0, upper_range):
+                try:
+                    try:
+                        test = FiveW.objects.get(supplier_id__id=user_data.partner.id,
+                                                 supplier_id__code=int(df['1st TIER PARTNER CODE'][row]),
+                                                 component_id__id=user_data.project.id,
+                                                 component_id__code=str(df['Project/Component Code'][row]),
+                                                 program_id__id=user_data.program.id,
+                                                 program_id__code=str(int(df['Programme Code'][row])),
+                                                 province_id__code=str(int(df['PROVINCE.CODE'][row])),
+                                                 district_id__code=str(df['D.CODE'][row]),
+                                                 municipality_id__hlcit_code=str(df['PALIKA.Code'][row]))
+                        test.status = df['PROJECT STATUS'][row]
+                        test.second_tier_partner_name = df['2nd TIER PARTNER'][row]
+                        test.reporting_line_ministry = df['REPORTING LINE MINISTRY'][row]
+                        test.contact_name = df['CONTACT NAME'][row]
+                        test.designation = df['DESIGNATION'][row]
+                        test.contact_number = df['CONTACT NUMBER'][row]
+                        test.email = df['EMAIL'][row]
+                        test.remarks = df['REMARKS'][row]
+                        test.allocated_budget = float(df['BUDGET (£)'][row])
+                        test.save()
+
+                        update_count += 1
+                    except ObjectDoesNotExist:
+                        fivew_correct.append(FiveW(
+                            supplier_id=Partner.objects.get(id=user_data.partner.id,
+                                                            code=int(df['1st TIER PARTNER CODE'][row])),
+                            second_tier_partner_name=df['2nd TIER PARTNER'][row],
+                            component_id=Project.objects.get(id=user_data.project.id,
+                                                             code=df['Project/Component Code'][row]),
+                            program_id=Program.objects.get(id=user_data.program.id,
+                                                           code=str(int(df['Programme Code'][row]))),
+                            province_id=Province.objects.get(code=df['PROVINCE.CODE'][row]),
+                            district_id=District.objects.get(code=df['D.CODE'][row]),
+                            municipality_id=GapaNapa.objects.get(hlcit_code=df['PALIKA.Code'][row]),
+                            status=df['PROJECT STATUS'][row],
+                            reporting_line_ministry=df['REPORTING LINE MINISTRY'][row],
+                            contact_name=df['CONTACT NAME'][row],
+                            designation=df['DESIGNATION'][row],
+                            contact_number=df['CONTACT NUMBER'][row],
+                            email=df['EMAIL'][row],
+                            remarks=df['REMARKS'][row],
+                            allocated_budget=float(df['BUDGET (£)'][row])
+                        ))
+                        success_count += 1
+
+                except Exception as e:
+                    fivew_incorrect.append(row)
+                    error_log.append(e)
+                    error.append(str(row + 2))
+            if fivew_incorrect:
+                test = df.loc[fivew_incorrect, :]
+                test['Errors'] = error_log
+                test.to_csv('media/errordata.csv')
+
+            messages.error(request, 'Error in row' + str(' '.join([str(elem) for elem in error])))
+            messages.success(request, 'Success! : ' + str(success_count) + "Row Of Five-w Data Added ")
+            messages.info(request, 'Updated! : ' + str(update_count) + "Row Of Five-w Data Updated ")
+            FiveW.objects.bulk_create(fivew_correct)
+
+    return redirect('/dashboard/five-list', messages)
 
 
 @login_required()
@@ -378,7 +531,7 @@ def assign_role(request, **kwargs):
         return redirect('user-list')
 
 
-@login_required()
+'''@login_required()
 def Invitation(request):
     if "GET" == request.method:
         group = Group.objects.all()
@@ -415,7 +568,7 @@ def Invitation(request):
         else:
             msg = emails + " could not be invited "
             messages.success(request, msg)
-            return redirect('user-list')
+            return redirect('user-list')'''
 
 
 def signup(request, **kwargs):
@@ -469,36 +622,153 @@ def signup(request, **kwargs):
                       {'form': form, 'partners': partner, })
 
 
-def activate_user(request, **kwargs):
-    user = User.objects.get(id=kwargs['id'])
-    user_data = UserProfile.objects.get(user=user)
-    emails = user_data.email
-    url = settings.SITE_URL
-    user.is_active = True
-    user.save()
-    subject = 'Login'
-    message = render_to_string('confirmation_mail.html', {'url': url, 'user': user_data})
+def createuser(request, **kwargs):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.is_active = False
+            user.save()
+            group = Group.objects.get(pk=request.POST['group'])
+            user.groups.add(group)
+            '''
+            if kwargs['group'] != 0:
+                group = Group.objects.get(pk=kwargs['group'])
+                user.groups.add(group)
+            '''
+            try:
+                UserProfile.objects.create(user=user, name=request.POST['name'], email=request.POST['email'],
+                                           partner_id=int(request.POST['partner']), image=request.FILES['image'],
+                                           program_id=int(request.POST['program']),
+                                           project_id=int(request.POST['project']))
+            except:
+                UserProfile.objects.create(user=user, name=request.POST['name'], email=request.POST['email'],
+                                           partner_id=int(request.POST['partner']),
+                                           program_id=int(request.POST['program']),
+                                           project_id=int(request.POST['project']))
 
-    recipient_list = [emails]
-    email = EmailMessage(
-        subject, message, 'from@example.com', recipient_list
-    )
-    email.content_subtype = "html"
-    mail = email.send()
-    if mail == 1:
-        msg = emails + " was successfully activated"
-        messages.success(request, msg)
+            notify_message = request.POST['email'] + ' has created account by username ' + request.POST['username']
 
-        notify_message = 'Account for username ' + user.username + ' was activated by ' + request.user.username
+            notify_messages = 'Activate account for user ' + request.POST['username']
 
-        notify = Notification.objects.create(user=request.user, message=notify_message, type='activation',
-                                             link='/dashboard/user-list')
+            notify = Notification.objects.create(user=user, message=notify_message, type='signup',
+                                                 link='/dashboard/user-list')
+            notified = Notification.objects.create(user=user, message=notify_messages, type='signup',
+                                                   link='/dashboard/user-list')
+            return render(request, 'registered_message.html', {'user': request.POST['name']})
+        else:
+            partner = Partner.objects.all()
+            group = Group.objects.all()
+            programs = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
+            projects = Project.objects.values('id', 'name', 'program_id__id', 'code', 'partner_id__id').order_by('name')
+
+            return render(request, 'createuser.html',
+                          {'form': form, 'partners': partner, 'group': group, 'programs': programs,
+                           'projects': projects})
 
     else:
-        msg = emails + " could not be activated "
-        messages.success(request, msg)
+        form = UserCreationForm()
+        partner = Partner.objects.order_by('name')
+        group = Group.objects.all()
+        programs = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
+        projects = Project.objects.values('id', 'name', 'program_id__id', 'code', 'partner_id__id').order_by('name')
+        return render(request, 'createuser.html',
+                      {'form': form, 'partners': partner, 'group': group, 'programs': programs,
+                       'projects': projects})
 
-    return redirect('user-list')
+
+def updateuser(request, id):
+    context = {}
+    obj = get_object_or_404(UserProfile, id=id)
+    form = UserProfileForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        ho = form.save()
+        try:
+            ho.image = request.FILES['image']
+        except:
+            pass
+        ho.save()
+        test = User.objects.filter(id=obj.user.id)
+        test2 = User.objects.get(id=obj.user.id)
+        test.update(username=request.POST['username'])
+        old_group = Group.objects.get(user=test2)
+        group = Group.objects.get(pk=request.POST['group'])
+        old_group.user_set.remove(test2)
+        group.user_set.add(test2)
+        return HttpResponseRedirect("/dashboard/user-list")
+    partner = Partner.objects.order_by('name')
+    programs = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
+    projects = Project.objects.values('id', 'name', 'program_id__id', 'partner_id__id').order_by('name')
+    group = Group.objects.all()
+    user = User.objects.all()
+    context["form"] = form
+    context["partner"] = partner
+    context['user'] = user
+    context['programs'] = programs
+    context['projects'] = projects
+    context['groups'] = group
+
+    return render(request, "updateuser.html", context)
+
+
+def feedback_status(request, **kwargs):
+    feedback = FeedbackForm.objects.get(id=kwargs['id'])
+    if feedback.status == 'Old':
+        feedback.status = "New"
+        feedback.save()
+        if feedback.name:
+            msg = str(feedback.name) + " " + "Feedback Successfully changed From Old To New"
+        else:
+            msg = "Feedback Successfully changed From Old To New"
+        messages.success(request, msg)
+    else:
+        feedback.status = 'Old'
+        feedback.save()
+        if feedback.name:
+            msg = str(feedback.name) + " " + "Feedback Successfully changed From New to Old"
+        else:
+            msg = "Feedback Successfully changed From New to Old"
+        messages.success(request, msg)
+    return redirect('feedback-list')
+
+
+def activate_user(request, **kwargs):
+    user = User.objects.get(id=kwargs['id'])
+    if user.is_active == False:
+        user_data = UserProfile.objects.get(user=user)
+        emails = user_data.email
+        url = settings.SITE_URL
+        user.is_active = True
+        user.save()
+        subject = 'Login'
+        message = render_to_string('confirmation_mail.html', {'url': url, 'user': user_data})
+
+        recipient_list = [emails]
+        email = EmailMessage(
+            subject, message, 'from@example.com', recipient_list
+        )
+        email.content_subtype = "html"
+        mail = email.send()
+        if mail == 1:
+            msg = emails + " was successfully activated"
+            messages.success(request, msg)
+
+            notify_message = 'Account for username ' + user.username + ' was activated by ' + request.user.username
+
+            notify = Notification.objects.create(user=request.user, message=notify_message, type='activation',
+                                                 link='/dashboard/user-list')
+
+        else:
+            msg = emails + " could not be activated "
+            messages.success(request, msg)
+
+        return redirect('user-list')
+    else:
+        user.is_active = False
+        user.save()
+        msg = "Successfully Deactivated"
+        messages.success(request, msg)
+        return redirect('user-list')
 
 
 @authentication_classes([SessionAuthentication, ])
@@ -637,52 +907,188 @@ class RoleList(LoginRequiredMixin, ListView):
         return data
 
 
+def ExportData(request):
+    partnerdata = request.GET.getlist('partner', None)
+    programdata = request.GET.getlist('program', None)
+    projectdata = request.GET.getlist('project', None)
+    provincedata = request.GET.getlist('province', None)
+    districtdata = request.GET.getlist('district', None)
+    municipalitydata = request.GET.getlist('gapanapa', None)
+    user = request.user
+    user_data = UserProfile.objects.get(user=user)
+    group = Group.objects.get(user=user)
+    data = export(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata, group, user_data)
+    newdata = []
+    for d in data:
+        d['1st TIER PARTNER'] = d.pop('supplier_id__name')
+        d['1st TIER PARTNER CODE'] = d.pop('supplier_id__code')
+        d['2nd TIER PARTNER'] = d.pop('second_tier_partner_name')
+        d['PROGRAMME NAME'] = d.pop('program_id__name')
+        d['Programme Code'] = d.pop('program_id__code')
+        d['PROJECT/COMPONENT NAME'] = d.pop('component_id__name')
+        d['Project/Component Code'] = d.pop('component_id__code')
+        d['PROJECT STATUS'] = d.pop('status')
+        d['PROVINCE'] = d.pop('province_id__name')
+        d['PROVINCE.CODE'] = d.pop('province_id__code')
+        d['DISTRICT'] = d.pop('district_id__name')
+        d['D.CODE'] = d.pop('district_id__code')
+        d['PALIKA'] = d.pop('municipality_id__name')
+        d['PALIKA.Code'] = d.pop('municipality_id__hlcit_code')
+        d['BUDGET (£)'] = d.pop('allocated_budget')
+        d['REMARKS'] = d.pop('remarks')
+        d['EMAIL'] = d.pop('email')
+        d['CONTACT NAME'] = d.pop('contact_name')
+        d['CONTACT NUMBER'] = d.pop('contact_number')
+        d['DESIGNATION'] = d.pop('designation')
+        d['REPORTING LINE MINISTRY'] = d.pop('reporting_line_ministry')
+        newdata.append(d)
+    df = pd.DataFrame(newdata)
+    df.to_csv('media/exportdata.csv')
+    return JsonResponse({'resp': 'success'})
+
+
 class FiveList(LoginRequiredMixin, ListView):
     template_name = 'five_list.html'
     paginate_by = 2
     model = FiveW
 
     def get_context_data(self, **kwargs):
-        data = super(FiveList, self).get_context_data(**kwargs)
-        user = self.request.user
-        user_data = UserProfile.objects.get(user=user)
-        group = Group.objects.get(user=user)
-        if group.name == 'admin':
-            five = FiveW.objects.values('id', 'supplier_id__name', 'second_tier_partner_name', 'program_id__name',
-                                        'component_id__name', 'status', 'province_id__name', 'district_id__name',
-                                        'municipality_id__name', 'allocated_budget').order_by('id')
+        partnerdata = self.request.GET.getlist('partner', None)
+        programdata = self.request.GET.getlist('program', None)
+        projectdata = self.request.GET.getlist('project', None)
+        provincedata = self.request.GET.getlist('province', None)
+        districtdata = self.request.GET.getlist('district', None)
+        municipalitydata = self.request.GET.getlist('gapanapa', None)
+
+        if partnerdata or projectdata or programdata or provincedata or districtdata or municipalitydata:
+            user = self.request.user
+            user_data = UserProfile.objects.get(user=user)
+            group = Group.objects.get(user=user)
+            if group.name == 'admin':
+                dat_values = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata,
+                                   group, user_data)
+                partner = Partner.objects.values('id', 'name').order_by('name')
+                project = Project.objects.values('id', 'program_id__id', 'name', 'partner_id__id').order_by('name')
+                program = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
+                province = Province.objects.values('id', 'name').order_by('name')
+                district = District.objects.values('id', 'province_id__id', 'name').order_by('name')
+                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
 
 
+            else:
+                dat_values = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata,
+                                   group, user_data)
+                partner = Partner.objects.filter(id=user_data.partner.id).values('id', 'name').order_by('name')
+                program = Program.objects.filter(id=user_data.program.id).values('id', 'name',
+                                                                                 'partner_id__id').order_by('name')
+                project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id',
+                                                                                 'name', 'partner_id__id').order_by(
+                    'name')
+                province = Province.objects.values('id', 'name').order_by('name')
+                district = District.objects.values('id', 'province_id__id', 'name').order_by('name')
+                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
 
+            paginator = Paginator(dat_values, 500)
+            page_numbers_range = 500
+            max_index = len(paginator.page_range)
+            print(paginator)
+            page_number = self.request.GET.get('page')
+            current_page = int(page_number) if page_number else 1
+            page_obj = paginator.get_page(page_number)
+            start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+            end_index = start_index + page_numbers_range
+            if end_index >= max_index:
+                end_index = max_index
 
+            page_range = paginator.page_range[start_index:end_index]
+
+            data = {
+                'page_range': page_range,
+                'list': page_obj,
+                'active': 'five',
+                'user': user_data,
+                'partner': partner,
+                'program': program,
+                'project': project,
+                'province': province,
+                'district': district,
+                'gapanapa': gapanapa,
+                'partnerdata': partnerdata,
+                'programdata': programdata,
+                'projectdata': projectdata,
+                'provincedata': provincedata,
+                'municipalitydata': municipalitydata,
+                'districtdata': districtdata,
+
+            }
+            return data
         else:
-            five = FiveW.objects.filter(supplier_id=user_data.partner.id).values('id', 'supplier_id__name',
-                                                                                 'second_tier_partner_name',
-                                                                                 'program_id__name',
-                                                                                 'component_id__name', 'status',
-                                                                                 'province_id__name',
-                                                                                 'district_id__name',
-                                                                                 'municipality_id__name',
-                                                                                 'allocated_budget').order_by('id')
+            data = super(FiveList, self).get_context_data(**kwargs)
+            user = self.request.user
+            user_data = UserProfile.objects.get(user=user)
+            group = Group.objects.get(user=user)
+            if group.name == 'admin':
+                five = FiveW.objects.values('id', 'supplier_id__name', 'second_tier_partner_name', 'program_id__name',
+                                            'component_id__name', 'status', 'province_id__name', 'district_id__name',
+                                            'municipality_id__name', 'allocated_budget').order_by('id')
+                partner = Partner.objects.values('id', 'name').order_by('name')
+                project = Project.objects.values('id', 'program_id__id', 'name', 'partner_id__id').order_by('name')
+                program = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
+                province = Province.objects.values('id', 'name').order_by('name')
+                district = District.objects.values('id', 'province_id__id', 'name').order_by('name')
+                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
 
-        paginator = Paginator(five, 500)
-        page_numbers_range = 500
-        max_index = len(paginator.page_range)
-        print(paginator)
-        page_number = self.request.GET.get('page')
-        current_page = int(page_number) if page_number else 1
-        page_obj = paginator.get_page(page_number)
-        start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
-        end_index = start_index + page_numbers_range
-        if end_index >= max_index:
-            end_index = max_index
+            else:
+                five = FiveW.objects.filter(supplier_id=user_data.partner.id, program_id=user_data.program.id,
+                                            component_id=user_data.project.id).values('id', 'supplier_id__name',
+                                                                                      'second_tier_partner_name',
+                                                                                      'program_id__name',
+                                                                                      'component_id__name', 'status',
+                                                                                      'province_id__name',
+                                                                                      'district_id__name',
+                                                                                      'municipality_id__name',
+                                                                                      'allocated_budget').order_by('id')
+                partner = Partner.objects.filter(id=user_data.partner.id).values('id', 'name').order_by('name')
+                program = Program.objects.filter(id=user_data.program.id).values('id', 'name',
+                                                                                 'partner_id__id').order_by('name')
+                project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id',
+                                                                                 'name', 'partner_id__id').order_by(
+                    'name')
+                province = Province.objects.values('id', 'name').order_by('name')
+                district = District.objects.values('id', 'province_id__id', 'name').order_by('name')
+                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
 
-        page_range = paginator.page_range[start_index:end_index]
-        data['page_range'] = page_range
-        data['list'] = page_obj
-        data['user'] = user_data
-        data['active'] = 'five'
-        return data
+            paginator = Paginator(five, 500)
+            page_numbers_range = 500
+            max_index = len(paginator.page_range)
+            print(paginator)
+            page_number = self.request.GET.get('page')
+            current_page = int(page_number) if page_number else 1
+            page_obj = paginator.get_page(page_number)
+            start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+            end_index = start_index + page_numbers_range
+            if end_index >= max_index:
+                end_index = max_index
+
+            page_range = paginator.page_range[start_index:end_index]
+            data['page_range'] = page_range
+            data['list'] = page_obj
+            data['user'] = user_data
+            data['partner'] = partner
+            data['program'] = program
+            data['project'] = project
+            data['province'] = province
+            data['district'] = district
+            data['gapanapa'] = gapanapa
+            # data['partnerdata'] = partnerdata
+            # data['programdata'] = programdata
+            # data['projectdata'] = projectdata
+            # data['provincedata'] = provincedata
+            # data['municipalitydata'] = municipalitydata
+            # data['districtdata'] = districtdata
+            data['active'] = 'five'
+            data['five'] = five
+            return data
 
 
 class UserList(LoginRequiredMixin, ListView):
@@ -757,17 +1163,24 @@ class ProjectList(LoginRequiredMixin, ListView):
     model = Project
 
     def get_context_data(self, **kwargs):
+        program_ids = self.request.GET.getlist('program', None)
         data = super(ProjectList, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         group = Group.objects.get(user=user)
-        if group.name == 'admin':
-            project_list = Project.objects.order_by('id')
+        program = Program.objects.order_by('name')
+        if program_ids:
+            project_list = Project.objects.filter(program_id__in=program_ids).order_by('id')
         else:
-            project_list = Project.objects.order_by('id')
+            if group.name == 'admin':
+                project_list = Project.objects.order_by('id')
+            else:
+                project_list = Project.objects.order_by('id')
 
         data['list'] = project_list
+        data['program'] = program
         data['user'] = user_data
+        data['selected'] = program_ids
         data['active'] = 'project'
         return data
 
@@ -844,6 +1257,21 @@ class IndicatorList(LoginRequiredMixin, ListView):
         data['list'] = indicator_list
         data['user'] = user_data
         data['active'] = 'indicator'
+        return data
+
+
+class FeedbackList(LoginRequiredMixin, ListView):
+    template_name = 'feedback_list.html'
+    model = FeedbackForm
+
+    def get_context_data(self, **kwargs):
+        data = super(FeedbackList, self).get_context_data(**kwargs)
+        feedbacklist = FeedbackForm.objects.order_by('-id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = feedbacklist
+        data['user'] = user_data
+        data['active'] = 'feedback'
         return data
 
 
@@ -965,6 +1393,10 @@ class ProgramCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         markers = MarkerCategory.objects.all().prefetch_related('MarkerCategory').order_by('id')
+        partners = Partner.objects.order_by('name')
+        sectors = Sector.objects.all().prefetch_related('Sector').order_by('id')
+        data['sectors'] = sectors
+        data['partners'] = partners
         data['markers'] = markers
         data['user'] = user_data
         data['active'] = 'program'
@@ -1121,15 +1553,19 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         group = Group.objects.get(user=user)
         if group.name == 'admin':
             partner = Partner.objects.order_by('id')
+            program = Program.objects.values('id', 'name', 'partner_id__id').order_by('id')
+            project = Project.objects.values('id', 'name', 'program_id__id', 'partner_id__id').order_by('id')
         else:
             partner = Partner.objects.filter(id=user_data.partner.id).order_by('id')
+            program = Program.objects.filter(id=user_data.program.id).values('id', 'name', 'partner_id__id').order_by(
+                'id')
+            project = Project.objects.filter(id=user_data.project.id).values('id', 'name', 'program_id__id',
+                                                                             'partner_id__id').order_by('id')
 
         all_partner = Partner.objects.order_by('id')
-        program = Program.objects.values('id', 'name').order_by('id')
-        project = Project.objects.values('id', 'name').order_by('id')
         province = Province.objects.values('id', 'name').order_by('id')
-        district = District.objects.values('id', 'name').order_by('id')
-        municipality = GapaNapa.objects.values('id', 'name').order_by('id')
+        district = District.objects.values('id', 'name', 'province_id__id').order_by('id')
+        municipality = GapaNapa.objects.values('id', 'name', 'district_id__id').order_by('id')
         contact = PartnerContact.objects.values('id', 'name').order_by('id')
         data['user'] = user_data
         data['partners'] = partner
@@ -1186,11 +1622,15 @@ class ProjectCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         data = super(ProjectCreate, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
-        data['programs'] = Program.objects.order_by('id')
+        data['programs'] = Program.objects.order_by('name')
+        data['partners'] = Partner.objects.order_by('name')
         sectors = Sector.objects.all().prefetch_related('Sector').order_by('id')
         data['sectors'] = sectors
         data['user'] = user_data
         data['active'] = 'project'
+        for test in Program.objects.all():
+            for test2 in test.partner_id.all():
+                print(test2.id)
         return data
 
     def get_success_url(self):
@@ -1343,7 +1783,7 @@ class PalilkaCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
         data['province'] = Province.objects.values('id', 'name').order_by('id')
-        data['district'] = District.objects.values('id', 'name').order_by('id')
+        data['district'] = District.objects.values('id', 'name', 'province_id__id').order_by('id')
         data['active'] = 'location'
         return data
 
@@ -1476,15 +1916,45 @@ class ProgramUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         marker_list = Program.objects.filter(id=self.kwargs['pk']).values_list('marker_category', flat=True)
-
         if (marker_list[0] == None):
             filter_marker = MarkerCategory.objects.order_by('id')
         else:
             filter_marker = MarkerCategory.objects.exclude(id__in=marker_list)
+        sector_list = Program.objects.filter(id=self.kwargs['pk']).values_list('sector', flat=True)
 
+        if (sector_list[0] == None):
+            filter_sector = Sector.objects.order_by('id')
+
+        else:
+            filter_sector = Sector.objects.exclude(id__in=sector_list)
+
+        data['sectors'] = filter_sector
         data['markers'] = filter_marker
         data['user'] = user_data
         data['active'] = 'program'
+
+        # program = Program.objects.get(id=self.kwargs['pk'])
+        partners = Partner.objects.order_by('name')
+        # datatoselect = []
+        # datanottoselect = []
+        # for data in partners:
+        #     for data1 in program.partner_id.all():
+        #         if data.id == data1.id:
+        #             datatoselect.append(data1)
+        # # # datatoselect = set(datatoselect)
+        # # for test in partners:
+        # #     if test.name not in datatoselect:
+        # #         datanottoselect.append(test)
+        # # # datanottoselect = set(datanottoselect)
+        # # print("datatoselect")
+        # # print(datatoselect)
+        # # print("datanottoselect")
+        # # print(datanottoselect)
+        # #
+        # # # data['datatoselect'] = datatoselect
+        # # # data['datanottoselect'] = datanottoselect
+        data['partners'] = partners
+        # data['programs'] = program
         return data
 
     def get_success_url(self):
@@ -1508,8 +1978,10 @@ class PartnerUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         data = super(PartnerUpdate, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
+        partner = Partner.objects.order_by('id')
         data['user'] = user_data
         data['active'] = 'partner'
+        data['partner'] = partner
         return data
 
     def get_success_url(self):
@@ -1638,12 +2110,21 @@ class FiveUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         data = super(FiveUpdate, self).get_context_data(**kwargs)
         user = self.request.user
-        partner = Partner.objects.values('id', 'name').order_by('id')
-        program = Program.objects.values('id', 'name').order_by('id')
+        user_data = UserProfile.objects.get(user=user)
+        group = Group.objects.get(user=user)
+        if group.name == 'admin':
+            partner = Partner.objects.order_by('id')
+            program = Program.objects.values('id', 'name', 'partner_id__id').order_by('id')
+            project = Project.objects.values('id', 'name', 'program_id__id', 'partner_id__id').order_by('id')
+        else:
+            partner = Partner.objects.filter(id=user_data.partner.id).order_by('id')
+            program = Program.objects.filter(id=user_data.program.id).values('id', 'name', 'partner_id__id').order_by(
+                'id')
+            project = Project.objects.filter(id=user_data.project.id).values('id', 'name', 'program_id__id',
+                                                                             'partner_id__id').order_by('id')
         province = Province.objects.values('id', 'name').order_by('id')
-        project = Project.objects.values('id', 'name').order_by('id')
-        district = District.objects.values('id', 'name').order_by('id')
-        municipality = GapaNapa.objects.values('id', 'name').order_by('id')
+        district = District.objects.values('id', 'name', 'province_id__id').order_by('id')
+        municipality = GapaNapa.objects.values('id', 'name', 'district_id__id').order_by('id')
         contact = PartnerContact.objects.all().order_by('id')
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
@@ -1742,7 +2223,7 @@ class ProjectUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         data = super(ProjectUpdate, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
-        data['programs'] = Program.objects.order_by('id')
+        data['programs'] = Program.objects.order_by('name')
         sector_list = Project.objects.filter(id=self.kwargs['pk']).values_list('sector', flat=True)
 
         if (sector_list[0] == None):
@@ -1752,9 +2233,11 @@ class ProjectUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
             filter_sector = Sector.objects.exclude(id__in=sector_list)
 
         data['sectors'] = filter_sector
+        data['partners'] = Partner.objects.order_by('name')
         data['test'] = sector_list
         data['user'] = user_data
         data['active'] = 'project'
+        data['selectpartner'] = Project.objects.filter(id=self.kwargs['pk'])
         return data
 
     def get_success_url(self):
@@ -1870,6 +2353,25 @@ class ProvinceUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+class PalikaUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = GapaNapa
+    template_name = 'palika_edit.html'
+    form_class = PalikaCreateForm
+    success_message = 'Palika successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(PalilkaUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['province'] = Province.objects.order_by('id')
+        data['active'] = 'location'
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('palika-list')
+
+
 class DistrictUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = District
     template_name = 'district_edit.html'
@@ -1943,7 +2445,7 @@ class IndicatorUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "Indicator " + self.object.name + "  has been edited by " + self.request.user.username
+        message = "Indicator " + self.object.indicator + "  has been edited by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
@@ -2020,6 +2522,40 @@ class ProgramDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('program-list')
+
+
+class UserDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = User
+    template_name = 'user_delete.html'
+    success_message = 'User successfully deleted'
+    success_url = reverse_lazy('user-list')
+
+    # success_url = reverse_lazy('program-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(UserDelete, self).get_context_data(**kwargs)
+        user_list = UserProfile.objects.order_by('id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = user_list
+        data['user'] = user_data
+        data['active'] = 'user'
+        return data
+
+    def delete(self, request, *args, **kwargs):
+        messages.info(self.request, self.success_message)
+        return super(UserDelete, self).delete(request, *args, **kwargs)
+
+
+class FiveDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = FiveW
+    template_name = 'five_delete.html'
+    success_message = 'Fivew successfully deleted'
+    success_url = reverse_lazy('five-list')
+
+    def delete(self, request, *args, **kwargs):
+        messages.info(self.request, self.success_message)
+        return super(FiveDelete, self).delete(request, *args, **kwargs)
 
 
 class PartnerDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):

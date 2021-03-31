@@ -33,4 +33,15 @@ urlpatterns = [
     path('sankey-region/', views.RegionSankey.as_view({'get': 'list'}), name='region-region'),
     path('covid-fields/', views.CovidChoice.as_view({'get': 'list'}), name='covid-fields'),
     path('popup/', views.Popup.as_view({'get': 'list'}), name='popup'),
+    path('feedbackform', views.Feedback.as_view({'post': 'create'}), name='feedbackfrom'),
+    path('profile', views.RegionalProfile.as_view({'get': 'list'}), name='profile'),
+    path('programprofile', views.ProgramProfile.as_view({'get': 'list'}), name='programprofile'),
+    path('regionaldendrogram', views.RegionalDendrogram.as_view({'get': 'list'}), name='dendrogram'),
+    path('programupperdendrogram', views.ProgramUpperDendrogram.as_view({'get': 'list'}),
+         name='programupperdendrogram'),
+    path('programlowerdendrogram', views.ProgramLowerDendrogram.as_view({'get': 'list'}),
+         name='programlowerdendrogram'),
+    path('faq/', views.FAQView.as_view({'get': 'list'}), name='faq'),
+    path('terms-condition/', views.TermsAndConditionView.as_view({'get': 'list'}), name='terms-condition'),
+
 ]

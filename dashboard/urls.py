@@ -5,14 +5,18 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('upload/', views.uploadData, name='upload'),
+    path('export/', views.ExportData, name='export'),
+    path('cleardata/', views.clear_data, name='cleardata'),
     path('upload-shapefile/', views.ShapefileUpload, name='upload-shapefile'),
     path('bulk-upload/', views.bulkCreate, name='bulk-upload'),
-
-    path('invitation/', views.Invitation, name='invitation'),
+    # path('clear-data/', views.deleteallfivewdata, name='clear-data'),
+    # path('invitation/', views.Invitation, name='invitation'),
     path('login-test/', views.login_test, name='login-test'),
     # path('login-test/<int:group>/<int:partner>', views.login_test, name='login-test'),
     path('logout/', auth_views.LogoutView.as_view(), {'next_page': '/dashboard/login/'}, name='logout'),
     path('signup/<int:group>/<int:partner>', views.signup, name='signup'),
+    path('createuser', views.createuser, name='createuser'),
+    path('updateuser/<int:id>', views.updateuser, name='updateuser'),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('check-login/', views.check_login, name='check-login'),
     path('token/', views.auth, name='token'),
@@ -29,6 +33,8 @@ urlpatterns = [
     path('partner-add/', views.PartnerCreate.as_view(), name='partner-add'),
     path('partner-edit/<int:pk>', views.PartnerUpdate.as_view(), name='partner-edit'),
     path('partner-delete/<int:pk>', views.PartnerDelete.as_view(), name='partner-delete'),
+    path('user-delete/<int:pk>', views.UserDelete.as_view(), name='user-delete'),
+    path('five-delete/<int:pk>', views.FiveDelete.as_view(), name='five-delete'),
     path('partner-contact-list', views.PartnerContactList.as_view(), name='partner-contact-list'),
     path('partner-contact-add/<int:id>', views.AddPartnerContact, name='partner-contact-add'),
     path('partner-contact-edit/<int:pk>', views.PartnerContactUpdate.as_view(), name='partner-contact-edit'),
@@ -55,6 +61,7 @@ urlpatterns = [
     path('markervalue-delete/<int:pk>', views.MarkerValueDelete.as_view(), name='markervalue-delete'),
 
     path('indicator-list/', views.IndicatorList.as_view(), name='indicator-list'),
+    path('feedback-list/', views.FeedbackList.as_view(), name='feedback-list'),
     path('indicator-add/', views.IndicatorCreate.as_view(), name='indicator-add'),
     path('indicator-edit/<int:pk>', views.IndicatorUpdate.as_view(), name='indicator-edit'),
     path('indicator-delete/<int:pk>', views.IndicatorDelete.as_view(), name='indicator-delete'),
@@ -76,6 +83,7 @@ urlpatterns = [
     path('district-list/', views.DistrictList.as_view(), name='district-list'),
     path('district-add/', views.DistrictCreate.as_view(), name='district-add'),
     path('district-edit/<int:pk>', views.DistrictUpdate.as_view(), name='district-edit'),
+    path('palika-edit/<int:pk>', views.PalilkaUpdate.as_view(), name='palika-edit'),
     path('district-delete/<int:pk>', views.DistrictDelete.as_view(), name='district-delete'),
 
     path('palika-list/', views.PalikaList.as_view(), name='palika-list'),
@@ -84,6 +92,7 @@ urlpatterns = [
 
     path('user-list/', views.UserList.as_view(), name='user-list'),
     path('activate/<int:id>', views.activate_user, name='activate'),
+    path('status/<int:id>', views.feedback_status, name='feedback-status'),
     path('assign-role/<int:id>', views.assign_role, name='assign-role'),
 
     path('project-list/', views.ProjectList.as_view(), name='project-list'),
@@ -120,8 +129,6 @@ urlpatterns = [
     path('cmp-add/', views.CmpCreate.as_view(), name='cmp-add'),
     path('cmp-edit/<int:pk>', views.CmpUpdate.as_view(), name='cmp-edit'),
     path('cmp-delete/<int:pk>', views.CmpDelete.as_view(), name='cmp-delete'),
-
-
 
     path('vector-map/', views.VectorMap.as_view(), name='vector-map'),
 

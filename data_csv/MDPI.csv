@@ -1,0 +1,8 @@
+Province,code,MPI,MPI_CON_INT_A,MPI_CON_INT_B,Head_Count_Ratio,HCR_CON_INT_A,HCR_CON_INT_B,Intensity,Inten_CON_INT_A,Inten_CON_INT_B
+Province 1,1,0.085,0.062,0.108,19.7,14.9,24.4,43.2,41.2,45.2
+Province 2,2,0.217,0.18,0.254,47.9,40.7,55,45.3,43.4,47.3
+Bagmati Province,3,0.051,0.033,0.069,12.2,8.3,16.2,41.9,39.6,44.1
+Gandaki Province,4,0.061,0.036,0.085,14.2,8.9,19.5,42.9,40.4,45.3
+Lumbini Province,5,0.133,0.107,0.158,29.9,24.7,35.1,44.3,42.7,45.9
+Karnali Province,6,0.23,0.198,0.261,51.2,44.7,57.8,44.9,43.4,46.4
+Sudurpaschim Province,7,0.146,0.127,0.165,33.6,29.9,37.2,43.5,42.2,44.8

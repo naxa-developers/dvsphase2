@@ -13,8 +13,6 @@
     </div>
     <!-- program form -->
     <form class="program-form" method="POST">
-
-
         {% csrf_token %}
 
          {% if form.errors %}
@@ -35,6 +33,18 @@
 
 
         <div class="default-form">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id_partner_id">Select Partners</label>
+                        <select name="partner_id" id="id_partner_id" placeholder="Select Partners"  multiple="multiple">
+                            {% for data in partners %}
+                            <option value="{{data.id}}">{{data.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -86,51 +96,62 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <div class="form-group ">
-                        <label for="id_total_budget" class="">Total Budget</label>
+                        <label for="id_total_budget" class="">Total Approved Budget</label>
                         <input class="form-control" type="number" name="total_budget" step="any" id="id_total_budget"
                                placeholder="e.g. GBP 89413" value="{{ form.instance.total_budget }}"/>
                     </div>
                 </div>
-<!--                <div class="col-md-2">-->
-<!--                    <div class="form-group ">-->
-<!--                        <label for="id_total_budget" class="">Unallocated</label>-->
-<!--                        <input class="form-control" type="number" name="unallocated" step="any" id="id_unallocated"-->
-<!--                               placeholder="e.g. GBP 89413" value="{{ form.instance.unallocated }}"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="col-md-2">-->
-<!--                    <div class="form-group ">-->
-<!--                        <label for="id_reported" class="">Reported</label>-->
-<!--                        <input class="form-control" type="number" name="reported" step="any" id="id_reported"-->
-<!--                               placeholder="e.g. GBP 89413" value="{{ form.instance.reported }}"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="col-md-2">-->
-<!--                    <div class="form-group ">-->
-<!--                        <label for="id_difference" class="">Difference</label>-->
-<!--                        <input class="form-control" type="number" name="difference" step="any" id="id_difference"-->
-<!--                               placeholder="e.g. GBP 89413" value="{{ form.instance.difference }}"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-<!--                <div class="col-md-2">-->
-<!--                    <div class="form-group ">-->
-<!--                        <label for="id_reported_percentage" class="">Reported Percentage</label>-->
-<!--                        <input class="form-control" type="number" name="reported_percentage" step="any" id="id_reported_percentage"-->
-<!--                               placeholder="e.g. GBP 89413" value="{{ form.instance.reported_percentage }}"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                 <div class="col-md-2">-->
-<!--                    <div class="form-group ">-->
-<!--                        <label for="id_unreported_percentage" class="">Unreported Budget</label>-->
-<!--                        <input class="form-control" type="number" name="unreported_percentage" step="any" id="id_unreported_percentage"-->
-<!--                               placeholder="e.g. GBP 89413" value="{{ form.instance.unreported_percentage }}"/>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_total_budget_spend" class="">Budget Spend</label>
+                        <input class="form-control" type="number" value="{{form.instance.budget_spend}}" name="budget_spend" step="any" id="id_total_budget_spend"
+                               placeholder="e.g. GBP 89413"/>
+                    </div>
+                </div>
+            </div>
+                                        <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_start_date" class="">Start Date</label>
+                        <input class="form-control" value="{{form.instance.start_date|date:'Y-m-d'}}" type="date" name="start_date" step="any" id="id_start_date"
+                               placeholder=""/>
+                    </div>
+                </div>
+                                <div class="col-md-4">
+                    <div class="form-group ">
+                        <label for="id_end_date" class="">End Date</label>
+                        <input class="form-control" value="{{form.instance.end_date|date:'Y-m-d'}}" type="date" name="end_date" step="any" id="id_end_date"
+                               placeholder=""/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_end_date" class="">Description</label>
+                        <textarea class="form-control"  name="description">{{form.instance.description}}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="id_program_acronym" class="">Program Acronym</label>
+                        <input class="form-control" type="text" value="{{form.instance.program_acronym}}" name="program_acronym" step="any" id="id_program_acronym"
+                               placeholder=""/>
+                    </div>
+                </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                <label for="cmp" class="">CMP</label><br>
+                <select name="cmp">
+                    <option value="True" {% if form.instance.cmp == True %} selected {% endif %}>Yes</option>
+                    <option value="False" {% if form.instance.cmp == False %} selected {% endif %}>No</option>
+                </select>
+                </div>
+                </div>
             </div>
         </div>
 
@@ -141,80 +162,80 @@
                 <h3>Category</h3>
             </div>
             <div class="row">
-<!--                <div class="col-md-6">-->
-<!--                    <div class="category-sector select-list">-->
-<!--                        <h4>Sector</h4>-->
-<!--                        <div class="checklist-wrapper">-->
-<!--                            <div class="checklist-body category-body">-->
+                <div class="col-md-6">
+                    <div class="category-sector select-list">
+                        <h4>Sector</h4>
+                        <div class="checklist-wrapper">
+                            <div class="checklist-body category-body">
+<!---->
+                                {% for sector in form.instance.sector.all %}
+                                <div class="checklist-card ">
+                                    <div class="checklist-header active">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input sector-main" name="sector"
+                                                   id="list{{sector.id}}"
+                                                   value="{{sector.id}}"  checked>
+                                            <label class="custom-control-label"
+                                                   for="list{{sector.id}}">{{sector.name}}</label>
+<!---->
+                                        </div>
+                                    </div>
+                                    <ul style="display: block;">
+                                        {% for sub_sector in sector.Sector.all %}
+                                        <li>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input sector-cls"
+                                                       id="sublist{{sub_sector.id}}" name="sub_sector"
+                                                       value="{{sub_sector.id}}" val_name="{{ sub_sector.name }}" {% for i in form.instance.sub_sector.all %} {% if i.id == sub_sector.id %} checked  {% endif %} {% endfor %}>
+                                                <label class="custom-control-label"
+                                                       for="sublist{{sub_sector.id}}">{{sub_sector.name}}</label>
+<!---->
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+<!---->
+                                    </ul>
+                                </div>
+                                {% endfor %}
+<!---->
+<!---->
+                                 {% for sector in sectors %}
+                                <div class="checklist-card ">
+                                    <div class="checklist-header ">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input sector-main" name="sector"
+                                                   id="list{{sector.id}}"
+                                                   value="{{sector.id}}" >
+                                            <label class="custom-control-label"
+                                                   for="list{{sector.id}}">{{sector.name}}</label>
+<!---->
+                                        </div>
+                                    </div>
+                                    <ul>
+                                        {% for sub_sector in sector.Sector.all %}
+                                        <li>
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input sector-cls"
+                                                       id="sublist{{sub_sector.id}}" name="sub_sector"
+                                                       value="{{sub_sector.id}}" val_name="{{ sub_sector.name }}">
+                                                <label class="custom-control-label"
+                                                       for="sublist{{sub_sector.id}}">{{sub_sector.name}}</label>
+<!---->
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+<!---->
+                                    </ul>
+                                </div>
+                                {% endfor %}
+<!---->
 
-<!--                                {% for sector in form.instance.sector.all %}-->
-<!--                                <div class="checklist-card ">-->
-<!--                                    <div class="checklist-header active">-->
-<!--                                        <div class="custom-control custom-checkbox">-->
-<!--                                            <input type="checkbox" class="custom-control-input" name="sector"-->
-<!--                                                   id="list{{sector.id}}"-->
-<!--                                                   value="{{sector.id}}" checked>-->
-<!--                                            <label class="custom-control-label"-->
-<!--                                                   for="list{{sector.id}}">{{sector.name}}</label>-->
-
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <ul style="display: block;">-->
-<!--                                        {% for sub_sector in sector.Sector.all %}-->
-<!--                                        <li>-->
-<!--                                            <div class="custom-control custom-checkbox">-->
-<!--                                                <input type="checkbox" class="custom-control-input"-->
-<!--                                                       id="sublist{{sub_sector.id}}" name="sub_sector"-->
-<!--                                                       value="{{sub_sector.id}}" {% for i in form.instance.sub_sector.all %} {% if i.id == sub_sector.id %} checked  {% endif %} {% endfor %}>-->
-<!--                                                <label class="custom-control-label"-->
-<!--                                                       for="sublist{{sub_sector.id}}">{{sub_sector.name}}</label>-->
-
-<!--                                            </div>-->
-<!--                                        </li>-->
-<!--                                        {% endfor %}-->
-
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                                {% endfor %}-->
 
 
-<!--                                 {% for sector in sectors %}-->
-<!--                                <div class="checklist-card ">-->
-<!--                                    <div class="checklist-header ">-->
-<!--                                        <div class="custom-control custom-checkbox">-->
-<!--                                            <input type="checkbox" class="custom-control-input" name="sector"-->
-<!--                                                   id="list{{sector.id}}"-->
-<!--                                                   value="{{sector.id}}">-->
-<!--                                            <label class="custom-control-label"-->
-<!--                                                   for="list{{sector.id}}">{{sector.name}}</label>-->
-
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <ul>-->
-<!--                                        {% for sub_sector in sector.Sector.all %}-->
-<!--                                        <li>-->
-<!--                                            <div class="custom-control custom-checkbox">-->
-<!--                                                <input type="checkbox" class="custom-control-input"-->
-<!--                                                       id="sublist{{sub_sector.id}}" name="sub_sector"-->
-<!--                                                       value="{{sub_sector.id}}">-->
-<!--                                                <label class="custom-control-label"-->
-<!--                                                       for="sublist{{sub_sector.id}}">{{sub_sector.name}}</label>-->
-
-<!--                                            </div>-->
-<!--                                        </li>-->
-<!--                                        {% endfor %}-->
-
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                                {% endfor %}-->
-
-
-
-
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="col-md-6">
                     <div class="category-sector select-list">
@@ -329,13 +350,136 @@
 <!--                </div>-->
             </div>
         </div>
-
-
-        <div class="form-group mrt-100">
-            <button type="submit" class="dfid-button sm-button">Save</button>
+        <input type="hidden" id="sector_budget_id" name="sector_budget" value="{{ form.instance.sector_budget }}">
+        <div class="form-group mrt-100" style="margin-top:50px;margin-bottom: 30px;">
+            <button type="button" id="sector_budget_btn" class="btn btn-primary" data-toggle="modal" data-target="#SectorModal" disabled="disabled">
+          Sub-Sector Budget Percentage
+        </button>
         </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="SectorModal" tabindex="-1" role="dialog" aria-labelledby="SectorModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sector Budget Percentage</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="modal_body">
+                ...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id='sector_modal_save' type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group mrt-100" style="margin-top:50px;">
+            <button id='final_save' type="submit" class="dfid-button sm-button">Save</button>
+        </div>
+
     </form>
 </main>
 
 {% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function() {
+        var flag = true;
+        if (flag) {
+            var dat = [{% for x in form.instance.partner_id.all %}'{{x.id}}', {% endfor %}];
+            $('#id_partner_id').multipleSelect({
+                styler: function(row) {
+                    if (dat.length > 0) {
+                        for(var i=0;i<dat.length;i++) {
+                            if (row.value == dat[i]) {
+                                row.selected = true
+                            }
+                        }
+                        return row
+                    }
+                }
+            })
+            checkFunction()
+            flag = false;
+
+        };
+        function checkFunction() {
+            var count = 0
+            $('.sector-cls').each(function () {
+                if ($(this).prop('checked')) {
+                    count += 1
+                } else {
+                    $('#sector_budget_btn').prop('disabled', true);
+                }
+            })
+            if (count > 0) {
+                $('#sector_budget_btn').prop('disabled', false);
+            }
+        }
+
+
+        $('.sector-cls').change(function (e) {
+            e.preventDefault()
+            checkFunction()
+        })
+        $('.sector-main').change(function (e) {
+            e.preventDefault()
+            checkFunction()
+        })
+        $('#SectorModal').on('shown.bs.modal', function () {
+            var in_html = []
+            var val = {}
+            if ('{{ form.instance.sector_budget }}' != '0:0') {
+                console.log('hello')
+                var val_list1 = ('{{ form.instance.sector_budget }}').split(',')
+                for (var i=0;i<val_list1.length;i++) {
+                    var val_list2 = val_list1[i].split(':')
+                    val[val_list2[0]] = val_list2[1]
+                }
+            }
+            console.log(Object.keys(val).length)
+            $('.sector-cls').each(function () {
+                if ($(this).prop('checked')) {
+                    if (Object.keys(val).length > 0) {
+                        var temp_val = val[$(this).val()]
+                    }else {
+                        var temp_val = "0"
+                    }
+                    in_html.push('<div class="row"><label class="col" style="margin-right:30px;margin-left:10px;">'+ String($(this).attr('val_name')) +'</label><input valName="' + String($(this).val()) + '" class="col form-control modal_sector" style="width:80%;" type="number" step="0.01" value='+ temp_val +'></div>')
+                }
+            })
+            $('#modal_body').html(in_html.join(', '))
+        })
+        $('#sector_modal_save').click(function(e) {
+            e.preventDefault()
+            var temp_data = []
+            $('.modal_sector').each(function() {
+                temp_data.push(String($(this).attr('valName')) + ':' + String($(this).val()))
+            })
+            $('#sector_budget_id').val(temp_data.join())
+            $('#SectorModal').modal('toggle')
+
+        })
+        $('#final_save').click(function() {
+            var cnt = 0;
+            $('.sector-cls').each(function () {
+                if ($(this).prop('checked')) {
+                    cnt += 1
+                }
+                if (cnt == 0) {
+                    $('#sector_budget_id').val('0:0')
+                }
+            })
+        })
+
+    })
+</script>
+{% endblock %}
+
+
 
