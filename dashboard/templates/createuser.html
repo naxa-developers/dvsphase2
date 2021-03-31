@@ -12,7 +12,7 @@
         </ul>
     </div>
     <!-- program form -->
-    <form class="program-form" method="POST">
+    <form class="program-form" method="POST" enctype="multipart/form-data">
 
         {% csrf_token %}
 
@@ -32,98 +32,101 @@
         {% endif %}
         <div class="default-form">
             <div class="row">
-            <div class="col-md-6">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_username" class="">Username:</label>
                         <input type="text" name="username" class="form-control" maxlength="150" autofocus required
                                id="id_username"/>
                     </div>
-            </div>
+                </div>
             </div>
             <div class="row">
-            <div class="col-md-6">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_password1">Password:</label>
                         <input type="password" class="form-control" name="password1" required id="id_password1"/>
                     </div>
-            </div>
-            <div class="col-md-6">
+                </div>
+                <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_password2">Password confirmation:</label>
                         <input type="password" class="form-control" name="password2" required id="id_password2"/>
                     </div>
-            </div>
                 </div>
+            </div>
             <div class="row">
-            <div class="col-md-6">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_name">Full Name:</label>
                         <input type="text" class="form-control" name="name" required id="id_name"/>
                     </div>
                 </div>
-            <div class="col-md-6">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_email">Email:</label>
                         <input type="email" class="form-control" name="email" required id="id_email"/>
                     </div>
-            </div>
-            </div>
-            <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="id_group">Select Role For User</label>
-                        <select name="group" id="id_group" class="custom-select" required>
-                            <option value='' disabled selected>Select One</option>
-                            {% for groups in group %}
-                            <option value={{ groups.id }}>{{ groups }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                </div>
             </div>
             <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="id_partner">Select Partner For User</label>
-                        <select name="partner" id="id_partner" class="custom-select" required>
-                            <option value='' disabled selected>Select One</option>
-                            {% for partner in partners %}
-                            <option value='{{ partner.id }}'>{{ partner.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                <div class="form-group">
+                    <label for="id_group">Select Role For User</label>
+                    <select name="group" id="id_group" class="custom-select" required>
+                        <option value='' disabled selected>Select One</option>
+                        {% for groups in group %}
+                        <option value={{ groups.id }}>{{ groups }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
             <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="id_program">Select Program For User</label>
-                        <select name="program" id="id_program" class="custom-select" required>
-                            <option value='' disabled selected>Select One</option>
-                            {% for program in programs %}
+                <div class="form-group">
+                    <label for="id_partner">Select Partner For User</label>
+                    <select name="partner" id="id_partner" class="custom-select" required>
+                        <option value='' disabled selected>Select One</option>
+                        {% for partner in partners %}
+                        <option value='{{ partner.id }}'>{{ partner.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_program">Select Program For User</label>
+                    <select name="program" id="id_program" class="custom-select" required>
+                        <option value='' disabled selected>Select One</option>
+                        {% for program in programs %}
 
-                            <option value='{{ program.id }}' valId="{{ program.partner_id__id }}">{{ program.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                        <option value='{{ program.id }}' valId="{{ program.partner_id__id }}">{{ program.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
-                    <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="id_project">Select Component For User</label>
-                        <select name="project" id="id_project" class="custom-select" required>
-                            <option value='' disabled selected>Select One</option>
-                            {% for project in projects %}
-                            <option value='{{ project.id }}' valId="{{ project.program_id__id }}" valId1="{{ project.partner_id__id }}">{{ project.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    </div>
-                    <div class="col-md-6">
-                    <div class="form-group ">
-                        <label for="id_image" class="">Image</label>
-                        <input type="file" name="image" id="id_image" required>
-                    </div>
-                    </div>
-                    <div style="text-align:center">
-                    <div class="form-group">
-                        <button type="submit" class="dfid-button">Signup</button>
-                    </div>
-                    </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="id_project">Select Component For User</label>
+                    <select name="project" id="id_project" class="custom-select" required>
+                        <option value='' disabled selected>Select One</option>
+                        {% for project in projects %}
+                        <option value='{{ project.id }}' valId="{{ project.program_id__id }}"
+                                valId1="{{ project.partner_id__id }}">{{ project.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group ">
+                    <label for="id_image" class="">Image</label>
+                    <input type="file" name="image" id="id_image">
+                </div>
+            </div>
+            <div style="text-align:center">
+                <div class="form-group">
+                    <button type="submit" class="dfid-button">Signup</button>
+                </div>
+            </div>
         </div>
     </form>
 </main>
@@ -176,6 +179,7 @@
             });
         });
     };
+
 </script>
 <script>
  $(document).ready(function() {
@@ -214,6 +218,7 @@
         changefunction('#id_program', '#id_project')
     });
 });
+
 </script>
 
 {% endblock %}
