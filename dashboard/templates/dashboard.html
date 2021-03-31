@@ -2,6 +2,7 @@
 {% load static %}
 {% block content %}
 <main class="dfid-main">
+    {% if group.name == 'admin' %}
     <section class="section dfid-highlight mrtb-100">
         <div class="section-title">
             <h4>Dvs highlight</h4>
@@ -52,6 +53,7 @@
             </div>
         </div>
     </section>
+    {% endif %}
 
     <!-- welocme  -->
     <div class="welcome-user">
@@ -235,16 +237,9 @@
                                         <i class="material-icons">category</i>
                                         <div class="content">
                                             <h6>Broad Sectors</h6>
-                                            {% for sector in five.component_id.sector.all %}
+                                            {% for sector in five.program_id.sector.all %}
                                             <p>{{ sector }}</p>
                                             {% endfor %}
-                                        </div>
-                                    </li>
-                                    <li class="equalHeight">
-                                        <i class="material-icons">room</i>
-                                        <div class="content">
-                                            <h6>Province</h6>
-                                            <p>{{five.province_id}}</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -253,14 +248,14 @@
                                     <ul class="mr-left">
                                         <li>
                                             <div class="content">
-                                                <h6>District</h6>
-                                                <p>{{ five.district_id }}</p>
+                                                <h6>Component Name</h6>
+                                                <p>{{five.component_id.name}}</p>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="content">
-                                                <h6>Municipality</h6>
-                                                <p>{{five.municipality_id}}</p>
+                                                <h6>Component Code</h6>
+                                                <p>{{five.component_id.code}}</p>
                                             </div>
                                         </li>
                                     </ul>
@@ -289,8 +284,8 @@
                                     <li class="equalHeight">
                                         <i class="material-icons">monetization_on</i>
                                         <div class="content">
-                                            <h6>Budget</h6>
-                                            <h5>{{five.allocated_budget}}</h5>
+                                            <h6>Budget Spend</h6>
+                                            <h5>{{five.component_id.budget_spend}}</h5>
                                         </div>
                                     </li>
                                 </ul>
