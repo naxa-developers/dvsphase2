@@ -200,9 +200,9 @@
                                         <div class="checklist-card">
                                             <div class="checklist-header">
                                                 <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input sector-cls" name="sector"
+                                                    <input type="checkbox" class="custom-control-input" name="sector"
                                                            id="list{{sector.id}}"
-                                                           value="{{sector.id}}" val_name="{{ sector.name }}">
+                                                           value="{{sector.id}}" >
                                                     <label class="custom-control-label"
                                                            for="list{{sector.id}}">{{sector.name}}</label>
 <!---->
@@ -212,9 +212,9 @@
                                                 {% for sub_sector in sector.Sector.all %}
                                                 <li>
                                                     <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input"
+                                                        <input type="checkbox" class="custom-control-input sector-cls"
                                                                id="sublist{{sub_sector.id}}" name="sub_sector"
-                                                               value="{{sub_sector.id}}">
+                                                               value="{{sub_sector.id}}" val_name="{{ sub_sector.name }}">
                                                         <label class="custom-control-label"
                                                                for="sublist{{sub_sector.id}}">{{sub_sector.name}}</label>
 <!---->
@@ -302,7 +302,7 @@
         <input type="hidden" id="sector_budget_id" name="sector_budget" value="0:0">
         <div class="form-group mrt-100" style="margin-top:50px;margin-bottom: 30px;">
             <button type="button" id="sector_budget_btn" class="btn btn-primary" data-toggle="modal" data-target="#SectorModal" disabled="disabled">
-          Sector Budget Percentage
+          Sub-Sector Budget Percentage
         </button>
         </div>
 
