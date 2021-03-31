@@ -172,7 +172,7 @@
                                 <div class="checklist-card ">
                                     <div class="checklist-header active">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="sector"
+                                            <input type="checkbox" class="custom-control-input sector-main" name="sector"
                                                    id="list{{sector.id}}"
                                                    value="{{sector.id}}"  checked>
                                             <label class="custom-control-label"
@@ -203,7 +203,7 @@
                                 <div class="checklist-card ">
                                     <div class="checklist-header ">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="sector"
+                                            <input type="checkbox" class="custom-control-input sector-main" name="sector"
                                                    id="list{{sector.id}}"
                                                    value="{{sector.id}}" >
                                             <label class="custom-control-label"
@@ -379,7 +379,7 @@
           </div>
         </div>
         <div class="form-group mrt-100" style="margin-top:50px;">
-            <button type="submit" class="dfid-button sm-button">Save</button>
+            <button id='final_save' type="submit" class="dfid-button sm-button">Save</button>
         </div>
 
     </form>
@@ -421,25 +421,31 @@
                 $('#sector_budget_btn').prop('disabled', false);
             }
         }
+
+
         $('.sector-cls').change(function (e) {
             e.preventDefault()
             checkFunction()
-
+        })
+        $('.sector-main').change(function (e) {
+            e.preventDefault()
+            checkFunction()
         })
         $('#SectorModal').on('shown.bs.modal', function () {
             var in_html = []
             var val = {}
-            if ('{{ form.instance.sector_budget }}' != 'O:O') {
+            if ('{{ form.instance.sector_budget }}' != '0:0') {
+                console.log('hello')
                 var val_list1 = ('{{ form.instance.sector_budget }}').split(',')
                 for (var i=0;i<val_list1.length;i++) {
                     var val_list2 = val_list1[i].split(':')
                     val[val_list2[0]] = val_list2[1]
                 }
             }
-            console.log(val_list1)
+            console.log(Object.keys(val).length)
             $('.sector-cls').each(function () {
                 if ($(this).prop('checked')) {
-                    if (Boolean(val)) {
+                    if (Object.keys(val).length > 0) {
                         var temp_val = val[$(this).val()]
                     }else {
                         var temp_val = "0"
@@ -458,6 +464,17 @@
             $('#sector_budget_id').val(temp_data.join())
             $('#SectorModal').modal('toggle')
 
+        })
+        $('#final_save').click(function() {
+            var cnt = 0;
+            $('.sector-cls').each(function () {
+                if ($(this).prop('checked')) {
+                    cnt += 1
+                }
+                if (cnt == 0) {
+                    $('#sector_budget_id').val('0:0')
+                }
+            })
         })
 
     })
