@@ -200,7 +200,7 @@
                                         <div class="checklist-card">
                                             <div class="checklist-header">
                                                 <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" name="sector"
+                                                    <input type="checkbox" class="custom-control-input sector-main" name="sector"
                                                            id="list{{sector.id}}"
                                                            value="{{sector.id}}" >
                                                     <label class="custom-control-label"
@@ -358,7 +358,10 @@
         $('.sector-cls').change(function (e) {
             e.preventDefault()
             checkFunction()
-
+        })
+        $('.sector-main').change(function (e) {
+            e.preventDefault()
+            checkFunction()
         })
         $('#SectorModal').on('shown.bs.modal', function () {
             var in_html = []
