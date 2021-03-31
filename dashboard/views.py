@@ -683,7 +683,10 @@ def updateuser(request, id):
     form = UserProfileForm(request.POST or None, instance=obj)
     if form.is_valid():
         ho = form.save()
-        ho.image = request.FILES['image']
+        try:
+            ho.image = request.FILES['image']
+        except:
+            pass
         ho.save()
         test = User.objects.filter(id=obj.user.id)
         test2 = User.objects.get(id=obj.user.id)
