@@ -1036,14 +1036,15 @@ class FiveList(LoginRequiredMixin, ListView):
                 gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
 
             else:
-                five = FiveW.objects.filter(supplier_id=user_data.partner.id).values('id', 'supplier_id__name',
-                                                                                     'second_tier_partner_name',
-                                                                                     'program_id__name',
-                                                                                     'component_id__name', 'status',
-                                                                                     'province_id__name',
-                                                                                     'district_id__name',
-                                                                                     'municipality_id__name',
-                                                                                     'allocated_budget').order_by('id')
+                five = FiveW.objects.filter(supplier_id=user_data.partner.id, program_id=user_data.program.id,
+                                            component_id=user_data.project.id).values('id', 'supplier_id__name',
+                                                                                      'second_tier_partner_name',
+                                                                                      'program_id__name',
+                                                                                      'component_id__name', 'status',
+                                                                                      'province_id__name',
+                                                                                      'district_id__name',
+                                                                                      'municipality_id__name',
+                                                                                      'allocated_budget').order_by('id')
                 partner = Partner.objects.filter(id=user_data.partner.id).values('id', 'name').order_by('name')
                 program = Program.objects.filter(id=user_data.program.id).values('id', 'name',
                                                                                  'partner_id__id').order_by('name')
