@@ -184,7 +184,13 @@
             <a href="/dashboard/five-list" class="border-button dfid-button sm-button">View all</a>
         </div>
         <!-- program -->
+        {% for five in fives %}
         <div class="dfid-program">
+            {% if five.status == 'completed' %}
+            <div class="status green">Completed</div>
+            {% else %}
+            <div class="status yellow">Ongoing</div>
+            {% endif %}
             <div class="row">
                 <div class="col-xl-3 col-lg-4">
                     <div class="about-program">
@@ -315,6 +321,7 @@
             </div>
 
         </div>
+        {% endfor %}
     </section>
 
 

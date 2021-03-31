@@ -40,7 +40,7 @@ from django.contrib.admin.models import LogEntry
 from datetime import datetime, timedelta
 from django.core.paginator import Paginator
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from django.core.exceptions import ObjectDoesNotExist,MultipleObjectsReturned
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.shortcuts import (get_object_or_404,
                               render,
                               HttpResponseRedirect)
@@ -636,10 +636,16 @@ def createuser(request, **kwargs):
                 group = Group.objects.get(pk=kwargs['group'])
                 user.groups.add(group)
             '''
-
-            UserProfile.objects.create(user=user, name=request.POST['name'], email=request.POST['email'],
-                                       partner_id=int(request.POST['partner']), image=request.FILES['image'],
-                                       program_id=int(request.POST['program']), project_id=int(request.POST['project']))
+            try:
+                UserProfile.objects.create(user=user, name=request.POST['name'], email=request.POST['email'],
+                                           partner_id=int(request.POST['partner']), image=request.FILES['image'],
+                                           program_id=int(request.POST['program']),
+                                           project_id=int(request.POST['project']))
+            except:
+                UserProfile.objects.create(user=user, name=request.POST['name'], email=request.POST['email'],
+                                           partner_id=int(request.POST['partner']),
+                                           program_id=int(request.POST['program']),
+                                           project_id=int(request.POST['project']))
 
             notify_message = request.POST['email'] + ' has created account by username ' + request.POST['username']
 
@@ -950,7 +956,6 @@ class FiveList(LoginRequiredMixin, ListView):
         provincedata = self.request.GET.getlist('province', None)
         districtdata = self.request.GET.getlist('district', None)
         municipalitydata = self.request.GET.getlist('gapanapa', None)
-
 
         if partnerdata or projectdata or programdata or provincedata or districtdata or municipalitydata:
             user = self.request.user
