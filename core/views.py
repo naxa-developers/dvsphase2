@@ -2076,7 +2076,7 @@ class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
                     start_date_new = date(int(a[0]), int(a[1]), int(a[2]))
                     b = end_date.split('-')
                     end_date_new = date(int(b[0]), int(b[1]), int(b[2]))
-                    if p['start_date'] <= start_date_new <= end_date_new <= p['end_date']:
+                    if p['start_date'] <= start_date_new <= end_date_new <= p['end_date'] or start_date_new <= p['start_date'] <= p['end_date'] <= end_date_new:
                         ids.append(p['id'])
             queryset = Program.objects.filter(id__in=ids).order_by('id')
         else:
