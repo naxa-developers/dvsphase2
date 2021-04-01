@@ -191,10 +191,12 @@ def bulkCreate(request):
                 test = df.loc[fivew_incorrect, :]
                 test['Errors'] = error_log
                 test.to_csv('media/errordata.csv')
-
-            messages.error(request, 'Error in row' + str(' '.join([str(elem) for elem in error])))
-            messages.success(request, 'Success! : ' + str(success_count) + "Row Of Five-w Data Added ")
-            messages.info(request, 'Updated! : ' + str(update_count) + "Row Of Five-w Data Updated ")
+            if len(error) > 0:
+                messages.error(request, 'Error in row(s)' + str(' '.join([str(elem) for elem in error])))
+            if success_count > 0:
+                messages.success(request, 'Success! : ' + str(success_count) + ' '+ "row(s) Of Five-w Data Added ")
+            if update_count > 0:
+                messages.info(request, 'Updated! : ' + str(update_count) + " row(s) Of Five-w Data Updated ")
 
             FiveW.objects.bulk_create(fivew_correct)
 
@@ -745,7 +747,7 @@ def activate_user(request, **kwargs):
 
         recipient_list = [emails]
         email = EmailMessage(
-            subject, message, 'from@example.com', recipient_list
+            subject, message, 'noreply.dfid@gmail.com', recipient_list
         )
         email.content_subtype = "html"
         mail = email.send()
@@ -970,9 +972,9 @@ class FiveList(LoginRequiredMixin, ListView):
                 partner = Partner.objects.values('id', 'name').order_by('name')
                 project = Project.objects.values('id', 'program_id__id', 'name', 'partner_id__id').order_by('name')
                 program = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
-                province = Province.objects.values('id', 'name').order_by('name')
-                district = District.objects.values('id', 'province_id__id', 'name').order_by('name')
-                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
+                province = Province.objects.exclude(code=-1).values('id', 'name').order_by('name')
+                district = District.objects.exclude(code=-1).values('id', 'province_id__id', 'name').order_by('name')
+                gapanapa = GapaNapa.objects.exclude(code=-1).values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
 
 
             else:
@@ -984,9 +986,9 @@ class FiveList(LoginRequiredMixin, ListView):
                 project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id',
                                                                                  'name', 'partner_id__id').order_by(
                     'name')
-                province = Province.objects.values('id', 'name').order_by('name')
-                district = District.objects.values('id', 'province_id__id', 'name').order_by('name')
-                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
+                province = Province.objects.exclude(code=-1).values('id', 'name').order_by('name')
+                district = District.objects.exclude(code=-1).values('id', 'province_id__id', 'name').order_by('name')
+                gapanapa = GapaNapa.objects.exclude(code=-1).values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
 
             paginator = Paginator(dat_values, 500)
             page_numbers_range = 500
@@ -1001,6 +1003,9 @@ class FiveList(LoginRequiredMixin, ListView):
                 end_index = max_index
 
             page_range = paginator.page_range[start_index:end_index]
+            province_minus_id = Province.objects.get(code=-1)
+            district_minus_id = District.objects.get(code=-1)
+            municipality_minus_id = GapaNapa.objects.get(code=-1)
 
             data = {
                 'page_range': page_range,
@@ -1012,6 +1017,9 @@ class FiveList(LoginRequiredMixin, ListView):
                 'project': project,
                 'province': province,
                 'district': district,
+                'pr': province_minus_id.id,
+                'dr': district_minus_id.id,
+                'mr': municipality_minus_id.id,
                 'gapanapa': gapanapa,
                 'partnerdata': partnerdata,
                 'programdata': programdata,
@@ -1034,9 +1042,9 @@ class FiveList(LoginRequiredMixin, ListView):
                 partner = Partner.objects.values('id', 'name').order_by('name')
                 project = Project.objects.values('id', 'program_id__id', 'name', 'partner_id__id').order_by('name')
                 program = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
-                province = Province.objects.values('id', 'name').order_by('name')
-                district = District.objects.values('id', 'province_id__id', 'name').order_by('name')
-                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
+                province = Province.objects.exclude(code=-1).values('id', 'name').order_by('name')
+                district = District.objects.exclude(code=-1).values('id', 'province_id__id', 'name').order_by('name')
+                gapanapa = GapaNapa.objects.exclude(code=-1).values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
 
             else:
                 five = FiveW.objects.filter(supplier_id=user_data.partner.id, program_id=user_data.program.id,
@@ -1054,9 +1062,9 @@ class FiveList(LoginRequiredMixin, ListView):
                 project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id',
                                                                                  'name', 'partner_id__id').order_by(
                     'name')
-                province = Province.objects.values('id', 'name').order_by('name')
-                district = District.objects.values('id', 'province_id__id', 'name').order_by('name')
-                gapanapa = GapaNapa.objects.values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
+                province = Province.objects.exclude(code=-1).values('id', 'name').order_by('name')
+                district = District.objects.exclude(code=-1).values('id', 'province_id__id', 'name').order_by('name')
+                gapanapa = GapaNapa.objects.exclude(code=-1).values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
 
             paginator = Paginator(five, 500)
             page_numbers_range = 500
@@ -1071,6 +1079,12 @@ class FiveList(LoginRequiredMixin, ListView):
                 end_index = max_index
 
             page_range = paginator.page_range[start_index:end_index]
+            province_minus_id = Province.objects.get(code=-1)
+            district_minus_id = District.objects.get(code=-1)
+            municipality_minus_id = GapaNapa.objects.get(code=-1)
+            data['pr'] = province_minus_id.id
+            data['dr'] = district_minus_id.id
+            data['mr'] = municipality_minus_id.id
             data['page_range'] = page_range
             data['list'] = page_obj
             data['user'] = user_data
@@ -1080,12 +1094,6 @@ class FiveList(LoginRequiredMixin, ListView):
             data['province'] = province
             data['district'] = district
             data['gapanapa'] = gapanapa
-            # data['partnerdata'] = partnerdata
-            # data['programdata'] = programdata
-            # data['projectdata'] = projectdata
-            # data['provincedata'] = provincedata
-            # data['municipalitydata'] = municipalitydata
-            # data['districtdata'] = districtdata
             data['active'] = 'five'
             data['five'] = five
             return data
