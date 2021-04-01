@@ -73,6 +73,7 @@
             </div>
             <div class="col" style="padding-left:5px;padding-right:5px;">
                 <select name="province" id='multi_select_province' multiple="multiple" placeholder="Province">
+                    <option value="{{pr}}">All Provinces</option>
                     {% for province in province %}
                     <option value="{{province.id}}">{{province.name}}</option>
                     {% endfor %}
@@ -80,6 +81,7 @@
             </div>
             <div class="col" style="padding-left:5px;padding-right:5px;">
                 <select name="district" id='multi_select_district' multiple="multiple" placeholder="District">
+                    <option value="{{dr}}">All Districts</option>
                     {% for district in district %}
                     <option value="{{district.id}}" valId='{{district.province_id__id}}'>{{district.name}}</option>
                     {% endfor %}
@@ -87,6 +89,7 @@
             </div>
             <div class="col" style="padding-left:5px;padding-right:5px;">
                 <select name="gapanapa" id='multi_select_gapanapa' multiple="multiple" placeholder="Municipality">
+                    <option value="{{mr}}">All Municipalities</option>
                     {% for gapanapa in gapanapa %}
                     <option value="{{gapanapa.id}}" valId='{{gapanapa.district_id__id}}'>{{gapanapa.name}}</option>
                     {% endfor %}
@@ -240,7 +243,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <h4>Are you sure you would like to Clear Selected data. This may result in permanent data loss.</h4>
+              <h4>Are you sure you would like to clear selected data. This may result in permanent data loss.</h4>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -296,10 +299,10 @@
             selectFunction('#multi_select_district', districtData);
             selectFunction('#multi_select_gapanapa', municipalityData);
             multiChangeFunction_multi($('#multi_select_partner').val(), '#multi_select_program');
-            multiChangeFunction('#multi_select_program', '#multi_select_project');
-            multiChangeFunction('#multi_select_province', '#multi_select_district');
+            multiChangeFunction('#multi_select_program', '#multi_select_project', 'abc');
+            multiChangeFunction('#multi_select_province', '#multi_select_district', {{dr}});
             if (($('#multi_select_district').val()).length > 0) {
-                multiChangeFunction_one($('#multi_select_district').val(), '#multi_select_gapanapa');
+                multiChangeFunction_one($('#multi_select_district').val(), '#multi_select_gapanapa', {{mr}});
             }
 
             flag = false;
@@ -312,7 +315,7 @@
 
 </script>
 <script>
-    function multiChangeFunction(change_val, to_be_changed_id) {
+    function multiChangeFunction(change_val, to_be_changed_id, abc) {
         var change_value = $(change_val).val()
         $(to_be_changed_id).multipleSelect('uncheckAll');
         $(to_be_changed_id).multipleSelect('refresh')
@@ -345,6 +348,9 @@
                 }
 
             };
+            if ($(this).val() == abc) {
+                $(this).prop('disabled', false);
+            }
         });
         $(to_be_changed_id).multipleSelect('refresh');
         $('.ms-drop ul>li:has(label.disabled)').hide();
@@ -406,7 +412,7 @@
 
 </script>
 <script>
-    function multiChangeFunction_one(change_value, to_be_changed_id) {
+    function multiChangeFunction_one(change_value, to_be_changed_id, abc) {
         $(to_be_changed_id).multipleSelect('uncheckAll');
         $(to_be_changed_id).load(location.href + ' ' + to_be_changed_id)
         if(change_value.length > 0) {
@@ -419,6 +425,9 @@
                         $('#multi_select_gapanapa').append($('<option>').attr('value', $(this).val()).attr('valId', $(this).attr('valId')).text($(this).text()))
                     };
                 };
+                if ($(this).val() == abc) {
+                    $('#multi_select_gapanapa').append($('<option>').attr('value', $(this).val()).attr('valId', $(this).attr('valId')).text($(this).text()))
+                }
             });
             $('option[disabled]').remove();
         }
@@ -434,23 +443,23 @@
         $('#multi_select_partner').change(function(e) {
             e.preventDefault();
             if (($(this).val()).length > 0) {
-                multiChangeFunction('#multi_select_partner', '#multi_select_program')
+                multiChangeFunction('#multi_select_partner', '#multi_select_program', 'abc')
             }else {
                 multiChangeFunction_multi($(this).val(), '#multi_select_program')
             }
-            mulChangeFunction('#multi_select_partner', '#multi_select_project')
+            mulChangeFunction('#multi_select_partner', '#multi_select_project', 'abc')
         });
         $('#multi_select_program').change(function(e) {
             e.preventDefault();
-            multiChangeFunction('#multi_select_program', '#multi_select_project')
+            multiChangeFunction('#multi_select_program', '#multi_select_project', 'abc')
         });
         $('#multi_select_province').change(function(e) {
             e.preventDefault();
-            multiChangeFunction('#multi_select_province', '#multi_select_district')
+            multiChangeFunction('#multi_select_province', '#multi_select_district', {{dr}})
         });
         $('#multi_select_district').change(function(e) {
             e.preventDefault();
-            multiChangeFunction_one($(this).val(), '#multi_select_gapanapa')
+            multiChangeFunction_one($(this).val(), '#multi_select_gapanapa', {{mr}})
 
         });
         $('#reset-btn').click(function(e) {
@@ -464,7 +473,7 @@
                 type: "GET",
                 url: "/dashboard/export/?full_data='full_data'{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if programdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}",
             }).done(function() {
-                location.href = 'https://admin.dvs-nepal.org//media/exportdata.csv';
+                location.href = 'https://admin.dvs-nepal.org/media/exportdata.csv';
 
             });
         });

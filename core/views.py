@@ -1,6 +1,8 @@
 from .models import Partner, Program, MarkerValues, District, Province, GapaNapa, FiveW, Indicator, IndicatorValue, \
     Sector, SubSector, MarkerCategory, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
     NepalSummary, FeedbackForm, FAQ, TermsAndCondition
+from dashboard.models import UserProfile
+from django.contrib.auth.models import User, Group, Permission
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .serializers import PartnerSerializer, ProgramSerializer, MarkerValuesSerializer, DistrictSerializer, \
     ProvinceSerializer, GaanapaSerializer, FivewSerializer, \
@@ -2013,7 +2015,13 @@ class NotifyApi(viewsets.ReadOnlyModelViewSet):
     # authentication_classes = (TokenAuthentication, BasicAuthentication)
 
     def get_queryset(self):
-        queryset = Notification.objects.order_by('-id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        group = Group.objects.get(user=user)
+        if group.name == 'admin':
+            queryset = Notification.objects.order_by('-id')
+        else:
+            queryset = Notification.objects.filter(user=user).order_by('-id')
         return queryset
 
     def get_serializer_class(self):
