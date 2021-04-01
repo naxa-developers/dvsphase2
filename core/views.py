@@ -1442,7 +1442,8 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
                 sect = query.exclude(program_id__sector__name=None).values_list('program_id__sector__name',
-                                                                                flat=True).distinct()
+                                                                                flat=True).distinct(
+                    'program_id__sector__name')
                 sub_sect = query.exclude(program_id__sub_sector__name=None).values_list(
                     'program_id__sub_sector__name',
                     flat=True).distinct()
@@ -2088,7 +2089,8 @@ class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
                     start_date_new = date(int(a[0]), int(a[1]), int(a[2]))
                     b = end_date.split('-')
                     end_date_new = date(int(b[0]), int(b[1]), int(b[2]))
-                    if p['start_date'] <= start_date_new <= end_date_new <= p['end_date'] or start_date_new <= p['start_date'] <= p['end_date'] <= end_date_new:
+                    if p['start_date'] <= start_date_new <= end_date_new <= p['end_date'] or start_date_new <= p[
+                        'start_date'] <= p['end_date'] <= end_date_new:
                         ids.append(p['id'])
             queryset = Program.objects.filter(id__in=ids).order_by('id')
         else:
@@ -2227,6 +2229,7 @@ class Popup(viewsets.ReadOnlyModelViewSet):
                 Sum('allocated_budget'))
             for p in program:
                 marker_data = []
+                program_sector = []
                 component_data = []
                 p_data = Program.objects.get(id=p['program_id'])
                 for marker in p_data.marker_value.all():
@@ -2234,6 +2237,12 @@ class Popup(viewsets.ReadOnlyModelViewSet):
                         'marker_category': marker.marker_category_id.name,
                         'marker_value': marker.value
 
+                    })
+                for sectors in p_data.sub_sector.all():
+                    program_sector.append({
+                        'id': sectors.id,
+                        'sector': sectors.sector_id.name,
+                        'sub_sector': sectors.name,
                     })
                 c_data = query.values('component_id', 'component_id__name').filter(program_id=p['program_id']).annotate(
                     Sum('allocated_budget'))
@@ -2268,6 +2277,7 @@ class Popup(viewsets.ReadOnlyModelViewSet):
                 program_data.append({
                     'id': p['program_id'],
                     'program': p['program_id__name'],
+                    'sector': program_sector,
                     'program_budget': p['allocated_budget__sum'],
                     'markers': marker_data,
                     'components': component_data,
