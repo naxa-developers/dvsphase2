@@ -114,7 +114,7 @@
         {% if messages.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
         <div class="alert alert-danger alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong></strong> {{messages}} <a href="https://dvsnaxa.naxa.com.np/media/errordata.csv">View Error</a>
+            <strong></strong> {{messages}} <a href="https://admin.dvs-nepal.org/media/errordata.csv">View Error</a>
         </div>
         {% elif messages.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
         <div class="alert alert-success alert-dismissible">
@@ -464,7 +464,7 @@
                 type: "GET",
                 url: "/dashboard/export/?full_data='full_data'{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if programdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}",
             }).done(function() {
-                location.href = 'https://dvsnaxa.naxa.com.np/media/exportdata.csv';
+                location.href = 'https://admin.dvs-nepal.org//media/exportdata.csv';
 
             });
         });
