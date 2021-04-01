@@ -178,7 +178,7 @@
                         <h2 class="mb-0 btn-heading">
                             <button class="btn btn-link" type="button" data-toggle="collapse"
                                     data-target="#collapsethree" aria-expanded="false" aria-controls="collapseOne">
-                                Geography and budget Section
+                                Geography and Budget Section
                             </button>
                         </h2>
                     </div>
@@ -248,7 +248,7 @@
                                 <div class="col-md-6">
                                     <div class="col-wrapper">
                                         <div class="form-group form-flex">
-                                            <label for="id_allocated_budget">Enter Allocated Budget</label>
+                                            <label for="id_allocated_budget">Enter Budget Spend in GBP (£)</label>
                                             <input type="number" name="allocated_budget" value="0" step="any"
                                                    id="id_allocated_budget" class="form-control" placeholder="">
                                         </div>
@@ -500,9 +500,7 @@
 
                 };
             });
-            if ($(this).val() == abc){
-                $(this).css('display', 'block');
-            }
+
         });
     };
 
@@ -523,12 +521,12 @@
         }
         $('#id_supplier_id').change(function(e) {
             e.preventDefault();
-            changefunc($(this).val(), '#id_program_id option')
+            changefunc($(this).val(), '#id_program_id option', 'abc')
             changef('#id_program_id', '#id_component_id option')
         });
         $('#id_program_id').change(function(e) {
             e.preventDefault();
-            changefunc($(this).val(), '#id_component_id option')
+            changefunc($(this).val(), '#id_component_id option', 'abc')
         });
         $('#id_province_id').change(function(e) {
             e.preventDefault();

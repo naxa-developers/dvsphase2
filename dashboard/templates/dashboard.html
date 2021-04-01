@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 <main class="dfid-main">
     {% if group.name == 'admin' %}
     <section class="section dfid-highlight mrtb-100">
@@ -277,7 +278,7 @@
                             <div class="col-lg-4 col-md-6">
                                 <ul class="program-content">
                                     <li class="equalHeight">
-                                        <i class="material-icons">monetization_on</i>
+                                        <i class="fas fa-pound-sign"></i>
                                         <div class="content">
                                             <h6>Budget Spend</h6>
                                             <h5>{{five.component_id.budget_spend}}</h5>
