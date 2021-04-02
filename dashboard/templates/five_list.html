@@ -13,7 +13,7 @@
 </style>
 <main class="dfid-main">
     <!-- dfid breadcrumb -->
-    <div class="dfid-breadcrumb pdt-100">
+    <div class="dfid-breadcrumb">
         <ul class="flex-start">
             <li>
                 <a href="#"><i class="material-icons">assignment</i> Five W</a>
@@ -111,7 +111,8 @@
 
         </div>
     </form>
-    <div class="table-tesponsive scroll-table program-list">
+    <div class="naxa-table program-list is-border is-overflow is-sticky my-3"
+                    style="min-height: 550px; max-height: 550px;">
         {% if messages %}
         {% for messages in messages %}
         {% if messages.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
@@ -134,21 +135,19 @@
         {% endfor %}
         {% endif %}
 
-        <table class="five-table dataTable">
+        <table class="">
             <thead>
             <tr>
-                <th>id</th>
-                <th>Supplier</th>
-                <th>Program</th>
-                <th>Component</th>
-                <th>second Tier Partner</th>
-                <th>Province</th>
-                <th>District</th>
-                <th>Municipality</th>
-                <th>Allocated Budget</th>
-                <th>status</th>
-
-
+                <th style="width:55px;">id</th>
+                <th style="width:100px;">Supplier</th>
+                <th style="width:100px;">Program</th>
+                <th style="width:107px;">Component</th>
+                <th style="width:100px;">second Tier Partner</th>
+                <th style="width:95px;">Province</th>
+                <th style="width:80px;">District</th>
+                <th style="width:115px;">Municipality</th>
+                <th style="width:100px;">Allocated Budget</th>
+                <th style="width:100px;">status</th>
                 <th></th>
             </tr>
             </thead>
@@ -172,7 +171,7 @@
                 <td>
                     <div class="table-action">
                         <a href="#" class="more-action">
-                            <i class="material-icons">more_vert</i>
+                            <i style="color:red" class="material-icons">more_vert</i>
                         </a>
                         <ul class="dropdown-animation">
                             {% if perms.core.change_fivew %}
