@@ -435,14 +435,12 @@
             var in_html = []
             var val = {}
             if ('{{ form.instance.sector_budget }}' != '0:0') {
-                console.log('hello')
                 var val_list1 = ('{{ form.instance.sector_budget }}').split(',')
                 for (var i=0;i<val_list1.length;i++) {
                     var val_list2 = val_list1[i].split(':')
                     val[val_list2[0]] = val_list2[1]
                 }
             }
-            console.log(Object.keys(val).length)
             $('.sector-cls').each(function () {
                 if ($(this).prop('checked')) {
                     if (Object.keys(val).length > 0) {
@@ -471,10 +469,11 @@
                 if ($(this).prop('checked')) {
                     cnt += 1
                 }
-                if (cnt == 0) {
-                    $('#sector_budget_id').val('0:0')
-                }
+
             })
+            if (cnt == 0) {
+                $('#sector_budget_id').val('0:0')
+            }
         })
 
     })
