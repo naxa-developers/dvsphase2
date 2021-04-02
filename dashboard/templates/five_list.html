@@ -176,15 +176,15 @@
                         <ul class="dropdown-animation">
                             {% if perms.core.change_fivew %}
                             <li>
-                                <a href="/dashboard/five-edit/{{ five.id }}" class="flex-start">
-                                    <i class="material-icons">edit</i> Edit
+                                <a style="color:blue" href="/dashboard/five-edit/{{ five.id }}" class="flex-start">
+                                    <i style="color:blue" class="material-icons">edit</i> Edit
                                 </a>
                             </li>
                             {% endif %}
                             {% if perms.core.delete_fivew %}
                             <li>
-                                <a href="/dashboard/five-delete/{{ five.id }}" class="flex-start">
-                                    <i class="material-icons">delete</i>Delete
+                                <a style="color:blue" href="/dashboard/five-delete/{{ five.id }}" class="flex-start">
+                                    <i style="color:blue" class="material-icons">delete</i>Delete
                                 </a>
 
                             </li>
@@ -197,9 +197,8 @@
 
             </tbody>
         </table>
-
-
-        <div class="pagination">
+    </div>
+            <div class="pagination">
             <div class="paging-left">
                 <div class="page-item">
                     <p>Showing <span class="show-start">1</span>to<span class="show-end">100</span>of<span
@@ -229,9 +228,6 @@
                 {% endif %}
             </div>
         </div>
-
-
-    </div>
     <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
