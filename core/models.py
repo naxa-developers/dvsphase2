@@ -5,6 +5,7 @@ from PIL import Image
 from django.core.files.base import ContentFile
 from io import BytesIO
 from colorfield.fields import ColorField
+from ckeditor.fields import RichTextField
 
 
 # Create your models here
@@ -560,10 +561,12 @@ class FeedbackForm(models.Model):
 
 
 class FAQ(models.Model):
-    question = models.TextField(blank=True, null=True)
-    answer = models.TextField(blank=True, null=True)
+    question = RichTextField(blank=True, null=True)
+    answer = RichTextField(blank=True, null=True)
+    order = models.IntegerField(blank=True, null=True)
 
 
 class TermsAndCondition(models.Model):
-    title = models.TextField(blank=True, null=True)
-    sub_title = models.TextField(blank=True, null=True)
+    title = RichTextField(blank=True, null=True)
+    sub_title = RichTextField(blank=True, null=True)
+    order = models.IntegerField(blank=True, null=True)

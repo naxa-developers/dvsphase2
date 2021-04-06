@@ -447,6 +447,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             top_part_by_budget = []
             partner_name = []
             top_sector_by_no_partner = []
+            fivew_data = []
             if 'province_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level__in=['province', 'all']).values('category', 'id',
                                                                                              'federal_level',
@@ -582,9 +583,14 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                 program_count = five.distinct('program_id').count()
                 component_count = five.distinct('component_id').count()
                 supplier_count = five.distinct('supplier_id').count()
-                return Response({"indicatordata": data, 'total_budget': total_budget,
-                                 'sector_count': sector_count, 'supplier_count': supplier_count,
-                                 'component_count': component_count, 'program_count': program_count,
+                fivew_data.append({
+                    'total_budget': total_budget,
+                    'sector_count': sector_count,
+                    'program_count': program_count,
+                    'component_count': component_count,
+                    'supplier_count': supplier_count
+                })
+                return Response({"indicatordata": data, 'fivewdata': fivew_data,
                                  'active_sectors': test1, 'top_program_by_budget': test2,
                                  'top_partner_by_budget': test3, 'top_sector_by_no_of_partner': test4})
             else:
@@ -600,6 +606,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             supplier_ids = []
             partner_name = []
             top_sector_by_no_partner = []
+            fivew_data = []
             if 'district_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level__in=['district', 'all']).values('category', 'id',
                                                                                              'federal_level',
@@ -741,10 +748,14 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                 program_count = five.distinct('program_id').count()
                 component_count = five.distinct('component_id').count()
                 supplier_count = five.distinct('supplier_id').count()
-
-                return Response({"indicatordata": data, 'total_budget': total_budget,
-                                 'sector_count': sector_count, 'supplier_count': supplier_count,
-                                 'component_count': component_count, 'program_count': program_count,
+                fivew_data.append({
+                    'total_budget': total_budget,
+                    'sector_count': sector_count,
+                    'program_count': program_count,
+                    'component_count': component_count,
+                    'supplier_count': supplier_count
+                })
+                return Response({"indicatordata": data, 'fivewdata': fivew_data,
                                  'active_sectors': test1, 'top_program_by_budget': test2,
                                  'top_partner_by_budget': test3, 'top_sector_by_no_of_partner': test4})
             else:
@@ -759,6 +770,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             top_part_by_budget = []
             partner_name = []
             top_sector_by_no_partner = []
+            fivew_data = []
             if 'municipality_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level__in=['palika', 'all']).values('category', 'id',
                                                                                            'federal_level',
@@ -871,11 +883,16 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                 program_count = five.distinct('program_id').count()
                 component_count = five.distinct('component_id').count()
                 supplier_count = five.distinct('supplier_id').count()
-                return Response({"indicatordata": data, 'total_budget': total_budget,
-                                 'sector_count': sector_count, 'supplier_count': supplier_count,
-                                 'component_count': component_count, 'program_count': program_count,
-                                 'active_sectors': test1, 'top_program_by_budget': test2, 'top_part_by_budget': test3,
-                                 'top_sector_by_no_of_partner': test4})
+                fivew_data.append({
+                    'total_budget': total_budget,
+                    'sector_count': sector_count,
+                    'program_count': program_count,
+                    'component_count': component_count,
+                    'supplier_count': supplier_count
+                })
+                return Response({"indicatordata": data, 'fivewdata': fivew_data,
+                                 'active_sectors': test1, 'top_program_by_budget': test2,
+                                 'top_partner_by_budget': test3, 'top_sector_by_no_of_partner': test4})
             else:
                 return Response({"results": "Please Pass Municipality Code"})
         else:
