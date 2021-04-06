@@ -477,7 +477,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             province_id__code=request.GET['province_code']).aggregate(
                             Sum('population'))
                         test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
-                                                             province_id__code=int(
+                                                             gapanapa_id__province_id__code=int(
                                                                  request.GET['province_code'])).values('value',
                                                                                                        'gapanapa_id__population')
                         for ind in test:
@@ -620,7 +620,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     if d['federal_level'] == 'district':
                         initial_sum = 0
                         test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
-                                                             district_id__code=int(
+                                                             gapanapa_id__district_id__code=int(
                                                                  request.GET['district_code'])).values(
                             'value')
                         for test in test:
