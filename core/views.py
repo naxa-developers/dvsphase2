@@ -251,9 +251,11 @@ class PartnerView(viewsets.ReadOnlyModelViewSet):
 
 class FAQView(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['order']
 
     def get_queryset(self):
-        queryset = FAQ.objects.order_by('id')
+        queryset = FAQ.objects.order_by('order')
         return queryset
 
     def get_serializer_class(self):
@@ -263,9 +265,11 @@ class FAQView(viewsets.ReadOnlyModelViewSet):
 
 class TermsAndConditionView(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id']
 
     def get_queryset(self):
-        queryset = TermsAndCondition.objects.order_by('id')
+        queryset = TermsAndCondition.objects.order_by('order')
         return queryset
 
     def get_serializer_class(self):
