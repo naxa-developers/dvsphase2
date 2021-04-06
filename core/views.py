@@ -485,9 +485,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                 if ind['gapanapa_id__population'] is not None:
                                     indicator_value = (ind['value'] * ind['gapanapa_id__population'])
                                     value_sum = (value_sum + indicator_value)
-                                else:
-                                    indicator_value = (ind['value'])
-                                    value_sum = (value_sum + indicator_value)
+                                    
                         value = (value_sum / dist_pop_sum['population__sum'])
                         data.append({
                             'code': int(request.GET['province_code']),
@@ -645,9 +643,6 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             if math.isnan(ind['value']) == False:
                                 if ind['gapanapa_id__population'] is not None:
                                     indicator_value = (ind['value'] * ind['gapanapa_id__population'])
-                                    value_sum = (value_sum + indicator_value)
-                                else:
-                                    indicator_value = (ind['value'])
                                     value_sum = (value_sum + indicator_value)
                             else:
                                 value_sum = (value_sum + 0)
