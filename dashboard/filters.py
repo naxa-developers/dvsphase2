@@ -25,7 +25,8 @@ def fivew(partnerdata, programdata, projectdata, provincedata, districtdata, mun
     if group.name == 'admin':
         return dat_values
     else:
-        dat_values = dat_values.filter(supplier_id=user_data.partner.id)
+        dat_values = dat_values.filter(supplier_id=user_data.partner.id, component_id=user_data.project.id,
+                                       program_id=user_data.program.id)
         return dat_values
 
 
