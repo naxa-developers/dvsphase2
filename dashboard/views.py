@@ -257,9 +257,12 @@ def bulkCreate(request):
                 test['Errors'] = error_log
                 test.to_csv('media/errordata.csv')
 
-            messages.error(request, 'Error in row' + str(' '.join([str(elem) for elem in error])))
-            messages.success(request, 'Success! : ' + str(success_count) + "Row Of Five-w Data Added ")
-            messages.info(request, 'Updated! : ' + str(update_count) + "Row Of Five-w Data Updated ")
+            if len(error) > 0:
+                messages.error(request, 'Error in row(s)' + str(' '.join([str(elem) for elem in error])))
+            if success_count > 0:
+                messages.success(request, 'Success! : ' + str(success_count) + ' '+ "row(s) Of Five-w Data Added ")
+            if update_count > 0:
+                messages.info(request, 'Updated! : ' + str(update_count) + " row(s) Of Five-w Data Updated ")
             FiveW.objects.bulk_create(fivew_correct)
 
     return redirect('/dashboard/five-list', messages)
