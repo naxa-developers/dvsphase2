@@ -533,29 +533,35 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         top_part_by_budget.append({
                             'id': l,
                             'name': partner[0]['name'],
-                            'total_budget': total_partner_budget
+                            'key': 'total_budget',
+                            'value': total_partner_budget
                         })
                 if len(sectoruniqueid) != 0:
                     for s in sectoruniqueid:
-                        dat = Program.objects.filter(sector=s).exclude(total_budget=None)
+                        dat = Program.objects.filter(sector=s)
                         sector = Sector.objects.get(id=s)
                         total_budgetnew = 0
                         for d in dat:
-                            total_budgetnew += d.total_budget
+                            if d.total_budget:
+                                total_budgetnew += d.total_budget
                             partner_count = d.partner_id.all()
                             for p in partner_count:
-                                partner_name.append(p.name)
-                        u = unique(partner_name)
+                                if p.name not in partner_name:
+                                    partner_name.append(p.name)
+
                         sector_by_buget.append({
-                            'name': sector.name,
                             'id': sector.id,
-                            'total_budget': total_budgetnew
+                            'name': sector.name,
+                            'key': 'total_budget',
+                            'value': total_budgetnew
 
                         })
                         top_sector_by_no_partner.append({
-                            'sector_name': sector.name,
-                            'sector_id': sector.id,
-                            'partner_count': len(u)
+
+                            'id': sector.id,
+                            'name': sector.name,
+                            'key': 'partner_count',
+                            'value': len(partner_name)
                         })
                 if len(uniqueprogramid) != 0:
                     for p in uniqueprogramid:
@@ -564,12 +570,13 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         top_prog_by_budget.append({
                             'id': pr[0]['id'],
                             'name': pr[0]['name'],
-                            'total_budget': pr.aggregate(Sum('total_budget'))['total_budget__sum']
+                            'key': 'total_budget',
+                            'value': pr.aggregate(Sum('total_budget'))['total_budget__sum']
                         })
-                test1 = sorted(sector_by_buget, key=lambda i: i['total_budget'], reverse=True)
-                test2 = sorted(top_prog_by_budget, key=lambda i: i['total_budget'], reverse=True)
-                test3 = sorted(top_part_by_budget, key=lambda i: i['total_budget'], reverse=True)
-                test4 = sorted(top_sector_by_no_partner, key=lambda i: i['partner_count'], reverse=True)
+                test1 = sorted(sector_by_buget, key=lambda i: i['value'], reverse=True)
+                test2 = sorted(top_prog_by_budget, key=lambda i: i['value'], reverse=True)
+                test3 = sorted(top_part_by_budget, key=lambda i: i['value'], reverse=True)
+                test4 = sorted(top_sector_by_no_partner, key=lambda i: i['value'], reverse=True)
                 total_budget = five.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
                 sector_count = five.distinct('program_id__sector').exclude(program_id__sector=None).count()
                 program_count = five.distinct('program_id').count()
@@ -579,7 +586,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                  'sector_count': sector_count, 'supplier_count': supplier_count,
                                  'component_count': component_count, 'program_count': program_count,
                                  'active_sectors': test1, 'top_program_by_budget': test2,
-                                 'top_partner_by_budget': test3,'top_sector_by_no_of_partner':test4})
+                                 'top_partner_by_budget': test3, 'top_sector_by_no_of_partner': test4})
             else:
                 return Response({"results": "Please Pass Province Code"})
 
@@ -685,56 +692,50 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         top_part_by_budget.append({
                             'id': l,
                             'name': partner[0]['name'],
-                            'total_budget': total_partner_budget
-                        })
-                if len(sectoruniqueid) != 0:
-                    for l in supplieruniqueid:
-                        total_partner_budget = 0
-                        partner = Partner.objects.filter(id=int(l)).values('name')
-                        fivenew = FiveW.objects.filter(supplier_id=l).values('supplier_id__name', 'supplier_id',
-                                                                             'allocated_budget')
-                        for f in fivenew:
-                            total_partner_budget += f['allocated_budget']
-                        top_part_by_budget.append({
-                            'id': l,
-                            'name': partner[0]['name'],
-                            'total_budget': total_partner_budget
+                            'key': 'total_budget',
+                            'value': total_partner_budget
                         })
                 if len(sectoruniqueid) != 0:
                     for s in sectoruniqueid:
-                        dat = Program.objects.filter(sector=s).exclude(total_budget=None)
+                        dat = Program.objects.filter(sector=s)
                         sector = Sector.objects.get(id=s)
                         total_budgetnew = 0
                         for d in dat:
-                            total_budgetnew += d.total_budget
+                            if d.total_budget:
+                                total_budgetnew += d.total_budget
                             partner_count = d.partner_id.all()
                             for p in partner_count:
-                                partner_name.append(p.name)
-                        u = unique(partner_name)
+                                if p.name not in partner_name:
+                                    partner_name.append(p.name)
+
                         sector_by_buget.append({
-                            'name': sector.name,
                             'id': sector.id,
-                            'total_budget': total_budgetnew
+                            'name': sector.name,
+                            'key': 'total_budget',
+                            'value': total_budgetnew
 
                         })
                         top_sector_by_no_partner.append({
-                            'sector_name': sector.name,
-                            'sector_id': sector.id,
-                            'partner_count': len(u)
+
+                            'id': sector.id,
+                            'name': sector.name,
+                            'key': 'partner_count',
+                            'value': len(partner_name)
                         })
                 if len(uniqueprogramid) != 0:
                     for p in uniqueprogramid:
-                        pr = Program.objects.filter(id=p).exclude(total_budget=None).values('id', 'total_budget',
-                                                                                            'name')
+                        pr = Program.objects.filter(id=p).exclude(total_budget=None).values('total_budget', 'name',
+                                                                                            'id')
                         top_prog_by_budget.append({
                             'id': pr[0]['id'],
                             'name': pr[0]['name'],
-                            'total_budget': pr.aggregate(Sum('total_budget'))['total_budget__sum']
+                            'key': 'total_budget',
+                            'value': pr.aggregate(Sum('total_budget'))['total_budget__sum']
                         })
-                test1 = sorted(sector_by_buget, key=lambda i: i['total_budget'], reverse=True)
-                test2 = sorted(top_prog_by_budget, key=lambda i: i['total_budget'], reverse=True)
-                test3 = sorted(top_part_by_budget, key=lambda i: i['total_budget'], reverse=True)
-                test4 = sorted(top_sector_by_no_partner, key=lambda i: i['partner_count'], reverse=True)
+                test1 = sorted(sector_by_buget, key=lambda i: i['value'], reverse=True)
+                test2 = sorted(top_prog_by_budget, key=lambda i: i['value'], reverse=True)
+                test3 = sorted(top_part_by_budget, key=lambda i: i['value'], reverse=True)
+                test4 = sorted(top_sector_by_no_partner, key=lambda i: i['value'], reverse=True)
                 total_budget = five.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
                 sector_count = five.distinct('program_id__sector').exclude(program_id__sector=None).count()
                 program_count = five.distinct('program_id').count()
@@ -820,59 +821,51 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         top_part_by_budget.append({
                             'id': l,
                             'name': partner[0]['name'],
-                            'total_budget': total_partner_budget
-                        })
-                partner_sector = []
-                if len(sectoruniqueid) != 0:
-                    for l in supplieruniqueid:
-                        total_partner_budget = 0
-                        partner = Partner.objects.filter(id=int(l)).values('name')
-                        fivenew = FiveW.objects.filter(supplier_id=l).values('supplier_id__name', 'supplier_id',
-                                                                             'allocated_budget')
-                        for f in fivenew:
-                            total_partner_budget += f['allocated_budget']
-                        top_part_by_budget.append({
-                            'id': l,
-                            'name': partner[0]['name'],
-                            'total_budget': total_partner_budget
+                            'key': 'total_budget',
+                            'value': total_partner_budget
                         })
                 if len(sectoruniqueid) != 0:
                     for s in sectoruniqueid:
-                        dat = Program.objects.filter(sector=s).exclude(total_budget=None)
+                        dat = Program.objects.filter(sector=s)
                         sector = Sector.objects.get(id=s)
                         total_budgetnew = 0
                         for d in dat:
-                            total_budgetnew += d.total_budget
+                            if d.total_budget:
+                                total_budgetnew += d.total_budget
                             partner_count = d.partner_id.all()
                             for p in partner_count:
-                                partner_name.append(p.name)
-                        u = unique(partner_name)
+                                if p.name not in partner_name:
+                                    partner_name.append(p.name)
+
                         sector_by_buget.append({
-                            'name': sector.name,
                             'id': sector.id,
-                            'total_budget': total_budgetnew
+                            'name': sector.name,
+                            'key': 'total_budget',
+                            'value': total_budgetnew
 
                         })
                         top_sector_by_no_partner.append({
-                            'sector_name': sector.name,
-                            'sector_id': sector.id,
-                            'partner_count': len(u)
+
+                            'id': sector.id,
+                            'name': sector.name,
+                            'key': 'partner_count',
+                            'value': len(partner_name)
                         })
                 if len(uniqueprogramid) != 0:
                     for p in uniqueprogramid:
-                        pr = Program.objects.filter(id=p).exclude(total_budget=None).values('id', 'total_budget',
-                                                                                            'name')
+                        pr = Program.objects.filter(id=p).exclude(total_budget=None).values('total_budget', 'name',
+                                                                                            'id')
                         top_prog_by_budget.append({
                             'id': pr[0]['id'],
                             'name': pr[0]['name'],
-                            'total_budget': pr.aggregate(Sum('total_budget'))['total_budget__sum']
+                            'key': 'total_budget',
+                            'value': pr.aggregate(Sum('total_budget'))['total_budget__sum']
                         })
-                print("ho")
-                test1 = sorted(sector_by_buget, key=lambda i: i['total_budget'], reverse=True)
+                test1 = sorted(sector_by_buget, key=lambda i: i['value'], reverse=True)
 
-                test2 = sorted(top_prog_by_budget, key=lambda i: i['total_budget'], reverse=True)
-                test3 = sorted(top_part_by_budget, key=lambda i: i['total_budget'], reverse=True)
-                test4 = sorted(top_sector_by_no_partner, key=lambda i: i['partner_count'], reverse=True)
+                test2 = sorted(top_prog_by_budget, key=lambda i: i['value'], reverse=True)
+                test3 = sorted(top_part_by_budget, key=lambda i: i['value'], reverse=True)
+                test4 = sorted(top_sector_by_no_partner, key=lambda i: i['value'], reverse=True)
                 total_budget = five.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
                 sector_count = five.distinct('program_id__sector').exclude(program_id__sector=None).count()
                 program_count = five.distinct('program_id').count()
