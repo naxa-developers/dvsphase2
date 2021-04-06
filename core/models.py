@@ -307,6 +307,7 @@ class Indicator(models.Model):
     abstract = models.CharField(max_length=1500, null=True, blank=True)
     category = models.CharField(max_length=500, null=True, blank=True)
     source = models.CharField(max_length=1500, null=True, blank=True)
+    url = models.CharField(max_length=1500, null=True, blank=True)
     federal_level = models.CharField(max_length=50, choices=fed, default='all')
     is_covid = models.BooleanField(default=True)
     show_flag = models.BooleanField(default=True)
@@ -566,5 +567,3 @@ class FAQ(models.Model):
 class TermsAndCondition(models.Model):
     title = models.TextField(blank=True, null=True)
     sub_title = models.TextField(blank=True, null=True)
-
-

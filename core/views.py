@@ -2002,9 +2002,7 @@ class IndicatorData(viewsets.ReadOnlyModelViewSet):
                 'gapanapa_id', 'indicator_id').order_by('id')
 
         else:
-
             if self.request.GET.getlist('province_id') == []:
-                print('herer')
                 queryset = IndicatorValue.objects.filter(indicator_id__in=id_indicator).select_related('gapanapa_id',
                                                                                                        'indicator_id').order_by(
                     'id')

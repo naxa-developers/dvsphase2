@@ -2570,7 +2570,7 @@ class UserDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
 class FiveDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = FiveW
     template_name = 'five_delete.html'
-    success_message = 'Fivew successfully deleted'
+    success_message = 'Row successfully deleted'
     success_url = reverse_lazy('five-list')
 
     def delete(self, request, *args, **kwargs):
