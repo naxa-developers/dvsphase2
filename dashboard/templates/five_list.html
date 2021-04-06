@@ -146,7 +146,7 @@
                 <th>Province</th>
                 <th>District</th>
                 <th>Municipality</th>
-                <th>Allocated Budget</th>
+                <th>BUDGET SPEND (£)</th>
                 <th>status</th>
                 <th style="width:40px"></th>
             </tr>
@@ -211,6 +211,11 @@
                 <div class="page-item pre-page">
                     <a href="?page={{ list.previous_page_number }}{% if partnerdata %}{% for x in partnerdata %}&partner={{x}}{% endfor %}{% endif %}{% if programdata %}{% for x in programdata %}&program={{x}}{% endfor %}{% endif %}{% if projectdata %}{% for x in projectdata %}&project={{x}}{% endfor %}{% endif %}{% if provincedata %}{% for x in provincedata %}&province={{x}}{% endfor %}{% endif %}{% if districtdata %}{% for x in districtdata %}&district={{x}}{% endfor %}{% endif %}{% if municipalitydata %}{% for x in municipalitydata %}&gapanapa={{x}}{% endfor %}{% endif %}">previous
                         page</a>
+                </div>
+                {% else %}
+                <div class="page-item pre-page">
+                    <a href="#">
+                        Page </a>
                 </div>
                 {% endif %}
                 <ul>
