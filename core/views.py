@@ -485,9 +485,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                 if ind['gapanapa_id__population'] is not None:
                                     indicator_value = (ind['value'] * ind['gapanapa_id__population'])
                                     value_sum = (value_sum + indicator_value)
-                                else:
-                                    indicator_value = (ind['value'])
-                                    value_sum = (value_sum + indicator_value)
+                                    
                         value = (value_sum / dist_pop_sum['population__sum'])
                         data.append({
                             'code': int(request.GET['province_code']),
@@ -620,7 +618,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     if d['federal_level'] == 'district':
                         initial_sum = 0
                         test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
-                                                             gapanapa_id__district_id__code=int(
+                                                             district_id__code=int(
                                                                  request.GET['district_code'])).values(
                             'value')
                         for test in test:
@@ -633,7 +631,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         })
                     else:
                         test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
-                                                             district_id__code=int(
+                                                             gapanapa_id__district_id__code=int(
                                                                  request.GET['district_code'])).values(
                             'value', 'gapanapa_id__population')
                         value_sum = 0
@@ -645,9 +643,6 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             if math.isnan(ind['value']) == False:
                                 if ind['gapanapa_id__population'] is not None:
                                     indicator_value = (ind['value'] * ind['gapanapa_id__population'])
-                                    value_sum = (value_sum + indicator_value)
-                                else:
-                                    indicator_value = (ind['value'])
                                     value_sum = (value_sum + indicator_value)
                             else:
                                 value_sum = (value_sum + 0)
