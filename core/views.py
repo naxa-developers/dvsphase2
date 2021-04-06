@@ -620,7 +620,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     if d['federal_level'] == 'district':
                         initial_sum = 0
                         test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
-                                                             gapanapa_id__district_id__code=int(
+                                                             district_id__code=int(
                                                                  request.GET['district_code'])).values(
                             'value')
                         for test in test:
@@ -633,7 +633,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         })
                     else:
                         test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
-                                                             district_id__code=int(
+                                                             gapanapa_id__district_id__code=int(
                                                                  request.GET['district_code'])).values(
                             'value', 'gapanapa_id__population')
                         value_sum = 0
