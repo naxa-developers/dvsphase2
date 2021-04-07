@@ -468,7 +468,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         data.append({
                             'code': int(request.GET['province_code']),
                             'indicator_id': d['id'],
-                            'indicator': d['indicator'],
+                            'indicator': d['full_title'],
                             'value': initial_sum
                         })
                     else:
@@ -485,7 +485,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                 if ind['gapanapa_id__population'] is not None:
                                     indicator_value = (ind['value'] * ind['gapanapa_id__population'])
                                     value_sum = (value_sum + indicator_value)
-                                    
+
                         value = (value_sum / dist_pop_sum['population__sum'])
                         data.append({
                             'code': int(request.GET['province_code']),
@@ -626,7 +626,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         data.append({
                             'code': int(request.GET['district_code']),
                             'indicator_id': d['id'],
-                            'indicator': d['indicator'],
+                            'indicator': d['full_title'],
                             'value': initial_sum
                         })
                     else:
@@ -788,7 +788,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     data.append({
                         'code': int(request.GET['municipality_code']),
                         'indicator_id': d['id'],
-                        'indicator': d['indicator'],
+                        'indicator': d['full_title'],
                         'value': initial_sum
                     })
                 five = FiveW.objects.filter(municipality_id__code=int(request.GET['municipality_code'])).exclude(
