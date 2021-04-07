@@ -541,12 +541,25 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         })
                 if len(sectoruniqueid) != 0:
                     for s in sectoruniqueid:
-                        dat = Program.objects.filter(sector=s)
+                        dat = Program.objects.filter(sector=s).exclude(total_budget=None)
                         sector = Sector.objects.get(id=s)
+                        sub_sec = [i.id for i in SubSector.objects.filter(sector_id=sector.id)]
                         total_budgetnew = 0
                         for d in dat:
+                            ho = d.sector_budget
+                            if ho:
+                                if ho != 'None':
+                                    sec_budget = 0
+                                    for h in ho.split(','):
+                                        x = h.split(':')
+                                        if int(x[0]) in sub_sec:
+                                            try:
+                                                sec_budget += float(x[1])
+                                            except:
+                                                pass
+                                    print(str(d.name)+str(sec_budget))
                             if d.total_budget:
-                                total_budgetnew += d.total_budget
+                                total_budgetnew += (d.total_budget * sec_budget) / 100
                             partner_count = d.partner_id.all()
                             for p in partner_count:
                                 if p.name not in partner_name:
@@ -612,7 +625,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             if 'district_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level__in=['district', 'all']).values('category', 'id',
                                                                                              'federal_level',
-                                                                                             'indicator').distinct()
+                                                                                             'indicator','full_title').distinct()
                 print(ind)
                 for d in ind:
                     if d['federal_level'] == 'district':
@@ -703,31 +716,29 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         })
                 if len(sectoruniqueid) != 0:
                     for s in sectoruniqueid:
-                        dat = Program.objects.filter(sector=s)
+                        dat = Program.objects.filter(sector=s).exclude(total_budget=None)
                         sector = Sector.objects.get(id=s)
+                        sub_sec = [i.id for i in SubSector.objects.filter(sector_id=sector.id)]
                         total_budgetnew = 0
                         for d in dat:
+                            ho = d.sector_budget
+                            if ho:
+                                if ho != 'None':
+                                    sec_budget = 0
+                                    for h in ho.split(','):
+                                        x = h.split(':')
+                                        if int(x[0]) in sub_sec:
+                                            try:
+                                                sec_budget += float(x[1])
+                                            except:
+                                                pass
+                                    print(str(d.name)+str(sec_budget))
                             if d.total_budget:
-                                total_budgetnew += d.total_budget
+                                total_budgetnew += (d.total_budget * sec_budget) / 100
                             partner_count = d.partner_id.all()
                             for p in partner_count:
                                 if p.name not in partner_name:
                                     partner_name.append(p.name)
-
-                        sector_by_buget.append({
-                            'id': sector.id,
-                            'name': sector.name,
-                            'key': 'total_budget',
-                            'value': total_budgetnew
-
-                        })
-                        top_sector_by_no_partner.append({
-
-                            'id': sector.id,
-                            'name': sector.name,
-                            'key': 'partner_count',
-                            'value': len(partner_name)
-                        })
                 if len(uniqueprogramid) != 0:
                     for p in uniqueprogramid:
                         pr = Program.objects.filter(id=p).exclude(total_budget=None).values('total_budget', 'name',
@@ -837,31 +848,29 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         })
                 if len(sectoruniqueid) != 0:
                     for s in sectoruniqueid:
-                        dat = Program.objects.filter(sector=s)
+                        dat = Program.objects.filter(sector=s).exclude(total_budget=None)
                         sector = Sector.objects.get(id=s)
+                        sub_sec = [i.id for i in SubSector.objects.filter(sector_id=sector.id)]
                         total_budgetnew = 0
                         for d in dat:
+                            ho = d.sector_budget
+                            if ho:
+                                if ho != 'None':
+                                    sec_budget = 0
+                                    for h in ho.split(','):
+                                        x = h.split(':')
+                                        if int(x[0]) in sub_sec:
+                                            try:
+                                                sec_budget += float(x[1])
+                                            except:
+                                                pass
+                                    print(str(d.name)+str(sec_budget))
                             if d.total_budget:
-                                total_budgetnew += d.total_budget
+                                total_budgetnew += (d.total_budget * sec_budget) / 100
                             partner_count = d.partner_id.all()
                             for p in partner_count:
                                 if p.name not in partner_name:
                                     partner_name.append(p.name)
-
-                        sector_by_buget.append({
-                            'id': sector.id,
-                            'name': sector.name,
-                            'key': 'total_budget',
-                            'value': total_budgetnew
-
-                        })
-                        top_sector_by_no_partner.append({
-
-                            'id': sector.id,
-                            'name': sector.name,
-                            'key': 'partner_count',
-                            'value': len(partner_name)
-                        })
                 if len(uniqueprogramid) != 0:
                     for p in uniqueprogramid:
                         pr = Program.objects.filter(id=p).exclude(total_budget=None).values('total_budget', 'name',
