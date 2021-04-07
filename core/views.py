@@ -490,7 +490,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         data.append({
                             'code': int(request.GET['province_code']),
                             'indicator_id': d['id'],
-                            'indicator': d['indicator'],
+                            'indicator': d['full_title'],
                             'value': value
                         })
                 five = FiveW.objects.filter(province_id__code=int(request.GET['province_code'])).exclude(
@@ -653,7 +653,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         data.append({
                             'code': int(request.GET['district_code']),
                             'indicator_id': d['id'],
-                            'indicator': d['indicator'],
+                            'indicator': d['full_title'],
                             'value': value_sum
                         })
                 five = FiveW.objects.filter(district_id__code=int(request.GET['district_code'])).exclude(
