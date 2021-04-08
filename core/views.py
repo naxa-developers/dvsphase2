@@ -739,6 +739,21 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             for p in partner_count:
                                 if p.name not in partner_name:
                                     partner_name.append(p.name)
+
+                        sector_by_buget.append({
+                            'id': sector.id,
+                            'name': sector.name,
+                            'key': 'total_budget',
+                            'value': total_budgetnew
+
+                        })
+                        top_sector_by_no_partner.append({
+
+                            'id': sector.id,
+                            'name': sector.name,
+                            'key': 'partner_count',
+                            'value': len(partner_name)
+                        })
                 if len(uniqueprogramid) != 0:
                     for p in uniqueprogramid:
                         pr = Program.objects.filter(id=p).exclude(total_budget=None).values('total_budget', 'name',
@@ -871,6 +886,22 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             for p in partner_count:
                                 if p.name not in partner_name:
                                     partner_name.append(p.name)
+
+
+                        sector_by_buget.append({
+                            'id': sector.id,
+                            'name': sector.name,
+                            'key': 'total_budget',
+                            'value': total_budgetnew
+
+                        })
+                        top_sector_by_no_partner.append({
+
+                            'id': sector.id,
+                            'name': sector.name,
+                            'key': 'partner_count',
+                            'value': len(partner_name)
+                        })
                 if len(uniqueprogramid) != 0:
                     for p in uniqueprogramid:
                         pr = Program.objects.filter(id=p).exclude(total_budget=None).values('total_budget', 'name',
