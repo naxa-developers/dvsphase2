@@ -547,9 +547,9 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         total_budgetnew = 0
                         for d in dat:
                             ho = d.sector_budget
+                            sec_budget = 0
                             if ho:
                                 if ho != 'None':
-                                    sec_budget = 0
                                     for h in ho.split(','):
                                         x = h.split(':')
                                         if int(x[0]) in sub_sec:
@@ -722,9 +722,9 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         total_budgetnew = 0
                         for d in dat:
                             ho = d.sector_budget
+                            sec_budget = 0
                             if ho:
                                 if ho != 'None':
-                                    sec_budget = 0
                                     for h in ho.split(','):
                                         x = h.split(':')
                                         if int(x[0]) in sub_sec:
@@ -853,10 +853,10 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         sub_sec = [i.id for i in SubSector.objects.filter(sector_id=sector.id)]
                         total_budgetnew = 0
                         for d in dat:
+                            sec_budget = 0
                             ho = d.sector_budget
                             if ho:
                                 if ho != 'None':
-                                    sec_budget = 0
                                     for h in ho.split(','):
                                         x = h.split(':')
                                         if int(x[0]) in sub_sec:
