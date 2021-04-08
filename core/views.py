@@ -23,6 +23,7 @@ from django.db.models import Q
 from rest_framework.parsers import MultiPartParser, FormParser
 from .filters import fivew, fivew_province, fivew_district, fivew_municipality
 from datetime import datetime, date
+from django.db.models import Q
 
 
 # Create your views here.
@@ -1876,6 +1877,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
         return Response({"results": data})
 
 
+
 class SummaryData(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = True
@@ -1901,13 +1903,13 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
             supplier = list(Partner.objects.values_list('id', flat=True))
             count.append('supplier')
 
-        if request.GET.getlist('component_code'):
-            comp = request.GET['component_code']
+        if request.GET.getlist('component_id'):
+            comp = request.GET['component_id']
             component = comp.split(",")
             for i in range(0, len(component)):
-                component[i] = str(component[i])
+                component[i] = int(component[i])
         else:
-            component = list(Project.objects.values_list('code', flat=True))
+            component = list(Project.objects.values_list('id', flat=True))
             count.append('component')
 
         if request.GET.getlist('marker_category_id'):
@@ -1946,7 +1948,7 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
             sub_sector = list(SubSector.objects.values_list('id', flat=True))
             count.append('sub_sector')
 
-        if count:
+        if len(count) != 0:
             if len(count) == 7:
                 query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id')
             else:
@@ -1955,14 +1957,6 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
         else:
             query = fivew(supplier, program, component, sector, sub_sector, markers, markers_value,
                           count)
-
-        # query = FiveW.objects.filter(
-        #         program_id__in=program, component_id__in=component, supplier_id__in=supplier,
-        #         component_id__sector__id__in=sector,
-        #         component_id__sub_sector__id__in=sub_sector,
-        #         program_id__marker_category__id__in=markers,
-        #         program_id__marker_value__id__in=markers_value
-        #     )
         if query.aggregate(Sum('allocated_budget')).get('allocated_budget__sum') is None:
             all_budget = {'allocated_budget__sum': 0}
         else:
@@ -1977,7 +1971,7 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
         total_partner = Partner.objects.all().count()
         total_component = Project.objects.all().count()
         total_sector = Sector.objects.all().count()
-        total_allocated_budget = Program.objects.values('id', 'total_budget')
+        total_allocated_budget = Program.objects.values('total_budget')
         total_budget = total_allocated_budget.aggregate(Sum('total_budget'))
 
         return Response({

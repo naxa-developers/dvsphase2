@@ -1,5 +1,6 @@
 from .models import FiveW
 from django.db.models import Sum
+from django.db.models import Q
 
 
 def fivew(supplier, program, component, sector, sub_sector, markers, markers_value, count):
@@ -13,20 +14,8 @@ def fivew(supplier, program, component, sector, sub_sector, markers, markers_val
         if x and name_list[index] not in count:
             filter_dict[key_list[index]] = x
 
-    dat_values = FiveW.objects.filter(**filter_dict).values('id', 'allocated_budget', 'province_id__code',
-                                                            'district_id__code', 'municipality_id__code',
-                                                            'component_id',
-                                                            'program_id', 'allocated_budget', 'program_id__name',
-                                                            'component_id__name', 'supplier_id__name',
-                                                            'program_id__sector__name', 'program_id__sub_sector__name',
-                                                            'program_id__marker_category__name',
-                                                            'program_id__marker_value__value').distinct()
+    dat_values = FiveW.objects.filter(**filter_dict).values('id').distinct()
 
-    dat_values = dat_values.exclude(
-        municipality_id__code='-1',
-        district_id__code='-1',
-        province_id__code='-1')
-    # print(dat_values.aggregate(Sum('allocated_budget')))
     return dat_values
 
 
@@ -41,19 +30,8 @@ def fivew_province(province, supplier, program, component, sector, sub_sector, m
         if x and name_list[index] not in count:
             filter_dict[key_list[index]] = x
 
-    dat_values = FiveW.objects.filter(**filter_dict).values('id', 'allocated_budget', 'province_id__code',
-                                                            'district_id__code', 'municipality_id__code',
-                                                            'component_id',
-                                                            'program_id', 'allocated_budget', 'program_id__name',
-                                                            'component_id__name', 'supplier_id__name',
-                                                            'program_id__sector__name', 'program_id__sub_sector__name',
-                                                            'program_id__marker_category__name',
-                                                            'program_id__marker_value__value').distinct()
+    dat_values = FiveW.objects.filter(**filter_dict).values('id').distinct()
 
-    dat_values = dat_values.exclude(
-        municipality_id__code='-1',
-        district_id__code='-1',
-        province_id__code='-1')
     return dat_values
 
 
@@ -68,18 +46,8 @@ def fivew_municipality(municipality, supplier, program, component, sector, sub_s
         if x and name_list[index] not in count:
             filter_dict[key_list[index]] = x
 
-    dat_values = FiveW.objects.filter(**filter_dict).values('id', 'allocated_budget', 'province_id__code',
-                                                            'district_id__code', 'municipality_id__code',
-                                                            'component_id',
-                                                            'program_id', 'allocated_budget', 'program_id__name',
-                                                            'component_id__name', 'supplier_id__name',
-                                                            'program_id__sector__name', 'program_id__sub_sector__name',
-                                                            'program_id__marker_category__name',
-                                                            'program_id__marker_value__value').distinct()
-    dat_values = dat_values.exclude(
-        municipality_id__code='-1',
-        district_id__code='-1',
-        province_id__code='-1')
+    dat_values = FiveW.objects.filter(**filter_dict).values('id').distinct()
+
     return dat_values
 
 
@@ -94,17 +62,7 @@ def fivew_district(district, supplier, program, component, sector, sub_sector, m
         if x and name_list[index] not in count:
             filter_dict[key_list[index]] = x
     print(filter_dict)
-    dat_values = FiveW.objects.filter(**filter_dict).values('id', 'allocated_budget', 'province_id__code',
-                                                            'district_id__code', 'municipality_id__code',
-                                                            'component_id',
-                                                            'program_id', 'allocated_budget', 'program_id__name',
-                                                            'component_id__name', 'supplier_id__name',
-                                                            'program_id__sector__name', 'program_id__sub_sector__name',
-                                                            'program_id__marker_category__name',
-                                                            'program_id__marker_value__value').distinct()
-    dat_values = dat_values.exclude(
-        municipality_id__code='-1',
-        district_id__code='-1',
-        province_id__code='-1'
-    )
+    dat_values = FiveW.objects.filter(**filter_dict).values('id').distinct()
+
     return dat_values
+
