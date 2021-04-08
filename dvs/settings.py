@@ -159,7 +159,7 @@ SWAGGER_SETTINGS = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 20000
-
+DATA_UPLOAD_MAX_MEMORY_SIZE = 157286400
 STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

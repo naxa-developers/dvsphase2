@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+{% if perms.core.view_user %}
 <main class="dfid-main">
     <!-- dfid breadcrumb -->
     <div class="dfid-breadcrumb pdt-100">
@@ -137,4 +138,76 @@
         </table>
     </div>
 </main>
+{% else %}
+<body class="">
+        <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+                <tbody>
+                        <tr>
+                                <td style="line-height:30px;font-size:0;" height="30">
+                                   
+                                </td>
+                              </tr>
+                  <tr>
+                    <td style="font-size:0;" align="center">
+                      <div style="display:inline-block;width:100%;max-width:800px;vertical-align:top;" class="width800">
+                        <table class="display-width" style="max-width:800px; " width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+                          <tbody>
+                            <tr>
+                              <td class="padding" align="center">
+                                <div style="display:inline-block;width:100%;max-width:600px;vertical-align:top;font-family:'Montserrat', sans-serif; border: 1px solid #efefef;" class="main-width">
+                                  <table class="display-width-inner" style="max-width:600px;" width="100%" cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#efefef">
+                                    <tbody>
+                                      <tr>
+                                        <td style="line-height:30px;font-size:0;" height="30">
+                                           
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                          <td style="text-align: center; padding: 40px 0; border-bottom: 1px solid #f9f9f9;">
+                                            <a class="logo" href="" style="display: inline-block; margin: 0 auto; max-width:200px;">
+                                                    <img src="https://logodix.com/logo/1989451.png" alt="" width="200px">
+                                            </a>
+
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                            <td style="line-height:30px;font-size:0;" height="30">
+                                               
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                              <td style="font-family: 'Montserrat', sans-serif ; text-align: center; padding: 1rem 2rem;">
+
+                                                    <p style="font-size: .875rem; font-weight: 500; line-height: 1.5; letter-spacing:.25px;">
+                                                       <strong style="font-size: 45px;">404 </strong>
+                                                        <br>
+                                                        <strong>Sorry ,You don't have permission to view this page.</strong>
+                                                        <br>
+
+
+                                                        <a href="/dashboard/main/" style="color: #05367D; text-decoration: none;">Go Back</a>
+                                                    </p>
+                                              </td>ne
+                                          </tr>
+                                    <tr>
+                                            <td style="line-height:30px;font-size:0;" height="30">
+                                               
+                                            </td>
+                                          </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </td>
+</tr>
+</tbody>
+</table>
+
+
+</body>
+{% endif %}
 {% endblock %}
