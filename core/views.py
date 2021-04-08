@@ -449,7 +449,6 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             top_prog_by_budget = []
             supplier_ids = []
             top_part_by_budget = []
-            partner_name = []
             top_sector_by_no_partner = []
             fivew_data = []
             if 'province_code' in request.GET:
@@ -545,6 +544,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         sector = Sector.objects.get(id=s)
                         sub_sec = [i.id for i in SubSector.objects.filter(sector_id=sector.id)]
                         total_budgetnew = 0
+                        partner_name = []
                         for d in dat:
                             ho = d.sector_budget
                             sec_budget = 0
@@ -557,7 +557,6 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                                 sec_budget += float(x[1])
                                             except:
                                                 pass
-                                    print(str(d.name) + str(sec_budget))
                             if d.total_budget:
                                 total_budgetnew += (d.total_budget * sec_budget) / 100
                             partner_count = d.partner_id.all()
@@ -619,7 +618,6 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             top_prog_by_budget = []
             top_part_by_budget = []
             supplier_ids = []
-            partner_name = []
             top_sector_by_no_partner = []
             fivew_data = []
             if 'district_code' in request.GET:
@@ -721,6 +719,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         sector = Sector.objects.get(id=s)
                         sub_sec = [i.id for i in SubSector.objects.filter(sector_id=sector.id)]
                         total_budgetnew = 0
+                        partner_name = []
                         for d in dat:
                             ho = d.sector_budget
                             sec_budget = 0
@@ -794,7 +793,6 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             top_prog_by_budget = []
             supplier_ids = []
             top_part_by_budget = []
-            partner_name = []
             top_sector_by_no_partner = []
             fivew_data = []
             if 'municipality_code' in request.GET:
@@ -868,6 +866,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         sector = Sector.objects.get(id=s)
                         sub_sec = [i.id for i in SubSector.objects.filter(sector_id=sector.id)]
                         total_budgetnew = 0
+                        partner_name = []
                         for d in dat:
                             sec_budget = 0
                             ho = d.sector_budget
