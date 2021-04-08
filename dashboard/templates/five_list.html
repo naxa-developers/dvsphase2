@@ -26,6 +26,10 @@
             <li style="padding-left:10px"><a href="/dashboard/clear-data" class="border-button dfid-button sm-button"><i class="material-icons">add_circle_outline</i>Clear All Data</a>
             </li>
             {% endif %} -->
+            <li style="padding-left:10px" ><a href="#"
+                    class="border-button dfid-button sm-button" id="export_id"><i
+                    class="material-icons">system_update</i>Export</a>
+            </li>
             {% if perms.core.add_fivew %}
             <li style="padding-left:10px"><a href="/dashboard/bulk-upload"
                                              class="border-button dfid-button sm-button"><i class="material-icons">view_agenda</i>Bulk
@@ -33,10 +37,6 @@
 
             </li>
             {% endif %}
-            <li style="padding-left:10px" ><a href="#"
-                    class="border-button dfid-button sm-button" id="export_id"><i
-                    class="material-icons">system_update</i>Export</a>
-            </li>
             <li style="padding-left:10px" ><a href="#"
                     class="border-button dfid-button sm-button" data-toggle="modal" data-target="#confirmModal"><i
                     class="material-icons">delete</i>Delete Filtered Data</a>
