@@ -557,7 +557,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                                 sec_budget += float(x[1])
                                             except:
                                                 pass
-                                    print(str(d.name)+str(sec_budget))
+                                    print(str(d.name) + str(sec_budget))
                             if d.total_budget:
                                 total_budgetnew += (d.total_budget * sec_budget) / 100
                             partner_count = d.partner_id.all()
@@ -625,7 +625,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             if 'district_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level__in=['district', 'all']).values('category', 'id',
                                                                                              'federal_level',
-                                                                                             'indicator','full_title').distinct()
+                                                                                             'indicator',
+                                                                                             'full_title').distinct()
                 print(ind)
                 for d in ind:
                     if d['federal_level'] == 'district':
@@ -732,7 +733,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                                 sec_budget += float(x[1])
                                             except:
                                                 pass
-                                    print(str(d.name)+str(sec_budget))
+                                    print(str(d.name) + str(sec_budget))
                             if d.total_budget:
                                 total_budgetnew += (d.total_budget * sec_budget) / 100
                             partner_count = d.partner_id.all()
@@ -879,14 +880,13 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                                 sec_budget += float(x[1])
                                             except:
                                                 pass
-                                    print(str(d.name)+str(sec_budget))
+                                    print(str(d.name) + str(sec_budget))
                             if d.total_budget:
                                 total_budgetnew += (d.total_budget * sec_budget) / 100
                             partner_count = d.partner_id.all()
                             for p in partner_count:
                                 if p.name not in partner_name:
                                     partner_name.append(p.name)
-
 
                         sector_by_buget.append({
                             'id': sector.id,
@@ -2171,9 +2171,11 @@ class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
                     start_date_new = date(int(a[0]), int(a[1]), int(a[2]))
                     b = end_date.split('-')
                     end_date_new = date(int(b[0]), int(b[1]), int(b[2]))
+                    print(str('Start Date') + ':' + str(start_date) + str('End Date') + ':' + str(end_date))
                     if p['start_date'] <= start_date_new <= end_date_new <= p['end_date'] or start_date_new <= p[
                         'start_date'] <= p['end_date'] <= end_date_new:
                         ids.append(p['id'])
+            print(ids)
             queryset = Program.objects.filter(id__in=ids).order_by('id')
         else:
             queryset = Program.objects.order_by('id')
