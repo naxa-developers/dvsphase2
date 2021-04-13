@@ -1274,11 +1274,6 @@ class ProvinceIndicator(viewsets.ModelViewSet):
         id_indicator = id_indicators.split(",")
         for i in range(0, len(id_indicator)):
             id_indicator[i] = int(id_indicator[i])
-        # id_indicators = request.data
-        # id_indicator = id_indicators['indicatorId']
-        # health_id = Indicator.objects.get(indicator='number_hospitals')
-        # health_id_b = Indicator.objects.get(indicator='household_affected_covid')
-        # financial = Indicator.objects.get(indicator='number_financial_institutions')
         for i in range(0, len(id_indicator)):
             for dist in province:
                 value_sum = 0
@@ -1286,35 +1281,28 @@ class ProvinceIndicator(viewsets.ModelViewSet):
                     province_id=dist['id']).aggregate(
                     Sum('population'))
                 indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
-                                                          'gapanapa_id__population',
-                                                          'indicator_id__federal_level').filter(
+                                                          'gapanapa_id__population').filter(
                     indicator_id=int(id_indicator[i]),
-                    province_id=dist['id'])
+                    gapanapa_id__province_id=dist['id'])
                 for ind in indicator:
-                    if ind['indicator_id__federal_level'] == 'province':
-                        value = ind['value']
-                    elif ind['indicator_id__federal_level'] == 'all':
-                        if math.isnan(ind['value']) == False:
-                            if ind['gapanapa_id__population'] is not None:
-                                indicator_value = (ind['value'] * ind['gapanapa_id__population'])
-                                value_sum = (value_sum + indicator_value)
-                            else:
-                                indicator_value = (ind['value'])
-                                value_sum = (value_sum + indicator_value)
-                        value = (value_sum / dist_pop_sum['population__sum'])
+                    if math.isnan(ind['value']) == False:
+                        indicator_value = (ind['value'] * ind['gapanapa_id__population'])
+                        # print(indicator_value)
+                        value_sum = (value_sum + indicator_value)
+                    else:
+                        value_sum = (value_sum + 0)
 
-                    if ind['indicator_id__federal_level'] == 'province' or ind['indicator_id__federal_level'] == 'all':
-                        data.append(
-                            {
-                                'id': dist['id'],
-                                'indicator_id': int(id_indicator[i]),
-                                'code': dist['code'],
-                                # 'value_sum': value_sum,
-                                # 'population': dist_pop_sum['population__sum'],
-                                'value': value
+                value = (value_sum / dist_pop_sum['population__sum'])
 
-                            }
-                        )
+                data.append(
+                    {
+                        'id': dist['id'],
+                        'indicator_id': int(id_indicator[i]),
+                        'code': dist['code'],
+                        'value': value
+
+                    }
+                )
 
         return Response({"results": data})
 
