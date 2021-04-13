@@ -1533,7 +1533,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                     # print(len(da))
                     for d in da:
                         sec_budget = 0
-                        if d:
+                        if d['program_id__sector_budget']:
                             if d['program_id__sector_budget'] != 'None':
                                 for h in d['program_id__sector_budget'].split(','):
                                     x = h.split(':')
@@ -1698,17 +1698,15 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 # print(len(query))
                 total_new_budget1 = 0
                 prog = query.values_list('program_id__name', flat=True).distinct()
-                print(len(prog))
                 if request.GET.getlist('sector_id'):
                     da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
                                       'allocated_budget')
-                    print(str(province['name']) + ': ' + str(len(da)))
                     sub_sec = [i.id for i in SubSector.objects.filter(sector_id__in=sector)]
                     # print(sub_sec)
                     # print(len(da))
                     for d in da:
                         sec_budget = 0
-                        if d:
+                        if d['program_id__sector_budget']:
                             if d['program_id__sector_budget'] != 'None':
                                 for h in d['program_id__sector_budget'].split(','):
                                     x = h.split(':')
@@ -1901,7 +1899,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                     # print(len(da))
                     for d in da:
                         sec_budget = 0
-                        if d:
+                        if d['program_id__sector_budget']:
                             if d['program_id__sector_budget'] != 'None':
                                 for h in d['program_id__sector_budget'].split(','):
                                     x = h.split(':')
@@ -2048,7 +2046,7 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
             # print(len(da))
             for d in da:
                 sec_budget = 0
-                if d:
+                if d['program_id__sector_budget']:
                     if d['program_id__sector_budget'] != 'None':
                         for h in d['program_id__sector_budget'].split(','):
                             x = h.split(':')
@@ -2414,7 +2412,7 @@ class Popup(viewsets.ReadOnlyModelViewSet):
             # print(len(da))
             for d in da:
                 sec_budget = 0
-                if d:
+                if d['program_id__sector_budget']:
                     if d['program_id__sector_budget'] != 'None':
                         for h in d['program_id__sector_budget'].split(','):
                             x = h.split(':')
