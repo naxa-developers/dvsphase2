@@ -1,0 +1,776 @@
+objectid,palika,district,palika_name,gn_type,province_code,district_code,mun_code,lu_cbs_code,hlcit_id,admin2pcode,indicators,value,Fulltitle,Abstract,Category,Year,value_formula,,,HLICT_Code,Community_school
+,Phungling Nagarpalika,TAPLEJUNG,Phungling,Nagarpalika,1,1,6,10106,524 1 01 3 001,NP0101301,e_i_f_n_c_s,51,Community School,,Total number of schools community/institutional,,51,,,524 7 70 4 001,32
+,Phaktanglung Gaunpalika,TAPLEJUNG,Phaktanglung,Gaunpalika,1,1,5,10101,524 1 01 4 001,NP0101401,e_i_f_n_c_s,43,Community School,,Total number of schools community/institutional,,43,,,524 2 33 4 009,14
+,Mikwakhola Gaunpalika,TAPLEJUNG,Mikwakhola,Gaunpalika,1,1,4,10102,524 1 01 4 002,NP0101402,e_i_f_n_c_s,27,Community School,,Total number of schools community/institutional,,27,,,524 5 55 4 007,44
+,Sirijangha Gaunpalika,TAPLEJUNG,Sirijangha,Gaunpalika,1,1,8,10108,524 1 01 4 003,NP0101403,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,524 7 73 4 004,42
+,Meringden Gaunpalika,TAPLEJUNG,Meringden,Gaunpalika,1,1,3,10103,524 1 01 4 004,NP0101404,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,524 1 10 4 006,43
+,Maiwakhola Gaunpalika,TAPLEJUNG,Maiwakhola,Gaunpalika,1,1,2,10104,524 1 01 4 005,NP0101405,e_i_f_n_c_s,28,Community School,,Total number of schools community/institutional,,28,,,524 4 40 4 005,41
+,Aathrai Tribeni Gaunpalika,TAPLEJUNG,Aathrai Tribeni,Gaunpalika,1,1,1,10105,524 1 01 4 006,NP0101406,e_i_f_n_c_s,35,Community School,,Total number of schools community/institutional,,35,,,524 4 41 4 001,41
+,Yangwarak Gaunpalika,TAPLEJUNG,Yangwarak,Gaunpalika,1,1,9,10107,524 1 01 4 007,NP0101407,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,524 4 36 4 006,42
+,Sidingba Gaunpalika,TAPLEJUNG,Sidingba,Gaunpalika,1,1,7,10109,524 1 01 4 008,NP0101408,e_i_f_n_c_s,39,Community School,,Total number of schools community/institutional,,39,,,524 6 52 3 001,59
+,Phidim Nagarpalika,PANCHTHAR,Phidim,Nagarpalika,1,2,15,10904,524 1 02 3 001,NP0102301,e_i_f_n_c_s,80,Community School,,Total number of schools community/institutional,,80,,,524 1 08 4 003,59
+,Hilihang Gaunpalika,PANCHTHAR,Hilihang,Gaunpalika,1,2,12,10902,524 1 02 4 001,NP0102401,e_i_f_n_c_s,44,Community School,,Total number of schools community/institutional,,44,,,524 1 01 4 006,35
+,Yangwarak Gaunpalika,PANCHTHAR,Yangwarak,Gaunpalika,1,2,17,10107,524 1 02 4 002,NP0102402,e_i_f_n_c_s,43,Community School,,Total number of schools community/institutional,,43,,,524 6 61 3 001,58
+,Falelung Gaunpalika,PANCHTHAR,Falelung,Gaunpalika,1,2,10,10903,524 1 02 4 003,NP0102403,e_i_f_n_c_s,47,Community School,,Total number of schools community/institutional,,47,,,524 6 66 4 007,19
+,Kummayak Gaunpalika,PANCHTHAR,Kummayak,Gaunpalika,1,2,13,10906,524 1 02 4 004,NP0102404,e_i_f_n_c_s,39,Community School,,Total number of schools community/institutional,,39,,,524 2 15 4 002,21
+,Falgunanda Gaunpalika,PANCHTHAR,Falgunanda,Gaunpalika,1,2,11,10905,524 1 02 4 005,NP0102405,e_i_f_n_c_s,40,Community School,,Total number of schools community/institutional,,40,,,524 1 12 4 001,43
+,Tumbewa Gaunpalika,PANCHTHAR,Tumbewa,Gaunpalika,1,2,16,10907,524 1 02 4 006,NP0102406,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 7 73 4 002,33
+,Miklajung Gaunpalika,PANCHTHAR,Miklajung,Gaunpalika,1,2,14,10908,524 1 02 4 007,NP0102407,e_i_f_n_c_s,56,Community School,,Total number of schools community/institutional,,56,,,524 4 36 4 002,32
+,Deumai Nagarpalika,ILAM,Deumai,Nagarpalika,1,3,19,11004,524 1 03 3 001,NP0103301,e_i_f_n_c_s,54,Community School,,Total number of schools community/institutional,,54,,,524 7 73 3 002,31
+,Illam Nagarpalika,ILAM,Illam,Nagarpalika,1,3,21,11003,524 1 03 3 002,NP0103302,e_i_f_n_c_s,58,Community School,,Total number of schools community/institutional,,58,,,524 4 39 4 001,54
+,Suryodaya Nagarpalika,ILAM,Suryodaya,Nagarpalika,1,3,27,11009,524 1 03 3 003,NP0103303,e_i_f_n_c_s,71,Community School,,Total number of schools community/institutional,,71,,,524 4 44 4 003,38
+,Mai Nagarpalika,ILAM,Mai,Nagarpalika,1,3,22,11008,524 1 03 3 004,NP0103304,e_i_f_n_c_s,50,Community School,,Total number of schools community/institutional,,50,,,524 7 75 4 003,24
+,Fakphokthum Gaunpalika,ILAM,Fakphokthum,Gaunpalika,1,3,20,11005,524 1 03 4 001,NP0103401,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,524 4 41 4 003,33
+,Sandakpur Gaunpalika,ILAM,Sandakpur,Gaunpalika,1,3,26,11002,524 1 03 4 002,NP0103402,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 1 04 3 004,32
+,Maijogmai Gaunpalika,ILAM,Maijogmai,Gaunpalika,1,3,23,11001,524 1 03 4 003,NP0103403,e_i_f_n_c_s,38,Community School,,Total number of schools community/institutional,,38,,,524 2 16 4 003,15
+,Chulachuli Gaunpalika,ILAM,Chulachuli,Gaunpalika,1,3,18,11007,524 1 03 4 004,NP0103404,e_i_f_n_c_s,23,Community School,,Total number of schools community/institutional,,23,,,524 1 10 4 003,36
+,Mangsebung Gaunpalika,ILAM,Mangsebung,Gaunpalika,1,3,24,11006,524 1 03 4 005,NP0103405,e_i_f_n_c_s,33,Community School,,Total number of schools community/institutional,,33,,,524 2 16 4 004,15
+,Rong Gaunpalika,ILAM,Rong,Gaunpalika,1,3,25,11010,524 1 03 4 006,NP0103406,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 2 17 4 003,10
+,Damak Nagarpalika,JHAPA,Damak,Nagarpalika,1,4,33,11107,524 1 04 3 001,NP0104301,e_i_f_n_c_s,25,Community School,,Total number of schools community/institutional,,25,,,524 2 18 3 003,17
+,Shivasataxi Nagarpalika,JHAPA,Shivasataxi,Nagarpalika,1,4,42,11105,524 1 04 3 002,NP0104302,e_i_f_n_c_s,39,Community School,,Total number of schools community/institutional,,39,,,524 5 56 4 001,34
+,Kankai Nagarpalika,JHAPA,Kankai,Nagarpalika,1,4,40,11104,524 1 04 3 003,NP0104303,e_i_f_n_c_s,17,Community School,,Total number of schools community/institutional,,17,,,524 5 58 4 002,43
+,Arjundhara Nagarpalika,JHAPA,Arjundhara,Nagarpalika,1,4,28,11103,524 1 04 3 004,NP0104304,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 7 70 4 006,40
+,Mechinagar Nagarpalika,JHAPA,Mechinagar,Nagarpalika,1,4,41,11101,524 1 04 3 005,NP0104305,e_i_f_n_c_s,43,Community School,,Total number of schools community/institutional,,43,,,524 4 43 4 003,62
+,Gauradhaha Nagarpalika,JHAPA,Gauradhaha,Nagarpalika,1,4,34,11108,524 1 04 3 006,NP0104306,e_i_f_n_c_s,35,Community School,,Total number of schools community/institutional,,35,,,524 7 68 3 002,25
+,Birtamod Nagarpalika,JHAPA,Birtamod,Nagarpalika,1,4,31,11112,524 1 04 3 007,NP0104307,e_i_f_n_c_s,26,Community School,,Total number of schools community/institutional,,26,,,524 6 53 3 002,70
+,Bhadrapur Nagarpalika,JHAPA,Bhadrapur,Nagarpalika,1,4,30,11114,524 1 04 3 008,NP0104308,e_i_f_n_c_s,33,Community School,,Total number of schools community/institutional,,33,,,524 5 46 4 005,31
+,Kamal Gaunpalika,JHAPA,Kamal,Gaunpalika,1,4,39,11106,524 1 04 4 001,NP0104401,e_i_f_n_c_s,27,Community School,,Total number of schools community/institutional,,27,,,524 4 43 3 003,111
+,Buddhashanti Gaunpalika,JHAPA,Buddhashanti,Gaunpalika,1,4,32,11102,524 1 04 4 002,NP0104402,e_i_f_n_c_s,19,Community School,,Total number of schools community/institutional,,19,,,524 3 25 4 001,46
+,Gauriganj Gaunpalika,JHAPA,Gauriganj,Gaunpalika,1,4,35,11109,524 1 04 4 003,NP0104403,e_i_f_n_c_s,26,Community School,,Total number of schools community/institutional,,26,,,524 3 31 4 008,50
+,Jhapa Gaunpalika,JHAPA,Jhapa,Gaunpalika,1,4,37,11110,524 1 04 4 004,NP0104404,e_i_f_n_c_s,40,Community School,,Total number of schools community/institutional,,40,,,524 2 19 3 001,14
+,Barhadashi Gaunpalika,JHAPA,Barhadashi,Gaunpalika,1,4,29,11111,524 1 04 4 005,NP0104405,e_i_f_n_c_s,24,Community School,,Total number of schools community/institutional,,24,,,524 3 23 3 003,52
+,Haldibari Gaunpalika,JHAPA,Haldibari,Gaunpalika,1,4,36,11113,524 1 04 4 006,NP0104406,e_i_f_n_c_s,18,Community School,,Total number of schools community/institutional,,18,,,524 4 45 4 003,17
+,Kachankawal Gaunpalika,JHAPA,Kachankawal,Gaunpalika,1,4,38,11115,524 1 04 4 007,NP0104407,e_i_f_n_c_s,33,Community School,,Total number of schools community/institutional,,33,,,524 2 34 3 002,21
+,Biratnagar Mahanagarpalika,MORANG,Biratnagar,Mahanagarpalika,1,5,44,11214,524 1 05 1 001,NP0105101,e_i_f_n_c_s,83,Community School,,Total number of schools community/institutional,,83,,,524 5 57 4 002,42
+,Letang Nagarpalika,MORANG,Letang,Nagarpalika,1,5,52,11202,524 1 05 3 001,NP0105301,e_i_f_n_c_s,34,Community School,,Total number of schools community/institutional,,34,,,524 3 22 4 004,36
+,Sundarharaicha Nagarpalika,MORANG,Sundarharaicha,Nagarpalika,1,5,57,11204,524 1 05 3 002,NP0105302,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,524 3 31 4 007,75
+,Belbari Nagarpalika,MORANG,Belbari,Nagarpalika,1,5,43,11205,524 1 05 3 003,NP0105303,e_i_f_n_c_s,28,Community School,,Total number of schools community/institutional,,28,,,524 2 15 4 004,18
+,Patahrishanishchare Nagarpalika,MORANG,Patahrishanishchare,Nagarpalika,1,5,54,11207,524 1 05 3 004,NP0105304,e_i_f_n_c_s,27,Community School,,Total number of schools community/institutional,,27,,,524 2 19 3 011,27
+,Uralabari Nagarpalika,MORANG,Uralabari,Nagarpalika,1,5,59,11208,524 1 05 3 005,NP0105305,e_i_f_n_c_s,20,Community School,,Total number of schools community/institutional,,20,,,524 2 18 3 007,29
+,Rangeli Nagarpalika,MORANG,Rangeli,Nagarpalika,1,5,55,11211,524 1 05 3 006,NP0105306,e_i_f_n_c_s,28,Community School,,Total number of schools community/institutional,,28,,,524 3 23 4 006,36
+,Sunwarshi Nagarpalika,MORANG,Sunwarshi,Nagarpalika,1,5,58,11210,524 1 05 3 007,NP0105307,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 6 53 3 001,66
+,Ratuwamai Nagarpalika,MORANG,Ratuwamai,Nagarpalika,1,5,56,11209,524 1 05 3 008,NP0105308,e_i_f_n_c_s,45,Community School,,Total number of schools community/institutional,,45,,,524 4 40 4 004,41
+,Kerabari Gaunpalika,MORANG,Kerabari,Gaunpalika,1,5,51,11203,524 1 05 4 001,NP0105401,e_i_f_n_c_s,27,Community School,,Total number of schools community/institutional,,27,,,524 3 24 3 002,43
+,Miklajung Gaunpalika,MORANG,Miklajung,Gaunpalika,1,5,53,10908,524 1 05 4 002,NP0105402,e_i_f_n_c_s,34,Community School,,Total number of schools community/institutional,,34,,,524 5 56 4 005,41
+,Kanepokhari Gaunpalika,MORANG,Kanepokhari,Gaunpalika,1,5,49,11206,524 1 05 4 003,NP0105403,e_i_f_n_c_s,18,Community School,,Total number of schools community/institutional,,18,,,524 5 49 3 003,49
+,Budhiganga Gaunpalika,MORANG,Budhiganga,Gaunpalika,1,5,45,11213,524 1 05 4 004,NP0105404,e_i_f_n_c_s,19,Community School,,Total number of schools community/institutional,,19,,,524 7 69 4 003,28
+,Gramthan Gaunpalika,MORANG,Gramthan,Gaunpalika,1,5,47,11212,524 1 05 4 005,NP0105405,e_i_f_n_c_s,23,Community School,,Total number of schools community/institutional,,23,,,524 6 52 4 002,47
+,Katahari Gaunpalika,MORANG,Katahari,Gaunpalika,1,5,50,11215,524 1 05 4 006,NP0105406,e_i_f_n_c_s,20,Community School,,Total number of schools community/institutional,,20,,,524 5 58 3 006,42
+,Jahada Gaunpalika,MORANG,Jahada,Gaunpalika,1,5,48,11217,524 1 05 4 007,NP0105407,e_i_f_n_c_s,29,Community School,,Total number of schools community/institutional,,29,,,524 2 33 4 006,19
+,Dhanpalthan Gaunpalika,MORANG,Dhanpalthan,Gaunpalika,1,5,46,11216,524 1 05 4 008,NP0105408,e_i_f_n_c_s,26,Community School,,Total number of schools community/institutional,,26,,,524 1 06 3 001,59
+,Dharan Upamahanagarpalika,SUNSARI,Dharan,Upamahanagarpalika,1,6,64,11301,524 1 06 2 001,NP0106201,e_i_f_n_c_s,60,Community School,,Total number of schools community/institutional,,60,,,524 1 12 4 007,35
+,Itahari Upamahanagarpalika,SUNSARI,Itahari,Upamahanagarpalika,1,6,69,11306,524 1 06 2 002,NP0106202,e_i_f_n_c_s,39,Community School,,Total number of schools community/institutional,,39,,,524 6 59 4 002,50
+,Barah Nagarpalika,SUNSARI,Barah,Nagarpalika,1,6,60,11302,524 1 06 3 001,NP0106301,e_i_f_n_c_s,59,Community School,,Total number of schools community/institutional,,59,,,524 2 19 3 004,35
+,Ramdhuni Nagarpalika,SUNSARI,Ramdhuni,Nagarpalika,1,6,71,11305,524 1 06 3 002,NP0106302,e_i_f_n_c_s,29,Community School,,Total number of schools community/institutional,,29,,,524 5 58 3 005,45
+,Inaruwa Nagarpalika,SUNSARI,Inaruwa,Nagarpalika,1,6,68,11309,524 1 06 3 003,NP0106303,e_i_f_n_c_s,40,Community School,,Total number of schools community/institutional,,40,,,524 5 76 3 002,40
+,Duhabi Nagarpalika,SUNSARI,Duhabi,Nagarpalika,1,6,65,11307,524 1 06 3 004,NP0106304,e_i_f_n_c_s,35,Community School,,Total number of schools community/institutional,,35,,,524 7 71 4 005,17
+,Koshi Gaunpalika,SUNSARI,Koshi,Gaunpalika,1,6,70,11303,524 1 06 4 001,NP0106401,e_i_f_n_c_s,45,Community School,,Total number of schools community/institutional,,45,,,524 2 18 3 001,56
+,Bhokraha Gaunpalika,SUNSARI,Bhokraha,Gaunpalika,1,6,62,11304,524 1 06 4 002,NP0106402,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 6 60 4 003,44
+,Gadhi Gaunpalika,SUNSARI,Gadhi,Gaunpalika,1,6,66,11308,524 1 06 4 003,NP0106403,e_i_f_n_c_s,27,Community School,,Total number of schools community/institutional,,27,,,524 4 43 4 006,32
+,Harinagara Gaunpalika,SUNSARI,Harinagara,Gaunpalika,1,6,67,11310,524 1 06 4 004,NP0106404,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,524 1 04 4 005,24
+,Dewanganj Gaunpalika,SUNSARI,Dewanganj,Gaunpalika,1,6,63,11311,524 1 06 4 005,NP0106405,e_i_f_n_c_s,29,Community School,,Total number of schools community/institutional,,29,,,524 2 16 4 005,24
+,Barju Gaunpalika,SUNSARI,Barju,Gaunpalika,1,6,61,11312,524 1 06 4 006,NP0106406,e_i_f_n_c_s,30,Community School,,Total number of schools community/institutional,,30,,,524 1 06 4 006,30
+,Koshi Tappu Wildlife Reserve Wildlife Reserve,SUNSARI,Koshi Tappu Wildlife Reserve,Wildlife Reserve,1,6,72,99979,524 1 06 5 995,NP0106595,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 2 19 4 001,12
+,Mahalaxmi Nagarpalika,DHANKUTA,Mahalaxmi,Nagarpalika,1,7,77,10701,524 1 07 3 001,NP0107301,e_i_f_n_c_s,53,Community School,,Total number of schools community/institutional,,53,,,524 2 17 4 001,21
+,Pakhribas Nagarpalika,DHANKUTA,Pakhribas,Nagarpalika,1,7,78,10702,524 1 07 3 002,NP0107302,e_i_f_n_c_s,37,Community School,,Total number of schools community/institutional,,37,,,524 7 72 3 003,28
+,Dhankuta Nagarpalika,DHANKUTA,Dhankuta,Nagarpalika,1,7,75,10704,524 1 07 3 003,NP0107303,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,524 1 14 3 004,52
+,Khalsa Chhintang Shahidbhumi Gaunpalika,DHANKUTA,Khalsa Chhintang Shahidbhumi,Gaunpalika,1,7,76,10705,524 1 07 4 001,NP0107401,e_i_f_n_c_s,39,Community School,,Total number of schools community/institutional,,39,,,524 1 05 3 003,28
+,Chhathar Jorpati Gaunpalika,DHANKUTA,Chhathar Jorpati,Gaunpalika,1,7,74,10703,524 1 07 4 002,NP0107402,e_i_f_n_c_s,33,Community School,,Total number of schools community/institutional,,33,,,524 7 72 3 006,17
+,Sangurigadhi Gaunpalika,DHANKUTA,Sangurigadhi,Gaunpalika,1,7,79,10706,524 1 07 4 003,NP0107403,e_i_f_n_c_s,54,Community School,,Total number of schools community/institutional,,54,,,524 2 15 4 006,22
+,Chaubise Gaunpalika,DHANKUTA,Chaubise,Gaunpalika,1,7,73,10707,524 1 07 4 004,NP0107404,e_i_f_n_c_s,52,Community School,,Total number of schools community/institutional,,52,,,524 3 28 3 002,55
+,Laligurans Nagarpalika,TERHATHUM,Laligurans,Nagarpalika,1,8,82,10805,524 1 08 3 001,NP0108301,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 7 72 4 001,35
+,Myanglung Nagarpalika,TERHATHUM,Myanglung,Nagarpalika,1,8,84,10804,524 1 08 3 002,NP0108302,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 4 44 3 001,60
+,Menchayam Gaunpalika,TERHATHUM,Menchayam,Gaunpalika,1,8,83,10803,524 1 08 4 001,NP0108401,e_i_f_n_c_s,23,Community School,,Total number of schools community/institutional,,23,,,524 3 30 4 008,75
+,Phedap Gaunpalika,TERHATHUM,Phedap,Gaunpalika,1,8,85,10802,524 1 08 4 002,NP0108402,e_i_f_n_c_s,43,Community School,,Total number of schools community/institutional,,43,,,524 4 37 3 002,60
+,Aathrai Gaunpalika,TERHATHUM,Aathrai,Gaunpalika,1,8,80,10801,524 1 08 4 003,NP0108403,e_i_f_n_c_s,59,Community School,,Total number of schools community/institutional,,59,,,524 3 24 4 003,31
+,Chhathar Gaunpalika,TERHATHUM,Chhathar,Gaunpalika,1,8,81,10806,524 1 08 4 004,NP0108404,e_i_f_n_c_s,47,Community School,,Total number of schools community/institutional,,47,,,524 1 04 3 008,33
+,Khandbari Nagarpalika,SANKHUWASABHA,Khandbari,Nagarpalika,1,9,90,10206,524 1 09 3 001,NP0109301,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,524 2 16 4 009,16
+,Panchakhapan Nagarpalika,SANKHUWASABHA,Panchakhapan,Nagarpalika,1,9,93,10207,524 1 09 3 002,NP0109302,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,524 6 61 4 007,39
+,Chainpur Nagarpalika,SANKHUWASABHA,Chainpur,Nagarpalika,1,9,87,10208,524 1 09 3 003,NP0109303,e_i_f_n_c_s,59,Community School,,Total number of schools community/institutional,,59,,,524 7 73 4 001,35
+,Dharmadevi Nagarpalika,SANKHUWASABHA,Dharmadevi,Nagarpalika,1,9,89,10210,524 1 09 3 004,NP0109304,e_i_f_n_c_s,37,Community School,,Total number of schools community/institutional,,37,,,524 6 61 4 002,44
+,Madi Nagarpalika,SANKHUWASABHA,Madi,Nagarpalika,1,9,91,10209,524 1 09 3 005,NP0109305,e_i_f_n_c_s,35,Community School,,Total number of schools community/institutional,,35,,,524 7 71 3 004,31
+,Makalu Gaunpalika,SANKHUWASABHA,Makalu,Gaunpalika,1,9,92,10202,524 1 09 4 001,NP0109401,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,524 3 26 3 003,36
+,Bhotkhola Gaunpalika,SANKHUWASABHA,Bhotkhola,Gaunpalika,1,9,86,10201,524 1 09 4 002,NP0109402,e_i_f_n_c_s,23,Community School,,Total number of schools community/institutional,,23,,,524 2 18 3 004,37
+,Silichong Gaunpalika,SANKHUWASABHA,Silichong,Gaunpalika,1,9,95,10203,524 1 09 4 003,NP0109403,e_i_f_n_c_s,40,Community School,,Total number of schools community/institutional,,40,,,524 4 40 3 003,72
+,Chichila Gaunpalika,SANKHUWASABHA,Chichila,Gaunpalika,1,9,88,10204,524 1 09 4 004,NP0109404,e_i_f_n_c_s,21,Community School,,Total number of schools community/institutional,,21,,,524 3 35 1 001,125
+,Sabhapokhari Gaunpalika,SANKHUWASABHA,Sabhapokhari,Gaunpalika,1,9,94,10205,524 1 09 4 005,NP0109405,e_i_f_n_c_s,30,Community School,,Total number of schools community/institutional,,30,,,524 6 60 3 002,55
+,Shadananda Nagarpalika,BHOJPUR,Shadananda,Nagarpalika,1,10,103,10601,524 1 10 3 001,NP0110301,e_i_f_n_c_s,71,Community School,,Total number of schools community/institutional,,71,,,524 6 59 3 002,48
+,Bhojpur Nagarpalika,BHOJPUR,Bhojpur,Nagarpalika,1,10,98,10604,524 1 10 3 002,NP0110302,e_i_f_n_c_s,45,Community School,,Total number of schools community/institutional,,45,,,524 4 40 3 004,54
+,Salpasilichho Gaunpalika,BHOJPUR,Salpasilichho,Gaunpalika,1,10,102,10602,524 1 10 4 001,NP0110401,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 7 72 3 002,61
+,Tyamkemaiyung Gaunpalika,BHOJPUR,Tyamkemaiyung,Gaunpalika,1,10,104,10603,524 1 10 4 002,NP0110402,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,524 3 22 3 001,49
+,Arun Gaunpalika,BHOJPUR,Arun,Gaunpalika,1,10,97,10605,524 1 10 4 003,NP0110403,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,524 3 31 4 004,52
+,Ramprasad Rai Gaunpalika,BHOJPUR,Ramprasad Rai,Gaunpalika,1,10,101,10607,524 1 10 4 004,NP0110404,e_i_f_n_c_s,34,Community School,,Total number of schools community/institutional,,34,,,524 4 36 4 007,45
+,Pauwadungma Gaunpalika,BHOJPUR,Pauwadungma,Gaunpalika,1,10,100,10606,524 1 10 4 005,NP0110405,e_i_f_n_c_s,34,Community School,,Total number of schools community/institutional,,34,,,524 4 41 3 002,48
+,Aamchowk Gaunpalika,BHOJPUR,Aamchowk,Gaunpalika,1,10,96,10609,524 1 10 4 006,NP0110406,e_i_f_n_c_s,43,Community School,,Total number of schools community/institutional,,43,,,524 1 10 3 002,45
+,Hatuwagadhi Gaunpalika,BHOJPUR,Hatuwagadhi,Gaunpalika,1,10,99,10608,524 1 10 4 007,NP0110407,e_i_f_n_c_s,39,Community School,,Total number of schools community/institutional,,39,,,524 1 06 4 002,41
+,Solududhakunda Nagarpalika,SOLUKHUMBU,Solududhakunda,Nagarpalika,1,11,111,10307,524 1 11 3 001,NP0111301,e_i_f_n_c_s,64,Community School,,Total number of schools community/institutional,,64,,,524 5 77 4 003,37
+,Khumbupasanglahmu Gaunpalika,SOLUKHUMBU,Khumbupasanglahmu,Gaunpalika,1,11,107,10301,524 1 11 4 001,NP0111401,e_i_f_n_c_s,19,Community School,,Total number of schools community/institutional,,19,,,524 3 23 4 004,32
+,Mahakulung Gaunpalika,SOLUKHUMBU,Mahakulung,Gaunpalika,1,11,109,10302,524 1 11 4 002,NP0111402,e_i_f_n_c_s,19,Community School,,Total number of schools community/institutional,,19,,,524 1 09 4 002,23
+,Likhupike Gaunpalika,SOLUKHUMBU,Likhupike,Gaunpalika,1,11,108,10308,524 1 11 4 003,NP0111403,e_i_f_n_c_s,22,Community School,,Total number of schools community/institutional,,22,,,524 5 50 3 001,64
+,Dudhkoshi Gaunpalika,SOLUKHUMBU,Dudhkoshi,Gaunpalika,1,11,106,10304,524 1 11 4 004,NP0111404,e_i_f_n_c_s,40,Community School,,Total number of schools community/institutional,,40,,,524 3 24 4 001,49
+,Nechasalyan Gaunpalika,SOLUKHUMBU,Nechasalyan,Gaunpalika,1,11,110,10306,524 1 11 4 005,NP0111405,e_i_f_n_c_s,44,Community School,,Total number of schools community/institutional,,44,,,524 2 17 3 010,15
+,Dudhkaushika Gaunpalika,SOLUKHUMBU,Dudhkaushika,Gaunpalika,1,11,105,10305,524 1 11 4 006,NP0111406,e_i_f_n_c_s,53,Community School,,Total number of schools community/institutional,,53,,,524 3 28 3 001,69
+,Sotang Gaunpalika,SOLUKHUMBU,Sotang,Gaunpalika,1,11,112,10303,524 1 11 4 007,NP0111407,e_i_f_n_c_s,26,Community School,,Total number of schools community/institutional,,26,,,524 3 22 4 001,42
+,Halesi Tuwachung Nagarpalika,KHOTANG,Halesi Tuwachung,Nagarpalika,1,12,124,10504,524 1 12 3 001,NP0112301,e_i_f_n_c_s,89,Community School,,Total number of schools community/institutional,,89,,,524 4 42 4 003,31
+,Rupakot Majhuwagadhi Nagarpalika,KHOTANG,Rupakot Majhuwagadhi,Nagarpalika,1,12,129,10505,524 1 12 3 002,NP0112302,e_i_f_n_c_s,93,Community School,,Total number of schools community/institutional,,93,,,524 5 49 4 001,41
+,Ainselukhark Gaunpalika,KHOTANG,Ainselukhark,Gaunpalika,1,12,121,10502,524 1 12 4 001,NP0112401,e_i_f_n_c_s,43,Community School,,Total number of schools community/institutional,,43,,,524 4 47 4 004,37
+,Kepilasagadhi Gaunpalika,KHOTANG,Kepilasagadhi,Gaunpalika,1,12,126,10501,524 1 12 4 002,NP0112402,e_i_f_n_c_s,39,Community School,,Total number of schools community/institutional,,39,,,524 2 34 4 010,10
+,Lamidanda Gaunpalika,KHOTANG,Lamidanda,Gaunpalika,1,12,128,10503,524 1 12 4 003,NP0112403,e_i_f_n_c_s,28,Community School,,Total number of schools community/institutional,,28,,,524 1 05 1 001,83
+,Diprung Gaunpalika,KHOTANG,Diprung,Gaunpalika,1,12,123,10507,524 1 12 4 004,NP0112404,e_i_f_n_c_s,50,Community School,,Total number of schools community/institutional,,50,,,524 6 59 3 003,73
+,Sakela Gaunpalika,KHOTANG,Sakela,Gaunpalika,1,12,130,10506,524 1 12 4 005,NP0112405,e_i_f_n_c_s,28,Community School,,Total number of schools community/institutional,,28,,,524 2 34 1 001,95
+,Khotehang Gaunpalika,KHOTANG,Khotehang,Gaunpalika,1,12,127,10508,524 1 12 4 006,NP0112406,e_i_f_n_c_s,51,Community School,,Total number of schools community/institutional,,51,,,524 1 04 3 007,26
+,Barahapokhari Gaunpalika,KHOTANG,Barahapokhari,Gaunpalika,1,12,122,10510,524 1 12 4 007,NP0112407,e_i_f_n_c_s,35,Community School,,Total number of schools community/institutional,,35,,,524 4 41 4 004,34
+,Jantedhunga Gaunpalika,KHOTANG,Jantedhunga,Gaunpalika,1,12,125,10509,524 1 12 4 008,NP0112408,e_i_f_n_c_s,37,Community School,,Total number of schools community/institutional,,37,,,524 2 19 4 008,7
+,Siddhicharan Nagarpalika,OKHALDHUNGA,Siddhicharan,Nagarpalika,1,13,119,10402,524 1 13 3 001,NP0113301,e_i_f_n_c_s,54,Community School,,Total number of schools community/institutional,,54,,,524 2 15 4 007,21
+,Khijidemba Gaunpalika,OKHALDHUNGA,Khijidemba,Gaunpalika,1,13,115,10404,524 1 13 4 001,NP0113401,e_i_f_n_c_s,54,Community School,,Total number of schools community/institutional,,54,,,524 2 16 4 002,13
+,Likhu Gaunpalika,OKHALDHUNGA,Likhu,Gaunpalika,1,13,116,10405,524 1 13 4 002,NP0113402,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 2 33 4 004,10
+,Molung Gaunpalika,OKHALDHUNGA,Molung,Gaunpalika,1,13,118,10403,524 1 13 4 003,NP0113403,e_i_f_n_c_s,24,Community School,,Total number of schools community/institutional,,24,,,524 7 67 4 004,32
+,Champadevi Gaunpalika,OKHALDHUNGA,Champadevi,Gaunpalika,1,13,113,10406,524 1 13 4 004,NP0113404,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,524 2 15 3 006,32
+,Sunkoshi Gaunpalika,OKHALDHUNGA,Sunkoshi,Gaunpalika,1,13,120,10407,524 1 13 4 005,NP0113405,e_i_f_n_c_s,39,Community School,,Total number of schools community/institutional,,39,,,524 7 70 4 007,43
+,Chisankhugadhi Gaunpalika,OKHALDHUNGA,Chisankhugadhi,Gaunpalika,1,13,114,10401,524 1 13 4 006,NP0113406,e_i_f_n_c_s,44,Community School,,Total number of schools community/institutional,,44,,,524 2 32 3 010,12
+,Manebhanjyang Gaunpalika,OKHALDHUNGA,Manebhanjyang,Gaunpalika,1,13,117,10408,524 1 13 4 007,NP0113407,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,524 2 19 4 007,7
+,Katari Nagarpalika,UDAYAPUR,Katari,Nagarpalika,1,14,133,11407,524 1 14 3 001,NP0114301,e_i_f_n_c_s,84,Community School,,Total number of schools community/institutional,,84,,,524 2 32 3 005,23
+,Triyuga Nagarpalika,UDAYAPUR,Triyuga,Nagarpalika,1,14,137,11403,524 1 14 3 002,NP0114302,e_i_f_n_c_s,76,Community School,,Total number of schools community/institutional,,76,,,524 5 49 3 002,57
+,Chaudandigadhi Nagarpalika,UDAYAPUR,Chaudandigadhi,Nagarpalika,1,14,132,11402,524 1 14 3 003,NP0114303,e_i_f_n_c_s,49,Community School,,Total number of schools community/institutional,,49,,,524 1 04 4 002,19
+,Belaka Nagarpalika,UDAYAPUR,Belaka,Nagarpalika,1,14,131,11401,524 1 14 3 004,NP0114304,e_i_f_n_c_s,52,Community School,,Total number of schools community/institutional,,52,,,524 3 27 3 003,9
+,Tapli Gaunpalika,UDAYAPUR,Tapli,Gaunpalika,1,14,136,11406,524 1 14 4 001,NP0114401,e_i_f_n_c_s,37,Community School,,Total number of schools community/institutional,,37,,,524 1 05 4 004,19
+,Sunkoshi Gaunpalika,UDAYAPUR,Sunkoshi,Gaunpalika,1,14,135,10407,524 1 14 4 002,NP0114402,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 7 68 3 003,33
+,Udayapurgadhi Gaunpalika,UDAYAPUR,Udayapurgadhi,Gaunpalika,1,14,138,11408,524 1 14 4 003,NP0114403,e_i_f_n_c_s,61,Community School,,Total number of schools community/institutional,,61,,,524 7 68 3 001,30
+,Rautamai Gaunpalika,UDAYAPUR,Rautamai,Gaunpalika,1,14,134,11404,524 1 14 4 004,NP0114404,e_i_f_n_c_s,60,Community School,,Total number of schools community/institutional,,60,,,524 4 47 4 002,44
+,Koshi Tappu Wildlife Reserve Wildlife Reserve,UDAYAPUR,Koshi Tappu Wildlife Reserve,Wildlife Reserve,1,14,139,99980,524 1 14 5 995,NP0114595,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 7 67 3 001,85
+,Surunga Nagarpalika,SAPTARI,Surunga,Nagarpalika,2,15,155,20107,524 2 15 3 001,NP0215301,e_i_f_n_c_s,35,Community School,,Total number of schools community/institutional,,35,,,524 4 47 4 001,32
+,Khadak Nagarpalika,SAPTARI,Khadak,Nagarpalika,2,15,149,20106,524 2 15 3 002,NP0215302,e_i_f_n_c_s,43,Community School,,Total number of schools community/institutional,,43,,,524 5 48 2 001,41
+,Shambhunath Nagarpalika,SAPTARI,Shambhunath,Nagarpalika,2,15,154,20105,524 2 15 3 003,NP0215303,e_i_f_n_c_s,27,Community School,,Total number of schools community/institutional,,27,,,524 7 75 4 001,25
+,Saptakoshi Nagarpalika,SAPTARI,Saptakoshi,Nagarpalika,2,15,153,20101,524 2 15 3 004,NP0215304,e_i_f_n_c_s,13,Community School,,Total number of schools community/institutional,,13,,,524 4 40 3 002,88
+,Kanchanrup Nagarpalika,SAPTARI,Kanchanrup,Nagarpalika,2,15,148,20102,524 2 15 3 005,NP0215305,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 1 09 3 003,59
+,Bode Barsain Nagarpalika,SAPTARI,Bode Barsain,Nagarpalika,2,15,144,20109,524 2 15 3 006,NP0215306,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 2 19 4 004,15
+,Dakneshwori Nagarpalika,SAPTARI,Dakneshwori,Nagarpalika,2,15,146,20110,524 2 15 3 007,NP0215307,e_i_f_n_c_s,25,Community School,,Total number of schools community/institutional,,25,,,524 4 38 4 003,6
+,Rajbiraj Nagarpalika,SAPTARI,Rajbiraj,Nagarpalika,2,15,151,20113,524 2 15 3 008,NP0215308,e_i_f_n_c_s,44,Community School,,Total number of schools community/institutional,,44,,,524 1 13 4 004,42
+,Hanumannagar Kankalini Nagarpalika,SAPTARI,Hanumannagar Kankalini,Nagarpalika,2,15,147,20116,524 2 15 3 009,NP0215309,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 6 61 3 002,52
+,Rupani Gaunpalika,SAPTARI,Rupani,Gaunpalika,2,15,152,20104,524 2 15 4 001,NP0215401,e_i_f_n_c_s,15,Community School,,Total number of schools community/institutional,,15,,,524 6 63 3 001,29
+,Agnisair Krishna Savaran Gaunpalika,SAPTARI,Agnisair Krishna Savaran,Gaunpalika,2,15,140,20103,524 2 15 4 002,NP0215402,e_i_f_n_c_s,21,Community School,,Total number of schools community/institutional,,21,,,524 3 27 3 008,24
+,Tirahut Gaunpalika,SAPTARI,Tirahut,Gaunpalika,2,15,157,20115,524 2 15 4 003,NP0215403,e_i_f_n_c_s,10,Community School,,Total number of schools community/institutional,,10,,,524 5 51 4 006,45
+,Balan Bihul Gaunpalika,SAPTARI,Balan Bihul,Gaunpalika,2,15,141,20108,524 2 15 4 004,NP0215404,e_i_f_n_c_s,18,Community School,,Total number of schools community/institutional,,18,,,524 2 19 4 002,11
+,Mahadeva Gaunpalika,SAPTARI,Mahadeva,Gaunpalika,2,15,150,20114,524 2 15 4 005,NP0215405,e_i_f_n_c_s,18,Community School,,Total number of schools community/institutional,,18,,,524 2 32 3 002,52
+,Belhi Chapena Gaunpalika,SAPTARI,Belhi Chapena,Gaunpalika,2,15,142,20111,524 2 15 4 006,NP0215406,e_i_f_n_c_s,22,Community School,,Total number of schools community/institutional,,22,,,524 3 26 3 002,36
+,Bishnupur Gaunpalika,SAPTARI,Bishnupur,Gaunpalika,2,15,143,20112,524 2 15 4 007,NP0215407,e_i_f_n_c_s,21,Community School,,Total number of schools community/institutional,,21,,,524 6 66 4 005,20
+,Chhinnamasta Gaunpalika,SAPTARI,Chhinnamasta,Gaunpalika,2,15,145,20118,524 2 15 4 008,NP0215408,e_i_f_n_c_s,22,Community School,,Total number of schools community/institutional,,22,,,524 4 41 3 005,56
+,Tilathi Koiladi Gaunpalika,SAPTARI,Tilathi Koiladi,Gaunpalika,2,15,156,20117,524 2 15 4 009,NP0215409,e_i_f_n_c_s,21,Community School,,Total number of schools community/institutional,,21,,,524 1 07 4 004,52
+,Koshi Tappu Wildlife Reserve Wildlife Reserve,SAPTARI,Koshi Tappu Wildlife Reserve,Wildlife Reserve,2,15,158,99981,524 2 15 5 995,NP0215595,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 1 14 3 003,49
+,Karjanha Nagarpalika,SIRAHA,Karjanha,Nagarpalika,2,16,167,20205,524 2 16 3 001,NP0216301,e_i_f_n_c_s,23,Community School,,Total number of schools community/institutional,,23,,,524 6 59 4 001,47
+,Mirchaiya Nagarpalika,SIRAHA,Mirchaiya,Nagarpalika,2,16,170,20204,524 2 16 3 002,NP0216302,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 3 24 4 002,57
+,Golbazar Nagarpalika,SIRAHA,Golbazar,Nagarpalika,2,16,165,20203,524 2 16 3 003,NP0216303,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 6 52 3 002,43
+,Dhangadhimai Nagarpalika,SIRAHA,Dhangadhimai,Nagarpalika,2,16,164,20202,524 2 16 3 004,NP0216304,e_i_f_n_c_s,34,Community School,,Total number of schools community/institutional,,34,,,524 7 69 4 001,41
+,Lahan Nagarpalika,SIRAHA,Lahan,Nagarpalika,2,16,168,20201,524 2 16 3 005,NP0216305,e_i_f_n_c_s,67,Community School,,Total number of schools community/institutional,,67,,,524 7 67 4 007,41
+,Kalyanpur Nagarpalika,SIRAHA,Kalyanpur,Nagarpalika,2,16,166,20206,524 2 16 3 006,NP0216306,e_i_f_n_c_s,37,Community School,,Total number of schools community/institutional,,37,,,524 6 62 4 006,7
+,Sukhipur Nagarpalika,SIRAHA,Sukhipur,Nagarpalika,2,16,175,20210,524 2 16 3 007,NP0216307,e_i_f_n_c_s,29,Community School,,Total number of schools community/institutional,,29,,,524 1 08 4 004,47
+,Siraha Nagarpalika,SIRAHA,Siraha,Nagarpalika,2,16,174,20217,524 2 16 3 008,NP0216308,e_i_f_n_c_s,64,Community School,,Total number of schools community/institutional,,64,,,524 1 07 4 002,33
+,Naraha Gaunpalika,SIRAHA,Naraha,Gaunpalika,2,16,171,20207,524 2 16 4 001,NP0216401,e_i_f_n_c_s,14,Community School,,Total number of schools community/institutional,,14,,,524 5 50 4 002,42
+,Bishnupur Gaunpalika,SIRAHA,Bishnupur,Gaunpalika,2,16,163,20112,524 2 16 4 002,NP0216402,e_i_f_n_c_s,13,Community School,,Total number of schools community/institutional,,13,,,524 5 51 4 007,46
+,Arnama Gaunpalika,SIRAHA,Arnama,Gaunpalika,2,16,159,20209,524 2 16 4 003,NP0216403,e_i_f_n_c_s,15,Community School,,Total number of schools community/institutional,,15,,,524 6 53 4 005,40
+,Aurahi Gaunpalika,SIRAHA,Aurahi,Gaunpalika,2,16,160,20216,524 2 16 4 004,NP0216404,e_i_f_n_c_s,15,Community School,,Total number of schools community/institutional,,15,,,524 6 65 3 001,39
+,Bariyarpatti Gaunpalika,SIRAHA,Bariyarpatti,Gaunpalika,2,16,161,20215,524 2 16 4 005,NP0216405,e_i_f_n_c_s,24,Community School,,Total number of schools community/institutional,,24,,,524 6 60 3 001,102
+,Laxmipur Patari Gaunpalika,SIRAHA,Laxmipur Patari,Gaunpalika,2,16,169,20211,524 2 16 4 006,NP0216406,e_i_f_n_c_s,19,Community School,,Total number of schools community/institutional,,19,,,524 7 68 4 003,31
+,Nawarajpur Gaunpalika,SIRAHA,Nawarajpur,Gaunpalika,2,16,172,20214,524 2 16 4 007,NP0216407,e_i_f_n_c_s,20,Community School,,Total number of schools community/institutional,,20,,,524 2 15 4 008,22
+,Sakhuwanankarkatti Gaunpalika,SIRAHA,Sakhuwanankarkatti,Gaunpalika,2,16,173,20212,524 2 16 4 008,NP0216408,e_i_f_n_c_s,19,Community School,,Total number of schools community/institutional,,19,,,524 2 34 4 007,13
+,Bhagawanpur Gaunpalika,SIRAHA,Bhagawanpur,Gaunpalika,2,16,162,20213,524 2 16 4 009,NP0216409,e_i_f_n_c_s,16,Community School,,Total number of schools community/institutional,,16,,,524 2 17 3 003,24
+,Janakpur Upamahanagarpalika,DHANUSHA,Janakpur,Upamahanagarpalika,2,17,185,20315,524 2 17 2 001,NP0217201,e_i_f_n_c_s,61,Community School,,Total number of schools community/institutional,,61,,,524 1 09 4 004,21
+,Mithila Nagarpalika,DHANUSHA,Mithila,Nagarpalika,2,17,188,20303,524 2 17 3 001,NP0217301,e_i_f_n_c_s,29,Community School,,Total number of schools community/institutional,,29,,,524 6 59 4 003,31
+,Ganeshman Charnath Nagarpalika,DHANUSHA,Ganeshman Charnath,Nagarpalika,2,17,182,20301,524 2 17 3 002,NP0217302,e_i_f_n_c_s,20,Community School,,Total number of schools community/institutional,,20,,,524 1 13 4 006,44
+,Chhireshwornath Nagarpalika,DHANUSHA,Chhireshwornath,Nagarpalika,2,17,179,20305,524 2 17 3 003,NP0217303,e_i_f_n_c_s,24,Community School,,Total number of schools community/institutional,,24,,,524 3 23 3 002,86
+,Dhanusadham Nagarpalika,DHANUSHA,Dhanusadham,Nagarpalika,2,17,181,20302,524 2 17 3 004,NP0217304,e_i_f_n_c_s,21,Community School,,Total number of schools community/institutional,,21,,,524 1 03 4 004,23
+,Mithila Bihari Nagarpalika,DHANUSHA,Mithila Bihari,Nagarpalika,2,17,189,20307,524 2 17 3 005,NP0217305,e_i_f_n_c_s,15,Community School,,Total number of schools community/institutional,,15,,,524 4 36 4 001,24
+,Sabaila Nagarpalika,DHANUSHA,Sabaila,Nagarpalika,2,17,192,20309,524 2 17 3 006,NP0217306,e_i_f_n_c_s,26,Community School,,Total number of schools community/institutional,,26,,,524 7 71 4 001,42
+,Hansapur Nagarpalika,DHANUSHA,Hansapur,Nagarpalika,2,17,183,20308,524 2 17 3 007,NP0217307,e_i_f_n_c_s,23,Community School,,Total number of schools community/institutional,,23,,,524 2 15 3 007,25
+,Sahidnagar Nagarpalika,DHANUSHA,Sahidnagar,Nagarpalika,2,17,193,20310,524 2 17 3 008,NP0217308,e_i_f_n_c_s,30,Community School,,Total number of schools community/institutional,,30,,,524 3 27 3 010,24
+,Nagarain Nagarpalika,DHANUSHA,Nagarain,Nagarpalika,2,17,191,20317,524 2 17 3 009,NP0217309,e_i_f_n_c_s,16,Community School,,Total number of schools community/institutional,,16,,,524 4 45 4 002,11
+,Bideha Nagarpalika,DHANUSHA,Bideha,Nagarpalika,2,17,178,20313,524 2 17 3 010,NP0217310,e_i_f_n_c_s,15,Community School,,Total number of schools community/institutional,,15,,,524 1 04 3 001,25
+,Kamala Nagarpalika,DHANUSHA,Kamala,Nagarpalika,2,17,186,20311,524 2 17 3 011,NP0217311,e_i_f_n_c_s,17,Community School,,Total number of schools community/institutional,,17,,,524 5 56 4 002,15
+,Bateshwor Gaunpalika,DHANUSHA,Bateshwor,Gaunpalika,2,17,177,20304,524 2 17 4 001,NP0217401,e_i_f_n_c_s,21,Community School,,Total number of schools community/institutional,,21,,,524 6 53 4 002,35
+,Lakshminiya Gaunpalika,DHANUSHA,Lakshminiya,Gaunpalika,2,17,187,20306,524 2 17 4 002,NP0217402,e_i_f_n_c_s,24,Community School,,Total number of schools community/institutional,,24,,,524 7 74 3 001,57
+,Aaurahi Gaunpalika,DHANUSHA,Aaurahi,Gaunpalika,2,17,176,20404,524 2 17 4 003,NP0217403,e_i_f_n_c_s,10,Community School,,Total number of schools community/institutional,,10,,,524 1 03 3 001,54
+,Dhanauji Gaunpalika,DHANUSHA,Dhanauji,Gaunpalika,2,17,180,20316,524 2 17 4 004,NP0217404,e_i_f_n_c_s,10,Community School,,Total number of schools community/institutional,,10,,,524 4 47 3 003,28
+,Mukhiyapatti Musarmiya Gaunpalika,DHANUSHA,Mukhiyapatti Musarmiya,Gaunpalika,2,17,190,20318,524 2 17 4 005,NP0217405,e_i_f_n_c_s,10,Community School,,Total number of schools community/institutional,,10,,,524 5 48 3 002,33
+,Janaknandani Gaunpalika,DHANUSHA,Janaknandani,Gaunpalika,2,17,184,20312,524 2 17 4 006,NP0217406,e_i_f_n_c_s,13,Community School,,Total number of schools community/institutional,,13,,,524 4 40 4 006,45
+,Bardibas Nagarpalika,MAHOTTARI,Bardibas,Nagarpalika,2,18,196,20401,524 2 18 3 001,NP0218301,e_i_f_n_c_s,56,Community School,,Total number of schools community/institutional,,56,,,524 2 33 4 007,11
+,Gaushala Nagarpalika,MAHOTTARI,Gaushala,Nagarpalika,2,18,199,20402,524 2 18 3 002,NP0218302,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,524 2 32 3 007,17
+,Aurahi Nagarpalika,MAHOTTARI,Aurahi,Nagarpalika,2,18,194,20216,524 2 18 3 003,NP0218303,e_i_f_n_c_s,17,Community School,,Total number of schools community/institutional,,17,,,524 1 06 4 005,29
+,Bhangaha Nagarpalika,MAHOTTARI,Bhangaha,Nagarpalika,2,18,197,20405,524 2 18 3 004,NP0218304,e_i_f_n_c_s,37,Community School,,Total number of schools community/institutional,,37,,,524 7 69 4 005,45
+,Ramgopalpur Nagarpalika,MAHOTTARI,Ramgopalpur,Nagarpalika,2,18,206,20408,524 2 18 3 005,NP0218305,e_i_f_n_c_s,18,Community School,,Total number of schools community/institutional,,18,,,524 2 19 4 003,7
+,Manra Siswa Nagarpalika,MAHOTTARI,Manra Siswa,Nagarpalika,2,18,203,20410,524 2 18 3 006,NP0218306,e_i_f_n_c_s,27,Community School,,Total number of schools community/institutional,,27,,,524 1 05 4 008,26
+,Balwa Nagarpalika,MAHOTTARI,Balwa,Nagarpalika,2,18,195,20407,524 2 18 3 007,NP0218307,e_i_f_n_c_s,29,Community School,,Total number of schools community/institutional,,29,,,524 2 17 4 004,10
+,Loharpatti Nagarpalika,MAHOTTARI,Loharpatti,Nagarpalika,2,18,201,20406,524 2 18 3 008,NP0218308,e_i_f_n_c_s,22,Community School,,Total number of schools community/institutional,,22,,,524 7 71 2 001,84
+,Jaleswor Nagarpalika,MAHOTTARI,Jaleswor,Nagarpalika,2,18,200,20415,524 2 18 3 009,NP0218309,e_i_f_n_c_s,38,Community School,,Total number of schools community/institutional,,38,,,524 2 16 3 004,34
+,Matihani Nagarpalika,MAHOTTARI,Matihani,Nagarpalika,2,18,204,20414,524 2 18 3 010,NP0218310,e_i_f_n_c_s,14,Community School,,Total number of schools community/institutional,,14,,,524 1 07 3 003,42
+,Sonama Gaunpalika,MAHOTTARI,Sonama,Gaunpalika,2,18,208,20403,524 2 18 4 001,NP0218401,e_i_f_n_c_s,18,Community School,,Total number of schools community/institutional,,18,,,524 2 17 3 004,21
+,Samsi Gaunpalika,MAHOTTARI,Samsi,Gaunpalika,2,18,207,20409,524 2 18 4 002,NP0218402,e_i_f_n_c_s,11,Community School,,Total number of schools community/institutional,,11,,,524 1 06 2 001,60
+,Ekadara Gaunpalika,MAHOTTARI,Ekadara,Gaunpalika,2,18,198,20411,524 2 18 4 003,NP0218403,e_i_f_n_c_s,17,Community School,,Total number of schools community/institutional,,17,,,524 4 36 4 004,27
+,Mahottari Gaunpalika,MAHOTTARI,Mahottari,Gaunpalika,2,18,202,20412,524 2 18 4 004,NP0218404,e_i_f_n_c_s,12,Community School,,Total number of schools community/institutional,,12,,,524 1 09 3 004,37
+,Pipra Gaunpalika,MAHOTTARI,Pipra,Gaunpalika,2,18,205,20413,524 2 18 4 005,NP0218405,e_i_f_n_c_s,23,Community School,,Total number of schools community/institutional,,23,,,524 4 44 4 001,28
+,Bagmati Nagarpalika,SARLAHI,Bagmati,Nagarpalika,2,19,209,20503,524 2 19 3 001,NP0219301,e_i_f_n_c_s,14,Community School,,Total number of schools community/institutional,,14,,,524 2 34 4 006,11
+,Hariwan Nagarpalika,SARLAHI,Hariwan,Nagarpalika,2,19,221,20502,524 2 19 3 002,NP0219302,e_i_f_n_c_s,30,Community School,,Total number of schools community/institutional,,30,,,524 6 53 4 003,28
+,Lalbandi Nagarpalika,SARLAHI,Lalbandi,Nagarpalika,2,19,225,20501,524 2 19 3 003,NP0219303,e_i_f_n_c_s,52,Community School,,Total number of schools community/institutional,,52,,,524 4 43 3 001,42
+,Barahathawa Nagarpalika,SARLAHI,Barahathawa,Nagarpalika,2,19,211,20504,524 2 19 3 004,NP0219304,e_i_f_n_c_s,35,Community School,,Total number of schools community/institutional,,35,,,524 1 11 4 006,53
+,Haripur Nagarpalika,SARLAHI,Haripur,Nagarpalika,2,19,219,20505,524 2 19 3 005,NP0219305,e_i_f_n_c_s,21,Community School,,Total number of schools community/institutional,,21,,,524 1 11 4 004,40
+,Ishworpur Nagarpalika,SARLAHI,Ishworpur,Nagarpalika,2,19,222,20506,524 2 19 3 006,NP0219306,e_i_f_n_c_s,47,Community School,,Total number of schools community/institutional,,47,,,524 3 24 3 003,27
+,Kabilasi Nagarpalika,SARLAHI,Kabilasi,Nagarpalika,2,19,223,20511,524 2 19 3 007,NP0219307,e_i_f_n_c_s,15,Community School,,Total number of schools community/institutional,,15,,,524 3 30 3 002,41
+,Godaita Nagarpalika,SARLAHI,Godaita,Nagarpalika,2,19,218,20517,524 2 19 3 008,NP0219308,e_i_f_n_c_s,23,Community School,,Total number of schools community/institutional,,23,,,524 5 51 4 003,49
+,Malangawa Nagarpalika,SARLAHI,Malangawa,Nagarpalika,2,19,226,20520,524 2 19 3 009,NP0219309,e_i_f_n_c_s,23,Community School,,Total number of schools community/institutional,,23,,,524 7 74 4 001,57
+,Haripurwa Nagarpalika,SARLAHI,Haripurwa,Nagarpalika,2,19,220,20507,524 2 19 3 010,NP0219310,e_i_f_n_c_s,14,Community School,,Total number of schools community/institutional,,14,,,524 7 70 3 002,44
+,Balara Nagarpalika,SARLAHI,Balara,Nagarpalika,2,19,210,20516,524 2 19 3 011,NP0219311,e_i_f_n_c_s,27,Community School,,Total number of schools community/institutional,,27,,,524 1 12 4 004,50
+,Basbariya Gaunpalika,SARLAHI,Basbariya,Gaunpalika,2,19,212,20513,524 2 19 4 001,NP0219401,e_i_f_n_c_s,12,Community School,,Total number of schools community/institutional,,12,,,524 7 74 4 002,60
+,Chandranagar Gaunpalika,SARLAHI,Chandranagar,Gaunpalika,2,19,216,20510,524 2 19 4 002,NP0219402,e_i_f_n_c_s,11,Community School,,Total number of schools community/institutional,,11,,,524 6 62 4 003,2
+,Dhankaul Gaunpalika,SARLAHI,Dhankaul,Gaunpalika,2,19,217,20514,524 2 19 4 003,NP0219403,e_i_f_n_c_s,7,Community School,,Total number of schools community/institutional,,7,,,524 3 21 4 002,53
+,Chakraghatta Gaunpalika,SARLAHI,Chakraghatta,Gaunpalika,2,19,215,20512,524 2 19 4 004,NP0219404,e_i_f_n_c_s,15,Community School,,Total number of schools community/institutional,,15,,,524 4 37 4 003,55
+,Ramnagar Gaunpalika,SARLAHI,Ramnagar,Gaunpalika,2,19,228,20515,524 2 19 4 005,NP0219405,e_i_f_n_c_s,18,Community School,,Total number of schools community/institutional,,18,,,524 4 37 4 004,35
+,Kaudena Gaunpalika,SARLAHI,Kaudena,Gaunpalika,2,19,224,20519,524 2 19 4 006,NP0219406,e_i_f_n_c_s,14,Community School,,Total number of schools community/institutional,,14,,,524 3 20 3 002,80
+,Bramhapuri Gaunpalika,SARLAHI,Bramhapuri,Gaunpalika,2,19,214,20509,524 2 19 4 007,NP0219407,e_i_f_n_c_s,7,Community School,,Total number of schools community/institutional,,7,,,524 5 57 4 004,36
+,Bishnu Gaunpalika,SARLAHI,Bishnu,Gaunpalika,2,19,213,20518,524 2 19 4 008,NP0219408,e_i_f_n_c_s,7,Community School,,Total number of schools community/institutional,,7,,,524 1 06 3 004,35
+,Parsa Gaunpalika,SARLAHI,Parsa,Gaunpalika,2,19,227,20508,524 2 19 4 009,NP0219409,e_i_f_n_c_s,13,Community School,,Total number of schools community/institutional,,13,,,524 7 75 4 002,19
+,Gujara Nagarpalika,RAUTAHAT,Gujara,Nagarpalika,2,32,353,20602,524 2 32 3 001,NP0232301,e_i_f_n_c_s,27,Community School,,Total number of schools community/institutional,,27,,,524 5 54 4 002,43
+,Chandrapur Nagarpalika,RAUTAHAT,Chandrapur,Nagarpalika,2,32,347,20601,524 2 32 3 002,NP0232302,e_i_f_n_c_s,52,Community School,,Total number of schools community/institutional,,52,,,524 6 61 3 003,58
+,Phatuwa Bijayapur Nagarpalika,RAUTAHAT,Phatuwa Bijayapur,Nagarpalika,2,32,359,20603,524 2 32 3 003,NP0232303,e_i_f_n_c_s,22,Community School,,Total number of schools community/institutional,,22,,,524 6 61 4 006,31
+,Katahariya Nagarpalika,RAUTAHAT,Katahariya,Nagarpalika,2,32,355,20604,524 2 32 3 004,NP0232304,e_i_f_n_c_s,24,Community School,,Total number of schools community/institutional,,24,,,524 3 28 4 008,52
+,Brindaban Nagarpalika,RAUTAHAT,Brindaban,Nagarpalika,2,32,346,20605,524 2 32 3 005,NP0232305,e_i_f_n_c_s,23,Community School,,Total number of schools community/institutional,,23,,,524 2 32 4 002,23
+,Maulapur Nagarpalika,RAUTAHAT,Maulapur,Nagarpalika,2,32,357,20610,524 2 32 3 006,NP0232306,e_i_f_n_c_s,24,Community School,,Total number of schools community/institutional,,24,,,524 7 67 4 006,29
+,Dewahhi Gonahi Nagarpalika,RAUTAHAT,Dewahhi Gonahi,Nagarpalika,2,32,348,20609,524 2 32 3 007,NP0232307,e_i_f_n_c_s,17,Community School,,Total number of schools community/institutional,,17,,,524 2 18 4 003,17
+,Garuda Nagarpalika,RAUTAHAT,Garuda,Nagarpalika,2,32,351,20608,524 2 32 3 008,NP0232308,e_i_f_n_c_s,30,Community School,,Total number of schools community/institutional,,30,,,524 1 03 4 001,42
+,Gadhimai Nagarpalika,RAUTAHAT,Gadhimai,Nagarpalika,2,32,350,20606,524 2 32 3 009,NP0232309,e_i_f_n_c_s,25,Community School,,Total number of schools community/institutional,,25,,,524 1 02 4 003,47
+,Baudhimai Nagarpalika,RAUTAHAT,Baudhimai,Nagarpalika,2,32,345,20611,524 2 32 3 010,NP0232310,e_i_f_n_c_s,12,Community School,,Total number of schools community/institutional,,12,,,524 1 02 4 005,40
+,Madhav Narayan Nagarpalika,RAUTAHAT,Madhav Narayan,Nagarpalika,2,32,356,20607,524 2 32 3 011,NP0232311,e_i_f_n_c_s,22,Community School,,Total number of schools community/institutional,,22,,,524 5 56 4 006,32
+,Paroha Nagarpalika,RAUTAHAT,Paroha,Nagarpalika,2,32,358,20612,524 2 32 3 012,NP0232312,e_i_f_n_c_s,23,Community School,,Total number of schools community/institutional,,23,,,524 1 06 4 003,27
+,Ishanath Nagarpalika,RAUTAHAT,Ishanath,Nagarpalika,2,32,354,20618,524 2 32 3 013,NP0232313,e_i_f_n_c_s,29,Community School,,Total number of schools community/institutional,,29,,,524 2 32 3 009,25
+,Rajpur Nagarpalika,RAUTAHAT,Rajpur,Nagarpalika,2,32,361,20613,524 2 32 3 014,NP0232314,e_i_f_n_c_s,21,Community School,,Total number of schools community/institutional,,21,,,524 5 48 4 003,31
+,Gaur Nagarpalika,RAUTAHAT,Gaur,Nagarpalika,2,32,352,20617,524 2 32 3 015,NP0232315,e_i_f_n_c_s,30,Community School,,Total number of schools community/institutional,,30,,,524 4 47 3 004,31
+,Rajdevi Nagarpalika,RAUTAHAT,Rajdevi,Nagarpalika,2,32,360,20616,524 2 32 3 016,NP0232316,e_i_f_n_c_s,22,Community School,,Total number of schools community/institutional,,22,,,524 3 30 4 009,47
+,Yemunamai Gaunpalika,RAUTAHAT,Yemunamai,Gaunpalika,2,32,362,20614,524 2 32 4 001,NP0232401,e_i_f_n_c_s,17,Community School,,Total number of schools community/institutional,,17,,,524 3 30 4 010,42
+,Durga Bhagwati Gaunpalika,RAUTAHAT,Durga Bhagwati,Gaunpalika,2,32,349,20615,524 2 32 4 002,NP0232402,e_i_f_n_c_s,23,Community School,,Total number of schools community/institutional,,23,,,524 4 43 3 002,73
+,Jitpur Simara Upamahanagarpalika,BARA,Jitpur Simara,Upamahanagarpalika,2,33,367,20703,524 2 33 2 001,NP0233201,e_i_f_n_c_s,61,Community School,,Total number of schools community/institutional,,61,,,524 4 41 3 003,60
+,Kalaiya Upamahanagarpalika,BARA,Kalaiya,Upamahanagarpalika,2,33,368,20708,524 2 33 2 002,NP0233202,e_i_f_n_c_s,67,Community School,,Total number of schools community/institutional,,67,,,524 4 36 4 009,49
+,Nijgadh Nagarpalika,BARA,Nijgadh,Nagarpalika,2,33,372,20701,524 2 33 3 001,NP0233301,e_i_f_n_c_s,29,Community School,,Total number of schools community/institutional,,29,,,524 2 17 3 002,20
+,Kolhabi Nagarpalika,BARA,Kolhabi,Nagarpalika,2,33,370,20702,524 2 33 3 002,NP0233302,e_i_f_n_c_s,40,Community School,,Total number of schools community/institutional,,40,,,524 3 30 4 002,47
+,Mahagadhimai Nagarpalika,BARA,Mahagadhimai,Nagarpalika,2,33,371,20714,524 2 33 3 003,NP0233303,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,524 7 73 4 005,25
+,Pacharauta Nagarpalika,BARA,Pacharauta,Nagarpalika,2,33,373,20713,524 2 33 3 004,NP0233304,e_i_f_n_c_s,18,Community School,,Total number of schools community/institutional,,18,,,524 2 32 3 008,30
+,Simraungadh Nagarpalika,BARA,Simraungadh,Nagarpalika,2,33,377,20712,524 2 33 3 005,NP0233305,e_i_f_n_c_s,28,Community School,,Total number of schools community/institutional,,28,,,524 5 55 4 002,41
+,Parwanipur Gaunpalika,BARA,Parwanipur,Gaunpalika,2,33,374,20704,524 2 33 4 001,NP0233401,e_i_f_n_c_s,6,Community School,,Total number of schools community/institutional,,6,,,524 7 68 4 002,23
+,Prasauni Gaunpalika,BARA,Prasauni,Gaunpalika,2,33,376,20705,524 2 33 4 002,NP0233402,e_i_f_n_c_s,9,Community School,,Total number of schools community/institutional,,9,,,524 2 32 3 015,30
+,Karaiyamai Gaunpalika,BARA,Karaiyamai,Gaunpalika,2,33,369,20709,524 2 33 4 003,NP0233403,e_i_f_n_c_s,21,Community School,,Total number of schools community/institutional,,21,,,524 1 04 3 006,35
+,Bishrampur Gaunpalika,BARA,Bishrampur,Gaunpalika,2,33,365,20706,524 2 33 4 004,NP0233404,e_i_f_n_c_s,10,Community School,,Total number of schools community/institutional,,10,,,524 7 71 3 002,42
+,Pheta Gaunpalika,BARA,Pheta,Gaunpalika,2,33,375,20707,524 2 33 4 005,NP0233405,e_i_f_n_c_s,21,Community School,,Total number of schools community/institutional,,21,,,524 1 04 4 003,26
+,Baragadhi Gaunpalika,BARA,Baragadhi,Gaunpalika,2,33,364,20710,524 2 33 4 006,NP0233406,e_i_f_n_c_s,19,Community School,,Total number of schools community/institutional,,19,,,524 3 22 4 002,49
+,Devtal Gaunpalika,BARA,Devtal,Gaunpalika,2,33,366,20715,524 2 33 4 007,NP0233407,e_i_f_n_c_s,11,Community School,,Total number of schools community/institutional,,11,,,524 2 18 3 002,36
+,Suwarna Gaunpalika,BARA,Suwarna,Gaunpalika,2,33,378,20716,524 2 33 4 008,NP0233408,e_i_f_n_c_s,19,Community School,,Total number of schools community/institutional,,19,,,524 5 58 4 001,33
+,Adarshkotwal Gaunpalika,BARA,Adarshkotwal,Gaunpalika,2,33,363,20711,524 2 33 4 009,NP0233409,e_i_f_n_c_s,14,Community School,,Total number of schools community/institutional,,14,,,524 4 45 4 004,7
+,Parsa Wildlife Reserve Wildlife Reserve,BARA,Parsa Wildlife Reserve,Wildlife Reserve,2,33,343,99982,524 2 33 5 995,NP0233595,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 4 40 4 002,40
+,Birgunj Mahanagarpalika,PARSA,Birgunj,Mahanagarpalika,2,34,382,20807,524 2 34 1 001,NP0234101,e_i_f_n_c_s,95,Community School,,Total number of schools community/institutional,,95,,,524 7 71 3 003,61
+,Pokhariya Nagarpalika,PARSA,Pokhariya,Nagarpalika,2,34,391,20809,524 2 34 3 001,NP0234301,e_i_f_n_c_s,27,Community School,,Total number of schools community/institutional,,27,,,524 5 56 2 002,100
+,Bahudaramai Nagarpalika,PARSA,Bahudaramai,Nagarpalika,2,34,380,20808,524 2 34 3 002,NP0234302,e_i_f_n_c_s,21,Community School,,Total number of schools community/institutional,,21,,,524 3 20 4 003,31
+,Parsagadhi Nagarpalika,PARSA,Parsagadhi,Nagarpalika,2,34,389,20806,524 2 34 3 003,NP0234303,e_i_f_n_c_s,30,Community School,,Total number of schools community/institutional,,30,,,524 2 19 3 008,23
+,Thori Gaunpalika,PARSA,Thori,Gaunpalika,2,34,393,20801,524 2 34 4 001,NP0234401,e_i_f_n_c_s,24,Community School,,Total number of schools community/institutional,,24,,,524 3 25 3 001,35
+,Jirabhawani Gaunpalika,PARSA,Jirabhawani,Gaunpalika,2,34,386,20802,524 2 34 4 002,NP0234402,e_i_f_n_c_s,24,Community School,,Total number of schools community/institutional,,24,,,524 7 71 3 001,51
+,Paterwasugauli Gaunpalika,PARSA,Paterwasugauli,Gaunpalika,2,34,390,20804,524 2 34 4 003,NP0234403,e_i_f_n_c_s,29,Community School,,Total number of schools community/institutional,,29,,,524 3 27 3 004,15
+,SakhuwaPrasauni Gaunpalika,PARSA,SakhuwaPrasauni,Gaunpalika,2,34,392,20805,524 2 34 4 004,NP0234404,e_i_f_n_c_s,28,Community School,,Total number of schools community/institutional,,28,,,524 3 21 4 003,45
+,Jagarnathpur Gaunpalika,PARSA,Jagarnathpur,Gaunpalika,2,34,385,20803,524 2 34 4 005,NP0234405,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 3 20 4 005,57
+,Dhobini Gaunpalika,PARSA,Dhobini,Gaunpalika,2,34,384,20811,524 2 34 4 006,NP0234406,e_i_f_n_c_s,11,Community School,,Total number of schools community/institutional,,11,,,524 2 16 3 003,31
+,Chhipaharmai Gaunpalika,PARSA,Chhipaharmai,Gaunpalika,2,34,383,20812,524 2 34 4 007,NP0234407,e_i_f_n_c_s,13,Community School,,Total number of schools community/institutional,,13,,,524 4 36 3 002,59
+,Kalikamai Gaunpalika,PARSA,Kalikamai,Gaunpalika,2,34,387,20810,524 2 34 4 008,NP0234408,e_i_f_n_c_s,13,Community School,,Total number of schools community/institutional,,13,,,524 3 29 4 002,18
+,Pakahamainpur Gaunpalika,PARSA,Pakahamainpur,Gaunpalika,2,34,388,20813,524 2 34 4 009,NP0234409,e_i_f_n_c_s,16,Community School,,Total number of schools community/institutional,,16,,,524 1 05 4 005,23
+,Bindabasini Gaunpalika,PARSA,Bindabasini,Gaunpalika,2,34,381,20814,524 2 34 4 010,NP0234410,e_i_f_n_c_s,10,Community School,,Total number of schools community/institutional,,10,,,524 2 32 3 001,27
+,Parsa Wildlife Resrve Wildlife Reserve,PARSA,Parsa Wildlife Resrve,Wildlife Reserve,2,34,379,99983,524 2 34 5 995,NP0234595,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 5 58 3 004,48
+,Parsa Wildlife Resrve National Park,PARSA,Parsa Wildlife Resrve,National Park,2,34,344,99984,524 2 34 5 997,NP0234597,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 5 51 4 005,31
+,Kamalamai Nagarpalika,SINDHULI,Kamalamai,Nagarpalika,3,20,233,31105,524 3 20 3 001,NP0320301,e_i_f_n_c_s,101,Community School,,Total number of schools community/institutional,,101,,,524 6 61 4 005,46
+,Dudhouli Nagarpalika,SINDHULI,Dudhouli,Nagarpalika,3,20,229,31101,524 3 20 3 002,NP0320302,e_i_f_n_c_s,80,Community School,,Total number of schools community/institutional,,80,,,524 6 59 3 005,74
+,Hariharpurgadhi Gaunpalika,SINDHULI,Hariharpurgadhi,Gaunpalika,3,20,232,31109,524 3 20 4 001,NP0320401,e_i_f_n_c_s,48,Community School,,Total number of schools community/institutional,,48,,,524 6 63 4 007,6
+,Marin Gaunpalika,SINDHULI,Marin,Gaunpalika,3,20,234,31108,524 3 20 4 002,NP0320402,e_i_f_n_c_s,47,Community School,,Total number of schools community/institutional,,47,,,524 1 04 4 006,18
+,Ghyanglekh Gaunpalika,SINDHULI,Ghyanglekh,Gaunpalika,3,20,230,31107,524 3 20 4 003,NP0320403,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 1 12 3 001,89
+,Sunkoshi Gaunpalika,SINDHULI,Sunkoshi,Gaunpalika,3,20,236,10407,524 3 20 4 004,NP0320404,e_i_f_n_c_s,52,Community School,,Total number of schools community/institutional,,52,,,524 2 17 3 007,23
+,Golanjor Gaunpalika,SINDHULI,Golanjor,Gaunpalika,3,20,231,31104,524 3 20 4 005,NP0320405,e_i_f_n_c_s,57,Community School,,Total number of schools community/institutional,,57,,,524 2 15 3 009,31
+,Tinpatan Gaunpalika,SINDHULI,Tinpatan,Gaunpalika,3,20,237,31103,524 3 20 4 006,NP0320406,e_i_f_n_c_s,87,Community School,,Total number of schools community/institutional,,87,,,524 3 20 4 001,48
+,Phikkal Gaunpalika,SINDHULI,Phikkal,Gaunpalika,3,20,235,31102,524 3 20 4 007,NP0320407,e_i_f_n_c_s,47,Community School,,Total number of schools community/institutional,,47,,,524 1 06 4 004,46
+,Manthali Nagarpalika,RAMECHHAP,Manthali,Nagarpalika,3,21,242,31005,524 3 21 3 001,NP0321301,e_i_f_n_c_s,87,Community School,,Total number of schools community/institutional,,87,,,524 4 41 4 005,31
+,Ramechhap Nagarpalika,RAMECHHAP,Ramechhap,Nagarpalika,3,21,243,31004,524 3 21 3 002,NP0321302,e_i_f_n_c_s,64,Community School,,Total number of schools community/institutional,,64,,,524 2 19 3 005,21
+,Sunapati Gaunpalika,RAMECHHAP,Sunapati,Gaunpalika,3,21,244,31008,524 3 21 4 001,NP0321401,e_i_f_n_c_s,43,Community School,,Total number of schools community/institutional,,43,,,524 2 19 3 010,14
+,Doramba Gaunpalika,RAMECHHAP,Doramba,Gaunpalika,3,21,238,31007,524 3 21 4 002,NP0321402,e_i_f_n_c_s,53,Community School,,Total number of schools community/institutional,,53,,,524 2 19 3 002,30
+,Gokulganga Gaunpalika,RAMECHHAP,Gokulganga,Gaunpalika,3,21,239,31002,524 3 21 4 003,NP0321403,e_i_f_n_c_s,45,Community School,,Total number of schools community/institutional,,45,,,524 1 10 4 007,39
+,Umakunda Gaunpalika,RAMECHHAP,Umakunda,Gaunpalika,3,21,245,31001,524 3 21 4 004,NP0321404,e_i_f_n_c_s,50,Community School,,Total number of schools community/institutional,,50,,,524 3 23 4 001,36
+,Khadadevi Gaunpalika,RAMECHHAP,Khadadevi,Gaunpalika,3,21,240,31006,524 3 21 4 005,NP0321405,e_i_f_n_c_s,71,Community School,,Total number of schools community/institutional,,71,,,524 3 31 2 001,86
+,Likhu Gaunpalika,RAMECHHAP,Likhu,Gaunpalika,3,21,241,10405,524 3 21 4 006,NP0321406,e_i_f_n_c_s,53,Community School,,Total number of schools community/institutional,,53,,,524 1 02 4 001,44
+,Bhimeshwor Nagarpalika,DOLAKHA,Bhimeshwor,Nagarpalika,3,22,247,30109,524 3 22 3 001,NP0322301,e_i_f_n_c_s,49,Community School,,Total number of schools community/institutional,,49,,,524 6 63 4 004,22
+,Jiri Nagarpalika,DOLAKHA,Jiri,Nagarpalika,3,22,250,30105,524 3 22 3 002,NP0322302,e_i_f_n_c_s,35,Community School,,Total number of schools community/institutional,,35,,,524 7 68 4 001,23
+,Bigu Gaunpalika,DOLAKHA,Bigu,Gaunpalika,3,22,248,30102,524 3 22 4 001,NP0322401,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,524 4 47 4 003,36
+,Gaurishankar Gaunpalika,DOLAKHA,Gaurishankar,Gaunpalika,3,22,249,30101,524 3 22 4 002,NP0322402,e_i_f_n_c_s,49,Community School,,Total number of schools community/institutional,,49,,,524 1 03 3 002,58
+,Kalinchok Gaunpalika,DOLAKHA,Kalinchok,Gaunpalika,3,22,251,30103,524 3 22 4 003,NP0322403,e_i_f_n_c_s,54,Community School,,Total number of schools community/institutional,,54,,,524 1 06 3 003,40
+,Bateshwor Gaunpalika,DOLAKHA,Bateshwor,Gaunpalika,3,22,246,20304,524 3 22 4 004,NP0322404,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,524 3 31 4 005,24
+,Shailung Gaunpalika,DOLAKHA,Shailung,Gaunpalika,3,22,253,30108,524 3 22 4 005,NP0322405,e_i_f_n_c_s,44,Community School,,Total number of schools community/institutional,,44,,,524 3 35 4 001,58
+,Melung Gaunpalika,DOLAKHA,Melung,Gaunpalika,3,22,252,30107,524 3 22 4 006,NP0322406,e_i_f_n_c_s,47,Community School,,Total number of schools community/institutional,,47,,,524 3 23 4 005,59
+,Tamakoshi Gaunpalika,DOLAKHA,Tamakoshi,Gaunpalika,3,22,254,30106,524 3 22 4 007,NP0322407,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,524 2 32 3 013,29
+,Melamchi Nagarpalika,SINDHUPALCHOK,Melamchi,Nagarpalika,3,23,263,30205,524 3 23 3 001,NP0323301,e_i_f_n_c_s,73,Community School,,Total number of schools community/institutional,,73,,,524 2 19 3 006,47
+,Chautara SangachokGadhi Nagarpalika,SINDHUPALCHOK,Chautara SangachokGadhi,Nagarpalika,3,23,258,30207,524 3 23 3 002,NP0323302,e_i_f_n_c_s,86,Community School,,Total number of schools community/institutional,,86,,,524 5 51 4 004,41
+,Barhabise Nagarpalika,SINDHUPALCHOK,Barhabise,Nagarpalika,3,23,256,30209,524 3 23 3 003,NP0323303,e_i_f_n_c_s,52,Community School,,Total number of schools community/institutional,,52,,,524 1 06 2 002,39
+,Helambu Gaunpalika,SINDHUPALCHOK,Helambu,Gaunpalika,3,23,259,30204,524 3 23 4 001,NP0323401,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,524 6 62 4 002,11
+,Panchpokhari Thangpal Gaunpalika,SINDHUPALCHOK,Panchpokhari Thangpal,Gaunpalika,3,23,264,30203,524 3 23 4 002,NP0323402,e_i_f_n_c_s,34,Community School,,Total number of schools community/institutional,,34,,,524 2 34 4 005,31
+,Jugal Gaunpalika,SINDHUPALCHOK,Jugal,Gaunpalika,3,23,261,30202,524 3 23 4 003,NP0323403,e_i_f_n_c_s,45,Community School,,Total number of schools community/institutional,,45,,,524 1 05 4 007,29
+,Bhotekoshi Gaunpalika,SINDHUPALCHOK,Bhotekoshi,Gaunpalika,3,23,257,30201,524 3 23 4 004,NP0323404,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 4 43 3 004,77
+,Indrawati Gaunpalika,SINDHUPALCHOK,Indrawati,Gaunpalika,3,23,260,30206,524 3 23 4 005,NP0323405,e_i_f_n_c_s,59,Community School,,Total number of schools community/institutional,,59,,,524 2 18 3 009,38
+,Balefi Gaunpalika,SINDHUPALCHOK,Balefi,Gaunpalika,3,23,255,30208,524 3 23 4 006,NP0323406,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,524 4 42 4 001,46
+,Sunkoshi Gaunpalika,SINDHUPALCHOK,Sunkoshi,Gaunpalika,3,23,265,10407,524 3 23 4 007,NP0323407,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 2 17 4 006,13
+,Tripurasundari Gaunpalika,SINDHUPALCHOK,Tripurasundari,Gaunpalika,3,23,266,30210,524 3 23 4 008,NP0323408,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 5 57 4 003,32
+,Lisangkhu Pakhar Gaunpalika,SINDHUPALCHOK,Lisangkhu Pakhar,Gaunpalika,3,23,262,30211,524 3 23 4 009,NP0323409,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 7 71 4 006,29
+,Mandandeupur Nagarpalika,KABHREPALANCHOK,Mandandeupur,Nagarpalika,3,24,274,30903,524 3 24 3 001,NP0324301,e_i_f_n_c_s,47,Community School,,Total number of schools community/institutional,,47,,,524 2 17 2 001,61
+,Banepa Nagarpalika,KABHREPALANCHOK,Banepa,Nagarpalika,3,24,267,30904,524 3 24 3 002,NP0324302,e_i_f_n_c_s,43,Community School,,Total number of schools community/institutional,,43,,,524 1 12 4 008,37
+,Dhulikhel Nagarpalika,KABHREPALANCHOK,Dhulikhel,Nagarpalika,3,24,271,30905,524 3 24 3 003,NP0324303,e_i_f_n_c_s,27,Community School,,Total number of schools community/institutional,,27,,,524 7 67 3 002,54
+,Panchkhal Nagarpalika,KABHREPALANCHOK,Panchkhal,Nagarpalika,3,24,277,30906,524 3 24 3 004,NP0324304,e_i_f_n_c_s,37,Community School,,Total number of schools community/institutional,,37,,,524 1 04 4 004,40
+,Panauti Nagarpalika,KABHREPALANCHOK,Panauti,Nagarpalika,3,24,276,30909,524 3 24 3 005,NP0324305,e_i_f_n_c_s,39,Community School,,Total number of schools community/institutional,,39,,,524 5 55 4 003,49
+,Namobuddha Nagarpalika,KABHREPALANCHOK,Namobuddha,Nagarpalika,3,24,275,30908,524 3 24 3 006,NP0324306,e_i_f_n_c_s,50,Community School,,Total number of schools community/institutional,,50,,,524 2 34 4 002,24
+,Bhumlu Gaunpalika,KABHREPALANCHOK,Bhumlu,Gaunpalika,3,24,269,30902,524 3 24 4 001,NP0324401,e_i_f_n_c_s,49,Community School,,Total number of schools community/institutional,,49,,,524 3 22 3 002,35
+,Chaurideurali Gaunpalika,KABHREPALANCHOK,Chaurideurali,Gaunpalika,3,24,270,30901,524 3 24 4 002,NP0324402,e_i_f_n_c_s,57,Community School,,Total number of schools community/institutional,,57,,,524 2 33 2 001,61
+,Bethanchowk Gaunpalika,KABHREPALANCHOK,Bethanchowk,Gaunpalika,3,24,268,30910,524 3 24 4 003,NP0324403,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 7 70 4 004,58
+,Roshi Gaunpalika,KABHREPALANCHOK,Roshi,Gaunpalika,3,24,278,30911,524 3 24 4 004,NP0324404,e_i_f_n_c_s,72,Community School,,Total number of schools community/institutional,,72,,,524 7 71 4 004,25
+,Temal Gaunpalika,KABHREPALANCHOK,Temal,Gaunpalika,3,24,279,30907,524 3 24 4 005,NP0324405,e_i_f_n_c_s,49,Community School,,Total number of schools community/institutional,,49,,,524 3 23 4 003,45
+,Khanikhola Gaunpalika,KABHREPALANCHOK,Khanikhola,Gaunpalika,3,24,272,30913,524 3 24 4 006,NP0324406,e_i_f_n_c_s,37,Community School,,Total number of schools community/institutional,,37,,,524 6 60 4 001,59
+,Mahabharat Gaunpalika,KABHREPALANCHOK,Mahabharat,Gaunpalika,3,24,273,30912,524 3 24 4 007,NP0324407,e_i_f_n_c_s,51,Community School,,Total number of schools community/institutional,,51,,,524 3 30 4 006,42
+,Lalitpur Mahanagarpalika,LALITPUR,Lalitpur,Mahanagarpalika,3,25,283,30801,524 3 25 1 001,NP0325101,e_i_f_n_c_s,50,Community School,,Total number of schools community/institutional,,50,,,524 7 70 4 005,34
+,Godawari Nagarpalika,LALITPUR,Godawari,Nagarpalika,3,25,281,30803,524 3 25 3 001,NP0325301,e_i_f_n_c_s,35,Community School,,Total number of schools community/institutional,,35,,,524 2 19 3 007,15
+,Mahalaxmi Nagarpalika,LALITPUR,Mahalaxmi,Nagarpalika,3,25,284,10701,524 3 25 3 002,NP0325302,e_i_f_n_c_s,14,Community School,,Total number of schools community/institutional,,14,,,524 1 04 4 007,33
+,Bagmati Gaunpalika,LALITPUR,Bagmati,Gaunpalika,3,25,280,20503,524 3 25 4 001,NP0325401,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,524 3 27 3 006,13
+,Konjyosom Gaunpalika,LALITPUR,Konjyosom,Gaunpalika,3,25,282,30804,524 3 25 4 002,NP0325402,e_i_f_n_c_s,15,Community School,,Total number of schools community/institutional,,15,,,524 6 62 4 005,14
+,Mahankal Gaunpalika,LALITPUR,Mahankal,Gaunpalika,3,25,285,30805,524 3 25 4 003,NP0325403,e_i_f_n_c_s,24,Community School,,Total number of schools community/institutional,,24,,,524 7 71 4 002,46
+,Madhyapur Thimi Nagarpalika,BHAKTAPUR,Madhyapur Thimi,Nagarpalika,3,26,288,30703,524 3 26 3 001,NP0326301,e_i_f_n_c_s,17,Community School,,Total number of schools community/institutional,,17,,,524 3 31 4 003,51
+,Changunarayan Nagarpalika,BHAKTAPUR,Changunarayan,Nagarpalika,3,26,287,30701,524 3 26 3 002,NP0326302,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,524 3 35 3 001,38
+,Bhaktapur Nagarpalika,BHAKTAPUR,Bhaktapur,Nagarpalika,3,26,286,30702,524 3 26 3 003,NP0326303,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,524 3 28 4 009,47
+,Suryabinayak Nagarpalika,BHAKTAPUR,Suryabinayak,Nagarpalika,3,26,289,30704,524 3 26 3 004,NP0326304,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 2 33 2 002,67
+,Kathmandu Mahanagarpalika,KATHMANDU,Kathmandu,Mahanagarpalika,3,27,295,30601,524 3 27 1 001,NP0327101,e_i_f_n_c_s,135,Community School,,Total number of schools community/institutional,,135,,,524 5 51 4 010,44
+,Tarakeshwor Nagarpalika,KATHMANDU,Tarakeshwor,Nagarpalika,3,27,299,30507,524 3 27 3 001,NP0327301,e_i_f_n_c_s,23,Community School,,Total number of schools community/institutional,,23,,,524 4 41 4 006,36
+,Tokha Nagarpalika,KATHMANDU,Tokha,Nagarpalika,3,27,300,30605,524 3 27 3 002,NP0327302,e_i_f_n_c_s,10,Community School,,Total number of schools community/institutional,,10,,,524 3 29 4 004,22
+,Budhanilakantha Nagarpalika,KATHMANDU,Budhanilakantha,Nagarpalika,3,27,290,30604,524 3 27 3 003,NP0327303,e_i_f_n_c_s,9,Community School,,Total number of schools community/institutional,,9,,,524 6 64 4 005,28
+,Gokarneshwor Nagarpalika,KATHMANDU,Gokarneshwor,Nagarpalika,3,27,293,30603,524 3 27 3 004,NP0327304,e_i_f_n_c_s,15,Community School,,Total number of schools community/institutional,,15,,,524 2 34 4 008,13
+,Nagarjun Nagarpalika,KATHMANDU,Nagarjun,Nagarpalika,3,27,297,30607,524 3 27 3 005,NP0327305,e_i_f_n_c_s,15,Community School,,Total number of schools community/institutional,,15,,,524 6 53 4 004,52
+,Kageshwori Manahora Nagarpalika,KATHMANDU,Kageshwori Manahora,Nagarpalika,3,27,294,30602,524 3 27 3 006,NP0327306,e_i_f_n_c_s,13,Community School,,Total number of schools community/institutional,,13,,,524 3 22 4 003,54
+,Shankharapur Nagarpalika,KATHMANDU,Shankharapur,Nagarpalika,3,27,298,30601,524 3 27 3 007,NP0327307,e_i_f_n_c_s,21,Community School,,Total number of schools community/institutional,,21,,,524 2 16 3 006,37
+,Chandragiri Nagarpalika,KATHMANDU,Chandragiri,Nagarpalika,3,27,291,30610,524 3 27 3 008,NP0327308,e_i_f_n_c_s,24,Community School,,Total number of schools community/institutional,,24,,,524 7 69 3 003,47
+,Kirtipur Nagarpalika,KATHMANDU,Kirtipur,Nagarpalika,3,27,296,30609,524 3 27 3 009,NP0327309,e_i_f_n_c_s,13,Community School,,Total number of schools community/institutional,,13,,,524 1 04 4 001,27
+,Dakshinkali Nagarpalika,KATHMANDU,Dakshinkali,Nagarpalika,3,27,292,30611,524 3 27 3 010,NP0327310,e_i_f_n_c_s,24,Community School,,Total number of schools community/institutional,,24,,,524 2 17 3 011,17
+,Bidur Nagarpalika,NUWAKOT,Bidur,Nagarpalika,3,28,302,30504,524 3 28 3 001,NP0328301,e_i_f_n_c_s,69,Community School,,Total number of schools community/institutional,,69,,,524 3 20 3 001,101
+,Belkotgadhi Nagarpalika,NUWAKOT,Belkotgadhi,Nagarpalika,3,28,301,30508,524 3 28 3 002,NP0328302,e_i_f_n_c_s,55,Community School,,Total number of schools community/institutional,,55,,,524 6 63 4 001,19
+,Meghang Gaunpalika,NUWAKOT,Meghang,Gaunpalika,3,28,307,30506,524 3 28 4 001,NP0328401,e_i_f_n_c_s,25,Community School,,Total number of schools community/institutional,,25,,,524 5 48 4 001,19
+,Kispang Gaunpalika,NUWAKOT,Kispang,Gaunpalika,3,28,305,30505,524 3 28 4 002,NP0328402,e_i_f_n_c_s,24,Community School,,Total number of schools community/institutional,,24,,,524 2 15 3 005,31
+,Tarkeshwar Gaunpalika,NUWAKOT,Tarkeshwar,Gaunpalika,3,28,312,30507,524 3 28 4 003,NP0328403,e_i_f_n_c_s,35,Community School,,Total number of schools community/institutional,,35,,,524 7 67 4 001,5
+,Suryagadhi Gaunpalika,NUWAKOT,Suryagadhi,Gaunpalika,3,28,310,30503,524 3 28 4 004,NP0328404,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 1 05 4 003,18
+,Tadi Gaunpalika,NUWAKOT,Tadi,Gaunpalika,3,28,311,30502,524 3 28 4 005,NP0328405,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,524 1 04 3 003,17
+,Likhu Gaunpalika,NUWAKOT,Likhu,Gaunpalika,3,28,306,10405,524 3 28 4 006,NP0328406,e_i_f_n_c_s,21,Community School,,Total number of schools community/institutional,,21,,,524 5 49 3 006,60
+,Panchakanya Gaunpalika,NUWAKOT,Panchakanya,Gaunpalika,3,28,308,30510,524 3 28 4 007,NP0328407,e_i_f_n_c_s,29,Community School,,Total number of schools community/institutional,,29,,,524 6 53 4 007,26
+,Dupcheshwar Gaunpalika,NUWAKOT,Dupcheshwar,Gaunpalika,3,28,303,30501,524 3 28 4 008,NP0328408,e_i_f_n_c_s,52,Community School,,Total number of schools community/institutional,,52,,,524 2 33 4 003,21
+,Kakani Gaunpalika,NUWAKOT,Kakani,Gaunpalika,3,28,304,30512,524 3 28 4 009,NP0328409,e_i_f_n_c_s,47,Community School,,Total number of schools community/institutional,,47,,,524 2 16 3 001,23
+,Shivapuri Gaunpalika,NUWAKOT,Shivapuri,Gaunpalika,3,28,309,30511,524 3 28 4 010,NP0328410,e_i_f_n_c_s,52,Community School,,Total number of schools community/institutional,,52,,,524 1 05 4 006,20
+,Shivapuri Watershed and Wildlife Reserve Watershed & Wildlif*,NUWAKOT,Shivapuri Watershed and Wildlife Reserve,Watershed & Wildlif*,3,28,313,99985,524 3 28 5 996,NP0328596,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 2 32 3 004,24
+,Langtang National Park National Park,NUWAKOT,Langtang National Park,National Park,3,28,314,99986,524 3 28 5 997,NP0328597,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 1 14 3 001,84
+,Parbati Kunda Gaunpalika,RASUWA,Parbati Kunda,Gaunpalika,3,29,318,30302,524 3 29 4 001,NP0329401,e_i_f_n_c_s,12,Community School,,Total number of schools community/institutional,,12,,,524 4 43 4 005,54
+,Gosaikunda Gaunpalika,RASUWA,Gosaikunda,Gaunpalika,3,29,315,30301,524 3 29 4 002,NP0329402,e_i_f_n_c_s,18,Community School,,Total number of schools community/institutional,,18,,,524 3 27 1 001,135
+,Uttargaya Gaunpalika,RASUWA,Uttargaya,Gaunpalika,3,29,319,30303,524 3 29 4 003,NP0329403,e_i_f_n_c_s,21,Community School,,Total number of schools community/institutional,,21,,,524 2 19 4 006,14
+,Kalika Gaunpalika,RASUWA,Kalika,Gaunpalika,3,29,316,30304,524 3 29 4 004,NP0329404,e_i_f_n_c_s,22,Community School,,Total number of schools community/institutional,,22,,,524 4 47 3 002,37
+,Naukunda Gaunpalika,RASUWA,Naukunda,Gaunpalika,3,29,317,30305,524 3 29 4 005,NP0329405,e_i_f_n_c_s,29,Community School,,Total number of schools community/institutional,,29,,,524 7 67 4 005,52
+,Nilakantha Nagarpalika,DHADING,Nilakantha,Nagarpalika,3,30,328,30406,524 3 30 3 001,NP0330301,e_i_f_n_c_s,96,Community School,,Total number of schools community/institutional,,96,,,524 1 12 4 002,39
+,Dhunibesi Nagarpalika,DHADING,Dhunibesi,Nagarpalika,3,30,321,30413,524 3 30 3 002,NP0330302,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 1 05 4 001,27
+,Rubi Valley Gaunpalika,DHADING,Rubi Valley,Gaunpalika,3,30,329,30401,524 3 30 4 001,NP0330401,e_i_f_n_c_s,23,Community School,,Total number of schools community/institutional,,23,,,524 2 15 3 002,43
+,Gangajamuna Gaunpalika,DHADING,Gangajamuna,Gaunpalika,3,30,324,30403,524 3 30 4 002,NP0330402,e_i_f_n_c_s,47,Community School,,Total number of schools community/institutional,,47,,,524 3 35 3 003,29
+,Khaniyabash Gaunpalika,DHADING,Khaniyabash,Gaunpalika,3,30,326,30402,524 3 30 4 003,NP0330403,e_i_f_n_c_s,28,Community School,,Total number of schools community/institutional,,28,,,524 5 57 4 001,53
+,Tripura Sundari Gaunpalika,DHADING,Tripura Sundari,Gaunpalika,3,30,332,60105,524 3 30 4 004,NP0330404,e_i_f_n_c_s,34,Community School,,Total number of schools community/institutional,,34,,,524 1 07 4 001,39
+,Netrawati Gaunpalika,DHADING,Netrawati,Gaunpalika,3,30,327,30405,524 3 30 4 005,NP0330405,e_i_f_n_c_s,27,Community School,,Total number of schools community/institutional,,27,,,524 1 09 3 001,46
+,Jwalamukhi Gaunpalika,DHADING,Jwalamukhi,Gaunpalika,3,30,325,30407,524 3 30 4 006,NP0330406,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,524 6 64 3 002,36
+,Siddhalek Gaunpalika,DHADING,Siddhalek,Gaunpalika,3,30,330,30408,524 3 30 4 007,NP0330407,e_i_f_n_c_s,49,Community School,,Total number of schools community/institutional,,49,,,524 3 21 4 005,71
+,Benighat Rorang Gaunpalika,DHADING,Benighat Rorang,Gaunpalika,3,30,320,30409,524 3 30 4 008,NP0330408,e_i_f_n_c_s,75,Community School,,Total number of schools community/institutional,,75,,,524 3 24 4 006,37
+,Gajuri Gaunpalika,DHADING,Gajuri,Gaunpalika,3,30,322,30410,524 3 30 4 009,NP0330409,e_i_f_n_c_s,47,Community School,,Total number of schools community/institutional,,47,,,524 3 30 4 003,28
+,Galchi Gaunpalika,DHADING,Galchi,Gaunpalika,3,30,323,30411,524 3 30 4 010,NP0330410,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,524 7 67 4 010,41
+,Thakre Gaunpalika,DHADING,Thakre,Gaunpalika,3,30,331,30412,524 3 30 4 011,NP0330411,e_i_f_n_c_s,43,Community School,,Total number of schools community/institutional,,43,,,524 6 66 4 003,16
+,Hetauda Upamahanagarpalika,MAKAWANPUR,Hetauda,Upamahanagarpalika,3,31,336,31206,524 3 31 2 001,NP0331201,e_i_f_n_c_s,86,Community School,,Total number of schools community/institutional,,86,,,524 6 65 4 001,43
+,Thaha Nagarpalika,MAKAWANPUR,Thaha,Nagarpalika,3,31,342,31202,524 3 31 3 001,NP0331301,e_i_f_n_c_s,57,Community School,,Total number of schools community/institutional,,57,,,524 1 13 4 001,54
+,Manahari Gaunpalika,MAKAWANPUR,Manahari,Gaunpalika,3,31,340,31205,524 3 31 4 001,NP0331401,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 1 12 4 006,51
+,Raksirang Gaunpalika,MAKAWANPUR,Raksirang,Gaunpalika,3,31,341,31204,524 3 31 4 002,NP0331402,e_i_f_n_c_s,54,Community School,,Total number of schools community/institutional,,54,,,524 1 11 4 001,19
+,Kailash Gaunpalika,MAKAWANPUR,Kailash,Gaunpalika,3,31,338,31203,524 3 31 4 003,NP0331403,e_i_f_n_c_s,51,Community School,,Total number of schools community/institutional,,51,,,524 3 27 3 009,13
+,Bhimphedi Gaunpalika,MAKAWANPUR,Bhimphedi,Gaunpalika,3,31,335,31207,524 3 31 4 004,NP0331404,e_i_f_n_c_s,52,Community School,,Total number of schools community/institutional,,52,,,524 3 28 4 002,24
+,Indrasarowar Gaunpalika,MAKAWANPUR,Indrasarowar,Gaunpalika,3,31,337,31201,524 3 31 4 005,NP0331405,e_i_f_n_c_s,24,Community School,,Total number of schools community/institutional,,24,,,524 5 57 3 001,40
+,Makawanpurgadhi Gaunpalika,MAKAWANPUR,Makawanpurgadhi,Gaunpalika,3,31,339,31208,524 3 31 4 006,NP0331406,e_i_f_n_c_s,39,Community School,,Total number of schools community/institutional,,39,,,524 2 33 3 002,40
+,Bakaiya Gaunpalika,MAKAWANPUR,Bakaiya,Gaunpalika,3,31,334,31209,524 3 31 4 007,NP0331407,e_i_f_n_c_s,75,Community School,,Total number of schools community/institutional,,75,,,524 3 25 4 002,15
+,Bagmati Gaunpalika,MAKAWANPUR,Bagmati,Gaunpalika,3,31,333,20503,524 3 31 4 008,NP0331408,e_i_f_n_c_s,50,Community School,,Total number of schools community/institutional,,50,,,524 1 06 4 001,45
+,Parsa Wildlife Reserve Wildlife Reserve,MAKAWANPUR,Parsa Wildlife Reserve,Wildlife Reserve,3,31,779,99987,524 3 31 5 995,NP0331595,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 5 48 4 008,21
+,Parsa Wildlife Reserve National Park,MAKAWANPUR,Parsa Wildlife Reserve,National Park,3,31,402,99988,524 3 31 5 997,NP0331597,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 5 49 3 004,49
+,Bharatpur Mahanagarpalika,CHITAWAN,Bharatpur,Mahanagarpalika,3,35,395,30702,524 3 35 1 001,NP0335101,e_i_f_n_c_s,125,Community School,,Total number of schools community/institutional,,125,,,524 7 72 3 005,37
+,Kalika Nagarpalika,CHITAWAN,Kalika,Nagarpalika,3,35,397,30304,524 3 35 3 001,NP0335301,e_i_f_n_c_s,38,Community School,,Total number of schools community/institutional,,38,,,524 6 53 4 001,49
+,Ratnanagar Nagarpalika,CHITAWAN,Ratnanagar,Nagarpalika,3,35,401,31305,524 3 35 3 002,NP0335302,e_i_f_n_c_s,33,Community School,,Total number of schools community/institutional,,33,,,524 1 02 4 004,39
+,Khairahani Nagarpalika,CHITAWAN,Khairahani,Nagarpalika,3,35,398,31306,524 3 35 3 003,NP0335303,e_i_f_n_c_s,29,Community School,,Total number of schools community/institutional,,29,,,524 6 60 4 002,51
+,Rapti Nagarpalika,CHITAWAN,Rapti,Nagarpalika,3,35,400,31301,524 3 35 3 004,NP0335304,e_i_f_n_c_s,54,Community School,,Total number of schools community/institutional,,54,,,524 4 42 3 001,68
+,Madi Nagarpalika,CHITAWAN,Madi,Nagarpalika,3,35,399,10209,524 3 35 3 005,NP0335305,e_i_f_n_c_s,45,Community School,,Total number of schools community/institutional,,45,,,524 4 37 4 001,30
+,Ichchhyakamana Gaunpalika,CHITAWAN,Ichchhyakamana,Gaunpalika,3,35,396,31303,524 3 35 4 001,NP0335401,e_i_f_n_c_s,58,Community School,,Total number of schools community/institutional,,58,,,524 2 16 3 005,67
+,Chitawan National Park National Park,CHITAWAN,Chitawan National Park,National Park,3,35,774,99989,524 3 35 5 997,NP0335597,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 2 19 3 003,52
+,Palungtar Nagarpalika,GORKHA,Palungtar,Nagarpalika,4,36,410,40108,524 4 36 3 001,NP0436301,e_i_f_n_c_s,50,Community School,,Total number of schools community/institutional,,50,,,524 1 08 3 001,32
+,Gorkha Nagarpalika,GORKHA,Gorkha,Nagarpalika,4,36,409,40109,524 4 36 3 002,NP0436302,e_i_f_n_c_s,59,Community School,,Total number of schools community/institutional,,59,,,524 3 25 1 001,50
+,Chum Nubri Gaunpalika,GORKHA,Chum Nubri,Gaunpalika,4,36,406,40101,524 4 36 4 001,NP0436401,e_i_f_n_c_s,24,Community School,,Total number of schools community/institutional,,24,,,524 7 72 4 002,18
+,Ajirkot Gaunpalika,GORKHA,Ajirkot,Gaunpalika,4,36,404,40102,524 4 36 4 002,NP0436402,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 5 56 3 001,28
+,Sulikot Gaunpalika,GORKHA,Sulikot,Gaunpalika,4,36,413,40103,524 4 36 4 003,NP0436403,e_i_f_n_c_s,51,Community School,,Total number of schools community/institutional,,51,,,524 1 12 4 003,28
+,Dharche Gaunpalika,GORKHA,Dharche,Gaunpalika,4,36,407,40104,524 4 36 4 004,NP0436404,e_i_f_n_c_s,27,Community School,,Total number of schools community/institutional,,27,,,524 7 71 3 006,46
+,Siranchok Gaunpalika,GORKHA,Siranchok,Gaunpalika,4,36,412,40107,524 4 36 4 005,NP0436405,e_i_f_n_c_s,52,Community School,,Total number of schools community/institutional,,52,,,524 2 17 4 002,24
+,Aarughat Gaunpalika,GORKHA,Aarughat,Gaunpalika,4,36,403,40105,524 4 36 4 006,NP0436406,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,524 2 16 4 006,19
+,Bhimsen Gaunpalika,GORKHA,Bhimsen,Gaunpalika,4,36,405,40106,524 4 36 4 007,NP0436407,e_i_f_n_c_s,45,Community School,,Total number of schools community/institutional,,45,,,524 6 59 3 004,46
+,Sahid Lakhan Gaunpalika,GORKHA,Sahid Lakhan,Gaunpalika,4,36,411,40110,524 4 36 4 008,NP0436408,e_i_f_n_c_s,53,Community School,,Total number of schools community/institutional,,53,,,524 7 75 4 006,46
+,Gandaki Gaunpalika,GORKHA,Gandaki,Gaunpalika,4,36,408,40111,524 4 36 4 009,NP0436409,e_i_f_n_c_s,49,Community School,,Total number of schools community/institutional,,49,,,524 1 05 3 001,34
+,MadhyaNepal Nagarpalika,LAMJUNG,MadhyaNepal,Nagarpalika,4,37,773,40604,524 4 37 3 001,NP0437301,e_i_f_n_c_s,48,Community School,,Total number of schools community/institutional,,48,,,524 1 13 4 002,31
+,Besishahar Nagarpalika,LAMJUNG,Besishahar,Nagarpalika,4,37,414,40605,524 4 37 3 002,NP0437302,e_i_f_n_c_s,60,Community School,,Total number of schools community/institutional,,60,,,524 3 21 4 006,53
+,Sundarbazar Nagarpalika,LAMJUNG,Sundarbazar,Nagarpalika,4,37,421,40606,524 4 37 3 003,NP0437303,e_i_f_n_c_s,44,Community School,,Total number of schools community/institutional,,44,,,524 3 28 4 006,21
+,Rainas Nagarpalika,LAMJUNG,Rainas,Nagarpalika,4,37,420,40607,524 4 37 3 004,NP0437304,e_i_f_n_c_s,39,Community School,,Total number of schools community/institutional,,39,,,524 1 11 4 003,22
+,Kwholasothar Gaunpalika,LAMJUNG,Kwholasothar,Gaunpalika,4,37,417,40603,524 4 37 4 001,NP0437401,e_i_f_n_c_s,30,Community School,,Total number of schools community/institutional,,30,,,524 3 23 4 009,31
+,Marsyangdi Gaunpalika,LAMJUNG,Marsyangdi,Gaunpalika,4,37,419,40602,524 4 37 4 002,NP0437402,e_i_f_n_c_s,58,Community School,,Total number of schools community/institutional,,58,,,524 2 18 3 008,22
+,Dordi Gaunpalika,LAMJUNG,Dordi,Gaunpalika,4,37,415,40601,524 4 37 4 003,NP0437403,e_i_f_n_c_s,55,Community School,,Total number of schools community/institutional,,55,,,524 4 45 4 001,13
+,Dudhpokhari Gaunpalika,LAMJUNG,Dudhpokhari,Gaunpalika,4,37,416,40608,524 4 37 4 004,NP0437404,e_i_f_n_c_s,35,Community School,,Total number of schools community/institutional,,35,,,524 5 48 3 004,64
+,Neshyang Gaunpalika,MANANG,Neshyang,Gaunpalika,4,38,451,40202,524 4 38 4 001,NP0438401,e_i_f_n_c_s,8,Community School,,Total number of schools community/institutional,,8,,,524 5 54 4 008,32
+,Narphu Gaunpalika,MANANG,Narphu,Gaunpalika,4,38,449,40201,524 4 38 4 002,NP0438402,e_i_f_n_c_s,2,Community School,,Total number of schools community/institutional,,2,,,524 4 39 4 002,48
+,Chame Gaunpalika,MANANG,Chame,Gaunpalika,4,38,448,40203,524 4 38 4 003,NP0438403,e_i_f_n_c_s,6,Community School,,Total number of schools community/institutional,,6,,,524 5 51 4 001,49
+,Nashong Gaunpalika,MANANG,Nashong,Gaunpalika,4,38,450,40204,524 4 38 4 004,NP0438404,e_i_f_n_c_s,11,Community School,,Total number of schools community/institutional,,11,,,524 2 32 3 011,22
+,Pokhara Lekhnath Mahanagarpalika,KASKI,Pokhara Lekhnath,Mahanagarpalika,4,39,446,40504,524 4 39 1 001,NP0439101,e_i_f_n_c_s,223,Community School,,Total number of schools community/institutional,,223,,,524 5 58 3 002,33
+,Annapurna Gaunpalika,KASKI,Annapurna,Gaunpalika,4,39,443,40401,524 4 39 4 001,NP0439401,e_i_f_n_c_s,54,Community School,,Total number of schools community/institutional,,54,,,524 4 47 3 001,41
+,Machhapuchchhre Gaunpalika,KASKI,Machhapuchchhre,Gaunpalika,4,39,444,40502,524 4 39 4 002,NP0439402,e_i_f_n_c_s,48,Community School,,Total number of schools community/institutional,,48,,,524 4 37 3 001,48
+,Madi Gaunpalika,KASKI,Madi,Gaunpalika,4,39,445,10209,524 4 39 4 003,NP0439403,e_i_f_n_c_s,55,Community School,,Total number of schools community/institutional,,55,,,524 3 26 3 001,17
+,Rupa Gaunpalika,KASKI,Rupa,Gaunpalika,4,39,447,40505,524 4 39 4 004,NP0439404,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,524 4 39 4 003,55
+,Shuklagandaki Nagarpalika,TANAHU,Shuklagandaki,Nagarpalika,4,40,431,40704,524 4 40 3 001,NP0440301,e_i_f_n_c_s,66,Community School,,Total number of schools community/institutional,,66,,,524 5 54 4 004,33
+,Byas Nagarpalika,TANAHU,Byas,Nagarpalika,4,40,426,40702,524 4 40 3 002,NP0440302,e_i_f_n_c_s,88,Community School,,Total number of schools community/institutional,,88,,,524 1 09 3 005,35
+,Bhanu Nagarpalika,TANAHU,Bhanu,Nagarpalika,4,40,424,40701,524 4 40 3 003,NP0440303,e_i_f_n_c_s,72,Community School,,Total number of schools community/institutional,,72,,,524 3 35 3 005,45
+,Bhimad Nagarpalika,TANAHU,Bhimad,Nagarpalika,4,40,425,40705,524 4 40 3 004,NP0440304,e_i_f_n_c_s,54,Community School,,Total number of schools community/institutional,,54,,,524 3 24 4 007,51
+,Myagde Gaunpalika,TANAHU,Myagde,Gaunpalika,4,40,429,40703,524 4 40 4 001,NP0440401,e_i_f_n_c_s,35,Community School,,Total number of schools community/institutional,,35,,,524 6 61 4 003,34
+,Ghiring Gaunpalika,TANAHU,Ghiring,Gaunpalika,4,40,428,40706,524 4 40 4 002,NP0440402,e_i_f_n_c_s,40,Community School,,Total number of schools community/institutional,,40,,,524 2 15 4 005,18
+,Rhishing Gaunpalika,TANAHU,Rhishing,Gaunpalika,4,40,430,40707,524 4 40 4 003,NP0440403,e_i_f_n_c_s,50,Community School,,Total number of schools community/institutional,,50,,,524 2 33 3 003,46
+,Bandipur Gaunpalika,TANAHU,Bandipur,Gaunpalika,4,40,423,40709,524 4 40 4 004,NP0440404,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 7 72 3 001,26
+,Anbukhaireni Gaunpalika,TANAHU,Anbukhaireni,Gaunpalika,4,40,422,40710,524 4 40 4 005,NP0440405,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 7 75 3 001,50
+,Devghat Gaunpalika,TANAHU,Devghat,Gaunpalika,4,40,427,40708,524 4 40 4 006,NP0440406,e_i_f_n_c_s,45,Community School,,Total number of schools community/institutional,,45,,,524 1 11 4 002,19
+,Putalibazar Nagarpalika,SYANGJA,Putalibazar,Nagarpalika,4,41,441,40901,524 4 41 3 001,NP0441301,e_i_f_n_c_s,74,Community School,,Total number of schools community/institutional,,74,,,524 1 07 3 001,53
+,Bhirkot Nagarpalika,SYANGJA,Bhirkot,Nagarpalika,4,41,434,40905,524 4 41 3 002,NP0441302,e_i_f_n_c_s,48,Community School,,Total number of schools community/institutional,,48,,,524 3 25 3 002,14
+,Galyang Nagarpalika,SYANGJA,Galyang,Nagarpalika,4,41,437,40910,524 4 41 3 003,NP0441303,e_i_f_n_c_s,60,Community School,,Total number of schools community/institutional,,60,,,524 3 25 4 003,24
+,Waling Nagarpalika,SYANGJA,Waling,Nagarpalika,4,41,442,40909,524 4 41 3 004,NP0441304,e_i_f_n_c_s,81,Community School,,Total number of schools community/institutional,,81,,,524 5 49 3 005,74
+,Chapakot Nagarpalika,SYANGJA,Chapakot,Nagarpalika,4,41,436,40908,524 4 41 3 005,NP0441305,e_i_f_n_c_s,56,Community School,,Total number of schools community/institutional,,56,,,524 4 42 4 004,30
+,Aandhikhola Gaunpalika,SYANGJA,Aandhikhola,Gaunpalika,4,41,432,40903,524 4 41 4 001,NP0441401,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 6 64 4 006,21
+,Phedikhola Gaunpalika,SYANGJA,Phedikhola,Gaunpalika,4,41,440,40902,524 4 41 4 002,NP0441402,e_i_f_n_c_s,27,Community School,,Total number of schools community/institutional,,27,,,524 2 18 4 004,12
+,Arjunchaupari Gaunpalika,SYANGJA,Arjunchaupari,Gaunpalika,4,41,433,40904,524 4 41 4 003,NP0441403,e_i_f_n_c_s,33,Community School,,Total number of schools community/institutional,,33,,,524 1 03 4 003,38
+,Biruwa Gaunpalika,SYANGJA,Biruwa,Gaunpalika,4,41,435,40906,524 4 41 4 004,NP0441404,e_i_f_n_c_s,34,Community School,,Total number of schools community/institutional,,34,,,524 1 03 3 004,50
+,Harinas Gaunpalika,SYANGJA,Harinas,Gaunpalika,4,41,438,40907,524 4 41 4 005,NP0441405,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 1 01 4 005,28
+,Kaligandagi Gaunpalika,SYANGJA,Kaligandagi,Gaunpalika,4,41,439,40911,524 4 41 4 006,NP0441406,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,524 1 09 4 001,46
+,Kushma Nagarpalika,PARBAT,Kushma,Nagarpalika,4,42,466,41003,524 4 42 3 001,NP0442301,e_i_f_n_c_s,68,Community School,,Total number of schools community/institutional,,68,,,524 3 31 4 006,39
+,Phalebas Nagarpalika,PARBAT,Phalebas,Nagarpalika,4,42,470,41004,524 4 42 3 002,NP0442302,e_i_f_n_c_s,58,Community School,,Total number of schools community/institutional,,58,,,524 2 19 3 009,23
+,Jaljala Gaunpalika,PARBAT,Jaljala,Gaunpalika,4,42,465,41002,524 4 42 4 001,NP0442401,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,524 5 50 4 001,61
+,Modi Gaunpalika,PARBAT,Modi,Gaunpalika,4,42,468,41001,524 4 42 4 002,NP0442402,e_i_f_n_c_s,54,Community School,,Total number of schools community/institutional,,54,,,524 4 44 4 004,34
+,Bihadi Gaunpalika,PARBAT,Bihadi,Gaunpalika,4,42,464,41006,524 4 42 4 003,NP0442403,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 5 51 4 002,55
+,Mahashila Gaunpalika,PARBAT,Mahashila,Gaunpalika,4,42,467,41005,524 4 42 4 004,NP0442404,e_i_f_n_c_s,30,Community School,,Total number of schools community/institutional,,30,,,524 7 75 4 004,46
+,Painyu Gaunpalika,PARBAT,Painyu,Gaunpalika,4,42,469,41007,524 4 42 4 005,NP0442405,e_i_f_n_c_s,30,Community School,,Total number of schools community/institutional,,30,,,524 5 55 4 005,25
+,Dhorpatan Nagarpalika,BAGLUNG,Dhorpatan,Nagarpalika,4,43,474,41105,524 4 43 3 001,NP0443301,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,524 3 31 4 001,32
+,Galkot Nagarpalika,BAGLUNG,Galkot,Nagarpalika,4,43,475,41108,524 4 43 3 002,NP0443302,e_i_f_n_c_s,73,Community School,,Total number of schools community/institutional,,73,,,524 2 18 3 006,27
+,Baglung Nagarpalika,BAGLUNG,Baglung,Nagarpalika,4,43,472,41101,524 4 43 3 003,NP0443303,e_i_f_n_c_s,111,Community School,,Total number of schools community/institutional,,111,,,524 3 24 3 001,47
+,Jaimuni Nagarpalika,BAGLUNG,Jaimuni,Nagarpalika,4,43,476,41110,524 4 43 3 004,NP0443304,e_i_f_n_c_s,77,Community School,,Total number of schools community/institutional,,77,,,524 5 55 4 004,26
+,Nisikhola Gaunpalika,BAGLUNG,Nisikhola,Gaunpalika,4,43,478,41106,524 4 43 4 001,NP0443401,e_i_f_n_c_s,39,Community School,,Total number of schools community/institutional,,39,,,524 1 13 4 007,46
+,Taman Khola Gaunpalika,BAGLUNG,Taman Khola,Gaunpalika,4,43,479,41104,524 4 43 4 002,NP0443402,e_i_f_n_c_s,16,Community School,,Total number of schools community/institutional,,16,,,524 4 44 4 005,43
+,Badigad Gaunpalika,BAGLUNG,Badigad,Gaunpalika,4,43,471,41107,524 4 43 4 003,NP0443403,e_i_f_n_c_s,62,Community School,,Total number of schools community/institutional,,62,,,524 7 69 3 002,51
+,Tara Khola Gaunpalika,BAGLUNG,Tara Khola,Gaunpalika,4,43,480,41103,524 4 43 4 004,NP0443404,e_i_f_n_c_s,18,Community School,,Total number of schools community/institutional,,18,,,524 1 03 4 005,33
+,Kanthekhola Gaunpalika,BAGLUNG,Kanthekhola,Gaunpalika,4,43,477,41102,524 4 43 4 005,NP0443405,e_i_f_n_c_s,54,Community School,,Total number of schools community/institutional,,54,,,524 3 21 3 001,87
+,Bareng Gaunpalika,BAGLUNG,Bareng,Gaunpalika,4,43,473,41109,524 4 43 4 006,NP0443406,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 5 48 4 010,20
+,Dhorpatan Hunting Reserve Hunting Reserve,BAGLUNG,Dhorpatan Hunting Reserve,Hunting Reserve,4,43,463,99990,524 4 43 5 998,NP0443598,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 3 20 4 002,47
+,Beni Nagarpalika,MYAGDI,Beni,Nagarpalika,4,44,458,40406,524 4 44 3 001,NP0444301,e_i_f_n_c_s,60,Community School,,Total number of schools community/institutional,,60,,,524 7 75 4 007,43
+,Dhaulagiri Gaunpalika,MYAGDI,Dhaulagiri,Gaunpalika,4,44,459,40403,524 4 44 4 001,NP0444401,e_i_f_n_c_s,28,Community School,,Total number of schools community/institutional,,28,,,524 4 37 4 002,58
+,Raghuganga Gaunpalika,MYAGDI,Raghuganga,Gaunpalika,4,44,462,40402,524 4 44 4 002,NP0444402,e_i_f_n_c_s,33,Community School,,Total number of schools community/institutional,,33,,,524 7 67 4 008,32
+,Annapurna Gaunpalika,MYAGDI,Annapurna,Gaunpalika,4,44,457,40401,524 4 44 4 003,NP0444403,e_i_f_n_c_s,38,Community School,,Total number of schools community/institutional,,38,,,524 5 46 4 004,41
+,Malika Gaunpalika,MYAGDI,Malika,Gaunpalika,4,44,460,40404,524 4 44 4 004,NP0444404,e_i_f_n_c_s,34,Community School,,Total number of schools community/institutional,,34,,,524 2 18 3 010,14
+,Mangala Gaunpalika,MYAGDI,Mangala,Gaunpalika,4,44,461,40405,524 4 44 4 005,NP0444405,e_i_f_n_c_s,43,Community School,,Total number of schools community/institutional,,43,,,524 2 32 3 006,24
+,Dhorpatan Hunting Reserve Hunting Reserve,MYAGDI,Dhorpatan Hunting Reserve,Hunting Reserve,4,44,481,99991,524 4 44 5 998,NP0444598,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 5 48 4 005,29
+,Lomanthang Gaunpalika,MUSTANG,Lomanthang,Gaunpalika,4,45,455,40304,524 4 45 4 001,NP0445401,e_i_f_n_c_s,13,Community School,,Total number of schools community/institutional,,13,,,524 5 49 4 003,50
+,Dalome Gaunpalika,MUSTANG,Dalome,Gaunpalika,4,45,453,40301,524 4 45 4 002,NP0445402,e_i_f_n_c_s,11,Community School,,Total number of schools community/institutional,,11,,,524 1 04 3 005,43
+,Barhagaun Muktikhsetra Gaunpalika,MUSTANG,Barhagaun Muktikhsetra,Gaunpalika,4,45,452,40303,524 4 45 4 003,NP0445403,e_i_f_n_c_s,17,Community School,,Total number of schools community/institutional,,17,,,524 3 28 4 001,25
+,Gharapjhong Gaunpalika,MUSTANG,Gharapjhong,Gaunpalika,4,45,454,40302,524 4 45 4 004,NP0445404,e_i_f_n_c_s,7,Community School,,Total number of schools community/institutional,,7,,,524 3 23 3 001,73
+,Thasang Gaunpalika,MUSTANG,Thasang,Gaunpalika,4,45,456,40305,524 4 45 4 005,NP0445405,e_i_f_n_c_s,12,Community School,,Total number of schools community/institutional,,12,,,524 7 74 3 003,46
+,Madhyabindu Nagarpalika,NAWALPARASI_E,Madhyabindu,Nagarpalika,4,47,418,40807,524 4 47 3 001,NP0447301,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 7 69 4 002,34
+,Kawasoti Nagarpalika,NAWALPARASI_E,Kawasoti,Nagarpalika,4,47,772,40806,524 4 47 3 002,NP0447302,e_i_f_n_c_s,37,Community School,,Total number of schools community/institutional,,37,,,524 3 22 4 006,47
+,Devchuli Nagarpalika,NAWALPARASI_E,Devchuli,Nagarpalika,4,47,769,40805,524 4 47 3 003,NP0447303,e_i_f_n_c_s,28,Community School,,Total number of schools community/institutional,,28,,,524 1 08 4 001,23
+,Gaidakot Nagarpalika,NAWALPARASI_E,Gaidakot,Nagarpalika,4,47,770,40801,524 4 47 3 004,NP0447304,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 1 01 4 004,36
+,Bungdikali Gaunpalika,NAWALPARASI_E,Bungdikali,Gaunpalika,4,47,768,40803,524 4 47 4 001,NP0447401,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 1 02 4 007,56
+,Bulingtar Gaunpalika,NAWALPARASI_E,Bulingtar,Gaunpalika,4,47,767,40802,524 4 47 4 002,NP0447402,e_i_f_n_c_s,44,Community School,,Total number of schools community/institutional,,44,,,524 1 05 4 002,34
+,Hupsekot Gaunpalika,NAWALPARASI_E,Hupsekot,Gaunpalika,4,47,771,40804,524 4 47 4 003,NP0447403,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,524 1 01 4 002,27
+,Binayee Tribeni Gaunpalika,NAWALPARASI_E,Binayee Tribeni,Gaunpalika,4,47,766,40808,524 4 47 4 004,NP0447404,e_i_f_n_c_s,37,Community School,,Total number of schools community/institutional,,37,,,524 2 16 3 002,32
+,Chitawan National Park National Park,NAWALPARASI_E,Chitawan National Park,National Park,4,47,394,99992,524 4 47 5 997,NP0447597,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 2 17 3 005,15
+,Tansen Nagarpalika,PALPA,Tansen,Nagarpalika,5,46,502,50605,524 5 46 3 001,NP0546301,e_i_f_n_c_s,53,Community School,,Total number of schools community/institutional,,53,,,524 2 17 3 001,29
+,Rampur Nagarpalika,PALPA,Rampur,Nagarpalika,5,46,500,50601,524 5 46 3 002,NP0546302,e_i_f_n_c_s,51,Community School,,Total number of schools community/institutional,,51,,,524 4 42 4 002,54
+,Rainadevi Chhahara Gaunpalika,PALPA,Rainadevi Chhahara,Gaunpalika,5,46,498,50607,524 5 46 4 001,NP0546401,e_i_f_n_c_s,61,Community School,,Total number of schools community/institutional,,61,,,524 7 71 4 003,40
+,Tinau Gaunpalika,PALPA,Tinau,Gaunpalika,5,46,503,50608,524 5 46 4 002,NP0546402,e_i_f_n_c_s,39,Community School,,Total number of schools community/institutional,,39,,,524 1 13 4 003,24
+,Ribdikot Gaunpalika,PALPA,Ribdikot,Gaunpalika,5,46,501,50606,524 5 46 4 003,NP0546403,e_i_f_n_c_s,37,Community School,,Total number of schools community/institutional,,37,,,524 6 62 4 004,11
+,Mathagadhi Gaunpalika,PALPA,Mathagadhi,Gaunpalika,5,46,495,50609,524 5 46 4 004,NP0546404,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 6 65 4 003,15
+,Bagnaskali Gaunpalika,PALPA,Bagnaskali,Gaunpalika,5,46,494,50604,524 5 46 4 005,NP0546405,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 2 17 4 005,10
+,Purbakhola Gaunpalika,PALPA,Purbakhola,Gaunpalika,5,46,497,50602,524 5 46 4 006,NP0546406,e_i_f_n_c_s,37,Community School,,Total number of schools community/institutional,,37,,,524 5 51 3 001,63
+,Rambha Gaunpalika,PALPA,Rambha,Gaunpalika,5,46,499,50603,524 5 46 4 007,NP0546407,e_i_f_n_c_s,37,Community School,,Total number of schools community/institutional,,37,,,524 6 52 3 003,61
+,Nisdi Gaunpalika,PALPA,Nisdi,Gaunpalika,5,46,496,50610,524 5 46 4 008,NP0546408,e_i_f_n_c_s,54,Community School,,Total number of schools community/institutional,,54,,,524 4 40 4 001,35
+,Butwal Upamahanagarpalika,RUPANDEHI,Butwal,Upamahanagarpalika,5,48,511,50802,524 5 48 2 001,NP0548201,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 1 08 3 002,31
+,Sainamaina Nagarpalika,RUPANDEHI,Sainamaina,Nagarpalika,5,48,521,50803,524 5 48 3 001,NP0548301,e_i_f_n_c_s,24,Community School,,Total number of schools community/institutional,,24,,,524 2 17 3 009,16
+,Devdaha Nagarpalika,RUPANDEHI,Devdaha,Nagarpalika,5,48,512,50801,524 5 48 3 002,NP0548302,e_i_f_n_c_s,33,Community School,,Total number of schools community/institutional,,33,,,524 3 27 3 005,15
+,Tillotama Nagarpalika,RUPANDEHI,Tillotama,Nagarpalika,5,48,526,50808,524 5 48 3 003,NP0548303,e_i_f_n_c_s,48,Community School,,Total number of schools community/institutional,,48,,,524 6 66 4 001,17
+,Lumbini Sanskritik Nagarpalika,RUPANDEHI,Lumbini Sanskritik,Nagarpalika,5,48,516,50813,524 5 48 3 004,NP0548304,e_i_f_n_c_s,64,Community School,,Total number of schools community/institutional,,64,,,524 3 24 3 006,50
+,Siddharthanagar Nagarpalika,RUPANDEHI,Siddharthanagar,Nagarpalika,5,48,523,50811,524 5 48 3 005,NP0548305,e_i_f_n_c_s,28,Community School,,Total number of schools community/institutional,,28,,,524 2 16 4 001,14
+,Kanchan Gaunpalika,RUPANDEHI,Kanchan,Gaunpalika,5,48,514,50804,524 5 48 4 001,NP0548401,e_i_f_n_c_s,19,Community School,,Total number of schools community/institutional,,19,,,524 6 64 4 001,52
+,Sudhdhodhan Gaunpalika,RUPANDEHI,Sudhdhodhan,Gaunpalika,5,48,525,50806,524 5 48 4 002,NP0548402,e_i_f_n_c_s,18,Community School,,Total number of schools community/institutional,,18,,,524 5 57 4 006,40
+,Gaidahawa Gaunpalika,RUPANDEHI,Gaidahawa,Gaunpalika,5,48,513,50805,524 5 48 4 003,NP0548403,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 4 38 4 002,2
+,Siyari Gaunpalika,RUPANDEHI,Siyari,Gaunpalika,5,48,524,50807,524 5 48 4 004,NP0548404,e_i_f_n_c_s,30,Community School,,Total number of schools community/institutional,,30,,,524 6 61 3 004,45
+,Mayadevi Gaunpalika,RUPANDEHI,Mayadevi,Gaunpalika,5,48,518,50812,524 5 48 4 005,NP0548405,e_i_f_n_c_s,29,Community School,,Total number of schools community/institutional,,29,,,524 4 38 4 004,11
+,Omsatiya Gaunpalika,RUPANDEHI,Omsatiya,Gaunpalika,5,48,519,50809,524 5 48 4 006,NP0548406,e_i_f_n_c_s,22,Community School,,Total number of schools community/institutional,,22,,,524 5 55 4 001,39
+,Rohini Gaunpalika,RUPANDEHI,Rohini,Gaunpalika,5,48,520,50810,524 5 48 4 007,NP0548407,e_i_f_n_c_s,29,Community School,,Total number of schools community/institutional,,29,,,524 7 75 4 005,42
+,Kotahimai Gaunpalika,RUPANDEHI,Kotahimai,Gaunpalika,5,48,515,50814,524 5 48 4 008,NP0548408,e_i_f_n_c_s,21,Community School,,Total number of schools community/institutional,,21,,,524 3 29 4 005,29
+,Sammarimai Gaunpalika,RUPANDEHI,Sammarimai,Gaunpalika,5,48,522,50815,524 5 48 4 009,NP0548409,e_i_f_n_c_s,34,Community School,,Total number of schools community/institutional,,34,,,524 6 61 4 004,52
+,Marchawari Gaunpalika,RUPANDEHI,Marchawari,Gaunpalika,5,48,517,50816,524 5 48 4 010,NP0548410,e_i_f_n_c_s,20,Community School,,Total number of schools community/institutional,,20,,,524 7 73 4 003,30
+,Lumbini Sanskritik Development Area Development Area,RUPANDEHI,Lumbini Sanskritik Development Area,Development Area,5,48,527,50813,524 5 48 5 999,NP0548599,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 2 16 4 007,20
+,Shivaraj Nagarpalika,KAPILBASTU,Shivaraj,Nagarpalika,5,49,535,50903,524 5 49 3 001,NP0549301,e_i_f_n_c_s,69,Community School,,Total number of schools community/institutional,,69,,,524 1 11 4 005,44
+,Buddhabhumi Nagarpalika,KAPILBASTU,Buddhabhumi,Nagarpalika,5,49,530,50902,524 5 49 3 002,NP0549302,e_i_f_n_c_s,57,Community School,,Total number of schools community/institutional,,57,,,524 5 57 2 001,97
+,Banganga Nagarpalika,KAPILBASTU,Banganga,Nagarpalika,5,49,528,50901,524 5 49 3 003,NP0549303,e_i_f_n_c_s,49,Community School,,Total number of schools community/institutional,,49,,,524 4 38 4 001,8
+,Krishnanagar Nagarpalika,KAPILBASTU,Krishnanagar,Nagarpalika,5,49,532,50905,524 5 49 3 004,NP0549304,e_i_f_n_c_s,49,Community School,,Total number of schools community/institutional,,49,,,524 3 30 4 005,27
+,Maharajgunj Nagarpalika,KAPILBASTU,Maharajgunj,Nagarpalika,5,49,533,50906,524 5 49 3 005,NP0549305,e_i_f_n_c_s,74,Community School,,Total number of schools community/institutional,,74,,,524 2 33 3 001,29
+,Kapilbastu Nagarpalika,KAPILBASTU,Kapilbastu,Nagarpalika,5,49,531,50907,524 5 49 3 006,NP0549306,e_i_f_n_c_s,60,Community School,,Total number of schools community/institutional,,60,,,524 3 30 3 001,96
+,Bijayanagar Gaunpalika,KAPILBASTU,Bijayanagar,Gaunpalika,5,49,529,50904,524 5 49 4 001,NP0549401,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 5 46 4 008,54
+,Yashodhara Gaunpalika,KAPILBASTU,Yashodhara,Gaunpalika,5,49,537,50908,524 5 49 4 002,NP0549402,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,524 4 43 4 001,39
+,Mayadevi Gaunpalika,KAPILBASTU,Mayadevi,Gaunpalika,5,49,534,50812,524 5 49 4 003,NP0549403,e_i_f_n_c_s,50,Community School,,Total number of schools community/institutional,,50,,,524 5 48 4 006,22
+,Suddhodhan Gaunpalika,KAPILBASTU,Suddhodhan,Gaunpalika,5,49,536,50806,524 5 49 4 004,NP0549404,e_i_f_n_c_s,34,Community School,,Total number of schools community/institutional,,34,,,524 6 64 4 003,28
+,Bhumekasthan Nagarpalika,ARGHAKHANCHI,Bhumekasthan,Nagarpalika,5,50,538,50503,524 5 50 3 001,NP0550301,e_i_f_n_c_s,64,Community School,,Total number of schools community/institutional,,64,,,524 2 33 3 004,18
+,Sandhikharka Nagarpalika,ARGHAKHANCHI,Sandhikharka,Nagarpalika,5,50,542,50504,524 5 50 3 002,NP0550302,e_i_f_n_c_s,65,Community School,,Total number of schools community/institutional,,65,,,524 4 42 4 005,30
+,Sitganga Nagarpalika,ARGHAKHANCHI,Sitganga,Nagarpalika,5,50,543,50506,524 5 50 3 003,NP0550303,e_i_f_n_c_s,109,Community School,,Total number of schools community/institutional,,109,,,524 2 34 4 009,16
+,Malarani Gaunpalika,ARGHAKHANCHI,Malarani,Gaunpalika,5,50,540,50502,524 5 50 4 001,NP0550401,e_i_f_n_c_s,61,Community School,,Total number of schools community/institutional,,61,,,524 1 07 3 002,37
+,Chhatradev Gaunpalika,ARGHAKHANCHI,Chhatradev,Gaunpalika,5,50,539,50501,524 5 50 4 002,NP0550402,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,524 6 64 4 004,32
+,Panini Gaunpalika,ARGHAKHANCHI,Panini,Gaunpalika,5,50,541,50505,524 5 50 4 003,NP0550403,e_i_f_n_c_s,57,Community School,,Total number of schools community/institutional,,57,,,524 5 76 4 001,25
+,Musikot Nagarpalika,GULMI,Musikot,Nagarpalika,5,51,490,50404,524 5 51 3 001,NP0551301,e_i_f_n_c_s,63,Community School,,Total number of schools community/institutional,,63,,,524 4 36 3 001,50
+,Resunga Nagarpalika,GULMI,Resunga,Nagarpalika,5,51,491,50409,524 5 51 3 002,NP0551302,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,524 3 24 3 005,39
+,Madane Gaunpalika,GULMI,Madane,Gaunpalika,5,51,488,50407,524 5 51 4 001,NP0551401,e_i_f_n_c_s,49,Community School,,Total number of schools community/institutional,,49,,,524 3 28 4 007,29
+,Malika Gaunpalika,GULMI,Malika,Gaunpalika,5,51,489,40404,524 5 51 4 002,NP0551402,e_i_f_n_c_s,55,Community School,,Total number of schools community/institutional,,55,,,524 1 09 3 002,42
+,Dhurkot Gaunpalika,GULMI,Dhurkot,Gaunpalika,5,51,484,50408,524 5 51 4 003,NP0551403,e_i_f_n_c_s,49,Community School,,Total number of schools community/institutional,,49,,,524 6 59 3 001,58
+,Isma Gaunpalika,GULMI,Isma,Gaunpalika,5,51,486,50405,524 5 51 4 004,NP0551404,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 7 69 3 004,61
+,Gulmidarbar Gaunpalika,GULMI,Gulmidarbar,Gaunpalika,5,51,485,50410,524 5 51 4 005,NP0551405,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 7 74 4 004,34
+,Chandrakot Gaunpalika,GULMI,Chandrakot,Gaunpalika,5,51,482,50403,524 5 51 4 006,NP0551406,e_i_f_n_c_s,45,Community School,,Total number of schools community/institutional,,45,,,524 3 24 3 004,37
+,Chatrakot Gaunpalika,GULMI,Chatrakot,Gaunpalika,5,51,483,50411,524 5 51 4 007,NP0551407,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,524 3 23 4 002,34
+,Ruru Gaunpalika,GULMI,Ruru,Gaunpalika,5,51,492,50412,524 5 51 4 008,NP0551408,e_i_f_n_c_s,49,Community School,,Total number of schools community/institutional,,49,,,524 7 68 4 004,17
+,Satyawati Gaunpalika,GULMI,Satyawati,Gaunpalika,5,51,493,50402,524 5 51 4 009,NP0551409,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,524 5 50 4 003,57
+,Kaligandaki Gaunpalika,GULMI,Kaligandaki,Gaunpalika,5,51,487,40911,524 5 51 4 010,NP0551410,e_i_f_n_c_s,44,Community School,,Total number of schools community/institutional,,44,,,524 7 73 3 001,64
+,Rolpa Nagarpalika,ROLPA,Rolpa,Nagarpalika,5,54,557,50207,524 5 54 3 001,NP0554301,e_i_f_n_c_s,67,Community School,,Total number of schools community/institutional,,67,,,524 2 33 4 001,6
+,Sukidaha Gaunpalika,ROLPA,Sukidaha,Gaunpalika,5,54,559,50204,524 5 54 4 001,NP0554401,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,524 3 29 4 001,12
+,Duikholi Gaunpalika,ROLPA,Duikholi,Gaunpalika,5,54,553,50203,524 5 54 4 002,NP0554402,e_i_f_n_c_s,43,Community School,,Total number of schools community/institutional,,43,,,524 2 32 3 012,23
+,Thawang Gaunpalika,ROLPA,Thawang,Gaunpalika,5,54,562,50202,524 5 54 4 003,NP0554403,e_i_f_n_c_s,21,Community School,,Total number of schools community/institutional,,21,,,524 2 19 4 009,13
+,Madi Gaunpalika,ROLPA,Madi,Gaunpalika,5,54,555,10209,524 5 54 4 004,NP0554404,e_i_f_n_c_s,33,Community School,,Total number of schools community/institutional,,33,,,524 2 34 3 003,30
+,Sunchhahari Gaunpalika,ROLPA,Sunchhahari,Gaunpalika,5,54,560,50201,524 5 54 4 005,NP0554405,e_i_f_n_c_s,39,Community School,,Total number of schools community/institutional,,39,,,524 7 74 3 004,65
+,Tribeni Gaunpalika,ROLPA,Tribeni,Gaunpalika,5,54,563,50206,524 5 54 4 006,NP0554406,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 6 63 4 003,16
+,Suwarnabati Gaunpalika,ROLPA,Suwarnabati,Gaunpalika,5,54,561,50209,524 5 54 4 007,NP0554407,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 2 34 4 003,29
+,Lungri Gaunpalika,ROLPA,Lungri,Gaunpalika,5,54,554,50210,524 5 54 4 008,NP0554408,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 1 05 3 004,27
+,Runtigadi Gaunpalika,ROLPA,Runtigadi,Gaunpalika,5,54,558,50208,524 5 54 4 009,NP0554409,e_i_f_n_c_s,55,Community School,,Total number of schools community/institutional,,55,,,524 1 10 4 005,34
+,Sworgadwary Nagarpalika,PYUTHAN,Sworgadwary,Nagarpalika,5,55,552,50305,524 5 55 3 001,NP0555301,e_i_f_n_c_s,55,Community School,,Total number of schools community/institutional,,55,,,524 1 01 4 001,43
+,Pyuthan Nagarpalika,PYUTHAN,Pyuthan,Nagarpalika,5,55,550,50304,524 5 55 3 002,NP0555302,e_i_f_n_c_s,51,Community School,,Total number of schools community/institutional,,51,,,524 4 42 3 002,58
+,Naubahini Gaunpalika,PYUTHAN,Naubahini,Gaunpalika,5,55,549,50302,524 5 55 4 001,NP0555401,e_i_f_n_c_s,39,Community School,,Total number of schools community/institutional,,39,,,524 2 32 3 003,22
+,Gaumukhi Gaunpalika,PYUTHAN,Gaumukhi,Gaunpalika,5,55,545,50301,524 5 55 4 002,NP0555402,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 1 08 4 002,43
+,Jhimruk Gaunpalika,PYUTHAN,Jhimruk,Gaunpalika,5,55,546,50303,524 5 55 4 003,NP0555403,e_i_f_n_c_s,49,Community School,,Total number of schools community/institutional,,49,,,524 4 41 4 002,27
+,Mandavi Gaunpalika,PYUTHAN,Mandavi,Gaunpalika,5,55,548,50306,524 5 55 4 004,NP0555404,e_i_f_n_c_s,26,Community School,,Total number of schools community/institutional,,26,,,524 2 33 4 005,21
+,Mallarani Gaunpalika,PYUTHAN,Mallarani,Gaunpalika,5,55,547,50307,524 5 55 4 005,NP0555405,e_i_f_n_c_s,25,Community School,,Total number of schools community/institutional,,25,,,524 1 02 3 001,80
+,Sarumarani Gaunpalika,PYUTHAN,Sarumarani,Gaunpalika,5,55,551,50309,524 5 55 4 006,NP0555406,e_i_f_n_c_s,26,Community School,,Total number of schools community/institutional,,26,,,524 3 20 4 007,47
+,Ayirabati Gaunpalika,PYUTHAN,Ayirabati,Gaunpalika,5,55,544,50308,524 5 55 4 007,NP0555407,e_i_f_n_c_s,44,Community School,,Total number of schools community/institutional,,44,,,524 1 01 3 001,51
+,Tulsipur Upamahanagarpalika,DANG,Tulsipur,Upamahanagarpalika,5,56,590,51003,524 5 56 2 001,NP0556201,e_i_f_n_c_s,83,Community School,,Total number of schools community/institutional,,83,,,524 2 18 4 005,23
+,Ghorahi Upamahanagarpalika,DANG,Ghorahi,Upamahanagarpalika,5,56,585,51002,524 5 56 2 002,NP0556202,e_i_f_n_c_s,100,Community School,,Total number of schools community/institutional,,100,,,524 4 39 1 001,223
+,Lamahi Nagarpalika,DANG,Lamahi,Nagarpalika,5,56,586,51007,524 5 56 3 001,NP0556301,e_i_f_n_c_s,28,Community School,,Total number of schools community/institutional,,28,,,524 2 34 3 001,27
+,Babai Gaunpalika,DANG,Babai,Gaunpalika,5,56,581,51005,524 5 56 4 001,NP0556401,e_i_f_n_c_s,34,Community School,,Total number of schools community/institutional,,34,,,524 2 33 4 002,9
+,Dangisharan Gaunpalika,DANG,Dangisharan,Gaunpalika,5,56,583,51006,524 5 56 4 002,NP0556402,e_i_f_n_c_s,15,Community School,,Total number of schools community/institutional,,15,,,524 5 76 4 003,20
+,Shantinagar Gaunpalika,DANG,Shantinagar,Gaunpalika,5,56,589,51004,524 5 56 4 003,NP0556403,e_i_f_n_c_s,27,Community School,,Total number of schools community/institutional,,27,,,524 7 74 3 002,88
+,Rajpur Gaunpalika,DANG,Rajpur,Gaunpalika,5,56,587,20613,524 5 56 4 004,NP0556404,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 7 72 3 007,35
+,Banglachuli Gaunpalika,DANG,Banglachuli,Gaunpalika,5,56,582,51001,524 5 56 4 005,NP0556405,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 5 46 4 006,37
+,Gadhawa Gaunpalika,DANG,Gadhawa,Gaunpalika,5,56,584,51009,524 5 56 4 006,NP0556406,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 7 70 4 003,40
+,Rapti Gaunpalika,DANG,Rapti,Gaunpalika,5,56,588,31301,524 5 56 4 007,NP0556407,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 4 41 3 001,74
+,Nepalgunj Upamahanagarpalika,BANKE,Nepalgunj,Upamahanagarpalika,5,57,597,51106,524 5 57 2 001,NP0557201,e_i_f_n_c_s,97,Community School,,Total number of schools community/institutional,,97,,,524 5 77 4 002,47
+,Kohalpur Nagarpalika,BANKE,Kohalpur,Nagarpalika,5,57,595,51102,524 5 57 3 001,NP0557301,e_i_f_n_c_s,40,Community School,,Total number of schools community/institutional,,40,,,524 5 55 3 002,51
+,Khajura Gaunpalika,BANKE,Khajura,Gaunpalika,5,57,594,51104,524 5 57 4 001,NP0557401,e_i_f_n_c_s,53,Community School,,Total number of schools community/institutional,,53,,,524 4 44 4 002,33
+,Baijanath Gaunpalika,BANKE,Baijanath,Gaunpalika,5,57,591,51103,524 5 57 4 002,NP0557402,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,524 5 46 4 001,61
+,Janki Gaunpalika,BANKE,Janki,Gaunpalika,5,57,593,70808,524 5 57 4 003,NP0557403,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 4 37 3 004,39
+,Duduwa Gaunpalika,BANKE,Duduwa,Gaunpalika,5,57,592,51107,524 5 57 4 004,NP0557404,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,524 5 58 3 001,38
+,Rapti Sonari Gaunpalika,BANKE,Rapti Sonari,Gaunpalika,5,57,598,51101,524 5 57 4 005,NP0557405,e_i_f_n_c_s,58,Community School,,Total number of schools community/institutional,,58,,,524 2 15 3 008,44
+,Narainapur Gaunpalika,BANKE,Narainapur,Gaunpalika,5,57,596,51108,524 5 57 4 006,NP0557406,e_i_f_n_c_s,40,Community School,,Total number of schools community/institutional,,40,,,524 2 32 3 016,22
+,Rajapur Nagarpalika,BARDIYA,Rajapur,Nagarpalika,5,58,606,51205,524 5 58 3 001,NP0558301,e_i_f_n_c_s,38,Community School,,Total number of schools community/institutional,,38,,,524 5 56 4 004,32
+,Madhuwan Nagarpalika,BARDIYA,Madhuwan,Nagarpalika,5,58,605,51206,524 5 58 3 002,NP0558302,e_i_f_n_c_s,33,Community School,,Total number of schools community/institutional,,33,,,524 2 32 3 014,21
+,Thakurbaba Nagarpalika,BARDIYA,Thakurbaba,Nagarpalika,5,58,607,51203,524 5 58 3 003,NP0558303,e_i_f_n_c_s,34,Community School,,Total number of schools community/institutional,,34,,,524 3 31 4 002,54
+,Gulariya Nagarpalika,BARDIYA,Gulariya,Nagarpalika,5,58,604,51207,524 5 58 3 004,NP0558304,e_i_f_n_c_s,48,Community School,,Total number of schools community/institutional,,48,,,524 2 18 3 005,18
+,Barbardiya Nagarpalika,BARDIYA,Barbardiya,Nagarpalika,5,58,602,51202,524 5 58 3 005,NP0558305,e_i_f_n_c_s,45,Community School,,Total number of schools community/institutional,,45,,,524 7 69 4 004,46
+,Bansagadhi Nagarpalika,BARDIYA,Bansagadhi,Nagarpalika,5,58,600,51201,524 5 58 3 006,NP0558306,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,524 5 46 4 007,37
+,Geruwa Gaunpalika,BARDIYA,Geruwa,Gaunpalika,5,58,603,51204,524 5 58 4 001,NP0558401,e_i_f_n_c_s,33,Community School,,Total number of schools community/institutional,,33,,,524 1 06 3 002,29
+,Badhaiyatal Gaunpalika,BARDIYA,Badhaiyatal,Gaunpalika,5,58,599,51208,524 5 58 4 002,NP0558402,e_i_f_n_c_s,43,Community School,,Total number of schools community/institutional,,43,,,524 3 21 3 002,64
+,Bardiya National Park National Park,BARDIYA,Bardiya National Park,National Park,5,58,608,99994,524 5 58 5 997,NP0558597,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 5 76 3 003,30
+,Sunwal Nagarpalika,NAWALPARASI_W,Sunwal,Nagarpalika,5,76,509,50702,524 5 76 3 001,NP0576301,e_i_f_n_c_s,34,Community School,,Total number of schools community/institutional,,34,,,524 2 19 4 005,18
+,Bardaghat Nagarpalika,NAWALPARASI_W,Bardaghat,Nagarpalika,5,76,504,50701,524 5 76 3 002,NP0576302,e_i_f_n_c_s,40,Community School,,Total number of schools community/institutional,,40,,,524 1 10 4 004,34
+,Ramgram Nagarpalika,NAWALPARASI_W,Ramgram,Nagarpalika,5,76,507,50703,524 5 76 3 003,NP0576303,e_i_f_n_c_s,30,Community School,,Total number of schools community/institutional,,30,,,524 5 46 3 002,51
+,Palhi Nandan Gaunpalika,NAWALPARASI_W,Palhi Nandan,Gaunpalika,5,76,505,50704,524 5 76 4 001,NP0576401,e_i_f_n_c_s,25,Community School,,Total number of schools community/institutional,,25,,,524 1 05 3 006,28
+,Sarawal Gaunpalika,NAWALPARASI_W,Sarawal,Gaunpalika,5,76,508,50705,524 5 76 4 002,NP0576402,e_i_f_n_c_s,23,Community School,,Total number of schools community/institutional,,23,,,524 5 56 4 007,31
+,Pratappur Gaunpalika,NAWALPARASI_W,Pratappur,Gaunpalika,5,76,506,50706,524 5 76 4 003,NP0576403,e_i_f_n_c_s,20,Community School,,Total number of schools community/institutional,,20,,,524 3 35 3 004,54
+,Susta Gaunpalika,NAWALPARASI_W,Susta,Gaunpalika,5,76,510,50707,524 5 76 4 004,NP0576404,e_i_f_n_c_s,25,Community School,,Total number of schools community/institutional,,25,,,524 5 57 4 005,58
+,Sisne Gaunpalika,RUKUM_W,Sisne,Gaunpalika,5,77,777,50102,524 5 77 4 001,NP0577401,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 6 64 3 001,25
+,Putha Uttarganga Gaunpalika,RUKUM_W,Putha Uttarganga,Gaunpalika,5,77,776,50101,524 5 77 4 002,NP0577402,e_i_f_n_c_s,47,Community School,,Total number of schools community/institutional,,47,,,524 3 35 3 002,33
+,Bhume Gaunpalika,RUKUM_W,Bhume,Gaunpalika,5,77,775,50103,524 5 77 4 003,NP0577403,e_i_f_n_c_s,37,Community School,,Total number of schools community/institutional,,37,,,524 1 05 3 008,45
+,Dhorpatan Hunting Reserve Hunting Reserve,RUKUM_W,Dhorpatan Hunting Reserve,Hunting Reserve,5,77,778,99993,524 5 77 5 998,NP0577598,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 1 14 4 004,60
+,Aathbiskot Nagarpalika,RUKUM_E,Aathbiskot,Nagarpalika,6,52,564,60605,524 6 52 3 001,NP0652301,e_i_f_n_c_s,59,Community School,,Total number of schools community/institutional,,59,,,524 5 51 3 002,36
+,Chaurjahari Nagarpalika,RUKUM_E,Chaurjahari,Nagarpalika,6,52,566,60806,524 6 52 3 002,NP0652302,e_i_f_n_c_s,43,Community School,,Total number of schools community/institutional,,43,,,524 4 40 4 003,50
+,Musikot Nagarpalika,RUKUM_E,Musikot,Nagarpalika,6,52,568,50404,524 6 52 3 003,NP0652303,e_i_f_n_c_s,61,Community School,,Total number of schools community/institutional,,61,,,524 5 46 4 003,37
+,Sani Bheri Gaunpalika,RUKUM_E,Sani Bheri,Gaunpalika,6,52,569,60802,524 6 52 4 001,NP0652401,e_i_f_n_c_s,49,Community School,,Total number of schools community/institutional,,49,,,524 5 48 4 007,29
+,Banfikot Gaunpalika,RUKUM_E,Banfikot,Gaunpalika,6,52,565,60803,524 6 52 4 002,NP0652402,e_i_f_n_c_s,47,Community School,,Total number of schools community/institutional,,47,,,524 5 54 3 001,67
+,Tribeni Gaunpalika,RUKUM_E,Tribeni,Gaunpalika,6,52,570,50206,524 6 52 4 003,NP0652403,e_i_f_n_c_s,44,Community School,,Total number of schools community/institutional,,44,,,524 1 03 4 006,31
+,Bangad Kupinde Nagarpalika,SALYAN,Bangad Kupinde,Nagarpalika,6,53,572,60903,524 6 53 3 001,NP0653301,e_i_f_n_c_s,66,Community School,,Total number of schools community/institutional,,66,,,524 3 24 4 004,72
+,Bagchaur Nagarpalika,SALYAN,Bagchaur,Nagarpalika,6,53,571,60905,524 6 53 3 002,NP0653302,e_i_f_n_c_s,70,Community School,,Total number of schools community/institutional,,70,,,524 3 30 4 001,23
+,Sharada Nagarpalika,SALYAN,Sharada,Nagarpalika,6,53,579,60907,524 6 53 3 003,NP0653303,e_i_f_n_c_s,57,Community School,,Total number of schools community/institutional,,57,,,524 5 54 4 009,55
+,Kumakhmalika Gaunpalika,SALYAN,Kumakhmalika,Gaunpalika,6,53,578,60902,524 6 53 4 001,NP0653401,e_i_f_n_c_s,49,Community School,,Total number of schools community/institutional,,49,,,524 4 39 4 004,36
+,Darma Gaunpalika,SALYAN,Darma,Gaunpalika,6,53,574,60901,524 6 53 4 002,NP0653402,e_i_f_n_c_s,35,Community School,,Total number of schools community/institutional,,35,,,524 1 12 3 002,93
+,Dhorchaur Gaunpalika,SALYAN,Dhorchaur,Gaunpalika,6,53,575,60904,524 6 53 4 003,NP0653403,e_i_f_n_c_s,28,Community School,,Total number of schools community/institutional,,28,,,524 2 15 4 001,15
+,Kalimati Gaunpalika,SALYAN,Kalimati,Gaunpalika,6,53,576,60908,524 6 53 4 004,NP0653404,e_i_f_n_c_s,52,Community School,,Total number of schools community/institutional,,52,,,524 5 51 4 008,49
+,Chhatreshwori Gaunpalika,SALYAN,Chhatreshwori,Gaunpalika,6,53,573,60906,524 6 53 4 005,NP0653405,e_i_f_n_c_s,40,Community School,,Total number of schools community/institutional,,40,,,524 2 17 3 006,26
+,Tribeni Gaunpalika,SALYAN,Tribeni,Gaunpalika,6,53,580,50206,524 6 53 4 006,NP0653406,e_i_f_n_c_s,30,Community School,,Total number of schools community/institutional,,30,,,524 1 09 4 005,30
+,Kapurkot Gaunpalika,SALYAN,Kapurkot,Gaunpalika,6,53,577,60910,524 6 53 4 007,NP0653407,e_i_f_n_c_s,26,Community School,,Total number of schools community/institutional,,26,,,524 5 48 3 001,24
+,Panchpuri Nagarpalika,SURKHET,Panchpuri,Nagarpalika,6,59,616,61008,524 6 59 3 001,NP0659301,e_i_f_n_c_s,58,Community School,,Total number of schools community/institutional,,58,,,524 1 12 4 005,28
+,Bheriganga Nagarpalika,SURKHET,Bheriganga,Nagarpalika,6,59,610,61005,524 6 59 3 002,NP0659302,e_i_f_n_c_s,48,Community School,,Total number of schools community/institutional,,48,,,524 2 16 4 008,19
+,Birendranagar Nagarpalika,SURKHET,Birendranagar,Nagarpalika,6,59,611,61006,524 6 59 3 003,NP0659303,e_i_f_n_c_s,73,Community School,,Total number of schools community/institutional,,73,,,524 2 34 4 004,28
+,Lekbeshi Nagarpalika,SURKHET,Lekbeshi,Nagarpalika,6,59,615,61003,524 6 59 3 004,NP0659304,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,524 1 10 4 001,41
+,Gurbhakot Nagarpalika,SURKHET,Gurbhakot,Nagarpalika,6,59,614,61004,524 6 59 3 005,NP0659305,e_i_f_n_c_s,74,Community School,,Total number of schools community/institutional,,74,,,524 5 48 4 009,34
+,Chaukune Gaunpalika,SURKHET,Chaukune,Gaunpalika,6,59,612,61009,524 6 59 4 001,NP0659401,e_i_f_n_c_s,47,Community School,,Total number of schools community/institutional,,47,,,524 2 18 4 002,11
+,Barahtal Gaunpalika,SURKHET,Barahtal,Gaunpalika,6,59,609,61007,524 6 59 4 002,NP0659402,e_i_f_n_c_s,50,Community School,,Total number of schools community/institutional,,50,,,524 1 03 4 002,32
+,Chingad Gaunpalika,SURKHET,Chingad,Gaunpalika,6,59,613,61002,524 6 59 4 003,NP0659403,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 5 50 3 002,65
+,Simta Gaunpalika,SURKHET,Simta,Gaunpalika,6,59,617,61001,524 6 59 4 004,NP0659404,e_i_f_n_c_s,70,Community School,,Total number of schools community/institutional,,70,,,524 1 07 4 003,54
+,Chhedagad Nagarpalika,JAJARKOT,Chhedagad,Nagarpalika,6,60,631,60704,524 6 60 3 001,NP0660301,e_i_f_n_c_s,102,Community School,,Total number of schools community/institutional,,102,,,524 6 52 4 001,49
+,Bheri Nagarpalika,JAJARKOT,Bheri,Nagarpalika,6,60,630,60706,524 6 60 3 002,NP0660302,e_i_f_n_c_s,55,Community School,,Total number of schools community/institutional,,55,,,524 6 64 4 002,27
+,Tribeni Nalagad Nagarpalika,JAJARKOT,Tribeni Nalagad,Nagarpalika,6,60,635,60707,524 6 60 3 003,NP0660303,e_i_f_n_c_s,71,Community School,,Total number of schools community/institutional,,71,,,524 7 69 3 001,71
+,Junichande Gaunpalika,JAJARKOT,Junichande,Gaunpalika,6,60,632,60703,524 6 60 4 001,NP0660401,e_i_f_n_c_s,59,Community School,,Total number of schools community/institutional,,59,,,524 2 15 3 004,13
+,Kuse Gaunpalika,JAJARKOT,Kuse,Gaunpalika,6,60,633,60702,524 6 60 4 002,NP0660402,e_i_f_n_c_s,51,Community School,,Total number of schools community/institutional,,51,,,524 5 76 4 002,23
+,Barekot Gaunpalika,JAJARKOT,Barekot,Gaunpalika,6,60,629,60701,524 6 60 4 003,NP0660403,e_i_f_n_c_s,44,Community School,,Total number of schools community/institutional,,44,,,524 6 66 4 004,30
+,Shiwalaya Gaunpalika,JAJARKOT,Shiwalaya,Gaunpalika,6,60,634,60705,524 6 60 4 004,NP0660404,e_i_f_n_c_s,44,Community School,,Total number of schools community/institutional,,44,,,524 5 55 4 006,26
+,Aathabis Nagarpalika,DAILEKH,Aathabis,Nagarpalika,6,61,618,60801,524 6 61 3 001,NP0661301,e_i_f_n_c_s,58,Community School,,Total number of schools community/institutional,,58,,,524 5 51 4 009,46
+,Chamunda Bindrasaini Nagarpalika,DAILEKH,Chamunda Bindrasaini,Nagarpalika,6,61,621,60606,524 6 61 3 002,NP0661302,e_i_f_n_c_s,52,Community School,,Total number of schools community/institutional,,52,,,524 7 70 4 002,32
+,Dullu Nagarpalika,DAILEKH,Dullu,Nagarpalika,6,61,622,60607,524 6 61 3 003,NP0661303,e_i_f_n_c_s,58,Community School,,Total number of schools community/institutional,,58,,,524 1 10 3 001,71
+,Narayan Nagarpalika,DAILEKH,Narayan,Nagarpalika,6,61,626,60608,524 6 61 3 004,NP0661304,e_i_f_n_c_s,45,Community School,,Total number of schools community/institutional,,45,,,524 4 36 4 008,53
+,Thantikandh Gaunpalika,DAILEKH,Thantikandh,Gaunpalika,6,61,628,60604,524 6 61 4 001,NP0661401,e_i_f_n_c_s,39,Community School,,Total number of schools community/institutional,,39,,,524 2 17 3 008,30
+,Bhairabi Gaunpalika,DAILEKH,Bhairabi,Gaunpalika,6,61,620,60603,524 6 61 4 002,NP0661402,e_i_f_n_c_s,44,Community School,,Total number of schools community/institutional,,44,,,524 3 22 4 005,44
+,Mahabu Gaunpalika,DAILEKH,Mahabu,Gaunpalika,6,61,625,60602,524 6 61 4 003,NP0661403,e_i_f_n_c_s,34,Community School,,Total number of schools community/institutional,,34,,,524 7 75 3 002,51
+,Naumule Gaunpalika,DAILEKH,Naumule,Gaunpalika,6,61,627,60601,524 6 61 4 004,NP0661404,e_i_f_n_c_s,52,Community School,,Total number of schools community/institutional,,52,,,524 2 15 3 003,27
+,Gurans Gaunpalika,DAILEKH,Gurans,Gaunpalika,6,61,624,60611,524 6 61 4 005,NP0661405,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,524 3 27 3 007,21
+,Dungeshwor Gaunpalika,DAILEKH,Dungeshwor,Gaunpalika,6,61,623,60610,524 6 61 4 006,NP0661406,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 5 56 4 003,27
+,Bhagawatimai Gaunpalika,DAILEKH,Bhagawatimai,Gaunpalika,6,61,619,60609,524 6 61 4 007,NP0661407,e_i_f_n_c_s,39,Community School,,Total number of schools community/institutional,,39,,,524 6 53 3 003,57
+,Tripurasundari Nagarpalika,DOLPA,Tripurasundari,Nagarpalika,6,62,643,30210,524 6 62 3 001,NP0662301,e_i_f_n_c_s,33,Community School,,Total number of schools community/institutional,,33,,,524 6 62 4 001,10
+,Thuli Bheri Nagarpalika,DOLPA,Thuli Bheri,Nagarpalika,6,62,642,60106,524 6 62 3 002,NP0662302,e_i_f_n_c_s,25,Community School,,Total number of schools community/institutional,,25,,,524 7 70 3 001,68
+,Shey Phoksundo Gaunpalika,DOLPA,Shey Phoksundo,Gaunpalika,6,62,641,60102,524 6 62 4 001,NP0662401,e_i_f_n_c_s,10,Community School,,Total number of schools community/institutional,,10,,,524 5 50 3 003,109
+,Jagadulla Gaunpalika,DOLPA,Jagadulla,Gaunpalika,6,62,638,60103,524 6 62 4 002,NP0662402,e_i_f_n_c_s,11,Community School,,Total number of schools community/institutional,,11,,,524 6 60 4 004,44
+,Dolpo Buddha Gaunpalika,DOLPA,Dolpo Buddha,Gaunpalika,6,62,637,60101,524 6 62 4 003,NP0662403,e_i_f_n_c_s,2,Community School,,Total number of schools community/institutional,,2,,,524 7 74 4 005,36
+,Mudkechula Gaunpalika,DOLPA,Mudkechula,Gaunpalika,6,62,640,60104,524 6 62 4 004,NP0662404,e_i_f_n_c_s,11,Community School,,Total number of schools community/institutional,,11,,,524 3 28 4 010,52
+,Kaike Gaunpalika,DOLPA,Kaike,Gaunpalika,6,62,639,60107,524 6 62 4 005,NP0662405,e_i_f_n_c_s,14,Community School,,Total number of schools community/institutional,,14,,,524 5 49 3 001,69
+,Chharka Tangsong Gaunpalika,DOLPA,Chharka Tangsong,Gaunpalika,6,62,636,60108,524 6 62 4 006,NP0662406,e_i_f_n_c_s,7,Community School,,Total number of schools community/institutional,,7,,,524 1 04 3 002,39
+,Chandannath Nagarpalika,JUMLA,Chandannath,Nagarpalika,6,63,644,60404,524 6 63 3 001,NP0663301,e_i_f_n_c_s,29,Community School,,Total number of schools community/institutional,,29,,,524 5 49 4 004,34
+,Kanakasundari Gaunpalika,JUMLA,Kanakasundari,Gaunpalika,6,63,647,60402,524 6 63 4 001,NP0663401,e_i_f_n_c_s,19,Community School,,Total number of schools community/institutional,,19,,,524 4 40 3 001,66
+,Sinja Gaunpalika,JUMLA,Sinja,Gaunpalika,6,63,649,60403,524 6 63 4 002,NP0663402,e_i_f_n_c_s,14,Community School,,Total number of schools community/institutional,,14,,,524 7 72 3 004,36
+,Patrasi Gaunpalika,JUMLA,Patrasi,Gaunpalika,6,63,648,60401,524 6 63 4 003,NP0663403,e_i_f_n_c_s,16,Community School,,Total number of schools community/institutional,,16,,,524 3 30 4 007,49
+,Hima Gaunpalika,JUMLA,Hima,Gaunpalika,6,63,646,60408,524 6 63 4 004,NP0663404,e_i_f_n_c_s,22,Community School,,Total number of schools community/institutional,,22,,,524 5 48 3 005,28
+,Tila Gaunpalika,JUMLA,Tila,Gaunpalika,6,63,651,60407,524 6 63 4 005,NP0663405,e_i_f_n_c_s,25,Community School,,Total number of schools community/institutional,,25,,,524 1 13 3 001,54
+,Tatopani Gaunpalika,JUMLA,Tatopani,Gaunpalika,6,63,650,60406,524 6 63 4 006,NP0663406,e_i_f_n_c_s,25,Community School,,Total number of schools community/institutional,,25,,,524 1 01 4 008,39
+,Guthichaur Gaunpalika,JUMLA,Guthichaur,Gaunpalika,6,63,645,60405,524 6 63 4 007,NP0663407,e_i_f_n_c_s,6,Community School,,Total number of schools community/institutional,,6,,,524 7 74 4 006,59
+,Raskot Nagarpalika,KALIKOT,Raskot,Nagarpalika,6,64,658,60503,524 6 64 3 001,NP0664301,e_i_f_n_c_s,25,Community School,,Total number of schools community/institutional,,25,,,524 1 09 4 003,40
+,Khandachakra Nagarpalika,KALIKOT,Khandachakra,Nagarpalika,6,64,653,60506,524 6 64 3 002,NP0664302,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,524 6 66 4 002,23
+,Tilagufa Nagarpalika,KALIKOT,Tilagufa,Nagarpalika,6,64,660,60507,524 6 64 3 003,NP0664303,e_i_f_n_c_s,33,Community School,,Total number of schools community/institutional,,33,,,524 2 33 3 005,28
+,Naraharinath Gaunpalika,KALIKOT,Naraharinath,Gaunpalika,6,64,655,60505,524 6 64 4 001,NP0664401,e_i_f_n_c_s,52,Community School,,Total number of schools community/institutional,,52,,,524 6 59 4 004,70
+,Sanni Tribeni Gaunpalika,KALIKOT,Sanni Tribeni,Gaunpalika,6,64,659,60504,524 6 64 4 002,NP0664402,e_i_f_n_c_s,27,Community School,,Total number of schools community/institutional,,27,,,524 6 63 4 002,14
+,Pachaljharana Gaunpalika,KALIKOT,Pachaljharana,Gaunpalika,6,64,656,60502,524 6 64 4 003,NP0664403,e_i_f_n_c_s,28,Community School,,Total number of schools community/institutional,,28,,,524 2 16 3 008,64
+,Palata Gaunpalika,KALIKOT,Palata,Gaunpalika,6,64,657,60501,524 6 64 4 004,NP0664404,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 4 36 4 005,52
+,Kalika Gaunpalika,KALIKOT,Kalika,Gaunpalika,6,64,652,30304,524 6 64 4 005,NP0664405,e_i_f_n_c_s,28,Community School,,Total number of schools community/institutional,,28,,,524 1 01 4 003,42
+,Mahawai Gaunpalika,KALIKOT,Mahawai,Gaunpalika,6,64,654,60508,524 6 64 4 006,NP0664406,e_i_f_n_c_s,21,Community School,,Total number of schools community/institutional,,21,,,524 5 77 4 001,41
+,Chhayanath Rara Nagarpalika,MUGU,Chhayanath Rara,Nagarpalika,6,65,661,60202,524 6 65 3 001,NP0665301,e_i_f_n_c_s,39,Community School,,Total number of schools community/institutional,,39,,,524 5 48 4 004,30
+,Khatyad Gaunpalika,MUGU,Khatyad,Gaunpalika,6,65,662,60204,524 6 65 4 001,NP0665401,e_i_f_n_c_s,43,Community School,,Total number of schools community/institutional,,43,,,524 1 11 3 001,64
+,Soru Gaunpalika,MUGU,Soru,Gaunpalika,6,65,664,60203,524 6 65 4 002,NP0665402,e_i_f_n_c_s,44,Community School,,Total number of schools community/institutional,,44,,,524 2 18 4 001,18
+,Mugum Karmarong Gaunpalika,MUGU,Mugum Karmarong,Gaunpalika,6,65,663,60201,524 6 65 4 003,NP0665403,e_i_f_n_c_s,15,Community School,,Total number of schools community/institutional,,15,,,524 6 65 4 002,44
+,Namkha Gaunpalika,HUMLA,Namkha,Gaunpalika,6,66,668,60304,524 6 66 4 001,NP0666401,e_i_f_n_c_s,17,Community School,,Total number of schools community/institutional,,17,,,524 1 11 4 007,26
+,Simkot Gaunpalika,HUMLA,Simkot,Gaunpalika,6,66,670,60303,524 6 66 4 002,NP0666402,e_i_f_n_c_s,23,Community School,,Total number of schools community/institutional,,23,,,524 2 33 4 008,19
+,Kharpunath Gaunpalika,HUMLA,Kharpunath,Gaunpalika,6,66,667,60302,524 6 66 4 003,NP0666403,e_i_f_n_c_s,16,Community School,,Total number of schools community/institutional,,16,,,524 5 54 4 001,42
+,Sarkegad Gaunpalika,HUMLA,Sarkegad,Gaunpalika,6,66,669,60305,524 6 66 4 004,NP0666404,e_i_f_n_c_s,30,Community School,,Total number of schools community/institutional,,30,,,524 5 48 4 002,18
+,Chankheli Gaunpalika,HUMLA,Chankheli,Gaunpalika,6,66,666,60301,524 6 66 4 005,NP0666405,e_i_f_n_c_s,20,Community School,,Total number of schools community/institutional,,20,,,524 2 16 3 007,29
+,Tanjakot Gaunpalika,HUMLA,Tanjakot,Gaunpalika,6,66,671,60307,524 6 66 4 006,NP0666406,e_i_f_n_c_s,19,Community School,,Total number of schools community/institutional,,19,,,524 5 54 4 005,39
+,Adanchuli Gaunpalika,HUMLA,Adanchuli,Gaunpalika,6,66,665,60306,524 6 66 4 007,NP0666407,e_i_f_n_c_s,19,Community School,,Total number of schools community/institutional,,19,,,524 4 36 4 003,51
+,Bungal Nagarpalika,BAJHANG,Bungal,Nagarpalika,7,67,683,70202,524 7 67 3 001,NP0767301,e_i_f_n_c_s,85,Community School,,Total number of schools community/institutional,,85,,,524 3 21 4 001,43
+,JayaPrithivi Nagarpalika,BAJHANG,JayaPrithivi,Nagarpalika,7,67,686,70206,524 7 67 3 002,NP0767302,e_i_f_n_c_s,54,Community School,,Total number of schools community/institutional,,54,,,524 5 76 3 001,34
+,Kanda Gaunpalika,BAJHANG,Kanda,Gaunpalika,7,67,687,70201,524 7 67 4 001,NP0767401,e_i_f_n_c_s,5,Community School,,Total number of schools community/institutional,,5,,,524 5 54 4 007,32
+,Surma Gaunpalika,BAJHANG,Surma,Gaunpalika,7,67,691,70203,524 7 67 4 002,NP0767402,e_i_f_n_c_s,16,Community School,,Total number of schools community/institutional,,16,,,524 4 37 3 003,44
+,Talkot Gaunpalika,BAJHANG,Talkot,Gaunpalika,7,67,692,70204,524 7 67 4 003,NP0767403,e_i_f_n_c_s,28,Community School,,Total number of schools community/institutional,,28,,,524 1 05 3 002,42
+,Bithadchir Gaunpalika,BAJHANG,Bithadchir,Gaunpalika,7,67,682,70210,524 7 67 4 004,NP0767404,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 1 13 4 005,39
+,Kedarseu Gaunpalika,BAJHANG,Kedarseu,Gaunpalika,7,67,688,70209,524 7 67 4 005,NP0767405,e_i_f_n_c_s,52,Community School,,Total number of schools community/institutional,,52,,,524 1 14 4 002,32
+,Durgathali Gaunpalika,BAJHANG,Durgathali,Gaunpalika,7,67,685,70208,524 7 67 4 006,NP0767406,e_i_f_n_c_s,29,Community School,,Total number of schools community/institutional,,29,,,524 3 20 4 004,52
+,Chabispathivera Gaunpalika,BAJHANG,Chabispathivera,Gaunpalika,7,67,684,70207,524 7 67 4 007,NP0767407,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 3 23 4 007,31
+,Masta Gaunpalika,BAJHANG,Masta,Gaunpalika,7,67,690,70205,524 7 67 4 008,NP0767408,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 1 05 3 007,41
+,Thalara Gaunpalika,BAJHANG,Thalara,Gaunpalika,7,67,693,70211,524 7 67 4 009,NP0767409,e_i_f_n_c_s,43,Community School,,Total number of schools community/institutional,,43,,,524 7 67 4 002,16
+,Khaptadchhanna Gaunpalika,BAJHANG,Khaptadchhanna,Gaunpalika,7,67,689,70212,524 7 67 4 010,NP0767410,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 7 74 4 003,38
+,Khaptad National Park National Park,BAJHANG,Khaptad National Park,National Park,7,67,681,99995,524 7 67 5 997,NP0767597,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 2 15 3 001,35
+,Budhinanda Nagarpalika,BAJURA,Budhinanda,Nagarpalika,7,68,674,70103,524 7 68 3 001,NP0768301,e_i_f_n_c_s,30,Community School,,Total number of schools community/institutional,,30,,,524 3 26 3 004,41
+,Badimalika Nagarpalika,BAJURA,Badimalika,Nagarpalika,7,68,672,70106,524 7 68 3 002,NP0768302,e_i_f_n_c_s,25,Community School,,Total number of schools community/institutional,,25,,,524 3 28 4 004,31
+,Budhiganga Nagarpalika,BAJURA,Budhiganga,Nagarpalika,7,68,673,11213,524 7 68 3 003,NP0768303,e_i_f_n_c_s,33,Community School,,Total number of schools community/institutional,,33,,,524 1 03 3 003,71
+,Tribeni Nagarpalika,BAJURA,Tribeni,Nagarpalika,7,68,680,50206,524 7 68 3 004,NP0768304,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,524 5 76 4 004,25
+,Himali Gaunpalika,BAJURA,Himali,Gaunpalika,7,68,677,70101,524 7 68 4 001,NP0768401,e_i_f_n_c_s,23,Community School,,Total number of schools community/institutional,,23,,,524 7 68 4 005,26
+,Gaumul Gaunpalika,BAJURA,Gaumul,Gaunpalika,7,68,676,70102,524 7 68 4 002,NP0768402,e_i_f_n_c_s,23,Community School,,Total number of schools community/institutional,,23,,,524 5 55 3 001,55
+,Chhededaha Gaunpalika,BAJURA,Chhededaha,Gaunpalika,7,68,675,70107,524 7 68 4 003,NP0768403,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 3 28 4 005,36
+,Pandav Gupha Gaunpalika,BAJURA,Pandav Gupha,Gaunpalika,7,68,678,70105,524 7 68 4 004,NP0768404,e_i_f_n_c_s,17,Community School,,Total number of schools community/institutional,,17,,,524 7 67 4 003,28
+,Swami Kartik Gaunpalika,BAJURA,Swami Kartik,Gaunpalika,7,68,679,70104,524 7 68 4 005,NP0768405,e_i_f_n_c_s,26,Community School,,Total number of schools community/institutional,,26,,,524 3 22 4 007,46
+,Khaptad National Park National Park,BAJURA,Khaptad National Park,National Park,7,68,694,99996,524 7 68 5 997,NP0768597,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 4 43 4 002,16
+,Sanphebagar Nagarpalika,ACHHAM,Sanphebagar,Nagarpalika,7,69,703,70704,524 7 69 3 001,NP0769301,e_i_f_n_c_s,71,Community School,,Total number of schools community/institutional,,71,,,524 6 66 4 006,19
+,Mangalsen Nagarpalika,ACHHAM,Mangalsen,Nagarpalika,7,69,699,70706,524 7 69 3 002,NP0769302,e_i_f_n_c_s,51,Community School,,Total number of schools community/institutional,,51,,,524 5 46 3 001,53
+,Kamalbazar Nagarpalika,ACHHAM,Kamalbazar,Nagarpalika,7,69,698,70708,524 7 69 3 003,NP0769303,e_i_f_n_c_s,47,Community School,,Total number of schools community/institutional,,47,,,524 1 14 4 001,37
+,Panchadewal Binayak Nagarpalika,ACHHAM,Panchadewal Binayak,Nagarpalika,7,69,701,70701,524 7 69 3 004,NP0769304,e_i_f_n_c_s,61,Community School,,Total number of schools community/institutional,,61,,,524 3 28 4 003,35
+,Chaurpati Gaunpalika,ACHHAM,Chaurpati,Gaunpalika,7,69,696,70705,524 7 69 4 001,NP0769401,e_i_f_n_c_s,41,Community School,,Total number of schools community/institutional,,41,,,524 3 27 3 001,23
+,Mellekh Gaunpalika,ACHHAM,Mellekh,Gaunpalika,7,69,700,70703,524 7 69 4 002,NP0769402,e_i_f_n_c_s,34,Community School,,Total number of schools community/institutional,,34,,,524 4 43 4 004,18
+,Bannigadhi Jayagadh Gaunpalika,ACHHAM,Bannigadhi Jayagadh,Gaunpalika,7,69,695,70707,524 7 69 4 003,NP0769403,e_i_f_n_c_s,28,Community School,,Total number of schools community/institutional,,28,,,524 6 63 4 006,25
+,Ramaroshan Gaunpalika,ACHHAM,Ramaroshan,Gaunpalika,7,69,702,70702,524 7 69 4 004,NP0769404,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,524 3 24 4 005,49
+,Dhakari Gaunpalika,ACHHAM,Dhakari,Gaunpalika,7,69,697,70709,524 7 69 4 005,NP0769405,e_i_f_n_c_s,45,Community School,,Total number of schools community/institutional,,45,,,524 3 31 3 001,57
+,Turmakhad Gaunpalika,ACHHAM,Turmakhad,Gaunpalika,7,69,704,70710,524 7 69 4 006,NP0769406,e_i_f_n_c_s,55,Community School,,Total number of schools community/institutional,,55,,,524 3 30 4 011,43
+,Khaptad National Park National Park,ACHHAM,Khaptad National Park,National Park,7,69,705,99997,524 7 69 5 997,NP0769597,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 5 58 3 003,34
+,Shikhar Nagarpalika,DOTI,Shikhar,Nagarpalika,7,70,714,70604,524 7 70 3 001,NP0770301,e_i_f_n_c_s,68,Community School,,Total number of schools community/institutional,,68,,,524 7 67 4 009,43
+,Dipayal Silgadi Nagarpalika,DOTI,Dipayal Silgadi,Nagarpalika,7,70,709,70605,524 7 70 3 002,NP0770302,e_i_f_n_c_s,44,Community School,,Total number of schools community/institutional,,44,,,524 6 61 4 001,39
+,Adharsha Gaunpalika,DOTI,Adharsha,Gaunpalika,7,70,706,70603,524 7 70 4 001,NP0770401,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 4 45 4 005,12
+,Sayal Gaunpalika,DOTI,Sayal,Gaunpalika,7,70,713,70602,524 7 70 4 002,NP0770402,e_i_f_n_c_s,32,Community School,,Total number of schools community/institutional,,32,,,524 5 54 4 003,21
+,Purbichauki Gaunpalika,DOTI,Purbichauki,Gaunpalika,7,70,712,70601,524 7 70 4 003,NP0770403,e_i_f_n_c_s,40,Community School,,Total number of schools community/institutional,,40,,,524 2 34 4 001,24
+,Jorayal Gaunpalika,DOTI,Jorayal,Gaunpalika,7,70,710,70609,524 7 70 4 004,NP0770404,e_i_f_n_c_s,58,Community School,,Total number of schools community/institutional,,58,,,524 6 62 3 002,25
+,K I Singh Gaunpalika,DOTI,K I Singh,Gaunpalika,7,70,711,70606,524 7 70 4 005,NP0770405,e_i_f_n_c_s,34,Community School,,Total number of schools community/institutional,,34,,,524 7 71 3 005,35
+,Badikedar Gaunpalika,DOTI,Badikedar,Gaunpalika,7,70,707,70608,524 7 70 4 006,NP0770406,e_i_f_n_c_s,40,Community School,,Total number of schools community/institutional,,40,,,524 6 63 4 005,25
+,Bogtan Gaunpalika,DOTI,Bogtan,Gaunpalika,7,70,708,70607,524 7 70 4 007,NP0770407,e_i_f_n_c_s,43,Community School,,Total number of schools community/institutional,,43,,,524 6 64 3 003,33
+,Khaptad National Park National Park,DOTI,Khaptad National Park,National Park,7,70,715,99998,524 7 70 5 997,NP0770597,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 2 15 4 009,21
+,Dhangadhi Upamahanagarpalika,KAILALI,Dhangadhi,Upamahanagarpalika,7,71,719,70813,524 7 71 2 001,NP0771201,e_i_f_n_c_s,84,Community School,,Total number of schools community/institutional,,84,,,524 5 48 3 003,48
+,Godawari Nagarpalika,KAILALI,Godawari,Nagarpalika,7,71,722,30803,524 7 71 3 001,NP0771301,e_i_f_n_c_s,51,Community School,,Total number of schools community/institutional,,51,,,524 5 46 4 002,39
+,Gauriganga Nagarpalika,KAILALI,Gauriganga,Nagarpalika,7,71,720,70804,524 7 71 3 002,NP0771302,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,524 3 20 4 006,87
+,Ghodaghodi Nagarpalika,KAILALI,Ghodaghodi,Nagarpalika,7,71,721,70805,524 7 71 3 003,NP0771303,e_i_f_n_c_s,61,Community School,,Total number of schools community/institutional,,61,,,524 2 15 4 003,10
+,Bhajani Nagarpalika,KAILALI,Bhajani,Nagarpalika,7,71,717,70811,524 7 71 3 004,NP0771304,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 3 27 3 002,10
+,Tikapur Nagarpalika,KAILALI,Tikapur,Nagarpalika,7,71,728,70810,524 7 71 3 005,NP0771305,e_i_f_n_c_s,35,Community School,,Total number of schools community/institutional,,35,,,524 5 54 4 006,41
+,Lamkichuha Nagarpalika,KAILALI,Lamkichuha,Nagarpalika,7,71,726,70807,524 7 71 3 006,NP0771306,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,524 6 52 4 003,44
+,Chure Gaunpalika,KAILALI,Chure,Gaunpalika,7,71,718,70802,524 7 71 4 001,NP0771401,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,524 6 53 4 006,30
+,Kailari Gaunpalika,KAILALI,Kailari,Gaunpalika,7,71,725,70812,524 7 71 4 002,NP0771402,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,524 7 68 3 004,36
+,Mohanyal Gaunpalika,KAILALI,Mohanyal,Gaunpalika,7,71,727,70801,524 7 71 4 003,NP0771403,e_i_f_n_c_s,40,Community School,,Total number of schools community/institutional,,40,,,524 6 60 3 003,71
+,Joshipur Gaunpalika,KAILALI,Joshipur,Gaunpalika,7,71,724,70809,524 7 71 4 004,NP0771404,e_i_f_n_c_s,25,Community School,,Total number of schools community/institutional,,25,,,524 3 23 4 008,31
+,Bardagoriya Gaunpalika,KAILALI,Bardagoriya,Gaunpalika,7,71,716,70806,524 7 71 4 005,NP0771405,e_i_f_n_c_s,17,Community School,,Total number of schools community/institutional,,17,,,524 3 30 4 004,34
+,Janaki Gaunpalika,KAILALI,Janaki,Gaunpalika,7,71,723,51105,524 7 71 4 006,NP0771406,e_i_f_n_c_s,29,Community School,,Total number of schools community/institutional,,29,,,524 6 62 3 001,33
+,Mahakali Nagarpalika,KANCHANPUR,Mahakali,Nagarpalika,7,72,735,70303,524 7 72 3 001,NP0772301,e_i_f_n_c_s,26,Community School,,Total number of schools community/institutional,,26,,,524 1 14 3 002,76
+,Bhimdatta Nagarpalika,KANCHANPUR,Bhimdatta,Nagarpalika,7,72,732,70904,524 7 72 3 002,NP0772302,e_i_f_n_c_s,61,Community School,,Total number of schools community/institutional,,61,,,524 5 56 2 001,83
+,Bedkot Nagarpalika,KANCHANPUR,Bedkot,Nagarpalika,7,72,729,70903,524 7 72 3 003,NP0772303,e_i_f_n_c_s,28,Community School,,Total number of schools community/institutional,,28,,,524 1 02 4 006,41
+,Shuklaphanta Nagarpalika,KANCHANPUR,Shuklaphanta,Nagarpalika,7,72,737,70902,524 7 72 3 004,NP0772304,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,524 7 69 4 006,55
+,Krishnapur Nagarpalika,KANCHANPUR,Krishnapur,Nagarpalika,7,72,733,70901,524 7 72 3 005,NP0772305,e_i_f_n_c_s,37,Community School,,Total number of schools community/institutional,,37,,,524 1 10 4 002,46
+,Belauri Nagarpalika,KANCHANPUR,Belauri,Nagarpalika,7,72,730,70908,524 7 72 3 006,NP0772306,e_i_f_n_c_s,17,Community School,,Total number of schools community/institutional,,17,,,524 1 14 4 003,61
+,Punarbas Nagarpalika,KANCHANPUR,Punarbas,Nagarpalika,7,72,736,70907,524 7 72 3 007,NP0772307,e_i_f_n_c_s,35,Community School,,Total number of schools community/institutional,,35,,,524 3 21 4 004,50
+,Beldandi Gaunpalika,KANCHANPUR,Beldandi,Gaunpalika,7,72,731,70909,524 7 72 4 001,NP0772401,e_i_f_n_c_s,35,Community School,,Total number of schools community/institutional,,35,,,524 1 05 3 005,20
+,Laljhadi Gaunpalika,KANCHANPUR,Laljhadi,Gaunpalika,7,72,734,70906,524 7 72 4 002,NP0772402,e_i_f_n_c_s,18,Community School,,Total number of schools community/institutional,,18,,,524 3 29 4 003,21
+,Shuklaphanta National Park National Park,KANCHANPUR,Shuklaphanta National Park,National Park,7,72,738,99999,524 7 72 5 997,NP0772597,e_i_f_n_c_s,0,Community School,,Total number of schools community/institutional,,#N/A,,,524 4 41 3 004,81
+,Parashuram Nagarpalika,DADELDHURA,Parashuram,Nagarpalika,7,73,745,70505,524 7 73 3 001,NP0773301,e_i_f_n_c_s,64,Community School,,Total number of schools community/institutional,,64,,,524 2 32 4 001,17
+,Amargadhi Nagarpalika,DADELDHURA,Amargadhi,Nagarpalika,7,73,741,70502,524 7 73 3 002,NP0773302,e_i_f_n_c_s,31,Community School,,Total number of schools community/institutional,,31,,,524 1 02 4 002,43
+,Bhageshwar Gaunpalika,DADELDHURA,Bhageshwar,Gaunpalika,7,73,742,70504,524 7 73 4 001,NP0773401,e_i_f_n_c_s,35,Community School,,Total number of schools community/institutional,,35,,,524 1 01 4 007,36
+,Ajaymeru Gaunpalika,DADELDHURA,Ajaymeru,Gaunpalika,7,73,739,70503,524 7 73 4 002,NP0773402,e_i_f_n_c_s,33,Community School,,Total number of schools community/institutional,,33,,,524 5 49 4 002,42
+,Nawadurga Gaunpalika,DADELDHURA,Nawadurga,Gaunpalika,7,73,744,70501,524 7 73 4 003,NP0773403,e_i_f_n_c_s,30,Community School,,Total number of schools community/institutional,,30,,,,
+,Alital Gaunpalika,DADELDHURA,Alital,Gaunpalika,7,73,740,70506,524 7 73 4 004,NP0773404,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,,
+,Ganayapdhura Gaunpalika,DADELDHURA,Ganayapdhura,Gaunpalika,7,73,743,70507,524 7 73 4 005,NP0773405,e_i_f_n_c_s,25,Community School,,Total number of schools community/institutional,,25,,,,
+,Dasharathchanda Nagarpalika,BAITADI,Dasharathchanda,Nagarpalika,7,74,746,70405,524 7 74 3 001,NP0774301,e_i_f_n_c_s,57,Community School,,Total number of schools community/institutional,,57,,,,
+,Purchaudi Nagarpalika,BAITADI,Purchaudi,Nagarpalika,7,74,752,70403,524 7 74 3 002,NP0774302,e_i_f_n_c_s,88,Community School,,Total number of schools community/institutional,,88,,,,
+,Melauli Nagarpalika,BAITADI,Melauli,Nagarpalika,7,74,749,70408,524 7 74 3 003,NP0774303,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,,
+,Patan Nagarpalika,BAITADI,Patan,Nagarpalika,7,74,751,70409,524 7 74 3 004,NP0774304,e_i_f_n_c_s,65,Community School,,Total number of schools community/institutional,,65,,,,
+,Dilasaini Gaunpalika,BAITADI,Dilasaini,Gaunpalika,7,74,747,70401,524 7 74 4 001,NP0774401,e_i_f_n_c_s,57,Community School,,Total number of schools community/institutional,,57,,,,
+,Dogadakedar Gaunpalika,BAITADI,Dogadakedar,Gaunpalika,7,74,748,70402,524 7 74 4 002,NP0774402,e_i_f_n_c_s,60,Community School,,Total number of schools community/institutional,,60,,,,
+,Surnaya Gaunpalika,BAITADI,Surnaya,Gaunpalika,7,74,755,70404,524 7 74 4 003,NP0774403,e_i_f_n_c_s,38,Community School,,Total number of schools community/institutional,,38,,,,
+,Pancheshwar Gaunpalika,BAITADI,Pancheshwar,Gaunpalika,7,74,750,70406,524 7 74 4 004,NP0774404,e_i_f_n_c_s,34,Community School,,Total number of schools community/institutional,,34,,,,
+,Shivanath Gaunpalika,BAITADI,Shivanath,Gaunpalika,7,74,753,70407,524 7 74 4 005,NP0774405,e_i_f_n_c_s,36,Community School,,Total number of schools community/institutional,,36,,,,
+,Sigas Gaunpalika,BAITADI,Sigas,Gaunpalika,7,74,754,70410,524 7 74 4 006,NP0774406,e_i_f_n_c_s,59,Community School,,Total number of schools community/institutional,,59,,,,
+,Mahakali Nagarpalika,DARCHULA,Mahakali,Nagarpalika,7,75,760,70303,524 7 75 3 001,NP0775301,e_i_f_n_c_s,50,Community School,,Total number of schools community/institutional,,50,,,,
+,Shailyashikhar Nagarpalika,DARCHULA,Shailyashikhar,Nagarpalika,7,75,764,70307,524 7 75 3 002,NP0775302,e_i_f_n_c_s,51,Community School,,Total number of schools community/institutional,,51,,,,
+,Byas Gaunpalika,DARCHULA,Byas,Gaunpalika,7,75,757,40702,524 7 75 4 001,NP0775401,e_i_f_n_c_s,25,Community School,,Total number of schools community/institutional,,25,,,,
+,Dunhu Gaunpalika,DARCHULA,Dunhu,Gaunpalika,7,75,758,70302,524 7 75 4 002,NP0775402,e_i_f_n_c_s,19,Community School,,Total number of schools community/institutional,,19,,,,
+,Apihimal Gaunpalika,DARCHULA,Apihimal,Gaunpalika,7,75,756,70305,524 7 75 4 003,NP0775403,e_i_f_n_c_s,24,Community School,,Total number of schools community/institutional,,24,,,,
+,Malikaarjun Gaunpalika,DARCHULA,Malikaarjun,Gaunpalika,7,75,761,70308,524 7 75 4 004,NP0775404,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,,
+,Naugad Gaunpalika,DARCHULA,Naugad,Gaunpalika,7,75,763,70304,524 7 75 4 005,NP0775405,e_i_f_n_c_s,42,Community School,,Total number of schools community/institutional,,42,,,,
+,Lekam Gaunpalika,DARCHULA,Lekam,Gaunpalika,7,75,759,70309,524 7 75 4 006,NP0775406,e_i_f_n_c_s,46,Community School,,Total number of schools community/institutional,,46,,,,
+,Marma Gaunpalika,DARCHULA,Marma,Gaunpalika,7,75,762,70306,524 7 75 4 007,NP0775407,e_i_f_n_c_s,43,Community School,,Total number of schools community/institutional,,43,,,,

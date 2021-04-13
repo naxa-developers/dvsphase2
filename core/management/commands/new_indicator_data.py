@@ -1,6 +1,16 @@
 from django.core.management.base import BaseCommand
 import pandas as pd
 from core.models import Indicator, IndicatorValue, GapaNapa, District
+from django.core.exceptions import ObjectDoesNotExist
+
+
+def gapanapa(code):
+    try:
+        obj = GapaNapa.objects.get(hlcit_code=code)
+    except ObjectDoesNotExist:
+        print(code)
+        obj = None
+    return obj
 
 
 class Command(BaseCommand):
@@ -21,7 +31,7 @@ class Command(BaseCommand):
             indicator_value = [
                 IndicatorValue(
                     indicator_id=Indicator.objects.get(indicator=indicator_name),
-                    gapanapa_id=GapaNapa.objects.get(hlcit_code=df['hlcit_id'][row]),
+                    gapanapa_id=gapanapa(str(df['hlcit_id'][row])),
                     value=float(df['value'][row]),
 
                 ) for row in range(0, upper_range)
@@ -37,4 +47,5 @@ class Command(BaseCommand):
 
 
         except Exception as e:
+
             print(e)
