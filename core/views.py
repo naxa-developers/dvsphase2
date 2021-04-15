@@ -21,7 +21,7 @@ from django.db.models import Sum
 import math
 from django.db.models import Q
 from rest_framework.parsers import MultiPartParser, FormParser
-from .filters import fivew, fivew_province, fivew_district, fivew_municipality
+from .filters import fivew, fivew_province, fivew_district, fivew_municipality,sankey
 from datetime import datetime, date
 from django.db.models import Q
 
@@ -142,6 +142,7 @@ class RegionSankey(viewsets.ModelViewSet):
         province_id = []
         district_id = []
         municipality_id = []
+        count = []
 
         # threshold = float(request.GET['threshold'])
         if request.GET.getlist('threshold'):
@@ -157,15 +158,72 @@ class RegionSankey(viewsets.ModelViewSet):
                 province_filter_id[i] = int(province_filter_id[i])
         else:
             province_filter_id = list(Province.objects.exclude(code=-1).values_list('id', flat=True).distinct())
+
         if request.GET.getlist('program'):
             prov = request.GET['program']
-            program_filter_id = prov.split(",")
-            for i in range(0, len(program_filter_id)):
-                program_filter_id[i] = int(program_filter_id[i])
+            program = prov.split(",")
+            for i in range(0, len(program)):
+                program[i] = int(program[i])
         else:
-            program_filter_id = list(Program.objects.values_list('id', flat=True))
+            program = list(Program.objects.values_list('id', flat=True))
+            count.append('program')
 
-        five_query = FiveW.objects.filter(province_id__in=province_filter_id, program_id__in=program_filter_id)
+        if request.GET.getlist('sector_id'):
+            sect = request.GET['sector_id']
+            sector = sect.split(",")
+            for i in range(0, len(sector)):
+                sector[i] = int(sector[i])
+        else:
+            sector = list(Sector.objects.values_list('id', flat=True))
+            count.append('sector')
+
+        if request.GET.getlist('sub_sector_id'):
+            subsect = request.GET['sub_sector_id']
+            sub_sector = subsect.split(",")
+            for i in range(0, len(sub_sector)):
+                sub_sector[i] = int(sub_sector[i])
+        else:
+            sub_sector = list(Sector.objects.values_list('id', flat=True))
+            count.append('sub_sector')
+        if request.GET.getlist('marker_category_id'):
+            mc = request.GET['marker_category_id']
+            markers = mc.split(",")
+            for i in range(0, len(markers)):
+                markers[i] = int(markers[i])
+        else:
+            markers = list(MarkerCategory.objects.values_list('id', flat=True))
+            count.append('markers')
+
+        if request.GET.getlist('marker_value_id'):
+            mv = request.GET['marker_value_id']
+            markers_value = mv.split(",")
+            for i in range(0, len(markers_value)):
+                markers_value[i] = int(markers_value[i])
+        else:
+            markers_value = list(MarkerValues.objects.values_list('id', flat=True))
+            count.append('markers_value')
+
+        if request.GET.getlist('supplier_id'):
+            supp = request.GET['supplier_id']
+            supplier = supp.split(",")
+            for i in range(0, len(supplier)):
+                supplier[i] = int(supplier[i])
+        else:
+            supplier = list(Partner.objects.values_list('id', flat=True))
+            count.append('supplier')
+
+        if request.GET.getlist('component_code'):
+            comp = request.GET['component_code']
+            component = comp.split(",")
+            for i in range(0, len(component)):
+                component[i] = str(component[i])
+        else:
+            component = list(Project.objects.values_list('code', flat=True))
+            count.append('component')
+
+        five_query = sankey(province_filter_id, supplier, program, component, sector, sub_sector, markers,
+                                       markers_value, count)
+        print(five_query)
         if five_query.exists():
             total_budget_sum = five_query.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
 
@@ -1691,7 +1749,6 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
             markers_value = list(MarkerValues.objects.values_list('id', flat=True))
             count.append('markers_value')
 
-        provinces = Province.objects.values('name', 'id', 'code').exclude(code='-1').order_by('id')
         if request.GET.getlist('supplier_id'):
             supp = request.GET['supplier_id']
             supplier = supp.split(",")
@@ -1709,6 +1766,8 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
         else:
             component = list(Project.objects.values_list('code', flat=True))
             count.append('component')
+
+        provinces = Province.objects.values('name', 'id', 'code').exclude(code='-1').order_by('id')
 
         for province in provinces:
             if count:
