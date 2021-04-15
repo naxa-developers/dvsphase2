@@ -204,7 +204,7 @@ class IndicatorSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'full_title', 'abstract', 'category', 'source', 'federal_level', 'is_covid', 'is_dashboard', 'filter',
             'unit',
-            'data_type')
+            'data_type', 'url')
 
 
 class SectorSerializer(serializers.ModelSerializer):

@@ -543,12 +543,23 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         })
                 if len(sectoruniqueid) != 0:
                     for s in sectoruniqueid:
+                        sector_sub_sector_new = []
+                        sub_sector_final_data = []
                         dat = Program.objects.filter(sector=s).exclude(total_budget=None)
                         sector = Sector.objects.get(id=s)
-                        sub_sec = [i.id for i in SubSector.objects.filter(sector_id=sector.id)]
+                        set = SubSector.objects.filter(sector_id=sector.id).values('name')
+                        for v in set:
+                            sector_sub_sector_new.append(v['name'])
+                        sub_sec = [i['id'] for i in SubSector.objects.filter(sector_id=sector.id).values('id')]
                         total_budgetnew = 0
                         partner_name = []
                         for d in dat:
+                            sub_sectors = []
+                            sub_sector_final = []
+                            sub_sectors.append(list(d.sub_sector.values_list('name', flat=True)))
+                            for s in sub_sectors:
+                                for di in s:
+                                    sub_sector_final.append(di)
                             ho = d.sector_budget
                             sec_budget = 0
                             if ho:
@@ -566,10 +577,18 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             for p in partner_count:
                                 if p.name not in partner_name:
                                     partner_name.append(p.name)
-
+                        if dat:
+                            last_sub_sector = unique(sub_sector_final)
+                        else:
+                            sub_sector_final = []
+                            last_sub_sector = unique(sub_sector_final)
+                        for l in last_sub_sector:
+                            if l in sector_sub_sector_new:
+                                sub_sector_final_data.append(l)
                         sector_by_buget.append({
                             'id': sector.id,
                             'name': sector.name,
+                            'sub_sector': sub_sector_final_data,
                             'key': 'total_budget',
                             'value': total_budgetnew
 
@@ -718,12 +737,23 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         })
                 if len(sectoruniqueid) != 0:
                     for s in sectoruniqueid:
+                        sector_sub_sector_new = []
+                        sub_sector_final_data = []
                         dat = Program.objects.filter(sector=s).exclude(total_budget=None)
                         sector = Sector.objects.get(id=s)
-                        sub_sec = [i.id for i in SubSector.objects.filter(sector_id=sector.id)]
+                        set = SubSector.objects.filter(sector_id=sector.id).values('name')
+                        for v in set:
+                            sector_sub_sector_new.append(v['name'])
+                        sub_sec = [i['id'] for i in SubSector.objects.filter(sector_id=sector.id).values('id')]
                         total_budgetnew = 0
                         partner_name = []
                         for d in dat:
+                            sub_sectors = []
+                            sub_sector_final = []
+                            sub_sectors.append(list(d.sub_sector.values_list('name', flat=True)))
+                            for s in sub_sectors:
+                                for di in s:
+                                    sub_sector_final.append(di)
                             ho = d.sector_budget
                             sec_budget = 0
                             if ho:
@@ -735,17 +765,24 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                                 sec_budget += float(x[1])
                                             except:
                                                 pass
-                                    print(str(d.name) + str(sec_budget))
                             if d.total_budget:
                                 total_budgetnew += (d.total_budget * sec_budget) / 100
                             partner_count = d.partner_id.all()
                             for p in partner_count:
                                 if p.name not in partner_name:
                                     partner_name.append(p.name)
-
+                        if dat:
+                            last_sub_sector = unique(sub_sector_final)
+                        else:
+                            sub_sector_final = []
+                            last_sub_sector = unique(sub_sector_final)
+                        for l in last_sub_sector:
+                            if l in sector_sub_sector_new:
+                                sub_sector_final_data.append(l)
                         sector_by_buget.append({
                             'id': sector.id,
                             'name': sector.name,
+                            'sub_sector': sub_sector_final_data,
                             'key': 'total_budget',
                             'value': total_budgetnew
 
@@ -866,14 +903,25 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         })
                 if len(sectoruniqueid) != 0:
                     for s in sectoruniqueid:
+                        sector_sub_sector_new = []
+                        sub_sector_final_data = []
                         dat = Program.objects.filter(sector=s).exclude(total_budget=None)
                         sector = Sector.objects.get(id=s)
-                        sub_sec = [i.id for i in SubSector.objects.filter(sector_id=sector.id)]
+                        set = SubSector.objects.filter(sector_id=sector.id).values('name')
+                        for v in set:
+                            sector_sub_sector_new.append(v['name'])
+                        sub_sec = [i['id'] for i in SubSector.objects.filter(sector_id=sector.id).values('id')]
                         total_budgetnew = 0
                         partner_name = []
                         for d in dat:
-                            sec_budget = 0
+                            sub_sectors = []
+                            sub_sector_final = []
+                            sub_sectors.append(list(d.sub_sector.values_list('name', flat=True)))
+                            for s in sub_sectors:
+                                for di in s:
+                                    sub_sector_final.append(di)
                             ho = d.sector_budget
+                            sec_budget = 0
                             if ho:
                                 if ho != 'None':
                                     for h in ho.split(','):
@@ -883,17 +931,24 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                                 sec_budget += float(x[1])
                                             except:
                                                 pass
-                                    print(str(d.name) + str(sec_budget))
                             if d.total_budget:
                                 total_budgetnew += (d.total_budget * sec_budget) / 100
                             partner_count = d.partner_id.all()
                             for p in partner_count:
                                 if p.name not in partner_name:
                                     partner_name.append(p.name)
-
+                        if dat:
+                            last_sub_sector = unique(sub_sector_final)
+                        else:
+                            sub_sector_final = []
+                            last_sub_sector = unique(sub_sector_final)
+                        for l in last_sub_sector:
+                            if l in sector_sub_sector_new:
+                                sub_sector_final_data.append(l)
                         sector_by_buget.append({
                             'id': sector.id,
                             'name': sector.name,
+                            'sub_sector': sub_sector_final_data,
                             'key': 'total_budget',
                             'value': total_budgetnew
 
