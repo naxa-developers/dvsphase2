@@ -1,6 +1,6 @@
 from .models import Partner, Program, MarkerValues, District, Province, GapaNapa, FiveW, Indicator, IndicatorValue, \
     Sector, SubSector, MarkerCategory, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
-    NepalSummary, FeedbackForm, FAQ, TermsAndCondition
+    NepalSummary, FeedbackForm, FAQ, TermsAndCondition,NationalStatistic
 from dashboard.models import UserProfile
 from django.contrib.auth.models import User, Group, Permission
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -8,7 +8,8 @@ from .serializers import PartnerSerializer, ProgramSerializer, MarkerValuesSeria
     ProvinceSerializer, GaanapaSerializer, FivewSerializer, \
     IndicatorSerializer, IndicatorValueSerializer, SectorSerializer, SubsectorSerializer, MarkerCategorySerializer, \
     TravelTimeSerializer, GisLayerSerializer, ProjectSerializer, OutputSerializer, NotificationSerializer, \
-    ContractSumSerializer, NepalSummarySerializer, FeedbackSerializer, TermsAndConditionSerializer, FAQSerializer
+    ContractSumSerializer, NepalSummarySerializer, FeedbackSerializer, TermsAndConditionSerializer, FAQSerializer, \
+    NetionalStatisticSerializer
 from rest_framework import viewsets, views
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
@@ -21,7 +22,7 @@ from django.db.models import Sum
 import math
 from django.db.models import Q
 from rest_framework.parsers import MultiPartParser, FormParser
-from .filters import fivew, fivew_province, fivew_district, fivew_municipality,sankey
+from .filters import fivew, fivew_province, fivew_district, fivew_municipality, sankey
 from datetime import datetime, date
 from django.db.models import Q
 
@@ -222,7 +223,7 @@ class RegionSankey(viewsets.ModelViewSet):
             count.append('component')
 
         five_query = sankey(province_filter_id, supplier, program, component, sector, sub_sector, markers,
-                                       markers_value, count)
+                            markers_value, count)
         print(five_query)
         if five_query.exists():
             total_budget_sum = five_query.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
@@ -319,6 +320,17 @@ class FAQView(viewsets.ReadOnlyModelViewSet):
 
     def get_serializer_class(self):
         serializer_class = FAQSerializer
+        return serializer_class
+
+class NationalStatisticView(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        queryset = NationalStatistic.objects.order_by('id')
+        return queryset
+
+    def get_serializer_class(self):
+        serializer_class = NetionalStatisticSerializer
         return serializer_class
 
 

@@ -330,6 +330,9 @@ class IndicatorValue(models.Model):
     value = models.FloatField(default=0)
     district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='Idistrict', null=True, blank=True)
     province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='Iprovince', null=True, blank=True)
+    national_average = models.FloatField(default=0)
+    province_average = models.FloatField(default=0)
+    district_average = models.FloatField(default=0)
 
     def __str__(self):
         return self.indicator_id.indicator
@@ -570,3 +573,7 @@ class TermsAndCondition(models.Model):
     title = RichTextField(blank=True, null=True)
     sub_title = RichTextField(blank=True, null=True)
     order = models.IntegerField(blank=True, null=True)
+
+
+class NationalStatistic(models.Model):
+    url = models.URLField(blank=True, null=True)
