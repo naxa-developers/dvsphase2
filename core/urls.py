@@ -42,6 +42,7 @@ urlpatterns = [
     path('programlowerdendrogram', views.ProgramLowerDendrogram.as_view({'get': 'list'}),
          name='programlowerdendrogram'),
     path('faq/', views.FAQView.as_view({'get': 'list'}), name='faq'),
+    path('national-statistic/', views.NationalStatisticView.as_view({'get': 'list'}), name='national-statistic'),
     path('terms-condition/', views.TermsAndConditionView.as_view({'get': 'list'}), name='terms-condition'),
 
 ]
