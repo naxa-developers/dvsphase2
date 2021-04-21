@@ -47,7 +47,8 @@ class Command(BaseCommand):
                             category=(df['Category'][row]).strip(),
                             source=df['Source'][row],
                             url=df['Link'][row],
-                            federal_level='all'
+                            federal_level='all',
+                            unit=df['Unit'][row]
                         ))
                 except Exception as e:
                     print(e)
