@@ -1,6 +1,6 @@
 from .models import Partner, Program, MarkerValues, District, Province, GapaNapa, FiveW, Indicator, IndicatorValue, \
     Sector, SubSector, MarkerCategory, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
-    NepalSummary, FeedbackForm, FAQ, TermsAndCondition,NationalStatistic
+    NepalSummary, FeedbackForm, FAQ, TermsAndCondition, NationalStatistic
 from dashboard.models import UserProfile
 from django.contrib.auth.models import User, Group, Permission
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -322,6 +322,7 @@ class FAQView(viewsets.ReadOnlyModelViewSet):
         serializer_class = FAQSerializer
         return serializer_class
 
+
 class NationalStatisticView(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
 
@@ -523,7 +524,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             top_sector_by_no_partner = []
             fivew_data = []
             if 'province_code' in request.GET:
-                ind = Indicator.objects.filter(federal_level__in=['province', 'all']).exclude(show_flag=False).values(
+                ind = Indicator.objects.filter(federal_level__in=['province', 'all']).exclude(
+                    Q(show_flag=False) | Q(is_dashboard=False)).values(
                     'category', 'id',
                     'federal_level',
                     'full_title',
