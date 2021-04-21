@@ -37,6 +37,7 @@ class Command(BaseCommand):
                         test.source = df['Source'][row]
                         test.url = df['Link'][row]
                         test.federal_level = 'all'
+                        test.unit = df['Unit'][row]
                         test.save()
                         self.stdout.write('Successfully Updated' + str(test.full_title) + 'data')
                     except ObjectDoesNotExist:
@@ -47,7 +48,8 @@ class Command(BaseCommand):
                             category=(df['Category'][row]).strip(),
                             source=df['Source'][row],
                             url=df['Link'][row],
-                            federal_level='all'
+                            federal_level='all',
+                            unit=df['Unit'][row]
                         ))
                 except Exception as e:
                     print(e)

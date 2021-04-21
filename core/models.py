@@ -316,9 +316,6 @@ class Indicator(models.Model):
     data_type = models.CharField(max_length=1500, null=True, blank=True)
     is_dashboard = models.BooleanField(default=True)
 
-    unit = models.CharField(max_length=1500, null=True, blank=True)
-    data_type = models.CharField(max_length=1500, null=True, blank=True)
-
     def __str__(self):
         return self.indicator
 
