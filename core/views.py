@@ -525,7 +525,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             fivew_data = []
             if 'province_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level__in=['province', 'all']).exclude(
-                    Q(show_flag=False) | Q(is_dashboard=False)).values(
+                    Q(show_flag=False) | Q(is_dashboard=False) | Q(is_regional_profile=False)).values(
                     'category', 'id',
                     'federal_level',
                     'full_title',

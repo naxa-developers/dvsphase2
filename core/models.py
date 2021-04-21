@@ -315,6 +315,7 @@ class Indicator(models.Model):
     unit = models.CharField(max_length=1500, null=True, blank=True)
     data_type = models.CharField(max_length=1500, null=True, blank=True)
     is_dashboard = models.BooleanField(default=True)
+    is_regional_profile = models.BooleanField(default=True)
 
     def __str__(self):
         return self.indicator
