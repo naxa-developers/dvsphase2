@@ -37,6 +37,7 @@ class Command(BaseCommand):
                         test.source = df['Source'][row]
                         test.url = df['Link'][row]
                         test.federal_level = 'all'
+                        test.unit = df['Unit'][row]
                         test.save()
                         self.stdout.write('Successfully Updated' + str(test.full_title) + 'data')
                     except ObjectDoesNotExist:
