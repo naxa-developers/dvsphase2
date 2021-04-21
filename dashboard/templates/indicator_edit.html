@@ -158,6 +158,17 @@
                 </div>
                 </div>
             </div>
+                                    <div class="row">
+                            <div class="col-md-6">
+                <div class="form-group">
+                <label  class="">Show On Regional Profile</label><br>
+                <select name="is_regional_profile">
+                    <option value="True" {% if form.instance.is_regional_profile == True %} selected {% endif %}>Yes</option>
+                    <option value="False"{% if form.instance.is_regional_profile == False %} selected {% endif %}>No</option>
+                </select>
+                </div>
+                </div>
+            </div>
                 </div>
             <div class="row">
                 <input type="hidden" class="form-control" name="show_flag" maxlength="500" value="True"/>
