@@ -243,6 +243,26 @@
                             class="material-icons">assignment</i><span>Centrally Managed Programs</span></a>
                 </li>
                 {% endif %}
+                {% if perms.core.view_faq %}
+                {% if active == 'faq' %}
+                <li class="menu-item active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="/dashboard/faq-list/" class=""><i
+                            class="material-icons">quiz</i><span>FAQ</span></a>
+                </li>
+                {% endif %}
+<!--                                {% if perms.core.view_termsandcondition %}-->
+<!--                {% if active == 'termsandcondition' %}-->
+<!--                <li class="menu-item active">-->
+<!--                    {% else %}-->
+<!--                <li class="menu-item">-->
+<!--                    {% endif %}-->
+<!--                    <a href="/dashboard/tac-list/" class=""><i-->
+<!--                            class="material-icons">gavel</i><span>Terms And Conditions</span></a>-->
+<!--                </li>-->
+<!--                {% endif %}-->
 <!--                {% if perms.core.view_faq %}-->
 <!--                {% if active == 'sector' %}-->
 <!--                <li class="menu-item active submenu">-->
