@@ -7,7 +7,8 @@ from django.core.mail import EmailMessage
 from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateForm, SubSectorCreateForm, \
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
     PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm, \
-    GroupForm, BudgetCreateForm, PartnerContactForm, CmpForm, GisStyleForm, UserProfileForm, FeedbackDataForm
+    GroupForm, BudgetCreateForm, PartnerContactForm, CmpForm, GisStyleForm, UserProfileForm, FeedbackDataForm, FAQForm, \
+    TACForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -23,7 +24,7 @@ from rest_framework.authentication import TokenAuthentication, SessionAuthentica
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
     MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output, Notification, \
-    BudgetToSecondTier, BudgetToFirstTier, Cmp, GisStyle, FeedbackForm
+    BudgetToSecondTier, BudgetToFirstTier, Cmp, GisStyle, FeedbackForm, FAQ, TermsAndCondition
 from .models import UserProfile, Log
 from django.contrib.auth.models import User, Group, Permission
 from django.views.generic import TemplateView
@@ -194,7 +195,7 @@ def bulkCreate(request):
             if len(error) > 0:
                 messages.error(request, 'Error in row(s)' + str(' '.join([str(elem) for elem in error])))
             if success_count > 0:
-                messages.success(request, 'Success! : ' + str(success_count) + ' '+ "row(s) Of Five-w Data Added ")
+                messages.success(request, 'Success! : ' + str(success_count) + ' ' + "row(s) Of Five-w Data Added ")
             if update_count > 0:
                 messages.info(request, 'Updated! : ' + str(update_count) + " row(s) Of Five-w Data Updated ")
 
@@ -260,7 +261,7 @@ def bulkCreate(request):
             if len(error) > 0:
                 messages.error(request, 'Error in row(s)' + str(' '.join([str(elem) for elem in error])))
             if success_count > 0:
-                messages.success(request, 'Success! : ' + str(success_count) + ' '+ "row(s) Of Five-w Data Added ")
+                messages.success(request, 'Success! : ' + str(success_count) + ' ' + "row(s) Of Five-w Data Added ")
             if update_count > 0:
                 messages.info(request, 'Updated! : ' + str(update_count) + " row(s) Of Five-w Data Updated ")
             FiveW.objects.bulk_create(fivew_correct)
@@ -977,7 +978,8 @@ class FiveList(LoginRequiredMixin, ListView):
                 program = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
                 province = Province.objects.exclude(code=-1).values('id', 'name').order_by('name')
                 district = District.objects.exclude(code=-1).values('id', 'province_id__id', 'name').order_by('name')
-                gapanapa = GapaNapa.objects.exclude(code=-1).values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
+                gapanapa = GapaNapa.objects.exclude(code=-1).values('id', 'province_id__id', 'district_id__id',
+                                                                    'name').order_by('name')
 
 
             else:
@@ -991,7 +993,8 @@ class FiveList(LoginRequiredMixin, ListView):
                     'name')
                 province = Province.objects.exclude(code=-1).values('id', 'name').order_by('name')
                 district = District.objects.exclude(code=-1).values('id', 'province_id__id', 'name').order_by('name')
-                gapanapa = GapaNapa.objects.exclude(code=-1).values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
+                gapanapa = GapaNapa.objects.exclude(code=-1).values('id', 'province_id__id', 'district_id__id',
+                                                                    'name').order_by('name')
 
             paginator = Paginator(dat_values, 500)
             page_numbers_range = 500
@@ -1047,7 +1050,8 @@ class FiveList(LoginRequiredMixin, ListView):
                 program = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
                 province = Province.objects.exclude(code=-1).values('id', 'name').order_by('name')
                 district = District.objects.exclude(code=-1).values('id', 'province_id__id', 'name').order_by('name')
-                gapanapa = GapaNapa.objects.exclude(code=-1).values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
+                gapanapa = GapaNapa.objects.exclude(code=-1).values('id', 'province_id__id', 'district_id__id',
+                                                                    'name').order_by('name')
 
             else:
                 five = FiveW.objects.filter(supplier_id=user_data.partner.id, program_id=user_data.program.id,
@@ -1067,7 +1071,8 @@ class FiveList(LoginRequiredMixin, ListView):
                     'name')
                 province = Province.objects.exclude(code=-1).values('id', 'name').order_by('name')
                 district = District.objects.exclude(code=-1).values('id', 'province_id__id', 'name').order_by('name')
-                gapanapa = GapaNapa.objects.exclude(code=-1).values('id', 'province_id__id', 'district_id__id', 'name').order_by('name')
+                gapanapa = GapaNapa.objects.exclude(code=-1).values('id', 'province_id__id', 'district_id__id',
+                                                                    'name').order_by('name')
 
             paginator = Paginator(five, 500)
             page_numbers_range = 500
@@ -1286,6 +1291,21 @@ class FeedbackList(LoginRequiredMixin, ListView):
         return data
 
 
+class FAQList(LoginRequiredMixin, ListView):
+    template_name = 'faq_list.html'
+    model = FAQ
+
+    def get_context_data(self, **kwargs):
+        data = super(FAQList, self).get_context_data(**kwargs)
+        faqlist = FAQ.objects.order_by('-id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = faqlist
+        data['user'] = user_data
+        data['active'] = 'faq'
+        return data
+
+
 class IndicatorValueList(LoginRequiredMixin, ListView):
     template_name = 'indicator_value_list.html'
     model = Indicator
@@ -1374,7 +1394,9 @@ class Dashboard(LoginRequiredMixin, TemplateView):
         if group.name == 'admin':
             five = FiveW.objects.order_by('id')
         else:
-            five = FiveW.objects.select_related('supplier_id').filter(supplier_id=user_data.partner.id,program_id=user_data.program.id,component_id=user_data.project.id)[:10]
+            five = FiveW.objects.select_related('supplier_id').filter(supplier_id=user_data.partner.id,
+                                                                      program_id=user_data.program.id,
+                                                                      component_id=user_data.project.id)[:10]
         return render(request, 'dashboard.html',
                       {'user': user_data, 'active': 'dash', 'fives': five, 'logs': log, 'group': group})
 
@@ -1493,6 +1515,24 @@ class RoleCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('role-list')
+
+class FAQCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+    model = FAQ
+    template_name = 'faq_add.html'
+    form_class = FAQForm
+    success_message = 'FAQ successfully added'
+
+    def get_context_data(self, **kwargs):
+        data = super(FAQCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'faq'
+        data['permissions'] = Permission.objects.all()
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('faq-list')
 
     # def form_valid(self, form):
     #     self.object = form.save()
@@ -2066,6 +2106,25 @@ class PartnerContactUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         message = "Partner contact" + self.object.name + "  has been edited by " + self.request.user.username
         log = Log.objects.create(user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
+
+
+class FAQUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = FAQ
+    template_name = 'faq_edit.html'
+    form_class = FAQForm
+    success_message = 'FAQ successfully updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(FAQUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'faq'
+        data['permissions'] = Permission.objects.all()
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('faq-list')
 
 
 class RoleUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
@@ -2711,6 +2770,23 @@ class RoleDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
         return data
+
+class FAQDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = FAQ
+    template_name = 'faq_confirm_delete.html'
+    success_message = 'FAQ successfully deleted'
+    success_url = reverse_lazy('faq-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(FAQDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
+    def delete(self, request, *args, **kwargs):
+        messages.info(self.request, self.success_message)
+        return super(FAQDelete, self).delete(request, *args, **kwargs)
 
 
 class ProvinceDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
