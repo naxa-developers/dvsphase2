@@ -13,9 +13,9 @@
     <div class="dfid-breadcrumb pdt-100">
         <ul class="flex-start">
             <li>
-                <a href="/dashboard/faq-list/"><i class="material-icons">assignment</i>FAQ</a>
+                <a href="/dashboard/tac-list/"><i class="material-icons">assignment</i>Terms And Condition</a>
             </li>
-            <li>ADD</li>
+            <li>Edit</li>
         </ul>
     </div>
     <!-- program form -->
@@ -42,16 +42,16 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group ">
-                        <label for="id_end_date" class="">Question</label>
-                        <textarea id="editor" name="question"></textarea>
+                        <label for="id_end_date" class="">Title</label>
+                        <textarea id="editor" name="title">{{form.instance.title}}</textarea>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group ">
-                        <label class="">Answer</label>
-                        <textarea id="editor1" name="answer"></textarea>
+                        <label class="">Sub Title</label>
+                        <textarea id="editor1" name="sub_title">{{form.instance.sub_title}}</textarea>
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                 <div class="col-md-12">
                     <div class="form-group ">
                         <label class="">Order</label>
-                        <input type="number" name="order" required>
+                        <input type="number" name="order" value="{{form.instance.order}}" required>
                     </div>
                 </div>
             </div>

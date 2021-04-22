@@ -55,6 +55,7 @@ urlpatterns = [
     path('indicator-list/', views.IndicatorList.as_view(), name='indicator-list'),
     path('feedback-list/', views.FeedbackList.as_view(), name='feedback-list'),
     path('faq-list/', views.FAQList.as_view(), name='faq-list'),
+    path('tac-list/', views.TACList.as_view(), name='tac-list'),
     path('indicator-add/', views.IndicatorCreate.as_view(), name='indicator-add'),
     path('indicator-edit/<int:pk>', views.IndicatorUpdate.as_view(), name='indicator-edit'),
     path('indicator-delete/<int:pk>', views.IndicatorDelete.as_view(), name='indicator-delete'),
@@ -100,6 +101,7 @@ urlpatterns = [
     # path('create-role/', views.create_role, name='create-role'),
     path('role-delete/<int:pk>', views.RoleDelete.as_view(), name='role-delete'),
     path('faq-delete/<int:pk>', views.FAQDelete.as_view(), name='faq-delete'),
+    path('tac-delete/<int:pk>', views.TACDelete.as_view(), name='tac-delete'),
     # path('role-edit/', views.edit_role, name='role-edit'),
     path('role-edit/<int:pk>', views.RoleUpdate.as_view(), name='role-edit'),
 
@@ -119,6 +121,7 @@ urlpatterns = [
     path('gis_style_layer_add/<int:pk>', views.StyleCreate.as_view(), name='style-create'),
     path('gis_style_layer_edit/<int:pk>', views.StyleUpdate.as_view(), name='style-update'),
     path('faq-edit/<int:pk>', views.FAQUpdate.as_view(), name='faq-update'),
+    path('tac-edit/<int:pk>', views.TACUpdate.as_view(), name='tac-update'),
     path('faq-add', views.FAQCreate.as_view(), name='faq-create'),
-
+    path('tac-add', views.TACCreate.as_view(), name='tac-create'),
 ]
