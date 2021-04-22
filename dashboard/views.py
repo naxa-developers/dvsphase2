@@ -1305,6 +1305,19 @@ class FAQList(LoginRequiredMixin, ListView):
         data['active'] = 'faq'
         return data
 
+class TACList(LoginRequiredMixin, ListView):
+    template_name = 'tac_list.html'
+    model = TermsAndCondition
+
+    def get_context_data(self, **kwargs):
+        data = super(TACList, self).get_context_data(**kwargs)
+        taclist = TermsAndCondition.objects.order_by('-id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = taclist
+        data['user'] = user_data
+        data['active'] = 'tac'
+        return data
 
 class IndicatorValueList(LoginRequiredMixin, ListView):
     template_name = 'indicator_value_list.html'
@@ -1540,6 +1553,23 @@ class FAQCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     #     log = Log.objects.create(user=self.request.user, message=message, type="update")
     #     return HttpResponseRedirect(self.get_success_url())
 
+class TACCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+    model = TermsAndCondition
+    template_name = 'tac_add.html'
+    form_class = TACForm
+    success_message = 'Terms and condition successfully added'
+
+    def get_context_data(self, **kwargs):
+        data = super(TACCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'tac'
+        data['permissions'] = Permission.objects.all()
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('tac-list')
 
 class SectorCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Sector
@@ -2125,6 +2155,24 @@ class FAQUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('faq-list')
+
+class TACUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = TermsAndCondition
+    template_name = 'tac_edit.html'
+    form_class = TACForm
+    success_message = 'Terms and condition successfully updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(TACUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'tac'
+        data['permissions'] = Permission.objects.all()
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('tac-list')
 
 
 class RoleUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
@@ -2787,6 +2835,23 @@ class FAQDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.info(self.request, self.success_message)
         return super(FAQDelete, self).delete(request, *args, **kwargs)
+
+class TACDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = TermsAndCondition
+    template_name = 'tac_confirm_delete.html'
+    success_message = 'Terms and condition successfully deleted'
+    success_url = reverse_lazy('tac-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(TACDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
+    def delete(self, request, *args, **kwargs):
+        messages.info(self.request, self.success_message)
+        return super(TACDelete, self).delete(request, *args, **kwargs)
 
 
 class ProvinceDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
