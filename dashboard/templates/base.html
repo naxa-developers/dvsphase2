@@ -263,6 +263,16 @@
                             class="material-icons">gavel</i><span>Terms And Conditions</span></a>
                 </li>
                 {% endif %}
+                                {% if perms.core.view_nationalstatistic %}
+                {% if active == 'ns' %}
+                <li class="menu-item active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="/dashboard/ns-list/" class=""><i
+                            class="material-icons">gavel</i><span>National Statistic</span></a>
+                </li>
+                {% endif %}
 <!--                {% if perms.core.view_faq %}-->
 <!--                {% if active == 'sector' %}-->
 <!--                <li class="menu-item active submenu">-->

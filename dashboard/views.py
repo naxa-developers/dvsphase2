@@ -8,7 +8,7 @@ from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateF
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
     PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm, \
     GroupForm, BudgetCreateForm, PartnerContactForm, CmpForm, GisStyleForm, UserProfileForm, FeedbackDataForm, FAQForm, \
-    TACForm
+    TACForm,NSForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -24,7 +24,7 @@ from rest_framework.authentication import TokenAuthentication, SessionAuthentica
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
     MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output, Notification, \
-    BudgetToSecondTier, BudgetToFirstTier, Cmp, GisStyle, FeedbackForm, FAQ, TermsAndCondition
+    BudgetToSecondTier, BudgetToFirstTier, Cmp, GisStyle, FeedbackForm, FAQ, TermsAndCondition,NationalStatistic
 from .models import UserProfile, Log
 from django.contrib.auth.models import User, Group, Permission
 from django.views.generic import TemplateView
@@ -1297,12 +1297,26 @@ class FAQList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         data = super(FAQList, self).get_context_data(**kwargs)
-        faqlist = FAQ.objects.order_by('-id')
+        faqlist = FAQ.objects.order_by('order')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['list'] = faqlist
         data['user'] = user_data
         data['active'] = 'faq'
+        return data
+
+class NSList(LoginRequiredMixin, ListView):
+    template_name = 'ns_list.html'
+    model = NationalStatistic
+
+    def get_context_data(self, **kwargs):
+        data = super(NSList, self).get_context_data(**kwargs)
+        nslist = NationalStatistic.objects.order_by('-id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = nslist
+        data['user'] = user_data
+        data['active'] = 'ns'
         return data
 
 class TACList(LoginRequiredMixin, ListView):
@@ -1311,7 +1325,7 @@ class TACList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         data = super(TACList, self).get_context_data(**kwargs)
-        taclist = TermsAndCondition.objects.order_by('-id')
+        taclist = TermsAndCondition.objects.order_by('order')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['list'] = taclist
@@ -2155,6 +2169,24 @@ class FAQUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('faq-list')
+
+class NSUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = NationalStatistic
+    template_name = 'ns_edit.html'
+    form_class = NSForm
+    success_message = 'National Statistic successfully updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(NSUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'ns'
+        data['permissions'] = Permission.objects.all()
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('ns-list')
 
 class TACUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = TermsAndCondition

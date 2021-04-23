@@ -124,4 +124,6 @@ urlpatterns = [
     path('tac-edit/<int:pk>', views.TACUpdate.as_view(), name='tac-update'),
     path('faq-add', views.FAQCreate.as_view(), name='faq-create'),
     path('tac-add', views.TACCreate.as_view(), name='tac-create'),
+    path('ns-list/', views.NSList.as_view(), name='ns-list'),
+    path('ns-edit/<int:pk>', views.NSUpdate.as_view(), name='ns-edit'),
 ]
