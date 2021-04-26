@@ -1668,7 +1668,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                                 if d['program_id__sector_budget'] != 'None':
                                     for h in d['program_id__sector_budget'].split(','):
                                         x = h.split(':')
-                                        if int(x[0]) == int(request.GET['sub_sector_id']):
+                                        if int(x[0]) in sub_sector:
                                             sub_sec_budget = float(x[1])
                             if d['allocated_budget']:
                                 total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
@@ -2089,7 +2089,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                                 if d['program_id__sector_budget'] != 'None':
                                     for h in d['program_id__sector_budget'].split(','):
                                         x = h.split(':')
-                                        if int(x[0]) == int(request.GET['sub_sector_id']):
+                                        if int(x[0]) in sub_sector:
                                             sub_sec_budget = float(x[1])
                             if d['allocated_budget']:
                                 total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
@@ -2278,7 +2278,7 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
                     if d['program_id__sector_budget'] != 'None':
                         for h in d['program_id__sector_budget'].split(','):
                             x = h.split(':')
-                            if int(x[0]) == int(request.GET['sub_sector_id']):
+                            if int(x[0]) in sub_sector:
                                 sub_sec_budget = float(x[1])
                 if d['allocated_budget']:
                     total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
@@ -2648,6 +2648,7 @@ class Popup(viewsets.ReadOnlyModelViewSet):
                     if not request.GET.getlist('sub_sector_id'):
                         sub_sect = [i.id for i in
                                     SubSector.objects.filter(sector_id__in=sector)]
+
                         for h in pid.sector_budget.split(','):
                             x = h.split(':')
                             # print(str(int(x[0])) + ":" + str((x[1])))
@@ -2658,14 +2659,15 @@ class Popup(viewsets.ReadOnlyModelViewSet):
                                     pass
                         print(sec_budget)
                     else:
-                        for h in pid.sector_budget.split(','):
-                            x = h.split(':')
-                            # print(str(int(x[0])) + ":" + str((x[1])))
-                            if int(x[0]) in sub_sector:
-                                try:
-                                    sec_budget += float(x[1])
-                                except:
-                                    pass
+                        if pid.sector_budget is not None:
+                            for h in pid.sector_budget.split(','):
+                                x = h.split(':')
+                                # print(str(int(x[0])) + ":" + str((x[1])))
+                                if int(x[0]) in sub_sector:
+                                    try:
+                                        sec_budget += float(x[1])
+                                    except:
+                                        pass
                 elif request.GET.getlist('sub_sector_id'):
 
                     for j in pid.sector_budget.split(','):
