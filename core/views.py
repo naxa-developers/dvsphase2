@@ -1640,32 +1640,62 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
             if query:
                 total_new_budget1 = 0
                 prog = query.values_list('program_id__name', flat=True).distinct()
-                # if request.GET.getlist('sector_id'):
-                #     da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
-                #                       'allocated_budget')
-                #     sub_sec = [i.id for i in SubSector.objects.filter(sector_id__in=sector)]
-                #     # print(sub_sec)
-                #     # print(len(da))
-                #     for d in da:
-                #         sec_budget = 0
-                #         if d['program_id__sector_budget']:
-                #             if d['program_id__sector_budget'] != 'None':
-                #                 for h in d['program_id__sector_budget'].split(','):
-                #                     x = h.split(':')
-                #                     # print(str(int(x[0])) + ":" + str((x[1])))
-                #                     if int(x[0]) in sub_sec:
-                #                         try:
-                #                             sec_budget += float(x[1])
-                #                         except:
-                #                             pass
-                #         if d['allocated_budget']:
-                #             total_new_budget1 += (d['allocated_budget'] * sec_budget) / 100
-                #
-                # if request.GET.getlist('sector_id'):
-                #     budget = total_new_budget1
-                # else:
-                allocated_sum = query.aggregate(Sum('allocated_budget'))
-                budget = allocated_sum['allocated_budget__sum']
+                total_new_budget1 = 0
+                if request.GET.getlist('sector_id'):
+                    if not request.GET.getlist('sub_sector_id'):
+                        da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
+                                          'allocated_budget')
+                        sub_sec = [i.id for i in SubSector.objects.filter(sector_id__in=sector)]
+                        for d in da:
+                            sec_budget = 0
+                            if d['program_id__sector_budget']:
+                                if d['program_id__sector_budget'] != 'None':
+                                    for h in d['program_id__sector_budget'].split(','):
+                                        x = h.split(':')
+                                        if int(x[0]) in sub_sec:
+                                            try:
+                                                sec_budget += float(x[1])
+                                            except:
+                                                pass
+                            if d['allocated_budget']:
+                                total_new_budget1 += (d['allocated_budget'] * sec_budget) / 100
+                    else:
+                        da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
+                                          'allocated_budget')
+                        for d in da:
+                            sub_sec_budget = 0
+                            if d['program_id__sector_budget']:
+                                if d['program_id__sector_budget'] != 'None':
+                                    for h in d['program_id__sector_budget'].split(','):
+                                        x = h.split(':')
+                                        if int(x[0]) == int(request.GET['sub_sector_id']):
+                                            sub_sec_budget = float(x[1])
+                            if d['allocated_budget']:
+                                total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
+                elif request.GET.getlist('sub_sector_id'):
+                    da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
+                                      'allocated_budget')
+                    for d in da:
+                        sub_sec_budget = 0
+                        if d['program_id__sector_budget']:
+                            if d['program_id__sector_budget'] != 'None':
+                                for h in d['program_id__sector_budget'].split(','):
+                                    x = h.split(':')
+                                    if int(x[0]) == int(request.GET['sub_sector_id']):
+                                        sub_sec_budget = float(x[1])
+                        if d['allocated_budget']:
+                            total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
+
+                if request.GET.getlist('sector_id'):
+                    if not request.GET.getlist('sub_sector_id'):
+                        budget = total_new_budget1
+                    else:
+                        budget = total_new_budget1
+                elif request.GET.getlist('sub_sector_id'):
+                    budget = total_new_budget1
+                else:
+                    allocated_sum = query.aggregate(Sum('allocated_budget'))
+                    budget = allocated_sum['allocated_budget__sum']
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
                 sect = query.exclude(program_id__sector__name=None).values_list('program_id__sector__name',
@@ -1806,29 +1836,64 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 # print(len(query))
                 total_new_budget1 = 0
                 prog = query.values_list('program_id__name', flat=True).distinct()
-                # if request.GET.getlist('sector_id'):
-                #     da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
-                #                       'allocated_budget')
-                #     sub_sec = [i.id for i in SubSector.objects.filter(sector_id__in=sector)]
-                #     for d in da:
-                #         sec_budget = 0
-                #         if d['program_id__sector_budget']:
-                #             if d['program_id__sector_budget'] != 'None':
-                #                 for h in d['program_id__sector_budget'].split(','):
-                #                     x = h.split(':')
-                #                     if int(x[0]) in sub_sec:
-                #                         try:
-                #                             sec_budget += float(x[1])
-                #                         except:
-                #                             pass
-                #         if d['allocated_budget']:
-                #             total_new_budget1 += (d['allocated_budget'] * sec_budget) / 100
-                #
-                # if request.GET.getlist('sector_id'):
-                #     budget = total_new_budget1
-                # else:
-                allocated_sum = query.aggregate(Sum('allocated_budget'))
-                budget = allocated_sum['allocated_budget__sum']
+                if request.GET.getlist('sector_id'):
+                    if not request.GET.getlist('sub_sector_id'):
+                        da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
+                                          'allocated_budget')
+                        sub_sec = [i.id for i in SubSector.objects.filter(sector_id__in=sector)]
+                        for d in da:
+                            sec_budget = 0
+                            if d['program_id__sector_budget']:
+                                if d['program_id__sector_budget'] != 'None':
+                                    for h in d['program_id__sector_budget'].split(','):
+                                        x = h.split(':')
+                                        if int(x[0]) in sub_sec:
+                                            try:
+                                                sec_budget += float(x[1])
+                                            except:
+                                                pass
+
+                            if d['allocated_budget']:
+                                print(sec_budget)
+                                print(d['allocated_budget'])
+                                total_new_budget1 += (d['allocated_budget'] * sec_budget) / 100
+                    else:
+                        da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
+                                          'allocated_budget')
+                        for d in da:
+                            sub_sec_budget = 0
+                            if d['program_id__sector_budget']:
+                                if d['program_id__sector_budget'] != 'None':
+                                    for h in d['program_id__sector_budget'].split(','):
+                                        x = h.split(':')
+                                        if int(x[0]) in sub_sector:
+                                            sub_sec_budget = float(x[1])
+                            if d['allocated_budget']:
+                                total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
+                elif request.GET.getlist('sub_sector_id'):
+                    da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
+                                      'allocated_budget')
+                    for d in da:
+                        sub_sec_budget = 0
+                        if d['program_id__sector_budget']:
+                            if d['program_id__sector_budget'] != 'None':
+                                for h in d['program_id__sector_budget'].split(','):
+                                    x = h.split(':')
+                                    if int(x[0]) == int(request.GET['sub_sector_id']):
+                                        sub_sec_budget = float(x[1])
+                        if d['allocated_budget']:
+                            total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
+
+                if request.GET.getlist('sector_id'):
+                    if not request.GET.getlist('sub_sector_id'):
+                        budget = total_new_budget1
+                    else:
+                        budget = total_new_budget1
+                elif request.GET.getlist('sub_sector_id'):
+                    budget = total_new_budget1
+                else:
+                    allocated_sum = query.aggregate(Sum('allocated_budget'))
+                    budget = allocated_sum['allocated_budget__sum']
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
                 sect = query.exclude(program_id__sector__name=None).values_list('program_id__sector__name',
@@ -1996,32 +2061,62 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
             if query.exists():
                 total_new_budget1 = 0
                 prog = query.values_list('program_id__name', flat=True).distinct()
-                # if request.GET.getlist('sector_id'):
-                #     da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
-                #                       'allocated_budget')
-                #     sub_sec = [i.id for i in SubSector.objects.filter(sector_id__in=sector)]
-                #     # print(sub_sec)
-                #     # print(len(da))
-                #     for d in da:
-                #         sec_budget = 0
-                #         if d['program_id__sector_budget']:
-                #             if d['program_id__sector_budget'] != 'None':
-                #                 for h in d['program_id__sector_budget'].split(','):
-                #                     x = h.split(':')
-                #                     # print(str(int(x[0])) + ":" + str((x[1])))
-                #                     if int(x[0]) in sub_sec:
-                #                         try:
-                #                             sec_budget += float(x[1])
-                #                         except:
-                #                             pass
-                #         if d['allocated_budget']:
-                #             total_new_budget1 += (d['allocated_budget'] * sec_budget) / 100
-                #
-                # if request.GET.getlist('sector_id'):
-                #     budget = total_new_budget1
-                # else:
-                allocated_sum = query.aggregate(Sum('allocated_budget'))
-                budget = allocated_sum['allocated_budget__sum']
+                total_new_budget1 = 0
+                if request.GET.getlist('sector_id'):
+                    if not request.GET.getlist('sub_sector_id'):
+                        da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
+                                          'allocated_budget')
+                        sub_sec = [i.id for i in SubSector.objects.filter(sector_id__in=sector)]
+                        for d in da:
+                            sec_budget = 0
+                            if d['program_id__sector_budget']:
+                                if d['program_id__sector_budget'] != 'None':
+                                    for h in d['program_id__sector_budget'].split(','):
+                                        x = h.split(':')
+                                        if int(x[0]) in sub_sec:
+                                            try:
+                                                sec_budget += float(x[1])
+                                            except:
+                                                pass
+                            if d['allocated_budget']:
+                                total_new_budget1 += (d['allocated_budget'] * sec_budget) / 100
+                    else:
+                        da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
+                                          'allocated_budget')
+                        for d in da:
+                            sub_sec_budget = 0
+                            if d['program_id__sector_budget']:
+                                if d['program_id__sector_budget'] != 'None':
+                                    for h in d['program_id__sector_budget'].split(','):
+                                        x = h.split(':')
+                                        if int(x[0]) == int(request.GET['sub_sector_id']):
+                                            sub_sec_budget = float(x[1])
+                            if d['allocated_budget']:
+                                total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
+                elif request.GET.getlist('sub_sector_id'):
+                    da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
+                                      'allocated_budget')
+                    for d in da:
+                        sub_sec_budget = 0
+                        if d['program_id__sector_budget']:
+                            if d['program_id__sector_budget'] != 'None':
+                                for h in d['program_id__sector_budget'].split(','):
+                                    x = h.split(':')
+                                    if int(x[0]) == int(request.GET['sub_sector_id']):
+                                        sub_sec_budget = float(x[1])
+                        if d['allocated_budget']:
+                            total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
+
+                if request.GET.getlist('sector_id'):
+                    if not request.GET.getlist('sub_sector_id'):
+                        budget = total_new_budget1
+                    else:
+                        budget = total_new_budget1
+                elif request.GET.getlist('sub_sector_id'):
+                    budget = total_new_budget1
+                else:
+                    allocated_sum = query.aggregate(Sum('allocated_budget'))
+                    budget = allocated_sum['allocated_budget__sum']
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
                 sect = query.exclude(program_id__sector__name=None).values_list('program_id__sector__name',
@@ -2086,13 +2181,13 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
             supplier = list(Partner.objects.values_list('id', flat=True))
             count.append('supplier')
 
-        if request.GET.getlist('component_id'):
-            comp = request.GET['component_id']
+        if request.GET.getlist('component_code'):
+            comp = request.GET['component_code']
             component = comp.split(",")
             for i in range(0, len(component)):
-                component[i] = int(component[i])
+                component[i] = str(component[i])
         else:
-            component = list(Project.objects.values_list('id', flat=True))
+            component = list(Project.objects.values_list('code', flat=True))
             count.append('component')
 
         if request.GET.getlist('marker_category_id'):
@@ -2142,38 +2237,68 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
                           count)
 
         program = query.distinct('program_id').count()
-        # total_new_budget1 = 0
-        # if request.GET.getlist('sector_id'):
-        #     da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
-        #                       'allocated_budget')
-        #     sub_sec = [i.id for i in SubSector.objects.filter(sector_id__in=sector)]
-        #     # print(sub_sec)
-        #     # print(len(da))
-        #     for d in da:
-        #         sec_budget = 0
-        #         if d['program_id__sector_budget']:
-        #             if d['program_id__sector_budget'] != 'None':
-        #                 for h in d['program_id__sector_budget'].split(','):
-        #                     x = h.split(':')
-        #                     # print(str(int(x[0])) + ":" + str((x[1])))
-        #                     if int(x[0]) in sub_sec:
-        #                         try:
-        #                             sec_budget += float(x[1])
-        #                         except:
-        #                             pass
-        #         if d['allocated_budget']:
-        #             total_new_budget1 += (d['allocated_budget'] * sec_budget) / 100
-        #
-        # if request.GET.getlist('sector_id'):
-        #     all_budget = total_new_budget1
-        #     allocated_sum = all_budget
-        # else:
-        if query.aggregate(Sum('allocated_budget')).get('allocated_budget__sum') is None:
-            all_budget = {'allocated_budget__sum': 0}
-        else:
-            all_budget = query.aggregate(Sum('allocated_budget'))
+        total_new_budget1 = 0
+        if request.GET.getlist('sector_id'):
+            if not request.GET.getlist('sub_sector_id'):
+                da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
+                                  'allocated_budget')
+                sub_sec = [i.id for i in SubSector.objects.filter(sector_id__in=sector)]
+                for d in da:
+                    sec_budget = 0
+                    if d['program_id__sector_budget']:
+                        if d['program_id__sector_budget'] != 'None':
+                            for h in d['program_id__sector_budget'].split(','):
+                                x = h.split(':')
+                                if int(x[0]) in sub_sec:
+                                    try:
+                                        sec_budget += float(x[1])
+                                    except:
+                                        pass
+                    if d['allocated_budget']:
+                        total_new_budget1 += (d['allocated_budget'] * sec_budget) / 100
+            else:
+                da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
+                                  'allocated_budget')
+                for d in da:
+                    sub_sec_budget = 0
+                    if d['program_id__sector_budget']:
+                        if d['program_id__sector_budget'] != 'None':
+                            for h in d['program_id__sector_budget'].split(','):
+                                x = h.split(':')
+                                if int(x[0]) == int(request.GET['sub_sector_id']):
+                                    sub_sec_budget = float(x[1])
+                    if d['allocated_budget']:
+                        total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
+        elif request.GET.getlist('sub_sector_id'):
+            da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
+                              'allocated_budget')
+            for d in da:
+                sub_sec_budget = 0
+                if d['program_id__sector_budget']:
+                    if d['program_id__sector_budget'] != 'None':
+                        for h in d['program_id__sector_budget'].split(','):
+                            x = h.split(':')
+                            if int(x[0]) == int(request.GET['sub_sector_id']):
+                                sub_sec_budget = float(x[1])
+                if d['allocated_budget']:
+                    total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
 
-        allocated_sum = all_budget['allocated_budget__sum']
+        if request.GET.getlist('sector_id'):
+            if not request.GET.getlist('sub_sector_id'):
+                all_budget = total_new_budget1
+            else:
+                all_budget = total_new_budget1
+        elif request.GET.getlist('sub_sector_id'):
+            all_budget = total_new_budget1
+        else:
+            if query.aggregate(Sum('allocated_budget')).get('allocated_budget__sum') is None:
+                all_budget_test = {'allocated_budget__sum': 0}
+                all_budget = all_budget_test['allocated_budget__sum']
+            else:
+                all_budget_test = query.aggregate(Sum('allocated_budget'))
+                all_budget = all_budget_test['allocated_budget__sum']
+
+        allocated_sum = all_budget
         component = query.distinct('component_id').count()
         partner = query.distinct('supplier_id').count()
         sector = query.distinct('component_id__sector').count()
@@ -2508,38 +2633,48 @@ class Popup(viewsets.ReadOnlyModelViewSet):
                 '{0}__iexact'.format(field): value
             }
             query = query.filter(Q(**kwargs))
-        # total_new_budget1 = 0
-        # if request.GET.getlist('sector_id'):
-        #     da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
-        #                       'allocated_budget')
-        #     sub_sec = [i.id for i in SubSector.objects.filter(sector_id__in=sector)]
-        #     # print(sub_sec)
-        #     # print(len(da))
-        #     for d in da:
-        #         sec_budget = 0
-        #         if d['program_id__sector_budget']:
-        #             if d['program_id__sector_budget'] != 'None':
-        #                 for h in d['program_id__sector_budget'].split(','):
-        #                     x = h.split(':')
-        #                     # print(str(int(x[0])) + ":" + str((x[1])))
-        #                     if int(x[0]) in sub_sec:
-        #                         try:
-        #                             sec_budget += float(x[1])
-        #                         except:
-        #                             pass
-        #         if d['allocated_budget']:
-        #             total_new_budget1 += (d['allocated_budget'] * sec_budget) / 100
-        # if request.GET.getlist('sector_id'):
-        #     total_budget = total_new_budget1
-        # else:
-        total_budget = query.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
-
         if query.exists():
-            p = query.values_list('program_id', flat=True).distinct()
-            program = query.values('program_id', 'program_id__name', 'program_id__sector_budget').annotate(
-                Sum('allocated_budget'))
-
+            program = query.values('program_id', 'program_id__name').annotate(Sum('allocated_budget'))
+            total_final_budget = 0
             for p in program:
+                pid = Program.objects.get(id=p['program_id'])
+                if request.GET.getlist('sector_id') or request.GET.getlist('sub_sector_id'):
+                    sec_id_list = [i['id'] for i in pid.sector.all().values('id')]
+                    pt = len(list(set(sec_id_list).intersection(sector)))
+                    sub_sec_id_list = [i['id'] for i in pid.sub_sector.all().values('id')]
+                    dt = len(list(set(sub_sec_id_list).intersection(sub_sector)))
+                sec_budget = 0
+                if request.GET.getlist('sector_id'):
+                    if not request.GET.getlist('sub_sector_id'):
+                        sub_sect = [i.id for i in
+                                    SubSector.objects.filter(sector_id__in=sector)]
+                        for h in pid.sector_budget.split(','):
+                            x = h.split(':')
+                            # print(str(int(x[0])) + ":" + str((x[1])))
+                            if int(x[0]) in sub_sect:
+                                try:
+                                    sec_budget += float(x[1])
+                                except:
+                                    pass
+                        print(sec_budget)
+                    else:
+                        for h in pid.sector_budget.split(','):
+                            x = h.split(':')
+                            # print(str(int(x[0])) + ":" + str((x[1])))
+                            if int(x[0]) in sub_sector:
+                                try:
+                                    sec_budget += float(x[1])
+                                except:
+                                    pass
+                elif request.GET.getlist('sub_sector_id'):
+
+                    for j in pid.sector_budget.split(','):
+                        y = j.split(':')
+                        if int(y[0]) in sub_sector:
+                            try:
+                                sec_budget += float(y[1])
+                            except:
+                                pass
                 marker_data = []
                 program_sector = []
                 component_data = []
@@ -2548,7 +2683,6 @@ class Popup(viewsets.ReadOnlyModelViewSet):
                     marker_data.append({
                         'marker_category': marker.marker_category_id.name,
                         'marker_value': marker.value
-
                     })
                 for sectors in p_data.sub_sector.all():
                     program_sector.append({
@@ -2585,22 +2719,22 @@ class Popup(viewsets.ReadOnlyModelViewSet):
                         'sectors': sector_data,
                         'partners': partner_data,
                     })
-
+                if request.GET.getlist('sector_id'):
+                    program_budget = ((p['allocated_budget__sum'] * sec_budget) / 100)/pt
+                elif request.GET.getlist('sub_sector_id'):
+                    program_budget = ((p['allocated_budget__sum'] * sec_budget) / 100)/dt
+                else:
+                    program_budget = p['allocated_budget__sum']
+                total_final_budget += program_budget
                 program_data.append({
                     'id': p['program_id'],
                     'program': p['program_id__name'],
-                    'sector_percentage': p['program_id__sector_budget'],
                     'sector': program_sector,
-                    'program_budget': p['allocated_budget__sum'],
+                    'program_budget': program_budget,
                     'markers': marker_data,
                     'components': component_data,
-
                 })
-
-        data = [{
-            "total_budget": total_budget,
-            "programs": program_data
-        }]
+        total_budget = total_final_budget
         return Response({"total_budget": total_budget, "programs": program_data})
 
 
