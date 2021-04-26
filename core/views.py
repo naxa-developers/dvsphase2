@@ -1640,7 +1640,6 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
             if query:
                 total_new_budget1 = 0
                 prog = query.values_list('program_id__name', flat=True).distinct()
-                total_new_budget1 = 0
                 if request.GET.getlist('sector_id'):
                     if not request.GET.getlist('sub_sector_id'):
                         da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
@@ -1657,7 +1656,10 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                                                 sec_budget += float(x[1])
                                             except:
                                                 pass
+
                             if d['allocated_budget']:
+                                print(sec_budget)
+                                print(d['allocated_budget'])
                                 total_new_budget1 += (d['allocated_budget'] * sec_budget) / 100
                     else:
                         da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
@@ -1681,7 +1683,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                             if d['program_id__sector_budget'] != 'None':
                                 for h in d['program_id__sector_budget'].split(','):
                                     x = h.split(':')
-                                    if int(x[0]) == int(request.GET['sub_sector_id']):
+                                    if int(x[0]) in sub_sector:
                                         sub_sec_budget = float(x[1])
                         if d['allocated_budget']:
                             total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
@@ -1879,7 +1881,7 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                             if d['program_id__sector_budget'] != 'None':
                                 for h in d['program_id__sector_budget'].split(','):
                                     x = h.split(':')
-                                    if int(x[0]) == int(request.GET['sub_sector_id']):
+                                    if int(x[0]) in sub_sector:
                                         sub_sec_budget = float(x[1])
                         if d['allocated_budget']:
                             total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
@@ -2059,7 +2061,6 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 query = query.filter(Q(**kwargs))
 
             if query.exists():
-                total_new_budget1 = 0
                 prog = query.values_list('program_id__name', flat=True).distinct()
                 total_new_budget1 = 0
                 if request.GET.getlist('sector_id'):
@@ -2078,7 +2079,10 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                                                 sec_budget += float(x[1])
                                             except:
                                                 pass
+
                             if d['allocated_budget']:
+                                print(sec_budget)
+                                print(d['allocated_budget'])
                                 total_new_budget1 += (d['allocated_budget'] * sec_budget) / 100
                     else:
                         da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
@@ -2102,7 +2106,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                             if d['program_id__sector_budget'] != 'None':
                                 for h in d['program_id__sector_budget'].split(','):
                                     x = h.split(':')
-                                    if int(x[0]) == int(request.GET['sub_sector_id']):
+                                    if int(x[0]) in sub_sector:
                                         sub_sec_budget = float(x[1])
                         if d['allocated_budget']:
                             total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
@@ -2254,7 +2258,10 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
                                         sec_budget += float(x[1])
                                     except:
                                         pass
+
                     if d['allocated_budget']:
+                        print(sec_budget)
+                        print(d['allocated_budget'])
                         total_new_budget1 += (d['allocated_budget'] * sec_budget) / 100
             else:
                 da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
@@ -2265,7 +2272,7 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
                         if d['program_id__sector_budget'] != 'None':
                             for h in d['program_id__sector_budget'].split(','):
                                 x = h.split(':')
-                                if int(x[0]) == int(request.GET['sub_sector_id']):
+                                if int(x[0]) in sub_sector:
                                     sub_sec_budget = float(x[1])
                     if d['allocated_budget']:
                         total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
