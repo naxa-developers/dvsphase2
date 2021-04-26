@@ -2633,6 +2633,7 @@ class Popup(viewsets.ReadOnlyModelViewSet):
                 '{0}__iexact'.format(field): value
             }
             query = query.filter(Q(**kwargs))
+        total_final_budget = 0
         if query.exists():
             program = query.values('program_id', 'program_id__name').annotate(Sum('allocated_budget'))
             total_final_budget = 0
