@@ -2648,16 +2648,16 @@ class Popup(viewsets.ReadOnlyModelViewSet):
                     if not request.GET.getlist('sub_sector_id'):
                         sub_sect = [i.id for i in
                                     SubSector.objects.filter(sector_id__in=sector)]
-
-                        for h in pid.sector_budget.split(','):
-                            x = h.split(':')
-                            # print(str(int(x[0])) + ":" + str((x[1])))
-                            if int(x[0]) in sub_sect:
-                                try:
-                                    sec_budget += float(x[1])
-                                except:
-                                    pass
-                        print(sec_budget)
+                        if pid.sector_budget is not None:
+                            for h in pid.sector_budget.split(','):
+                                x = h.split(':')
+                                # print(str(int(x[0])) + ":" + str((x[1])))
+                                if int(x[0]) in sub_sect:
+                                    try:
+                                        sec_budget += float(x[1])
+                                    except:
+                                        pass
+                            print(sec_budget)
                     else:
                         if pid.sector_budget is not None:
                             for h in pid.sector_budget.split(','):
@@ -2669,14 +2669,14 @@ class Popup(viewsets.ReadOnlyModelViewSet):
                                     except:
                                         pass
                 elif request.GET.getlist('sub_sector_id'):
-
-                    for j in pid.sector_budget.split(','):
-                        y = j.split(':')
-                        if int(y[0]) in sub_sector:
-                            try:
-                                sec_budget += float(y[1])
-                            except:
-                                pass
+                    if pid.sector_budget is not None:
+                        for j in pid.sector_budget.split(','):
+                            y = j.split(':')
+                            if int(y[0]) in sub_sector:
+                                try:
+                                    sec_budget += float(y[1])
+                                except:
+                                    pass
                 marker_data = []
                 program_sector = []
                 component_data = []
