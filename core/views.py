@@ -1696,8 +1696,11 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 elif request.GET.getlist('sub_sector_id'):
                     budget = total_new_budget1
                 else:
-                    allocated_sum = query.aggregate(Sum('allocated_budget'))
-                    budget = allocated_sum['allocated_budget__sum']
+                    all_budget_test = query.values('allocated_budget')
+                    s = 0
+                    for h in all_budget_test:
+                        s += h['allocated_budget']
+                    budget = s
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
                 sect = query.exclude(program_id__sector__name=None).values_list('program_id__sector__name',
@@ -1894,8 +1897,11 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                 elif request.GET.getlist('sub_sector_id'):
                     budget = total_new_budget1
                 else:
-                    allocated_sum = query.aggregate(Sum('allocated_budget'))
-                    budget = allocated_sum['allocated_budget__sum']
+                    all_budget_test = query.values('allocated_budget')
+                    s = 0
+                    for h in all_budget_test:
+                        s += h['allocated_budget']
+                    budget = s
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
                 sect = query.exclude(program_id__sector__name=None).values_list('program_id__sector__name',
@@ -2119,8 +2125,11 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 elif request.GET.getlist('sub_sector_id'):
                     budget = total_new_budget1
                 else:
-                    allocated_sum = query.aggregate(Sum('allocated_budget'))
-                    budget = allocated_sum['allocated_budget__sum']
+                    all_budget_test = query.values('allocated_budget')
+                    s = 0
+                    for h in all_budget_test:
+                        s += h['allocated_budget']
+                    budget = s
                 comp = query.values_list('component_id__name', flat=True).distinct()
                 part = query.values_list('supplier_id__name', flat=True).distinct()
                 sect = query.exclude(program_id__sector__name=None).values_list('program_id__sector__name',
@@ -2302,8 +2311,11 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
                 all_budget_test = {'allocated_budget__sum': 0}
                 all_budget = all_budget_test['allocated_budget__sum']
             else:
-                all_budget_test = query.aggregate(Sum('allocated_budget'))
-                all_budget = all_budget_test['allocated_budget__sum']
+                all_budget_test = query.values('allocated_budget')
+                s=0
+                for h in all_budget_test:
+                    s += h['allocated_budget']
+                all_budget = s
 
         allocated_sum = all_budget
         component = query.distinct('component_id').count()
