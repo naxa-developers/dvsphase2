@@ -1310,18 +1310,12 @@ class DistrictIndicator(viewsets.ModelViewSet):
         id_indicator = id_indicators.split(",")
         for i in range(0, len(id_indicator)):
             id_indicator[i] = int(id_indicator[i])
-        # health_id = Indicator.objects.get(indicator='number_hospitals')
-        # health_id_b = Indicator.objects.get(indicator='household_affected_covid')
-        # financial = Indicator.objects.get(indicator='number_financial_institutions')
         for i in range(0, len(id_indicator)):
-            try:
-                cat_in = Indicator.objects.get(id=int(id_indicator[i]))
-            except:
-                return Response({"results": "Indicator Id Doesnot Exists"})
+            cat_in = Indicator.objects.get(id=int(id_indicator[i]))
             if cat_in.federal_level == 'district':
                 indicator_dist = IndicatorValue.objects.values('id', 'indicator_id', 'value',
                                                                'district_id__code').filter(
-                    indicator_id=id_indicator[i], district_id__province_id__id__in=province_ids)
+                    indicator_id=id_indicator[i], dsitrict_id__province_id__id__in=province_ids)
 
                 for dist_ind in indicator_dist:
                     data.append(
@@ -1334,43 +1328,34 @@ class DistrictIndicator(viewsets.ModelViewSet):
                         }
                     )
                 print('market')
-            elif cat_in.federal_level == 'all':
+            else:
                 # print(health_id.id)
                 for dist in district:
                     indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
                                                               'gapanapa_id__population').filter(
                         indicator_id=int(id_indicator[i]),
                         gapanapa_id__district_id=dist['id'])
-                    # if int(id_indicator[i]) != health_id.id and int(id_indicator[i]) != health_id_b.id and int(
-                    #         id_indicator[i]) != financial.id:
                     value_sum = 0
                     dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
                         district_id=dist['id']).aggregate(
                         Sum('population'))
+                    print(dist_pop_sum['population__sum'])
 
                     for ind in indicator:
                         # print(ind['value'])
                         # print(math.isnan(ind['value']))
 
                         if math.isnan(ind['value']) == False:
-                            if ind['gapanapa_id__population'] is not None:
-                                indicator_value = (ind['value'] * ind['gapanapa_id__population'])
-                                value_sum = (value_sum + indicator_value)
-                            else:
-                                indicator_value = (ind['value'])
-                                value_sum = (value_sum + indicator_value)
+                            indicator_value = (ind['value'] * ind['gapanapa_id__population'])
+                            # print(indicator_value)
+                            value_sum = (value_sum + indicator_value)
                         else:
                             value_sum = (value_sum + 0)
 
                     # print(value_sum)
                     # print(dist_pop_sum['population__sum'])
+                    print(value_sum)
                     value = (value_sum / dist_pop_sum['population__sum'])
-                    # else:
-                    #     dist_health_num = IndicatorValue.objects.values('id', 'value', 'gapanapa_id').filter(
-                    #         indicator_id=int(id_indicator[i]),
-                    #         gapanapa_id__district_id=dist['id']).aggregate(
-                    #         Sum('value'))
-                    #     value = dist_health_num['value__sum']
 
                     data.append(
                         {
@@ -1412,6 +1397,10 @@ class ProvinceIndicator(viewsets.ModelViewSet):
                     indicator_id=int(id_indicator[i]),
                     gapanapa_id__province_id=dist['id'])
                 for ind in indicator:
+                    # print(ind['value'])
+                    # print(dist_pop_sum['population__sum'])
+                    # print(math.isnan(ind['value']))
+
                     if math.isnan(ind['value']) == False:
                         indicator_value = (ind['value'] * ind['gapanapa_id__population'])
                         # print(indicator_value)
@@ -1419,20 +1408,24 @@ class ProvinceIndicator(viewsets.ModelViewSet):
                     else:
                         value_sum = (value_sum + 0)
 
-                value = (value_sum / dist_pop_sum['population__sum'])
+                # print(value_sum)
+                # print(dist_pop_sum)
+                if dist_pop_sum['population__sum'] is not None:
+                    value = (value_sum / dist_pop_sum['population__sum'])
 
                 data.append(
                     {
                         'id': dist['id'],
                         'indicator_id': int(id_indicator[i]),
                         'code': dist['code'],
+                        # 'value_sum': value_sum,
+                        # 'population': dist_pop_sum['population__sum'],
                         'value': value
 
                     }
                 )
 
         return Response({"results": data})
-
 
 class MarkerCategoryApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
@@ -2312,21 +2305,23 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
                 all_budget = all_budget_test['allocated_budget__sum']
             else:
                 all_budget_test = query.values('allocated_budget')
-                s=0
+                s = 0
                 for h in all_budget_test:
                     s += h['allocated_budget']
                 all_budget = s
-
+        fivbudget = FiveW.objects.values('allocated_budget', 'program_id', 'component_id', 'supplier_id')
         allocated_sum = all_budget
         component = query.distinct('component_id').count()
         partner = query.distinct('supplier_id').count()
         sector = query.distinct('component_id__sector').count()
-        total_program = Program.objects.all().count()
-        total_partner = Partner.objects.all().count()
-        total_component = Project.objects.all().count()
+        total_program = fivbudget.distinct('program_id').count()
+        total_partner = fivbudget.distinct('supplier_id').count()
+        total_component = fivbudget.distinct('component_id').count()
         total_sector = Sector.objects.all().count()
-        total_allocated_budget = Program.objects.values('total_budget')
-        total_budget = total_allocated_budget.aggregate(Sum('total_budget'))
+        fivbudget = FiveW.objects.values('allocated_budget')
+        total_budget = 0
+        for b in fivbudget:
+            total_budget += b['allocated_budget']
 
         return Response({
             'allocated_budget': allocated_sum,
@@ -2334,7 +2329,7 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
             'partner': partner,
             'component': component,
             'sector': sector,
-            'total_allocated_budget': total_budget['total_budget__sum'],
+            'total_allocated_budget': total_budget,
             'total_program': total_program,
             'total_partner': total_partner,
             'total_component': total_component,
@@ -2403,7 +2398,9 @@ class IndicatorData(viewsets.ReadOnlyModelViewSet):
                 'gapanapa_id', 'indicator_id').order_by('id')
 
         else:
+
             if self.request.GET.getlist('province_id') == []:
+                print('herer')
                 queryset = IndicatorValue.objects.filter(indicator_id__in=id_indicator).select_related('gapanapa_id',
                                                                                                        'indicator_id').order_by(
                     'id')
@@ -2413,6 +2410,7 @@ class IndicatorData(viewsets.ReadOnlyModelViewSet):
     def get_serializer_class(self):
         serializer_class = IndicatorValueSerializer
         return serializer_class
+
 
 
 class SectorApi(viewsets.ReadOnlyModelViewSet):
@@ -2742,9 +2740,9 @@ class Popup(viewsets.ReadOnlyModelViewSet):
                         'partners': partner_data,
                     })
                 if request.GET.getlist('sector_id'):
-                    program_budget = ((p['allocated_budget__sum'] * sec_budget) / 100)/pt
+                    program_budget = ((p['allocated_budget__sum'] * sec_budget) / 100) / pt
                 elif request.GET.getlist('sub_sector_id'):
-                    program_budget = ((p['allocated_budget__sum'] * sec_budget) / 100)/dt
+                    program_budget = ((p['allocated_budget__sum'] * sec_budget) / 100) / dt
                 else:
                     program_budget = p['allocated_budget__sum']
                 total_final_budget += program_budget
