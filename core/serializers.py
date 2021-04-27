@@ -343,7 +343,7 @@ class IndicatorValueSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = IndicatorValue
-        fields = ('id', 'indicator_id', 'code', 'value')
+        fields = ('id', 'indicator_id', 'code', 'value','name')
 
     def get_code(self, obj):
         try:
