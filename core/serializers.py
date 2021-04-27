@@ -337,6 +337,7 @@ class FivewSerializer(serializers.ModelSerializer):
 
 class IndicatorValueSerializer(serializers.ModelSerializer):
     code = serializers.SerializerMethodField()
+    name = serializers.SerializerMethodField()
 
     # indicator_name = serializers.SerializerMethodField()
 
@@ -347,6 +348,12 @@ class IndicatorValueSerializer(serializers.ModelSerializer):
     def get_code(self, obj):
         try:
             return str(obj.gapanapa_id.code)
+        except:
+            return None
+
+    def get_name(self, obj):
+        try:
+            return str(obj.gapanapa_id.name)
         except:
             return None
 
