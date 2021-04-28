@@ -1339,22 +1339,14 @@ class DistrictIndicator(viewsets.ModelViewSet):
                     dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
                         district_id=dist['id']).aggregate(
                         Sum('population'))
-                    print(dist_pop_sum['population__sum'])
 
                     for ind in indicator:
-                        # print(ind['value'])
-                        # print(math.isnan(ind['value']))
-
                         if math.isnan(ind['value']) == False:
                             indicator_value = (ind['value'] * ind['gapanapa_id__population'])
-                            # print(indicator_value)
                             value_sum = (value_sum + indicator_value)
                         else:
                             value_sum = (value_sum + 0)
 
-                    # print(value_sum)
-                    # print(dist_pop_sum['population__sum'])
-                    print(value_sum)
                     value = (value_sum / dist_pop_sum['population__sum'])
 
                     data.append(
@@ -1362,6 +1354,7 @@ class DistrictIndicator(viewsets.ModelViewSet):
                             'id': dist['id'],
                             'indicator_id': int(id_indicator[i]),
                             'code': dist['code'],
+                            'district_population':dist_pop_sum['population__sum'],
                             'value': value
 
                         }

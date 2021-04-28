@@ -4,6 +4,7 @@ import pandas as pd
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from core.models import Indicator
 import math
+import json
 
 
 class Command(BaseCommand):
@@ -38,6 +39,8 @@ class Command(BaseCommand):
                         test.url = df['Link'][row]
                         test.federal_level = 'all'
                         test.unit = df['Unit'][row]
+                        test.is_dashboard = json.loads(str(df['Show on Dashboard '][row]).lower())
+                        test.is_regional_profile = json.loads(str(df['Show on Profile '][row]).lower())
                         test.save()
                         self.stdout.write('Successfully Updated' + str(test.full_title) + 'data')
                     except ObjectDoesNotExist:
@@ -49,7 +52,9 @@ class Command(BaseCommand):
                             source=df['Source'][row],
                             url=df['Link'][row],
                             federal_level='all',
-                            unit=df['Unit'][row]
+                            unit=df['Unit'][row],
+                            is_dashboard=json.loads(str(df['Show on Dashboard '][row]).lower()),
+                            is_regional_profile=json.loads(str(df['Show on Dashboard '][row]).lower())
                         ))
                 except Exception as e:
                     print(e)
