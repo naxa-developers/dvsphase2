@@ -523,6 +523,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             top_part_by_budget = []
             top_sector_by_no_partner = []
             fivew_data = []
+            addition_type = ['meters', 'count', 'sqkm']
+            average_type = ['percent', 'millimeters / month', 'persons per household', 'indices']
             if 'province_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level__in=['province', 'all']).exclude(
                     Q(show_flag=False) | Q(is_dashboard=False) | Q(is_regional_profile=False)).values(
@@ -546,31 +548,35 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             'value': initial_sum
                         })
                     else:
-                        value_sum = 0
-                        dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
-                            province_id__code=request.GET['province_code']).aggregate(
-                            Sum('population'))
                         test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
                                                              gapanapa_id__province_id__code=int(
                                                                  request.GET['province_code'])).values('value',
-                                                                                                       'gapanapa_id__population')
-                        for ind in test:
-                            if math.isnan(ind['value']) == False:
-                                if ind['gapanapa_id__population'] is not None:
-                                    indicator_value = (ind['value'] * ind['gapanapa_id__population'])
-                                    value_sum = (value_sum + indicator_value)
+                                                                                                       'indicator_id__unit')
 
-                        value = (value_sum / dist_pop_sum['population__sum'])
+                        count = 0
+                        value_sum = 0
+                        for ind in test:
+                            if ind['indicator_id__unit'] in addition_type:
+                                if math.isnan(ind['value']) == False:
+                                    value_sum = (value_sum + ind['value'])
+                                else:
+                                    value_sum = (value_sum + 0)
+                            elif ind['indicator_id__unit'] in average_type:
+                                if math.isnan(ind['value']) == False:
+                                    count += 1
+                                    value_sum = (value_sum + ind['value'])
+                                else:
+                                    count += 1
+                                    value_sum = (value_sum + 0)
+                        if test[0]['indicator_id__unit'] in average_type:
+                            value_sum = value_sum / count
                         data.append({
                             'code': int(request.GET['province_code']),
                             'indicator_id': d['id'],
                             'indicator': d['full_title'],
-                            'value': value
+                            'value': value_sum
                         })
-                five = FiveW.objects.filter(province_id__code=int(request.GET['province_code'])).exclude(
-                    municipality_id__code='-1',
-                    district_id__code='-1',
-                    province_id__code='-1').values(
+                five = FiveW.objects.filter(province_id__code=int(request.GET['province_code'])).values(
                     'id',
                     'allocated_budget',
                     'program_id__sector__name',
@@ -714,6 +720,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             supplier_ids = []
             top_sector_by_no_partner = []
             fivew_data = []
+            addition_type = ['meters', 'count', 'sqkm']
+            average_type = ['percent', 'millimeters / month', 'persons per household', 'indices']
             if 'district_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level__in=['district', 'all']).exclude(show_flag=False).values(
                     'category', 'id',
@@ -739,23 +747,25 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
                                                              gapanapa_id__district_id__code=int(
                                                                  request.GET['district_code'])).values(
-                            'value', 'gapanapa_id__population')
+                            'value', 'indicator_id__unit')
+
+                        count = 0
                         value_sum = 0
-                        dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
-                            district_id=request.GET['district_code']).aggregate(
-                            Sum('population'))
-
                         for ind in test:
-                            if math.isnan(ind['value']) == False:
-                                if ind['gapanapa_id__population'] is not None:
-                                    indicator_value = (ind['value'] * ind['gapanapa_id__population'])
-                                    value_sum = (value_sum + indicator_value)
-                            else:
-                                value_sum = (value_sum + 0)
-
-                        # print(value_sum)
-                        # print(dist_pop_sum['population__sum'])
-                        value = (value_sum / dist_pop_sum['population__sum'])
+                            if ind['indicator_id__unit'] in addition_type:
+                                if math.isnan(ind['value']) == False:
+                                    value_sum = (value_sum + ind['value'])
+                                else:
+                                    value_sum = (value_sum + 0)
+                            elif ind['indicator_id__unit'] in average_type:
+                                if math.isnan(ind['value']) == False:
+                                    count += 1
+                                    value_sum = (value_sum + ind['value'])
+                                else:
+                                    count += 1
+                                    value_sum = (value_sum + 0)
+                        if test[0]['indicator_id__unit'] in average_type:
+                            value_sum = value_sum / count
                         data.append({
                             'code': int(request.GET['district_code']),
                             'indicator_id': d['id'],
@@ -1164,11 +1174,9 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
                     'program_id__name').distinct()
                 for f in fiveprogram:
                     component = []
-                    print(f['program_id__name'])
                     dami = FiveW.objects.filter(program_id__name=f['program_id__name'],
                                                 province_id__code=request.GET['province_code']).values(
                         'component_id__name').distinct()
-                    print(dami)
                     program.append({
                         "name": f['program_id__name'],
                         "children": component
@@ -1180,10 +1188,9 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
                                 'name': d['component_id__name'],
                                 'children': partner
                             })
-                        nadami = FiveW.objects.filter(program_id__name=f['program_id__name'],
+                        nadami = FiveW.objects.filter(component_id__name=d['component_id__name'],
                                                       province_id__code=request.GET['province_code']).values(
                             'supplier_id__name').distinct()
-                        print(nadami)
                         for n in nadami:
                             if n['supplier_id__name'] not in partner:
                                 partner.append({
@@ -1216,7 +1223,7 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
                                 'name': d['component_id__name'],
                                 'children': partner
                             })
-                        nadami = FiveW.objects.filter(program_id__name=f['program_id__name'],
+                        nadami = FiveW.objects.filter(component_id__name=f['component_id__name'],
                                                       district_id__code=request.GET['district_code']).values(
                             'supplier_id__name').distinct()
                         print(nadami)
@@ -1252,7 +1259,7 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
                                 'name': d['component_id__name'],
                                 'children': partner
                             })
-                        nadami = FiveW.objects.filter(program_id__name=f['program_id__name'],
+                        nadami = FiveW.objects.filter(component_id__name=f['component_id__name'],
                                                       municipality_id__code=request.GET['municipality_code']).values(
                             'supplier_id__name').distinct()
                         print(nadami)
@@ -1331,31 +1338,36 @@ class DistrictIndicator(viewsets.ModelViewSet):
             else:
                 # print(health_id.id)
                 for dist in district:
+                    addition_type = ['meters', 'count', 'sqkm']
+                    average_type = ['percent', 'millimeters / month', 'persons per household', 'indices']
                     indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
-                                                              'gapanapa_id__population').filter(
+                                                              'indicator_id__unit').filter(
                         indicator_id=int(id_indicator[i]),
                         gapanapa_id__district_id=dist['id'])
                     value_sum = 0
-                    dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
-                        district_id=dist['id']).aggregate(
-                        Sum('population'))
-
+                    count = 0
                     for ind in indicator:
-                        if math.isnan(ind['value']) == False:
-                            indicator_value = (ind['value'] * ind['gapanapa_id__population'])
-                            value_sum = (value_sum + indicator_value)
-                        else:
-                            value_sum = (value_sum + 0)
-
-                    value = (value_sum / dist_pop_sum['population__sum'])
+                        if ind['indicator_id__unit'] in addition_type:
+                            if math.isnan(ind['value']) == False:
+                                value_sum = (value_sum + ind['value'])
+                            else:
+                                value_sum = (value_sum + 0)
+                        elif ind['indicator_id__unit'] in average_type:
+                            if math.isnan(ind['value']) == False:
+                                count += 1
+                                value_sum = (value_sum + ind['value'])
+                            else:
+                                count += 1
+                                value_sum = (value_sum + 0)
+                    if indicator[0]['indicator_id__unit'] in average_type:
+                        value_sum = value_sum / count
 
                     data.append(
                         {
                             'id': dist['id'],
                             'indicator_id': int(id_indicator[i]),
                             'code': dist['code'],
-                            'district_population':dist_pop_sum['population__sum'],
-                            'value': value
+                            'value': value_sum
 
                         }
                     )
@@ -1373,7 +1385,8 @@ class ProvinceIndicator(viewsets.ModelViewSet):
         *required= id of indicator as param{indicator_id} send as get request - /province-indicator/?indicator_id={indicator_id}
         """
         data = []
-        total = []
+        addition_type = ['meters', 'count', 'sqkm']
+        average_type = ['percent', 'millimeters / month', 'persons per household', 'indices']
         province = Province.objects.values('name', 'id', 'code').exclude(code=-1).order_by('id')
         id_indicators = request.GET['indicator_id']
         id_indicator = id_indicators.split(",")
@@ -1382,43 +1395,42 @@ class ProvinceIndicator(viewsets.ModelViewSet):
         for i in range(0, len(id_indicator)):
             for dist in province:
                 value_sum = 0
-                dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
-                    province_id=dist['id']).aggregate(
-                    Sum('population'))
+                # dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
+                #     province_id=dist['id']).aggregate(
+                #     Sum('population'))
                 indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
-                                                          'gapanapa_id__population').filter(
+                                                          'gapanapa_id__population', 'indicator_id__unit').filter(
                     indicator_id=int(id_indicator[i]),
                     gapanapa_id__province_id=dist['id'])
+                count = 0
                 for ind in indicator:
-                    # print(ind['value'])
-                    # print(dist_pop_sum['population__sum'])
-                    # print(math.isnan(ind['value']))
-
-                    if math.isnan(ind['value']) == False:
-                        indicator_value = (ind['value'] * ind['gapanapa_id__population'])
-                        # print(indicator_value)
-                        value_sum = (value_sum + indicator_value)
-                    else:
-                        value_sum = (value_sum + 0)
-
-                # print(value_sum)
-                # print(dist_pop_sum)
-                if dist_pop_sum['population__sum'] is not None:
-                    value = (value_sum / dist_pop_sum['population__sum'])
+                    if ind['indicator_id__unit'] in addition_type:
+                        if math.isnan(ind['value']) == False:
+                            value_sum = (value_sum + ind['value'])
+                        else:
+                            value_sum = (value_sum + 0)
+                    elif ind['indicator_id__unit'] in average_type:
+                        if math.isnan(ind['value']) == False:
+                            count += 1
+                            value_sum = (value_sum + ind['value'])
+                        else:
+                            count += 1
+                            value_sum = (value_sum + 0)
+                if indicator[0]['indicator_id__unit'] in average_type:
+                    value_sum = value_sum / count
 
                 data.append(
                     {
                         'id': dist['id'],
                         'indicator_id': int(id_indicator[i]),
                         'code': dist['code'],
-                        # 'value_sum': value_sum,
-                        # 'population': dist_pop_sum['population__sum'],
-                        'value': value
+                        'value': value_sum
 
                     }
                 )
 
         return Response({"results": data})
+
 
 class MarkerCategoryApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
@@ -2403,7 +2415,6 @@ class IndicatorData(viewsets.ReadOnlyModelViewSet):
     def get_serializer_class(self):
         serializer_class = IndicatorValueSerializer
         return serializer_class
-
 
 
 class SectorApi(viewsets.ReadOnlyModelViewSet):
