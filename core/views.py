@@ -630,7 +630,9 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     for s in sectoruniqueid:
                         sector_sub_sector_new = []
                         sub_sector_final_data = []
-                        dat = Program.objects.filter(sector=s).exclude(total_budget=None)
+                        dat = FiveW.objects.filter(program_id__sector=s,
+                                                   province_id__code=int(request.GET['province_code'])).exclude(
+                            allocated_budget=None)
                         sector = Sector.objects.get(id=s)
                         set = SubSector.objects.filter(sector_id=sector.id).values('name')
                         for v in set:
@@ -641,11 +643,11 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         for d in dat:
                             sub_sectors = []
                             sub_sector_final = []
-                            sub_sectors.append(list(d.sub_sector.values_list('name', flat=True)))
+                            sub_sectors.append(list(d.program_id.sub_sector.values_list('name', flat=True)))
                             for s in sub_sectors:
                                 for di in s:
                                     sub_sector_final.append(di)
-                            ho = d.sector_budget
+                            ho = d.program_id.sector_budget
                             sec_budget = 0
                             if ho:
                                 if ho != 'None':
@@ -656,9 +658,9 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                                 sec_budget += float(x[1])
                                             except:
                                                 pass
-                            if d.total_budget:
-                                total_budgetnew += (d.total_budget * sec_budget) / 100
-                            partner_count = d.partner_id.all()
+                            if d.allocated_budget:
+                                total_budgetnew += (d.allocated_budget * sec_budget) / 100
+                            partner_count = d.program_id.partner_id.all()
                             for p in partner_count:
                                 if p.name not in partner_name:
                                     partner_name.append(p.name)
@@ -835,7 +837,9 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     for s in sectoruniqueid:
                         sector_sub_sector_new = []
                         sub_sector_final_data = []
-                        dat = Program.objects.filter(sector=s).exclude(total_budget=None)
+                        dat = FiveW.objects.filter(program_id__sector=s,
+                                                   district_id__code=int(request.GET['district_code'])).exclude(
+                            allocated_budget=None)
                         sector = Sector.objects.get(id=s)
                         set = SubSector.objects.filter(sector_id=sector.id).values('name')
                         for v in set:
@@ -846,11 +850,11 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         for d in dat:
                             sub_sectors = []
                             sub_sector_final = []
-                            sub_sectors.append(list(d.sub_sector.values_list('name', flat=True)))
+                            sub_sectors.append(list(d.program_id.sub_sector.values_list('name', flat=True)))
                             for s in sub_sectors:
                                 for di in s:
                                     sub_sector_final.append(di)
-                            ho = d.sector_budget
+                            ho = d.program_id.sector_budget
                             sec_budget = 0
                             if ho:
                                 if ho != 'None':
@@ -861,9 +865,9 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                                 sec_budget += float(x[1])
                                             except:
                                                 pass
-                            if d.total_budget:
-                                total_budgetnew += (d.total_budget * sec_budget) / 100
-                            partner_count = d.partner_id.all()
+                            if d.allocated_budget:
+                                total_budgetnew += (d.allocated_budget * sec_budget) / 100
+                            partner_count = d.program_id.partner_id.all()
                             for p in partner_count:
                                 if p.name not in partner_name:
                                     partner_name.append(p.name)
@@ -1004,7 +1008,9 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     for s in sectoruniqueid:
                         sector_sub_sector_new = []
                         sub_sector_final_data = []
-                        dat = Program.objects.filter(sector=s).exclude(total_budget=None)
+                        dat = FiveW.objects.filter(program_id__sector=s,
+                                                   municipality_id__code=int(request.GET['municipality_code'])).exclude(
+                            allocated_budget=None)
                         sector = Sector.objects.get(id=s)
                         set = SubSector.objects.filter(sector_id=sector.id).values('name')
                         for v in set:
@@ -1015,11 +1021,11 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         for d in dat:
                             sub_sectors = []
                             sub_sector_final = []
-                            sub_sectors.append(list(d.sub_sector.values_list('name', flat=True)))
+                            sub_sectors.append(list(d.program_id.sub_sector.values_list('name', flat=True)))
                             for s in sub_sectors:
                                 for di in s:
                                     sub_sector_final.append(di)
-                            ho = d.sector_budget
+                            ho = d.program_id.sector_budget
                             sec_budget = 0
                             if ho:
                                 if ho != 'None':
@@ -1030,9 +1036,9 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                                 sec_budget += float(x[1])
                                             except:
                                                 pass
-                            if d.total_budget:
-                                total_budgetnew += (d.total_budget * sec_budget) / 100
-                            partner_count = d.partner_id.all()
+                            if d.allocated_budget:
+                                total_budgetnew += (d.allocated_budget * sec_budget) / 100
+                            partner_count = d.program_id.partner_id.all()
                             for p in partner_count:
                                 if p.name not in partner_name:
                                     partner_name.append(p.name)
