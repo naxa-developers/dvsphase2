@@ -524,7 +524,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             top_sector_by_no_partner = []
             fivew_data = []
             addition_type = ['meters', 'count', 'sqkm']
-            average_type = ['percent', 'millimeters / month', 'persons per household', 'indices']
+            average_type = ['percent', 'millimeters / month', 'persons per household', 'indices', 'hour']
             if 'province_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level__in=['province', 'all']).exclude(
                     Q(show_flag=False) | Q(is_dashboard=False) | Q(is_regional_profile=False)).values(
@@ -568,8 +568,11 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                 else:
                                     count += 1
                                     value_sum = (value_sum + 0)
-                        if test[0]['indicator_id__unit'] in average_type:
-                            value_sum = value_sum / count
+                        try:
+                            if test[0]['indicator_id__unit'] in average_type:
+                                value_sum = value_sum / count
+                        except:
+                            pass
                         data.append({
                             'code': int(request.GET['province_code']),
                             'indicator_id': d['id'],
@@ -583,7 +586,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     'program_id__sector__id',
                     'program_id',
                     'supplier_id',
-                    'allocated_budget'
+                    'allocated_budget',
+                    'province_id__code'
                 ).distinct()
                 for f in five:
                     sector_ids.append(f['program_id__sector__id'])
@@ -591,6 +595,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     supplier_ids.append(f['supplier_id'])
 
                 def unique(list1):
+                    # Returns Unique Value form a list
                     unique_list = []
                     finaldata = []
                     for x in list1:
@@ -609,8 +614,10 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     for l in supplieruniqueid:
                         total_partner_budget = 0
                         partner = Partner.objects.filter(id=int(l)).values('name')
-                        fivenew = FiveW.objects.filter(supplier_id=l).values('supplier_id__name', 'supplier_id',
-                                                                             'allocated_budget')
+                        fivenew = FiveW.objects.filter(supplier_id=l,
+                                                       province_id__code=int(request.GET['province_code'])).values(
+                            'supplier_id__name', 'supplier_id',
+                            'allocated_budget')
                         for f in fivenew:
                             total_partner_budget += f['allocated_budget']
                         top_part_by_budget.append({
@@ -680,13 +687,15 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         })
                 if len(uniqueprogramid) != 0:
                     for p in uniqueprogramid:
-                        pr = Program.objects.filter(id=p).exclude(total_budget=None).values('total_budget', 'name',
-                                                                                            'id')
+                        pr = FiveW.objects.filter(program_id=p,
+                                                  province_id__code=int(request.GET['province_code'])).exclude(
+                            allocated_budget=None).values('allocated_budget', 'program_id__name',
+                                                          'program_id__id')
                         top_prog_by_budget.append({
-                            'id': pr[0]['id'],
-                            'name': pr[0]['name'],
+                            'id': pr[0]['program_id__id'],
+                            'name': pr[0]['program_id__name'],
                             'key': 'total_budget',
-                            'value': pr.aggregate(Sum('total_budget'))['total_budget__sum']
+                            'value': pr.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
                         })
                 test1 = sorted(sector_by_buget, key=lambda i: i['value'], reverse=True)
                 test2 = sorted(top_prog_by_budget, key=lambda i: i['value'], reverse=True)
@@ -721,7 +730,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             top_sector_by_no_partner = []
             fivew_data = []
             addition_type = ['meters', 'count', 'sqkm']
-            average_type = ['percent', 'millimeters / month', 'persons per household', 'indices']
+            average_type = ['percent', 'millimeters / month', 'persons per household', 'indices', 'hour']
             if 'district_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level__in=['district', 'all']).exclude(show_flag=False).values(
                     'category', 'id',
@@ -744,11 +753,11 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             'value': initial_sum
                         })
                     else:
+                        print("1")
                         test = IndicatorValue.objects.filter(indicator_id__id=d['id'],
                                                              gapanapa_id__district_id__code=int(
                                                                  request.GET['district_code'])).values(
                             'value', 'indicator_id__unit')
-
                         count = 0
                         value_sum = 0
                         for ind in test:
@@ -764,8 +773,11 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                 else:
                                     count += 1
                                     value_sum = (value_sum + 0)
-                        if test[0]['indicator_id__unit'] in average_type:
-                            value_sum = value_sum / count
+                        try:
+                            if test[0]['indicator_id__unit'] in average_type:
+                                value_sum = value_sum / count
+                        except:
+                            pass
                         data.append({
                             'code': int(request.GET['district_code']),
                             'indicator_id': d['id'],
@@ -807,8 +819,10 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     for l in supplieruniqueid:
                         total_partner_budget = 0
                         partner = Partner.objects.filter(id=int(l)).values('name')
-                        fivenew = FiveW.objects.filter(supplier_id=l).values('supplier_id__name', 'supplier_id',
-                                                                             'allocated_budget')
+                        fivenew = FiveW.objects.filter(supplier_id=l,
+                                                       district_id__code=int(request.GET['district_code'])).values(
+                            'supplier_id__name', 'supplier_id',
+                            'allocated_budget')
                         for f in fivenew:
                             total_partner_budget += f['allocated_budget']
                         top_part_by_budget.append({
@@ -878,13 +892,15 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         })
                 if len(uniqueprogramid) != 0:
                     for p in uniqueprogramid:
-                        pr = Program.objects.filter(id=p).exclude(total_budget=None).values('total_budget', 'name',
-                                                                                            'id')
+                        pr = FiveW.objects.filter(program_id=p,
+                                                  district_id__code=int(request.GET['district_code'])).exclude(
+                            allocated_budget=None).values('allocated_budget', 'program_id__name',
+                                                          'program_id__id')
                         top_prog_by_budget.append({
-                            'id': pr[0]['id'],
-                            'name': pr[0]['name'],
+                            'id': pr[0]['program_id__id'],
+                            'name': pr[0]['program_id__name'],
                             'key': 'total_budget',
-                            'value': pr.aggregate(Sum('total_budget'))['total_budget__sum']
+                            'value': pr.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
                         })
                 test1 = sorted(sector_by_buget, key=lambda i: i['value'], reverse=True)
                 test2 = sorted(top_prog_by_budget, key=lambda i: i['value'], reverse=True)
@@ -973,8 +989,9 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     for l in supplieruniqueid:
                         total_partner_budget = 0
                         partner = Partner.objects.filter(id=int(l)).values('name')
-                        fivenew = FiveW.objects.filter(supplier_id=l).values('supplier_id__name', 'supplier_id',
-                                                                             'allocated_budget')
+                        fivenew = FiveW.objects.filter(supplier_id=l, municipality_id__code=int(
+                            request.GET['municipality_code'])).values('supplier_id__name', 'supplier_id',
+                                                                      'allocated_budget')
                         for f in fivenew:
                             total_partner_budget += f['allocated_budget']
                         top_part_by_budget.append({
@@ -1044,13 +1061,15 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         })
                 if len(uniqueprogramid) != 0:
                     for p in uniqueprogramid:
-                        pr = Program.objects.filter(id=p).exclude(total_budget=None).values('total_budget', 'name',
-                                                                                            'id')
+                        pr = FiveW.objects.filter(program_id=p,
+                                                  municipality_id__code=int(request.GET['municipality_code'])).exclude(
+                            allocated_budget=None).values('allocated_budget', 'program_id__name',
+                                                          'program_id__id')
                         top_prog_by_budget.append({
-                            'id': pr[0]['id'],
-                            'name': pr[0]['name'],
+                            'id': pr[0]['program_id__id'],
+                            'name': pr[0]['program_id__name'],
                             'key': 'total_budget',
-                            'value': pr.aggregate(Sum('total_budget'))['total_budget__sum']
+                            'value': pr.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
                         })
                 test1 = sorted(sector_by_buget, key=lambda i: i['value'], reverse=True)
 
@@ -1211,7 +1230,6 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
                     dami = FiveW.objects.filter(program_id__name=f['program_id__name'],
                                                 district_id__code=request.GET['district_code']).values(
                         'component_id__name').distinct()
-                    print(dami)
                     program.append({
                         "name": f['program_id__name'],
                         "children": component
@@ -1223,7 +1241,7 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
                                 'name': d['component_id__name'],
                                 'children': partner
                             })
-                        nadami = FiveW.objects.filter(component_id__name=f['component_id__name'],
+                        nadami = FiveW.objects.filter(component_id__name=d['component_id__name'],
                                                       district_id__code=request.GET['district_code']).values(
                             'supplier_id__name').distinct()
                         print(nadami)
@@ -1259,7 +1277,7 @@ class RegionalDendrogram(viewsets.ReadOnlyModelViewSet):
                                 'name': d['component_id__name'],
                                 'children': partner
                             })
-                        nadami = FiveW.objects.filter(component_id__name=f['component_id__name'],
+                        nadami = FiveW.objects.filter(component_id__name=d['component_id__name'],
                                                       municipality_id__code=request.GET['municipality_code']).values(
                             'supplier_id__name').distinct()
                         print(nadami)
@@ -2673,13 +2691,11 @@ class Popup(viewsets.ReadOnlyModelViewSet):
                         if pid.sector_budget is not None:
                             for h in pid.sector_budget.split(','):
                                 x = h.split(':')
-                                # print(str(int(x[0])) + ":" + str((x[1])))
                                 if int(x[0]) in sub_sect:
                                     try:
                                         sec_budget += float(x[1])
                                     except:
                                         pass
-                            print(sec_budget)
                     else:
                         if pid.sector_budget is not None:
                             for h in pid.sector_budget.split(','):
