@@ -660,10 +660,10 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                                 pass
                             if d.allocated_budget:
                                 total_budgetnew += (d.allocated_budget * sec_budget) / 100
-                            partner_count = d.program_id.partner_id.all()
+                            partner_count = d.program_id.partner_id.all().values('name')
                             for p in partner_count:
-                                if p.name not in partner_name:
-                                    partner_name.append(p.name)
+                                if p['name'] not in partner_name:
+                                    partner_name.append(p['name'])
                         if dat:
                             last_sub_sector = unique(sub_sector_final)
                         else:
@@ -867,10 +867,10 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                                 pass
                             if d.allocated_budget:
                                 total_budgetnew += (d.allocated_budget * sec_budget) / 100
-                            partner_count = d.program_id.partner_id.all()
+                            partner_count = d.program_id.partner_id.all().values('name')
                             for p in partner_count:
-                                if p.name not in partner_name:
-                                    partner_name.append(p.name)
+                                if p['name'] not in partner_name:
+                                    partner_name.append(p['name'])
                         if dat:
                             last_sub_sector = unique(sub_sector_final)
                         else:
@@ -1038,10 +1038,10 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                                                 pass
                             if d.allocated_budget:
                                 total_budgetnew += (d.allocated_budget * sec_budget) / 100
-                            partner_count = d.program_id.partner_id.all()
+                            partner_count = d.program_id.partner_id.all().values('name')
                             for p in partner_count:
-                                if p.name not in partner_name:
-                                    partner_name.append(p.name)
+                                if p['name'] not in partner_name:
+                                    partner_name.append(p['name'])
                         if dat:
                             last_sub_sector = unique(sub_sector_final)
                         else:
