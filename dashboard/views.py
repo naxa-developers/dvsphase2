@@ -8,7 +8,7 @@ from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateF
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
     PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm, \
     GroupForm, BudgetCreateForm, PartnerContactForm, CmpForm, GisStyleForm, UserProfileForm, FeedbackDataForm, FAQForm, \
-    TACForm,NSForm
+    TACForm, NSForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -24,7 +24,7 @@ from rest_framework.authentication import TokenAuthentication, SessionAuthentica
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
     MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output, Notification, \
-    BudgetToSecondTier, BudgetToFirstTier, Cmp, GisStyle, FeedbackForm, FAQ, TermsAndCondition,NationalStatistic
+    BudgetToSecondTier, BudgetToFirstTier, Cmp, GisStyle, FeedbackForm, FAQ, TermsAndCondition, NationalStatistic
 from .models import UserProfile, Log
 from django.contrib.auth.models import User, Group, Permission
 from django.views.generic import TemplateView
@@ -50,6 +50,7 @@ from django.db.models import Q
 from .filters import fivew, export, cleardata
 from django.http import FileResponse
 from django.http import JsonResponse
+from django.db.models import Sum
 
 
 # Create your views here.
@@ -1305,6 +1306,7 @@ class FAQList(LoginRequiredMixin, ListView):
         data['active'] = 'faq'
         return data
 
+
 class NSList(LoginRequiredMixin, ListView):
     template_name = 'ns_list.html'
     model = NationalStatistic
@@ -1319,6 +1321,7 @@ class NSList(LoginRequiredMixin, ListView):
         data['active'] = 'ns'
         return data
 
+
 class TACList(LoginRequiredMixin, ListView):
     template_name = 'tac_list.html'
     model = TermsAndCondition
@@ -1332,6 +1335,7 @@ class TACList(LoginRequiredMixin, ListView):
         data['user'] = user_data
         data['active'] = 'tac'
         return data
+
 
 class IndicatorValueList(LoginRequiredMixin, ListView):
     template_name = 'indicator_value_list.html'
@@ -1418,14 +1422,19 @@ class Dashboard(LoginRequiredMixin, TemplateView):
         user_data = UserProfile.objects.get(user=user)
         group = Group.objects.get(user=user)
         log = Log.objects.all().order_by('-id')
+        total_budget_spend = 0
         if group.name == 'admin':
             five = FiveW.objects.order_by('id')
         else:
             five = FiveW.objects.select_related('supplier_id').filter(supplier_id=user_data.partner.id,
                                                                       program_id=user_data.program.id,
-                                                                      component_id=user_data.project.id)[:10]
+                                                                      component_id=user_data.project.id)
+            total_budget = five.aggregate(Sum('allocated_budget'))
+            total_budget_spend = total_budget['allocated_budget__sum']
+
         return render(request, 'dashboard.html',
-                      {'user': user_data, 'active': 'dash', 'fives': five, 'logs': log, 'group': group})
+                      {'user': user_data, 'active': 'dash', 'fives': five, 'logs': log, 'group': group,
+                       'total_budget_spend': total_budget_spend})
 
 
 class ProgramAdd(LoginRequiredMixin, TemplateView):
@@ -1543,6 +1552,7 @@ class RoleCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse_lazy('role-list')
 
+
 class FAQCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = FAQ
     template_name = 'faq_add.html'
@@ -1567,6 +1577,7 @@ class FAQCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     #     log = Log.objects.create(user=self.request.user, message=message, type="update")
     #     return HttpResponseRedirect(self.get_success_url())
 
+
 class TACCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = TermsAndCondition
     template_name = 'tac_add.html'
@@ -1584,6 +1595,7 @@ class TACCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('tac-list')
+
 
 class SectorCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Sector
@@ -2170,6 +2182,7 @@ class FAQUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('faq-list')
 
+
 class NSUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = NationalStatistic
     template_name = 'ns_edit.html'
@@ -2187,6 +2200,7 @@ class NSUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('ns-list')
+
 
 class TACUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = TermsAndCondition
@@ -2851,6 +2865,7 @@ class RoleDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
         data['user'] = user_data
         return data
 
+
 class FAQDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = FAQ
     template_name = 'faq_confirm_delete.html'
@@ -2867,6 +2882,7 @@ class FAQDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.info(self.request, self.success_message)
         return super(FAQDelete, self).delete(request, *args, **kwargs)
+
 
 class TACDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = TermsAndCondition
