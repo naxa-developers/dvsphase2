@@ -608,7 +608,6 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     return finaldata
 
                 uniqueprogramid = unique(program_ids)
-                sectoruniqueid = unique(sector_ids)
                 supplieruniqueid = unique(supplier_ids)
                 if len(supplieruniqueid) != 0:
                     for l in supplieruniqueid:
@@ -626,67 +625,6 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             'key': 'total_budget',
                             'value': total_partner_budget
                         })
-                if len(sectoruniqueid) != 0:
-                    for s in sectoruniqueid:
-                        sector_sub_sector_new = []
-                        sub_sector_final_data = []
-                        dat = FiveW.objects.filter(program_id__sector=s,
-                                                   province_id__code=int(request.GET['province_code'])).exclude(
-                            allocated_budget=None)
-                        sector = Sector.objects.get(id=s)
-                        set = SubSector.objects.filter(sector_id=sector.id).values('name')
-                        for v in set:
-                            sector_sub_sector_new.append(v['name'])
-                        sub_sec = [i['id'] for i in SubSector.objects.filter(sector_id=sector.id).values('id')]
-                        total_budgetnew = 0
-                        partner_name = []
-                        for d in dat:
-                            sub_sectors = []
-                            sub_sector_final = []
-                            sub_sectors.append(list(d.program_id.sub_sector.values_list('name', flat=True)))
-                            for s in sub_sectors:
-                                for di in s:
-                                    sub_sector_final.append(di)
-                            ho = d.program_id.sector_budget
-                            sec_budget = 0
-                            if ho:
-                                if ho != 'None':
-                                    for h in ho.split(','):
-                                        x = h.split(':')
-                                        if int(x[0]) in sub_sec:
-                                            try:
-                                                sec_budget += float(x[1])
-                                            except:
-                                                pass
-                            if d.allocated_budget:
-                                total_budgetnew += (d.allocated_budget * sec_budget) / 100
-                            partner_count = d.program_id.partner_id.all().values('name')
-                            for p in partner_count:
-                                if p['name'] not in partner_name:
-                                    partner_name.append(p['name'])
-                        if dat:
-                            last_sub_sector = unique(sub_sector_final)
-                        else:
-                            sub_sector_final = []
-                            last_sub_sector = unique(sub_sector_final)
-                        for l in last_sub_sector:
-                            if l in sector_sub_sector_new:
-                                sub_sector_final_data.append(l)
-                        sector_by_buget.append({
-                            'id': sector.id,
-                            'name': sector.name,
-                            'sub_sector': sub_sector_final_data,
-                            'key': 'total_budget',
-                            'value': total_budgetnew
-
-                        })
-                        top_sector_by_no_partner.append({
-
-                            'id': sector.id,
-                            'name': sector.name,
-                            'key': 'partner_count',
-                            'value': len(partner_name)
-                        })
                 if len(uniqueprogramid) != 0:
                     for p in uniqueprogramid:
                         pr = FiveW.objects.filter(program_id=p,
@@ -699,10 +637,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             'key': 'total_budget',
                             'value': pr.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
                         })
-                test1 = sorted(sector_by_buget, key=lambda i: i['value'], reverse=True)
                 test2 = sorted(top_prog_by_budget, key=lambda i: i['value'], reverse=True)
                 test3 = sorted(top_part_by_budget, key=lambda i: i['value'], reverse=True)
-                test4 = sorted(top_sector_by_no_partner, key=lambda i: i['value'], reverse=True)
                 total_budget = five.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
                 sector_count = five.distinct('program_id__sector').exclude(program_id__sector=None).count()
                 program_count = five.distinct('program_id').count()
@@ -716,8 +652,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     'supplier_count': supplier_count
                 })
                 return Response({"indicatordata": data, 'fivewdata': fivew_data,
-                                 'active_sectors': test1, 'top_program_by_budget': test2,
-                                 'top_partner_by_budget': test3, 'top_sector_by_no_of_partner': test4})
+                                 'top_program_by_budget': test2,
+                                 'top_partner_by_budget': test3})
             else:
                 return Response({"results": "Please Pass Province Code"})
 
@@ -815,7 +751,6 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     return finaldata
 
                 uniqueprogramid = unique(program_ids)
-                sectoruniqueid = unique(sector_ids)
                 supplieruniqueid = unique(supplier_ids)
                 if len(supplieruniqueid) != 0:
                     for l in supplieruniqueid:
@@ -833,67 +768,6 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             'key': 'total_budget',
                             'value': total_partner_budget
                         })
-                if len(sectoruniqueid) != 0:
-                    for s in sectoruniqueid:
-                        sector_sub_sector_new = []
-                        sub_sector_final_data = []
-                        dat = FiveW.objects.filter(program_id__sector=s,
-                                                   district_id__code=int(request.GET['district_code'])).exclude(
-                            allocated_budget=None)
-                        sector = Sector.objects.get(id=s)
-                        set = SubSector.objects.filter(sector_id=sector.id).values('name')
-                        for v in set:
-                            sector_sub_sector_new.append(v['name'])
-                        sub_sec = [i['id'] for i in SubSector.objects.filter(sector_id=sector.id).values('id')]
-                        total_budgetnew = 0
-                        partner_name = []
-                        for d in dat:
-                            sub_sectors = []
-                            sub_sector_final = []
-                            sub_sectors.append(list(d.program_id.sub_sector.values_list('name', flat=True)))
-                            for s in sub_sectors:
-                                for di in s:
-                                    sub_sector_final.append(di)
-                            ho = d.program_id.sector_budget
-                            sec_budget = 0
-                            if ho:
-                                if ho != 'None':
-                                    for h in ho.split(','):
-                                        x = h.split(':')
-                                        if int(x[0]) in sub_sec:
-                                            try:
-                                                sec_budget += float(x[1])
-                                            except:
-                                                pass
-                            if d.allocated_budget:
-                                total_budgetnew += (d.allocated_budget * sec_budget) / 100
-                            partner_count = d.program_id.partner_id.all().values('name')
-                            for p in partner_count:
-                                if p['name'] not in partner_name:
-                                    partner_name.append(p['name'])
-                        if dat:
-                            last_sub_sector = unique(sub_sector_final)
-                        else:
-                            sub_sector_final = []
-                            last_sub_sector = unique(sub_sector_final)
-                        for l in last_sub_sector:
-                            if l in sector_sub_sector_new:
-                                sub_sector_final_data.append(l)
-                        sector_by_buget.append({
-                            'id': sector.id,
-                            'name': sector.name,
-                            'sub_sector': sub_sector_final_data,
-                            'key': 'total_budget',
-                            'value': total_budgetnew
-
-                        })
-                        top_sector_by_no_partner.append({
-
-                            'id': sector.id,
-                            'name': sector.name,
-                            'key': 'partner_count',
-                            'value': len(partner_name)
-                        })
                 if len(uniqueprogramid) != 0:
                     for p in uniqueprogramid:
                         pr = FiveW.objects.filter(program_id=p,
@@ -906,10 +780,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             'key': 'total_budget',
                             'value': pr.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
                         })
-                test1 = sorted(sector_by_buget, key=lambda i: i['value'], reverse=True)
                 test2 = sorted(top_prog_by_budget, key=lambda i: i['value'], reverse=True)
                 test3 = sorted(top_part_by_budget, key=lambda i: i['value'], reverse=True)
-                test4 = sorted(top_sector_by_no_partner, key=lambda i: i['value'], reverse=True)
                 total_budget = five.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
                 sector_count = five.distinct('program_id__sector').exclude(program_id__sector=None).count()
                 program_count = five.distinct('program_id').count()
@@ -923,8 +795,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     'supplier_count': supplier_count
                 })
                 return Response({"indicatordata": data, 'fivewdata': fivew_data,
-                                 'active_sectors': test1, 'top_program_by_budget': test2,
-                                 'top_partner_by_budget': test3, 'top_sector_by_no_of_partner': test4})
+                                 'top_program_by_budget': test2,
+                                 'top_partner_by_budget': test3})
             else:
                 return Response({"results": "Please Pass District Code"})
         elif request.GET['region'] == 'municipality':
@@ -987,7 +859,6 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     return finaldata
 
                 uniqueprogramid = unique(program_ids)
-                sectoruniqueid = unique(sector_ids)
                 supplieruniqueid = unique(supplier_ids)
                 if len(supplieruniqueid) != 0:
                     for l in supplieruniqueid:
@@ -1004,67 +875,6 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             'key': 'total_budget',
                             'value': total_partner_budget
                         })
-                if len(sectoruniqueid) != 0:
-                    for s in sectoruniqueid:
-                        sector_sub_sector_new = []
-                        sub_sector_final_data = []
-                        dat = FiveW.objects.filter(program_id__sector=s,
-                                                   municipality_id__code=int(request.GET['municipality_code'])).exclude(
-                            allocated_budget=None)
-                        sector = Sector.objects.get(id=s)
-                        set = SubSector.objects.filter(sector_id=sector.id).values('name')
-                        for v in set:
-                            sector_sub_sector_new.append(v['name'])
-                        sub_sec = [i['id'] for i in SubSector.objects.filter(sector_id=sector.id).values('id')]
-                        total_budgetnew = 0
-                        partner_name = []
-                        for d in dat:
-                            sub_sectors = []
-                            sub_sector_final = []
-                            sub_sectors.append(list(d.program_id.sub_sector.values_list('name', flat=True)))
-                            for s in sub_sectors:
-                                for di in s:
-                                    sub_sector_final.append(di)
-                            ho = d.program_id.sector_budget
-                            sec_budget = 0
-                            if ho:
-                                if ho != 'None':
-                                    for h in ho.split(','):
-                                        x = h.split(':')
-                                        if int(x[0]) in sub_sec:
-                                            try:
-                                                sec_budget += float(x[1])
-                                            except:
-                                                pass
-                            if d.allocated_budget:
-                                total_budgetnew += (d.allocated_budget * sec_budget) / 100
-                            partner_count = d.program_id.partner_id.all().values('name')
-                            for p in partner_count:
-                                if p['name'] not in partner_name:
-                                    partner_name.append(p['name'])
-                        if dat:
-                            last_sub_sector = unique(sub_sector_final)
-                        else:
-                            sub_sector_final = []
-                            last_sub_sector = unique(sub_sector_final)
-                        for l in last_sub_sector:
-                            if l in sector_sub_sector_new:
-                                sub_sector_final_data.append(l)
-                        sector_by_buget.append({
-                            'id': sector.id,
-                            'name': sector.name,
-                            'sub_sector': sub_sector_final_data,
-                            'key': 'total_budget',
-                            'value': total_budgetnew
-
-                        })
-                        top_sector_by_no_partner.append({
-
-                            'id': sector.id,
-                            'name': sector.name,
-                            'key': 'partner_count',
-                            'value': len(partner_name)
-                        })
                 if len(uniqueprogramid) != 0:
                     for p in uniqueprogramid:
                         pr = FiveW.objects.filter(program_id=p,
@@ -1077,11 +887,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                             'key': 'total_budget',
                             'value': pr.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
                         })
-                test1 = sorted(sector_by_buget, key=lambda i: i['value'], reverse=True)
-
                 test2 = sorted(top_prog_by_budget, key=lambda i: i['value'], reverse=True)
                 test3 = sorted(top_part_by_budget, key=lambda i: i['value'], reverse=True)
-                test4 = sorted(top_sector_by_no_partner, key=lambda i: i['value'], reverse=True)
                 total_budget = five.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
                 sector_count = five.distinct('program_id__sector').exclude(program_id__sector=None).count()
                 program_count = five.distinct('program_id').count()
@@ -1095,8 +902,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     'supplier_count': supplier_count
                 })
                 return Response({"indicatordata": data, 'fivewdata': fivew_data,
-                                 'active_sectors': test1, 'top_program_by_budget': test2,
-                                 'top_partner_by_budget': test3, 'top_sector_by_no_of_partner': test4})
+                                 'top_program_by_budget': test2,
+                                 'top_partner_by_budget': test3})
             else:
                 return Response({"results": "Please Pass Municipality Code"})
         else:
@@ -2795,3 +2602,288 @@ class Feedback(viewsets.ViewSet):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class RegionalSectorGraph(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+    queryset = FiveW.objects.all()
+    serializer_class = FivewSerializer
+
+    def list(self, request, *args, **kwargs):
+        if request.GET['region'] == 'province':
+            sector_ids = []
+            sector_by_buget = []
+            top_sector_by_no_partner = []
+            if 'province_code' in request.GET:
+                five = FiveW.objects.filter(province_id__code=int(request.GET['province_code'])).values(
+                    'id',
+                    'program_id__sector__id',
+                ).distinct()
+                for f in five:
+                    sector_ids.append(f['program_id__sector__id'])
+
+                def unique(list1):
+                    unique_list = []
+                    finaldata = []
+                    for x in list1:
+                        if x not in unique_list:
+                            unique_list.append(x)
+                    for x in unique_list:
+                        finaldata.append(x)
+                    if None in finaldata:
+                        finaldata.remove(None)
+                    return finaldata
+
+                sectoruniqueid = unique(sector_ids)
+                if len(sectoruniqueid) != 0:
+                    for s in sectoruniqueid:
+                        sector_sub_sector_new = []
+                        sub_sector_final_data = []
+                        dat = FiveW.objects.filter(program_id__sector=s,
+                                                   province_id__code=int(request.GET['province_code'])).exclude(
+                            allocated_budget=None)
+                        sector = Sector.objects.get(id=s)
+                        set = SubSector.objects.filter(sector_id=sector.id).values('name')
+                        for v in set:
+                            sector_sub_sector_new.append(v['name'])
+                        sub_sec = [i['id'] for i in SubSector.objects.filter(sector_id=sector.id).values('id')]
+                        total_budgetnew = 0
+                        partner_name = []
+                        for d in dat:
+                            sub_sectors = []
+                            sub_sector_final = []
+                            sub_sectors.append(list(d.program_id.sub_sector.values_list('name', flat=True)))
+                            for s in sub_sectors:
+                                for di in s:
+                                    sub_sector_final.append(di)
+                            ho = d.program_id.sector_budget
+                            sec_budget = 0
+                            if ho:
+                                if ho != 'None':
+                                    for h in ho.split(','):
+                                        x = h.split(':')
+                                        if int(x[0]) in sub_sec:
+                                            try:
+                                                sec_budget += float(x[1])
+                                            except:
+                                                pass
+                            if d.allocated_budget:
+                                total_budgetnew += (d.allocated_budget * sec_budget) / 100
+                            partner_count = d.program_id.partner_id.all().values('name')
+                            for p in partner_count:
+                                if p['name'] not in partner_name:
+                                    partner_name.append(p['name'])
+                        if dat:
+                            last_sub_sector = unique(sub_sector_final)
+                        else:
+                            sub_sector_final = []
+                            last_sub_sector = unique(sub_sector_final)
+                        for l in last_sub_sector:
+                            if l in sector_sub_sector_new:
+                                sub_sector_final_data.append(l)
+                        sector_by_buget.append({
+                            'id': sector.id,
+                            'name': sector.name,
+                            'sub_sector': sub_sector_final_data,
+                            'key': 'total_budget',
+                            'value': total_budgetnew
+
+                        })
+                        top_sector_by_no_partner.append({
+
+                            'id': sector.id,
+                            'name': sector.name,
+                            'key': 'partner_count',
+                            'value': len(partner_name)
+                        })
+                test1 = sorted(sector_by_buget, key=lambda i: i['value'], reverse=True)
+                test4 = sorted(top_sector_by_no_partner, key=lambda i: i['value'], reverse=True)
+                return Response({'active_sectors': test1, 'top_sector_by_no_of_partner': test4})
+            else:
+                return Response({"results": "Please Pass Province Code"})
+
+        elif request.GET['region'] == 'district':
+            sector_ids = []
+            sector_by_buget = []
+            top_sector_by_no_partner = []
+            if 'district_code' in request.GET:
+                five = FiveW.objects.filter(district_id__code=int(request.GET['district_code'])).values(
+                    'id',
+                    'program_id__sector__id',
+                ).distinct()
+                for f in five:
+                    sector_ids.append(f['program_id__sector__id'])
+
+                def unique(list1):
+                    unique_list = []
+                    finaldata = []
+                    for x in list1:
+                        if x not in unique_list:
+                            unique_list.append(x)
+                    for x in unique_list:
+                        finaldata.append(x)
+                    if None in finaldata:
+                        finaldata.remove(None)
+                    return finaldata
+
+                sectoruniqueid = unique(sector_ids)
+                if len(sectoruniqueid) != 0:
+                    for s in sectoruniqueid:
+                        sector_sub_sector_new = []
+                        sub_sector_final_data = []
+                        dat = FiveW.objects.filter(program_id__sector=s,
+                                                   district_id__code=int(request.GET['district_code'])).exclude(
+                            allocated_budget=None)
+                        sector = Sector.objects.get(id=s)
+                        set = SubSector.objects.filter(sector_id=sector.id).values('name')
+                        for v in set:
+                            sector_sub_sector_new.append(v['name'])
+                        sub_sec = [i['id'] for i in SubSector.objects.filter(sector_id=sector.id).values('id')]
+                        total_budgetnew = 0
+                        partner_name = []
+                        for d in dat:
+                            sub_sectors = []
+                            sub_sector_final = []
+                            sub_sectors.append(list(d.program_id.sub_sector.values_list('name', flat=True)))
+                            for s in sub_sectors:
+                                for di in s:
+                                    sub_sector_final.append(di)
+                            ho = d.program_id.sector_budget
+                            sec_budget = 0
+                            if ho:
+                                if ho != 'None':
+                                    for h in ho.split(','):
+                                        x = h.split(':')
+                                        if int(x[0]) in sub_sec:
+                                            try:
+                                                sec_budget += float(x[1])
+                                            except:
+                                                pass
+                            if d.allocated_budget:
+                                total_budgetnew += (d.allocated_budget * sec_budget) / 100
+                            partner_count = d.program_id.partner_id.all().values('name')
+                            for p in partner_count:
+                                if p['name'] not in partner_name:
+                                    partner_name.append(p['name'])
+                        if dat:
+                            last_sub_sector = unique(sub_sector_final)
+                        else:
+                            sub_sector_final = []
+                            last_sub_sector = unique(sub_sector_final)
+                        for l in last_sub_sector:
+                            if l in sector_sub_sector_new:
+                                sub_sector_final_data.append(l)
+                        sector_by_buget.append({
+                            'id': sector.id,
+                            'name': sector.name,
+                            'sub_sector': sub_sector_final_data,
+                            'key': 'total_budget',
+                            'value': total_budgetnew
+
+                        })
+                        top_sector_by_no_partner.append({
+
+                            'id': sector.id,
+                            'name': sector.name,
+                            'key': 'partner_count',
+                            'value': len(partner_name)
+                        })
+                test1 = sorted(sector_by_buget, key=lambda i: i['value'], reverse=True)
+                test4 = sorted(top_sector_by_no_partner, key=lambda i: i['value'], reverse=True)
+                return Response({'active_sectors': test1, 'top_sector_by_no_of_partner': test4})
+            else:
+                return Response({"results": "Please Pass District Code"})
+        elif request.GET['region'] == 'municipality':
+            sector_ids = []
+            sector_by_buget = []
+            top_sector_by_no_partner = []
+            if 'municipality_code' in request.GET:
+                five = FiveW.objects.filter(municipality_id__code=int(request.GET['municipality_code'])).values(
+                    'id',
+                    'program_id__sector__id').distinct()
+
+                for f in five:
+                    sector_ids.append(f['program_id__sector__id'])
+
+                def unique(list1):
+                    unique_list = []
+                    finaldata = []
+                    for x in list1:
+                        if x not in unique_list:
+                            unique_list.append(x)
+                    for x in unique_list:
+                        finaldata.append(x)
+                    if None in finaldata:
+                        finaldata.remove(None)
+                    return finaldata
+
+                sectoruniqueid = unique(sector_ids)
+                if len(sectoruniqueid) != 0:
+                    for s in sectoruniqueid:
+                        sector_sub_sector_new = []
+                        sub_sector_final_data = []
+                        dat = FiveW.objects.filter(program_id__sector=s,
+                                                   municipality_id__code=int(request.GET['municipality_code'])).exclude(
+                            allocated_budget=None)
+                        sector = Sector.objects.get(id=s)
+                        set = SubSector.objects.filter(sector_id=sector.id).values('name')
+                        for v in set:
+                            sector_sub_sector_new.append(v['name'])
+                        sub_sec = [i['id'] for i in SubSector.objects.filter(sector_id=sector.id).values('id')]
+                        total_budgetnew = 0
+                        partner_name = []
+                        for d in dat:
+                            sub_sectors = []
+                            sub_sector_final = []
+                            sub_sectors.append(list(d.program_id.sub_sector.values_list('name', flat=True)))
+                            for s in sub_sectors:
+                                for di in s:
+                                    sub_sector_final.append(di)
+                            ho = d.program_id.sector_budget
+                            sec_budget = 0
+                            if ho:
+                                if ho != 'None':
+                                    for h in ho.split(','):
+                                        x = h.split(':')
+                                        if int(x[0]) in sub_sec:
+                                            try:
+                                                sec_budget += float(x[1])
+                                            except:
+                                                pass
+                            if d.allocated_budget:
+                                total_budgetnew += (d.allocated_budget * sec_budget) / 100
+                            partner_count = d.program_id.partner_id.all().values('name')
+                            for p in partner_count:
+                                if p['name'] not in partner_name:
+                                    partner_name.append(p['name'])
+                        if dat:
+                            last_sub_sector = unique(sub_sector_final)
+                        else:
+                            sub_sector_final = []
+                            last_sub_sector = unique(sub_sector_final)
+                        for l in last_sub_sector:
+                            if l in sector_sub_sector_new:
+                                sub_sector_final_data.append(l)
+                        sector_by_buget.append({
+                            'id': sector.id,
+                            'name': sector.name,
+                            'sub_sector': sub_sector_final_data,
+                            'key': 'total_budget',
+                            'value': total_budgetnew
+
+                        })
+                        top_sector_by_no_partner.append({
+
+                            'id': sector.id,
+                            'name': sector.name,
+                            'key': 'partner_count',
+                            'value': len(partner_name)
+                        })
+
+                test1 = sorted(sector_by_buget, key=lambda i: i['value'], reverse=True)
+                test4 = sorted(top_sector_by_no_partner, key=lambda i: i['value'], reverse=True)
+                return Response({'active_sectors': test1, 'top_sector_by_no_of_partner': test4})
+            else:
+                return Response({"results": "Please Pass Municipality Code"})
+        else:
+            return Response({"results": "Invalid Region"})
