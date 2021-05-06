@@ -544,6 +544,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         data.append({
                             'code': int(request.GET['province_code']),
                             'indicator_id': d['id'],
+                            'category':d['category'],
                             'indicator': d['full_title'],
                             'value': initial_sum
                         })
@@ -576,6 +577,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         data.append({
                             'code': int(request.GET['province_code']),
                             'indicator_id': d['id'],
+                            'category': d['category'],
                             'indicator': d['full_title'],
                             'value': value_sum
                         })
@@ -660,12 +662,10 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
         elif request.GET['region'] == 'district':
             data = []
             sector_ids = []
-            sector_by_buget = []
             program_ids = []
             top_prog_by_budget = []
             top_part_by_budget = []
             supplier_ids = []
-            top_sector_by_no_partner = []
             fivew_data = []
             addition_type = ['meters', 'count', 'sqkm']
             average_type = ['percent', 'millimeters / month', 'persons per household', 'indices', 'hour']
@@ -687,6 +687,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         data.append({
                             'code': int(request.GET['district_code']),
                             'indicator_id': d['id'],
+                            'category': d['category'],
                             'indicator': d['full_title'],
                             'value': initial_sum
                         })
@@ -719,6 +720,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         data.append({
                             'code': int(request.GET['district_code']),
                             'indicator_id': d['id'],
+                            'category': d['category'],
                             'indicator': d['full_title'],
                             'value': value_sum
                         })
@@ -828,6 +830,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                     data.append({
                         'code': int(request.GET['municipality_code']),
                         'indicator_id': d['id'],
+                        'category': d['category'],
                         'indicator': d['full_title'],
                         'value': initial_sum
                     })
