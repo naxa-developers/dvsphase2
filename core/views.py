@@ -1405,7 +1405,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
             st = request.GET['status']
             stat = st.split(",")
             for i in range(0, len(stat)):
-                stat[i] = str(stat[i])
+                stat[i] = str(stat[i]).lower()
         else:
             stat = list(FiveW.objects.values_list('status', flat=True))
             count.append('stat')
@@ -1634,7 +1634,7 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
             st = request.GET['status']
             stat = st.split(",")
             for i in range(0, len(stat)):
-                stat[i] = str(stat[i])
+                stat[i] = str(stat[i]).lower()
         else:
             stat = list(FiveW.objects.values_list('status', flat=True))
             count.append('stat')
@@ -1855,7 +1855,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
             st = request.GET['status']
             stat = st.split(",")
             for i in range(0, len(stat)):
-                stat[i] = str(stat[i])
+                stat[i] = str(stat[i]).lower()
         else:
             stat = list(FiveW.objects.values_list('status', flat=True))
             count.append('stat')
@@ -2075,7 +2075,7 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
             st = request.GET['status']
             stat = st.split(",")
             for i in range(0, len(stat)):
-                stat[i] = str(stat[i])
+                stat[i] = str(stat[i]).lower()
         else:
             stat = list(FiveW.objects.values_list('status', flat=True))
             count.append('stat')
@@ -2475,7 +2475,7 @@ class Popup(viewsets.ReadOnlyModelViewSet):
             st = request.GET['status']
             stat = st.split(",")
             for i in range(0, len(stat)):
-                stat[i] = str(stat[i])
+                stat[i] = str(stat[i]).lower()
         else:
             stat = list(FiveW.objects.values_list('status', flat=True))
             count.append('stat')
