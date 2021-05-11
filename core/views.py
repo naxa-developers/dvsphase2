@@ -1339,7 +1339,7 @@ class ProvinceApi(viewsets.ReadOnlyModelViewSet):
     filterset_fields = ['id', 'code']
 
     def get_queryset(self):
-        queryset = Province.objects.exclude(code=-1).order_by('id')
+        queryset = Province.objects.order_by('id')
         return queryset
 
     def get_serializer_class(self):
