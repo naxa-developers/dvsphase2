@@ -1466,8 +1466,7 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 province_id__code__in=province_codes).exclude(code='-1').order_by('id')
 
         else:
-            districts = District.objects.values('name', 'id', 'code', 'n_code', 'province_id__name').exclude(
-                code='-1').order_by('id')
+            districts = District.objects.values('name', 'id', 'code', 'n_code', 'province_id__name').order_by('id')
 
         for dist in districts:
             if count:
@@ -1677,7 +1676,7 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
             component = list(Project.objects.values_list('code', flat=True))
             count.append('component')
 
-        provinces = Province.objects.values('name', 'id', 'code').exclude(code='-1').order_by('id')
+        provinces = Province.objects.values('name', 'id', 'code').order_by('id')
 
         for province in provinces:
             if count:
@@ -1887,7 +1886,7 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 province_codes[i] = int(province_codes[i])
             municipalities = GapaNapa.objects.values('name', 'id', 'code', 'province_id__name',
                                                      'district_id__name').filter(
-                province_id__code__in=province_codes).exclude(code='-1').order_by('id')
+                province_id__code__in=province_codes).order_by('id')
 
         else:
             municipalities = GapaNapa.objects.values('name', 'id', 'code', 'province_id__name',
