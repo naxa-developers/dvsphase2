@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Partner, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
     IndicatorValue, Sector, SubSector, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
-    Filter, NepalSummary, FeedbackForm, FAQ, TermsAndCondition, NationalStatistic
+    Filter, NepalSummary, FeedbackForm, FAQ, TermsAndCondition, NationalStatistic,Manual
 
 
 class NepalSummarySerializer(serializers.ModelSerializer):
@@ -216,6 +216,11 @@ class IndicatorSerializer(serializers.ModelSerializer):
 class SectorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sector
+        fields = '__all__'
+
+class ManualSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Manual
         fields = '__all__'
 
 

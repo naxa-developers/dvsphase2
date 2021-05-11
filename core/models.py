@@ -576,3 +576,7 @@ class TermsAndCondition(models.Model):
 class NationalStatistic(models.Model):
     title = models.CharField(max_length=500, blank=True, null=True)
     url = models.URLField(blank=True, null=True)
+
+class Manual(models.Model):
+    file = models.FileField(upload_to='feedbackfiles', blank=True, null=True)
+

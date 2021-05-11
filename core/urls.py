@@ -45,5 +45,6 @@ urlpatterns = [
     path('faq/', views.FAQView.as_view({'get': 'list'}), name='faq'),
     path('national-statistic/', views.NationalStatisticView.as_view({'get': 'list'}), name='national-statistic'),
     path('terms-condition/', views.TermsAndConditionView.as_view({'get': 'list'}), name='terms-condition'),
+    path('manual/', views.ManualViewSet.as_view({'get': 'list'}), name='manual'),
 
 ]

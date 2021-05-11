@@ -1,6 +1,6 @@
 from .models import Partner, Program, MarkerValues, District, Province, GapaNapa, FiveW, Indicator, IndicatorValue, \
     Sector, SubSector, MarkerCategory, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
-    NepalSummary, FeedbackForm, FAQ, TermsAndCondition, NationalStatistic
+    NepalSummary, FeedbackForm, FAQ, TermsAndCondition, NationalStatistic,Manual
 from dashboard.models import UserProfile
 from django.contrib.auth.models import User, Group, Permission
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -9,7 +9,7 @@ from .serializers import PartnerSerializer, ProgramSerializer, MarkerValuesSeria
     IndicatorSerializer, IndicatorValueSerializer, SectorSerializer, SubsectorSerializer, MarkerCategorySerializer, \
     TravelTimeSerializer, GisLayerSerializer, ProjectSerializer, OutputSerializer, NotificationSerializer, \
     ContractSumSerializer, NepalSummarySerializer, FeedbackSerializer, TermsAndConditionSerializer, FAQSerializer, \
-    NetionalStatisticSerializer
+    NetionalStatisticSerializer,ManualSerializer
 from rest_framework import viewsets, views
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
@@ -346,6 +346,17 @@ class TermsAndConditionView(viewsets.ReadOnlyModelViewSet):
 
     def get_serializer_class(self):
         serializer_class = TermsAndConditionSerializer
+        return serializer_class
+
+class ManualViewSet(viewsets.ReadOnlyModelViewSet):
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        queryset = Manual.objects.order_by('id')
+        return queryset
+
+    def get_serializer_class(self):
+        serializer_class = ManualSerializer
         return serializer_class
 
 
