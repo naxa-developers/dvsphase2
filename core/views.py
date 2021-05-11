@@ -2198,7 +2198,7 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
         allocated_sum = all_budget
         component = query.distinct('component_id').count()
         partner = query.distinct('supplier_id').count()
-        sector = query.distinct('component_id__sector').count()
+        sector = query.distinct('program_id__sector').count()
         total_program = fivbudget.distinct('program_id').count()
         total_partner = fivbudget.distinct('supplier_id').count()
         total_component = fivbudget.distinct('component_id').count()
