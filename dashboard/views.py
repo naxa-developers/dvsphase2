@@ -1331,7 +1331,7 @@ class ManualList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         data = super(ManualList, self).get_context_data(**kwargs)
-        manualList = NationalStatistic.objects.order_by('-id')
+        manualList = Manual.objects.order_by('-id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['list'] = manualList
