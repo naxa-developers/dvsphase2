@@ -2,7 +2,7 @@ from django.contrib.auth.models import User, Permission, Group
 from django.forms import ModelForm
 from core.models import Program, Partner, Sector, SubSector, MarkerCategory, MarkerValues, GisLayer, Province, District, \
     GapaNapa, Indicator, Project, FiveW, Output, BudgetToFirstTier, PartnerContact, Cmp, GisStyle, FeedbackForm, FAQ, \
-    TermsAndCondition,NationalStatistic
+    TermsAndCondition,NationalStatistic,Manual
 from .models import UserProfile
 
 
@@ -20,6 +20,11 @@ class FeedbackDataForm(ModelForm):
 class NSForm(ModelForm):
     class Meta:
         model = NationalStatistic
+        fields = '__all__'
+
+class ManualForm(ModelForm):
+    class Meta:
+        model = Manual
         fields = '__all__'
 
 class FAQForm(ModelForm):
