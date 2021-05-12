@@ -1,12 +1,18 @@
 from rest_framework import serializers
 from .models import Partner, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
     IndicatorValue, Sector, SubSector, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
-    Filter, NepalSummary, FeedbackForm, FAQ, TermsAndCondition
+    Filter, NepalSummary, FeedbackForm, FAQ, TermsAndCondition, NationalStatistic,Manual
 
 
 class NepalSummarySerializer(serializers.ModelSerializer):
     class Meta:
         model = NepalSummary
+        fields = '__all__'
+
+
+class NetionalStatisticSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NationalStatistic
         fields = '__all__'
 
 
@@ -204,12 +210,17 @@ class IndicatorSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'full_title', 'abstract', 'category', 'source', 'federal_level', 'is_covid', 'is_dashboard', 'filter',
             'unit',
-            'data_type')
+            'data_type', 'url')
 
 
 class SectorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sector
+        fields = '__all__'
+
+class ManualSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Manual
         fields = '__all__'
 
 
@@ -227,10 +238,11 @@ class SubsectorSerializer(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
     sub_sector = serializers.SerializerMethodField()
     sector = serializers.SerializerMethodField()
+    partners = serializers.SerializerMethodField()
 
     class Meta:
         model = Project
-        fields = ('id', 'name', 'sector', 'sub_sector', 'code')
+        fields = ('id', 'name', 'sector', 'sub_sector', 'code', 'partners')
 
     def get_sub_sector(self, obj):
         qs = obj.sub_sector.all().order_by('id').values_list('id', flat=True)
@@ -239,6 +251,10 @@ class ProjectSerializer(serializers.ModelSerializer):
     def get_sector(self, obj):
         qs = obj.sector.all().order_by('id').values_list('id', flat=True)
         # qs = obj.sub_sector.all().order_by('id').values('sub_sector_name', 'sub_sector_code')
+        return qs
+
+    def get_partners(self, obj):
+        qs = obj.partner_id.all().order_by('id').values_list('id', flat=True)
         return qs
 
 
@@ -326,16 +342,23 @@ class FivewSerializer(serializers.ModelSerializer):
 
 class IndicatorValueSerializer(serializers.ModelSerializer):
     code = serializers.SerializerMethodField()
+    name = serializers.SerializerMethodField()
 
     # indicator_name = serializers.SerializerMethodField()
 
     class Meta:
         model = IndicatorValue
-        fields = ('id', 'indicator_id', 'code', 'value')
+        fields = ('id', 'indicator_id', 'code', 'value','name')
 
     def get_code(self, obj):
         try:
             return str(obj.gapanapa_id.code)
+        except:
+            return None
+
+    def get_name(self, obj):
+        try:
+            return str(obj.gapanapa_id.name)
         except:
             return None
 

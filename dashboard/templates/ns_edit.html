@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+.ck-editor__editable_inline {
+    min-height: 200px;
+}
+
+</style>
+
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="/dashboard/ns-list/"><i class="material-icons">assignment</i>National Statistic</a>
+            </li>
+            <li>Edit</li>
+        </ul>
+    </div>
+    <!-- program form -->
+    <form class="program-form" method="POST">
+        {% csrf_token %}
+
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ field.name|title }} {{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+            <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group ">
+                            <label for="id_url" class="">Title</label>
+                            <input type="text" class="form-control" name="title"
+                                   id="id_url" value="{{form.instance.title}}"
+                                   placeholder="Title"/>
+                        </div>
+                    </div>
+            </div>
+            <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group ">
+                            <label for="id_phone_number" class="">URL</label>
+                            <input type="url" class="form-control" value="{{form.instance.url}}" name="url"
+                                   id="id_phone_number"
+                                   placeholder="URL"/>
+                        </div>
+                    </div>
+            </div>
+
+
+        <div class="form-group mrt-100" style="margin-top:50px;">
+            <button id='final_save' type="submit" class="dfid-button sm-button">Save</button>
+        </div>
+
+    </form>
+</main>
+
+{% endblock %}
+{% block script %}
+<script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
+<script>
+    var i;
+    list = ['#editor','#editor1']
+    for (i = 0; i < list.length; i++) {
+    ClassicEditor
+            .create( document.querySelector(list[i] ) )
+            .then( editor => {
+                    console.log( editor );
+            } )
+            .catch( error => {
+                    console.error( error );
+            } );
+            };
+
+</script>
+{% endblock %}
+
+
+

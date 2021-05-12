@@ -149,6 +149,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 1000
 
 }
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 
 SWAGGER_SETTINGS = {
 

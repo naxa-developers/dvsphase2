@@ -35,6 +35,7 @@ urlpatterns = [
     path('popup/', views.Popup.as_view({'get': 'list'}), name='popup'),
     path('feedbackform', views.Feedback.as_view({'post': 'create'}), name='feedbackfrom'),
     path('profile', views.RegionalProfile.as_view({'get': 'list'}), name='profile'),
+    path('regional-sector-graph', views.RegionalSectorGraph.as_view({'get': 'list'}), name='sector-profile'),
     path('programprofile', views.ProgramProfile.as_view({'get': 'list'}), name='programprofile'),
     path('regionaldendrogram', views.RegionalDendrogram.as_view({'get': 'list'}), name='dendrogram'),
     path('programupperdendrogram', views.ProgramUpperDendrogram.as_view({'get': 'list'}),
@@ -42,6 +43,8 @@ urlpatterns = [
     path('programlowerdendrogram', views.ProgramLowerDendrogram.as_view({'get': 'list'}),
          name='programlowerdendrogram'),
     path('faq/', views.FAQView.as_view({'get': 'list'}), name='faq'),
+    path('national-statistic/', views.NationalStatisticView.as_view({'get': 'list'}), name='national-statistic'),
     path('terms-condition/', views.TermsAndConditionView.as_view({'get': 'list'}), name='terms-condition'),
+    path('manual/', views.ManualViewSet.as_view({'get': 'list'}), name='manual'),
 
 ]

@@ -34,13 +34,14 @@
                 <th>Source</th>
                 <th>Federal Level</th>
                 <th>unit</th>
-                <th>Data Type</th>
+                <th>Show Frontend</th>
+                <th>Regional Profile</th>
             </tr>
             </thead>
             <tbody>
 
             {% for indicator in list %}
-            {% if request.get_full_path == '/dashboard/indicator-list/?data=palika' %}
+            {% if request.get_full_path == '/dashboard/indicator-list/?data=palika' or request.get_full_path == '/dashboard/indicator-list/' %}
             {% if indicator.federal_level == 'palika' or indicator.federal_level == 'all'%}
 
             <tr>
@@ -57,7 +58,8 @@
                 <td>{% if indicator.source == 'nan' %} {% else %} {{ indicator.source }} {% endif %}</td>
                 <td>{{ indicator.federal_level }}</td>
                 <td>{{ indicator.unit }}</td>
-                <td>{{ indicator.data_type }}</td>
+                <td>{{ indicator.is_dashboard }}</td>
+                <td>{{ indicator.is_regional_profile }}</td>
 
                 <td>
                     <div class="table-action">
@@ -102,7 +104,8 @@
                 <td>{% if indicator.source == 'nan' %} {% else %} {{ indicator.source }} {% endif %}</td>
                 <td>{{ indicator.federal_level }}</td>
                 <td>{{ indicator.unit }}</td>
-                <td>{{ indicator.data_type }}</td>
+                <td>{{ indicator.is_dashboard }}</td>
+                <td>{{ indicator.is_regional_profile }}</td>
 
                 <td>
                     <div class="table-action">
@@ -147,7 +150,8 @@
                 <td>{% if indicator.source == 'nan' %} {% else %} {{ indicator.source }} {% endif %}</td>
                 <td>{{ indicator.federal_level }}</td>
                 <td>{{ indicator.unit }}</td>
-                <td>{{ indicator.data_type }}</td>
+                <td>{{ indicator.is_dashboard }}</td>
+                <td>{{ indicator.is_regional_profile }}</td>
 
                 <td>
                     <div class="table-action">
