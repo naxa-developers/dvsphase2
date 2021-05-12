@@ -36,15 +36,19 @@
         </div>
         {% endfor %}
         {% endif %}
-
-            <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group ">
-                            <label for="file" class="">Change file</label>
-                            <input type="file" name="file" id="id_file">
-                        </div>
-                    </div>
+        
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label class= "form-label">Current File</label>
+                <input readonly class = "form-control"value = "{{form.instance.file.url| slice:"21:"}} ">
             </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label class = "form-label" for="file">Change file</label>
+                <input class = "form-control" type="file" name="file" id="id_file">
+            </div>
+        </div>
 
 
         <div class="form-group mrt-100" style="margin-top:50px;">
