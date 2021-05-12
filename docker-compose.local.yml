@@ -1,16 +1,1 @@
-
-version: '3'
-
-services:
-  server:
-    env_file: .env
-#    restart: unless-stopped
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - .:/code
-    ports:
-      - "8000:8000"
-    external_links:
-     - psql-11-dvs:db
+docker-compose.yml
