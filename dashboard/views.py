@@ -150,7 +150,7 @@ def bulkCreate(request):
                                                  province_id__code=str(int(df['PROVINCE.CODE'][row])),
                                                  district_id__code=str(df['D.CODE'][row]),
                                                  municipality_id__hlcit_code=str(df['PALIKA.Code'][row]))
-                        test.status = df['PROJECT STATUS'][row]
+                        test.status = 'Ongoing' if df['PROJECT STATUS'][row][0].lower() == 'o' else "Completed"
                         test.second_tier_partner_name = df['2nd TIER PARTNER'][row]
                         test.reporting_line_ministry = df['REPORTING LINE MINISTRY'][row]
                         test.contact_name = df['CONTACT NAME'][row]
@@ -173,7 +173,7 @@ def bulkCreate(request):
                             province_id=Province.objects.get(code=str(int(df['PROVINCE.CODE'][row]))),
                             district_id=District.objects.get(code=str(df['D.CODE'][row])),
                             municipality_id=GapaNapa.objects.get(hlcit_code=str(df['PALIKA.Code'][row])),
-                            status=df['PROJECT STATUS'][row],
+                            status='Ongoing' if df['PROJECT STATUS'][row][0].lower() == 'o' else "Completed",
                             reporting_line_ministry=df['REPORTING LINE MINISTRY'][row],
                             contact_name=df['CONTACT NAME'][row],
                             designation=df['DESIGNATION'][row],
@@ -215,7 +215,7 @@ def bulkCreate(request):
                                                  province_id__code=str(int(df['PROVINCE.CODE'][row])),
                                                  district_id__code=str(df['D.CODE'][row]),
                                                  municipality_id__hlcit_code=str(df['PALIKA.Code'][row]))
-                        test.status = df['PROJECT STATUS'][row]
+                        test.status = 'Ongoing' if df['PROJECT STATUS'][row][0].lower() == 'o' else "Completed"
                         test.second_tier_partner_name = df['2nd TIER PARTNER'][row]
                         test.reporting_line_ministry = df['REPORTING LINE MINISTRY'][row]
                         test.contact_name = df['CONTACT NAME'][row]
@@ -239,7 +239,7 @@ def bulkCreate(request):
                             province_id=Province.objects.get(code=df['PROVINCE.CODE'][row]),
                             district_id=District.objects.get(code=df['D.CODE'][row]),
                             municipality_id=GapaNapa.objects.get(hlcit_code=df['PALIKA.Code'][row]),
-                            status=df['PROJECT STATUS'][row],
+                            status='Ongoing' if df['PROJECT STATUS'][row][0].lower() == 'o' else "Completed",
                             reporting_line_ministry=df['REPORTING LINE MINISTRY'][row],
                             contact_name=df['CONTACT NAME'][row],
                             designation=df['DESIGNATION'][row],
