@@ -1034,6 +1034,8 @@ class FiveList(LoginRequiredMixin, ListView):
                 'provincedata': provincedata,
                 'municipalitydata': municipalitydata,
                 'districtdata': districtdata,
+                'domain': settings.SITE_URL,
+                'total_objects': five.count()
 
             }
             return data
@@ -1105,6 +1107,8 @@ class FiveList(LoginRequiredMixin, ListView):
             data['gapanapa'] = gapanapa
             data['active'] = 'five'
             data['five'] = five
+            data['domain'] = settings.SITE_URL
+            data['total_objects'] = five.count()
             return data
 
 
