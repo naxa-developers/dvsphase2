@@ -22,6 +22,11 @@ class NSForm(ModelForm):
         model = NationalStatistic
         fields = '__all__'
 
+class ManualForm(ModelForm):
+    class Meta:
+        model = Manual
+        fields = '__all__'
+
 class FAQForm(ModelForm):
     class Meta:
         model = FAQ
