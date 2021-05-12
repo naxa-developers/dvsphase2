@@ -235,8 +235,8 @@ class Project(models.Model):
 
 class FiveW(models.Model):
     status = (
-        ('ongoing', 'Ongoing'),
-        ('completed', 'Completed'),
+        ('Ongoing', 'Ongoing'),
+        ('Completed', 'Completed'),
 
     )
 
