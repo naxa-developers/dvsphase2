@@ -2217,6 +2217,23 @@ class NSUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('ns-list')
 
+class ManualUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = Manual
+    template_name = 'manual_edit.html'
+    form_class = ManualForm
+    success_message = 'Manuals successfully updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(ManualUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'man'
+        data['permissions'] = Permission.objects.all()
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('manual-list')
 
 class TACUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = TermsAndCondition
