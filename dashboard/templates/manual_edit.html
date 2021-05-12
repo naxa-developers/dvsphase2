@@ -13,13 +13,13 @@
     <div class="dfid-breadcrumb pdt-100">
         <ul class="flex-start">
             <li>
-                <a href="/dashboard/nman-list/"><i class="material-icons">assignment</i>Manuals</a>
+                <a href="/dashboard/manual-list/"><i class="material-icons">assignment</i>Manuals</a>
             </li>
             <li>Edit</li>
         </ul>
     </div>
     <!-- program form -->
-    <form class="program-form" method="POST">
+    <form class="program-form" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
         {% if form.errors %}
@@ -40,20 +40,8 @@
             <div class="row">
                     <div class="col-md-6">
                         <div class="form-group ">
-                            <label for="id_url" class="">Title</label>
-                            <input type="text" class="form-control" name="title"
-                                   id="id_url" value="{{form.instance.title}}"
-                                   placeholder="Title"/>
-                        </div>
-                    </div>
-            </div>
-            <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group ">
-                            <label for="id_phone_number" class="">URL</label>
-                            <input type="url" class="form-control" value="{{form.instance.url}}" name="url"
-                                   id="id_phone_number"
-                                   placeholder="URL"/>
+                            <label for="file" class="">Change file</label>
+                            <input type="file" name="file" id="id_file">
                         </div>
                     </div>
             </div>
