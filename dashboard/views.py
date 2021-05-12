@@ -22,7 +22,7 @@ from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
+from core.models import Manual, Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
     MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output, Notification, \
     BudgetToSecondTier, BudgetToFirstTier, Cmp, GisStyle, FeedbackForm, FAQ, TermsAndCondition, NationalStatistic
 from .models import UserProfile, Log
@@ -1325,7 +1325,19 @@ class NSList(LoginRequiredMixin, ListView):
         data['active'] = 'ns'
         return data
 
+class ManualList(LoginRequiredMixin, ListView):
+    template_name = 'manual_list.html'
+    model = Manual
 
+    def get_context_data(self, **kwargs):
+        data = super(ManualList, self).get_context_data(**kwargs)
+        manualList = NationalStatistic.objects.order_by('-id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = manualList
+        data['user'] = user_data
+        data['active'] = 'man'
+        return data
 class TACList(LoginRequiredMixin, ListView):
     template_name = 'tac_list.html'
     model = TermsAndCondition
