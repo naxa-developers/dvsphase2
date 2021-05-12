@@ -4,6 +4,11 @@ from django.db.models import Q
 
 
 def fivew(supplier, program, component, sector, sub_sector, markers, markers_value, count, stat):
+    if stat[0][0].lower() == 'c':
+        stat = ['Completed']
+    elif stat[0][0].lower() == 'o':
+        stat = ['Ongoing']
+
     name_list = ['supplier', 'program', 'component', 'sector', 'sub_sector', 'markers', 'markers_value', 'stat']
     value_list = [supplier, program, component, sector, sub_sector, markers, markers_value, stat]
     key_list = ['supplier_id__in', 'program_id__in', 'component_id__code__in', 'program_id__sector__id__in',
@@ -20,6 +25,10 @@ def fivew(supplier, program, component, sector, sub_sector, markers, markers_val
 
 
 def fivew_province(province, supplier, program, component, sector, sub_sector, markers, markers_value, count, stat):
+    if stat[0][0].lower() == 'c':
+        stat = ['Completed']
+    elif stat[0][0].lower() == 'o':
+        stat = ['Ongoing']
     name_list = ['province', 'supplier', 'program', 'component', 'sector', 'sub_sector', 'markers', 'markers_value',
                  'stat']
     value_list = [province, supplier, program, component, sector, sub_sector, markers, markers_value, stat]
@@ -53,6 +62,10 @@ def sankey(province, supplier, program, component, sector, sub_sector, markers, 
 
 def fivew_municipality(municipality, supplier, program, component, sector, sub_sector, markers, markers_value, count,
                        stat):
+    if stat[0][0].lower() == 'c':
+        stat = ['Completed']
+    elif stat[0][0].lower() == 'o':
+        stat = ['Ongoing']
     name_list = ['municipality', 'supplier', 'program', 'component', 'sector', 'sub_sector', 'markers', 'markers_value',
                  'stat']
     value_list = [municipality, supplier, program, component, sector, sub_sector, markers, markers_value, stat]
@@ -70,6 +83,10 @@ def fivew_municipality(municipality, supplier, program, component, sector, sub_s
 
 
 def fivew_district(district, supplier, program, component, sector, sub_sector, markers, markers_value, count, stat):
+    if stat[0][0].lower() == 'c':
+        stat = ['Completed']
+    elif stat[0][0].lower() == 'o':
+        stat = ['Ongoing']
     name_list = ['district', 'supplier', 'program', 'component', 'sector', 'sub_sector', 'markers', 'markers_value',
                  'stat']
     value_list = [district, supplier, program, component, sector, sub_sector, markers, markers_value, stat]
