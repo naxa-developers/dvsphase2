@@ -25,6 +25,7 @@
             <thead>
             <tr>
                 <th>Id</th>
+                <th>Name</th>
                 <th>URL</th>
                 <th></th>
             </tr>
@@ -33,17 +34,18 @@
             {% for man in list %}
             <tr>
                 <td>{{ man.id }}</td>
-                <td>{{ man.url }}</td>
+                <td>{{ man.file.name | slice:"14:" }}</td>
+                <td><a href="{{man.file.url}}" target = "_blank">Click to open the file</a></td>
 
                 <td>
                     <div class="table-action">
                         <a href="#" class="more-action">
-                            <i class="material-icoman">more_vert</i>
+                            <i class="material-icons">more_vert</i>
                         </a>
                         <ul class="dropdown-animation">
-                            {% if perms.core.change_manual %}
+                            {% if perms.core.change_nationalstatistic %}
                             <li>
-                                    <a href="/dashboard/man-edit/{{ man.id }}" class="flex-start">
+                                    <a href="/dashboard/ns-edit/{{ man.id }}" class="flex-start">
                                     <i class="material-icons">edit</i> Edit
                                 </a>
                             </li>
