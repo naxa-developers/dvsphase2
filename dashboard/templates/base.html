@@ -273,6 +273,17 @@
                             class="material-icons">gavel</i><span>National Statistic</span></a>
                 </li>
                 {% endif %}
+                {% if perms.core.view_manual %}
+                {% if active == 'man' %}
+                <li class="menu-item active">
+                    {% else %}
+                <li class="menu-item">
+                    {% endif %}
+                    <a href="/dashboard/manual-list/" class=""><i
+                            class="material-icons">gavel</i><span>Manual</span></a>
+                </li>
+                {% endif %}
+                
 <!--                {% if perms.core.view_faq %}-->
 <!--                {% if active == 'sector' %}-->
 <!--                <li class="menu-item active submenu">-->

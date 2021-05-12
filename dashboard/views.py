@@ -8,7 +8,7 @@ from .forms import UserForm, ProgramCreateForm, PartnerCreateForm, SectorCreateF
     MarkerCategoryCreateForm, MarkerValueCreateForm, GisLayerCreateForm, ProvinceCreateForm, DistrictCreateForm, \
     PalikaCreateForm, IndicatorCreateForm, ProjectCreateForm, PermissionForm, FiveCreateForm, OutputCreateForm, \
     GroupForm, BudgetCreateForm, PartnerContactForm, CmpForm, GisStyleForm, UserProfileForm, FeedbackDataForm, FAQForm, \
-    TACForm, NSForm
+    TACForm, NSForm, ManualForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from rest_framework.decorators import api_view, permission_classes, renderer_classes, authentication_classes
@@ -22,7 +22,7 @@ from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from core.models import Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
+from core.models import Manual, Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
     MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output, Notification, \
     BudgetToSecondTier, BudgetToFirstTier, Cmp, GisStyle, FeedbackForm, FAQ, TermsAndCondition, NationalStatistic
 from .models import UserProfile, Log
@@ -150,7 +150,7 @@ def bulkCreate(request):
                                                  province_id__code=str(int(df['PROVINCE.CODE'][row])),
                                                  district_id__code=str(df['D.CODE'][row]),
                                                  municipality_id__hlcit_code=str(df['PALIKA.Code'][row]))
-                        test.status = df['PROJECT STATUS'][row]
+                        test.status = 'Ongoing' if df['PROJECT STATUS'][row][0].lower() == 'o' else "Completed"
                         test.second_tier_partner_name = df['2nd TIER PARTNER'][row]
                         test.reporting_line_ministry = df['REPORTING LINE MINISTRY'][row]
                         test.contact_name = df['CONTACT NAME'][row]
@@ -173,7 +173,7 @@ def bulkCreate(request):
                             province_id=Province.objects.get(code=str(int(df['PROVINCE.CODE'][row]))),
                             district_id=District.objects.get(code=str(df['D.CODE'][row])),
                             municipality_id=GapaNapa.objects.get(hlcit_code=str(df['PALIKA.Code'][row])),
-                            status=df['PROJECT STATUS'][row],
+                            status='Ongoing' if df['PROJECT STATUS'][row][0].lower() == 'o' else "Completed",
                             reporting_line_ministry=df['REPORTING LINE MINISTRY'][row],
                             contact_name=df['CONTACT NAME'][row],
                             designation=df['DESIGNATION'][row],
@@ -215,7 +215,7 @@ def bulkCreate(request):
                                                  province_id__code=str(int(df['PROVINCE.CODE'][row])),
                                                  district_id__code=str(df['D.CODE'][row]),
                                                  municipality_id__hlcit_code=str(df['PALIKA.Code'][row]))
-                        test.status = df['PROJECT STATUS'][row]
+                        test.status = 'Ongoing' if df['PROJECT STATUS'][row][0].lower() == 'o' else "Completed"
                         test.second_tier_partner_name = df['2nd TIER PARTNER'][row]
                         test.reporting_line_ministry = df['REPORTING LINE MINISTRY'][row]
                         test.contact_name = df['CONTACT NAME'][row]
@@ -239,7 +239,7 @@ def bulkCreate(request):
                             province_id=Province.objects.get(code=df['PROVINCE.CODE'][row]),
                             district_id=District.objects.get(code=df['D.CODE'][row]),
                             municipality_id=GapaNapa.objects.get(hlcit_code=df['PALIKA.Code'][row]),
-                            status=df['PROJECT STATUS'][row],
+                            status='Ongoing' if df['PROJECT STATUS'][row][0].lower() == 'o' else "Completed",
                             reporting_line_ministry=df['REPORTING LINE MINISTRY'][row],
                             contact_name=df['CONTACT NAME'][row],
                             designation=df['DESIGNATION'][row],
@@ -1325,7 +1325,19 @@ class NSList(LoginRequiredMixin, ListView):
         data['active'] = 'ns'
         return data
 
+class ManualList(LoginRequiredMixin, ListView):
+    template_name = 'manual_list.html'
+    model = Manual
 
+    def get_context_data(self, **kwargs):
+        data = super(ManualList, self).get_context_data(**kwargs)
+        manualList = Manual.objects.order_by('-id')
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = manualList
+        data['user'] = user_data
+        data['active'] = 'man'
+        return data
 class TACList(LoginRequiredMixin, ListView):
     template_name = 'tac_list.html'
     model = TermsAndCondition
@@ -2205,6 +2217,23 @@ class NSUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('ns-list')
 
+class ManualUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = Manual
+    template_name = 'manual_edit.html'
+    form_class = ManualForm
+    success_message = 'Manuals successfully updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(ManualUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['active'] = 'man'
+        data['permissions'] = Permission.objects.all()
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('manual-list')
 
 class TACUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = TermsAndCondition

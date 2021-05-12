@@ -5,10 +5,9 @@ from django.db.models import Q
 
 def fivew(supplier, program, component, sector, sub_sector, markers, markers_value, count, stat):
     if stat[0][0].lower() == 'c':
-        stat = ['completed', 'Completed']
+        stat = ['completed', 'Completed', 'complete']
     elif stat[0][0].lower() == 'o':
         stat = ['ongoing', 'Ongoing']
-
     name_list = ['supplier', 'program', 'component', 'sector', 'sub_sector', 'markers', 'markers_value', 'stat']
     value_list = [supplier, program, component, sector, sub_sector, markers, markers_value, stat]
     key_list = ['supplier_id__in', 'program_id__in', 'component_id__code__in', 'program_id__sector__id__in',
