@@ -1035,7 +1035,7 @@ class FiveList(LoginRequiredMixin, ListView):
                 'municipalitydata': municipalitydata,
                 'districtdata': districtdata,
                 'domain': settings.SITE_URL,
-                'total_objects': five.count()
+                'total_objects': dat_values.count()
 
             }
             return data
