@@ -51,7 +51,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_partners_id">Select Partners</label>
-                        <select name="partner_id" placeholder="Select Partners" id="id_partners_id" multiple="multiple">
+                        <select name="partner_id" placeholder="Select Partners" id="id_partners_id" multiple="multiple" required>
                             {% for partner in partners %}
                             <option value="{{partner.id}}">{{partner.name}}</option>
                             {% endfor %}
