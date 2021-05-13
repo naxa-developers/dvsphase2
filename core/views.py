@@ -682,7 +682,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             addition_type = ['meters', 'count', 'sqkm']
             average_type = ['percent', 'millimeters / month', 'persons per household', 'indices', 'hour']
             if 'district_code' in request.GET:
-                ind = Indicator.objects.filter(federal_level__in=['district', 'all']).exclude(show_flag=False).values(
+                ind = Indicator.objects.filter(federal_level__in=['district', 'all']).exclude(
+                    Q(show_flag=False) | Q(is_dashboard=False) | Q(is_regional_profile=False)).values(
                     'category', 'id',
                     'federal_level',
                     'indicator',
@@ -824,7 +825,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             top_sector_by_no_partner = []
             fivew_data = []
             if 'municipality_code' in request.GET:
-                ind = Indicator.objects.filter(federal_level__in=['palika', 'all']).exclude(show_flag=False).values(
+                ind = Indicator.objects.filter(federal_level__in=['palika', 'all']).exclude(
+                    Q(show_flag=False) | Q(is_dashboard=False) | Q(is_regional_profile=False)).values(
                     'category', 'id',
                     'federal_level',
                     'full_title',
@@ -1180,9 +1182,7 @@ class DistrictIndicator(viewsets.ModelViewSet):
 
                         }
                     )
-                print('market')
             else:
-                # print(health_id.id)
                 for dist in district:
                     addition_type = ['meters', 'count', 'sqkm']
                     average_type = ['percent', 'millimeters / month', 'persons per household', 'indices']
@@ -1241,9 +1241,6 @@ class ProvinceIndicator(viewsets.ModelViewSet):
         for i in range(0, len(id_indicator)):
             for dist in province:
                 value_sum = 0
-                # dist_pop_sum = GapaNapa.objects.values('name', 'id', 'district_id', 'population').filter(
-                #     province_id=dist['id']).aggregate(
-                #     Sum('population'))
                 indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
                                                           'gapanapa_id__population', 'indicator_id__unit').filter(
                     indicator_id=int(id_indicator[i]),
