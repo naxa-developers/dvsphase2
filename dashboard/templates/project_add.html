@@ -279,8 +279,13 @@
 {% endblock %}
 {% block script %}
 <script>
-    $(document).ready(function() {
+    $(document).ready(function() { 
+        $("#id_start_date").on("input change", function (e) {
+                console.log("hello")
+                var min_date = e.target.value
+                $("#id_end_date").attr('min',min_date);
 
+            })  
         $('#id_partners_id').multipleSelect();
         var dataValue = []
         $('#id_programs_id option').each(function () {
@@ -314,7 +319,7 @@
                     $(this).css('display', 'none');
                 };
                 dataValue.push($(this).val());
-            })
+            })            
         })
     })
 </script>
