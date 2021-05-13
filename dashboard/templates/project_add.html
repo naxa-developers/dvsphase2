@@ -37,7 +37,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_programs_id">Select Program</label>
-                        <select name="program_id" id="id_programs_id" class="custom-select">
+                        <select name="program_id" id="id_programs_id" class="custom-select" required>
                              <option value="" selected disabled>----Select Program----</option>
                             {% for program in programs %}
                                 {% for dat in program.partner_id.all %}
