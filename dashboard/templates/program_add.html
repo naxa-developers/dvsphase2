@@ -382,25 +382,12 @@
             $('#SectorModal').modal('toggle')
 
         })
-    })
 
-    $( function() {
-        var todaydt = new Date();
-        $("#id_start_date").datepicker({
-                    autoclose: true,
-                        dateFormat: "dd/mm/yy",
-                        endDate: todaydt,
-                    onSelect: function (date) {
-                    //Get selected date 
-                        var date2 = $('#id_start_date').datepicker('getDate');
-                        //sets minDate to txt_date_to
-                        $('#id_end_date').datepicker('option', 'minDate', date2);
-                    }
-                });
-                $('#id_end_date).datepicker({
-                    dateFormat: "dd/mm/yy",
-                    
-                });
-    } );
+        $("#id_start_date").on("input change", function (e) {
+            var min_date = e.target.value
+            $("#id_end_date").attr('min',min_date);
+
+        })
+    });
 </script>
 {% endblock %}

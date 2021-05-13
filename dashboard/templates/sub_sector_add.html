@@ -37,7 +37,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_sector_id">Select Sector</label>
-                        <select name="sector_id" id="id_sector_id" class="custom-select">
+                        <select name="sector_id" id="id_sector_id" class="custom-select" required>
                             <option value="" selected>----Select Sector----</option>
                             {% for sector in sectors %}
 
@@ -61,7 +61,7 @@
                     <div class="form-group ">
                         <label for="id_name" class="">Name</label>
                         <input type="text" class="form-control" name="name" maxlength="100" id="id_name"
-                               placeholder="Name"/>
+                               placeholder="Name" required/>
                         <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
                         <!--                                        Please ennter name</span>-->
                     </div>
@@ -70,8 +70,8 @@
                 <div class="col-md-6">
                     <div class="form-group ">
                         <label for="id_code" class="">Code</label>
-                        <input type="text" class="form-control" name="code" maxlength="100" id="id_code"
-                               placeholder="84349"/>
+                        <input type="number" class="form-control" name="code" maxlength="100" id="id_code"
+                               placeholder="84349" required/>
 
                     </div>
                 </div>
