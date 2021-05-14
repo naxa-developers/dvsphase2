@@ -37,7 +37,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_programs_id">Select Program</label>
-                        <select name="program_id" id="id_programs_id" class="custom-select">
+                        <select name="program_id" id="id_programs_id" class="custom-select" required>
                              <option value="" selected disabled>----Select Program----</option>
                             {% for program in programs %}
                                 {% for dat in program.partner_id.all %}
@@ -51,7 +51,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="id_partners_id">Select Partners</label>
-                        <select name="partner_id" placeholder="Select Partners" id="id_partners_id" multiple="multiple">
+                        <select name="partner_id" placeholder="Select Partners" id="id_partners_id" multiple="multiple" required>
                             {% for partner in partners %}
                             <option value="{{partner.id}}">{{partner.name}}</option>
                             {% endfor %}
@@ -69,7 +69,7 @@
                     <div class="form-group ">
                         <label for="id_name" class="">Name</label>
                         <input type="text" class="form-control" name="name" maxlength="100" id="id_name"
-                               placeholder="Name"/>
+                               placeholder="Name" required/>
                         <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
                         <!--                                        Please ennter name</span>-->
                     </div>
@@ -78,8 +78,8 @@
                 <div class="col-md-6">
                     <div class="form-group ">
                         <label for="id_code" class="">Code</label>
-                        <input type="text" class="form-control" name="code" maxlength="100" id="id_code"
-                               placeholder="84349"/>
+                        <input type="number" class="form-control" name="code" maxlength="100" id="id_code"
+                               placeholder="84349" required/>
                         <!--                        <span class="error-message"><i class="material-icons error-icon">error_outline</i>-->
                         <!--                                        Please ennter name</span>-->
                     </div>
@@ -279,8 +279,13 @@
 {% endblock %}
 {% block script %}
 <script>
-    $(document).ready(function() {
+    $(document).ready(function() { 
+        $("#id_start_date").on("input change", function (e) {
+                console.log("hello")
+                var min_date = e.target.value
+                $("#id_end_date").attr('min',min_date);
 
+            })  
         $('#id_partners_id').multipleSelect();
         var dataValue = []
         $('#id_programs_id option').each(function () {
@@ -314,7 +319,7 @@
                     $(this).css('display', 'none');
                 };
                 dataValue.push($(this).val());
-            })
+            })            
         })
     })
 </script>

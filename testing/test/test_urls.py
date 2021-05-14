@@ -54,3 +54,18 @@ class TestUrls:
     def test_dashboard_token(self):
         path = reverse('token')
         assert resolve(path).view_name == "token"
+
+
+
+# import requests
+#
+# driver_firstname = request.POST['driver_firstname']
+# driver_lastname = request.POST['driver_lastname']
+# driver_email = request.POST['driver_email']
+#
+# payload = {'driver.driver_firstname': driver_firstname,
+#            'driver.driver_lastname': driver_lastname,
+#            'driver.driver_email': driver_email
+#            }
+#
+# r = requests.post("http://your-url.org/post", data=payload)
