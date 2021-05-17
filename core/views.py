@@ -1205,8 +1205,9 @@ class DistrictIndicator(viewsets.ModelViewSet):
                             else:
                                 count += 1
                                 value_sum = (value_sum + 0)
-                    if indicator.first()['indicator_id__unit'] in average_type:
-                        value_sum = value_sum / count
+                    if indicator:
+                        if indicator.first()['indicator_id__unit'] in average_type:
+                            value_sum = value_sum / count
 
                     data.append(
                         {
@@ -1259,8 +1260,9 @@ class ProvinceIndicator(viewsets.ModelViewSet):
                         else:
                             count += 1
                             value_sum = (value_sum + 0)
-                if indicator.first()['indicator_id__unit'] in average_type:
-                    value_sum = value_sum / count
+                if indicator:
+                    if indicator.first()['indicator_id__unit'] in average_type:
+                        value_sum = value_sum / count
 
                 data.append(
                     {
