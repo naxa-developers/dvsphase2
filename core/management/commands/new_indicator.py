@@ -54,7 +54,7 @@ class Command(BaseCommand):
                             federal_level='all',
                             unit=df['Unit'][row],
                             is_dashboard=json.loads(str(df['Show on Dashboard '][row]).lower()),
-                            is_regional_profile=json.loads(str(df['Show on Dashboard '][row]).lower())
+                            is_regional_profile=json.loads(str(df['Show on Profile '][row]).lower())
                         ))
                 except Exception as e:
                     print(e)
