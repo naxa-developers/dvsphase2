@@ -25,6 +25,8 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from .filters import fivew, fivew_province, fivew_district, fivew_municipality, sankey
 from datetime import datetime, date
 from django.db.models import Q
+from datetimerange import DateTimeRange
+
 
 
 # Create your views here.
@@ -2401,10 +2403,11 @@ class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
                     b = end_date.split('-')
                     end_date_new = date(int(b[0]), int(b[1]), int(b[2]))
                     print(str('Start Date') + ':' + str(start_date) + str('End Date') + ':' + str(end_date))
-                    if p['start_date'] <= start_date_new <= end_date_new <= p['end_date'] or start_date_new <= p[
-                        'start_date'] <= p['end_date'] <= end_date_new:
+                    user_timerange = DateTimeRange( end_date_new,start_date_new)
+                    program_timerange = DateTimeRange(p['start_date'],p['end_date'])
+
+                    if user_timerange in program_timerange:
                         ids.append(p['id'])
-            print(ids)
             queryset = Program.objects.filter(id__in=ids).order_by('id')
         else:
             queryset = Program.objects.order_by('id')
