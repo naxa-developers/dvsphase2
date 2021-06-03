@@ -1,0 +1,12 @@
+/home/ubuntu/projects/dvsphase2/postgres-data
+postgres-data
+*.pyc
+*/__pycache__/*
+media/
+data_csv_new
+testing
+data_csv
+csv
+update_csv
+./fixtures
+.git
