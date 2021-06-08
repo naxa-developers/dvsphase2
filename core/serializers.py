@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Partner, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
     IndicatorValue, Sector, SubSector, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
-    Filter, NepalSummary, FeedbackForm, FAQ, TermsAndCondition, NationalStatistic,Manual
+    Filter, NepalSummary, FeedbackForm, FAQ, TermsAndCondition, NationalStatistic, Manual
 
 
 class NepalSummarySerializer(serializers.ModelSerializer):
@@ -113,7 +113,7 @@ class ProgramSerializer(serializers.ModelSerializer):
             'id', 'name', 'start_date', 'end_date', 'code', 'iati', 'total_budget', 'partner', 'component',
             'marker_category', 'marker_value',
             'sector',
-            'sub_sector')
+            'sub_sector', 'program_acronym')
 
     def get_partner(self, obj):
         data = []
@@ -141,7 +141,8 @@ class ProgramSerializer(serializers.ModelSerializer):
 
     def get_marker_category(self, obj):
         data = []
-        qs = obj.marker_value.all().values('marker_category_id', 'marker_category_id__name')
+        qs = obj.marker_value.all().values(
+            'marker_category_id', 'marker_category_id__name')
         for q in qs:
             data.append({
                 'id': q['marker_category_id'],
@@ -218,6 +219,7 @@ class SectorSerializer(serializers.ModelSerializer):
         model = Sector
         fields = '__all__'
 
+
 class ManualSerializer(serializers.ModelSerializer):
     class Meta:
         model = Manual
@@ -269,7 +271,8 @@ class DistrictSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = District
-        fields = ('id', 'province_id', 'province_name', 'name', 'code', 'n_code', 'bbox')
+        fields = ('id', 'province_id', 'province_name',
+                  'name', 'code', 'n_code', 'bbox')
 
     def get_province_name(self, obj):
         return str(obj.province_id.name)
@@ -348,7 +351,7 @@ class IndicatorValueSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = IndicatorValue
-        fields = ('id', 'indicator_id', 'code', 'value','name')
+        fields = ('id', 'indicator_id', 'code', 'value', 'name')
 
     def get_code(self, obj):
         try:
@@ -385,4 +388,5 @@ class TravelTimeSerializer(serializers.ModelSerializer):
 class FeedbackSerializer(serializers.ModelSerializer):
     class Meta:
         model = FeedbackForm
-        fields = ['name', 'email', 'attachment', 'subject', 'your_feedback', 'type']
+        fields = ['name', 'email', 'attachment',
+                  'subject', 'your_feedback', 'type']
