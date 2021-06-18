@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'dashboard',
     'federal',
     'ckeditor',
+    'about_us',
 
 ]
 

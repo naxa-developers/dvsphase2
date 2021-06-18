@@ -22,9 +22,6 @@ from django.conf import settings
 from django.contrib.auth import views as auth_views
 
 
-
-
-
 schema_view = get_schema_view(
     openapi.Info(
         title="Dvs Api Doc",
@@ -35,20 +32,25 @@ schema_view = get_schema_view(
 urlpatterns = [
 
     path('admin/', admin.site.urls),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('swagger/', schema_view.with_ui('swagger',
+         cache_timeout=0), name='schema-swagger-ui'),
     path('api/v1/core/', include('core.urls')),
     path('api/v1/covid/', include('covid.urls')),
     path('dashboard/', include('dashboard.urls')),
 
     path('federal/', include('federal.urls')),
+    path('api/v1/about_us/', include('about_us.urls')),
+
 
     path('', auth_views.LoginView.as_view(), name='login'),
 
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
 
     # import debug_toolbar
     #
