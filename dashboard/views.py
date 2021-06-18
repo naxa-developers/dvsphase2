@@ -52,8 +52,11 @@ from django.http import FileResponse
 from django.http import JsonResponse
 from django.db.models import Sum
 
+from about_us.models import AboutUs, ContactUs
+from about_us.forms import AboutUsForm, ContactUsForm
 
 # Create your views here.
+
 
 @login_required()
 def login_test(request, **kwargs):
@@ -145,12 +148,17 @@ def bulkCreate(request):
                 try:
                     try:
                         test = FiveW.objects.get(supplier_id__code=int(df['1st TIER PARTNER CODE'][row]),
-                                                 component_id__code=str(df['Project/Component Code'][row]),
-                                                 program_id__code=str(int(df['Programme Code'][row])),
-                                                 province_id__code=str(int(df['PROVINCE.CODE'][row])),
-                                                 district_id__code=str(df['D.CODE'][row]),
+                                                 component_id__code=str(
+                                                     df['Project/Component Code'][row]),
+                                                 program_id__code=str(
+                                                     int(df['Programme Code'][row])),
+                                                 province_id__code=str(
+                                                     int(df['PROVINCE.CODE'][row])),
+                                                 district_id__code=str(
+                                                     df['D.CODE'][row]),
                                                  municipality_id__hlcit_code=str(df['PALIKA.Code'][row]))
-                        test.status = 'Ongoing' if df['PROJECT STATUS'][row][0].lower() == 'o' else "Completed"
+                        test.status = 'Ongoing' if df['PROJECT STATUS'][row][0].lower(
+                        ) == 'o' else "Completed"
                         test.second_tier_partner_name = df['2nd TIER PARTNER'][row]
                         test.reporting_line_ministry = df['REPORTING LINE MINISTRY'][row]
                         test.contact_name = df['CONTACT NAME'][row]
@@ -165,15 +173,21 @@ def bulkCreate(request):
 
                     except ObjectDoesNotExist:
                         fivew_correct.append(FiveW(
-                            supplier_id=Partner.objects.get(code=int(df['1st TIER PARTNER CODE'][row])),
+                            supplier_id=Partner.objects.get(
+                                code=int(df['1st TIER PARTNER CODE'][row])),
                             second_tier_partner_name=df['2nd TIER PARTNER'][row],
                             component_id=project(df['Project/Component Code'][row],
                                                  int(df['1st TIER PARTNER CODE'][row])),
-                            program_id=Program.objects.get(code=str(int(df['Programme Code'][row]))),
-                            province_id=Province.objects.get(code=str(int(df['PROVINCE.CODE'][row]))),
-                            district_id=District.objects.get(code=str(df['D.CODE'][row])),
-                            municipality_id=GapaNapa.objects.get(hlcit_code=str(df['PALIKA.Code'][row])),
-                            status='Ongoing' if df['PROJECT STATUS'][row][0].lower() == 'o' else "Completed",
+                            program_id=Program.objects.get(
+                                code=str(int(df['Programme Code'][row]))),
+                            province_id=Province.objects.get(
+                                code=str(int(df['PROVINCE.CODE'][row]))),
+                            district_id=District.objects.get(
+                                code=str(df['D.CODE'][row])),
+                            municipality_id=GapaNapa.objects.get(
+                                hlcit_code=str(df['PALIKA.Code'][row])),
+                            status='Ongoing' if df['PROJECT STATUS'][row][0].lower(
+                            ) == 'o' else "Completed",
                             reporting_line_ministry=df['REPORTING LINE MINISTRY'][row],
                             contact_name=df['CONTACT NAME'][row],
                             designation=df['DESIGNATION'][row],
@@ -184,7 +198,6 @@ def bulkCreate(request):
                         ))
                         success_count += 1
 
-
                 except Exception as e:
                     fivew_incorrect.append(row)
                     error_log.append(e)
@@ -194,11 +207,14 @@ def bulkCreate(request):
                 test['Errors'] = error_log
                 test.to_csv('media/errordata.csv')
             if len(error) > 0:
-                messages.error(request, 'Error in row(s)' + str(' '.join([str(elem) for elem in error])))
+                messages.error(request, 'Error in row(s)' +
+                               str(' '.join([str(elem) for elem in error])))
             if success_count > 0:
-                messages.success(request, 'Success! : ' + str(success_count) + ' ' + "row(s) Of Five-w Data Added ")
+                messages.success(
+                    request, 'Success! : ' + str(success_count) + ' ' + "row(s) Of Five-w Data Added ")
             if update_count > 0:
-                messages.info(request, 'Updated! : ' + str(update_count) + " row(s) Of Five-w Data Updated ")
+                messages.info(
+                    request, 'Updated! : ' + str(update_count) + " row(s) Of Five-w Data Updated ")
 
             FiveW.objects.bulk_create(fivew_correct)
 
@@ -207,15 +223,21 @@ def bulkCreate(request):
                 try:
                     try:
                         test = FiveW.objects.get(supplier_id__id=user_data.partner.id,
-                                                 supplier_id__code=int(df['1st TIER PARTNER CODE'][row]),
+                                                 supplier_id__code=int(
+                                                     df['1st TIER PARTNER CODE'][row]),
                                                  component_id__id=user_data.project.id,
-                                                 component_id__code=str(df['Project/Component Code'][row]),
+                                                 component_id__code=str(
+                                                     df['Project/Component Code'][row]),
                                                  program_id__id=user_data.program.id,
-                                                 program_id__code=str(int(df['Programme Code'][row])),
-                                                 province_id__code=str(int(df['PROVINCE.CODE'][row])),
-                                                 district_id__code=str(df['D.CODE'][row]),
+                                                 program_id__code=str(
+                                                     int(df['Programme Code'][row])),
+                                                 province_id__code=str(
+                                                     int(df['PROVINCE.CODE'][row])),
+                                                 district_id__code=str(
+                                                     df['D.CODE'][row]),
                                                  municipality_id__hlcit_code=str(df['PALIKA.Code'][row]))
-                        test.status = 'Ongoing' if df['PROJECT STATUS'][row][0].lower() == 'o' else "Completed"
+                        test.status = 'Ongoing' if df['PROJECT STATUS'][row][0].lower(
+                        ) == 'o' else "Completed"
                         test.second_tier_partner_name = df['2nd TIER PARTNER'][row]
                         test.reporting_line_ministry = df['REPORTING LINE MINISTRY'][row]
                         test.contact_name = df['CONTACT NAME'][row]
@@ -236,10 +258,14 @@ def bulkCreate(request):
                                                              code=df['Project/Component Code'][row]),
                             program_id=Program.objects.get(id=user_data.program.id,
                                                            code=str(int(df['Programme Code'][row]))),
-                            province_id=Province.objects.get(code=df['PROVINCE.CODE'][row]),
-                            district_id=District.objects.get(code=df['D.CODE'][row]),
-                            municipality_id=GapaNapa.objects.get(hlcit_code=df['PALIKA.Code'][row]),
-                            status='Ongoing' if df['PROJECT STATUS'][row][0].lower() == 'o' else "Completed",
+                            province_id=Province.objects.get(
+                                code=df['PROVINCE.CODE'][row]),
+                            district_id=District.objects.get(
+                                code=df['D.CODE'][row]),
+                            municipality_id=GapaNapa.objects.get(
+                                hlcit_code=df['PALIKA.Code'][row]),
+                            status='Ongoing' if df['PROJECT STATUS'][row][0].lower(
+                            ) == 'o' else "Completed",
                             reporting_line_ministry=df['REPORTING LINE MINISTRY'][row],
                             contact_name=df['CONTACT NAME'][row],
                             designation=df['DESIGNATION'][row],
@@ -260,11 +286,14 @@ def bulkCreate(request):
                 test.to_csv('media/errordata.csv')
 
             if len(error) > 0:
-                messages.error(request, 'Error in row(s)' + str(' '.join([str(elem) for elem in error])))
+                messages.error(request, 'Error in row(s)' +
+                               str(' '.join([str(elem) for elem in error])))
             if success_count > 0:
-                messages.success(request, 'Success! : ' + str(success_count) + ' ' + "row(s) Of Five-w Data Added ")
+                messages.success(
+                    request, 'Success! : ' + str(success_count) + ' ' + "row(s) Of Five-w Data Added ")
             if update_count > 0:
-                messages.info(request, 'Updated! : ' + str(update_count) + " row(s) Of Five-w Data Updated ")
+                messages.info(
+                    request, 'Updated! : ' + str(update_count) + " row(s) Of Five-w Data Updated ")
             FiveW.objects.bulk_create(fivew_correct)
 
     return redirect('/dashboard/five-list', messages)
@@ -293,21 +322,32 @@ def uploadData(request):
                 print(row)
                 print(df['New Local Unit'][row])
 
-                supplier_id = Partner.objects.get(code=str(int(df['Tier 1_Partner'][row])))
-                second_tier_partner = Partner.objects.get(code=str(int(df['Tier 2_Partner_code'][row])))
-                component_id = Project.objects.get(code=str(df['Component'][row]))
-                program_id = Program.objects.get(code=str(int(df['Programme'][row])))
-                province_id = Province.objects.get(code=str(int(df['State'][row])))
-                district_id = District.objects.get(name=df['Project District'][row])
-                municipality_id = GapaNapa.objects.get(hlcit_code=df['hlcit_code'][row])
+                supplier_id = Partner.objects.get(
+                    code=str(int(df['Tier 1_Partner'][row])))
+                second_tier_partner = Partner.objects.get(
+                    code=str(int(df['Tier 2_Partner_code'][row])))
+                component_id = Project.objects.get(
+                    code=str(df['Component'][row]))
+                program_id = Program.objects.get(
+                    code=str(int(df['Programme'][row])))
+                province_id = Province.objects.get(
+                    code=str(int(df['State'][row])))
+                district_id = District.objects.get(
+                    name=df['Project District'][row])
+                municipality_id = GapaNapa.objects.get(
+                    hlcit_code=df['hlcit_code'][row])
                 ward = None
                 local_partner = None
                 project_title = df['Name of the Project'][row]
                 status = df['Status'][row]
-                start_date = datetime.strptime(df['Start date'][row], "%m/%d/%Y").strftime('%Y-%m-%d')
-                end_date = datetime.strptime(df['End Date'][row], "%m/%d/%Y").strftime('%Y-%m-%d')
-                allocated_budget = float(df['Allocated Funds to Local Units'][row])
-                male_beneficiary = (int(df['Total Beneficiaries'][row]) - int(df['Female Beneficiaries'][row]))
+                start_date = datetime.strptime(
+                    df['Start date'][row], "%m/%d/%Y").strftime('%Y-%m-%d')
+                end_date = datetime.strptime(
+                    df['End Date'][row], "%m/%d/%Y").strftime('%Y-%m-%d')
+                allocated_budget = float(
+                    df['Allocated Funds to Local Units'][row])
+                male_beneficiary = (
+                    int(df['Total Beneficiaries'][row]) - int(df['Female Beneficiaries'][row]))
                 female_beneficiary = int(df['Female Beneficiaries'][row])
                 total_beneficiary = int(df['Total Beneficiaries'][row])
 
@@ -472,14 +512,16 @@ def ShapefileUpload(request):
         return render(request, 'shapefile.html')
     else:
         # shapefile = request.FILES["shapefile"]
-        get_store_name = GisLayer.objects.filter(id=19).values_list('store_name', flat=True)
+        get_store_name = GisLayer.objects.filter(
+            id=19).values_list('store_name', flat=True)
 
         url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/' + get_store_name[
             0] + '?recurse=true'
         headers = {
             'Content-type': '',
         }
-        response = requests.delete(url, headers=headers, auth=('admin', 'geoserver'))
+        response = requests.delete(
+            url, headers=headers, auth=('admin', 'geoserver'))
         # print(response)
         return HttpResponse(response.status_code)
 
@@ -532,7 +574,8 @@ def assign_role(request, **kwargs):
         user = User.objects.get(id=user_id)
         group = Group.objects.get(id=group_id)
         user.groups.add(group)
-        notify_message = user.username + ' was assigned ' + group.name + ' role by ' + request.user.username
+        notify_message = user.username + ' was assigned ' + \
+            group.name + ' role by ' + request.user.username
         notify = Notification.objects.create(user=user, message=notify_message, type='role',
                                              link='/dashboard/user-list')
         return redirect('user-list')
@@ -592,9 +635,11 @@ def signup(request, **kwargs):
             UserProfile.objects.create(user=user, name=request.POST['name'], email=request.POST['email'],
                                        partner_id=int(request.POST['partner']), image=request.FILES['image'])
 
-            notify_message = request.POST['email'] + ' has created account by username ' + request.POST['username']
+            notify_message = request.POST['email'] + \
+                ' has created account by username ' + request.POST['username']
 
-            notify_messages = 'Activate account for user ' + request.POST['username']
+            notify_messages = 'Activate account for user ' + \
+                request.POST['username']
 
             notify = Notification.objects.create(user=user, message=notify_message, type='signup',
                                                  link='/dashboard/user-list')
@@ -646,17 +691,22 @@ def createuser(request, **kwargs):
             try:
                 UserProfile.objects.create(user=user, name=request.POST['name'], email=request.POST['email'],
                                            partner_id=int(request.POST['partner']), image=request.FILES['image'],
-                                           program_id=int(request.POST['program']),
+                                           program_id=int(
+                                               request.POST['program']),
                                            project_id=int(request.POST['project']))
             except:
                 UserProfile.objects.create(user=user, name=request.POST['name'], email=request.POST['email'],
-                                           partner_id=int(request.POST['partner']),
-                                           program_id=int(request.POST['program']),
+                                           partner_id=int(
+                                               request.POST['partner']),
+                                           program_id=int(
+                                               request.POST['program']),
                                            project_id=int(request.POST['project']))
 
-            notify_message = request.POST['email'] + ' has created account by username ' + request.POST['username']
+            notify_message = request.POST['email'] + \
+                ' has created account by username ' + request.POST['username']
 
-            notify_messages = 'Activate account for user ' + request.POST['username']
+            notify_messages = 'Activate account for user ' + \
+                request.POST['username']
 
             notify = Notification.objects.create(user=user, message=notify_message, type='signup',
                                                  link='/dashboard/user-list')
@@ -666,8 +716,10 @@ def createuser(request, **kwargs):
         else:
             partner = Partner.objects.all()
             group = Group.objects.all()
-            programs = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
-            projects = Project.objects.values('id', 'name', 'program_id__id', 'code', 'partner_id__id').order_by('name')
+            programs = Program.objects.values(
+                'id', 'name', 'partner_id__id').order_by('name')
+            projects = Project.objects.values(
+                'id', 'name', 'program_id__id', 'code', 'partner_id__id').order_by('name')
 
             return render(request, 'createuser.html',
                           {'form': form, 'partners': partner, 'group': group, 'programs': programs,
@@ -677,8 +729,10 @@ def createuser(request, **kwargs):
         form = UserCreationForm()
         partner = Partner.objects.order_by('name')
         group = Group.objects.all()
-        programs = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
-        projects = Project.objects.values('id', 'name', 'program_id__id', 'code', 'partner_id__id').order_by('name')
+        programs = Program.objects.values(
+            'id', 'name', 'partner_id__id').order_by('name')
+        projects = Project.objects.values(
+            'id', 'name', 'program_id__id', 'code', 'partner_id__id').order_by('name')
         return render(request, 'createuser.html',
                       {'form': form, 'partners': partner, 'group': group, 'programs': programs,
                        'projects': projects})
@@ -704,8 +758,10 @@ def updateuser(request, id):
         group.user_set.add(test2)
         return HttpResponseRedirect("/dashboard/user-list")
     partner = Partner.objects.order_by('name')
-    programs = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
-    projects = Project.objects.values('id', 'name', 'program_id__id', 'partner_id__id').order_by('name')
+    programs = Program.objects.values(
+        'id', 'name', 'partner_id__id').order_by('name')
+    projects = Project.objects.values(
+        'id', 'name', 'program_id__id', 'partner_id__id').order_by('name')
     group = Group.objects.all()
     user = User.objects.all()
     context["form"] = form
@@ -724,7 +780,8 @@ def feedback_status(request, **kwargs):
         feedback.status = "New"
         feedback.save()
         if feedback.name:
-            msg = str(feedback.name) + " " + "Feedback Successfully changed From Old To New"
+            msg = str(feedback.name) + " " + \
+                "Feedback Successfully changed From Old To New"
         else:
             msg = "Feedback Successfully changed From Old To New"
         messages.success(request, msg)
@@ -732,7 +789,8 @@ def feedback_status(request, **kwargs):
         feedback.status = 'Old'
         feedback.save()
         if feedback.name:
-            msg = str(feedback.name) + " " + "Feedback Successfully changed From New to Old"
+            msg = str(feedback.name) + " " + \
+                "Feedback Successfully changed From New to Old"
         else:
             msg = "Feedback Successfully changed From New to Old"
         messages.success(request, msg)
@@ -748,7 +806,8 @@ def activate_user(request, **kwargs):
         user.is_active = True
         user.save()
         subject = 'Login'
-        message = render_to_string('confirmation_mail.html', {'url': url, 'user': user_data})
+        message = render_to_string('confirmation_mail.html', {
+                                   'url': url, 'user': user_data})
 
         recipient_list = [emails]
         email = EmailMessage(
@@ -760,7 +819,8 @@ def activate_user(request, **kwargs):
             msg = emails + " was successfully activated"
             messages.success(request, msg)
 
-            notify_message = 'Account for username ' + user.username + ' was activated by ' + request.user.username
+            notify_message = 'Account for username ' + user.username + \
+                ' was activated by ' + request.user.username
 
             notify = Notification.objects.create(user=request.user, message=notify_message, type='activation',
                                                  link='/dashboard/user-list')
@@ -827,7 +887,8 @@ def province_list(request):
     data = {}
     data['object_list'] = province
     data['log'] = LogEntry.objects.filter(user_id=user).order_by('-id')[:5]
-    data['sector'] = Sector.objects.all().prefetch_related('Sector').order_by('id')
+    data['sector'] = Sector.objects.all(
+    ).prefetch_related('Sector').order_by('id')
     data['filtered'] = filter_sector
     return render(request, template_name, data)
 
@@ -924,7 +985,8 @@ def ExportData(request):
     user = request.user
     user_data = UserProfile.objects.get(user=user)
     group = Group.objects.get(user=user)
-    data = export(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata, group, user_data)
+    data = export(partnerdata, programdata, projectdata, provincedata,
+                  districtdata, municipalitydata, group, user_data)
     newdata = []
     for d in data:
         d['1st TIER PARTNER'] = d.pop('supplier_id__name')
@@ -975,25 +1037,31 @@ class FiveList(LoginRequiredMixin, ListView):
                 dat_values = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata,
                                    group, user_data)
                 partner = Partner.objects.values('id', 'name').order_by('name')
-                project = Project.objects.values('id', 'program_id__id', 'name', 'partner_id__id').order_by('name')
-                program = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
-                province = Province.objects.exclude(code=-1).values('id', 'name').order_by('name')
-                district = District.objects.exclude(code=-1).values('id', 'province_id__id', 'name').order_by('name')
+                project = Project.objects.values(
+                    'id', 'program_id__id', 'name', 'partner_id__id').order_by('name')
+                program = Program.objects.values(
+                    'id', 'name', 'partner_id__id').order_by('name')
+                province = Province.objects.exclude(
+                    code=-1).values('id', 'name').order_by('name')
+                district = District.objects.exclude(
+                    code=-1).values('id', 'province_id__id', 'name').order_by('name')
                 gapanapa = GapaNapa.objects.exclude(code=-1).values('id', 'province_id__id', 'district_id__id',
                                                                     'name').order_by('name')
-
 
             else:
                 dat_values = fivew(partnerdata, programdata, projectdata, provincedata, districtdata, municipalitydata,
                                    group, user_data)
-                partner = Partner.objects.filter(id=user_data.partner.id).values('id', 'name').order_by('name')
+                partner = Partner.objects.filter(id=user_data.partner.id).values(
+                    'id', 'name').order_by('name')
                 program = Program.objects.filter(id=user_data.program.id).values('id', 'name',
                                                                                  'partner_id__id').order_by('name')
                 project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id',
                                                                                  'name', 'partner_id__id').order_by(
                     'name')
-                province = Province.objects.exclude(code=-1).values('id', 'name').order_by('name')
-                district = District.objects.exclude(code=-1).values('id', 'province_id__id', 'name').order_by('name')
+                province = Province.objects.exclude(
+                    code=-1).values('id', 'name').order_by('name')
+                district = District.objects.exclude(
+                    code=-1).values('id', 'province_id__id', 'name').order_by('name')
                 gapanapa = GapaNapa.objects.exclude(code=-1).values('id', 'province_id__id', 'district_id__id',
                                                                     'name').order_by('name')
 
@@ -1004,7 +1072,8 @@ class FiveList(LoginRequiredMixin, ListView):
             page_number = self.request.GET.get('page')
             current_page = int(page_number) if page_number else 1
             page_obj = paginator.get_page(page_number)
-            start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+            start_index = int((current_page - 1) /
+                              page_numbers_range) * page_numbers_range
             end_index = start_index + page_numbers_range
             if end_index >= max_index:
                 end_index = max_index
@@ -1049,10 +1118,14 @@ class FiveList(LoginRequiredMixin, ListView):
                                             'component_id__name', 'status', 'province_id__name', 'district_id__name',
                                             'municipality_id__name', 'allocated_budget').order_by('id')
                 partner = Partner.objects.values('id', 'name').order_by('name')
-                project = Project.objects.values('id', 'program_id__id', 'name', 'partner_id__id').order_by('name')
-                program = Program.objects.values('id', 'name', 'partner_id__id').order_by('name')
-                province = Province.objects.exclude(code=-1).values('id', 'name').order_by('name')
-                district = District.objects.exclude(code=-1).values('id', 'province_id__id', 'name').order_by('name')
+                project = Project.objects.values(
+                    'id', 'program_id__id', 'name', 'partner_id__id').order_by('name')
+                program = Program.objects.values(
+                    'id', 'name', 'partner_id__id').order_by('name')
+                province = Province.objects.exclude(
+                    code=-1).values('id', 'name').order_by('name')
+                district = District.objects.exclude(
+                    code=-1).values('id', 'province_id__id', 'name').order_by('name')
                 gapanapa = GapaNapa.objects.exclude(code=-1).values('id', 'province_id__id', 'district_id__id',
                                                                     'name').order_by('name')
 
@@ -1066,14 +1139,17 @@ class FiveList(LoginRequiredMixin, ListView):
                                                                                       'district_id__name',
                                                                                       'municipality_id__name',
                                                                                       'allocated_budget').order_by('id')
-                partner = Partner.objects.filter(id=user_data.partner.id).values('id', 'name').order_by('name')
+                partner = Partner.objects.filter(id=user_data.partner.id).values(
+                    'id', 'name').order_by('name')
                 program = Program.objects.filter(id=user_data.program.id).values('id', 'name',
                                                                                  'partner_id__id').order_by('name')
                 project = Project.objects.filter(id=user_data.project.id).values('id', 'program_id__id',
                                                                                  'name', 'partner_id__id').order_by(
                     'name')
-                province = Province.objects.exclude(code=-1).values('id', 'name').order_by('name')
-                district = District.objects.exclude(code=-1).values('id', 'province_id__id', 'name').order_by('name')
+                province = Province.objects.exclude(
+                    code=-1).values('id', 'name').order_by('name')
+                district = District.objects.exclude(
+                    code=-1).values('id', 'province_id__id', 'name').order_by('name')
                 gapanapa = GapaNapa.objects.exclude(code=-1).values('id', 'province_id__id', 'district_id__id',
                                                                     'name').order_by('name')
 
@@ -1084,7 +1160,8 @@ class FiveList(LoginRequiredMixin, ListView):
             page_number = self.request.GET.get('page')
             current_page = int(page_number) if page_number else 1
             page_obj = paginator.get_page(page_number)
-            start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+            start_index = int((current_page - 1) /
+                              page_numbers_range) * page_numbers_range
             end_index = start_index + page_numbers_range
             if end_index >= max_index:
                 end_index = max_index
@@ -1154,7 +1231,8 @@ class PartnerContactList(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         data = super(PartnerContactList, self).get_context_data(**kwargs)
         partner = self.request.GET['id']
-        partner_contact = PartnerContact.objects.filter(partner_id__id=partner).order_by('id')
+        partner_contact = PartnerContact.objects.filter(
+            partner_id__id=partner).order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['list'] = partner_contact
@@ -1191,7 +1269,8 @@ class ProjectList(LoginRequiredMixin, ListView):
         group = Group.objects.get(user=user)
         program = Program.objects.order_by('name')
         if program_ids:
-            project_list = Project.objects.filter(program_id__in=program_ids).order_by('id')
+            project_list = Project.objects.filter(
+                program_id__in=program_ids).order_by('id')
         else:
             if group.name == 'admin':
                 project_list = Project.objects.order_by('id')
@@ -1325,6 +1404,7 @@ class NSList(LoginRequiredMixin, ListView):
         data['active'] = 'ns'
         return data
 
+
 class ManualList(LoginRequiredMixin, ListView):
     template_name = 'manual_list.html'
     model = Manual
@@ -1338,6 +1418,8 @@ class ManualList(LoginRequiredMixin, ListView):
         data['user'] = user_data
         data['active'] = 'man'
         return data
+
+
 class TACList(LoginRequiredMixin, ListView):
     template_name = 'tac_list.html'
     model = TermsAndCondition
@@ -1360,7 +1442,8 @@ class IndicatorValueList(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         indicator = self.request.GET['id']
         data = super(IndicatorValueList, self).get_context_data(**kwargs)
-        indicator_value_list = IndicatorValue.objects.filter(indicator_id=indicator).order_by('id')
+        indicator_value_list = IndicatorValue.objects.filter(
+            indicator_id=indicator).order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['list'] = indicator_value_list
@@ -1406,7 +1489,8 @@ class DistrictList(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         data = super(DistrictList, self).get_context_data(**kwargs)
 
-        district = District.objects.values('id', 'name', 'code', 'province_id').order_by('id')
+        district = District.objects.values(
+            'id', 'name', 'code', 'province_id').order_by('id')
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['list'] = district
@@ -1477,7 +1561,8 @@ class ProgramCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         data = super(ProgramCreate, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
-        markers = MarkerCategory.objects.all().prefetch_related('MarkerCategory').order_by('id')
+        markers = MarkerCategory.objects.all().prefetch_related(
+            'MarkerCategory').order_by('id')
         partners = Partner.objects.order_by('name')
         sectors = Sector.objects.all().prefetch_related('Sector').order_by('id')
         data['sectors'] = sectors
@@ -1493,8 +1578,10 @@ class ProgramCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "New program " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="create")
+        message = "New program " + self.object.name + \
+            "  has been added by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1529,8 +1616,10 @@ class PartnerCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
                 PartnerContact.objects.create(partner_id=self.object, name=contact_names[row], email=emails[row],
                                               phone_number=numbers[row])
 
-        message = "New partner " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="create")
+        message = "New partner " + self.object.name + \
+            "  has been added by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1633,8 +1722,10 @@ class SectorCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "New sector " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="create")
+        message = "New sector " + self.object.name + \
+            "  has been added by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1658,8 +1749,10 @@ class OutputCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "New ouput " + self.object.indicator + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="create")
+        message = "New ouput " + self.object.indicator + \
+            "  has been added by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1676,19 +1769,25 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         group = Group.objects.get(user=user)
         if group.name == 'admin':
             partner = Partner.objects.order_by('id')
-            program = Program.objects.values('id', 'name', 'partner_id__id').order_by('id')
-            project = Project.objects.values('id', 'name', 'program_id__id', 'partner_id__id').order_by('id')
+            program = Program.objects.values(
+                'id', 'name', 'partner_id__id').order_by('id')
+            project = Project.objects.values(
+                'id', 'name', 'program_id__id', 'partner_id__id').order_by('id')
         else:
-            partner = Partner.objects.filter(id=user_data.partner.id).order_by('id')
+            partner = Partner.objects.filter(
+                id=user_data.partner.id).order_by('id')
             program = Program.objects.filter(id=user_data.program.id).values('id', 'name', 'partner_id__id').order_by(
                 'id')
             project = Project.objects.filter(id=user_data.project.id).values('id', 'name', 'program_id__id',
                                                                              'partner_id__id').order_by('id')
 
         all_partner = Partner.objects.order_by('id')
-        province = Province.objects.values('id', 'name', 'code').exclude(code=-1).order_by('id')
-        district = District.objects.values('id', 'name', 'province_id__id', 'code').exclude(code=-1).order_by('id')
-        municipality = GapaNapa.objects.values('id', 'name', 'district_id__id', 'code').exclude(code=-1).order_by('id')
+        province = Province.objects.values(
+            'id', 'name', 'code').exclude(code=-1).order_by('id')
+        district = District.objects.values(
+            'id', 'name', 'province_id__id', 'code').exclude(code=-1).order_by('id')
+        municipality = GapaNapa.objects.values(
+            'id', 'name', 'district_id__id', 'code').exclude(code=-1).order_by('id')
         province_minus_id = Province.objects.get(code=-1)
         district_minus_id = District.objects.get(code=-1)
         municipality_minus_id = GapaNapa.objects.get(code=-1)
@@ -1736,8 +1835,11 @@ class FiveCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         #     budget_to_second_tier = BudgetToSecondTier.objects.filter(id=contract_id).update(
         #         contract_value=self.request.POST['contract_value'])
 
-        message = "New Five W " + str(self.object.supplier_id) + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="create")
+        message = "New Five W " + \
+            str(self.object.supplier_id) + \
+            "  has been added by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1768,8 +1870,10 @@ class ProjectCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "New project " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="create")
+        message = "New project " + self.object.name + \
+            "  has been added by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1795,8 +1899,10 @@ class CmpCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "New cmp " + self.object.project_name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="create")
+        message = "New cmp " + self.object.project_name + \
+            "  has been added by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1845,8 +1951,10 @@ class SubSectorCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "New Sub Sector " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="create")
+        message = "New Sub Sector " + self.object.name + \
+            "  has been added by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1869,8 +1977,10 @@ class ProvinceCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        message = "New province " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=self.request.user, message=message, type="create")
+        message = "New province " + self.object.name + \
+            "  has been added by " + self.request.user.username
+        log = Log.objects.create(
+            user=self.request.user, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1895,8 +2005,10 @@ class DistrictCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "New District " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="create")
+        message = "New District " + self.object.name + \
+            "  has been added by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1912,7 +2024,8 @@ class PalilkaCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
         user_data = UserProfile.objects.get(user=user)
         data['user'] = user_data
         data['province'] = Province.objects.values('id', 'name').order_by('id')
-        data['district'] = District.objects.values('id', 'name', 'province_id__id').order_by('id')
+        data['district'] = District.objects.values(
+            'id', 'name', 'province_id__id').order_by('id')
         data['active'] = 'location'
         return data
 
@@ -1922,8 +2035,10 @@ class PalilkaCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "New Municipality " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="create")
+        message = "New Municipality " + self.object.name + \
+            "  has been added by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1948,8 +2063,10 @@ class MarkerValueCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "New Marker Value " + self.object.value + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="create")
+        message = "New Marker Value " + self.object.value + \
+            "  has been added by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1973,8 +2090,10 @@ class MarkerCategoryCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "New Marker Category " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="create")
+        message = "New Marker Category " + self.object.name + \
+            "  has been added by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -1998,8 +2117,10 @@ class IndicatorCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "New Indicator " + self.object.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="create")
+        message = "New Indicator " + self.object.name + \
+            "  has been added by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -2029,8 +2150,10 @@ class BudgetCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "New Budget For " + self.object.supplier_id.name + "  has been added by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="create")
+        message = "New Budget For " + self.object.supplier_id.name + \
+            "  has been added by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -2044,12 +2167,14 @@ class ProgramUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         data = super(ProgramUpdate, self).get_context_data(**kwargs)
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
-        marker_list = Program.objects.filter(id=self.kwargs['pk']).values_list('marker_category', flat=True)
+        marker_list = Program.objects.filter(
+            id=self.kwargs['pk']).values_list('marker_category', flat=True)
         if (marker_list[0] == None):
             filter_marker = MarkerCategory.objects.order_by('id')
         else:
             filter_marker = MarkerCategory.objects.exclude(id__in=marker_list)
-        sector_list = Program.objects.filter(id=self.kwargs['pk']).values_list('sector', flat=True)
+        sector_list = Program.objects.filter(
+            id=self.kwargs['pk']).values_list('sector', flat=True)
 
         if (sector_list[0] == None):
             filter_sector = Sector.objects.order_by('id')
@@ -2092,8 +2217,10 @@ class ProgramUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "Program " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="update")
+        message = "Program " + self.object.name + \
+            "  has been edited by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -2119,8 +2246,10 @@ class PartnerUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "Partner " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="update")
+        message = "Partner " + self.object.name + \
+            "  has been edited by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -2150,8 +2279,10 @@ class CmpUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "In cmp " + self.object.project_name + "  has been edit by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="update")
+        message = "In cmp " + self.object.project_name + \
+            "  has been edit by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -2175,8 +2306,10 @@ class PartnerContactUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "Partner contact" + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="update")
+        message = "Partner contact" + self.object.name + \
+            "  has been edited by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -2217,6 +2350,7 @@ class NSUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('ns-list')
 
+
 class ManualUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = Manual
     template_name = 'manual_edit.html'
@@ -2234,6 +2368,7 @@ class ManualUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('manual-list')
+
 
 class TACUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = TermsAndCondition
@@ -2299,8 +2434,10 @@ class OutputUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "Output " + self.object.indicator + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="update")
+        message = "Output " + self.object.indicator + \
+            "  has been edited by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -2317,17 +2454,22 @@ class FiveUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         group = Group.objects.get(user=user)
         if group.name == 'admin':
             partner = Partner.objects.order_by('id')
-            program = Program.objects.values('id', 'name', 'partner_id__id').order_by('id')
-            project = Project.objects.values('id', 'name', 'program_id__id', 'partner_id__id').order_by('id')
+            program = Program.objects.values(
+                'id', 'name', 'partner_id__id').order_by('id')
+            project = Project.objects.values(
+                'id', 'name', 'program_id__id', 'partner_id__id').order_by('id')
         else:
-            partner = Partner.objects.filter(id=user_data.partner.id).order_by('id')
+            partner = Partner.objects.filter(
+                id=user_data.partner.id).order_by('id')
             program = Program.objects.filter(id=user_data.program.id).values('id', 'name', 'partner_id__id').order_by(
                 'id')
             project = Project.objects.filter(id=user_data.project.id).values('id', 'name', 'program_id__id',
                                                                              'partner_id__id').order_by('id')
         province = Province.objects.values('id', 'name', 'code').order_by('id')
-        district = District.objects.values('id', 'name', 'province_id__id', 'code').order_by('id')
-        municipality = GapaNapa.objects.values('id', 'name', 'district_id__id', 'code').order_by('id')
+        district = District.objects.values(
+            'id', 'name', 'province_id__id', 'code').order_by('id')
+        municipality = GapaNapa.objects.values(
+            'id', 'name', 'district_id__id', 'code').order_by('id')
         province_minus_id = Province.objects.get(code=-1)
         district_minus_id = District.objects.get(code=-1)
         municipality_minus_id = GapaNapa.objects.get(code=-1)
@@ -2374,8 +2516,11 @@ class FiveUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         # else:
         #     budget_to_second_tier = BudgetToSecondTier.objects.filter(id=contract_id).update(
         #         contract_value=self.request.POST['contract_value'])
-        message = "New Five W " + str(self.object.supplier_id) + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="create")
+        message = "New Five W " + \
+            str(self.object.supplier_id) + \
+            "  has been edited by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -2417,8 +2562,10 @@ class SectorUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "Sector " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="update")
+        message = "Sector " + self.object.name + \
+            "  has been edited by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -2433,7 +2580,8 @@ class ProjectUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         user = self.request.user
         user_data = UserProfile.objects.get(user=user)
         data['programs'] = Program.objects.order_by('name')
-        sector_list = Project.objects.filter(id=self.kwargs['pk']).values_list('sector', flat=True)
+        sector_list = Project.objects.filter(
+            id=self.kwargs['pk']).values_list('sector', flat=True)
 
         if (sector_list[0] == None):
             filter_sector = Sector.objects.order_by('id')
@@ -2455,8 +2603,10 @@ class ProjectUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         self.object = form.save()
         user_data = UserProfile.objects.get(user=self.request.user)
-        message = "Project " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="update")
+        message = "Project " + self.object.name + \
+            "  has been edited by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -2481,8 +2631,10 @@ class SubSectorUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "Sub sector " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="update")
+        message = "Sub sector " + self.object.name + \
+            "  has been edited by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -2506,8 +2658,10 @@ class MarkerCategoryUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "Marker Category " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="update")
+        message = "Marker Category " + self.object.name + \
+            "  has been edited by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -2532,8 +2686,10 @@ class MarkerValueUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "Marker Value " + self.object.value + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="update")
+        message = "Marker Value " + self.object.value + \
+            "  has been edited by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -2557,8 +2713,10 @@ class ProvinceUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "Province" + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="update")
+        message = "Province" + self.object.name + \
+            "  has been edited by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -2602,8 +2760,10 @@ class DistrictUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "District " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="update")
+        message = "District " + self.object.name + \
+            "  has been edited by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -2629,8 +2789,10 @@ class PalilkaUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "Municipality " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="update")
+        message = "Municipality " + self.object.name + \
+            "  has been edited by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -2654,8 +2816,10 @@ class IndicatorUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "Indicator " + self.object.indicator + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="update")
+        message = "Indicator " + self.object.indicator + \
+            "  has been edited by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -2679,8 +2843,10 @@ class GisLayerUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = "Map Layer " + self.object.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="update")
+        message = "Map Layer " + self.object.name + \
+            "  has been edited by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="update")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -2710,8 +2876,10 @@ class BudgetUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         user_data = UserProfile.objects.get(user=self.request.user)
         self.object = form.save()
-        message = " Budget For " + self.object.supplier_id.name + "  has been edited by " + self.request.user.username
-        log = Log.objects.create(user=user_data, message=message, type="create")
+        message = " Budget For " + self.object.supplier_id.name + \
+            "  has been edited by " + self.request.user.username
+        log = Log.objects.create(
+            user=user_data, message=message, type="create")
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -3028,25 +3196,30 @@ def gisLayer_create(request):
         shapefile = request.FILES["shapefile"]
         named = request.POST["name"]
         store_named = request.POST["filename"]
-        store_name = store_named.replace(" ", "_").lower() + str(randint(0, 99999))
+        store_name = store_named.replace(
+            " ", "_").lower() + str(randint(0, 99999))
 
         # return HttpResponse(layer_name)
 
         if request.POST['type'] == 'vector':
 
-            url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/' + store_name + '/file.shp'
+            url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/' + \
+                store_name + '/file.shp'
             headers = {
                 'Content-type': 'application/zip',
             }
-            response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
+            response = requests.put(
+                url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
 
         else:
 
-            url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/coveragestores/' + store_name + '/file.geotiff'
+            url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/coveragestores/' + \
+                store_name + '/file.geotiff'
             headers = {
                 'Content-type': 'application/zip',
             }
-            response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
+            response = requests.put(
+                url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
             # return HttpResponse(response)
 
         if response.status_code == 201:
@@ -3057,15 +3230,18 @@ def gisLayer_create(request):
             obj.workspace = 'Naxa'
             obj.layer_name = layer_name
             obj.store_name = store_name
-            obj.geoserver_url = 'http://139.59.67.104:8080/geoserver/gwc/service/tms/1.0.0/Naxa:' + layer_name + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf'
+            obj.geoserver_url = 'http://139.59.67.104:8080/geoserver/gwc/service/tms/1.0.0/Naxa:' + \
+                layer_name + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf'
 
             obj.save()
             messaged = "Map Layer " + named + "  has been added by " + request.user.username
-            log = Log.objects.create(user=user_data, message=messaged, type="create")
+            log = Log.objects.create(
+                user=user_data, message=messaged, type="create")
             messages.success(request, "Layer successfully uploaded")
 
         else:
-            messages.error(request, "Layer could not be  uploaded !! Please Try again")
+            messages.error(
+                request, "Layer could not be  uploaded !! Please Try again")
 
         return redirect('gis-layer-list')
     return render(request, template_name, {'form': form, 'user': user_data})
@@ -3075,7 +3251,8 @@ def gisLayer_replace(request, **kwargs):
     template_name = 'gis_replace.html'
     user_data = UserProfile.objects.get(user=request.user)
     instance = GisLayer.objects.get(id=kwargs['pk'])
-    get_store_name = GisLayer.objects.filter(id=kwargs['pk']).values_list('store_name', flat=True)
+    get_store_name = GisLayer.objects.filter(
+        id=kwargs['pk']).values_list('store_name', flat=True)
     form = GisLayerCreateForm(request.POST or None, instance=instance)
     # return HttpResponse(instance.store_name)
 
@@ -3084,7 +3261,8 @@ def gisLayer_replace(request, **kwargs):
         shapefile = request.FILES["shapefile"]
         named = request.POST["name"]
         store_named = request.POST["filename"]
-        store_names = store_named.replace(" ", "_").lower() + str(randint(0, 99999999))
+        store_names = store_named.replace(
+            " ", "_").lower() + str(randint(0, 99999999))
 
         # return HttpResponse(instance.layer_name)
 
@@ -3096,14 +3274,17 @@ def gisLayer_replace(request, **kwargs):
             headers = {
                 'Content-type': '',
             }
-            response = requests.delete(store_check_url, headers=headers, auth=('admin', 'geoserver'))
+            response = requests.delete(
+                store_check_url, headers=headers, auth=('admin', 'geoserver'))
             # return HttpResponse(response.status_code)
 
-            url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/' + store_names + '/file.shp'
+            url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/datastores/' + \
+                store_names + '/file.shp'
             headers = {
                 'Content-type': 'application/zip',
             }
-            response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
+            response = requests.put(
+                url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
 
         else:
 
@@ -3112,13 +3293,16 @@ def gisLayer_replace(request, **kwargs):
             headers = {
                 'Content-type': '',
             }
-            requests.delete(store_check_url, headers=headers, auth=('admin', 'geoserver'))
+            requests.delete(store_check_url, headers=headers,
+                            auth=('admin', 'geoserver'))
 
-            url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/coveragestores/' + store_names + '/file.geotiff'
+            url = 'http://139.59.67.104:8080/geoserver/rest/workspaces/Naxa/coveragestores/' + \
+                store_names + '/file.geotiff'
             headers = {
                 'Content-type': 'application/zip',
             }
-            response = requests.put(url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
+            response = requests.put(
+                url, headers=headers, data=shapefile, auth=('admin', 'geoserver'))
             # return HttpResponse(response)
 
         if response.status_code == 201:
@@ -3129,23 +3313,28 @@ def gisLayer_replace(request, **kwargs):
             obj.workspace = 'Naxa'
             obj.store_name = store_names
             obj.layer_name = layer_name
-            obj.geoserver_url = 'http://139.59.67.104:8080/geoserver/gwc/service/tms/1.0.0/Naxa:' + layer_name + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf'
+            obj.geoserver_url = 'http://139.59.67.104:8080/geoserver/gwc/service/tms/1.0.0/Naxa:' + \
+                layer_name + '@EPSG%3A900913@pbf/{z}/{x}/{-y}.pbf'
 
             obj.save()
             messaged = "Map Layer " + named + "  has been edited by " + request.user.username
-            log = Log.objects.create(user=user_data, message=messaged, type="edited")
+            log = Log.objects.create(
+                user=user_data, message=messaged, type="edited")
             messages.success(request, "Layer successfully replaced")
 
         else:
-            messages.error(request, "Layer could not be  replaced !! Please Try again")
+            messages.error(
+                request, "Layer could not be  replaced !! Please Try again")
 
         return redirect('gis-layer-list')
     return render(request, template_name, {'form': form, 'user': user_data})
 
 
 def gisLayer_delete(request, **kwargs):
-    get_store_name = GisLayer.objects.filter(id=kwargs['pk']).values_list('store_name', flat=True)
-    type = GisLayer.objects.filter(id=kwargs['pk']).values_list('type', flat=True)
+    get_store_name = GisLayer.objects.filter(
+        id=kwargs['pk']).values_list('store_name', flat=True)
+    type = GisLayer.objects.filter(
+        id=kwargs['pk']).values_list('type', flat=True)
 
     if type[0] == 'vector':
         store = 'datastores'
@@ -3158,7 +3347,8 @@ def gisLayer_delete(request, **kwargs):
     headers = {
         'Content-type': '',
     }
-    response = requests.get(store_check_url, headers=headers, auth=('admin', 'geoserver'))
+    response = requests.get(
+        store_check_url, headers=headers, auth=('admin', 'geoserver'))
 
     if response.status_code == 200:
 
@@ -3168,7 +3358,8 @@ def gisLayer_delete(request, **kwargs):
         headers = {
             'Content-type': '',
         }
-        delete_response = requests.delete(delete_url, headers=headers, auth=('admin', 'geoserver'))
+        delete_response = requests.delete(
+            delete_url, headers=headers, auth=('admin', 'geoserver'))
 
         if delete_response.status_code == 200:
             delete = GisLayer.objects.filter(id=kwargs['pk']).delete()
@@ -3245,3 +3436,139 @@ class StyleUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         id_gis = GisStyle.objects.get(id=self.kwargs['pk'])
         return "/dashboard/gis_style_layer_list/" + str(id_gis.layer.id)
+
+
+class AboutUsList(LoginRequiredMixin, ListView):
+    template_name = 'about_us_list.html'
+    model = AboutUs
+
+    def get_context_data(self, **kwargs):
+        data = super(AboutUsList, self).get_context_data(**kwargs)
+        about_us_list = AboutUs.objects.all()
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = about_us_list
+        data['user'] = user_data
+        return data
+
+
+class ContactUsList(LoginRequiredMixin, ListView):
+    template_name = 'contact_us_list.html'
+    model = ContactUs
+
+    def get_context_data(self, **kwargs):
+        data = super(ContactUsList, self).get_context_data(**kwargs)
+        contact_us_list = ContactUs.objects.all()
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['list'] = contact_us_list
+        data['user'] = user_data
+        return data
+
+
+class AboutUsCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+    model = AboutUs
+    template_name = 'about_us_add.html'
+    form_class = AboutUsForm
+    success_message = 'About Us Successfully Added'
+
+    def get_context_data(self, **kwargs):
+        data = super(AboutUsCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['permissions'] = Permission.objects.all()
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('about-us-list')
+
+
+class ContactUsCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+    model = ContactUs
+    template_name = 'contact_us_add.html'
+    form_class = ContactUsForm
+    success_message = 'Contact Us Successfully Added'
+
+    def get_context_data(self, **kwargs):
+        data = super(ContactUsCreate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['permissions'] = Permission.objects.all()
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('contact-us-list')
+
+
+class AboutUsUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = AboutUs
+    template_name = 'about_us_update.html'
+    form_class = AboutUsForm
+    success_message = 'About Us  Successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(AboutUsUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['permissions'] = Permission.objects.all()
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('about-us-list')
+
+
+class ContactUsUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    model = ContactUs
+    template_name = 'contact_us_update.html'
+    form_class = ContactUsForm
+    success_message = 'Contact Us  Successfully Updated'
+
+    def get_context_data(self, **kwargs):
+        data = super(ContactUsUpdate, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        data['permissions'] = Permission.objects.all()
+        return data
+
+    def get_success_url(self):
+        return reverse_lazy('contact-us-list')
+
+
+class AboutUsDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = AboutUs
+    template_name = 'about_us_confirm_delete.html'
+    success_message = 'About us successfully deleted'
+    success_url = reverse_lazy('about-us-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(AboutUsDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
+    def delete(self, request, *args, **kwargs):
+        messages.info(self.request, self.success_message)
+        return super(AboutUsDelete, self).delete(request, *args, **kwargs)
+
+
+class ContactUsDelete(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
+    model = AboutUs
+    template_name = 'contact_us_confirm_delete.html'
+    success_message = 'Contact Us successfully deleted'
+    success_url = reverse_lazy('contact-us-list')
+
+    def get_context_data(self, **kwargs):
+        data = super(ContactUsDelete, self).get_context_data(**kwargs)
+        user = self.request.user
+        user_data = UserProfile.objects.get(user=user)
+        data['user'] = user_data
+        return data
+
+    def delete(self, request, *args, **kwargs):
+        messages.info(self.request, self.success_message)
+        return super(ContactUsDelete, self).delete(request, *args, **kwargs)
