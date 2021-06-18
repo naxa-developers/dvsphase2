@@ -11,6 +11,7 @@ __pycache__/
 /dvs_db_backup/
 dvs/local_setting.py
 media
+*.csv
 
 ### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files
@@ -54,6 +55,7 @@ env/
 # Docker
 docker-compose.yml
 dockrt-entrypoint.local.sh
+entrypoint.sh
 postgres-data
 Dockerfile
 
