@@ -14,403 +14,419 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Custom Css -->
     <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
-   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/css/bootstrap-multiselect.css"> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/css/bootstrap-multiselect.css"> -->
     <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap-datepicker.min.css' %}">
-   <link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet">
     <style>
-    select {
-      width: 100%;
+        select {
+            width: 100%;
 
-    }
-    .dt-buttons {
-        display: none;
-    }
+        }
 
-</style>
+        .dt-buttons {
+            display: none;
+        }
+    </style>
 </head>
 
 <body class="">
-<div class="dfid-wrapper">
-    <!-- Left Sidebar -->
-    <aside id="leftsidebar" class="sidebar">
+    <div class="dfid-wrapper">
+        <!-- Left Sidebar -->
+        <aside id="leftsidebar" class="sidebar">
 
-        <!-- brand start -->
-        <div class="navbar-brand">
-            <button class="btn-menu ls-toggle-btn" type="button"><i class="material-icons">menu</i></button>
-            <a href="/dashboard/main/"><img src="{% static 'dashboard/images/logo.png' %}" width="100" alt="DFID"></a>
-        </div>
-        <!-- sidebar menu start -->
-        <div class="menu">
-            <ul class="list">
-                {% if active == 'dash' %}
-                <li class="menu-item active">
-                    {% else %}
-                <li class="menu-item">
-                    {% endif %}
-
-                    <a href="/dashboard/main/" class="active-red"><i
-                            class="material-icons">dashboard</i><span>Dashboard</span></a>
-                </li>
-                {% if perms.core.view_partner %}
-                {% if active == 'partner' %}
-                <li class="menu-item submenu active">
-                    {% else %}
-                <li class="menu-item">
-                    {% endif %}
-                    <a href="/dashboard/partner-list/" class="active-red">
-                        <i class="material-icons">person</i><span>partners</span></a>
-                </li>
-                {% endif %}
-
-                {% if perms.core.view_program %}
-                {% if active == 'program' %}
-                <li class="menu-item active">
-                    {% else %}
-                <li class="menu-item">
-                    {% endif %}
-                    <a href="/dashboard/program-list/" class="active-red"><i
-                            class="material-icons">assignment</i><span>programs</span></a>
-                </li>
-                {% endif %}
-
-                {% if perms.core.view_project %}
-                {% if active == 'project' %}
-                <li class="menu-item active">
-                    {% else %}
-                <li class="menu-item">
-                    {% endif %}
-                    <a href="/dashboard/project-list/" class="active-red"><i
-                            class="material-icons">assignment</i><span>Components</span></a>
-
-                </li>
-                {% endif %}
-
-
-                {% if perms.core.view_fivew %}
-                {% if active == 'five' %}
-                <li class="menu-item submenu active">
-                    {% else %}
-                <li class="menu-item">
-                    {% endif %}
-                    <a href="/dashboard/five-list/" class="active-red">
-                        <i class="material-icons">table</i><span>Five W</span></a>
-                </li>
-                {% endif %}
-                {% if perms.core.view_sector or perms.core.view_subsector %}
-                {% if active == 'sector' %}
-                <li class="menu-item active submenu">
-                    {% else %}
-                <li class="menu-item submenu">
-                    {% endif %}
-
-                    <a href="javascript:void(0);" class="menu-toggle active-red"><i
-                            class="material-icons">category</i><span>Sectors</span></a>
-                    <ul class="ml-menu">
-                        {% if perms.core.view_sector %}
-                        <li><a href="/dashboard/sector-list/">Sectors</a></li>
+            <!-- brand start -->
+            <div class="navbar-brand">
+                <button class="btn-menu ls-toggle-btn" type="button"><i class="material-icons">menu</i></button>
+                <a href="/dashboard/main/"><img src="{% static 'dashboard/images/logo.png' %}" width="100"
+                        alt="DFID"></a>
+            </div>
+            <!-- sidebar menu start -->
+            <div class="menu">
+                <ul class="list">
+                    {% if active == 'dash' %}
+                    <li class="menu-item active">
+                        {% else %}
+                    <li class="menu-item">
                         {% endif %}
-                        {% if perms.core.view_subsector %}
-                        <li><a href="/dashboard/subsector-list/">Sub Sectors</a></li>
+
+                        <a href="/dashboard/main/" class="active-red"><i
+                                class="material-icons">dashboard</i><span>Dashboard</span></a>
+                    </li>
+                    {% if perms.core.view_partner %}
+                    {% if active == 'partner' %}
+                    <li class="menu-item submenu active">
+                        {% else %}
+                    <li class="menu-item">
                         {% endif %}
-                    </ul>
-                </li>
-
-                {% endif %}
-
-                {% if perms.core.view_markercategory or perms.core.view_markervalues %}
-                {% if active == 'marker' %}
-                <li class="menu-item active submenu">
-                    {% else %}
-                <li class="menu-item submenu">
+                        <a href="/dashboard/partner-list/" class="active-red">
+                            <i class="material-icons">person</i><span>partners</span></a>
+                    </li>
                     {% endif %}
-                    <a href="javascript:void(0);" class="menu-toggle active-red"><i
-                            class="material-icons">pie_chart</i><span>markers</span></a>
-                    <ul class="ml-menu">
-                        {% if perms.core.view_markercategory %}
-                        <li><a href="/dashboard/marker-list/">Marker Categories</a></li>
+
+                    {% if perms.core.view_program %}
+                    {% if active == 'program' %}
+                    <li class="menu-item active">
+                        {% else %}
+                    <li class="menu-item">
                         {% endif %}
-                        {% if perms.core.view_markervalues %}
-                        <li><a href="/dashboard/markervalue-list/">Marker Values</a></li>
+                        <a href="/dashboard/program-list/" class="active-red"><i
+                                class="material-icons">assignment</i><span>programs</span></a>
+                    </li>
+                    {% endif %}
+
+                    {% if perms.core.view_project %}
+                    {% if active == 'project' %}
+                    <li class="menu-item active">
+                        {% else %}
+                    <li class="menu-item">
                         {% endif %}
-                    </ul>
-                </li>
-                {% endif %}
-                {% if perms.core.view_indicator %}
-                {% if active == 'indicator' %}
-                <li class="menu-item active submenu">
-                    {% else %}
-                <li class="menu-item submenu">
+                        <a href="/dashboard/project-list/" class="active-red"><i
+                                class="material-icons">assignment</i><span>Components</span></a>
+
+                    </li>
                     {% endif %}
-                    <a href="javascript:void(0);" class="menu-toggle active-red"><i
-                            class="material-icons">drag_indicator</i><span>Indicators</span></a>
-                    <ul class="ml-menu">
-                        <li><a href="/dashboard/indicator-list/?data=province">Province Level</a></li>
-                        <li><a href="/dashboard/indicator-list/?data=district">District Level</a></li>
-                        <li><a href="/dashboard/indicator-list/?data=palika">Municipality Level</a></li>
-                    </ul>
-                </li>
-                {% endif %}
-                {% if perms.core.view_province or perms.core.view_district or perms.core.view_gapanapa %}
-                {% if active == 'location' %}
-                <li class="menu-item active submenu">
-                    {% else %}
-                <li class="menu-item submenu">
-                    {% endif %}
-                    <a href="javascript:void(0);" class="menu-toggle active-red"><i
-                            class="material-icons">room</i><span>Locations</span></a>
-                    <ul class="ml-menu">
-                        {% if perms.core.view_province %}
-                        <li><a href="/dashboard/province-list/">Province</a></li>
+
+
+                    {% if perms.core.view_fivew %}
+                    {% if active == 'five' %}
+                    <li class="menu-item submenu active">
+                        {% else %}
+                    <li class="menu-item">
                         {% endif %}
-                        {% if perms.core.view_district %}
-                        <li><a href="/dashboard/district-list/">Districts</a></li>
+                        <a href="/dashboard/five-list/" class="active-red">
+                            <i class="material-icons">table</i><span>Five W</span></a>
+                    </li>
+                    {% endif %}
+                    {% if perms.core.view_sector or perms.core.view_subsector %}
+                    {% if active == 'sector' %}
+                    <li class="menu-item active submenu">
+                        {% else %}
+                    <li class="menu-item submenu">
                         {% endif %}
-                        {% if perms.core.view_gapanapa %}
-                        <li><a href="/dashboard/palika-list/">Municipalities</a></li>
+
+                        <a href="javascript:void(0);" class="menu-toggle active-red"><i
+                                class="material-icons">category</i><span>Sectors</span></a>
+                        <ul class="ml-menu">
+                            {% if perms.core.view_sector %}
+                            <li><a href="/dashboard/sector-list/">Sectors</a></li>
+                            {% endif %}
+                            {% if perms.core.view_subsector %}
+                            <li><a href="/dashboard/subsector-list/">Sub Sectors</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
+
+                    {% endif %}
+
+                    {% if perms.core.view_markercategory or perms.core.view_markervalues %}
+                    {% if active == 'marker' %}
+                    <li class="menu-item active submenu">
+                        {% else %}
+                    <li class="menu-item submenu">
                         {% endif %}
-                    </ul>
-                </li>
-                {% endif %}
-
-                {% if perms.core.view_gislayer %}
-                {% if active == 'gis' %}
-                <li class="menu-item active">
-                    {% else %}
-                <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-toggle active-red"><i
+                                class="material-icons">pie_chart</i><span>markers</span></a>
+                        <ul class="ml-menu">
+                            {% if perms.core.view_markercategory %}
+                            <li><a href="/dashboard/marker-list/">Marker Categories</a></li>
+                            {% endif %}
+                            {% if perms.core.view_markervalues %}
+                            <li><a href="/dashboard/markervalue-list/">Marker Values</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
                     {% endif %}
-                    <a href="/dashboard/gis-layer-list/" class=""><i
-                            class="material-icons">map</i><span>Map Layers</span></a>
-
-                </li>
-                {% endif %}
-
-<!--                <li class="menu-item">-->
-<!--                    <a href="/dashboard/gis-layer-list/" class=""><i-->
-<!--                            class="material-icons">map</i><span>Map Layers Style</span></a>-->
-
-<!--                </li>-->
-
-                {% if perms.core.view_output %}
-                {% if active == 'output' %}
-                <li class="menu-item active">
-                    {% else %}
-                <li class="menu-item">
+                    {% if perms.core.view_indicator %}
+                    {% if active == 'indicator' %}
+                    <li class="menu-item active submenu">
+                        {% else %}
+                    <li class="menu-item submenu">
+                        {% endif %}
+                        <a href="javascript:void(0);" class="menu-toggle active-red"><i
+                                class="material-icons">drag_indicator</i><span>Indicators</span></a>
+                        <ul class="ml-menu">
+                            <li><a href="/dashboard/indicator-list/?data=province">Province Level</a></li>
+                            <li><a href="/dashboard/indicator-list/?data=district">District Level</a></li>
+                            <li><a href="/dashboard/indicator-list/?data=palika">Municipality Level</a></li>
+                        </ul>
+                    </li>
                     {% endif %}
-                    <a href="/dashboard/output-list/" class=""><i
-                            class="material-icons">person</i><span>Output</span></a>
-                </li>
-                {% endif %}
-                {% if perms.core.feedbackform %}
-                {% if active == 'feedback' %}
-                <li class="menu-item active">
-                    {% else %}
-                <li class="menu-item">
+                    {% if perms.core.view_province or perms.core.view_district or perms.core.view_gapanapa %}
+                    {% if active == 'location' %}
+                    <li class="menu-item active submenu">
+                        {% else %}
+                    <li class="menu-item submenu">
+                        {% endif %}
+                        <a href="javascript:void(0);" class="menu-toggle active-red"><i
+                                class="material-icons">room</i><span>Locations</span></a>
+                        <ul class="ml-menu">
+                            {% if perms.core.view_province %}
+                            <li><a href="/dashboard/province-list/">Province</a></li>
+                            {% endif %}
+                            {% if perms.core.view_district %}
+                            <li><a href="/dashboard/district-list/">Districts</a></li>
+                            {% endif %}
+                            {% if perms.core.view_gapanapa %}
+                            <li><a href="/dashboard/palika-list/">Municipalities</a></li>
+                            {% endif %}
+                        </ul>
+                    </li>
                     {% endif %}
-                    <a href="/dashboard/feedback-list/" class=""><i
-                            class="material-icons">feedback</i><span>FeedbackForm</span></a>
-                </li>
-                {% endif %}
 
-                {% if perms.auth.view_user %}
-                {% if active == 'user' %}
-                <li class="menu-item active">
-                    {% else %}
-                <li class="menu-item">
+                    {% if perms.core.view_gislayer %}
+                    {% if active == 'gis' %}
+                    <li class="menu-item active">
+                        {% else %}
+                    <li class="menu-item">
+                        {% endif %}
+                        <a href="/dashboard/gis-layer-list/" class=""><i class="material-icons">map</i><span>Map
+                                Layers</span></a>
+
+                    </li>
                     {% endif %}
-                    <a href="/dashboard/user-list/" class=""><i
-                            class="material-icons">person</i><span>User Management</span></a>
-                </li>
-                {% endif %}
 
-                {% if perms.auth.view_permission %}
-                {% if active == 'role' %}
-                <li class="menu-item active">
-                    {% else %}
-                <li class="menu-item">
+                    <!--                <li class="menu-item">-->
+                    <!--                    <a href="/dashboard/gis-layer-list/" class=""><i-->
+                    <!--                            class="material-icons">map</i><span>Map Layers Style</span></a>-->
+
+                    <!--                </li>-->
+
+                    {% if perms.core.view_output %}
+                    {% if active == 'output' %}
+                    <li class="menu-item active">
+                        {% else %}
+                    <li class="menu-item">
+                        {% endif %}
+                        <a href="/dashboard/output-list/" class=""><i
+                                class="material-icons">person</i><span>Output</span></a>
+                    </li>
                     {% endif %}
-                    <a href="/dashboard/role-list/" class=""><i
-                            class="material-icons">person</i><span>Role Management</span></a>
-                </li>
-                {% endif %}
-
-                {% if perms.core.view_cmp %}
-                {% if active == 'cmp' %}
-                <li class="menu-item active">
-                    {% else %}
-                <li class="menu-item">
+                    {% if perms.core.feedbackform %}
+                    {% if active == 'feedback' %}
+                    <li class="menu-item active">
+                        {% else %}
+                    <li class="menu-item">
+                        {% endif %}
+                        <a href="/dashboard/feedback-list/" class=""><i
+                                class="material-icons">feedback</i><span>FeedbackForm</span></a>
+                    </li>
                     {% endif %}
-                    <a href="/dashboard/cmp-list/" class=""><i
-                            class="material-icons">assignment</i><span>Centrally Managed Programs</span></a>
-                </li>
-                {% endif %}
-                {% if perms.core.view_faq %}
-                {% if active == 'faq' %}
-                <li class="menu-item active">
-                    {% else %}
-                <li class="menu-item">
+
+                    {% if perms.auth.view_user %}
+                    {% if active == 'user' %}
+                    <li class="menu-item active">
+                        {% else %}
+                    <li class="menu-item">
+                        {% endif %}
+                        <a href="/dashboard/user-list/" class=""><i class="material-icons">person</i><span>User
+                                Management</span></a>
+                    </li>
                     {% endif %}
-                    <a href="/dashboard/faq-list/" class=""><i
-                            class="material-icons">quiz</i><span>FAQ</span></a>
-                </li>
-                {% endif %}
-                {% if perms.core.view_termsandcondition %}
-                {% if active == 'tac' %}
-                <li class="menu-item active">
-                    {% else %}
-                <li class="menu-item">
+
+                    {% if perms.auth.view_permission %}
+                    {% if active == 'role' %}
+                    <li class="menu-item active">
+                        {% else %}
+                    <li class="menu-item">
+                        {% endif %}
+                        <a href="/dashboard/role-list/" class=""><i class="material-icons">person</i><span>Role
+                                Management</span></a>
+                    </li>
                     {% endif %}
-                    <a href="/dashboard/tac-list/" class=""><i
-                            class="material-icons">gavel</i><span>Terms And Conditions</span></a>
-                </li>
-                {% endif %}
-                                {% if perms.core.view_nationalstatistic %}
-                {% if active == 'ns' %}
-                <li class="menu-item active">
-                    {% else %}
-                <li class="menu-item">
+
+                    {% if perms.core.view_cmp %}
+                    {% if active == 'cmp' %}
+                    <li class="menu-item active">
+                        {% else %}
+                    <li class="menu-item">
+                        {% endif %}
+                        <a href="/dashboard/cmp-list/" class=""><i class="material-icons">assignment</i><span>Centrally
+                                Managed Programs</span></a>
+                    </li>
                     {% endif %}
-                    <a href="/dashboard/ns-list/" class=""><i
-                            class="material-icons">gavel</i><span>National Statistic</span></a>
-                </li>
-                {% endif %}
-                {% if perms.core.view_manual %}
-                {% if active == 'man' %}
-                <li class="menu-item active">
-                    {% else %}
-                <li class="menu-item">
+                    {% if perms.core.view_faq %}
+                    {% if active == 'faq' %}
+                    <li class="menu-item active">
+                        {% else %}
+                    <li class="menu-item">
+                        {% endif %}
+                        <a href="/dashboard/faq-list/" class=""><i class="material-icons">quiz</i><span>FAQ</span></a>
+                    </li>
                     {% endif %}
-                    <a href="/dashboard/manual-list/" class=""><i
-                            class="material-icons">gavel</i><span>Manual</span></a>
-                </li>
-                {% endif %}
-                
-<!--                {% if perms.core.view_faq %}-->
-<!--                {% if active == 'sector' %}-->
-<!--                <li class="menu-item active submenu">-->
-<!--                    {% else %}-->
-<!--                <li class="menu-item submenu">-->
-<!--                    {% endif %}-->
+                    {% if perms.core.view_termsandcondition %}
+                    {% if active == 'tac' %}
+                    <li class="menu-item active">
+                        {% else %}
+                    <li class="menu-item">
+                        {% endif %}
+                        <a href="/dashboard/tac-list/" class=""><i class="material-icons">gavel</i><span>Terms And
+                                Conditions</span></a>
+                    </li>
+                    {% endif %}
+                    {% if perms.core.view_nationalstatistic %}
+                    {% if active == 'ns' %}
+                    <li class="menu-item active">
+                        {% else %}
+                    <li class="menu-item">
+                        {% endif %}
+                        <a href="/dashboard/ns-list/" class=""><i class="material-icons">gavel</i><span>National
+                                Statistic</span></a>
+                    </li>
+                    {% endif %}
+                    {% if perms.core.view_manual %}
+                    {% if active == 'man' %}
+                    <li class="menu-item active">
+                        {% else %}
+                    <li class="menu-item">
+                        {% endif %}
+                        <a href="/dashboard/manual-list/" class=""><i
+                                class="material-icons">gavel</i><span>Manual</span></a>
+                    </li>
+                    {% endif %}
+                    {% if perms.about_us.view_aboutus %}
+                    <li class="menu-item active">
+                    <li class="menu-item">
+                        <a href="/dashboard/about-us-list/" class=""><i class="material-icons">gavel</i><span>About
+                                Us</span></a>
+                    </li>
+                    {% endif %}
+                    {% if perms.about_us.view_aboutus %}
+                    <li class="menu-item active">
+                    <li class="menu-item">
+                        <a href="/dashboard/contact-us-list/" class=""><i class="material-icons">gavel</i><span>Contact
+                                Us</span></a>
+                    </li>
+                    {% endif %}
 
-<!--                    <a href="javascript:void(0);" class="menu-toggle active-red"><i-->
-<!--                            class="material-icons">category</i><span>About</span></a>-->
-<!--                    <ul class="ml-menu">-->
-<!--                        {% if perms.core.faq %}-->
-<!--                        <li><a href="/dashboard/faq-list/">FAQ</a></li>-->
-<!--                        {% endif %}-->
-<!--                        {% if perms.core.faq %}-->
-<!--                        <li><a href="/dashboard/terms-condition-list/">Terms and Condition</a></li>-->
-<!--                        {% endif %}-->
-<!--                    </ul>-->
-<!--                </li>-->
-<!--                {% endif %}-->
 
-            </ul>
-        </div>
-    </aside>
+                    <!--                {% if perms.core.view_faq %}-->
+                    <!--                {% if active == 'sector' %}-->
+                    <!--                <li class="menu-item active submenu">-->
+                    <!--                    {% else %}-->
+                    <!--                <li class="menu-item submenu">-->
+                    <!--                    {% endif %}-->
 
-    <div class="page-wrapper">
-        <!-- header start -->
+                    <!--                    <a href="javascript:void(0);" class="menu-toggle active-red"><i-->
+                    <!--                            class="material-icons">category</i><span>About</span></a>-->
+                    <!--                    <ul class="ml-menu">-->
+                    <!--                        {% if perms.core.faq %}-->
+                    <!--                        <li><a href="/dashboard/faq-list/">FAQ</a></li>-->
+                    <!--                        {% endif %}-->
+                    <!--                        {% if perms.core.faq %}-->
+                    <!--                        <li><a href="/dashboard/terms-condition-list/">Terms and Condition</a></li>-->
+                    <!--                        {% endif %}-->
+                    <!--                    </ul>-->
+                    <!--                </li>-->
+                    <!--                {% endif %}-->
 
-        <header class="dfid-header" id="header">
-            <nav class="navbar navbar-static-top navbar-expand-lg">
-                <button class="btn-icon mobile_menu" type="button"><i class="material-icons">menu</i></button>
+                </ul>
+            </div>
+        </aside>
+
+        <div class="page-wrapper">
+            <!-- header start -->
+
+            <header class="dfid-header" id="header">
+                <nav class="navbar navbar-static-top navbar-expand-lg">
+                    <button class="btn-icon mobile_menu" type="button"><i class="material-icons">menu</i></button>
 
 
-                <div class="navbar-right ">
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown notifications-menu" >
-                            <button class="dropdown-toggle" id="notify-id-div" data-toggle="dropdown" aria-expanded="false">
-                                <i class="material-icons" >notifications_none</i>
-                                <span class="" id="notify-active-bar"></span>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-right dropdown-animation" id ="notifyBar">
-                                <li class="dropdown-header">You have 0 new notifications</li>
-
-                            </ul>
-                        </li>
-                        <!-- User Account -->
-                        <li class="dropdown user-menu">
-                            <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"
+                    <div class="navbar-right ">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown notifications-menu">
+                                <button class="dropdown-toggle" id="notify-id-div" data-toggle="dropdown"
                                     aria-expanded="false">
-                                {% if user.thumbnail %}
-                                <img src="{{ user.thumbnail.url }}" class="user-image"
-                                     alt="User Image">
-                                {% else %}
-                                <img src="{% static 'dashboard/images/admin.png' %}" class="user-image"
-                                     alt="User Image">
-                                {% endif %}
+                                    <i class="material-icons">notifications_none</i>
+                                    <span class="" id="notify-active-bar"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-animation" id="notifyBar">
+                                    <li class="dropdown-header">You have 0 new notifications</li>
 
-                                <div class="user-info">
-                                    <h6>{{ user.name}}</h6>
-                                    <span>
-                                        {% if user.user.groups.all.exists %}
-                                        {% for grp in user.user.groups.all %}
-                                        {{ grp.name }}
-                                        {% endfor %}
-                                        {% else %}
-                                        {% endif %}
-                                    </span>
-                                </div>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-right dropdown-animation">
-                                <!-- User image -->
-                                <!--                                <li>-->
-                                <!--                                    <a href="profile.html">-->
-                                <!--                                        My Profile-->
-                                <!--                                    </a>-->
-                                <!--                                </li>-->
-                                <!--                                <li>-->
-                                <!--                                    <a href="#"> Account Setting </a>-->
-                                <!--                                </li>-->
+                                </ul>
+                            </li>
+                            <!-- User Account -->
+                            <li class="dropdown user-menu">
+                                <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"
+                                    aria-expanded="false">
+                                    {% if user.thumbnail %}
+                                    <img src="{{ user.thumbnail.url }}" class="user-image" alt="User Image">
+                                    {% else %}
+                                    <img src="{% static 'dashboard/images/admin.png' %}" class="user-image"
+                                        alt="User Image">
+                                    {% endif %}
 
-                                <li class="dropdown-footer">
-                                    <a href="/dashboard/logout/"> <i class="material-icons">power_settings_new</i> Log
-                                        Out
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+                                    <div class="user-info">
+                                        <h6>{{ user.name}}</h6>
+                                        <span>
+                                            {% if user.user.groups.all.exists %}
+                                            {% for grp in user.user.groups.all %}
+                                            {{ grp.name }}
+                                            {% endfor %}
+                                            {% else %}
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right dropdown-animation">
+                                    <!-- User image -->
+                                    <!--                                <li>-->
+                                    <!--                                    <a href="profile.html">-->
+                                    <!--                                        My Profile-->
+                                    <!--                                    </a>-->
+                                    <!--                                </li>-->
+                                    <!--                                <li>-->
+                                    <!--                                    <a href="#"> Account Setting </a>-->
+                                    <!--                                </li>-->
+
+                                    <li class="dropdown-footer">
+                                        <a href="/dashboard/logout/"> <i class="material-icons">power_settings_new</i>
+                                            Log
+                                            Out
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
 
 
-        </header>
+            </header>
 
-        <!-- Main Content -->
-        {% block content %}
-        {% endblock %}
-        <!-- Main Content -->
+            <!-- Main Content -->
+            {% block content %}
+            {% endblock %}
+            <!-- Main Content -->
+
+        </div>
 
     </div>
 
-</div>
 
+    <!-- Jquery Core Js -->
 
-<!-- Jquery Core Js -->
+    <script src="{% static 'dashboard/js/jquery-3.4.1.min.js' %}"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+    <!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) -->
+    <script src="{% static 'dashboard/js/bootstrap.min.js' %}"></script> <!-- slimscroll, waves Scripts Plugin Js -->
+    <script src="{% static 'dashboard/js/jquery.slimscroll.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/mainscripts.bundle.js' %}"></script>
+    {% block five_add %}
+    <script src="{% static 'dashboard/js/customform.js' %}"></script>
+    {% endblock %}
+    <script src="{% static 'dashboard/js/bootstrap-datepicker.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/equalHeight.js' %}"></script>
+    <script src="{% static 'dashboard/plugins/datatable/dataTables.min.js' %}"></script>
+    <script src="{% static 'dashboard/plugins/datatable/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'dashboard/plugins/datatable/dataTables.button.js' %}"></script>
+    <script src="{% static 'dashboard/plugins/datatable/jszip.min.js' %}"></script>
+    <script src="{% static 'dashboard/plugins/datatable/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'dashboard/plugins/datatable/custom-datatables.js' %}"></script>
 
-<script src="{% static 'dashboard/js/jquery-3.4.1.min.js' %}"></script>
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
-<!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) -->
-<script src="{% static 'dashboard/js/bootstrap.min.js' %}"></script> <!-- slimscroll, waves Scripts Plugin Js -->
-<script src="{% static 'dashboard/js/jquery.slimscroll.min.js' %}"></script>
-<script src="{% static 'dashboard/js/mainscripts.bundle.js' %}"></script>
-{% block five_add %}
-<script src="{% static 'dashboard/js/customform.js' %}"></script>
-{% endblock %}
-<script src="{% static 'dashboard/js/bootstrap-datepicker.min.js' %}"></script>
-<script src="{% static 'dashboard/js/equalHeight.js' %}"></script>
-<script src="{% static 'dashboard/plugins/datatable/dataTables.min.js' %}"></script>
-<script src="{% static 'dashboard/plugins/datatable/dataTables.bootstrap.min.js' %}"></script>
-<script src="{% static 'dashboard/plugins/datatable/dataTables.button.js' %}"></script>
-<script src="{% static 'dashboard/plugins/datatable/jszip.min.js' %}"></script>
-<script src="{% static 'dashboard/plugins/datatable/buttons.html5.min.js' %}"></script>
-<script src="{% static 'dashboard/plugins/datatable/custom-datatables.js' %}"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"></script> -->
+    <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
 
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.16/js/bootstrap-multiselect.min.js"></script> -->
-<script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
-
-{% block script %}
-{% endblock %}
+    {% block script %}
+    {% endblock %}
 
 </html>

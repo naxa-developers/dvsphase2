@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if perms.core.view_user %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i>About Us</a>
+            </li>
+            {% if perms.core.add_about_us %}
+            <li><a href="/dashboard/about-us-add" class="border-button dfid-button sm-button"><i
+                        class="material-icons">add_circle_outline</i>New</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+    <!-- dfid program table -->
+    <div class="table-tesponsive program-list">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> {{message}}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <table class="program-table dataTable">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Sub Title</th>
+                    <th>Body</th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for about_us in list %}
+
+                <tr>
+                    <td>{{ about_us.id }}</td>
+                    <td>{{ about_us.title }}</td>
+                    <td>
+                        <strong><a href="#">{{about_us.sub_title}}</a></strong>
+                    </td>
+                    <td>{{ about_us.body }}</td>
+
+                    <td>
+                        <div class="table-action">
+                            <a href="#" class="more-action">
+                                <i class="material-icons">more_vert</i>
+                            </a>
+                            <ul class="dropdown-animation">
+                                {% if perms.core.change_about_us %}
+                                <li>
+                                    <a href="/dashboard/about-us-edit/{{ about_us.id }}" class="flex-start">
+                                        <i class="material-icons">edit</i> Edit
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.core.delete_about_us %}
+                                <li>
+                                    <a href="/dashboard/about-us-delete/{{ about_us.id }}" class="flex-start">
+                                        <i class="material-icons">delete</i>Delete
+                                    </a>
+
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+
+
+        {% endif %}
+
+        {% endblock %}

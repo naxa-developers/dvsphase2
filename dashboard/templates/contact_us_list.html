@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if perms.core.view_user %}
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="#"><i class="material-icons">assignment</i>Contact Us</a>
+            </li>
+            {% if perms.core.add_contact_us %}
+            <li><a href="/dashboard/contact-us-add" class="border-button dfid-button sm-button"><i
+                        class="material-icons">add_circle_outline</i>New</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+    <!-- dfid program table -->
+    <div class="table-tesponsive program-list">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> {{message}}
+        </div>
+        {% endfor %}
+        {% endif %}
+        <table class="program-table dataTable">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>name</th>
+                    <th>Address</th>
+                    <th>Email</th>
+                    <th>Telephone</th>
+                    <th>Fax</th>
+
+
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact_us in list %}
+
+                <tr>
+                    <td>{{ contact_us.id }}</td>
+                    <td>{{ contact_us.name }}</td>
+                    <td>
+                        {{contact_us.address}}
+                    </td>
+                    <td>{{ contact_us.email }}</td>
+                    <td>{{ contact_us.telephone }}</td>
+                    <td>{{ contact_us.fax }}</td>
+
+
+
+                    <td>
+                        <div class="table-action">
+                            <a href="#" class="more-action">
+                                <i class="material-icons">more_vert</i>
+                            </a>
+                            <ul class="dropdown-animation">
+                                {% if perms.core.change_contact_us %}
+                                <li>
+                                    <a href="/dashboard/contact-us-edit/{{ contact_us.id }}" class="flex-start">
+                                        <i class="material-icons">edit</i> Edit
+                                    </a>
+                                </li>
+                                {% endif %}
+                                {% if perms.core.delete_contact_us %}
+                                <li>
+                                    <a href="/dashboard/contact-us-delete/{{ contact_us.id }}" class="flex-start">
+                                        <i class="material-icons">delete</i>Delete
+                                    </a>
+
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+
+
+        {% endif %}
+
+        {% endblock %}
