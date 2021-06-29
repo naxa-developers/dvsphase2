@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .ck-editor__editable_inline {
+        min-height: 200px;
+    }
+</style>
+
+<main class="dfid-main">
+    <!-- dfid breadcrumb -->
+    <div class="dfid-breadcrumb pdt-100">
+        <ul class="flex-start">
+            <li>
+                <a href="/dashboard/about-us-list/"><i class="material-icons">assignment</i>About Us</a>
+            </li>
+            <li>Edit</li>
+        </ul>
+    </div>
+    <!-- program form -->
+    <form class="program-form" method="POST">
+        {% csrf_token %}
+
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <strong>{{ field.name|title }} {{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+        <div class="default-form">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group ">
+                        <label for="id_end_date" class="">Name</label>
+                        <textarea id="editor" name="name">{{form.instance.name}}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group ">
+                        <label class="">Address</label>
+                        <textarea id="editor1" name="address">{{form.instance.address}}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group ">
+                        <label class="">Email</label>
+                        <textarea id="editor1" name="email">{{form.instance.email}}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group ">
+                        <label class="">Telephone</label>
+                        <textarea id="editor1" name="telephone">{{form.instance.telephone}}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group ">
+                        <label class="">Fax</label>
+                        <textarea name="fax">{{form.instance.fax}}</textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group mrt-100" style="margin-top:50px;">
+            <button id='final_save' type="submit" class="dfid-button sm-button">Save</button>
+        </div>
+
+    </form>
+</main>
+
+{% endblock %}
+{% block script %}
+<script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
+<script>
+    var i;
+    list = ['#editor', '#editor1']
+    for (i = 0; i < list.length; i++) {
+        ClassicEditor
+            .create(document.querySelector(list[i]))
+            .then(editor => {
+                console.log(editor);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
+
+</script>
+{% endblock %}
