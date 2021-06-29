@@ -59,9 +59,9 @@
                     <div class="form-group ">
                         <label class="">
 
-                            <Body></Body>
+                            Body
                         </label>
-                        <textarea id="editor1" name="body">{{form.instance.body}}</textarea>
+                        <textarea id="editor2" name="body">{{form.instance.body}}</textarea>
 
                     </div>
                 </div>
@@ -80,7 +80,7 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
 <script>
     var i;
-    list = ['#editor', '#editor1']
+    list = ['#editor', '#editor1', '#editor2']
     for (i = 0; i < list.length; i++) {
         ClassicEditor
             .create(document.querySelector(list[i]))
