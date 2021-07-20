@@ -665,7 +665,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         pr = FiveW.objects.filter(program_id=p,
                                                   province_id__code=int(request.GET['province_code'])).exclude(
                             allocated_budget=None).values('allocated_budget', 'program_id__name',
-                                                          'program_id__id')
+                                                          'program_id__id', 'program_id__program_acronym')
                         top_prog_by_budget.append({
                             'id': pr[0]['program_id__id'],
                             'name': pr[0]['program_id__name'],
@@ -816,7 +816,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         pr = FiveW.objects.filter(program_id=p,
                                                   district_id__code=int(request.GET['district_code'])).exclude(
                             allocated_budget=None).values('allocated_budget', 'program_id__name',
-                                                          'program_id__id')
+                                                          'program_id__id', 'program_id__program_acronym')
                         top_prog_by_budget.append({
                             'id': pr[0]['program_id__id'],
                             'name': pr[0]['program_id__name'],
@@ -931,7 +931,7 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         pr = FiveW.objects.filter(program_id=p,
                                                   municipality_id__code=int(request.GET['municipality_code'])).exclude(
                             allocated_budget=None).values('allocated_budget', 'program_id__name',
-                                                          'program_id__id')
+                                                          'program_id__id', 'program_id__program_acronym')
                         top_prog_by_budget.append({
                             'id': pr[0]['program_id__id'],
                             'name': pr[0]['program_id__name'],
