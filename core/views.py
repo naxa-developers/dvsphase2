@@ -28,7 +28,6 @@ from django.db.models import Q
 from datetimerange import DateTimeRange
 
 
-
 # Create your views here.
 class ProgramSankey(viewsets.ModelViewSet):
     queryset = True
@@ -53,11 +52,13 @@ class ProgramSankey(viewsets.ModelViewSet):
             for i in range(0, len(program_filter_id)):
                 program_filter_id[i] = int(program_filter_id[i])
         else:
-            program_filter_id = list(Program.objects.values_list('id', flat=True))
+            program_filter_id = list(
+                Program.objects.values_list('id', flat=True))
 
         five_query = FiveW.objects.filter(program_id__in=program_filter_id)
         if five_query.exists():
-            total_budget_sum = five_query.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
+            total_budget_sum = five_query.aggregate(Sum('allocated_budget'))[
+                'allocated_budget__sum']
             percentage_one = int((total_budget_sum * threshold) / 100)
         else:
             percentage_one = 0
@@ -82,7 +83,8 @@ class ProgramSankey(viewsets.ModelViewSet):
                 'name': c['component_id__name'],
                 'type': 'component',
             })
-            indexes.append(c['component_id__name'] + str(c['component_id__code']))
+            indexes.append(c['component_id__name'] +
+                           str(c['component_id__code']))
             component_id.append(c['component_id'])
         partner = five_query.values('supplier_id__name', 'supplier_id', "supplier_id__code").exclude(
             allocated_budget__lt=percentage_one).filter(
@@ -92,7 +94,8 @@ class ProgramSankey(viewsets.ModelViewSet):
                 'name': part['supplier_id__name'],
                 'type': 'partner',
             })
-            indexes.append(part['supplier_id__name'] + str(part['supplier_id__code']))
+            indexes.append(part['supplier_id__name'] +
+                           str(part['supplier_id__code']))
             partner_id.append(part['supplier_id'])
 
         # allocated_sum = query.aggregate(Sum('allocated_budget'))
@@ -105,8 +108,10 @@ class ProgramSankey(viewsets.ModelViewSet):
                 component_id=component_id[i])
 
             budget = q.aggregate(Sum('allocated_budget'))
-            source = indexes.index(q[0]['program_id__name'] + str(q[0]['program_id__code']))
-            target = indexes.index(q[0]['component_id__name'] + str(q[0]['component_id__code']))
+            source = indexes.index(
+                q[0]['program_id__name'] + str(q[0]['program_id__code']))
+            target = indexes.index(
+                q[0]['component_id__name'] + str(q[0]['component_id__code']))
             links.append({
                 'source': source,
                 'target': target,
@@ -123,8 +128,10 @@ class ProgramSankey(viewsets.ModelViewSet):
                     i])
 
             budget = q.aggregate(Sum('allocated_budget'))
-            source = indexes.index(q[0]['component_id__name'] + str(q[0]['component_id__code']))
-            target = indexes.index(q[0]['supplier_id__name'] + str(q[0]['supplier_id__code']))
+            source = indexes.index(
+                q[0]['component_id__name'] + str(q[0]['component_id__code']))
+            target = indexes.index(
+                q[0]['supplier_id__name'] + str(q[0]['supplier_id__code']))
             links.append({
                 'source': source,
                 'target': target,
@@ -160,7 +167,8 @@ class RegionSankey(viewsets.ModelViewSet):
             for i in range(0, len(province_filter_id)):
                 province_filter_id[i] = int(province_filter_id[i])
         else:
-            province_filter_id = list(Province.objects.exclude(code=-1).values_list('id', flat=True).distinct())
+            province_filter_id = list(Province.objects.exclude(
+                code=-1).values_list('id', flat=True).distinct())
 
         if request.GET.getlist('program'):
             prov = request.GET['program']
@@ -203,7 +211,8 @@ class RegionSankey(viewsets.ModelViewSet):
             for i in range(0, len(markers_value)):
                 markers_value[i] = int(markers_value[i])
         else:
-            markers_value = list(MarkerValues.objects.values_list('id', flat=True))
+            markers_value = list(
+                MarkerValues.objects.values_list('id', flat=True))
             count.append('markers_value')
 
         if request.GET.getlist('supplier_id'):
@@ -228,7 +237,8 @@ class RegionSankey(viewsets.ModelViewSet):
                             markers_value, count)
         print(five_query)
         if five_query.exists():
-            total_budget_sum = five_query.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
+            total_budget_sum = five_query.aggregate(Sum('allocated_budget'))[
+                'allocated_budget__sum']
 
             percentage_one = int((total_budget_sum * threshold) / 100)
         else:
@@ -240,7 +250,8 @@ class RegionSankey(viewsets.ModelViewSet):
                 'name': p['province_id__name'],
                 'type': 'province',
             })
-            indexes.append(p['province_id__name'] + str(p['province_id__code']))
+            indexes.append(p['province_id__name'] +
+                           str(p['province_id__code']))
             province_id.append(p['province_id'])
         district = five_query.values('province_id', 'district_id__name', 'district_id',
                                      'district_id__code').distinct(
@@ -250,7 +261,8 @@ class RegionSankey(viewsets.ModelViewSet):
                 'name': c['district_id__name'],
                 'type': 'district',
             })
-            indexes.append(c['district_id__name'] + str(c['district_id__code']))
+            indexes.append(c['district_id__name'] +
+                           str(c['district_id__code']))
             district_id.append(c['district_id'])
         municipality = five_query.values('province_id', 'municipality_id__name', 'municipality_id',
                                          "municipality_id__code").distinct('municipality_id').exclude(
@@ -260,7 +272,8 @@ class RegionSankey(viewsets.ModelViewSet):
                 'name': part['municipality_id__name'],
                 'type': 'municipality',
             })
-            indexes.append(part['municipality_id__name'] + str(part['municipality_id__code']))
+            indexes.append(part['municipality_id__name'] +
+                           str(part['municipality_id__code']))
             municipality_id.append(part['municipality_id'])
         for i in range(0, len(district_id)):
             q = five_query.values('district_id__name', 'district_id', 'district_id__code',
@@ -270,8 +283,10 @@ class RegionSankey(viewsets.ModelViewSet):
                 allocated_budget__lt=percentage_one)
 
             budget = q.aggregate(Sum('allocated_budget'))
-            source = indexes.index(q[0]['province_id__name'] + str(q[0]['province_id__code']))
-            target = indexes.index(q[0]['district_id__name'] + str(q[0]['district_id__code']))
+            source = indexes.index(
+                q[0]['province_id__name'] + str(q[0]['province_id__code']))
+            target = indexes.index(
+                q[0]['district_id__name'] + str(q[0]['district_id__code']))
             links.append({
                 'source': source,
                 'target': target,
@@ -286,8 +301,10 @@ class RegionSankey(viewsets.ModelViewSet):
                 allocated_budget__lt=percentage_one)
 
             budget = q.aggregate(Sum('allocated_budget'))
-            source = indexes.index(q[0]['district_id__name'] + str(q[0]['district_id__code']))
-            target = indexes.index(q[0]['municipality_id__name'] + str(q[0]['municipality_id__code']))
+            source = indexes.index(
+                q[0]['district_id__name'] + str(q[0]['district_id__code']))
+            target = indexes.index(
+                q[0]['municipality_id__name'] + str(q[0]['municipality_id__code']))
             links.append({
                 'source': source,
                 'target': target,
@@ -538,7 +555,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             top_sector_by_no_partner = []
             fivew_data = []
             addition_type = ['meters', 'count', 'sqkm']
-            average_type = ['percent', 'millimeters / month', 'persons per household', 'indices', 'hour']
+            average_type = ['percent', 'millimeters / month',
+                            'persons per household', 'indices', 'hour']
             if 'province_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level__in=['province', 'all']).exclude(
                     Q(show_flag=False) | Q(is_dashboard=False) | Q(is_regional_profile=False)).values(
@@ -628,7 +646,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                 if len(supplieruniqueid) != 0:
                     for l in supplieruniqueid:
                         total_partner_budget = 0
-                        partner = Partner.objects.filter(id=int(l)).values('name')
+                        partner = Partner.objects.filter(
+                            id=int(l)).values('name')
                         fivenew = FiveW.objects.filter(supplier_id=l,
                                                        province_id__code=int(request.GET['province_code'])).values(
                             'supplier_id__name', 'supplier_id',
@@ -650,13 +669,18 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         top_prog_by_budget.append({
                             'id': pr[0]['program_id__id'],
                             'name': pr[0]['program_id__name'],
+                            'acronym': pr[0]['program_id__program_acronym'],
                             'key': 'total_budget',
                             'value': pr.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
                         })
-                test2 = sorted(top_prog_by_budget, key=lambda i: i['value'], reverse=True)
-                test3 = sorted(top_part_by_budget, key=lambda i: i['value'], reverse=True)
-                total_budget = five.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
-                sector_count = five.distinct('program_id__sector').exclude(program_id__sector=None).count()
+                test2 = sorted(top_prog_by_budget,
+                               key=lambda i: i['value'], reverse=True)
+                test3 = sorted(top_part_by_budget,
+                               key=lambda i: i['value'], reverse=True)
+                total_budget = five.aggregate(Sum('allocated_budget'))[
+                    'allocated_budget__sum']
+                sector_count = five.distinct('program_id__sector').exclude(
+                    program_id__sector=None).count()
                 program_count = five.distinct('program_id').count()
                 component_count = five.distinct('component_id').count()
                 supplier_count = five.distinct('supplier_id').count()
@@ -682,7 +706,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
             supplier_ids = []
             fivew_data = []
             addition_type = ['meters', 'count', 'sqkm']
-            average_type = ['percent', 'millimeters / month', 'persons per household', 'indices', 'hour']
+            average_type = ['percent', 'millimeters / month',
+                            'persons per household', 'indices', 'hour']
             if 'district_code' in request.GET:
                 ind = Indicator.objects.filter(federal_level__in=['district', 'all']).exclude(
                     Q(show_flag=False) | Q(is_dashboard=False) | Q(is_regional_profile=False)).values(
@@ -772,7 +797,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                 if len(supplieruniqueid) != 0:
                     for l in supplieruniqueid:
                         total_partner_budget = 0
-                        partner = Partner.objects.filter(id=int(l)).values('name')
+                        partner = Partner.objects.filter(
+                            id=int(l)).values('name')
                         fivenew = FiveW.objects.filter(supplier_id=l,
                                                        district_id__code=int(request.GET['district_code'])).values(
                             'supplier_id__name', 'supplier_id',
@@ -794,13 +820,18 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         top_prog_by_budget.append({
                             'id': pr[0]['program_id__id'],
                             'name': pr[0]['program_id__name'],
+                            'acronym': pr[0]['program_id__program_acronym'],
                             'key': 'total_budget',
                             'value': pr.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
                         })
-                test2 = sorted(top_prog_by_budget, key=lambda i: i['value'], reverse=True)
-                test3 = sorted(top_part_by_budget, key=lambda i: i['value'], reverse=True)
-                total_budget = five.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
-                sector_count = five.distinct('program_id__sector').exclude(program_id__sector=None).count()
+                test2 = sorted(top_prog_by_budget,
+                               key=lambda i: i['value'], reverse=True)
+                test3 = sorted(top_part_by_budget,
+                               key=lambda i: i['value'], reverse=True)
+                total_budget = five.aggregate(Sum('allocated_budget'))[
+                    'allocated_budget__sum']
+                sector_count = five.distinct('program_id__sector').exclude(
+                    program_id__sector=None).count()
                 program_count = five.distinct('program_id').count()
                 component_count = five.distinct('component_id').count()
                 supplier_count = five.distinct('supplier_id').count()
@@ -882,7 +913,8 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                 if len(supplieruniqueid) != 0:
                     for l in supplieruniqueid:
                         total_partner_budget = 0
-                        partner = Partner.objects.filter(id=int(l)).values('name')
+                        partner = Partner.objects.filter(
+                            id=int(l)).values('name')
                         fivenew = FiveW.objects.filter(supplier_id=l, municipality_id__code=int(
                             request.GET['municipality_code'])).values('supplier_id__name', 'supplier_id',
                                                                       'allocated_budget')
@@ -903,13 +935,18 @@ class RegionalProfile(viewsets.ReadOnlyModelViewSet):
                         top_prog_by_budget.append({
                             'id': pr[0]['program_id__id'],
                             'name': pr[0]['program_id__name'],
+                            'acronym': pr[0]['program_id__program_acronym'],
                             'key': 'total_budget',
                             'value': pr.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
                         })
-                test2 = sorted(top_prog_by_budget, key=lambda i: i['value'], reverse=True)
-                test3 = sorted(top_part_by_budget, key=lambda i: i['value'], reverse=True)
-                total_budget = five.aggregate(Sum('allocated_budget'))['allocated_budget__sum']
-                sector_count = five.distinct('program_id__sector').exclude(program_id__sector=None).count()
+                test2 = sorted(top_prog_by_budget,
+                               key=lambda i: i['value'], reverse=True)
+                test3 = sorted(top_part_by_budget,
+                               key=lambda i: i['value'], reverse=True)
+                total_budget = five.aggregate(Sum('allocated_budget'))[
+                    'allocated_budget__sum']
+                sector_count = five.distinct('program_id__sector').exclude(
+                    program_id__sector=None).count()
                 program_count = five.distinct('program_id').count()
                 component_count = five.distinct('component_id').count()
                 supplier_count = five.distinct('supplier_id').count()
@@ -938,7 +975,8 @@ class ProgramUpperDendrogram(viewsets.ReadOnlyModelViewSet):
         if request.GET.getlist('program_id'):
             component = []
             programid = request.GET['program_id']
-            dami = Project.objects.filter(program_id=programid).values('name').distinct()
+            dami = Project.objects.filter(
+                program_id=programid).values('name').distinct()
             for d in dami:
                 partner = []
                 if d['name'] not in component:
@@ -967,7 +1005,8 @@ class ProgramLowerDendrogram(viewsets.ReadOnlyModelViewSet):
         if request.GET.getlist('program_id'):
             component = []
             programid = request.GET['program_id']
-            dami = Project.objects.filter(program_id=programid).values('name').distinct()
+            dami = Project.objects.filter(
+                program_id=programid).values('name').distinct()
             print(dami)
             for d in dami:
                 province = []
@@ -1187,7 +1226,8 @@ class DistrictIndicator(viewsets.ModelViewSet):
             else:
                 for dist in district:
                     addition_type = ['meters', 'count', 'sqkm']
-                    average_type = ['percent', 'millimeters / month', 'persons per household', 'indices']
+                    average_type = ['percent', 'millimeters / month',
+                                    'persons per household', 'indices']
                     indicator = IndicatorValue.objects.values('id', 'indicator_id', 'value',
                                                               'indicator_id__unit').filter(
                         indicator_id=int(id_indicator[i]),
@@ -1235,8 +1275,10 @@ class ProvinceIndicator(viewsets.ModelViewSet):
         """
         data = []
         addition_type = ['meters', 'count', 'sqkm']
-        average_type = ['percent', 'millimeters / month', 'persons per household', 'indices']
-        province = Province.objects.values('name', 'id', 'code').exclude(code=-1).order_by('id')
+        average_type = ['percent', 'millimeters / month',
+                        'persons per household', 'indices']
+        province = Province.objects.values(
+            'name', 'id', 'code').exclude(code=-1).order_by('id')
         id_indicators = request.GET['indicator_id']
         id_indicator = id_indicators.split(",")
         for i in range(0, len(id_indicator)):
@@ -1313,7 +1355,8 @@ class MarkerValueApi(viewsets.ReadOnlyModelViewSet):
     filterset_fields = ['id', 'marker_category_id']
 
     def get_queryset(self):
-        queryset = MarkerValues.objects.select_related('marker_category_id').order_by('id')
+        queryset = MarkerValues.objects.select_related(
+            'marker_category_id').order_by('id')
         return queryset
 
     def get_serializer_class(self):
@@ -1352,7 +1395,8 @@ class ProvinceApi(viewsets.ReadOnlyModelViewSet):
 class GapaNapaApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'province_id', 'district_id', 'hlcit_code', 'gn_type_en', 'gn_type_np', 'code']
+    filterset_fields = ['id', 'province_id', 'district_id',
+                        'hlcit_code', 'gn_type_en', 'gn_type_np', 'code']
     queryset = GapaNapa.objects.only('id', 'province_id', 'district_id', 'hlcit_code', 'name', 'gn_type_np',
                                      'code', 'population').exclude(code=-1).order_by('id')
     serializer_class = GaanapaSerializer
@@ -1438,7 +1482,8 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
             for i in range(0, len(markers_value)):
                 markers_value[i] = int(markers_value[i])
         else:
-            markers_value = list(MarkerValues.objects.values_list('id', flat=True))
+            markers_value = list(
+                MarkerValues.objects.values_list('id', flat=True))
             count.append('markers_value')
 
         if request.GET.getlist('supplier_id'):
@@ -1468,7 +1513,8 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                 province_id__code__in=province_codes).exclude(code='-1').order_by('id')
 
         else:
-            districts = District.objects.values('name', 'id', 'code', 'n_code', 'province_id__name').order_by('id')
+            districts = District.objects.values(
+                'name', 'id', 'code', 'n_code', 'province_id__name').order_by('id')
 
         for dist in districts:
             if count:
@@ -1492,12 +1538,14 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
 
             if query:
                 total_new_budget1 = 0
-                prog = query.values_list('program_id__name', flat=True).distinct()
+                prog = query.values_list(
+                    'program_id__name', flat=True).distinct()
                 if request.GET.getlist('sector_id'):
                     if not request.GET.getlist('sub_sector_id'):
                         da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
                                           'allocated_budget')
-                        sub_sec = [i.id for i in SubSector.objects.filter(sector_id__in=sector)]
+                        sub_sec = [i.id for i in SubSector.objects.filter(
+                            sector_id__in=sector)]
                         for d in da:
                             sec_budget = 0
                             if d['program_id__sector_budget']:
@@ -1513,7 +1561,8 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                             if d['allocated_budget']:
                                 print(sec_budget)
                                 print(d['allocated_budget'])
-                                total_new_budget1 += (d['allocated_budget'] * sec_budget) / 100
+                                total_new_budget1 += (d['allocated_budget']
+                                                      * sec_budget) / 100
                     else:
                         da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
                                           'allocated_budget')
@@ -1526,7 +1575,8 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                                         if int(x[0]) in sub_sector:
                                             sub_sec_budget = float(x[1])
                             if d['allocated_budget']:
-                                total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
+                                total_new_budget1 += (d['allocated_budget']
+                                                      * sub_sec_budget) / 100
                 elif request.GET.getlist('sub_sector_id'):
                     da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
                                       'allocated_budget')
@@ -1539,7 +1589,8 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                                     if int(x[0]) in sub_sector:
                                         sub_sec_budget = float(x[1])
                         if d['allocated_budget']:
-                            total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
+                            total_new_budget1 += (d['allocated_budget']
+                                                  * sub_sec_budget) / 100
 
                 if request.GET.getlist('sector_id'):
                     if not request.GET.getlist('sub_sector_id'):
@@ -1554,8 +1605,10 @@ class FiveWDistrict(viewsets.ReadOnlyModelViewSet):
                     for h in all_budget_test:
                         s += h['allocated_budget']
                     budget = s
-                comp = query.values_list('component_id__name', flat=True).distinct()
-                part = query.values_list('supplier_id__name', flat=True).distinct()
+                comp = query.values_list(
+                    'component_id__name', flat=True).distinct()
+                part = query.values_list(
+                    'supplier_id__name', flat=True).distinct()
                 sect = query.exclude(program_id__sector__name=None).values_list('program_id__sector__name',
                                                                                 flat=True).distinct(
                     'program_id__sector__name')
@@ -1657,7 +1710,8 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
             for i in range(0, len(markers_value)):
                 markers_value[i] = int(markers_value[i])
         else:
-            markers_value = list(MarkerValues.objects.values_list('id', flat=True))
+            markers_value = list(
+                MarkerValues.objects.values_list('id', flat=True))
             count.append('markers_value')
 
         if request.GET.getlist('supplier_id'):
@@ -1678,7 +1732,8 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
             component = list(Project.objects.values_list('code', flat=True))
             count.append('component')
 
-        provinces = Province.objects.values('name', 'id', 'code').order_by('id')
+        provinces = Province.objects.values(
+            'name', 'id', 'code').order_by('id')
 
         for province in provinces:
             if count:
@@ -1702,12 +1757,14 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
             if query:
                 # print(len(query))
                 total_new_budget1 = 0
-                prog = query.values_list('program_id__name', flat=True).distinct()
+                prog = query.values_list(
+                    'program_id__name', flat=True).distinct()
                 if request.GET.getlist('sector_id'):
                     if not request.GET.getlist('sub_sector_id'):
                         da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
                                           'allocated_budget')
-                        sub_sec = [i.id for i in SubSector.objects.filter(sector_id__in=sector)]
+                        sub_sec = [i.id for i in SubSector.objects.filter(
+                            sector_id__in=sector)]
                         for d in da:
                             sec_budget = 0
                             if d['program_id__sector_budget']:
@@ -1723,7 +1780,8 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                             if d['allocated_budget']:
                                 print(sec_budget)
                                 print(d['allocated_budget'])
-                                total_new_budget1 += (d['allocated_budget'] * sec_budget) / 100
+                                total_new_budget1 += (d['allocated_budget']
+                                                      * sec_budget) / 100
                     else:
                         da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
                                           'allocated_budget')
@@ -1736,7 +1794,8 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                                         if int(x[0]) in sub_sector:
                                             sub_sec_budget = float(x[1])
                             if d['allocated_budget']:
-                                total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
+                                total_new_budget1 += (d['allocated_budget']
+                                                      * sub_sec_budget) / 100
                 elif request.GET.getlist('sub_sector_id'):
                     da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
                                       'allocated_budget')
@@ -1749,7 +1808,8 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                                     if int(x[0]) in sub_sector:
                                         sub_sec_budget = float(x[1])
                         if d['allocated_budget']:
-                            total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
+                            total_new_budget1 += (d['allocated_budget']
+                                                  * sub_sec_budget) / 100
 
                 if request.GET.getlist('sector_id'):
                     if not request.GET.getlist('sub_sector_id'):
@@ -1764,8 +1824,10 @@ class FiveWProvince(viewsets.ReadOnlyModelViewSet):
                     for h in all_budget_test:
                         s += h['allocated_budget']
                     budget = s
-                comp = query.values_list('component_id__name', flat=True).distinct()
-                part = query.values_list('supplier_id__name', flat=True).distinct()
+                comp = query.values_list(
+                    'component_id__name', flat=True).distinct()
+                part = query.values_list(
+                    'supplier_id__name', flat=True).distinct()
                 sect = query.exclude(program_id__sector__name=None).values_list('program_id__sector__name',
                                                                                 flat=True).distinct()
 
@@ -1860,7 +1922,8 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
             for i in range(0, len(markers_value)):
                 markers_value[i] = int(markers_value[i])
         else:
-            markers_value = list(MarkerValues.objects.values_list('id', flat=True))
+            markers_value = list(
+                MarkerValues.objects.values_list('id', flat=True))
             count.append('markers_value')
 
         if request.GET.getlist('status'):
@@ -1938,13 +2001,15 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                 query = query.filter(Q(**kwargs))
 
             if query.exists():
-                prog = query.values_list('program_id__name', flat=True).distinct()
+                prog = query.values_list(
+                    'program_id__name', flat=True).distinct()
                 total_new_budget1 = 0
                 if request.GET.getlist('sector_id'):
                     if not request.GET.getlist('sub_sector_id'):
                         da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
                                           'allocated_budget')
-                        sub_sec = [i.id for i in SubSector.objects.filter(sector_id__in=sector)]
+                        sub_sec = [i.id for i in SubSector.objects.filter(
+                            sector_id__in=sector)]
                         for d in da:
                             sec_budget = 0
                             if d['program_id__sector_budget']:
@@ -1960,7 +2025,8 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                             if d['allocated_budget']:
                                 print(sec_budget)
                                 print(d['allocated_budget'])
-                                total_new_budget1 += (d['allocated_budget'] * sec_budget) / 100
+                                total_new_budget1 += (d['allocated_budget']
+                                                      * sec_budget) / 100
                     else:
                         da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
                                           'allocated_budget')
@@ -1973,7 +2039,8 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                                         if int(x[0]) in sub_sector:
                                             sub_sec_budget = float(x[1])
                             if d['allocated_budget']:
-                                total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
+                                total_new_budget1 += (d['allocated_budget']
+                                                      * sub_sec_budget) / 100
                 elif request.GET.getlist('sub_sector_id'):
                     da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
                                       'allocated_budget')
@@ -1986,7 +2053,8 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                                     if int(x[0]) in sub_sector:
                                         sub_sec_budget = float(x[1])
                         if d['allocated_budget']:
-                            total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
+                            total_new_budget1 += (d['allocated_budget']
+                                                  * sub_sec_budget) / 100
 
                 if request.GET.getlist('sector_id'):
                     if not request.GET.getlist('sub_sector_id'):
@@ -2001,8 +2069,10 @@ class FiveWMunicipality(viewsets.ReadOnlyModelViewSet):
                     for h in all_budget_test:
                         s += h['allocated_budget']
                     budget = s
-                comp = query.values_list('component_id__name', flat=True).distinct()
-                part = query.values_list('supplier_id__name', flat=True).distinct()
+                comp = query.values_list(
+                    'component_id__name', flat=True).distinct()
+                part = query.values_list(
+                    'supplier_id__name', flat=True).distinct()
                 sect = query.exclude(program_id__sector__name=None).values_list('program_id__sector__name',
                                                                                 flat=True).distinct()
                 sub_sect = query.exclude(program_id__sub_sector__name=None).values_list(
@@ -2098,7 +2168,8 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
             for i in range(0, len(markers_value)):
                 markers_value[i] = int(markers_value[i])
         else:
-            markers_value = list(MarkerValues.objects.values_list('id', flat=True))
+            markers_value = list(
+                MarkerValues.objects.values_list('id', flat=True))
             count.append('markers_value')
 
         if request.GET.getlist('sector_id'):
@@ -2121,7 +2192,8 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
 
         if len(count) != 0:
             if len(count) == 8:
-                query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id')
+                query = FiveW.objects.values(
+                    'allocated_budget', 'component_id', 'program_id')
             else:
                 query = fivew(supplier, program, component, sector, sub_sector, markers, markers_value,
                               count, stat)
@@ -2135,7 +2207,8 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
             if not request.GET.getlist('sub_sector_id'):
                 da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
                                   'allocated_budget')
-                sub_sec = [i.id for i in SubSector.objects.filter(sector_id__in=sector)]
+                sub_sec = [i.id for i in SubSector.objects.filter(
+                    sector_id__in=sector)]
                 for d in da:
                     sec_budget = 0
                     if d['program_id__sector_budget']:
@@ -2151,7 +2224,8 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
                     if d['allocated_budget']:
                         print(sec_budget)
                         print(d['allocated_budget'])
-                        total_new_budget1 += (d['allocated_budget'] * sec_budget) / 100
+                        total_new_budget1 += (d['allocated_budget']
+                                              * sec_budget) / 100
             else:
                 da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
                                   'allocated_budget')
@@ -2164,7 +2238,8 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
                                 if int(x[0]) in sub_sector:
                                     sub_sec_budget = float(x[1])
                     if d['allocated_budget']:
-                        total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
+                        total_new_budget1 += (d['allocated_budget']
+                                              * sub_sec_budget) / 100
         elif request.GET.getlist('sub_sector_id'):
             da = query.values('program_id__id', 'program_id__sector_budget', 'program_id__total_budget',
                               'allocated_budget')
@@ -2177,7 +2252,8 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
                             if int(x[0]) in sub_sector:
                                 sub_sec_budget = float(x[1])
                 if d['allocated_budget']:
-                    total_new_budget1 += (d['allocated_budget'] * sub_sec_budget) / 100
+                    total_new_budget1 += (d['allocated_budget']
+                                          * sub_sec_budget) / 100
 
         if request.GET.getlist('sector_id'):
             if not request.GET.getlist('sub_sector_id'):
@@ -2196,7 +2272,8 @@ class SummaryData(viewsets.ReadOnlyModelViewSet):
                 for h in all_budget_test:
                     s += h['allocated_budget']
                 all_budget = s
-        fivbudget = FiveW.objects.values('allocated_budget', 'program_id', 'component_id', 'supplier_id')
+        fivbudget = FiveW.objects.values(
+            'allocated_budget', 'program_id', 'component_id', 'supplier_id')
         allocated_sum = all_budget
         component = query.distinct('component_id').count()
         partner = query.distinct('supplier_id').count()
@@ -2228,7 +2305,8 @@ class ContractSum(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
 
     # filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'supplier_id', 'program_id', 'component_id', 'second_tier_partner', ]
+    filterset_fields = ['id', 'supplier_id', 'program_id',
+                        'component_id', 'second_tier_partner', ]
 
     def get_queryset(self):
         queryset = BudgetToSecondTier.objects.order_by('id')
@@ -2243,10 +2321,12 @@ class ContractSum(viewsets.ReadOnlyModelViewSet):
 class IndicatorApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'category', 'indicator', 'is_covid', 'is_dashboard']
+    filterset_fields = ['id', 'category',
+                        'indicator', 'is_covid', 'is_dashboard']
 
     def get_queryset(self):
-        queryset = Indicator.objects.exclude(show_flag=False, is_dashboard=False).order_by('id')
+        queryset = Indicator.objects.exclude(
+            show_flag=False, is_dashboard=False).order_by('id')
         return queryset
 
     def get_serializer_class(self):
@@ -2360,7 +2440,8 @@ class SubsectorApi(viewsets.ReadOnlyModelViewSet):
 class ProjectApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'name', 'program_id', 'sector', 'sub_sector', 'code', 'partner_id']
+    filterset_fields = ['id', 'name', 'program_id',
+                        'sector', 'sub_sector', 'code', 'partner_id']
 
     def get_queryset(self):
         queryset = Project.objects.order_by('id')
@@ -2382,7 +2463,8 @@ class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
             program_filter_id = prov.split(",")
             for i in range(0, len(program_filter_id)):
                 program_filter_id[i] = int(program_filter_id[i])
-            queryset = Program.objects.filter(id__in=program_filter_id).order_by('id')
+            queryset = Program.objects.filter(
+                id__in=program_filter_id).order_by('id')
         elif self.request.GET.getlist('component_code'):
             comp = self.request.GET['component_code']
             component_filter_code = comp.split(",")
@@ -2402,9 +2484,12 @@ class ProgramTestApi(viewsets.ReadOnlyModelViewSet):
                     start_date_new = date(int(a[0]), int(a[1]), int(a[2]))
                     b = end_date.split('-')
                     end_date_new = date(int(b[0]), int(b[1]), int(b[2]))
-                    print(str('Start Date') + ':' + str(start_date) + str('End Date') + ':' + str(end_date))
-                    user_timerange = DateTimeRange( end_date_new,start_date_new)
-                    program_timerange = DateTimeRange(p['start_date'],p['end_date'])
+                    print(str('Start Date') + ':' + str(start_date) +
+                          str('End Date') + ':' + str(end_date))
+                    user_timerange = DateTimeRange(
+                        end_date_new, start_date_new)
+                    program_timerange = DateTimeRange(
+                        p['start_date'], p['end_date'])
 
                     if user_timerange in program_timerange:
                         ids.append(p['id'])
@@ -2422,7 +2507,8 @@ class TravelTimeApi(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     # authentication_classes = (TokenAuthentication, BasicAuthentication)
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'gapanapa', 'facility_type', 'travel_category_population', 'season', 'travel_category']
+    filterset_fields = ['id', 'gapanapa', 'facility_type',
+                        'travel_category_population', 'season', 'travel_category']
 
     def get_queryset(self):
         queryset = TravelTime.objects.select_related('gapanapa').order_by('id')
@@ -2441,7 +2527,8 @@ class CovidChoice(viewsets.ReadOnlyModelViewSet):
     def list(self, request, *args, **kwargs):
         return Response({
             'field': [{'name': 'Kathmandu Activity', 'value': 'kathmandu_activity'},
-                      {'name': 'Providing TA to Local government', 'value': 'providing_ta_to_local_government'},
+                      {'name': 'Providing TA to Local government',
+                          'value': 'providing_ta_to_local_government'},
                       {'name': 'Providing TA To Provincial Government',
                        'value': 'providing_ta_to_provincial_government'}],
             'kathmandu_activity': ['Intervention', 'Influence', 'N/A'],
@@ -2508,7 +2595,8 @@ class Popup(viewsets.ReadOnlyModelViewSet):
             for i in range(0, len(markers_value)):
                 markers_value[i] = int(markers_value[i])
         else:
-            markers_value = list(MarkerValues.objects.values_list('id', flat=True))
+            markers_value = list(
+                MarkerValues.objects.values_list('id', flat=True))
             count.append('markers_value')
 
         if request.GET.getlist('sector_id'):
@@ -2531,7 +2619,8 @@ class Popup(viewsets.ReadOnlyModelViewSet):
 
         if count:
             if len(count) == 8:
-                query = FiveW.objects.values('allocated_budget', 'component_id', 'program_id')
+                query = FiveW.objects.values(
+                    'allocated_budget', 'component_id', 'program_id')
             else:
                 query = fivew(supplier, program, component, sector, sub_sector, markers, markers_value,
                               count, stat)
@@ -2548,14 +2637,17 @@ class Popup(viewsets.ReadOnlyModelViewSet):
             query = query.filter(Q(**kwargs))
         total_final_budget = 0
         if query.exists():
-            program = query.values('program_id', 'program_id__name').annotate(Sum('allocated_budget'))
+            program = query.values('program_id', 'program_id__name').annotate(
+                Sum('allocated_budget'))
             total_final_budget = 0
             for p in program:
                 pid = Program.objects.get(id=p['program_id'])
                 if request.GET.getlist('sector_id') or request.GET.getlist('sub_sector_id'):
-                    sec_id_list = [i['id'] for i in pid.sector.all().values('id')]
+                    sec_id_list = [i['id']
+                                   for i in pid.sector.all().values('id')]
                     pt = len(list(set(sec_id_list).intersection(sector)))
-                    sub_sec_id_list = [i['id'] for i in pid.sub_sector.all().values('id')]
+                    sub_sec_id_list = [i['id']
+                                       for i in pid.sub_sector.all().values('id')]
                     dt = len(list(set(sub_sec_id_list).intersection(sub_sector)))
                 sec_budget = 0
                 if request.GET.getlist('sector_id'):
@@ -2634,9 +2726,11 @@ class Popup(viewsets.ReadOnlyModelViewSet):
                         'partners': partner_data,
                     })
                 if request.GET.getlist('sector_id'):
-                    program_budget = ((p['allocated_budget__sum'] * sec_budget) / 100) / pt
+                    program_budget = (
+                        (p['allocated_budget__sum'] * sec_budget) / 100) / pt
                 elif request.GET.getlist('sub_sector_id'):
-                    program_budget = ((p['allocated_budget__sum'] * sec_budget) / 100) / dt
+                    program_budget = (
+                        (p['allocated_budget__sum'] * sec_budget) / 100) / dt
                 else:
                     program_budget = p['allocated_budget__sum']
                 total_final_budget += program_budget
@@ -2704,16 +2798,19 @@ class RegionalSectorGraph(viewsets.ReadOnlyModelViewSet):
                                                    province_id__code=int(request.GET['province_code'])).exclude(
                             allocated_budget=None)
                         sector = Sector.objects.get(id=s)
-                        set = SubSector.objects.filter(sector_id=sector.id).values('name')
+                        set = SubSector.objects.filter(
+                            sector_id=sector.id).values('name')
                         for v in set:
                             sector_sub_sector_new.append(v['name'])
-                        sub_sec = [i['id'] for i in SubSector.objects.filter(sector_id=sector.id).values('id')]
+                        sub_sec = [i['id'] for i in SubSector.objects.filter(
+                            sector_id=sector.id).values('id')]
                         total_budgetnew = 0
                         partner_name = []
                         for d in dat:
                             sub_sectors = []
                             sub_sector_final = []
-                            sub_sectors.append(list(d.program_id.sub_sector.values_list('name', flat=True)))
+                            sub_sectors.append(
+                                list(d.program_id.sub_sector.values_list('name', flat=True)))
                             for s in sub_sectors:
                                 for di in s:
                                     sub_sector_final.append(di)
@@ -2729,7 +2826,8 @@ class RegionalSectorGraph(viewsets.ReadOnlyModelViewSet):
                                             except:
                                                 pass
                             if d.allocated_budget:
-                                total_budgetnew += (d.allocated_budget * sec_budget) / 100
+                                total_budgetnew += (d.allocated_budget *
+                                                    sec_budget) / 100
                             partner_count = d.program_id.partner_id.all().values('name')
                             for p in partner_count:
                                 if p['name'] not in partner_name:
@@ -2757,8 +2855,10 @@ class RegionalSectorGraph(viewsets.ReadOnlyModelViewSet):
                             'key': 'partner_count',
                             'value': len(partner_name)
                         })
-                test1 = sorted(sector_by_buget, key=lambda i: i['value'], reverse=True)
-                test4 = sorted(top_sector_by_no_partner, key=lambda i: i['value'], reverse=True)
+                test1 = sorted(sector_by_buget,
+                               key=lambda i: i['value'], reverse=True)
+                test4 = sorted(top_sector_by_no_partner,
+                               key=lambda i: i['value'], reverse=True)
                 return Response({'active_sectors': test1, 'top_sector_by_no_of_partner': test4})
             else:
                 return Response({"results": "Please Pass Province Code"})
@@ -2796,16 +2896,19 @@ class RegionalSectorGraph(viewsets.ReadOnlyModelViewSet):
                                                    district_id__code=int(request.GET['district_code'])).exclude(
                             allocated_budget=None)
                         sector = Sector.objects.get(id=s)
-                        set = SubSector.objects.filter(sector_id=sector.id).values('name')
+                        set = SubSector.objects.filter(
+                            sector_id=sector.id).values('name')
                         for v in set:
                             sector_sub_sector_new.append(v['name'])
-                        sub_sec = [i['id'] for i in SubSector.objects.filter(sector_id=sector.id).values('id')]
+                        sub_sec = [i['id'] for i in SubSector.objects.filter(
+                            sector_id=sector.id).values('id')]
                         total_budgetnew = 0
                         partner_name = []
                         for d in dat:
                             sub_sectors = []
                             sub_sector_final = []
-                            sub_sectors.append(list(d.program_id.sub_sector.values_list('name', flat=True)))
+                            sub_sectors.append(
+                                list(d.program_id.sub_sector.values_list('name', flat=True)))
                             for s in sub_sectors:
                                 for di in s:
                                     sub_sector_final.append(di)
@@ -2821,7 +2924,8 @@ class RegionalSectorGraph(viewsets.ReadOnlyModelViewSet):
                                             except:
                                                 pass
                             if d.allocated_budget:
-                                total_budgetnew += (d.allocated_budget * sec_budget) / 100
+                                total_budgetnew += (d.allocated_budget *
+                                                    sec_budget) / 100
                             partner_count = d.program_id.partner_id.all().values('name')
                             for p in partner_count:
                                 if p['name'] not in partner_name:
@@ -2849,8 +2953,10 @@ class RegionalSectorGraph(viewsets.ReadOnlyModelViewSet):
                             'key': 'partner_count',
                             'value': len(partner_name)
                         })
-                test1 = sorted(sector_by_buget, key=lambda i: i['value'], reverse=True)
-                test4 = sorted(top_sector_by_no_partner, key=lambda i: i['value'], reverse=True)
+                test1 = sorted(sector_by_buget,
+                               key=lambda i: i['value'], reverse=True)
+                test4 = sorted(top_sector_by_no_partner,
+                               key=lambda i: i['value'], reverse=True)
                 return Response({'active_sectors': test1, 'top_sector_by_no_of_partner': test4})
             else:
                 return Response({"results": "Please Pass District Code"})
@@ -2887,16 +2993,19 @@ class RegionalSectorGraph(viewsets.ReadOnlyModelViewSet):
                                                    municipality_id__code=int(request.GET['municipality_code'])).exclude(
                             allocated_budget=None)
                         sector = Sector.objects.get(id=s)
-                        set = SubSector.objects.filter(sector_id=sector.id).values('name')
+                        set = SubSector.objects.filter(
+                            sector_id=sector.id).values('name')
                         for v in set:
                             sector_sub_sector_new.append(v['name'])
-                        sub_sec = [i['id'] for i in SubSector.objects.filter(sector_id=sector.id).values('id')]
+                        sub_sec = [i['id'] for i in SubSector.objects.filter(
+                            sector_id=sector.id).values('id')]
                         total_budgetnew = 0
                         partner_name = []
                         for d in dat:
                             sub_sectors = []
                             sub_sector_final = []
-                            sub_sectors.append(list(d.program_id.sub_sector.values_list('name', flat=True)))
+                            sub_sectors.append(
+                                list(d.program_id.sub_sector.values_list('name', flat=True)))
                             for s in sub_sectors:
                                 for di in s:
                                     sub_sector_final.append(di)
@@ -2912,7 +3021,8 @@ class RegionalSectorGraph(viewsets.ReadOnlyModelViewSet):
                                             except:
                                                 pass
                             if d.allocated_budget:
-                                total_budgetnew += (d.allocated_budget * sec_budget) / 100
+                                total_budgetnew += (d.allocated_budget *
+                                                    sec_budget) / 100
                             partner_count = d.program_id.partner_id.all().values('name')
                             for p in partner_count:
                                 if p['name'] not in partner_name:
@@ -2941,8 +3051,10 @@ class RegionalSectorGraph(viewsets.ReadOnlyModelViewSet):
                             'value': len(partner_name)
                         })
 
-                test1 = sorted(sector_by_buget, key=lambda i: i['value'], reverse=True)
-                test4 = sorted(top_sector_by_no_partner, key=lambda i: i['value'], reverse=True)
+                test1 = sorted(sector_by_buget,
+                               key=lambda i: i['value'], reverse=True)
+                test4 = sorted(top_sector_by_no_partner,
+                               key=lambda i: i['value'], reverse=True)
                 return Response({'active_sectors': test1, 'top_sector_by_no_of_partner': test4})
             else:
                 return Response({"results": "Please Pass Municipality Code"})
