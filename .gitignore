@@ -56,7 +56,7 @@ env/
 docker-compose.yml
 dockrt-entrypoint.local.sh
 entrypoint.sh
-postgres-data
+postgres-data/
 Dockerfile
 
 #IDE
