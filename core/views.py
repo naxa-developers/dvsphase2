@@ -2932,6 +2932,8 @@ class RegionalSectorGraph(viewsets.ReadOnlyModelViewSet):
                             for p in partner_count:
                                 if p['name'] not in partner_name:
                                     partner_name.append(p['name'])
+                        partner_count_temp = FiveW.objects.filter(supplier_id__name__in=partner_name, district_id__code=request.GET['district_code']).values('supplier_id').distinct('supplier_id').count()
+                        
                         if dat:
                             last_sub_sector = unique(sub_sector_final)
                         else:
@@ -2953,7 +2955,7 @@ class RegionalSectorGraph(viewsets.ReadOnlyModelViewSet):
                             'id': sector.id,
                             'name': sector.name,
                             'key': 'partner_count',
-                            'value': len(partner_name)
+                            'value': partner_count_temp
                         })
                 test1 = sorted(sector_by_buget,
                                key=lambda i: i['value'], reverse=True)
@@ -3029,6 +3031,7 @@ class RegionalSectorGraph(viewsets.ReadOnlyModelViewSet):
                             for p in partner_count:
                                 if p['name'] not in partner_name:
                                     partner_name.append(p['name'])
+                        partner_count_temp = FiveW.objects.filter(supplier_id__name__in=partner_name, municipality_id__code=request.GET['municipality_code']).values('supplier_id').distinct('supplier_id').count()
                         if dat:
                             last_sub_sector = unique(sub_sector_final)
                         else:
@@ -3050,7 +3053,7 @@ class RegionalSectorGraph(viewsets.ReadOnlyModelViewSet):
                             'id': sector.id,
                             'name': sector.name,
                             'key': 'partner_count',
-                            'value': len(partner_name)
+                            'value': partner_count_temp
                         })
 
                 test1 = sorted(sector_by_buget,
