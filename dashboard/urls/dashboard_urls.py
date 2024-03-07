@@ -4,6 +4,7 @@ from dashboard.viewsets.dashboard_viewsets import *
 
 router = routers.DefaultRouter()
 router.register(r'partners', PartnerViewset)
+router.register(r'partnercontact', PartnerContactViewset)
 router.register(r'programs', ProgramViewset)
 
 urlpatterns = [

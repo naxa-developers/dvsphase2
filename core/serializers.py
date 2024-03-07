@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Partner, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
+from .models import Partner, PartnerContact, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
     IndicatorValue, Sector, SubSector, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
     Filter, NepalSummary, FeedbackForm, FAQ, TermsAndCondition, NationalStatistic, Manual
 
@@ -28,10 +28,19 @@ class TermsAndConditionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+
+class PartnerContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PartnerContact
+        fields = ['partner_id', 'name', 'email', 'phone_number']
+
+
 class PartnerSerializer(serializers.ModelSerializer):
+    contacts = PartnerContactSerializer(many=True, read_only=True)
+    
     class Meta:
         model = Partner
-        fields = '__all__'
+        fields = ['name', 'description', 'type_of_institution', 'address', 'email', 'phone_number', 'image', 'thumbnail', 'code', 'contacts']
 
 
 class MarkerCategorySerializer(serializers.ModelSerializer):

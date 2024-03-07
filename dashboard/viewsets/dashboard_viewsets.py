@@ -49,19 +49,77 @@ class PartnerViewset(viewsets.ModelViewSet):
         tags=["dashboard"],
     )
     def create(self, request, *args, **kwargs):
-         serializer = PartnerSerializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        
+        instance = serializer.instance
+        
+        partner_serializer = self.serializer_class(instance)
+        contact_serializer = PartnerContactSerializer(PartnerContact.objects.filter(partner_id=instance), many=True)
 
-         serializer.is_valid(raise_exception=True)
-         serializer.save()
-         return Response(serializer.data, status=status.HTTP_201_CREATED)
+        headers = self.get_success_headers(serializer.data)
+        data = {
+            'partner': partner_serializer.data,
+            'contacts': contact_serializer.data
+        }
+        
+        return Response(data, status=status.HTTP_201_CREATED, headers=headers)
+
+        # return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        contact_data = self.request.data.get('contacts', [])
+        contacts = []
+        for contact in contact_data:
+            contacts.append(PartnerContact(partner_id=instance, **contact))
+        PartnerContact.objects.bulk_create(contacts)
+
+
+class PartnerContactViewset(viewsets.ModelViewSet):
+    queryset = PartnerContact.objects.all()
+    serializer_class = PartnerContactSerializer
+    permission_classes = [IsAuthenticated]
+    http_method_names = ["get", "post", "put", "delete"]
+
+    @swagger_auto_schema(
+        operation_summary="Create - PartnerContact",
+        tags=["contact"],
+    )
+    def list(self, request, *args, **kwargs):
+        self.queryset = PartnerContact.objects.all()
+        return super().list(request, *args, **kwargs)
+
+    @swagger_auto_schema(
+        operation_summary="List - PartnerContact",
+        tags=["contact"],
+    )    
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
 
 
 class ProgramViewset(viewsets.ModelViewSet):
     queryset = Program.objects.all()
-    # serializer_class = SectorGroupSerializer
+    serializer_class = ProgramSerializer
     http_method_names = ["get", "post", "put", "patch", "delete"]
 
-
+    @swagger_auto_schema(
+        operation_summary="List - PartnerContact",
+        tags=["program"],
+    )
     def list(self, request, *args, **kwargs):
         self.queryset = Program.objects.all()
         return super().list(request, *args, **kwargs)
+
+
+
+    @swagger_auto_schema(
+        operation_summary="Create - PartnerContact",
+        tags=["program"],
+    )
+    def create(self, request, *args, **kwargs):
+        self.queryset = Program.objects.all()
+        return super().create(request, *args, **kwargs)
+
+
