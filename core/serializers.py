@@ -40,7 +40,7 @@ class PartnerSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Partner
-        fields = ['name', 'description', 'type_of_institution', 'address', 'email', 'phone_number', 'image', 'thumbnail', 'code', 'contacts']
+        fields = ['id', 'name', 'description', 'type_of_institution', 'address', 'email', 'phone_number', 'image', 'thumbnail', 'code', 'contacts']
 
 
 class MarkerCategorySerializer(serializers.ModelSerializer):
@@ -108,21 +108,27 @@ class MarkerValuesSerializer(serializers.ModelSerializer):
         return str(obj.marker_category_id.name)
 
 
+# class ProgramSerializer(serializers.ModelSerializer):
+#     marker_value = serializers.SerializerMethodField()
+#     marker_category = serializers.SerializerMethodField()
+#     sector = serializers.SerializerMethodField()
+#     sub_sector = serializers.SerializerMethodField()
+#     component = serializers.SerializerMethodField()
+#     partner = serializers.SerializerMethodField()
+
+#     class Meta:
+#         model = Program
+#         fields = (
+#             'id', 'name', 'start_date', 'end_date', 'code', 'iati', 'total_budget', 'partner', 'component',
+#             'marker_category', 'marker_value',
+#             'sector',
+#             'sub_sector', 'program_acronym')
+
 class ProgramSerializer(serializers.ModelSerializer):
-    marker_value = serializers.SerializerMethodField()
-    marker_category = serializers.SerializerMethodField()
-    sector = serializers.SerializerMethodField()
-    sub_sector = serializers.SerializerMethodField()
-    component = serializers.SerializerMethodField()
-    partner = serializers.SerializerMethodField()
 
     class Meta:
         model = Program
-        fields = (
-            'id', 'name', 'start_date', 'end_date', 'code', 'iati', 'total_budget', 'partner', 'component',
-            'marker_category', 'marker_value',
-            'sector',
-            'sub_sector', 'program_acronym')
+        fields = ['id', 'name', 'description', 'start_date', 'end_date', 'cmp', 'code', 'status', 'total_budget', 'budget_spend', 'marker_category', 'marker_value', 'sector', 'sub_sector', 'sector_budget', 'iati', 'program_acronym', 'partner_id']
 
     def get_partner(self, obj):
         data = []
@@ -218,7 +224,7 @@ class IndicatorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Indicator
         fields = (
-            'id', 'full_title', 'abstract', 'category', 'source', 'federal_level', 'is_covid', 'is_dashboard', 'filter',
+            'id', 'full_title', 'indicator', 'abstract', 'category', 'source', 'federal_level', 'is_covid', 'is_dashboard', 'filter',
             'unit',
             'data_type', 'url')
 
@@ -246,14 +252,21 @@ class SubsectorSerializer(serializers.ModelSerializer):
         return str(obj.sector_id.name)
 
 
+# class ProjectSerializer(serializers.ModelSerializer):
+#     sub_sector = serializers.SerializerMethodField()
+#     sector = serializers.SerializerMethodField()
+#     partners = serializers.SerializerMethodField()
+
+#     class Meta:
+#         model = Project
+#         fields = ('id', 'name', 'sector', 'sub_sector', 'code', 'partners')
+
 class ProjectSerializer(serializers.ModelSerializer):
-    sub_sector = serializers.SerializerMethodField()
-    sector = serializers.SerializerMethodField()
-    partners = serializers.SerializerMethodField()
 
     class Meta:
         model = Project
-        fields = ('id', 'name', 'sector', 'sub_sector', 'code', 'partners')
+        fields = '__all__'
+
 
     def get_sub_sector(self, obj):
         qs = obj.sub_sector.all().order_by('id').values_list('id', flat=True)
