@@ -17,6 +17,14 @@ router.register(r'province', ProvinceViewset)
 router.register(r'district', DistrictViewset)
 router.register(r'palika', PalikaViewset)
 router.register(r'output', OutputViewset)
+router.register(r'group', GroupManagementViewset)
+router.register(r'user', UserViewset)
+router.register(r'cmp', CmpViewset)
+router.register(r'faq', FAQViewset)
+router.register(r'terms', TermsAndConditionViewset)
+router.register(r'about', AboutUsViewset)
+router.register(r'contact', ContactViewset)
+
 
 urlpatterns = [
     path('', include(router.urls)),

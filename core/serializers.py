@@ -1,7 +1,11 @@
 from rest_framework import serializers
 from .models import Partner, PartnerContact, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
     IndicatorValue, Sector, SubSector, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
-    Filter, NepalSummary, FeedbackForm, FAQ, TermsAndCondition, NationalStatistic, Manual
+    Filter, NepalSummary, FeedbackForm, FAQ, TermsAndCondition, NationalStatistic, Manual, Cmp
+from about_us.models import AboutUs, ContactUs
+from django.contrib.auth.models import Group, Permission
+from django.contrib.auth.models import User
+from dashboard.models import UserProfile
 
 
 class NepalSummarySerializer(serializers.ModelSerializer):
@@ -252,15 +256,6 @@ class SubsectorSerializer(serializers.ModelSerializer):
         return str(obj.sector_id.name)
 
 
-# class ProjectSerializer(serializers.ModelSerializer):
-#     sub_sector = serializers.SerializerMethodField()
-#     sector = serializers.SerializerMethodField()
-#     partners = serializers.SerializerMethodField()
-
-#     class Meta:
-#         model = Project
-#         fields = ('id', 'name', 'sector', 'sub_sector', 'code', 'partners')
-
 class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -412,3 +407,56 @@ class FeedbackSerializer(serializers.ModelSerializer):
         model = FeedbackForm
         fields = ['name', 'email', 'attachment',
                   'subject', 'your_feedback', 'type']
+
+class PermissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Permission
+        fields = ('id', 'name', )
+
+class GetGroupSerializer(serializers.ModelSerializer):
+    permissions = PermissionSerializer(many=True)
+    class Meta:
+        model = Group
+        fields = '__all__'
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ["id", "name", "permissions"]
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        # fields = ('id', 'username', 'email', 'password')
+        fields = ( 'username', 'password')
+        extra_kwargs = {
+            'password': {'write_only': True},  # Password should only be written, not displayed
+        }
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ('name', 'email', 'partner', 'program', 'project', 'image', 'thumbnail', 'user')
+        
+
+class CmpSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cmp
+        fields = '__all__'
+
+class FAQSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FAQ
+        fields = '__all__'
+
+class AboutUsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AboutUs
+        fields = '__all__'
+
+class ContactUsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactUs
+        fields = '__all__'

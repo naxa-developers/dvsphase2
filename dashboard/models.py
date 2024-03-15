@@ -53,7 +53,7 @@ class UserProfile(models.Model):
             super(UserProfile, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.name
+        return self.user.username
 
 
 class Log(models.Model):
