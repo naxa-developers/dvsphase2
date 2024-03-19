@@ -1,17 +1,13 @@
-
-from rest_framework import status
+import glob
 import os, shutil
-
-from .file_handlers import handleShapeFile, handleCSV, handleGeoJSON, handleKML
+from rest_framework import status
+import zipfile
 
 from core.models import (
     VectorLayer,
-    Layer,
     FeatureCollection,
-
 )
-import zipfile
-import glob
+from dashboard.file_handlers import handleShapeFile, handleCSV, handleGeoJSON, handleKML
 
 
 def update_layer_data(id, geometry_type, bound_dict):
@@ -32,6 +28,7 @@ def update_layer_data(id, geometry_type, bound_dict):
     layer.save()
     return id, "success", "Layer added Sucessfully", status.HTTP_200_OK
 
+
 def get_file_extension(file_upload):
     split_tup = os.path.splitext(file_upload)
     file_extension = split_tup[1]
@@ -45,6 +42,7 @@ def get_file_extension(file_upload):
             "Invalid file extension. Supported extensions are: '.zip', '.csv', '.geojson', '.kml'",
             status.HTTP_400_BAD_REQUEST,
         )
+
 
 def validate_file_type(file_extension):
     dict = {".zip": "Shapefile", ".csv": "CSV", ".geojson": "Geojson", ".kml": "KML"}
@@ -123,4 +121,3 @@ def upload_vector_layer(file_id):
             "Invalid file extension. Supported extensions are: '.zip', '.csv', '.geojson', '.kml'",
             status.HTTP_400_BAD_REQUEST,
         )
-

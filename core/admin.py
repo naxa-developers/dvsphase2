@@ -1,7 +1,40 @@
 from django.contrib import admin
-from .models import Partner, Program, Sector, SubSector, MarkerCategory, MarkerValues, Province, District, GapaNapa, \
-    FiveW, Indicator, IndicatorValue, TravelTime, GisLayer, Project, PartnerContact, Output, ProvinceDummy, \
-    Notification, BudgetToSecondTier, BudgetToFirstTier, Cmp, Filter, GisPop, NepalSummary, FeedbackForm,FAQ,TermsAndCondition,NationalStatistic,Manual, Layer, VectorLayer, FeatureCollection, Category
+from .models import (
+    Partner,
+    Program,
+    Sector,
+    SubSector,
+    MarkerCategory,
+    MarkerValues,
+    Province,
+    District,
+    GapaNapa,
+    FiveW,
+    Indicator,
+    IndicatorValue,
+    TravelTime,
+    GisLayer,
+    Project,
+    PartnerContact,
+    Output,
+    ProvinceDummy,
+    Notification,
+    BudgetToSecondTier,
+    BudgetToFirstTier,
+    Cmp,
+    Filter,
+    GisPop,
+    NepalSummary,
+    FeedbackForm,
+    FAQ,
+    TermsAndCondition,
+    NationalStatistic,
+    Manual,
+    Layer,
+    VectorLayer,
+    FeatureCollection,
+    Category,
+)
 
 # Register your models here.
 
@@ -40,4 +73,3 @@ admin.site.register(Category)
 admin.site.register(Layer)
 admin.site.register(VectorLayer)
 admin.site.register(FeatureCollection)
-

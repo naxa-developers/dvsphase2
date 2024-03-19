@@ -1,8 +1,8 @@
-import fiona
-import pandas as pd
-import geopandas as gpd
 from django.contrib.gis.geos import GEOSGeometry
 from django.contrib.gis.geos.prototypes.io import wkt_w
+import fiona
+import geopandas as gpd
+import pandas as pd
 
 
 def handleShapeFile(shape, file_id, feature_collection_model):

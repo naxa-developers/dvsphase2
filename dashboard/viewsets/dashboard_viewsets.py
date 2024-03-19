@@ -1,11 +1,11 @@
-from django.contrib.auth.models import User, Group, Permission
+from django.contrib.auth.models import User, Group
 from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
+
 from about_us.models import *
 from core.serializers import *
 from core.models import *
@@ -41,13 +41,13 @@ class PartnerViewset(viewsets.ModelViewSet):
                 {"message": "Authentication credentials were not provided."},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
-        
+
     @swagger_auto_schema(
         operation_summary="Partner - Retrive partner by id",
         tags=["Partnerss"],
     )
     def retrieve(self, request, *args, **kwargs):
-        return super().retrieve(request, *args, **kwargs)        
+        return super().retrieve(request, *args, **kwargs)
 
     @swagger_auto_schema(
         operation_summary="Partner - Post all partners",
@@ -70,7 +70,6 @@ class PartnerViewset(viewsets.ModelViewSet):
 
         return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
-
     def perform_create(self, serializer):
         instance = serializer.save()
         contact_data = self.request.data.get("contacts", [])
@@ -82,16 +81,16 @@ class PartnerViewset(viewsets.ModelViewSet):
     @swagger_auto_schema(
         operation_summary="Partner - Partial Update of a partner",
         tags=["Partner"],
-    )    
+    )
     def partial_update(self, request, *args, **kwargs):
         return super().partial_update(request, *args, **kwargs)
-        
+
 
 class PartnerContactViewset(viewsets.ModelViewSet):
     queryset = PartnerContact.objects.all()
     serializer_class = PartnerContactSerializer
     permission_classes = [IsAuthenticated]
-    parser_classes = [MultiPartParser, FormParser]    
+    parser_classes = [MultiPartParser, FormParser]
     http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
@@ -113,7 +112,7 @@ class PartnerContactViewset(viewsets.ModelViewSet):
     )
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
-    
+
     @swagger_auto_schema(
         operation_summary="Retrive - PartnerContact",
         tags=["contact"],
@@ -128,11 +127,12 @@ class PartnerContactViewset(viewsets.ModelViewSet):
     def partial_update(self, request, *args, **kwargs):
         return super().partial_update(request, *args, **kwargs)
 
+
 class ProgramViewset(viewsets.ModelViewSet):
     queryset = Program.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = ProgramSerializer
-    parser_classes = [MultiPartParser, FormParser]    
+    parser_classes = [MultiPartParser, FormParser]
     http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
@@ -176,8 +176,8 @@ class ProjectViewset(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = ProjectSerializer
-    parser_classes = [MultiPartParser, FormParser]    
-    http_method_names = ["get", "post","patch", "delete"]
+    parser_classes = [MultiPartParser, FormParser]
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - Project",
@@ -220,7 +220,7 @@ class FiveWViewset(viewsets.ModelViewSet):
     queryset = FiveW.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = FivewSerializer
-    parser_classes = [MultiPartParser, FormParser]    
+    parser_classes = [MultiPartParser, FormParser]
     http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
@@ -256,12 +256,19 @@ class FiveWViewset(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
+    @swagger_auto_schema(
+        operation_summary="Update - FiveW",
+        tags=["five"],
+    )
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
+
 
 class SectorViewset(viewsets.ModelViewSet):
     queryset = Sector.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = SectorSerializer
-    parser_classes = [MultiPartParser, FormParser]    
+    parser_classes = [MultiPartParser, FormParser]
     http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
@@ -277,6 +284,13 @@ class SectorViewset(viewsets.ModelViewSet):
     )
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
+
+    @swagger_auto_schema(
+        operation_summary="Update - Sector",
+        tags=["sector"],
+    )
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
 
 
 class SubSectorViewset(viewsets.ModelViewSet):
@@ -300,12 +314,19 @@ class SubSectorViewset(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
+    @swagger_auto_schema(
+        operation_summary="Update - Sub Sector",
+        tags=["sub-sector"],
+    )
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
+
 
 class MarkerCategoryViewset(viewsets.ModelViewSet):
     queryset = MarkerCategory.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = MarkerCategorySerializer
-    parser_classes = [MultiPartParser, FormParser]    
+    parser_classes = [MultiPartParser, FormParser]
     http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
@@ -322,12 +343,19 @@ class MarkerCategoryViewset(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
+    @swagger_auto_schema(
+        operation_summary="Update - MarkerCategory",
+        tags=["marker-category"],
+    )
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
+
 
 class MarkerValueViewset(viewsets.ModelViewSet):
     queryset = MarkerValues.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = MarkerValuesSerializer
-    parser_classes = [MultiPartParser, FormParser]    
+    parser_classes = [MultiPartParser, FormParser]
     http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
@@ -344,122 +372,164 @@ class MarkerValueViewset(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
+    @swagger_auto_schema(
+        operation_summary="Update - MarkerValues",
+        tags=["marker-value"],
+    )
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
+
 
 class IndicatorViewset(viewsets.ModelViewSet):
     queryset = Indicator.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = IndicatorSerializer
-    parser_classes = [MultiPartParser, FormParser]    
+    parser_classes = [MultiPartParser, FormParser]
     http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - Indicator",
-        tags=["Indicator"],
+        tags=["indicator"],
     )
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
     @swagger_auto_schema(
         operation_summary="Create - Indicator",
-        tags=["Indicator"],
+        tags=["indicator"],
     )
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
+
+    @swagger_auto_schema(
+        operation_summary="Update - MarkerValues",
+        tags=["indicator"],
+    )
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
 
 
 class ProvinceViewset(viewsets.ModelViewSet):
     queryset = Province.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = ProvinceSerializer
-    parser_classes = [MultiPartParser, FormParser]    
+    parser_classes = [MultiPartParser, FormParser]
     http_method_names = ["get", "post" "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - Province",
-        tags=["Province"],
+        tags=["province"],
     )
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
     @swagger_auto_schema(
         operation_summary="Create - Province",
-        tags=["Province"],
+        tags=["province"],
     )
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
+
+    @swagger_auto_schema(
+        operation_summary="Update - Province",
+        tags=["province"],
+    )
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
 
 
 class DistrictViewset(viewsets.ModelViewSet):
     queryset = District.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = DistrictSerializer
-    parser_classes = [MultiPartParser, FormParser]    
+    parser_classes = [MultiPartParser, FormParser]
     http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - District",
-        tags=["District"],
+        tags=["district"],
     )
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
     @swagger_auto_schema(
         operation_summary="Create - District",
-        tags=["District"],
+        tags=["district"],
     )
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
+
+    @swagger_auto_schema(
+        operation_summary="Update - District",
+        tags=["district"],
+    )
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
 
 
 class PalikaViewset(viewsets.ModelViewSet):
     queryset = GapaNapa.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = GaanapaSerializer
-    parser_classes = [MultiPartParser, FormParser]    
+    parser_classes = [MultiPartParser, FormParser]
     http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - Palika",
-        tags=["Palika"],
+        tags=["palika"],
     )
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
     @swagger_auto_schema(
         operation_summary="Create - Palika",
-        tags=["Palika"],
+        tags=["palika"],
     )
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
+
+    @swagger_auto_schema(
+        operation_summary="Update - Palika",
+        tags=["palika"],
+    )
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
 
 
 class OutputViewset(viewsets.ModelViewSet):
     queryset = Output.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = OutputSerializer
-    parser_classes = [MultiPartParser, FormParser]    
+    parser_classes = [MultiPartParser, FormParser]
     http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - Output",
-        tags=["Output"],
+        tags=["output"],
     )
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
     @swagger_auto_schema(
         operation_summary="Create - Output",
-        tags=["Output"],
+        tags=["output"],
     )
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
+
+    @swagger_auto_schema(
+        operation_summary="Update - Palika",
+        tags=["output"],
+    )
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
 
 
 class GroupManagementViewset(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = GroupSerializer
-    parser_classes = [MultiPartParser, FormParser]    
+    parser_classes = [MultiPartParser, FormParser]
     http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
@@ -478,11 +548,14 @@ class GroupManagementViewset(viewsets.ModelViewSet):
         self.serializer_class = GroupSerializer
         return super().create(request, *args, **kwargs)
 
-    def get_serializer_class(self):
-        if self.action == 'list':
-            return GetGroupSerializer
-        return GroupSerializer
-    
+    @swagger_auto_schema(
+        operation_summary="Update - Group",
+        tags=["group"],
+    )
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
+
+
 class UserViewset(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -497,7 +570,6 @@ class UserViewset(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
-
     @swagger_auto_schema(
         operation_summary="Create - User",
         tags=["UserProfile"],
@@ -507,32 +579,41 @@ class UserViewset(viewsets.ModelViewSet):
             user_serializer = self.get_serializer(data=request.data)
             user_serializer.is_valid(raise_exception=True)
             user_instance = user_serializer.save()
-            group = Group.objects.get(id=request.data.get('group'))
+            group = Group.objects.get(id=request.data.get("group"))
             user_instance.groups.add(group)
 
             # Create UserProfile associated with the user
             profile_data = {
-                'user': user_instance.id,
-                'name': request.data.get('name'),
-                'email': request.data.get('email'),
-                'partner': request.data.get('partner'),
-                'program': request.data.get('program'),
-                'project': request.data.get('project'),
+                "user": user_instance.id,
+                "name": request.data.get("name"),
+                "email": request.data.get("email"),
+                "partner": request.data.get("partner"),
+                "program": request.data.get("program"),
+                "project": request.data.get("project"),
             }
-   
+
             profile_serializer = UserProfileSerializer(data=profile_data)
             profile_serializer.is_valid(raise_exception=True)
             profile_serializer.save()
 
             response_data = {
-                'user': user_serializer.data,
-                'profile': profile_serializer.data
+                "user": user_serializer.data,
+                "profile": profile_serializer.data,
             }
 
             headers = self.get_success_headers(user_serializer.data)
-            return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
+            return Response(
+                response_data, status=status.HTTP_201_CREATED, headers=headers
+            )
         except Exception as e:
             return Response({"message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    @swagger_auto_schema(
+        operation_summary="Update - User",
+        tags=["sector"],
+    )
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
 
 
 class CmpViewset(viewsets.ModelViewSet):
@@ -556,6 +637,7 @@ class CmpViewset(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
+
 class FAQViewset(viewsets.ModelViewSet):
     queryset = FAQ.objects.all()
     serializer_class = FAQSerializer
@@ -576,6 +658,7 @@ class FAQViewset(viewsets.ModelViewSet):
     )
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
+
 
 class TermsAndConditionViewset(viewsets.ModelViewSet):
     queryset = TermsAndCondition.objects.all()
@@ -598,6 +681,7 @@ class TermsAndConditionViewset(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
+
 class AboutUsViewset(viewsets.ModelViewSet):
     queryset = AboutUs.objects.all()
     serializer_class = AboutUsSerializer
@@ -618,6 +702,7 @@ class AboutUsViewset(viewsets.ModelViewSet):
     )
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
+
 
 class ContactViewset(viewsets.ModelViewSet):
     queryset = ContactUs.objects.all()
@@ -641,8 +726,8 @@ class ContactViewset(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
 
-
 # Vector Viewset
+
 
 class VectorLayerViewSet(viewsets.ModelViewSet):
     queryset = VectorLayer.objects.all()
@@ -683,7 +768,7 @@ class VectorLayerViewSet(viewsets.ModelViewSet):
 
         if serializer.is_valid():
             serializer.save(created_by=request.user, layer=layer_object)
-        
+
             file_upload = request.data.get("file_upload")
             if file_upload:
                 file_id = serializer.data.get("id")
@@ -717,7 +802,8 @@ class VectorLayerViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         return super().retrieve(request, *args, **kwargs)
 
-    @swagger_auto_schema(operation_summary="Get Vector Layer by id ", tags=["vector layer"])
+    @swagger_auto_schema(
+        operation_summary="Get Vector Layer by id ", tags=["vector layer"]
+    )
     def partial_update(self, request, *args, **kwargs):
         return super().partial_update(request, *args, **kwargs)
-    
