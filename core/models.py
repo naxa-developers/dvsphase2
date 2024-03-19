@@ -6,6 +6,7 @@ from django.core.files.base import ContentFile
 from io import BytesIO
 from colorfield.fields import ColorField
 from ckeditor.fields import RichTextField
+from django.db.models import Manager as GeoManager
 
 
 # Create your models here
@@ -354,6 +355,92 @@ class TravelTime(models.Model):
     season = models.CharField(max_length=100, null=True, blank=True)
     travel_category = models.CharField(max_length=100, null=True, blank=True)
 
+class AuditableModel(models.Model):
+    created_by = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, related_name="+"
+    )
+    updated_by = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, related_name="+"
+    )
+    updated_date = models.DateTimeField(auto_now=True, blank=True, null=True)
+    is_deleted = models.BooleanField(default=False)
+
+    class Meta:
+        abstract = True
+
+class Category(AuditableModel, models.Model):
+    name_en = models.CharField(max_length=500, blank=True, null=True)
+    name_ne = models.CharField(max_length=500, blank=True, null=True)
+
+    def __str__(self):
+        return self.name_en
+
+
+class Layer(AuditableModel, models.Model):
+    LAYER_TYPE_CHOICES = (("raster", "Raster"), ("vector", "Vector"), ("wms", "WMS"))
+    name_en = models.CharField(max_length=500, blank=True, null=True)
+    name_ne = models.CharField(max_length=500, blank=True, null=True)
+    category = models.ForeignKey(
+        Category, on_delete=models.SET_NULL, blank=True, null=True
+    )
+    layer_type = models.CharField(
+        max_length=15, choices=LAYER_TYPE_CHOICES, blank=True, null=True
+    )
+
+
+    def __str__(self):
+        return str(self.id)
+
+from django.db.models import JSONField
+from .tile import MVTManager
+
+
+class VectorLayer(AuditableModel, models.Model):
+    FILESTYPE_CHOICES = [
+        ("Shapefile", "Shapefile"),
+        ("Geojson", "Geojson"),
+        ("CSV", "CSV"),
+        ("KML", "KML"),
+        ("Raster", "Raster"),
+        ("OSM", "OSM"),
+        ("WMS", "WMS"),
+    ]
+    layer = models.OneToOneField(
+        Layer, on_delete=models.CASCADE, null=True, related_name="vector_layer"
+    )
+    file_upload = models.FileField(
+        upload_to="layer/vectorlayer_uploads", null=True, blank=True
+    )
+    type_of_layer = models.CharField(
+        max_length=20, choices=FILESTYPE_CHOICES, null=True, blank=True
+    )
+    lat_field = models.CharField(max_length=250, blank=True, null=True)
+    long_field = models.CharField(max_length=250, blank=True, null=True)
+    geometry_type = models.CharField(max_length=250, null=True, blank=True)
+    bbox = JSONField(default=dict, null=True, blank=True)
+
+    objects = models.Manager()
+
+    def __str__(self):
+        return str(self.id)
+
+class FeatureCollection(models.Model):
+    feature = models.ForeignKey(
+        VectorLayer,
+        on_delete=models.CASCADE,
+        related_name="file_data",
+        blank=True,
+        null=True,
+    )
+    attr_data = JSONField(default=dict)
+    geom = models.GeometryField(srid=4326, blank=True, null=True)
+
+    objects = GeoManager()
+    vector_tiles = MVTManager()
+
+    def __str__(self):
+        return str(self.id)
+    
 
 class GisLayer(models.Model):
     type = (
@@ -377,14 +464,14 @@ class GisLayer(models.Model):
         return self.name
 
 
-class GisStyle(models.Model):
-    circle_color = ColorField(default='#FF0000', blank=True, null=True)
-    fill_color = ColorField(default='#FF0000', blank=True, null=True)
-    circle_radius = models.FloatField(blank=True, null=True)
-    layer = models.ForeignKey(GisLayer, on_delete=models.CASCADE, related_name='GisStyle', blank=True, null=True)
+# class GisStyle(models.Model):
+#     circle_color = ColorField(default='#FF0000', blank=True, null=True)
+#     fill_color = ColorField(default='#FF0000', blank=True, null=True)
+#     circle_radius = models.FloatField(blank=True, null=True)
+#     layer = models.ForeignKey(GisLayer, on_delete=models.CASCADE, related_name='GisStyle', blank=True, null=True)
 
-    def __str__(self):
-        return self.layer.name
+    # def __str__(self):
+    #     return self.layer.name
 
 
 class GisPop(models.Model):

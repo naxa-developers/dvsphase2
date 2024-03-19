@@ -24,6 +24,7 @@ router.register(r'faq', FAQViewset)
 router.register(r'terms', TermsAndConditionViewset)
 router.register(r'about', AboutUsViewset)
 router.register(r'contact', ContactViewset)
+router.register(r'vector', VectorLayerViewSet)
 
 
 urlpatterns = [

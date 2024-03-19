@@ -1,21 +1,24 @@
-from core.serializers import *
-from core.models import *
-from about_us.models import *
-from dashboard.models import UserProfile
-from rest_framework import viewsets
+from django.contrib.auth.models import User, Group, Permission
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from django.contrib.auth.models import User, Group, Permission
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.parsers import MultiPartParser, FormParser
+from about_us.models import *
+from core.serializers import *
+from core.models import *
+from dashboard.models import UserProfile
+from dashboard.tasks import upload_vector_layer
 
 
 class PartnerViewset(viewsets.ModelViewSet):
     queryset = Partner.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = PartnerSerializer
-    http_method_names = ["get", "post", "put", "delete"]
+    parser_classes = [MultiPartParser, FormParser]
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="Partner - List all partners",
@@ -38,6 +41,13 @@ class PartnerViewset(viewsets.ModelViewSet):
                 {"message": "Authentication credentials were not provided."},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
+        
+    @swagger_auto_schema(
+        operation_summary="Partner - Retrive partner by id",
+        tags=["Partnerss"],
+    )
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)        
 
     @swagger_auto_schema(
         operation_summary="Partner - Post all partners",
@@ -69,24 +79,8 @@ class PartnerViewset(viewsets.ModelViewSet):
             contacts.append(PartnerContact(partner_id=instance, **contact))
         PartnerContact.objects.bulk_create(contacts)
 
-
-    # @swagger_auto_schema(
-    #     operation_summary="Partner - Update all partners",
-    #     tags=["Partner"],
-    # )
-    # def update(self, request, *args, **kwargs):
-    #     print("id", kwargs.get("pk"))
-    #     id = kwargs.get("pk")
-    #     if id == request.user.userprofile.partner.id:
-    #         update_serializer = PartnerSerializer(data=request.data )
-    #         update_serializer.is_valid(raise_exception=True)
-    #         update_serializer.save()
-    #         return Response(update_serializer.data)
-    #     else:
-    #         return Response({"message": "Unauthorized request."})        
-
     @swagger_auto_schema(
-        operation_summary="Partner - Update all partners",
+        operation_summary="Partner - Partial Update of a partner",
         tags=["Partner"],
     )    
     def partial_update(self, request, *args, **kwargs):
@@ -97,7 +91,8 @@ class PartnerContactViewset(viewsets.ModelViewSet):
     queryset = PartnerContact.objects.all()
     serializer_class = PartnerContactSerializer
     permission_classes = [IsAuthenticated]
-    http_method_names = ["get", "post", "put", "delete"]
+    parser_classes = [MultiPartParser, FormParser]    
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="Create - PartnerContact",
@@ -118,13 +113,27 @@ class PartnerContactViewset(viewsets.ModelViewSet):
     )
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
+    
+    @swagger_auto_schema(
+        operation_summary="Retrive - PartnerContact",
+        tags=["contact"],
+    )
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
 
+    @swagger_auto_schema(
+        operation_summary="Update - PartnerContact",
+        tags=["contact"],
+    )
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
 
 class ProgramViewset(viewsets.ModelViewSet):
     queryset = Program.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = ProgramSerializer
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    parser_classes = [MultiPartParser, FormParser]    
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - Program",
@@ -167,7 +176,8 @@ class ProjectViewset(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = ProjectSerializer
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    parser_classes = [MultiPartParser, FormParser]    
+    http_method_names = ["get", "post","patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - Project",
@@ -210,7 +220,8 @@ class FiveWViewset(viewsets.ModelViewSet):
     queryset = FiveW.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = FivewSerializer
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    parser_classes = [MultiPartParser, FormParser]    
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - FiveW",
@@ -250,7 +261,8 @@ class SectorViewset(viewsets.ModelViewSet):
     queryset = Sector.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = SectorSerializer
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    parser_classes = [MultiPartParser, FormParser]    
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - Sector",
@@ -271,7 +283,8 @@ class SubSectorViewset(viewsets.ModelViewSet):
     queryset = SubSector.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = SubsectorSerializer
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    parser_classes = [MultiPartParser, FormParser]
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - Sub Sector",
@@ -292,7 +305,8 @@ class MarkerCategoryViewset(viewsets.ModelViewSet):
     queryset = MarkerCategory.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = MarkerCategorySerializer
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    parser_classes = [MultiPartParser, FormParser]    
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - MarkerCategory",
@@ -313,7 +327,8 @@ class MarkerValueViewset(viewsets.ModelViewSet):
     queryset = MarkerValues.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = MarkerValuesSerializer
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    parser_classes = [MultiPartParser, FormParser]    
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - MarkerValues",
@@ -334,7 +349,8 @@ class IndicatorViewset(viewsets.ModelViewSet):
     queryset = Indicator.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = IndicatorSerializer
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    parser_classes = [MultiPartParser, FormParser]    
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - Indicator",
@@ -355,7 +371,8 @@ class ProvinceViewset(viewsets.ModelViewSet):
     queryset = Province.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = ProvinceSerializer
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    parser_classes = [MultiPartParser, FormParser]    
+    http_method_names = ["get", "post" "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - Province",
@@ -376,7 +393,8 @@ class DistrictViewset(viewsets.ModelViewSet):
     queryset = District.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = DistrictSerializer
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    parser_classes = [MultiPartParser, FormParser]    
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - District",
@@ -397,7 +415,8 @@ class PalikaViewset(viewsets.ModelViewSet):
     queryset = GapaNapa.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = GaanapaSerializer
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    parser_classes = [MultiPartParser, FormParser]    
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - Palika",
@@ -418,7 +437,8 @@ class OutputViewset(viewsets.ModelViewSet):
     queryset = Output.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = OutputSerializer
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    parser_classes = [MultiPartParser, FormParser]    
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - Output",
@@ -439,7 +459,8 @@ class GroupManagementViewset(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = GroupSerializer
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    parser_classes = [MultiPartParser, FormParser]    
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - Group",
@@ -465,9 +486,9 @@ class GroupManagementViewset(viewsets.ModelViewSet):
 class UserViewset(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
+    parser_classes = [MultiPartParser, FormParser]
     permission_classes = [IsAuthenticated]
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - User",
@@ -489,8 +510,6 @@ class UserViewset(viewsets.ModelViewSet):
             group = Group.objects.get(id=request.data.get('group'))
             user_instance.groups.add(group)
 
-            print('user_instance ========', user_instance)
-
             # Create UserProfile associated with the user
             profile_data = {
                 'user': user_instance.id,
@@ -500,16 +519,14 @@ class UserViewset(viewsets.ModelViewSet):
                 'program': request.data.get('program'),
                 'project': request.data.get('project'),
             }
-            print('request ========', request.data)
    
             profile_serializer = UserProfileSerializer(data=profile_data)
             profile_serializer.is_valid(raise_exception=True)
             profile_serializer.save()
 
-            # Optionally, you can include profile_instance in the response
             response_data = {
                 'user': user_serializer.data,
-                'profile': profile_serializer.data  # Include serialized profile data
+                'profile': profile_serializer.data
             }
 
             headers = self.get_success_headers(user_serializer.data)
@@ -521,9 +538,9 @@ class UserViewset(viewsets.ModelViewSet):
 class CmpViewset(viewsets.ModelViewSet):
     queryset = Cmp.objects.all()
     serializer_class = CmpSerializer
-
+    parser_classes = [MultiPartParser, FormParser]
     permission_classes = [IsAuthenticated]
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - Cmp",
@@ -542,9 +559,9 @@ class CmpViewset(viewsets.ModelViewSet):
 class FAQViewset(viewsets.ModelViewSet):
     queryset = FAQ.objects.all()
     serializer_class = FAQSerializer
-
+    parser_classes = [MultiPartParser, FormParser]
     permission_classes = [IsAuthenticated]
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - FAQ",
@@ -563,9 +580,9 @@ class FAQViewset(viewsets.ModelViewSet):
 class TermsAndConditionViewset(viewsets.ModelViewSet):
     queryset = TermsAndCondition.objects.all()
     serializer_class = TermsAndConditionSerializer
-
+    parser_classes = [MultiPartParser, FormParser]
     permission_classes = [IsAuthenticated]
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - TermsAndCondition",
@@ -584,9 +601,9 @@ class TermsAndConditionViewset(viewsets.ModelViewSet):
 class AboutUsViewset(viewsets.ModelViewSet):
     queryset = AboutUs.objects.all()
     serializer_class = AboutUsSerializer
-
+    parser_classes = [MultiPartParser, FormParser]
     permission_classes = [IsAuthenticated]
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - AboutUs",
@@ -605,9 +622,9 @@ class AboutUsViewset(viewsets.ModelViewSet):
 class ContactViewset(viewsets.ModelViewSet):
     queryset = ContactUs.objects.all()
     serializer_class = ContactUsSerializer
-
+    parser_classes = [MultiPartParser, FormParser]
     permission_classes = [IsAuthenticated]
-    http_method_names = ["get", "post", "put", "patch", "delete"]
+    http_method_names = ["get", "post", "patch", "delete"]
 
     @swagger_auto_schema(
         operation_summary="List - ContactUs",
@@ -623,3 +640,84 @@ class ContactViewset(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
+
+
+# Vector Viewset
+
+class VectorLayerViewSet(viewsets.ModelViewSet):
+    queryset = VectorLayer.objects.all()
+    http_method_names = ["get", "post", "patch", "delete"]
+    parser_classes = [MultiPartParser, FormParser]
+    serializer_class = VectorLayerDetailSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
+
+    @swagger_auto_schema(
+        operation_summary="Vector Layer",
+        operation_id="Upload Vector Data",
+        tags=["vector layer"],
+    )
+    def create(self, request, **kwargs):
+        """
+        Upload Vector Data
+        Supported Formats: Shapefile(zipped), Geojson, CSV, KML
+        """
+        serializer = VectorLayerPostSerializer(data=request.data)
+        layer_serializer = LayerPostSerializer(data=request.data)
+        name_en = request.data.get("name_en", None)
+        if name_en is not None:
+            if Layer.objects.filter(name_en=name_en).exists():
+                return Response(
+                    {"stat": "error", "message": "Name already exists"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+        if layer_serializer.is_valid():
+            layer_object = layer_serializer.save(created_by=request.user)
+        else:
+            return Response(
+                {"stat": "error", "message": layer_serializer.errors},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if serializer.is_valid():
+            serializer.save(created_by=request.user, layer=layer_object)
+        
+            file_upload = request.data.get("file_upload")
+            if file_upload:
+                file_id = serializer.data.get("id")
+                response = upload_vector_layer(file_id)
+                return Response(
+                    {
+                        "stat": "success",
+                        "message": "File upload is in progress",
+                        "vector_id": file_id,
+                    },
+                    status=status.HTTP_201_CREATED,
+                )
+            else:
+                return Response(
+                    {"stat": "error", "message": "File Missing"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+        else:
+            return Response(
+                {"stat": "error", "message": serializer.errors},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+    @swagger_auto_schema(
+        operation_summary="Get List of Vector Layer", tags=["vector layer"]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+    @swagger_auto_schema(operation_summary="Get Vector Layer ", tags=["vector layer"])
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
+
+    @swagger_auto_schema(operation_summary="Get Vector Layer by id ", tags=["vector layer"])
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
+    

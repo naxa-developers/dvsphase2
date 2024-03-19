@@ -1,10 +1,10 @@
 from rest_framework import serializers
 from .models import Partner, PartnerContact, Program, MarkerValues, MarkerCategory, District, Province, GapaNapa, FiveW, Indicator, \
     IndicatorValue, Sector, SubSector, TravelTime, GisLayer, Project, Output, Notification, BudgetToSecondTier, \
-    Filter, NepalSummary, FeedbackForm, FAQ, TermsAndCondition, NationalStatistic, Manual, Cmp
-from about_us.models import AboutUs, ContactUs
+    Filter, NepalSummary, FeedbackForm, FAQ, TermsAndCondition, NationalStatistic, Manual, Cmp, VectorLayer, Layer
 from django.contrib.auth.models import Group, Permission
 from django.contrib.auth.models import User
+from about_us.models import AboutUs, ContactUs
 from dashboard.models import UserProfile
 
 
@@ -51,6 +51,62 @@ class MarkerCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = MarkerCategory
         fields = '__all__'
+
+
+class LayerPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Layer
+        fields = "__all__"
+        read_only = ["id"]
+
+
+class LayerUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Layer
+        fields = ["category", "name_en", "name_ne"]
+
+class VectorLayerPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VectorLayer
+        fields = "__all__"
+        read_only = ["id"]
+
+class VectorLayerDetailSerializer(serializers.ModelSerializer):
+    name_en = serializers.SerializerMethodField()
+    name_ne = serializers.SerializerMethodField()
+    category = serializers.SerializerMethodField()
+    layer_type = serializers.SerializerMethodField()
+
+    class Meta:
+        model = VectorLayer
+        fields = "__all__"
+        read_only = ["id"]
+
+    def get_name_en(self, obj):
+        return obj.layer.name_en if obj.layer else None
+
+    def get_name_ne(self, obj):
+        return obj.layer.name_ne if obj.layer else None
+
+    def get_category(self, obj):
+        # return obj.layer.category.id if obj.layer else None
+        return obj.layer.category.id if obj.layer and obj.layer.category else None
+
+    def get_order(self, obj):
+        return obj.layer.order if obj.layer else None
+
+    def get_layer_type(self, obj):
+        return obj.layer.layer_type if obj.layer else None
+
+class VectorLayerListSerializer(serializers.ModelSerializer):
+    created_by = serializers.SerializerMethodField()
+    bbox = serializers.SerializerMethodField()
+
+    class Meta:
+        model = VectorLayer
+        fields = "__all__"
+        read_only = ["id"]
+
 
 
 class GisLayerSerializer(serializers.ModelSerializer):
