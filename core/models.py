@@ -586,16 +586,6 @@ class GisLayer(models.Model):
         return self.name
 
 
-# class GisStyle(models.Model):
-#     circle_color = ColorField(default='#FF0000', blank=True, null=True)
-#     fill_color = ColorField(default='#FF0000', blank=True, null=True)
-#     circle_radius = models.FloatField(blank=True, null=True)
-#     layer = models.ForeignKey(GisLayer, on_delete=models.CASCADE, related_name='GisStyle', blank=True, null=True)
-
-# def __str__(self):
-#     return self.layer.name
-
-
 class GisPop(models.Model):
     key = models.CharField(max_length=100, null=True, blank=True)
     title = models.CharField(max_length=100, null=True, blank=True)

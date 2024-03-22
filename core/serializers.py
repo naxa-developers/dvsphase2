@@ -67,7 +67,7 @@ class PartnerContactSerializer(serializers.ModelSerializer):
         fields = ["partner_id", "name", "email", "phone_number"]
 
 
-class PartnerSerializer(serializers.ModelSerializer):
+class DashboardPartnerSerializer(serializers.ModelSerializer):
     contacts = PartnerContactSerializer(many=True, read_only=True)
 
     class Meta:
@@ -85,6 +85,12 @@ class PartnerSerializer(serializers.ModelSerializer):
             "code",
             "contacts",
         ]
+
+
+class PartnerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Partner
+        fields = "__all__"
 
 
 class MarkerCategorySerializer(serializers.ModelSerializer):
@@ -131,7 +137,6 @@ class VectorLayerDetailSerializer(serializers.ModelSerializer):
         return obj.layer.name_ne if obj.layer else None
 
     def get_category(self, obj):
-        # return obj.layer.category.id if obj.layer else None
         return obj.layer.category.id if obj.layer and obj.layer.category else None
 
     def get_order(self, obj):
@@ -227,47 +232,32 @@ class MarkerValuesSerializer(serializers.ModelSerializer):
         return str(obj.marker_category_id.name)
 
 
-# class ProgramSerializer(serializers.ModelSerializer):
-#     marker_value = serializers.SerializerMethodField()
-#     marker_category = serializers.SerializerMethodField()
-#     sector = serializers.SerializerMethodField()
-#     sub_sector = serializers.SerializerMethodField()
-#     component = serializers.SerializerMethodField()
-#     partner = serializers.SerializerMethodField()
-
-#     class Meta:
-#         model = Program
-#         fields = (
-#             'id', 'name', 'start_date', 'end_date', 'code', 'iati', 'total_budget', 'partner', 'component',
-#             'marker_category', 'marker_value',
-#             'sector',
-#             'sub_sector', 'program_acronym')
-
-
 class ProgramSerializer(serializers.ModelSerializer):
+    marker_value = serializers.SerializerMethodField()
+    marker_category = serializers.SerializerMethodField()
+    sector = serializers.SerializerMethodField()
+    sub_sector = serializers.SerializerMethodField()
+    component = serializers.SerializerMethodField()
+    partner = serializers.SerializerMethodField()
 
     class Meta:
         model = Program
-        fields = [
+        fields = (
             "id",
             "name",
-            "description",
             "start_date",
             "end_date",
-            "cmp",
             "code",
-            "status",
+            "iati",
             "total_budget",
-            "budget_spend",
+            "partner",
+            "component",
             "marker_category",
             "marker_value",
             "sector",
             "sub_sector",
-            "sector_budget",
-            "iati",
             "program_acronym",
-            "partner_id",
-        ]
+        )
 
     def get_partner(self, obj):
         data = []
@@ -303,7 +293,6 @@ class ProgramSerializer(serializers.ModelSerializer):
                 {
                     "id": q["id"],
                     "name": q["value"],
-                    # 'cat': q['marker_category_id__name']
                 }
             )
         return data
@@ -325,6 +314,22 @@ class ProgramSerializer(serializers.ModelSerializer):
             data.append({"id": q["id"], "name": q["name"]})
 
         return data
+
+
+class ProvinceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Province
+        fields = ("id", "name", "code", "bbox")
+
+
+class FilterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Filter
+
+        fields = (
+            "name",
+            "options",
+        )
 
 
 class ProvinceSerializer(serializers.ModelSerializer):
@@ -400,7 +405,6 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     def get_sector(self, obj):
         qs = obj.sector.all().order_by("id").values_list("id", flat=True)
-        # qs = obj.sub_sector.all().order_by('id').values('sub_sector_name', 'sub_sector_code')
         return qs
 
     def get_partners(self, obj):
@@ -465,55 +469,15 @@ class GaanapaSerializer(serializers.ModelSerializer):
 
 
 class FivewSerializer(serializers.ModelSerializer):
-    # partner_name = serializers.SerializerMethodField()
-    # program_name = serializers.SerializerMethodField()
-    # province = serializers.SerializerMethodField()
-    # district = serializers.SerializerMethodField()
-    # gapa_napa = serializers.SerializerMethodField()
-    # implenting_partner_first = serializers.SerializerMethodField()
-    # implenting_partner_second = serializers.SerializerMethodField()
-    # implenting_partner_third = serializers.SerializerMethodField()
 
     class Meta:
         model = FiveW
         fields = "__all__"
 
-    #     fields = (
-    #         'id', 'partner_name', 'program_name', 'province', 'district', 'gapa_napa', 'status', 'start_date',
-    #         'end_date',
-    #         'reporting_ministry_line', 'implenting_partner_first', 'implenting_partner_second',
-    #         'implenting_partner_third')
-
-    # def get_partner_name(self, obj):
-    #     return str(obj.partner_name)
-    #
-    # def get_program_name(self, obj):
-    #     return str(obj.program_name)
-    #
-    # def get_province(self, obj):
-    #     return str(obj.province)
-    #
-    # def get_district(self, obj):
-    #     return str(obj.district)
-    #
-    # def get_gapa_napa(self, obj):
-    #     return str(obj.gapa_napa.name)
-    #
-    # def get_implenting_partner_first(self, obj):
-    #     return str(obj.implenting_partner_first)
-    #
-    # def get_implenting_partner_second(self, obj):
-    #     return str(obj.implenting_partner_second)
-    #
-    # def get_implenting_partner_third(self, obj):
-    #     return str(obj.implenting_partner_third)
-
 
 class IndicatorValueSerializer(serializers.ModelSerializer):
     code = serializers.SerializerMethodField()
     name = serializers.SerializerMethodField()
-
-    # indicator_name = serializers.SerializerMethodField()
 
     class Meta:
         model = IndicatorValue
@@ -530,9 +494,6 @@ class IndicatorValueSerializer(serializers.ModelSerializer):
             return str(obj.gapanapa_id.name)
         except:
             return None
-
-    # def get_indicator_name(self, obj):
-    #     return str(obj.indicator_id.indicator)
 
 
 class TravelTimeSerializer(serializers.ModelSerializer):

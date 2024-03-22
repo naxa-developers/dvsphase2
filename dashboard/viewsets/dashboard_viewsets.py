@@ -85,11 +85,13 @@ class PartnerViewset(viewsets.ModelViewSet):
     def partial_update(self, request, *args, **kwargs):
         user = request.user
         profile = UserProfile.objects.get(user=user)
-        partner_id = profile.partner_id  # Retrieve the partner ID associated with the logged-in user
-        print('partner_id===', partner_id)
+        partner_id = (
+            profile.partner_id
+        )  # Retrieve the partner ID associated with the logged-in user
         try:
-            request_partner_id = int(kwargs.get('pk'))  # Get the partner ID from the URL kwargs
-            print('request_partner_id===', request_partner_id)
+            request_partner_id = int(
+                kwargs.get("pk")
+            )  # Get the partner ID from the URL kwargs
         except (ValueError, TypeError):
             return Response(
                 {"message": "Invalid partner ID provided in the request."},
@@ -97,14 +99,14 @@ class PartnerViewset(viewsets.ModelViewSet):
             )
 
         if request_partner_id == partner_id:
-            return super().partial_update(request, *args, **kwargs)  # Call the superclass method for partial update
+            return super().partial_update(request, *args, **kwargs)
         else:
             return Response(
                 {"message": "Unauthorized to update this partner."},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
-        
-                
+
+
 class PartnerContactViewset(viewsets.ModelViewSet):
     queryset = PartnerContact.objects.all()
     serializer_class = PartnerContactSerializer
