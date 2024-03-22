@@ -188,7 +188,20 @@ class ProgramViewset(viewsets.ModelViewSet):
         tags=["program"],
     )
     def partial_update(self, request, *args, **kwargs):
-        return super().partial_update(request, *args, **kwargs)
+        user = request.user
+        user_data = UserProfile.objects.get(user=user)
+        program_id = user_data.program_id
+        print('partner_id===', program_id)
+        request_program_id = int(kwargs.get('pk'))
+        print('request p id =======', request_program_id)
+
+        if request_program_id == program_id:
+            return super().partial_update(request, *args, **kwargs)  # Call the superclass method for partial update
+        else:
+            return Response(
+                {"message": "Unauthorized to update this partner."},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )  
 
 
 class ProjectViewset(viewsets.ModelViewSet):
@@ -282,7 +295,7 @@ class FiveWViewset(viewsets.ModelViewSet):
     def partial_update(self, request, *args, **kwargs):
         return super().partial_update(request, *args, **kwargs)
 
-
+        
 class SectorViewset(viewsets.ModelViewSet):
     queryset = Sector.objects.all()
     permission_classes = [IsAuthenticated]

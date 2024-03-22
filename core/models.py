@@ -142,7 +142,7 @@ class Program(models.Model):
         ("ongoing", "Ongoing"),
         ("completed", "Completed"),
     )
-    partner_id = models.ManyToManyField(Partner, related_name="Progpartner")
+    partner_id = models.ManyToManyField(Partner, null=True, blank=True, related_name="Progpartner")
     name = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(blank=True)
     start_date = models.DateField(blank=True, null=True)
