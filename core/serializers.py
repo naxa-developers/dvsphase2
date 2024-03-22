@@ -67,7 +67,7 @@ class PartnerContactSerializer(serializers.ModelSerializer):
         fields = ["partner_id", "name", "email", "phone_number"]
 
 
-class PartnerSerializer(serializers.ModelSerializer):
+class DashboardPartnerSerializer(serializers.ModelSerializer):
     contacts = PartnerContactSerializer(many=True, read_only=True)
 
     class Meta:
@@ -86,6 +86,11 @@ class PartnerSerializer(serializers.ModelSerializer):
             "contacts",
         ]
 
+
+class PartnerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Partner
+        fields = '__all__'
 
 class MarkerCategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -227,24 +232,7 @@ class MarkerValuesSerializer(serializers.ModelSerializer):
         return str(obj.marker_category_id.name)
 
 
-# class ProgramSerializer(serializers.ModelSerializer):
-#     marker_value = serializers.SerializerMethodField()
-#     marker_category = serializers.SerializerMethodField()
-#     sector = serializers.SerializerMethodField()
-#     sub_sector = serializers.SerializerMethodField()
-#     component = serializers.SerializerMethodField()
-#     partner = serializers.SerializerMethodField()
-
-#     class Meta:
-#         model = Program
-#         fields = (
-#             'id', 'name', 'start_date', 'end_date', 'code', 'iati', 'total_budget', 'partner', 'component',
-#             'marker_category', 'marker_value',
-#             'sector',
-#             'sub_sector', 'program_acronym')
-
-
-class ProgramSerializer(serializers.ModelSerializer):
+class DashboardProgramSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Program
@@ -269,63 +257,96 @@ class ProgramSerializer(serializers.ModelSerializer):
             "partner_id",
         ]
 
+
+class ProgramSerializer(serializers.ModelSerializer):
+    marker_value = serializers.SerializerMethodField()
+    marker_category = serializers.SerializerMethodField()
+    sector = serializers.SerializerMethodField()
+    sub_sector = serializers.SerializerMethodField()
+    component = serializers.SerializerMethodField()
+    partner = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Program
+        fields = (
+            'id', 'name', 'start_date', 'end_date', 'code', 'iati', 'total_budget', 'partner', 'component',
+            'marker_category', 'marker_value',
+            'sector',
+            'sub_sector', 'program_acronym')
+
     def get_partner(self, obj):
         data = []
-        qs = obj.partner_id.all().values("name", "id")
+        qs = obj.partner_id.all().values('name', 'id')
         for q in qs:
-            data.append({"id": q["id"], "name": q["name"]})
+            data.append({
+                'id': q['id'],
+                'name': q['name']
+
+            })
         return data
 
     def get_component(self, obj):
         data = []
-        qs = obj.ProjectProgram.values("id", "name", "code").distinct("code")
+        qs = obj.ProjectProgram.values('id', 'name', 'code').distinct('code')
         for q in qs:
-            data.append({"id": q["id"], "code": q["code"], "name": q["name"]})
+            data.append({
+                'id': q['id'],
+                'code': q['code'],
+                'name': q['name']
+
+            })
 
         return data
 
     def get_marker_category(self, obj):
         data = []
         qs = obj.marker_value.all().values(
-            "marker_category_id", "marker_category_id__name"
-        )
+            'marker_category_id', 'marker_category_id__name')
         for q in qs:
-            data.append(
-                {"id": q["marker_category_id"], "name": q["marker_category_id__name"]}
-            )
+            data.append({
+                'id': q['marker_category_id'],
+                'name': q['marker_category_id__name']
+
+            })
         return data
 
     def get_marker_value(self, obj):
         data = []
-        qs = obj.marker_value.all().values("id", "value", "marker_category_id__name")
+        qs = obj.marker_value.all().values('id', 'value', 'marker_category_id__name')
         for q in qs:
-            data.append(
-                {
-                    "id": q["id"],
-                    "name": q["value"],
-                    # 'cat': q['marker_category_id__name']
-                }
-            )
+            data.append({
+                'id': q['id'],
+                'name': q['value'],
+                # 'cat': q['marker_category_id__name']
+
+            })
         return data
 
     def get_sector(self, obj):
         data = []
-        qs = obj.sector.all().values("id", "name").distinct("name")
+        qs = obj.sector.all().values('id', 'name').distinct('name')
 
         for q in qs:
-            data.append({"id": q["id"], "name": q["name"]})
+            data.append({
+                'id': q['id'],
+                'name': q['name']
+
+            })
 
         return data
 
     def get_sub_sector(self, obj):
         data = []
-        qs = obj.sub_sector.values("id", "name").distinct("name")
+        qs = obj.sub_sector.values('id', 'name').distinct('name')
 
         for q in qs:
-            data.append({"id": q["id"], "name": q["name"]})
+            data.append({
+                'id': q['id'],
+                'name': q['name']
+
+            })
 
         return data
-
 
 class ProvinceSerializer(serializers.ModelSerializer):
     class Meta:

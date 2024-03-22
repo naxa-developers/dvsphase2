@@ -16,7 +16,7 @@ from dashboard.tasks import upload_vector_layer
 class PartnerViewset(viewsets.ModelViewSet):
     queryset = Partner.objects.all()
     permission_classes = [IsAuthenticated]
-    serializer_class = PartnerSerializer
+    serializer_class = DashboardPartnerSerializer
     parser_classes = [MultiPartParser, FormParser]
     http_method_names = ["get", "post", "patch", "delete"]
 
@@ -150,7 +150,7 @@ class PartnerContactViewset(viewsets.ModelViewSet):
 class ProgramViewset(viewsets.ModelViewSet):
     queryset = Program.objects.all()
     permission_classes = [IsAuthenticated]
-    serializer_class = ProgramSerializer
+    serializer_class = DashboardProgramSerializer
     parser_classes = [MultiPartParser, FormParser]
     http_method_names = ["get", "post", "patch", "delete"]
 
