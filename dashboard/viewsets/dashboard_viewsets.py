@@ -293,9 +293,28 @@ class FiveWViewset(viewsets.ModelViewSet):
         tags=["five"],
     )
     def partial_update(self, request, *args, **kwargs):
-        return super().partial_update(request, *args, **kwargs)
-
+        user = request.user
+        user_data = UserProfile.objects.get(user=user)
+        request_fivew_id = int(kwargs.get('pk')) 
+        print('request p id =======', request_fivew_id) 
+        fivew = FiveW.objects.filter(
+                    supplier_id=user_data.partner.id,
+                    program_id=user_data.program.id,
+                    component_id=user_data.project.id,
+                )
+        print('fivew===', fivew)
+        print('fivew===', fivew.values_list('id', flat=True))
+        print('=========f========')
         
+        if request_fivew_id in fivew.values_list('id', flat=True):
+            return super().partial_update(request, *args, **kwargs)
+        else:
+            return Response(
+                {"message": "Unauthorized to update this partner."},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+
+
 class SectorViewset(viewsets.ModelViewSet):
     queryset = Sector.objects.all()
     permission_classes = [IsAuthenticated]
