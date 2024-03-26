@@ -13,12 +13,27 @@ class CovidSpecificProgramBudget(models.Model):
 
 
 class CovidSpecificProgram(models.Model):
-    province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='CvsProvince',
-                                    null=True, blank=True)
-    district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='CvsDistrict',
-                                    null=True, blank=True)
-    municipality_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='CvsGapaNapa',
-                                        null=True, blank=True)
+    province_id = models.ForeignKey(
+        Province,
+        on_delete=models.CASCADE,
+        related_name="CvsProvince",
+        null=True,
+        blank=True,
+    )
+    district_id = models.ForeignKey(
+        District,
+        on_delete=models.CASCADE,
+        related_name="CvsDistrict",
+        null=True,
+        blank=True,
+    )
+    municipality_id = models.ForeignKey(
+        GapaNapa,
+        on_delete=models.CASCADE,
+        related_name="CvsGapaNapa",
+        null=True,
+        blank=True,
+    )
     partner = models.CharField(max_length=500, blank=True, null=True)
     program = models.CharField(max_length=500, blank=True, null=True)
     component = models.CharField(max_length=500, blank=True, null=True)
@@ -30,9 +45,16 @@ class CovidSpecificProgram(models.Model):
     delivery_in_lockdown = models.CharField(max_length=500, blank=True, null=True)
     covid_priority_3_12_Months = models.CharField(max_length=500, blank=True, null=True)
     covid_recovery_priority = models.CharField(max_length=500, blank=True, null=True)
-    providing_ta_to_local_government = models.CharField(max_length=500, blank=True, null=True)
-    summary = models.ForeignKey(CovidSpecificProgramBudget, on_delete=models.CASCADE, related_name='program',
-                                null=True, blank=True)
+    providing_ta_to_local_government = models.CharField(
+        max_length=500, blank=True, null=True
+    )
+    summary = models.ForeignKey(
+        CovidSpecificProgramBudget,
+        on_delete=models.CASCADE,
+        related_name="program",
+        null=True,
+        blank=True,
+    )
 
 
 class CovidFivew(models.Model):
@@ -41,12 +63,27 @@ class CovidFivew(models.Model):
     program = models.CharField(max_length=500, blank=True, null=True)
     project_name = models.CharField(max_length=500, blank=True, null=True)
     sector = models.CharField(max_length=500, blank=True, null=True)
-    province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='TtmpProvince',
-                                    null=True, blank=True)
-    district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='TtmpDistrict',
-                                    null=True, blank=True)
-    municipality_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='TtmpGapaNapa',
-                                        null=True, blank=True)
+    province_id = models.ForeignKey(
+        Province,
+        on_delete=models.CASCADE,
+        related_name="TtmpProvince",
+        null=True,
+        blank=True,
+    )
+    district_id = models.ForeignKey(
+        District,
+        on_delete=models.CASCADE,
+        related_name="TtmpDistrict",
+        null=True,
+        blank=True,
+    )
+    municipality_id = models.ForeignKey(
+        GapaNapa,
+        on_delete=models.CASCADE,
+        related_name="TtmpGapaNapa",
+        null=True,
+        blank=True,
+    )
 
 
 class CommonField(models.Model):
@@ -95,12 +132,27 @@ class CommonField(models.Model):
 
 class DryDeshospSum(CommonField):
     grid_code = models.CharField(max_length=20, blank=True, null=True)
-    province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='DryDeshosp4hrSum',
-                                    null=True, blank=True)
-    district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='DryDeshosp4hrSum',
-                                    null=True, blank=True)
-    municipality_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE, related_name='DryDeshosp4hrSum',
-                                        null=True, blank=True)
+    province_id = models.ForeignKey(
+        Province,
+        on_delete=models.CASCADE,
+        related_name="DryDeshosp4hrSum",
+        null=True,
+        blank=True,
+    )
+    district_id = models.ForeignKey(
+        District,
+        on_delete=models.CASCADE,
+        related_name="DryDeshosp4hrSum",
+        null=True,
+        blank=True,
+    )
+    municipality_id = models.ForeignKey(
+        GapaNapa,
+        on_delete=models.CASCADE,
+        related_name="DryDeshosp4hrSum",
+        null=True,
+        blank=True,
+    )
     hospital_name = models.CharField(max_length=500, blank=True, null=True)
     category_code = models.CharField(max_length=10, blank=True, null=True)
     category_name = models.CharField(max_length=500, blank=True, null=True)
@@ -130,12 +182,27 @@ class DryDeshospUncoveredAdm1Sums(CommonField):
     fid_adm1 = models.CharField(max_length=20, blank=True, null=True)
     palika = models.CharField(max_length=500, blank=True, null=True)
     gn_type = models.CharField(max_length=500, blank=True, null=True)
-    province_id = models.ForeignKey(Province, on_delete=models.CASCADE, related_name='DryDeshosp4hrUncoveredAdm1Sums',
-                                    null=True, blank=True)
-    district_id = models.ForeignKey(District, on_delete=models.CASCADE, related_name='DryDeshosp4hrUncoveredAdm1Sums',
-                                    null=True, blank=True)
-    municipality_id = models.ForeignKey(GapaNapa, on_delete=models.CASCADE,
-                                        related_name='DryDeshosp4hrUncoveredAdm1Sums', null=True, blank=True)
+    province_id = models.ForeignKey(
+        Province,
+        on_delete=models.CASCADE,
+        related_name="DryDeshosp4hrUncoveredAdm1Sums",
+        null=True,
+        blank=True,
+    )
+    district_id = models.ForeignKey(
+        District,
+        on_delete=models.CASCADE,
+        related_name="DryDeshosp4hrUncoveredAdm1Sums",
+        null=True,
+        blank=True,
+    )
+    municipality_id = models.ForeignKey(
+        GapaNapa,
+        on_delete=models.CASCADE,
+        related_name="DryDeshosp4hrUncoveredAdm1Sums",
+        null=True,
+        blank=True,
+    )
     sum_11 = models.CharField(max_length=20, blank=True, null=True)
     wp_sum = models.CharField(max_length=20, blank=True, null=True)
     hrsl_sum = models.CharField(max_length=20, blank=True, null=True)

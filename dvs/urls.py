@@ -19,27 +19,20 @@ class BothHttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
 schema_view = get_schema_view(
     openapi.Info(
         title="Dvs Api Doc",
-        default_version='v1',
+        default_version="v1",
     ),
-    generator_class=BothHttpAndHttpsSchemaGenerator,    
+    generator_class=BothHttpAndHttpsSchemaGenerator,
 )
 
 urlpatterns = [
-
-    path('admin/', admin.site.urls),
-    # path('swagger/', schema_view.with_ui('swagger',
-    #      cache_timeout=0), name='schema-swagger-ui'),
-    path('api/v1/core/', include('core.urls')),
-    path('api/v1/covid/', include('covid.urls')),
-    path('dashboard/', include('dashboard.urls.urls')),
-    path('api/v2/dashboard/', include('dashboard.urls.dashboard_urls')),
-
-    path('federal/', include('federal.urls')),
-    path('api/v1/about_us/', include('about_us.urls')),
-
-
-    path('', auth_views.LoginView.as_view(), name='login'),
-
+    path("admin/", admin.site.urls),
+    path("api/v1/core/", include("core.urls")),
+    path("api/v1/covid/", include("covid.urls")),
+    path("dashboard/", include("dashboard.urls.urls")),
+    path("api/v2/dashboard/", include("dashboard.urls.dashboard_urls")),
+    path("federal/", include("federal.urls")),
+    path("api/v1/about_us/", include("about_us.urls")),
+    path("", auth_views.LoginView.as_view(), name="login"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

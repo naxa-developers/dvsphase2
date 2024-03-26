@@ -1,24 +1,50 @@
 from rest_framework import viewsets
-from covid.models import CovidFivew, DryDshosp4hrSums, DryDshosp4hrUncoveredAdm1Sums, DryDshosp8hrSums, \
-    DryDshosp8hrUncoveredAdm1Sums, DryDshosp12hrSums, DryDshosp12hrUncoveredAdm1Sums, DryAllCovidsDhfs4hrSums, \
-    DryAllCovidsDhfs4hrUncoveredAdm1Sums, DryAllCovidsDhfs8hrSums, DryAllCovidsDhfs8hrUncoveredAdm1Sums, \
-    DryAllCovidsDhfs12hrSums, DryAllCovidsDhfs12hrUncoveredAdm1Sums, CovidSpecificProgram, CovidSpecificProgramBudget
-from covid.serializers import CovidFivewSerializer, DryDshosp4hrSumsSerializer, \
-    DryDshosp4hrUncoveredAdm1SumsSerializer, DryDshosp8hrSumsSerializer, DryDshosp8hrUncoveredAdm1SumsSerializer, \
-    DryDshosp12hrSumsSerializer, DryDshosp12hrUncoveredAdm1SumsSerializer, DryAllCovidsDhfs4hrSumsSerializer, \
-    DryAllCovidsDhfs4hrUncoveredAdm1SumsSerializer, DryAllCovidsDhfs8hrSumsSerializer, \
-    DryAllCovidsDhfs8hrUncoveredAdm1SumsSerializer, DryAllCovidsDhfs12hrSumsSerializer, \
-    DryAllCovidsDhfs12hrUncoveredAdm1SumsSerializer, CovidSpecificSerializer, CovidSpecificBudgetSerializer
+from covid.models import (
+    CovidFivew,
+    DryDshosp4hrSums,
+    DryDshosp4hrUncoveredAdm1Sums,
+    DryDshosp8hrSums,
+    DryDshosp8hrUncoveredAdm1Sums,
+    DryDshosp12hrSums,
+    DryDshosp12hrUncoveredAdm1Sums,
+    DryAllCovidsDhfs4hrSums,
+    DryAllCovidsDhfs4hrUncoveredAdm1Sums,
+    DryAllCovidsDhfs8hrSums,
+    DryAllCovidsDhfs8hrUncoveredAdm1Sums,
+    DryAllCovidsDhfs12hrSums,
+    DryAllCovidsDhfs12hrUncoveredAdm1Sums,
+    CovidSpecificProgram,
+    CovidSpecificProgramBudget,
+)
+from covid.serializers import (
+    CovidFivewSerializer,
+    DryDshosp4hrSumsSerializer,
+    DryDshosp4hrUncoveredAdm1SumsSerializer,
+    DryDshosp8hrSumsSerializer,
+    DryDshosp8hrUncoveredAdm1SumsSerializer,
+    DryDshosp12hrSumsSerializer,
+    DryDshosp12hrUncoveredAdm1SumsSerializer,
+    DryAllCovidsDhfs4hrSumsSerializer,
+    DryAllCovidsDhfs4hrUncoveredAdm1SumsSerializer,
+    DryAllCovidsDhfs8hrSumsSerializer,
+    DryAllCovidsDhfs8hrUncoveredAdm1SumsSerializer,
+    DryAllCovidsDhfs12hrSumsSerializer,
+    DryAllCovidsDhfs12hrUncoveredAdm1SumsSerializer,
+    CovidSpecificSerializer,
+    CovidSpecificBudgetSerializer,
+)
 from django_filters.rest_framework import DjangoFilterBackend
 
 
 class TtmpViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'district_id', 'municipality_id', 'municipality_id']
+    filterset_fields = ["id", "district_id", "municipality_id", "municipality_id"]
 
     def get_queryset(self):
-        queryset = CovidFivew.objects.select_related('district_id', 'province_id', 'municipality_id').order_by('id')
+        queryset = CovidFivew.objects.select_related(
+            "district_id", "province_id", "municipality_id"
+        ).order_by("id")
         return queryset
 
     def get_serializer_class(self):
@@ -33,7 +59,7 @@ class CovidSpecificBudget(viewsets.ReadOnlyModelViewSet):
     # filterset_fields = ['id', 'district_id', 'municipality_id', 'municipality_id']
 
     def get_queryset(self):
-        queryset = CovidSpecificProgramBudget.objects.order_by('id')
+        queryset = CovidSpecificProgramBudget.objects.order_by("id")
         return queryset
 
     def get_serializer_class(self):
@@ -44,11 +70,12 @@ class CovidSpecificBudget(viewsets.ReadOnlyModelViewSet):
 class CovidSpecific(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'district_id', 'municipality_id', 'municipality_id']
+    filterset_fields = ["id", "district_id", "municipality_id", "municipality_id"]
 
     def get_queryset(self):
-        queryset = CovidSpecificProgram.objects.select_related('district_id', 'province_id',
-                                                               'municipality_id').order_by('id')
+        queryset = CovidSpecificProgram.objects.select_related(
+            "district_id", "province_id", "municipality_id"
+        ).order_by("id")
         return queryset
 
     def get_serializer_class(self):
@@ -59,11 +86,12 @@ class CovidSpecific(viewsets.ReadOnlyModelViewSet):
 class DryDshosp4hrSumsViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'district_id', 'municipality_id', 'municipality_id']
+    filterset_fields = ["id", "district_id", "municipality_id", "municipality_id"]
 
     def get_queryset(self):
-        queryset = DryDshosp4hrSums.objects.select_related('district_id', 'province_id', 'municipality_id').order_by(
-            'id')
+        queryset = DryDshosp4hrSums.objects.select_related(
+            "district_id", "province_id", "municipality_id"
+        ).order_by("id")
         return queryset
 
     def get_serializer_class(self):
@@ -74,12 +102,12 @@ class DryDshosp4hrSumsViewSet(viewsets.ReadOnlyModelViewSet):
 class DryDshosp4hrUncoveredAdm1SumsViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'district_id', 'municipality_id', 'municipality_id']
+    filterset_fields = ["id", "district_id", "municipality_id", "municipality_id"]
 
     def get_queryset(self):
-        queryset = DryDshosp4hrUncoveredAdm1Sums.objects.select_related('district_id', 'province_id',
-                                                                        'municipality_id').order_by(
-            'id')
+        queryset = DryDshosp4hrUncoveredAdm1Sums.objects.select_related(
+            "district_id", "province_id", "municipality_id"
+        ).order_by("id")
         return queryset
 
     def get_serializer_class(self):
@@ -90,11 +118,12 @@ class DryDshosp4hrUncoveredAdm1SumsViewSet(viewsets.ReadOnlyModelViewSet):
 class DryDshosp8hrSumsViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'district_id', 'municipality_id', 'municipality_id']
+    filterset_fields = ["id", "district_id", "municipality_id", "municipality_id"]
 
     def get_queryset(self):
-        queryset = DryDshosp8hrSums.objects.select_related('district_id', 'province_id', 'municipality_id').order_by(
-            'id')
+        queryset = DryDshosp8hrSums.objects.select_related(
+            "district_id", "province_id", "municipality_id"
+        ).order_by("id")
         return queryset
 
     def get_serializer_class(self):
@@ -105,12 +134,12 @@ class DryDshosp8hrSumsViewSet(viewsets.ReadOnlyModelViewSet):
 class DryDshosp8hrUncoveredAdm1SumsViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'district_id', 'municipality_id', 'municipality_id']
+    filterset_fields = ["id", "district_id", "municipality_id", "municipality_id"]
 
     def get_queryset(self):
-        queryset = DryDshosp8hrUncoveredAdm1Sums.objects.select_related('district_id', 'province_id',
-                                                                        'municipality_id').order_by(
-            'id')
+        queryset = DryDshosp8hrUncoveredAdm1Sums.objects.select_related(
+            "district_id", "province_id", "municipality_id"
+        ).order_by("id")
         return queryset
 
     def get_serializer_class(self):
@@ -121,12 +150,12 @@ class DryDshosp8hrUncoveredAdm1SumsViewSet(viewsets.ReadOnlyModelViewSet):
 class DryDshosp12hrSumsViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'district_id', 'municipality_id', 'municipality_id']
+    filterset_fields = ["id", "district_id", "municipality_id", "municipality_id"]
 
     def get_queryset(self):
-        queryset = DryDshosp12hrSums.objects.select_related('district_id', 'province_id',
-                                                            'municipality_id').order_by(
-            'id')
+        queryset = DryDshosp12hrSums.objects.select_related(
+            "district_id", "province_id", "municipality_id"
+        ).order_by("id")
         return queryset
 
     def get_serializer_class(self):
@@ -137,12 +166,12 @@ class DryDshosp12hrSumsViewSet(viewsets.ReadOnlyModelViewSet):
 class DryDshosp12hrUncoveredAdm1SumsViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'district_id', 'municipality_id', 'municipality_id']
+    filterset_fields = ["id", "district_id", "municipality_id", "municipality_id"]
 
     def get_queryset(self):
-        queryset = DryDshosp12hrUncoveredAdm1Sums.objects.select_related('district_id', 'province_id',
-                                                                         'municipality_id').order_by(
-            'id')
+        queryset = DryDshosp12hrUncoveredAdm1Sums.objects.select_related(
+            "district_id", "province_id", "municipality_id"
+        ).order_by("id")
         return queryset
 
     def get_serializer_class(self):
@@ -153,12 +182,12 @@ class DryDshosp12hrUncoveredAdm1SumsViewSet(viewsets.ReadOnlyModelViewSet):
 class DryAllCovidsDhfs4hrSumsViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'district_id', 'municipality_id', 'municipality_id']
+    filterset_fields = ["id", "district_id", "municipality_id", "municipality_id"]
 
     def get_queryset(self):
-        queryset = DryAllCovidsDhfs4hrSums.objects.select_related('district_id', 'province_id',
-                                                                  'municipality_id').order_by(
-            'id')
+        queryset = DryAllCovidsDhfs4hrSums.objects.select_related(
+            "district_id", "province_id", "municipality_id"
+        ).order_by("id")
         return queryset
 
     def get_serializer_class(self):
@@ -169,12 +198,12 @@ class DryAllCovidsDhfs4hrSumsViewSet(viewsets.ReadOnlyModelViewSet):
 class DryAllCovidsDhfs4hrUncoveredAdm1SumsViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'district_id', 'municipality_id', 'municipality_id']
+    filterset_fields = ["id", "district_id", "municipality_id", "municipality_id"]
 
     def get_queryset(self):
-        queryset = DryAllCovidsDhfs4hrUncoveredAdm1Sums.objects.select_related('district_id', 'province_id',
-                                                                               'municipality_id').order_by(
-            'id')
+        queryset = DryAllCovidsDhfs4hrUncoveredAdm1Sums.objects.select_related(
+            "district_id", "province_id", "municipality_id"
+        ).order_by("id")
         return queryset
 
     def get_serializer_class(self):
@@ -185,12 +214,12 @@ class DryAllCovidsDhfs4hrUncoveredAdm1SumsViewSet(viewsets.ReadOnlyModelViewSet)
 class DryAllCovidsDhfs8hrSumsViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'district_id', 'municipality_id', 'municipality_id']
+    filterset_fields = ["id", "district_id", "municipality_id", "municipality_id"]
 
     def get_queryset(self):
-        queryset = DryAllCovidsDhfs8hrSums.objects.select_related('district_id', 'province_id',
-                                                                  'municipality_id').order_by(
-            'id')
+        queryset = DryAllCovidsDhfs8hrSums.objects.select_related(
+            "district_id", "province_id", "municipality_id"
+        ).order_by("id")
         return queryset
 
     def get_serializer_class(self):
@@ -201,12 +230,12 @@ class DryAllCovidsDhfs8hrSumsViewSet(viewsets.ReadOnlyModelViewSet):
 class DryAllCovidsDhfs8hrUncoveredAdm1SumsViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'district_id', 'municipality_id', 'municipality_id']
+    filterset_fields = ["id", "district_id", "municipality_id", "municipality_id"]
 
     def get_queryset(self):
-        queryset = DryAllCovidsDhfs8hrUncoveredAdm1Sums.objects.select_related('district_id', 'province_id',
-                                                                               'municipality_id').order_by(
-            'id')
+        queryset = DryAllCovidsDhfs8hrUncoveredAdm1Sums.objects.select_related(
+            "district_id", "province_id", "municipality_id"
+        ).order_by("id")
         return queryset
 
     def get_serializer_class(self):
@@ -217,12 +246,12 @@ class DryAllCovidsDhfs8hrUncoveredAdm1SumsViewSet(viewsets.ReadOnlyModelViewSet)
 class DryAllCovidsDhfs12hrSumsViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'district_id', 'municipality_id', 'municipality_id']
+    filterset_fields = ["id", "district_id", "municipality_id", "municipality_id"]
 
     def get_queryset(self):
-        queryset = DryAllCovidsDhfs12hrSums.objects.select_related('district_id', 'province_id',
-                                                                   'municipality_id').order_by(
-            'id')
+        queryset = DryAllCovidsDhfs12hrSums.objects.select_related(
+            "district_id", "province_id", "municipality_id"
+        ).order_by("id")
         return queryset
 
     def get_serializer_class(self):
@@ -233,12 +262,12 @@ class DryAllCovidsDhfs12hrSumsViewSet(viewsets.ReadOnlyModelViewSet):
 class DryAllCovidsDhfs12hrUncoveredAdm1SumsViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = []
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['id', 'district_id', 'municipality_id', 'municipality_id']
+    filterset_fields = ["id", "district_id", "municipality_id", "municipality_id"]
 
     def get_queryset(self):
-        queryset = DryAllCovidsDhfs12hrUncoveredAdm1Sums.objects.select_related('district_id', 'province_id',
-                                                                                'municipality_id').order_by(
-            'id')
+        queryset = DryAllCovidsDhfs12hrUncoveredAdm1Sums.objects.select_related(
+            "district_id", "province_id", "municipality_id"
+        ).order_by("id")
         return queryset
 
     def get_serializer_class(self):

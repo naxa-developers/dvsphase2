@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 import csv
 
+
 def download_csv(request, queryset):
     if not request.user.is_staff:
         raise PermissionDenied
@@ -9,8 +10,8 @@ def download_csv(request, queryset):
     model_fields = model._meta.fields + model._meta.many_to_many
     field_names = [field.name for field in model_fields]
 
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="export.csv"'
+    response = HttpResponse(content_type="text/csv")
+    response["Content-Disposition"] = 'attachment; filename="export.csv"'
 
     # the csv writer
     writer = csv.writer(response, delimiter=";")
@@ -23,11 +24,11 @@ def download_csv(request, queryset):
             value = getattr(row, field)
             if callable(value):
                 try:
-                    value = value() or ''
+                    value = value() or ""
                 except:
-                    value = 'Error retrieving value'
+                    value = "Error retrieving value"
             if value is None:
-                value = ''
+                value = ""
             values.append(value)
         writer.writerow(values)
     return response
