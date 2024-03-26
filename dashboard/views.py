@@ -24,7 +24,7 @@ from rest_framework.authentication import TokenAuthentication, SessionAuthentica
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from core.models import Manual, Province, Program, FiveW, District, GapaNapa, Partner, Sector, SubSector, MarkerCategory, \
     MarkerValues, Indicator, IndicatorValue, GisLayer, Project, PartnerContact, Output, Notification, \
-    BudgetToSecondTier, BudgetToFirstTier, Cmp, GisStyle, FeedbackForm, FAQ, TermsAndCondition, NationalStatistic
+    BudgetToSecondTier, BudgetToFirstTier, Cmp, FeedbackForm, FAQ, TermsAndCondition, NationalStatistic
 from .models import UserProfile, Log
 from django.contrib.auth.models import User, Group, Permission
 from django.views.generic import TemplateView
@@ -3379,63 +3379,63 @@ def gisLayer_delete(request, **kwargs):
         return redirect('gis-layer-list')
 
 
-class StyleList(LoginRequiredMixin, ListView):
-    template_name = 'gis_layer_style_list.html'
-    model = GisStyle
+# class StyleList(LoginRequiredMixin, ListView):
+#     template_name = 'gis_layer_style_list.html'
+#     model = GisStyle
 
-    def get_context_data(self, **kwargs):
-        data = super(StyleList, self).get_context_data(**kwargs)
-        user = self.request.user
-        user_data = UserProfile.objects.get(user=user)
-        style = GisStyle.objects.filter(layer__id=self.kwargs['pk'])
-        data['id'] = self.kwargs['pk']
-        data['list'] = style
-        data['user'] = user_data
-        data['active'] = 'style'
-        return data
-
-
-class StyleCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
-    model = GisStyle
-    template_name = 'gis_layer_style_add.html'
-    form_class = GisStyleForm
-    success_message = 'Style successfully Created'
-
-    def get_context_data(self, **kwargs):
-        data = super(StyleCreate, self).get_context_data(**kwargs)
-        layer = GisLayer.objects.get(id=self.kwargs['pk'])
-        user = self.request.user
-        user_data = UserProfile.objects.get(user=user)
-        data['user'] = user_data
-        data['layer'] = layer
-        data['active'] = 'style'
-        return data
-
-    def get_success_url(self):
-        return "/dashboard/gis_style_layer_list/" + str(self.kwargs['pk'])
+#     def get_context_data(self, **kwargs):
+#         data = super(StyleList, self).get_context_data(**kwargs)
+#         user = self.request.user
+#         user_data = UserProfile.objects.get(user=user)
+#         style = GisStyle.objects.filter(layer__id=self.kwargs['pk'])
+#         data['id'] = self.kwargs['pk']
+#         data['list'] = style
+#         data['user'] = user_data
+#         data['active'] = 'style'
+#         return data
 
 
-class StyleUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
-    model = GisStyle
-    template_name = 'gis_layer_style_update.html'
-    form_class = GisStyleForm
-    success_message = 'Style successfully updated'
+# class StyleCreate(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+#     model = GisStyle
+#     template_name = 'gis_layer_style_add.html'
+#     form_class = GisStyleForm
+#     success_message = 'Style successfully Created'
 
-    def get_context_data(self, **kwargs):
-        data = super(StyleUpdate, self).get_context_data(**kwargs)
-        user = self.request.user
-        user_data = UserProfile.objects.get(user=user)
-        id_gis = GisStyle.objects.get(id=self.kwargs['pk'])
-        print(id_gis.layer.id)
-        layers = GisLayer.objects.all()
-        data['layers'] = layers
-        data['user'] = user_data
-        data['active'] = 'style'
-        return data
+#     def get_context_data(self, **kwargs):
+#         data = super(StyleCreate, self).get_context_data(**kwargs)
+#         layer = GisLayer.objects.get(id=self.kwargs['pk'])
+#         user = self.request.user
+#         user_data = UserProfile.objects.get(user=user)
+#         data['user'] = user_data
+#         data['layer'] = layer
+#         data['active'] = 'style'
+#         return data
 
-    def get_success_url(self):
-        id_gis = GisStyle.objects.get(id=self.kwargs['pk'])
-        return "/dashboard/gis_style_layer_list/" + str(id_gis.layer.id)
+#     def get_success_url(self):
+#         return "/dashboard/gis_style_layer_list/" + str(self.kwargs['pk'])
+
+
+# class StyleUpdate(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+#     model = GisStyle
+#     template_name = 'gis_layer_style_update.html'
+#     form_class = GisStyleForm
+#     success_message = 'Style successfully updated'
+
+#     def get_context_data(self, **kwargs):
+#         data = super(StyleUpdate, self).get_context_data(**kwargs)
+#         user = self.request.user
+#         user_data = UserProfile.objects.get(user=user)
+#         id_gis = GisStyle.objects.get(id=self.kwargs['pk'])
+#         print(id_gis.layer.id)
+#         layers = GisLayer.objects.all()
+#         data['layers'] = layers
+#         data['user'] = user_data
+#         data['active'] = 'style'
+#         return data
+
+#     def get_success_url(self):
+#         id_gis = GisStyle.objects.get(id=self.kwargs['pk'])
+#         return "/dashboard/gis_style_layer_list/" + str(id_gis.layer.id)
 
 
 class AboutUsList(LoginRequiredMixin, ListView):

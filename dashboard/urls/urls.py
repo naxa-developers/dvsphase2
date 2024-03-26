@@ -146,12 +146,13 @@ urlpatterns = [
 
     path('vector-map/', views.VectorMap.as_view(), name='vector-map'),
 
-    path('gis_style_layer_list/<int:pk>',
-         views.StyleList.as_view(), name='style-list'),
-    path('gis_style_layer_add/<int:pk>',
-         views.StyleCreate.as_view(), name='style-create'),
-    path('gis_style_layer_edit/<int:pk>',
-         views.StyleUpdate.as_view(), name='style-update'),
+#     path('gis_style_layer_list/<int:pk>',
+#          views.StyleList.as_view(), name='style-list'),
+#     path('gis_style_layer_add/<int:pk>',
+#          views.StyleCreate.as_view(), name='style-create'),
+#     path('gis_style_layer_edit/<int:pk>',
+#          views.StyleUpdate.as_view(), name='style-update'),
+    
     path('faq-edit/<int:pk>', views.FAQUpdate.as_view(), name='faq-update'),
     path('tac-edit/<int:pk>', views.TACUpdate.as_view(), name='tac-update'),
     path('faq-add', views.FAQCreate.as_view(), name='faq-create'),
