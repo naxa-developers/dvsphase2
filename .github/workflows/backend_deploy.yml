@@ -1,0 +1,23 @@
+name: Deploy Backend of dvsphase2
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+jobs:
+  deploy_backend:
+    name: Deploy Backend on AWS
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH into EC2 instance and deploy backend
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ec2-13-201-60-41.ap-south-1.compute.amazonaws.com
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/ubuntu/Projects/dvsphase2
+            git pull origin develop
+            docker compose up -d --build
