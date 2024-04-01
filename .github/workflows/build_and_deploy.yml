@@ -1,0 +1,49 @@
+name: Deploy Frontend and Backend of dvsphase2
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+jobs:
+  frontend:
+    name: Deploy Frontend on AWS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout frontend code
+        uses: actions/checkout@v2
+
+      - name: SSH into AWS instance
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ec2-13-201-60-41.ap-south-1.compute.amazonaws.com
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Run Frontend Deployment Commands
+        run: |
+            cd /home/ubuntu/Projects/dvs-v3-frontend
+            git pull origin develop
+            yarn install
+            yarn build
+
+  backend:
+    name: Deploy Backend on AWS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout backend code
+        uses: actions/checkout@v2
+
+      - name: SSH into EC2 instance and deploy backend
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ec2-13-201-60-41.ap-south-1.compute.amazonaws.com
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Run Backend Deployment Commands
+        run: |
+            cd /home/ubuntu/Projects/dvsphase2
+            git pull origin develop
+            docker-compose up -d --build
