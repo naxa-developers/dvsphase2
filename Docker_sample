@@ -1,12 +1,39 @@
-FROM python:3.6-slim
+FROM naxa/python:3.9-slim
+
 ENV PYTHONUNBUFFERED 1
-RUN mkdir /code
+RUN mkdir -p /code
+RUN mkdir -p /sock
+RUN mkdir -p /logs
 WORKDIR /code
 
-RUN apt-get update &&\
-    apt-get install -y binutils libproj-dev gdal-bin gettext
+RUN apt-get -y update
+RUN apt-get -y --no-install-recommends install \
+curl \
+libpangocairo-1.0-0 \
+libpq-dev \
+python-dev \
+libproj-dev \
+libc-dev \
+binutils \
+gettext \
+make \
+cmake \
+gcc \
+gdal-bin \
+libgdal-dev \
+g++
+
+ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
+ENV C_INCLUDE_PATH=/usr/include/gdal
 
 COPY requirements.txt /code/
-RUN pip install -r requirements.txt
+
+#required for gdal installation
+RUN python -m pip install --upgrade pip
+RUN pip install --no-cache-dir setuptools==57.5.0
+RUN pip install --no-cache-dir -r requirements.txt
+RUN rm /code/requirements.txt
+
 COPY . /code/
+
 ENTRYPOINT /code/docker-entrypoint.local.sh

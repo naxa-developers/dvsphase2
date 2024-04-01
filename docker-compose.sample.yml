@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  web:
+    env_file: .env   # Change env_sample.txt to env.txt
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+    ports:
+      - 8000:8000
+    entrypoint: sh entrypoint.sh
+
+  fastapi:
+    env_file: .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+      - mongo
+    ports:
+      - 8001:8000
+    entrypoint: uvicorn fastapi_app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  db:
+    image: mdillon/postgis:11-alpine
+    restart: always
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data/
+    ports:
+      - 5434:5432
+    env_file:
+      - .env
+
+  mongo:
+    image: mongo:6.0.2
+    volumes:
+      - ./mongodb_data:/data/db
+    ports:
+      - 27017:27017
+    env_file:
+      - .env

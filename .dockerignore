@@ -1,5 +1,18 @@
-/home/ubuntu/projects/dvsphase2/postgres-data
-postgres-data
+# Virtual envs
+venv/
+ENV/
+DockerData/
+
+# Postgresql
+postgres_data
+./postgres_data
+postgres_data/
+
+# Mongo
+mongodb_data
+./mongodb_data
+mongodb_data/
+
 *.pyc
 */__pycache__/*
 media/

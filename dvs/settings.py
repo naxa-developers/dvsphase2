@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from pymongo import MongoClient
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -87,13 +88,15 @@ WSGI_APPLICATION = 'dvs.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        "PASSWORD": '',
-        'HOST': 'localhost',
-        'PORT': '5432'
+    "default": {
+        "ENGINE": os.environ.get(
+            "SQL_ENGINE", "django.contrib.gis.db.backends.postgis"
+        ),
+        "NAME": os.environ.get("POSTGRES_DB", "postgres"),
+        "USER": os.environ.get("POSTGRES_USER", "postgres"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", ""),
+        "PORT": os.environ.get("POSTGRES_PORT", "5432"),
+        "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
     }
 }
 
@@ -169,6 +172,34 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DEBUG = os.environ.get("DEBUG", False)
+EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", 'django.core.mail.backends.smtp.EmailBackend')
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", True)
+EMAIL_HOST = os.environ.get("EMAIL_HOST", 'smtp.gmail.com')
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", '')
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", '')
+EMAIL_PORT = os.environ.get("EMAIL_PORT", 587)
+
+LOGIN_URL = os.environ.get("LOGIN_URL", '/dashboard/login/')
+LOGIN_REDIRECT_URL = os.environ.get("LOGIN_REDIRECT_URL", '/dashboard/main/')
+LOGOUT_REDIRECT_URL = os.environ.get("LOGOUT_REDIRECT_URL", '/dashboard/login/')
+SITE_URL = os.environ.get("SITE_URL", 'https://admin.dvs-nepal.org/')
+
+CORS_ORIGIN_ALLOW_ALL = os.environ.get("CORS_ORIGIN_ALLOW_ALL", True)
+USE_X_FORWARDED_HOST = os.environ.get("USE_X_FORWARDED_HOST", True)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Mongo
+MONGO_USERNAME = os.environ.get("MONGO_USERNAME", "root")
+MONGO_PASSWORD = os.environ.get("MONGO_PASSWORD", "root")
+MONGO_HOST = os.environ.get("MONGO_HOST", "mongo")
+MONGO_PORT = os.environ.get("MONGO_PORT", "27017")
+MONGO_DB_NAME = os.environ.get("MONGO_DB_NAME", "dvs")
+
+client = MongoClient(
+    f'mongodb://{MONGO_USERNAME}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}')
+MONGO_DB = client["dvs"]
 
 try:
     from .local_setting import *
