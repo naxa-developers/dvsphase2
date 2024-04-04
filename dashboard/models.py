@@ -1,10 +1,10 @@
 from django.contrib.gis.db import models
 from django.contrib.auth.models import User
-from core.models import Partner, Program, Project
-import os.path
-from PIL import Image
 from django.core.files.base import ContentFile
+import os.path
 from io import BytesIO
+from PIL import Image
+from core.models import Partner, Program, Project
 
 
 # Create your models here.
@@ -53,7 +53,7 @@ class UserProfile(models.Model):
             super(UserProfile, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.name
+        return self.user.username
 
 
 class Log(models.Model):
