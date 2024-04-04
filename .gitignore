@@ -58,6 +58,7 @@ dockrt-entrypoint.local.sh
 entrypoint.sh
 postgres-data/
 Dockerfile
+mongodb_data/
 
 #IDE
 .idea
